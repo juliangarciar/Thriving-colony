@@ -1,5 +1,5 @@
 # Ignore build
-build/*
+obj/*
 # Ignore executables
 bin/*
 # Ignore Mac specific files

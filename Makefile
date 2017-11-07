@@ -1,73 +1,45 @@
-# Makefile for Irrlicht Examples
-# It's usually sufficient to change just the target name and source file list
-# and be sure that CXX is set to a valid compiler
+# Makefile for Thriving colony
+# Created by Mario Gonzalez and Julian Garcia
 
 # Name of the executable created (.exe will be added automatically if necessary)
-Target := ThrivingColony
-# List of source files, separated by spaces
-Sources := ./src/main.cpp ./src/numero.cpp
-# Path to Irrlicht directory, should contain include/ and lib/
-IrrlichtHome := .
+TARGET := ThrivingColony
 # Path for the executable. Note that Irrlicht.dll should usually also be there for win32 systems
-BinPath = ./bin
-
-# general compiler settings (might need to be set when compiling the lib, too)
-# preprocessor flags, e.g. defines and include paths
-USERCPPFLAGS = 
-# compiler flags such as optimization flags
-USERCXXFLAGS = -O3 -ffast-math
-USERCXXFLAGS += -g -Wall
-# linker flags such as additional libraries and link paths
-USERLDFLAGS =
+BINPATH = ./bin
+# Path for the .o files
+BUILDPATH = ./obj
+# Path for the source files
+SOURCEPATH = ./src
 
 ####
-#no changes necessary below this line
+# FLAGS
 ####
+CPPFLAGS = -I/usr/include -I/usr/local/include
+CXXFLAGS = -O3 -ffast-math -g -Wall
+LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L/usr/local/lib
+LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lIrrlicht
 
-CPPFLAGS = -I$(IrrlichtHome)/include -I/usr/X11R6/include $(USERCPPFLAGS)
-CXXFLAGS = $(USERCXXFLAGS)
-LDFLAGS = $(USERLDFLAGS)
+######## DON'T EDIT ANYTHING BELOW THIS LINE
+EXECUTABLE = $(BINPATH)/$(TARGET)
+SRC := $(wildcard $(SOURCEPATH)/*.cpp)
+OBJ = $(patsubst $(SOURCEPATH)/%.cpp, $(BUILDPATH)/%.o, $(SRC))
 
-#default target is Linux
-all: all_linux
+#MAKE OPTIONS
+.PHONY: all clean
 
-# target specific settings
-all_linux all_win32 static_win32: LDFLAGS += -L$(IrrlichtHome)/lib/ -lIrrlicht
-all_linux: LDFLAGS += -L/usr/X11R6/lib$(LIBSELECT) -lGL -lXxf86vm -lXext -lX11 -lXcursor
-all_linux clean_linux: SYSTEM=Linux
-all_win32 clean_win32 static_win32: SYSTEM=Win32-gcc
-all_win32 clean_win32 static_win32: SUF=.exe
-static_win32: CPPFLAGS += -D_IRR_STATIC_LIB_
-all_win32: LDFLAGS += -lopengl32 -lm
-static_win32: LDFLAGS += -lgdi32 -lwinspool -lcomdlg32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lopengl32
-# name of the binary - only valid for targets which set SYSTEM
-DESTPATH = $(BinPath)/$(Target)$(SUF)
+all: $(OBJ)
+	$(warning Creando la estructura de carpetas)
+	mkdir -p $(BINPATH)
+	mkdir -p $(BUILDPATH)
 
-# objects
-objects := $(patsubst /src/%.cpp, /src/%.o, $(wildcard /src/*.cpp))
-#foo : $(objects)
-		#g++ -o $(objects)
-all_linux all_win32 static_win32:
-    
-	$(warning Creando el proyecto $(Target)...)
+	$(warning Creando el ejecutable $(Target)...)
 	
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(Sources) -o $(DESTPATH) $(LDFLAGS)
-    #$(warning Fin compilacion.)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(LIBS) $(OBJ) -o $(EXECUTABLE)
+    
+obj/%.o: src/%.cpp
+	$(warning Creando el binario $@...)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-clean: clean_linux clean_win32
+clean:
 	$(warning Cleaning...)
-
-clean_linux clean_win32:
-	@$(RM) $(DESTPATH)
-
-.PHONY: all all_win32 static_win32 clean clean_linux clean_win32
-
-#multilib handling
-ifeq ($(HOSTTYPE), x86_64)
-LIBSELECT=64
-endif
-#solaris real-time features
-ifeq ($(HOSTTYPE), sun4)
-LDFLAGS += -lrt
-endif
-
+	@$(RM) $(EXECUTABLE)
+	@$(RM) $(OBJ)
