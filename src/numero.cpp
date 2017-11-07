@@ -1,9 +1,10 @@
 #include "numero.h"
 
-numero::numero(int a){
+numero::numero(int a, std::string cadena){
     numero1 = a;
     numero2 = a - 1;
     numero3 = a - 2;
+    nombre = cadena;
 }
 numero::numero(const numero& orig){
 
