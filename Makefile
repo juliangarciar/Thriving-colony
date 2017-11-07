@@ -13,9 +13,13 @@ SOURCEPATH = ./src
 ####
 # FLAGS
 ####
+# Include paths
 CPPFLAGS = -I/usr/include -I/usr/local/include
+# Compiler params
 CXXFLAGS = -O3 -ffast-math -g -Wall
+# Lib paths
 LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L/usr/local/lib
+# Libs
 LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lIrrlicht
 
 ######## DON'T EDIT ANYTHING BELOW THIS LINE
