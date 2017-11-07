@@ -1,9 +1,9 @@
 # Makefile for Thriving colony
 # Created by Mario Gonzalez and Julian Garcia
 
-# Name of the executable created (.exe will be added automatically if necessary)
+# Name of the executable created
 TARGET := ThrivingColony
-# Path for the executable. Note that Irrlicht.dll should usually also be there for win32 systems
+# Path for the executable
 BINPATH = ./bin
 # Path for the .o files
 BUILDPATH = ./obj
@@ -26,11 +26,7 @@ OBJ = $(patsubst $(SOURCEPATH)/%.cpp, $(BUILDPATH)/%.o, $(SRC))
 #MAKE OPTIONS
 .PHONY: all clean
 
-all: $(OBJ)
-	$(warning Creando la estructura de carpetas)
-	mkdir -p $(BINPATH)
-	mkdir -p $(BUILDPATH)
-
+all: prepare $(OBJ)
 	$(warning Creando el ejecutable $(Target)...)
 	
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(LDFLAGS) $(LIBS) $(OBJ) -o $(EXECUTABLE)
@@ -38,6 +34,11 @@ all: $(OBJ)
 obj/%.o: src/%.cpp
 	$(warning Creando el binario $@...)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+prepare:
+	$(warning Creando la estructura de carpetas)
+	mkdir -p $(BINPATH)
+	mkdir -p $(BUILDPATH)
 
 clean:
 	$(warning Cleaning...)
