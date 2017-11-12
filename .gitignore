@@ -1,6 +1,8 @@
 # Ignore build
-build/*
+obj/*
 # Ignore executables
 bin/*
+# VSCode configurations
+.vscode
 # Ignore Mac specific files
 .DS_Store
