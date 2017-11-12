@@ -3,3 +3,7 @@
 UserInput::UserInput(){
     
 }
+
+UserInput::~UserInput(){
+    
+}

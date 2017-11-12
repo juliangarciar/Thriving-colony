@@ -3,3 +3,7 @@
 Game::Game(){
     
 }
+
+Game::~Game(){
+    
+}

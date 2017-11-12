@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-class Unit : Entity {
+class Unit : public Entity {
     
 public:
     Unit();

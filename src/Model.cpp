@@ -3,3 +3,7 @@
 Model::Model(){
 
 }
+
+Model::~Model(){
+
+}

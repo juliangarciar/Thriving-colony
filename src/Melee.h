@@ -1,8 +1,9 @@
 #include "Unit.h"
 
-class Melee : Unit {
+class Melee : public Unit {
     
 public:
+
     Melee();
     virtual ~Melee();
 

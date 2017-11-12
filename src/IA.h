@@ -1,6 +1,6 @@
 #include "Player.h"
 
-class IA : Player {
+class IA : public Player {
     
 public:
     IA();

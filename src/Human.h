@@ -1,8 +1,9 @@
 #include "Player.h"
 
-class Human : Player {
+class Human : public Player {
     
 public:
+
     Human();
     virtual ~Human();
 

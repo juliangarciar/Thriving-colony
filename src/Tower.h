@@ -1,6 +1,6 @@
 #include "Building.h"
 
-class Tower : Building {
+class Tower : public Building {
     
 public:
     Tower();

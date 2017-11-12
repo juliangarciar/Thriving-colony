@@ -1,6 +1,8 @@
-class UserInput{
+class UserInput {
+
     public:
         UserInput();
+        ~UserInput();
 
     private:
 };

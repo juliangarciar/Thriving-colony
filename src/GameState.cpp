@@ -3,3 +3,7 @@
 GameState::GameState(){
     
 }
+
+GameState::~GameState(){
+    
+}

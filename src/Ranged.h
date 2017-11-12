@@ -1,6 +1,6 @@
 #include "Unit.h"
 
-class Ranged : Unit {
+class Ranged : public Unit {
     
 public:
     Ranged();

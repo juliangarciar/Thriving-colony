@@ -3,3 +3,7 @@
 Animation::Animation(){
     
 }
+
+Animation::~Animation(){
+    
+}

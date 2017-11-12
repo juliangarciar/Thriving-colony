@@ -1,6 +1,6 @@
 #include "Entity.h"
 
-class Building : Entity {
+class Building : public Entity {
     
 public:
     Building();
