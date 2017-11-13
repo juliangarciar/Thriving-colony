@@ -55,3 +55,19 @@ bool Player::getBarnBuilt() {
 bool Player::getWorkshopBuilt() {
     return workshopBuilt;
 }
+
+int Player::getRangeAmount() {
+    return rangeAmount;
+}
+
+int Player::getSiegeAmount() {
+    return siegeAmount;
+}
+
+int Player::getRamAmount() {
+    return ramAmount;
+}
+
+int Player::getCatapultAmount() {
+    return catapultAmount;
+}

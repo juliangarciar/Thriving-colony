@@ -1,21 +1,22 @@
 #include "VeryHappyTree.h"
 
-VeryHappyTree::VeryHappyTree(IA *iaPnt) {
-    BehaviourTree BehaviourTree(iaPnt);
-
+VeryHappyTree::VeryHappyTree(IA* iaPnt) : BehaviourTree(iaPnt) {
     happinessThreshold = 80;
     quarryMilestone = 50;
-    mountedCriatureMilestone = 80;
+    mountedCreatureMilestone = 80;
     wallMilestone = 70;
     towerMilestone = 90;
     barnMilestone = 60;
     workshopMilestone = 65;
+    creatureMilestone = 100;
 
     metalThreshold = 1.5;
     crystalThreshold = 1.2;
     citizensThreshold = 2.5;
     armyThreshold = 0.1;
-    meleeThreshold = 0.6;
+    meleeThreshold = 0.5;
+    rangeThreshold = 0.45;
+    siegeThreshold = 0.05;
 }
 
 VeryHappyTree::~VeryHappyTree() {
@@ -45,43 +46,62 @@ void BehaviourTree::makeChoice() { //Es asi?
                     if (calculateArmyCitizensRate() < armyThreshold) {
                         //First subsubbranch: Melee
                         if (calculateMeleeRate() < meleeThreshold) {
-                            //First subsubsubbranch: With criature
-                            if (ia->getCityLevel() >= mountedCriatureMilestone) {
-                                //To do: generar melees en criatura
+                            //First subsubsubbranch: Creature
+                            if (ia->getCityLevel() >= creatureMilestone) {
+                                //To do: generar criatura
                             } else {
-                                //Second subsubsubbranch: Without criature
-                                //To do: generar melees
+                                //First subsubsubbranch: With creature
+                                if (ia->getCityLevel() >= mountedCreatureMilestone) {
+                                    //To do: generar melees en criatura
+                                } else {
+                                    //Second subsubsubbranch: Without creature
+                                    //To do: generar melees
+                                }
                             }
                         } else {
-                            //First subsubsubbranch: With criature
-                            if (ia->getCityLevel() >= mountedCriatureMilestone) {
-                                //To do: generar rango en criatura
+                            //Second subsubbranch: Range
+                            if (calculateRangeRate() < rangeThreshold) {
+                                //First subsubsubbranch: With creature
+                                if (ia->getCityLevel() >= mountedCreatureMilestone) {
+                                    //To do: generar rango en criatura
+                                } else {
+                                    //Second subsubsubbranch: Without creature
+                                    //To do: generar rango
+                                }
                             } else {
-                                //Second subsubsubbranch: Without criature
-                                //To do: generar rango
+                                //Third subsubbranch: Siege
+                                if (calculateSiegeRate() < siegeThreshold) {
+                                    //First subsubsubbranch: Ram
+                                    if (ia->getRamAmount() <= ia->getCatapultAmount()) {
+                                        //To do: generar ariete
+                                    } else {
+                                        //Second subsubsubbranch: Catapult
+                                        //To do: generar catapulta
+                                    }
+                                }
                             }
                         }
                     } else {
                         //Second subbranch: Buildings
-                        //First subsubranch: Wall
-                        if (ia->getCityLevel() >= wallMilestone && ia->getWallBuilt() != true) {
-                            //To do: construir muralla
+                        //First subsubbranch: Barrack
+                        if (ia->getBarrackBuilt() != true){
+                            //To do: construir barraca
                         } else {
-                            //Second subsubbranch: Tower
-                            if (ia->getCityLevel() >= towerMilestone) {
-                                //To do: construir torre
+                            //Second subsubbranch: Barn
+                            if (ia->getCityLevel() >= barnMilestone && ia->getBarnBuilt() != true) {
+                                //To do: construir establo
                             } else {
-                                //Third subsubbranch: Barrack
-                                if (ia->getBarrackBuilt() != true){
-                                    //To do: construir barraca
+                                //Third subsubbranch: Workshop
+                                if (ia->getCityLevel() >= workshopMilestone && ia->getWorkshopBuilt() != true) {
+                                    //To do: construir taller
                                 } else {
-                                    //Fourth subsubbranch: Barn
-                                    if (ia->getCityLevel() >= barnMilestone && ia->getBarnBuilt() != true) {
-                                        //To do: construir establo
+                                    //Fourth subsubranch: Wall
+                                    if (ia->getCityLevel() >= wallMilestone && ia->getWallBuilt() != true) {
+                                        //To do: construir muralla
                                     } else {
-                                        //Fifth subsubbranch: Workshop
-                                        if (ia->getCityLevel() >= workshopMilestone && ia->getWorkshopBuilt() != true) {
-                                            //To do: construir taller
+                                        //Fifth subsubbranch: Tower
+                                        if (ia->getCityLevel() >= towerMilestone) {
+                                            //To do: construir torre
                                         }
                                     }
                                 }

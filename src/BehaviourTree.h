@@ -11,21 +11,26 @@ class BehaviourTree {
         float calculateCitizensRate();
         float calculateArmyCitizensRate();
         float calculateMeleeRate();
+        float calculateRangeRate();
+        float calculateSiegeRate();
 
     protected:
         IA* ia;
         int happinessThreshold;
         int quarryMilestone;
-        int mountedCriatureMilestone;
+        int mountedCreatureMilestone;
         int wallMilestone;
         int towerMilestone;
         int barnMilestone;
         int workshopMilestone;
+        int creatureMilestone;
         float metalThreshold;
         float crystalThreshold;
         float citizensThreshold;
         float armyThreshold;
         float meleeThreshold;
+        float rangeThreshold;
+        float siegeThreshold;
 
     private:
         

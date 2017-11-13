@@ -53,3 +53,21 @@ float BehaviourTree::calculateMeleeRate() {
     int armySize = ia->getArmySize();
     return (meleeAmt / armySize);
 }
+
+//=====
+// Calculates the ratio between army and range soldiers
+//=====
+float BehaviourTree::calculateRangeRate() {
+    int rangeAmt = ia->getRangeAmount();
+    int armySize = ia->getArmySize();
+    return (rangeAmt / armySize);
+}
+
+//=====
+// Calculates the ratio between army and siege soldiers
+//=====
+float BehaviourTree::calculateSiegeRate() {
+    int siegeAmt = ia->getSiegeAmount();
+    int armySize = ia->getArmySize();
+    return (siegeAmt / armySize);
+}

@@ -12,6 +12,10 @@ class Player {
         int getCitizens();
         int getArmySize();
         int getMeleeAmount();
+        int getRangeAmount();
+        int getSiegeAmount();
+        int getRamAmount();
+        int getCatapultAmount();
         bool getWallBuilt();
         bool getBarrackBuilt();
         bool getBarnBuilt();
@@ -27,6 +31,10 @@ class Player {
         int citizens;
         int armySize;
         int meleeAmount;
+        int rangeAmount;
+        int siegeAmount;
+        int ramAount;
+        int catapultAmount;
         bool wallBuilt;
         bool barrackBuilt;
         bool barnBuilt;
