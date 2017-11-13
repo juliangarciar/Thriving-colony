@@ -17,6 +17,9 @@ class BehaviourTree{
         int quarryMilestone;
         int mountedCriatureMilestone;
         int wallMilestone;
+        int towerMilestone;
+        int barnMilestone;
+        int workshopMilestone;
         float metalThreshold;
         float crystalThreshold;
         float citizensThreshold;

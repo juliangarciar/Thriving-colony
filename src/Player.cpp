@@ -39,3 +39,19 @@ int Player::getArmySize() {
 int Player::getMeleeAmount() {
     return meleeAmount;
 }
+
+bool Player::getWallBuilt() {
+    return wallBuilt;
+}
+
+bool Player::getBarrackBuilt() {
+    return barrackBuilt;
+}
+
+bool Player::getBarnBuilt() {
+    return barnBuilt;
+}
+
+bool Player::getWorkshopBuilt() {
+    return workshopBuilt;
+}

@@ -49,8 +49,29 @@ void BehaviourTree::makeChoice() { //Es asi?
                         }
                     } else {
                         //Second subbranch: Buildings
-                        if (ia->getCityLevel() >= wallMilestone){
-                            
+                        //First subsubranch: Wall
+                        if (ia->getCityLevel() >= wallMilestone && ia->getWallBuilt() != true) {
+                            //To do: construir muralla
+                        } else {
+                            //Second subsubbranch: Tower
+                            if (ia->getCityLevel() >= towerMilestone) {
+                                //To do: construir torre
+                            } else {
+                                //Third subsubbranch: Barrack
+                                if (ia->getBarrackBuilt() != true){
+                                    //To do: construir barraca
+                                } else {
+                                    //Fourth subsubbranch: Barn
+                                    if (ia->getCityLevel() >= barnMilestone && ia->getBarnBuilt() != true) {
+                                        //To do: construir establo
+                                    } else {
+                                        //Fifth subsubbranch: Workshop
+                                        if(ia->getCityLevel() >= workshopMilestone && ia->getWorkshopBuilt() != true) {
+                                            //To do: construir taller
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }

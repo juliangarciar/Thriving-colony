@@ -12,6 +12,10 @@ class Player {
         int getCitizens();
         int getArmySize();
         int getMeleeAmount();
+        bool getWallBuilt();
+        bool getBarrackBuilt();
+        bool getBarnBuilt();
+        bool getWorkshopBuilt();
 
         //Setters
 
@@ -23,5 +27,9 @@ class Player {
         int citizens;
         int armySize;
         int meleeAmount;
+        bool wallBuilt;
+        bool barrackBuilt;
+        bool barnBuilt;
+        bool workshopBuilt;
         
 };
