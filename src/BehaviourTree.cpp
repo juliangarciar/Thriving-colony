@@ -1,17 +1,17 @@
 #include "BehaviourTree.h"
 
-BehaviourTree::BehaviourTree(){
-
+BehaviourTree::BehaviourTree(IA *iaPnt) {
+    ia=iaPnt;
 }
 
-BehaviourTree::~BehaviourTree(){
+BehaviourTree::~BehaviourTree() {
 
 }
 
 //=====
 // Calculates the ratio between metal production and city level
 //=====
-float BehaviourTree::calculateMetalProductionRate(){
+float BehaviourTree::calculateMetalProductionRate() {
     int cityLvl = ia->getCityLevel();
     int metalPr = ia->getMetalProduction();
     return (metalPr / cityLvl);
@@ -20,7 +20,7 @@ float BehaviourTree::calculateMetalProductionRate(){
 //=====
 // Calculates the ratio between crystal production and city level
 //=====
-float BehaviourTree::calculateCrystalProductionRate(){
+float BehaviourTree::calculateCrystalProductionRate() {
     int cityLvl = ia->getCityLevel();
     int crystalPr = ia->getCrystalProduction();
     return (crystalPr / cityLvl);
@@ -29,7 +29,7 @@ float BehaviourTree::calculateCrystalProductionRate(){
 //=====
 // Calculates the ratio between citizens and city level
 //=====
-float BehaviourTree::calculateCitizensRate(){
+float BehaviourTree::calculateCitizensRate() {
     int cityLvl = ia->getCityLevel();
     int citizens = ia->getCitizens();
     return (citizens / cityLvl);
@@ -38,7 +38,7 @@ float BehaviourTree::calculateCitizensRate(){
 //=====
 // Calculates the ratio between citizens and army
 //=====
-float BehaviourTree::calculateArmyCitizensRate(){
+float BehaviourTree::calculateArmyCitizensRate() {
     int armySize = ia->getArmySize();
     // Numbers of soldiers / Number of total cicitzens (citizens + soldiers)
     int totalCitizens = ia->getCitizens() + armySize;
@@ -48,7 +48,7 @@ float BehaviourTree::calculateArmyCitizensRate(){
 //=====
 // Calculates the ratio between army and melee soldiers
 //=====
-float BehaviourTree::calculateMeleeRate(){
+float BehaviourTree::calculateMeleeRate() {
     int meleeAmt = ia->getMeleeAmount();
     int armySize = ia->getArmySize();
     return (meleeAmt / armySize);

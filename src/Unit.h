@@ -2,10 +2,10 @@
 
 class Unit : public Entity {
     
-public:
-    Unit();
-    virtual ~Unit();
+    public:
+        Unit();
+        virtual ~Unit();
 
-private:
+    private:
         
 };

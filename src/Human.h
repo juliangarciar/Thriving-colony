@@ -2,11 +2,10 @@
 
 class Human : public Player {
     
-public:
+    public:
+        Human();
+        virtual ~Human();
 
-    Human();
-    virtual ~Human();
-
-private:
-        
+    private:
+            
 };

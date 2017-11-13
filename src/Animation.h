@@ -1,4 +1,5 @@
-class Animation{
+class Animation {
+    
     public:
         Animation();
         ~Animation();

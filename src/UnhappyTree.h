@@ -1,8 +1,10 @@
 #include "BehaviourTree.h"
 
-class UnhappyTree : public BehaviourTree{
+class UnhappyTree : public BehaviourTree {
+
     public:
         UnhappyTree();
         ~UnhappyTree();
+        
     private:
 };

@@ -1,10 +1,24 @@
 #include "VeryHappyTree.h"
 
-VeryHappyTree::VeryHappyTree(){
+VeryHappyTree::VeryHappyTree(IA *iaPnt) {
+    BehaviourTree BehaviourTree(iaPnt);
 
+    happinessThreshold = 80;
+    quarryMilestone = 50;
+    mountedCriatureMilestone = 80;
+    wallMilestone = 70;
+    towerMilestone = 90;
+    barnMilestone = 60;
+    workshopMilestone = 65;
+
+    metalThreshold = 1.5;
+    crystalThreshold = 1.2;
+    citizensThreshold = 2.5;
+    armyThreshold = 0.1;
+    meleeThreshold = 0.6;
 }
 
-VeryHappyTree::~VeryHappyTree(){
+VeryHappyTree::~VeryHappyTree() {
 
 }
 
@@ -66,7 +80,7 @@ void BehaviourTree::makeChoice() { //Es asi?
                                         //To do: construir establo
                                     } else {
                                         //Fifth subsubbranch: Workshop
-                                        if(ia->getCityLevel() >= workshopMilestone && ia->getWorkshopBuilt() != true) {
+                                        if (ia->getCityLevel() >= workshopMilestone && ia->getWorkshopBuilt() != true) {
                                             //To do: construir taller
                                         }
                                     }

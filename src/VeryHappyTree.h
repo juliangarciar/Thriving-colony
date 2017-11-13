@@ -1,8 +1,9 @@
 #include "BehaviourTree.h"
 
-class VeryHappyTree : public BehaviourTree{
+class VeryHappyTree : public BehaviourTree {
+    
     public:
-        VeryHappyTree();
+        VeryHappyTree(IA*);
         ~VeryHappyTree();
     
     private:

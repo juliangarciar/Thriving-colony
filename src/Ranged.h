@@ -2,10 +2,10 @@
 
 class Ranged : public Unit {
     
-public:
-    Ranged();
-    virtual ~Ranged();
+    public:
+        Ranged();
+        virtual ~Ranged();
 
-private:
+    private:
         
 };

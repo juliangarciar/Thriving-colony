@@ -2,10 +2,10 @@
 
 class Building : public Entity {
     
-public:
-    Building();
-    virtual ~Building();
+    public:
+        Building();
+        virtual ~Building();
 
-private:
+    private:
         
 };

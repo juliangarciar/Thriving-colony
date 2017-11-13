@@ -2,10 +2,10 @@
 
 class IA : public Player {
     
-public:
-    IA();
-    virtual ~IA();
+    public:
+        IA();
+        virtual ~IA();
 
-private:
+    private:
         
 };

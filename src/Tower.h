@@ -2,10 +2,10 @@
 
 class Tower : public Building {
     
-public:
-    Tower();
-    virtual ~Tower();
+    public:
+        Tower();
+        virtual ~Tower();
 
-private:
+    private:
         
 };

@@ -1,4 +1,4 @@
-class Graphics{
+class Graphics {
 
     public:
         Graphics();

@@ -1,4 +1,4 @@
-class Hud{
+class Hud {
     
     public:
         Hud();

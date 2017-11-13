@@ -1,4 +1,4 @@
-class Map{
+class Map {
     
     public:
         Map();

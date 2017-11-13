@@ -2,11 +2,11 @@
 
 class Melee : public Unit {
     
-public:
+    public:
 
-    Melee();
-    virtual ~Melee();
+        Melee();
+        virtual ~Melee();
 
-private:
+    private:
         
 };

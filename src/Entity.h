@@ -1,10 +1,10 @@
 
 class Entity {
 
-public:
-    Entity();
-    virtual ~Entity();
+    public:
+        Entity();
+        virtual ~Entity();
 
-private:
+    private:
     
 };

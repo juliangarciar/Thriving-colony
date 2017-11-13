@@ -1,8 +1,9 @@
 #include "IA.h"
 
-class BehaviourTree{
+class BehaviourTree {
+    
     public:
-        BehaviourTree();
+        BehaviourTree(IA*);
         ~BehaviourTree();
         virtual void makeChoice();
         float calculateMetalProductionRate();
