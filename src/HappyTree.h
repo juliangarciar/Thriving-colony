@@ -3,7 +3,7 @@
 class HappyTree : public BehaviourTree {
     
     public: 
-        HappyTree();
+        HappyTree(IA*);
         ~HappyTree();
 
     private:

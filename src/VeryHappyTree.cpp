@@ -23,10 +23,10 @@ VeryHappyTree::~VeryHappyTree() {
 
 }
 
-void BehaviourTree::makeChoice() { //Es asi?
+void BehaviourTree::developCity() { //Es asi?
     //First branch: Services
     if (ia->getHappiness() < happinessThreshold) {
-        //To do: Elegir el servicio a construir
+        serviceBranch();
     } else {
         //Second branch: Resources
         //First subbranch: Siderurgy
@@ -44,43 +44,7 @@ void BehaviourTree::makeChoice() { //Es asi?
                     //Fourth branch: Army
                     //First subbranch: Units
                     if (calculateArmyCitizensRate() < armyThreshold) {
-                        //First subsubbranch: Melee
-                        if (calculateMeleeRate() < meleeThreshold) {
-                            //First subsubsubbranch: Creature
-                            if (ia->getCityLevel() >= creatureMilestone) {
-                                //To do: generar criatura
-                            } else {
-                                //First subsubsubbranch: With creature
-                                if (ia->getCityLevel() >= mountedCreatureMilestone) {
-                                    //To do: generar melees en criatura
-                                } else {
-                                    //Second subsubsubbranch: Without creature
-                                    //To do: generar melees
-                                }
-                            }
-                        } else {
-                            //Second subsubbranch: Range
-                            if (calculateRangeRate() < rangeThreshold) {
-                                //First subsubsubbranch: With creature
-                                if (ia->getCityLevel() >= mountedCreatureMilestone) {
-                                    //To do: generar rango en criatura
-                                } else {
-                                    //Second subsubsubbranch: Without creature
-                                    //To do: generar rango
-                                }
-                            } else {
-                                //Third subsubbranch: Siege
-                                if (calculateSiegeRate() < siegeThreshold) {
-                                    //First subsubsubbranch: Ram
-                                    if (ia->getRamAmount() <= ia->getCatapultAmount()) {
-                                        //To do: generar ariete
-                                    } else {
-                                        //Second subsubsubbranch: Catapult
-                                        //To do: generar catapulta
-                                    }
-                                }
-                            }
-                        }
+                        unitsBranch();
                     } else {
                         //Second subbranch: Buildings
                         //First subsubbranch: Barrack
@@ -114,52 +78,6 @@ void BehaviourTree::makeChoice() { //Es asi?
     }
 }
 
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-
-void BehaviourTree::makeChoice() {
-    //First branch: Attacking the enemy
-    if (readyToAttack()) {
-        //ToDo: Attack the enemy
-    } else  {
-        //Second branch: Being attacked
-        if (underAttack){
-            //ToDo:
-        } else {
-            //Third branch: Peaceful, develop the city
-            developCity();
-        }
-    }
-}
-
-void BehaviourTree::developCity() { //Es asi?
-    //First branch: Services
-    if (ia->getHappiness() < happinessThreshold) {
-        serviceBranch();
-    } else {
-
-        //Second branch: Resources
-        //First subbranch: Siderurgy
-        if (calculateMetalProductionRate() < metalThreshold) {
-            //To do: Construir siderurgia
-        } else {
-            //Second subbranch: Quarry
-            if (calculateCrystalProductionRate() < crystalThreshold && ia->getCityLevel() >= quarryMilestone) {
-                //To do: Construir cantera
-            } else {
-
-                //Third branch: Homes
-                if (calculateCitizensRate() < citizensThreshold) {
-                    //ToDo: Construir viviendas
-                } else {
-                    militaryBranch();
-                }
-            }
-        }
-    }
-}
-
 /**
  * Determines wheter or not you are ready to attack
  */
@@ -167,5 +85,3 @@ bool BehaviourTree::readyToAttack() {
     //ToDo: Determinar cuando se esta listo
     return false;
 }
-
-

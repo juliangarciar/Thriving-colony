@@ -9,7 +9,7 @@ class BehaviourTree {
 
         virtual void developCity();
         void serviceBranch();
-        void militaryBranch();
+        void unitsBranch();
 
         virtual bool readyToAttack();
 

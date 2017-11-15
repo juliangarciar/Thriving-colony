@@ -3,7 +3,7 @@
 class VeryUnhappyTree : public BehaviourTree {
     
     public:
-        VeryUnhappyTree();
+        VeryUnhappyTree(IA*);
         ~VeryUnhappyTree();
 
     private:      

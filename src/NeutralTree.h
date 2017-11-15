@@ -3,7 +3,7 @@
 class NeutralTree : public BehaviourTree {
     
     public:
-        NeutralTree();
+        NeutralTree(IA*);
         ~NeutralTree();
 
     private:

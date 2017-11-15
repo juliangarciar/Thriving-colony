@@ -12,76 +12,59 @@ BehaviourTree::~BehaviourTree() {
  * Behaviour methods
  */
 
-
+void BehaviourTree::makeChoice() {
+    //First branch: Attacking the enemy
+    if (readyToAttack()) {
+        //To Do: Attack the enemy
+    } else  {
+        //Second branch: Being attacked
+        if (underAttack){
+            //To Do:
+        } else {
+            //Third branch: Peaceful, develop the city
+            developCity();
+        }
+    }
+}
 
 void BehaviourTree::serviceBranch() {
     //ToDo: Elegir el servicio a construir
 }
 
-void BehaviourTree::militaryBranch() {
-    //Fourth branch: Army
-    //First subbranch: Units
-    if (calculateArmyCitizensRate() < armyThreshold) {
-        //First subsubbranch: Melee
-        if (calculateMeleeRate() < meleeThreshold) {
-            //First subsubsubbranch: Creature
-            if (ia->getCityLevel() >= creatureMilestone) {
-                //To do: generar criatura
-            } else {
-                //First subsubsubbranch: With creature
-                if (ia->getCityLevel() >= mountedCreatureMilestone) {
-                    //To do: generar melees en criatura
-                } else {
-                    //Second subsubsubbranch: Without creature
-                    //To do: generar melees
-                }
-            }
+void BehaviourTree::unitsBranch() {
+    //First subsubbranch: Melee
+    if (calculateMeleeRate() < meleeThreshold) {
+        //First subsubsubbranch: Creature
+        if (ia->getCityLevel() >= creatureMilestone) {
+            //To do: generar criatura
         } else {
-            //Second subsubbranch: Range
-            if (calculateRangeRate() < rangeThreshold) {
-                //First subsubsubbranch: With creature
-                if (ia->getCityLevel() >= mountedCreatureMilestone) {
-                    //To do: generar rango en criatura
-                } else {
-                    //Second subsubsubbranch: Without creature
-                    //To do: generar rango
-                }
+            //First subsubsubbranch: With creature
+            if (ia->getCityLevel() >= mountedCreatureMilestone) {
+                //To do: generar melees en criatura
             } else {
-                //Third subsubbranch: Siege
-                if (calculateSiegeRate() < siegeThreshold) {
-                    //First subsubsubbranch: Ram
-                    if (ia->getRamAmount() <= ia->getCatapultAmount()) {
-                        //To do: generar ariete
-                    } else {
-                        //Second subsubsubbranch: Catapult
-                        //To do: generar catapulta
-                    }
-                }
+                //Second subsubsubbranch: Without creature
+                //To do: generar melees
             }
         }
     } else {
-        //Second subbranch: Buildings
-        //First subsubbranch: Barrack
-        if (ia->getBarrackBuilt() != true){
-            //To do: construir barraca
-        } else {
-            //Second subsubbranch: Barn
-            if (ia->getCityLevel() >= barnMilestone && ia->getBarnBuilt() != true) {
-                //To do: construir establo
+        //Second subsubbranch: Range
+        if (calculateRangeRate() < rangeThreshold) {
+            //First subsubsubbranch: With creature
+            if (ia->getCityLevel() >= mountedCreatureMilestone) {
+                //To do: generar rango en criatura
             } else {
-                //Third subsubbranch: Workshop
-                if (ia->getCityLevel() >= workshopMilestone && ia->getWorkshopBuilt() != true) {
-                    //To do: construir taller
+                //Second subsubsubbranch: Without creature
+                //To do: generar rango
+            }
+        } else {
+            //Third subsubbranch: Siege
+            if (calculateSiegeRate() < siegeThreshold) {
+                //First subsubsubbranch: Ram
+                if (ia->getRamAmount() <= ia->getCatapultAmount()) {
+                    //To do: generar ariete
                 } else {
-                    //Fourth subsubranch: Wall
-                    if (ia->getCityLevel() >= wallMilestone && ia->getWallBuilt() != true) {
-                        //To do: construir muralla
-                    } else {
-                        //Fifth subsubbranch: Tower
-                        if (ia->getCityLevel() >= towerMilestone) {
-                            //To do: construir torre
-                        }
-                    }
+                    //Second subsubsubbranch: Catapult
+                    //To do: generar catapulta
                 }
             }
         }
