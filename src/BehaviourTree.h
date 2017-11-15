@@ -6,6 +6,13 @@ class BehaviourTree {
         BehaviourTree(IA*);
         ~BehaviourTree();
         virtual void makeChoice();
+
+        virtual void developCity();
+        void serviceBranch();
+        void militaryBranch();
+
+        virtual bool readyToAttack();
+
         float calculateMetalProductionRate();
         float calculateCrystalProductionRate();
         float calculateCitizensRate();
@@ -16,6 +23,7 @@ class BehaviourTree {
 
     protected:
         IA* ia;
+
         int happinessThreshold;
         int quarryMilestone;
         int mountedCreatureMilestone;
@@ -24,6 +32,7 @@ class BehaviourTree {
         int barnMilestone;
         int workshopMilestone;
         int creatureMilestone;
+
         float metalThreshold;
         float crystalThreshold;
         float citizensThreshold;
@@ -31,6 +40,8 @@ class BehaviourTree {
         float meleeThreshold;
         float rangeThreshold;
         float siegeThreshold;
+
+        bool underAttack;
 
     private:
         

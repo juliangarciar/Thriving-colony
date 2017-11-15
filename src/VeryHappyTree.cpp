@@ -113,3 +113,59 @@ void BehaviourTree::makeChoice() { //Es asi?
         }
     }
 }
+
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+
+void BehaviourTree::makeChoice() {
+    //First branch: Attacking the enemy
+    if (readyToAttack()) {
+        //ToDo: Attack the enemy
+    } else  {
+        //Second branch: Being attacked
+        if (underAttack){
+            //ToDo:
+        } else {
+            //Third branch: Peaceful, develop the city
+            developCity();
+        }
+    }
+}
+
+void BehaviourTree::developCity() { //Es asi?
+    //First branch: Services
+    if (ia->getHappiness() < happinessThreshold) {
+        serviceBranch();
+    } else {
+
+        //Second branch: Resources
+        //First subbranch: Siderurgy
+        if (calculateMetalProductionRate() < metalThreshold) {
+            //To do: Construir siderurgia
+        } else {
+            //Second subbranch: Quarry
+            if (calculateCrystalProductionRate() < crystalThreshold && ia->getCityLevel() >= quarryMilestone) {
+                //To do: Construir cantera
+            } else {
+
+                //Third branch: Homes
+                if (calculateCitizensRate() < citizensThreshold) {
+                    //ToDo: Construir viviendas
+                } else {
+                    militaryBranch();
+                }
+            }
+        }
+    }
+}
+
+/**
+ * Determines wheter or not you are ready to attack
+ */
+bool BehaviourTree::readyToAttack() {
+    //ToDo: Determinar cuando se esta listo
+    return false;
+}
+
+
