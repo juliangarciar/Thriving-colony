@@ -1,3 +1,6 @@
+#ifndef BEHAVIOUR_TREE_H
+#define BEHAVIOUR_TREE_H
+
 #include "IA.h"
 
 class BehaviourTree {
@@ -46,3 +49,5 @@ class BehaviourTree {
     private:
         
 };
+
+#endif

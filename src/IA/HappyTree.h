@@ -1,3 +1,6 @@
+#ifndef HAPPY_TREE_H
+#define HAPPY_TREE_H
+
 #include "BehaviourTree.h"
 
 class HappyTree : public BehaviourTree {
@@ -8,3 +11,5 @@ class HappyTree : public BehaviourTree {
 
     private:
 };
+
+#endif

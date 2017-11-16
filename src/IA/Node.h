@@ -1,3 +1,6 @@
+#ifndef NEUTRAL_TREE_H
+#define NEUTRAL_TREE_H
+
 class Node {
     
     public:
@@ -6,3 +9,5 @@ class Node {
 
     private:
 };
+
+#endif
