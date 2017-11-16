@@ -1,3 +1,6 @@
+#ifndef USERINPUT_H
+#define USERINPUT_H
+
 class UserInput {
 
     public:
@@ -6,3 +9,5 @@ class UserInput {
 
     private:
 };
+
+#endif

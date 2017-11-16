@@ -1,3 +1,6 @@
+#ifndef BUILDING_H
+#define BUILDING_H
+
 #include "Entity.h"
 
 class Building : public Entity {
@@ -9,3 +12,5 @@ class Building : public Entity {
     private:
         
 };
+
+#endif

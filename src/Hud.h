@@ -1,3 +1,6 @@
+#ifndef HUD_H
+#define HUD_H
+
 class Hud {
     
     public:
@@ -6,3 +9,5 @@ class Hud {
 
     private:
 };
+
+#endif

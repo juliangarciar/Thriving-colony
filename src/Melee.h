@@ -1,3 +1,6 @@
+#ifndef MELEE_H
+#define MELEE_H
+
 #include "Unit.h"
 
 class Melee : public Unit {
@@ -10,3 +13,5 @@ class Melee : public Unit {
     private:
         
 };
+
+#endif

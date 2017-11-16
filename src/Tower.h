@@ -1,3 +1,6 @@
+#ifndef TOWER_H
+#define TOWER_H
+
 #include "Building.h"
 
 class Tower : public Building {
@@ -9,3 +12,5 @@ class Tower : public Building {
     private:
         
 };
+
+#endif

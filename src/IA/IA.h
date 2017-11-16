@@ -1,4 +1,4 @@
-#include "Player.h"
+#include "../Player.h"
 
 class IA : public Player {
     

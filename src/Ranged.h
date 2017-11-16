@@ -1,3 +1,6 @@
+#ifndef RANGED_H
+#define RANGED_H
+
 #include "Unit.h"
 
 class Ranged : public Unit {
@@ -9,3 +12,5 @@ class Ranged : public Unit {
     private:
         
 };
+
+#endif

@@ -2,13 +2,13 @@
 # Created by Mario Gonzalez and Julian Garcia
 
 # Name of the executable created
-TARGET := ThrivingColony
+TARGET = ThrivingColony
 # Path for the executable
 BINPATH = ./bin
 # Path for the .o files
 BUILDPATH = ./obj
 # Path for the source files
-SOURCEPATH = ./src
+SOURCEPATH = ./src ./src/graphics ./src/IA
 
 ####
 # FLAGS
@@ -24,8 +24,8 @@ LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lIrrlicht
 
 ######## DON'T EDIT ANYTHING BELOW THIS LINE
 EXECUTABLE = $(BINPATH)/$(TARGET)
-SRC := $(wildcard $(SOURCEPATH)/*.cpp)
-OBJ = $(patsubst $(SOURCEPATH)/%.cpp, $(BUILDPATH)/%.o, $(SRC))
+SRC := $(foreach DIR,$(SOURCEPATH),$(wildcard $(DIR)/*.cpp))
+OBJ := $(patsubst src/%.cpp, src/%.o, $(SRC))
 
 #MAKE OPTIONS
 .PHONY: all clean

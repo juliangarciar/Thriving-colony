@@ -1,3 +1,6 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
 class Player {
     
     public:
@@ -33,11 +36,13 @@ class Player {
         int meleeAmount;
         int rangeAmount;
         int siegeAmount;
-        int ramAount;
         int catapultAmount;
+        int ramAmount;
         bool wallBuilt;
         bool barrackBuilt;
         bool barnBuilt;
         bool workshopBuilt;
         
 };
+
+#endif

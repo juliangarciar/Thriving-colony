@@ -1,3 +1,6 @@
+#ifndef UNIT_H
+#define UNIT_H
+
 #include "Entity.h"
 
 class Unit : public Entity {
@@ -9,3 +12,5 @@ class Unit : public Entity {
     private:
         
 };
+
+#endif
