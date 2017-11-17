@@ -2,11 +2,11 @@
 # Created by Mario Gonzalez and Julian Garcia
 
 # Name of the executable created
-TARGET = ThrivingColony
+TARGET = mapTest
 # Path for the executable
-BINPATH = bin
+BINPATH = .
 # Path for the .o files
-BUILDPATH = obj
+BUILDPATH = .
 # Path for the source files
 SOURCEPATH = .
 #Directories
@@ -16,7 +16,7 @@ SOURCE_DIRS = .
 # FLAGS
 ####
 # Include paths
-CPPFLAGS = -I/usr/include -I/usr/local/include
+CPPFLAGS = -I/usr/include -I/usr/local/include -I/usr/include/irrlicht
 # Compiler params
 CXXFLAGS = -O3 -ffast-math -g -Wall
 # Lib paths
@@ -40,7 +40,7 @@ all: prepare $(OBJ)
     
 $(BUILDPATH)/%.o: $(SOURCEPATH)/%.cpp
 	$(warning Creando el binario $@...)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 prepare:
 	$(warning Creando la estructura de carpetas)
