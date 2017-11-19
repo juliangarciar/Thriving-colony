@@ -8,13 +8,13 @@ class BehaviourTree {
     public:
         BehaviourTree(IA*);
         ~BehaviourTree();
-        virtual void makeChoice();
+        void makeChoice();
 
-        virtual void developCity();
+        virtual void developCity() = 0;
         void serviceBranch();
         void unitsBranch();
 
-        virtual bool readyToAttack();
+        virtual bool readyToAttack() = 0;
 
         float calculateMetalProductionRate();
         float calculateCrystalProductionRate();
