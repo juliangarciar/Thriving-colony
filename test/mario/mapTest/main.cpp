@@ -43,8 +43,6 @@ int main() {
 		scene::ETPS_17,				// patchSize
 		4					// smoothFactor
     );
-    
-    terrain->
 
 	terrain->setMaterialFlag(video::EMF_LIGHTING, false);
 
