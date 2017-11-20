@@ -9,6 +9,10 @@ class NeutralTree : public BehaviourTree {
         NeutralTree(IA*);
         ~NeutralTree();
 
+        virtual void developCity();
+
+        virtual bool readyToAttack();
+
     private:
 };
 

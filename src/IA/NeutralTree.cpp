@@ -23,7 +23,7 @@ NeutralTree::~NeutralTree() {
     
 }
 
-void BehaviourTree::developCity() { //Es asi?
+void NeutralTree::developCity() { //Es asi?
     //First branch: Resources
     //First subbranch: Siderurgy
     if (calculateMetalProductionRate() < metalThreshold) {
@@ -76,4 +76,12 @@ void BehaviourTree::developCity() { //Es asi?
             }
         }
     }
+}
+
+/**
+ * Determines wheter or not you are ready to attack
+ */
+bool NeutralTree::readyToAttack() {
+    //ToDo: Determinar cuando se esta listo
+    return false;
 }

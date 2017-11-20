@@ -23,7 +23,7 @@ UnhappyTree::~UnhappyTree() {
     
 }
 
-void BehaviourTree::developCity() { //Es asi?
+void UnhappyTree::developCity() {
     //First branch: Resources
     //First subbranch: Siderurgy
     if (calculateMetalProductionRate() < metalThreshold) {
@@ -76,4 +76,12 @@ void BehaviourTree::developCity() { //Es asi?
             }
         }
     }
+}
+
+/**
+ * Determines wheter or not you are ready to attack
+ */
+bool UnhappyTree::readyToAttack() {
+    //ToDo: Determinar cuando se esta listo
+    return false;
 }

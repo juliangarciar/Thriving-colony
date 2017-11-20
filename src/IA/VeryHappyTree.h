@@ -8,6 +8,10 @@ class VeryHappyTree : public BehaviourTree {
     public:
         VeryHappyTree(IA*);
         ~VeryHappyTree();
+
+        virtual void developCity();
+
+        virtual bool readyToAttack();
     
     private:
 };

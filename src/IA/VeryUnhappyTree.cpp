@@ -22,7 +22,7 @@ VeryUnhappyTree::VeryUnhappyTree(IA* iaPnt) : BehaviourTree(iaPnt) {
 VeryUnhappyTree::~VeryUnhappyTree() {
     
 }
-void BehaviourTree::developCity() {
+void VeryUnhappyTree::developCity() {
     //First branch: Army
     //First subbranch: Units
     if (calculateArmyCitizensRate() < armyThreshold) {
@@ -75,4 +75,12 @@ void BehaviourTree::developCity() {
             }
         }
     }
+}
+
+/**
+ * Determines wheter or not you are ready to attack
+ */
+bool VeryUnhappyTree::readyToAttack() {
+    //ToDo: Determinar cuando se esta listo
+    return false;
 }

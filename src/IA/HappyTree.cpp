@@ -23,7 +23,7 @@ HappyTree::~HappyTree() {
 
 }
 
-void BehaviourTree::developCity() { //Es asi?
+void HappyTree::developCity() {
     //First branch: Homes
     if (calculateCitizensRate() < citizensThreshold) {
         //ToDo: Construir viviendas
@@ -81,7 +81,7 @@ void BehaviourTree::developCity() { //Es asi?
 /**
  * Determines wheter or not you are ready to attack
  */
-bool BehaviourTree::readyToAttack() {
+bool HappyTree::readyToAttack() {
     //ToDo: Determinar cuando se esta listo
     return false;
 }

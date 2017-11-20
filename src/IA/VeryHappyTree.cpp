@@ -23,7 +23,7 @@ VeryHappyTree::~VeryHappyTree() {
 
 }
 
-void BehaviourTree::developCity() { //Es asi?
+void VeryHappyTree::developCity() { //Es asi?
     //First branch: Services
     if (ia->getHappiness() < happinessThreshold) {
         serviceBranch();
@@ -81,7 +81,7 @@ void BehaviourTree::developCity() { //Es asi?
 /**
  * Determines wheter or not you are ready to attack
  */
-bool BehaviourTree::readyToAttack() {
+bool VeryHappyTree::readyToAttack() {
     //ToDo: Determinar cuando se esta listo
     return false;
 }
