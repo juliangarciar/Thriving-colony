@@ -1,3 +1,4 @@
+#include <iostream>
 #include <irrlicht.h>
 
 using namespace irr;
@@ -41,20 +42,50 @@ int main() {
 		5,					// maxLOD
 		scene::ETPS_17,				// patchSize
 		4					// smoothFactor
-	);
+    );
+    
+    terrain->
 
 	terrain->setMaterialFlag(video::EMF_LIGHTING, false);
 
 	terrain->setMaterialTexture(0, driver->getTexture("terrain-texture.jpg"));
 	terrain->setMaterialTexture(1, driver->getTexture("detailmap3.jpg"));
 	terrain->setMaterialType(video::EMT_DETAIL_MAP);
-	terrain->scaleTexture(1.0f, 20.0f);
+    terrain->scaleTexture(1.0f, 20.0f);
+    
+    scene::ITriangleSelector* selector = smgr->createTerrainTriangleSelector(terrain);
+    terrain->setTriangleSelector(selector);
+    gui::ICursorControl *cursor = device->getCursorControl();
+    scene::ISceneCollisionManager* collisionManager = smgr->getSceneCollisionManager();
+    // this sphere will mark our collision point
+    scene::ISceneNode* sphere = smgr->addSphereSceneNode();
+    scene::IMesh* cube = smgr->getGeometryCreator()->createCubeMesh();
+    scene::IMeshSceneNode *cubeNode = smgr->addCubeSceneNode(100); 
+    //smgr->addMeshSceneNode(cube, 0, 0, core::vector3df(0,0,0));
+    if(cubeNode) {
+        cubeNode->setMaterialFlag(video::EMF_LIGHTING, false);
+        cubeNode->setPosition(core::vector3df(500,50,500));
+    }
 
 	int lastFPS = -1;
 
 	while(device->run()) {
         if (device->isWindowActive()) {
             driver->beginScene(true, true, 0 );
+
+            core::position2d<s32> pos = cursor->getPosition();
+
+            core::vector3df point;
+            core::triangle3df triangle;
+
+            scene::ISceneNode *node = 0;
+            const core::line3d<f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
+            if (collisionManager->getCollisionPoint (ray, selector, point, triangle, node)) {
+                sphere->setPosition(point);
+                std::cout << triangle.pointA.X << " " << triangle.pointA.Y << " " << triangle.pointA.Z << std::endl;
+            }
+
+            //scene::ITerrainSceneNode* terrain = smgr->addTerrainSceneNode("gray.bmp", 0, 777);
 
             smgr->drawAll();
             env->drawAll();
@@ -72,7 +103,7 @@ int main() {
                 // We can use camera position because terrain is located at coordinate origin
                 str += " Height: ";
                 str += terrain->getHeight(camera->getAbsolutePosition().X,
-                        camera->getAbsolutePosition().Z);
+                    camera->getAbsolutePosition().Z);
 
                 device->setWindowCaption(str.c_str());
                 lastFPS = fps;

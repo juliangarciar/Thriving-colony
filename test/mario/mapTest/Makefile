@@ -16,7 +16,7 @@ SOURCE_DIRS = .
 # FLAGS
 ####
 # Include paths
-CPPFLAGS = -I/usr/include -I/usr/local/include -I/usr/include/irrlicht
+CPPFLAGS = -I/usr/include -I/usr/local/include
 # Compiler params
 CXXFLAGS = -O3 -ffast-math -g -Wall
 # Lib paths
