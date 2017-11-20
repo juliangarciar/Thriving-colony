@@ -139,3 +139,6 @@ float BehaviourTree::calculateSiegeRate() {
     return (siegeAmt / armySize);
 }
 
+bool BehaviourTree::readyToAttack() {}
+
+void BehaviourTree::developCity() {}
