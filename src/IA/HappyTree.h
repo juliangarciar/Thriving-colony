@@ -9,9 +9,9 @@ class HappyTree : public BehaviourTree {
         HappyTree(IA*);
         ~HappyTree();
 
-        void developCity();
+        virtual void developCity();
 
-        bool readyToAttack();
+        virtual bool readyToAttack();
 
     private:
 };

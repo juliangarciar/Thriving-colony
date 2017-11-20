@@ -13,6 +13,9 @@ class BehaviourTree {
         virtual void developCity() = 0;
         void serviceBranch();
         void unitsBranch();
+        void buildingsBranch();
+        void armyBranch();
+        void resourcesBranch();
 
         virtual bool readyToAttack() = 0;
 
