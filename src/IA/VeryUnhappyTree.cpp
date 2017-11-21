@@ -24,53 +24,20 @@ VeryUnhappyTree::~VeryUnhappyTree() {
 }
 void VeryUnhappyTree::developCity() {
     //First branch: Army
-    //First subbranch: Units
-    if (calculateArmyCitizensRate() < armyThreshold) {
-        unitsBranch();
+    if (needArmyInvestment()) {
+        armyBranch();
     } else {
-        //Second subbranch: Buildings
-        //First subsubbranch: Barrack
-        if (ia->getBarrackBuilt() != true){
-            //To do: construir barraca
+        //Second branch: Homes
+        if (calculateCitizensRate() < citizensThreshold) {
+            //ToDo: Construir viviendas
         } else {
-            //Second subsubbranch: Barn
-            if (ia->getCityLevel() >= barnMilestone && ia->getBarnBuilt() != true) {
-                //To do: construir establo
-            } else {
-                //Third subsubbranch: Workshop
-                if (ia->getCityLevel() >= workshopMilestone && ia->getWorkshopBuilt() != true) {
-                    //To do: construir taller
-                } else {
-                    //Fourth subsubranch: Wall
-                    if (ia->getCityLevel() >= wallMilestone && ia->getWallBuilt() != true) {
-                        //To do: construir muralla
-                    } else {
-                        //Fifth subsubbranch: Tower
-                        if (ia->getCityLevel() >= towerMilestone) {
-                            //To do: construir torre
-                        } else {
-                            //Second branch: Homes
-                            if (calculateCitizensRate() < citizensThreshold) {
-                                //ToDo: Construir viviendas
-                            } else {
-                                //Third branch: Resources
-                                //First subbranch: Siderurgy
-                                if (calculateMetalProductionRate() < metalThreshold) {
-                                    //To do: Construir siderurgia
-                                } else {
-                                    //Second subbranch: Quarry
-                                    if (calculateCrystalProductionRate() < crystalThreshold && ia->getCityLevel() >= quarryMilestone) {
-                                        //To do: Construir cantera
-                                    } else{
-                                        //Fourth branch: Services
-                                        if (ia->getHappiness() < happinessThreshold) {
-                                            serviceBranch();
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+            //Third branch: Resources
+            if (needResourcesInvestment()) {
+                resourcesBranch();
+            } else{
+                //Fourth branch: Services
+                if (ia->getHappiness() < happinessThreshold) {
+                    serviceBranch();
                 }
             }
         }

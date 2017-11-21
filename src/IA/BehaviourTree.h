@@ -17,6 +17,11 @@ class BehaviourTree {
         void armyBranch();
         void resourcesBranch();
 
+        bool needResourcesInvestment();
+        bool needArmyInvestment();
+        
+        bool evaluateWallNeed();
+
         virtual bool readyToAttack() = 0;
 
         float calculateMetalProductionRate();
@@ -48,6 +53,21 @@ class BehaviourTree {
         float siegeThreshold;
 
         bool underAttack;
+        // The production rate of a given resource is low in comparison with your city level
+        bool shortOnMetal;
+        bool shortOnCrystal;
+
+        bool needSoldiers;
+        // Dictate the need of a certain building
+        bool needBarracks;
+        bool needBarn;
+        bool needWorkshop;
+        bool needWall;
+        bool needTower;
+        // Dictate the requirement of a certain building
+        bool requireBarracks;
+        bool requireBarn;
+        bool requireWorkshop;
 
     private:
         

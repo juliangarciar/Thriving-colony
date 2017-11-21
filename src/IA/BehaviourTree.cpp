@@ -32,12 +32,15 @@ void BehaviourTree::serviceBranch() {
 }
 
 void BehaviourTree::resourcesBranch(){
-    //First subbranch: Siderurgy
-    if (calculateMetalProductionRate() < metalThreshold) {
-        //To do: Construir siderurgia
+    //First subbranch: Quarry
+    if (shortOnCrystal && ia->getCityLevel() >= quarryMilestone) {
+        //To do: Construir Cantera
     } else {
-        //Second subbranch: Quarry
-        //To do: Construir cantera
+        //Second subbranch: Siderurgy
+        if (shortOnMetal) {            
+        //To do: Construir siderurgia
+        }
+        
     }
 }
 
@@ -83,23 +86,23 @@ void BehaviourTree::unitsBranch() {
 
 void BehaviourTree::buildingsBranch(){
     //First subsubbranch: Barrack
-    if (ia->getBarrackBuilt() != true){
+    if (needBarracks){
         //To do: construir barraca
     } else {
         //Second subsubbranch: Barn
-        if (ia->getCityLevel() >= barnMilestone && ia->getBarnBuilt() != true) {
+        if (needBarn) {
             //To do: construir establo
         } else {
             //Third subsubbranch: Workshop
-            if (ia->getCityLevel() >= workshopMilestone && ia->getWorkshopBuilt() != true) {
+            if (needWorkshop) {
                 //To do: construir taller
             } else {
                 //Fourth subsubranch: Wall
-                if (ia->getCityLevel() >= wallMilestone && ia->getWallBuilt() != true) {
+                if (needWall) {
                     //To do: construir muralla
                 } else {
                     //Fifth subsubbranch: Tower
-                    if (ia->getCityLevel() >= towerMilestone) {
+                    if (needTower) {
                         //To do: construir torre
                     }
                 }
@@ -123,6 +126,15 @@ void BehaviourTree::armyBranch(){
 /**
  * Decision making methods
  */
+
+ /**
+  * Dictates wether or not one must invest in resource production
+  */
+bool BehaviourTree::needResourcesInvestment() {
+    shortOnMetal = calculateMetalProductionRate() < metalThreshold;
+    shortOnCrystal = calculateCrystalProductionRate() < crystalThreshold;
+    return (shortOnMetal || shortOnCrystal);
+}
 
 /**
 * Calculates the ratio between metal production and city level
@@ -162,6 +174,27 @@ float BehaviourTree::calculateArmyCitizensRate() {
 }
 
 /**
+ * Dictates wether or not one must invest in military
+ */
+bool BehaviourTree::needArmyInvestment() {
+    needSoldiers = calculateArmyCitizensRate() < armyThreshold;
+
+    /**
+     * A recruitment building is considered needed when:
+     * A player doesn't have it yet
+     * A player requires it to create a unit OR a player's city level is high enough for it to be considered a need
+     */
+    needBarracks = !(ia->getBarrackBuilt()) && requireBarracks;
+    needBarn = !(ia->getBarnBuilt()) && (requireBarn || ia->getCityLevel() >= barnMilestone);
+    needWorkshop = !(ia->getWorkshopBuilt()) && (requireWorkshop || ia->getCityLevel() >= workshopMilestone);
+    
+    needWall = evaluateWallNeed();
+    needTower = ia->getWallBuilt() && ia->getCityLevel() >= towerMilestone;
+
+    return (needSoldiers || needBarracks || needBarn || needWorkshop || needWall || needTower);
+}
+
+/**
 * Calculates the ratio between army and melee soldiers
 */
 float BehaviourTree::calculateMeleeRate() {
@@ -188,6 +221,14 @@ float BehaviourTree::calculateSiegeRate() {
     return (siegeAmt / armySize);
 }
 
-bool BehaviourTree::readyToAttack() {}
+bool BehaviourTree::evaluateWallNeed() {
+    //ToDo: Analizar cuando la expansion de terreno edificable llega a donde hay que construir la muralla
+
+    return ia->getCityLevel() >= wallMilestone && ia->getWallBuilt() != true;
+}
+
+bool BehaviourTree::readyToAttack() {
+    return false;
+}
 
 void BehaviourTree::developCity() {}

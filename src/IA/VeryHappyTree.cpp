@@ -29,7 +29,7 @@ void VeryHappyTree::developCity() {
         serviceBranch();
     } else {
         //Second branch: Resources
-        if (calculateMetalProductionRate() < metalThreshold || calculateCrystalProductionRate() < crystalThreshold && ia->getCityLevel() >= quarryMilestone) {
+        if (needResourcesInvestment()) {
             resourcesBranch();
         } else {
             //Third branch: Homes
@@ -37,7 +37,7 @@ void VeryHappyTree::developCity() {
                 //ToDo: Construir viviendas
             } else {
                 //Fourth branch: Army
-                if (calculateArmyCitizensRate() < armyThreshold || ia->getBarrackBuilt() != true || (ia->getCityLevel() >= barnMilestone && ia->getBarnBuilt() != true) || (ia->getCityLevel() >= workshopMilestone && ia->getWorkshopBuilt() != true) || (ia->getCityLevel() >= wallMilestone && ia->getWallBuilt() != true) || ia->getCityLevel() >= towerMilestone) {
+                if (needArmyInvestment()) {
                     armyBranch();
                 } 
             }
