@@ -10,13 +10,13 @@ BUILDPATH = obj
 # Path for the source files
 SOURCEPATH = src
 #Directories
-SOURCE_DIRS = . graphics IA
+SOURCE_DIRS = . GraphicEngine IOEngine SoundEngine IAEngine
 
 ####
 # FLAGS
 ####
 # Include paths
-CPPFLAGS = -I/usr/include -I/usr/local/include -I/usr/include/irrlicht
+CPPFLAGS = -I/usr/include -I/usr/local/include -I/usr/include/irrlicht -I.
 # Compiler params
 CXXFLAGS = -O3 -ffast-math -g -Wall
 # Lib paths

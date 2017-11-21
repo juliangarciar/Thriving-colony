@@ -27,9 +27,6 @@ int main() {
 	camera->setTarget(core::vector3df(2397*2,343*2,2700*2));
 	camera->setFarValue(42000.0f);
 
-	// disable mouse cursor
-	device->getCursorControl()->setVisible(false);
-
     //Draw terrain
 	scene::ITerrainSceneNode* terrain = smgr->addTerrainSceneNode(
 		"terrain-heightmap.bmp",
