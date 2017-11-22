@@ -10,13 +10,16 @@ BUILDPATH = obj
 # Path for the source files
 SOURCEPATH = src
 #Directories
-SOURCE_DIRS = . graphics IA
+SOURCE_DIRS = . GraphicEngine IOEngine SoundEngine IAEngine
+#C++ compiler
+CXX = clang++
+
 
 ####
 # FLAGS
 ####
 # Include paths
-CPPFLAGS = -I/usr/include -I/usr/local/include -I/usr/include/irrlicht
+CPPFLAGS = -I/usr/include -I/usr/local/include -I/usr/include/irrlicht -I.
 # Compiler params
 CXXFLAGS = -O3 -ffast-math -g -Wall
 # Lib paths
@@ -40,7 +43,7 @@ all: prepare $(OBJ)
     
 $(BUILDPATH)/%.o: $(SOURCEPATH)/%.cpp
 	$(warning Creando el binario $@...)
-	$(CC) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 prepare:
 	$(warning Creando la estructura de carpetas)
