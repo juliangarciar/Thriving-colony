@@ -1,13 +1,13 @@
-#ifndef GAMESTATE_H
-#define GAMESTATE_H
+#ifndef MENUSTATE_H
+#define MENUSTATE_H
 
 #include "State.h"
 
-class GameState : public State {
+class MenuState : public State {
     
     public:
-        GameState();
-        ~GameState();
+        MenuState();
+        ~MenuState();
 
         void Init();
         void Input();

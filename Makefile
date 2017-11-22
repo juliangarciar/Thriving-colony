@@ -11,6 +11,9 @@ BUILDPATH = obj
 SOURCEPATH = src
 #Directories
 SOURCE_DIRS = . GraphicEngine IOEngine SoundEngine IAEngine
+#C++ compiler
+CXX = clang++
+
 
 ####
 # FLAGS
@@ -40,7 +43,7 @@ all: prepare $(OBJ)
     
 $(BUILDPATH)/%.o: $(SOURCEPATH)/%.cpp
 	$(warning Creando el binario $@...)
-	$(CC) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 prepare:
 	$(warning Creando la estructura de carpetas)

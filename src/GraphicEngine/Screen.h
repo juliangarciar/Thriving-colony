@@ -6,15 +6,27 @@
 using namespace irr;
 
 class Screen {
-
     public:
-        Screen(int width, int height);
-        ~Screen();
+        static Screen* Instance();
 
         IrrlichtDevice* getDevice();
+        video::IVideoDriver* getVideoDriver();
+        scene::ISceneManager* getSceneManager();
+        gui::IGUIEnvironment* getGUIEnvironment();
         
+    protected:
+        Screen(int width, int height);
+        virtual ~Screen();
+        Screen(const Screen & );
+        Screen &operator = (const Screen & );
+
     private:
+        static Screen* pinstance;
         IrrlichtDevice* device;
+        video::IVideoDriver* driver;
+        scene::ISceneManager* scene;
+        gui::IGUIEnvironment* gui;
+        
 };
 
 #endif
