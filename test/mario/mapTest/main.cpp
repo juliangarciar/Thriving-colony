@@ -2,6 +2,7 @@
 #include <irrlicht.h>
 
 using namespace irr;
+using namespace std;
 
 int main() {
 	// create device with full flexibility over creation parameters
