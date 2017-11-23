@@ -70,7 +70,6 @@ class BehaviourTree {
         bool requireWorkshop;
 
     private:
-        
 };
 
 #endif
