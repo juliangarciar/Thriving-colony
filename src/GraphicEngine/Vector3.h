@@ -9,10 +9,12 @@ template <class T>
 class Vector3 {
 
     public:
-        Vector3();
+        Vector3(T x, T y, T z);
         virtual ~Vector3();
 
-        core::vector3df getVector();
+        Vector3 getVector();
+        core::vector3di getVectorI();
+        core::vector3df getVectorF();
         
     private:
         T x, y, z;

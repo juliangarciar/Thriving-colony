@@ -9,6 +9,14 @@ class Screen {
     public:
         static Screen* Instance();
 
+        void beginScene();
+        void endScene();
+
+        bool isOpen();
+        bool isReady();
+        
+        void close();
+
         IrrlichtDevice* getDevice();
         video::IVideoDriver* getVideoDriver();
         scene::ISceneManager* getSceneManager();

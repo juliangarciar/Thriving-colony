@@ -13,14 +13,14 @@ Camera::~Camera() {
 
 //Posicion de la camara
 void Camera::setPosition(Vector3<float> position){
-    camera->setPosition(position.getVector());
+    camera->setPosition(position.getVectorF());
 }
 
 //Hacia donde apunta la camara
 void Camera::setTargetPosition(Vector3<float> position){
-    camera->setTarget(position.getVector());
+    camera->setTarget(position.getVectorF());
 }
 
-void Camera::setZoom(float zoom){
+void Camera::setShadowDistance(float zoom){
 	camera->setFarValue(zoom);
 }

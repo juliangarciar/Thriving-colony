@@ -36,6 +36,29 @@ Screen::~Screen() {
     device = NULL;
 }
 
+void Screen::beginScene(){
+    driver->beginScene(true, true, 0 );
+}
+
+void Screen::endScene(){
+    scene->drawAll();
+    gui->drawAll();
+
+    driver->endScene();
+}
+
+bool Screen::isOpen(){
+    return device->run();
+}
+
+bool Screen::isReady(){
+    return device->isWindowActive();
+}
+
+void Screen::close(){
+    device->drop();
+}
+
 IrrlichtDevice* Screen::getDevice() {
     return device;
 }

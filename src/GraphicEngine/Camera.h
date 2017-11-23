@@ -16,7 +16,7 @@ class Camera {
 
         void setTargetPosition(Vector3<float> position);
 
-        void setZoom(float zoom);
+        void setShadowDistance(float sd);
 
     private:
         scene::ICameraSceneNode* camera;

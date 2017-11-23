@@ -2,6 +2,8 @@
 #define GAMESTATE_H
 
 #include "State.h"
+#include "GraphicEngine/Camera.h"
+#include "GraphicEngine/Terrain.h"
 
 class GameState : public State {
     
@@ -16,7 +18,8 @@ class GameState : public State {
         void CleanUp();
 
     private:
-    
+        Camera *camera;
+        Terrain *map;
 };
 
 #endif
