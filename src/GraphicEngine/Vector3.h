@@ -9,6 +9,7 @@ template <class T>
 class Vector3 {
 
     public:
+        Vector3();
         Vector3(T x, T y, T z);
         virtual ~Vector3();
 

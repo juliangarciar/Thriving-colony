@@ -14,6 +14,9 @@ Screen* Screen::Instance(){
 }
 
 Screen::Screen(int width, int height) {
+    screenWidth = width;
+    screenHeight = height;
+
     irr::SIrrlichtCreationParameters params;
 	params.DriverType=video::EDT_OPENGL;
 	params.WindowSize=core::dimension2d<u32>(640, 480);
@@ -73,4 +76,12 @@ scene::ISceneManager* Screen::getSceneManager(){
 
 gui::IGUIEnvironment* Screen::getGUIEnvironment(){
     return gui;
+}
+
+int Screen::getScreenWidth(){
+    return screenWidth;
+}
+
+int Screen::getScreenHeight(){
+    return screenHeight;
 }

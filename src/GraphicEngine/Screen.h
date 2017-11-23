@@ -21,6 +21,9 @@ class Screen {
         video::IVideoDriver* getVideoDriver();
         scene::ISceneManager* getSceneManager();
         gui::IGUIEnvironment* getGUIEnvironment();
+
+        int getScreenWidth();
+        int getScreenHeight();
         
     protected:
         Screen(int width, int height);
@@ -34,6 +37,9 @@ class Screen {
         video::IVideoDriver* driver;
         scene::ISceneManager* scene;
         gui::IGUIEnvironment* gui;
+
+        int screenWidth;
+        int screenHeight;
         
 };
 
