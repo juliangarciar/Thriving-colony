@@ -9,16 +9,16 @@ template <class T>
 class Vector2 {
 
     public:
+        T x, y;
+
         Vector2();
         Vector2(T x, T y);
         virtual ~Vector2();
 
-        Vector2 getVector();
         core::vector2di getVectorI();
         core::vector2df getVectorF();
         
     private:
-        T x, y;
 };
 
 #endif

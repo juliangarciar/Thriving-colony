@@ -25,3 +25,7 @@ void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture){
 	terrain->setMaterialType(video::EMT_DETAIL_MAP);
     terrain->scaleTexture(1.0f, 20.0f);
 }
+
+scene::ITerrainSceneNode* Terrain::getTerrain(){
+	return terrain;
+}

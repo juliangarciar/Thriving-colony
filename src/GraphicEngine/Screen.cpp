@@ -17,9 +17,12 @@ Screen::Screen(int width, int height) {
     screenWidth = width;
     screenHeight = height;
 
+    io = new InputManager();
+
     irr::SIrrlichtCreationParameters params;
 	params.DriverType=video::EDT_OPENGL;
 	params.WindowSize=core::dimension2d<u32>(640, 480);
+    params.EventReceiver=io;
     device = createDeviceEx(params);
     
     if (device == 0) exit(0); 
@@ -32,6 +35,8 @@ Screen::Screen(int width, int height) {
 
 	scene = device->getSceneManager();
 	gui = device->getGUIEnvironment();
+
+    dtThen = device->getTimer()->getTime();
 }
 
 Screen::~Screen() {
@@ -40,6 +45,10 @@ Screen::~Screen() {
 }
 
 void Screen::beginScene(){
+    float now = device->getTimer()->getTime();
+    deltaTime = (float)(now - dtThen) / 1000.f; // Time in seconds
+    dtThen = now;
+
     driver->beginScene(true, true, 0 );
 }
 
@@ -84,4 +93,12 @@ int Screen::getScreenWidth(){
 
 int Screen::getScreenHeight(){
     return screenHeight;
+}
+
+float Screen::getDeltaTime(){
+    return deltaTime;
+}
+
+InputManager *Screen::getIO(){
+    return io;
 }

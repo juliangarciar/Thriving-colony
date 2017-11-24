@@ -1,18 +1,17 @@
-#include "Input.h"
+#include "InputManager.h"
 
-Input::Input() {
+InputManager::InputManager() {
 	wheel[0] = false;
 	wheel[1] = false;
 	for (u32 i = 0; i < KEY_KEY_CODES_COUNT; ++i)
 		KeyIsDown[i] = false;
-	cursor = Screen::Instance()->getDevice()->getCursorControl();
 }
 
-Input::~Input() {
+InputManager::~InputManager() {
     
 }
 
-bool Input::OnEvent(const SEvent& event) {
+bool InputManager::OnEvent(const SEvent& event) {
 	if (event.EventType == EET_MOUSE_INPUT_EVENT) {
 		if (event.MouseInput.isLeftPressed())
 			MouseDown[0] = true;
@@ -36,30 +35,26 @@ bool Input::OnEvent(const SEvent& event) {
 	return false;
 }
 
-bool Input::IsKeyDown(EKEY_CODE keyCode) const {
+bool InputManager::IsKeyDown(EKEY_CODE keyCode) const {
 	return KeyIsDown[keyCode];
 }
 
-bool Input::isMouseLDown() const {
+bool InputManager::isMouseLDown() const {
 	return MouseDown[0];
 }
 
-bool Input::isMouseRDown() const {
+bool InputManager::isMouseRDown() const {
 	return MouseDown[1];
 }
 
-bool Input::isWheelUp() const {
+bool InputManager::isWheelUp() const {
 	return wheel[1];
 }
 
-bool Input::getWheelState() const {
+bool InputManager::getWheelState() const {
 	return wheel[0];
 }
 
-void Input::setWheelState(bool wheel1) {
+void InputManager::setWheelState(bool wheel1) {
 	wheel[0] = wheel1;
-}
-
-gui::ICursorControl *Input::getCursor(){
-	return cursor;
 }

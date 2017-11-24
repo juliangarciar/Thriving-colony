@@ -22,7 +22,7 @@ void GameState::Input(){
 }
 
 void GameState::Update(){
-
+    camera->Move(Screen::Instance()->getIO(), map);
 }
 
 void GameState::Render(){

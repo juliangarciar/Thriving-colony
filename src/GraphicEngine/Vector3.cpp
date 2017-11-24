@@ -20,6 +20,27 @@ Vector3<T>::~Vector3() {
 }
 
 template <class T>
+void Vector3<T>::setPosition(T x, T y, T z){
+    this->x = x;
+    this->y = y;
+    this->z = z;
+}
+
+template <class T>
+void Vector3<T>::setPosition(core::vector3di position){
+    this->x = position.X;
+    this->y = position.Y;
+    this->z = position.Z;
+}
+
+template <class T>
+void Vector3<T>::setPosition(core::vector3df position){
+    this->x = position.X;
+    this->y = position.Y;
+    this->z = position.Z;
+}
+
+template <class T>
 core::vector3di Vector3<T>::getVectorI() {
     return core::vector3di(x, y, z);
 }

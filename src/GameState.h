@@ -4,6 +4,7 @@
 #include "State.h"
 #include "GraphicEngine/Camera.h"
 #include "GraphicEngine/Terrain.h"
+#include "IOEngine/InputManager.h"
 
 class GameState : public State {
     

@@ -2,6 +2,7 @@
 #define SCREEN_H
 
 #include <irrlicht.h>
+#include <IOEngine/InputManager.h>
 
 using namespace irr;
 
@@ -24,6 +25,9 @@ class Screen {
 
         int getScreenWidth();
         int getScreenHeight();
+
+        float getDeltaTime();
+        InputManager *getIO();
         
     protected:
         Screen(int width, int height);
@@ -38,9 +42,13 @@ class Screen {
         scene::ISceneManager* scene;
         gui::IGUIEnvironment* gui;
 
+        InputManager *io;
+
         int screenWidth;
         int screenHeight;
         
+        float dtThen;
+        float deltaTime;
 };
 
 #endif

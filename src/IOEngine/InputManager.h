@@ -1,15 +1,14 @@
-#ifndef INPUT_H
-#define INPUT_H
+#ifndef INPUTMANAGER_H
+#define INPUTMANAGER_H
 
 #include <irrlicht.h>
-#include <GraphicEngine/Screen.h>
 
 using namespace irr;
 
-class Input {
+class InputManager : public IEventReceiver {
     public:
-        Input();
-        ~Input();
+        InputManager();
+        ~InputManager();
 
         bool OnEvent(const SEvent& event);
         bool IsKeyDown(EKEY_CODE keyCode) const;
@@ -19,11 +18,7 @@ class Input {
         bool getWheelState() const;
         void setWheelState(bool wheel1);
         
-        gui::ICursorControl *getCursor();
-        
     private:
-
-        gui::ICursorControl *cursor;
         bool KeyIsDown[KEY_KEY_CODES_COUNT];
         bool MouseDown[2];
         bool wheel[2];
