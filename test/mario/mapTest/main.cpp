@@ -69,18 +69,18 @@ int main() {
         if (device->isWindowActive()) {
             driver->beginScene(true, true, 0 );
 
-            core::position2d<s32> pos = cursor->getPosition();
-
-            core::vector3df point;
-            core::triangle3df triangle;
-
-            scene::ISceneNode *node = 0;
-            const core::line3d<f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
-            if (collisionManager->getCollisionPoint (ray, selector, point, triangle, node)) {
-                sphere->setPosition(point);
-                std::cout << triangle.pointA.X << " " << triangle.pointA.Y << " " << triangle.pointA.Z << std::endl;
-            }
-
+            //core::position2d<s32> pos = cursor->getPosition();
+//
+            //core::vector3df point;
+            //core::triangle3df triangle;
+//
+            //scene::ISceneNode *node = 0;
+            //const core::line3d<f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
+            //if (collisionManager->getCollisionPoint (ray, selector, point, triangle, node)) {
+            //    sphere->setPosition(point);
+            //    std::cout << triangle.pointA.X << " " << triangle.pointA.Y << " " << triangle.pointA.Z << std::endl;
+            //}
+//
             //scene::ITerrainSceneNode* terrain = smgr->addTerrainSceneNode("gray.bmp", 0, 777);
 
             smgr->drawAll();
