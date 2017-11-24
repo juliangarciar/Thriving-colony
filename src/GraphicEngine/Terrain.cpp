@@ -16,6 +16,17 @@ Terrain::Terrain(const char* heightMap){
 		scene::ETPS_17,				// patchSize
 		4					// smoothFactor
     );
+    /*selector = Screen::Instance()->getSceneManager()->createTerrainTriangleSelector(terrain);
+    terrain->setTriangleSelector(selector);
+    collisionManager = Screen::Instance()->getSceneManager()->getSceneCollisionManager();
+    sphere = Screen::Instance()->getSceneManager()->addSphereSceneNode();
+	
+	node = 0;
+    const core::line3d<f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
+    if (collisionManager->getCollisionPoint (ray, selector, point, triangle, node)) {
+        sphere->setPosition(point);
+        std::cout << triangle.pointA.X << " " << triangle.pointA.Y << " " << triangle.pointA.Z << std::endl;
+    }*/
 }
 
 void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture){
@@ -26,12 +37,11 @@ void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture){
     terrain->scaleTexture(1.0f, 20.0f);
 }
 
-<<<<<<< HEAD
 Terrain::~Terrain() {
     delete terrain;
     terrain = NULL;
-=======
+}
+
 scene::ITerrainSceneNode* Terrain::getTerrain(){
 	return terrain;
->>>>>>> 4ec8329b4bb04e89f8f1f91e1adfaa196d8f809c
 }

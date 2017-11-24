@@ -21,6 +21,7 @@ class GameState : public State {
     private:
         Camera *camera;
         Terrain *map;
+        Mouse *cursor;
 };
 
 #endif

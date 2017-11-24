@@ -26,7 +26,7 @@ void Camera::setShadowDistance(float zoom){
 	camera->setFarValue(zoom);
 }
 
-void Camera::Move(InputManager *receiver, Mouse *mouse, Terrain *terrain) {
+void Camera::Move(InputManager *receiver, Mouse *cursor, Terrain *terrain) {
 	Screen *sc = Screen::Instance();
 	if (receiver->getWheelState()) {
 		receiver->setWheelState(false);
@@ -48,7 +48,7 @@ void Camera::Move(InputManager *receiver, Mouse *mouse, Terrain *terrain) {
 	int n = (receiver->IsKeyDown(KEY_KEY_W) << 0) | (receiver->IsKeyDown(KEY_KEY_A) << 1)
 		| receiver->IsKeyDown(KEY_KEY_S) << 2 | receiver->IsKeyDown(KEY_KEY_D) << 3;
 
-	core::position2d<s32> cursorPosCurrent = mouse->getCursor()->getPosition();
+	core::position2d<s32> cursorPosCurrent = cursor->getCursor()->getPosition();
 	if (cursorPosCurrent.Y < 1)
 		n |= 1 << 0;
 	else if (cursorPosCurrent.Y > (sc->getScreenWidth() - 20))
@@ -62,10 +62,8 @@ void Camera::Move(InputManager *receiver, Mouse *mouse, Terrain *terrain) {
 	camPos.setPosition(camera->getPosition());
 	camTar1.setPosition(camera->getTarget());
 
-	if (n != 0)
-	{
-		switch (n)
-		{
+	if (n != 0) {
+		switch (n) {
 			// up stands for update (delta)
 		case 1:
 			Xup = (f32)camSpeed * sc->getDeltaTime() * direction.x;
@@ -102,54 +100,42 @@ void Camera::Move(InputManager *receiver, Mouse *mouse, Terrain *terrain) {
 		}
 
 		// border collision + apply update
-		if (camPos.x < 100)
-		{
-			if (Xup > 0)
-			{
+		if (camPos.x < 100) {
+			if (Xup > 0) {
 				camPos.x += Xup;
 				camTar1.x += Xup;
 			}
-		}
-		else if (camPos.x > 924)
-		{
-			if (Xup < 0)
-			{
+		} else if (camPos.x > 924){
+			if (Xup < 0) {
 				camPos.x += Xup;
 				camTar1.x += Xup;
 			}
-		}
-		else
-		{
+		} else {
 			camPos.x += Xup;
 			camTar1.x += Xup;
 		}
 
-		if (camPos.z < 100)
-		{
-			if (Yup > 0)
-			{
+		if (camPos.z < 100) {
+			if (Yup > 0) {
 				camPos.z += Yup;
 				camTar1.z += Yup;
 			}
-		}
-		else if (camPos.z > 924)
-		{
-			if (Yup < 0)
-			{
+		} else if (camPos.z > 924) {
+			if (Yup < 0) {
 				camPos.z += Yup;
 				camTar1.z += Yup;
 			}
-		}
-		else
-		{
+		} else {
 			camPos.z += Yup;
 			camTar1.z += Yup;
 		}
 	}
 
-	currentHight = terrain->getTerrain()->getHeight(camPos.x, camPos.z);
-	camPos.y = 0.85f*camPos.y + 0.15f*(currentHight + camHeight);
-	camTar1.y = 0.85f*camTar1.y + 0.15f*(currentHight + tarHeight);
+	currentHeight = terrain->getTerrain()->getHeight(camPos.x, camPos.z);
+
+	std::cout << currentHeight << std::endl;
+	/*camPos.y = 0.85f*camPos.y + 0.15f*(currentHeight + camHeight);
+	camTar1.y = 0.85f*camTar1.y + 0.15f*(currentHeight + tarHeight);*/
     
 	camera->setPosition(camPos.getVectorF());
 	camera->setTarget(camTar1.getVectorF());

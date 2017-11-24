@@ -3,6 +3,7 @@
 
 #include <irrlicht.h>
 #include <IOEngine/InputManager.h>
+#include <IOEngine/Mouse.h>
 #include "Vector2.h"
 #include "Vector3.h"
 #include "Terrain.h"
@@ -15,7 +16,7 @@ class Camera {
         Camera(scene::ISceneManager* sceneManager);
         ~Camera();
 
-        void Move(InputManager *receiver, Terrain *terrain);
+        void Move(InputManager *receiver, Mouse *cursor, Terrain *terrain);
 
         void setPosition(Vector3<float> position);
 
@@ -25,7 +26,7 @@ class Camera {
 
     private:
         scene::ICameraSceneNode* camera;
-        float camSpeed, camHeight, camRadius, recipsqrt2, tarHeight, Xup, Yup, currentHight;
+        float camSpeed, camHeight, camRadius, recipsqrt2, tarHeight, Xup, Yup, currentHeight;
         Vector3<float> camPos, camTar1;
         Vector2<float> direction;
 };

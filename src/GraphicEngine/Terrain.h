@@ -17,6 +17,13 @@ class Terrain{
         scene::ITerrainSceneNode* getTerrain();
     private:
         scene::ITerrainSceneNode* terrain;
+        /*scene::ITriangleSelector* selector;
+        scene::ISceneCollisionManager* collisionManager;
+        scene::ISceneNode* sphere;
+        core::position2d<s32> pos;
+        core::vector3df point;
+        core::triangle3df triangle;
+        scene::ISceneNode *node;*/
 };
 
 #endif

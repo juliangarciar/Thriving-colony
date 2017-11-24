@@ -4,6 +4,7 @@
 GameState::GameState() : State() {
     camera = new Camera(Screen::Instance()->getSceneManager());
     map = new Terrain("media/heightmap.bmp"); //ToDo: mover a map
+    cursor = new Mouse();
 }
 
 GameState::~GameState() {
@@ -22,7 +23,7 @@ void GameState::Input(){
 }
 
 void GameState::Update(){
-    camera->Move(Screen::Instance()->getIO(), map);
+    camera->Move(Screen::Instance()->getIO(), cursor, map);
 }
 
 void GameState::Render(){
