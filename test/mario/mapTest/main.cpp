@@ -59,13 +59,8 @@ int main() {
     scene::IMeshSceneNode *cubeNode = smgr->addCubeSceneNode(100); 
     if(cubeNode) {
         cubeNode->setMaterialFlag(video::EMF_LIGHTING, false);
-<<<<<<< HEAD
         cubeNode->setPosition(core::vector3df(0,1000,0));
     }
-=======
-        cubeNode->setPosition(core::vector3df(500,50,500));
-    }*/
->>>>>>> 4ec8329b4bb04e89f8f1f91e1adfaa196d8f809c
 
 	int lastFPS = -1;
 

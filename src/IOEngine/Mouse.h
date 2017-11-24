@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <irrlicht.h>
+#include <GraphicEngine/Vector2.h>
 
 using namespace irr;
 
@@ -13,7 +14,7 @@ class Mouse {
         ~Mouse();
         
         gui::ICursorControl *getCursor();
-        core::position2d<s32> getPosition();
+        Vector2<float> getPosition();
 
     private:
         gui::ICursorControl *cursor;

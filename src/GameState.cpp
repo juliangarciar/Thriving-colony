@@ -25,6 +25,8 @@ void GameState::Input(){
 
 void GameState::Update(){
     camera->Move(Screen::Instance()->getIO(), cursor, map);
+    Vector3<float> v = map->getPointCollision(cursor);
+    std::cout << v.x << " " << v.y << " " << v.z << std::endl;
 }
 
 void GameState::Render(){

@@ -13,6 +13,18 @@ Vector2<T>::Vector2(T x, T y) {
 }
 
 template <class T>
+Vector2<T>::Vector2(core::vector2di position){
+    this->x = position.X;
+    this->y = position.Y;
+}
+
+template <class T>
+Vector2<T>::Vector2(core::vector2df position){
+    this->x = position.X;
+    this->y = position.Y;
+}
+
+template <class T>
 Vector2<T>::~Vector2() {
     
 }

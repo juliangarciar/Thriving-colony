@@ -13,6 +13,8 @@ class Vector3 {
         
         Vector3();
         Vector3(T x, T y, T z);
+        Vector3(core::vector3di position);
+        Vector3(core::vector3df position);
         virtual ~Vector3();
 
         void setPosition(T x, T y, T z);

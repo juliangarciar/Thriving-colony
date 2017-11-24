@@ -13,7 +13,7 @@ Camera::Camera(scene::ISceneManager* sceneManager) {
 	camHeight = 200.f;
 	tarHeight = 160.f;
 	minZoom = 150;
-	maxZoom = 400;
+	maxZoom = 800;
 	marginTop = 20;
 	marginLeft = 30;
 	mapMarginTop = 100;
@@ -47,6 +47,7 @@ void Camera::setShadowDistance(float zoom){
 	camera->setFarValue(zoom);
 }
 
+//ToDo: Crear camera controller (fuera de fachada) y moverlo ahi
 void Camera::Move(InputManager *receiver, Mouse *cursor, Terrain *terrain) {
 	Screen *sc = Screen::Instance();
 
@@ -70,17 +71,17 @@ void Camera::Move(InputManager *receiver, Mouse *cursor, Terrain *terrain) {
 	int n = (receiver->IsKeyDown(KEY_KEY_W) << 0) | (receiver->IsKeyDown(KEY_KEY_A) << 1)
 		| receiver->IsKeyDown(KEY_KEY_S) << 2 | receiver->IsKeyDown(KEY_KEY_D) << 3;
 
-	core::position2d<s32> cursorPosCurrent = cursor->getCursor()->getPosition();
+	Vector2<float> cursorPosCurrent = cursor->getPosition();
 	
-	if (cursorPosCurrent.Y < marginTop){
+	if (cursorPosCurrent.y < marginTop){
 		n |= 1 << 0;
-	} else if (cursorPosCurrent.Y > (sc->getScreenHeight() - marginTop)) {
+	} else if (cursorPosCurrent.y > (sc->getScreenHeight() - marginTop)) {
 		n |= 1 << 2;
 	}
 
-	if (cursorPosCurrent.X < marginLeft){
+	if (cursorPosCurrent.x < marginLeft){
 		n |= 1 << 1;
-	} else if (cursorPosCurrent.X > (sc->getScreenWidth() - marginLeft)) {
+	} else if (cursorPosCurrent.x > (sc->getScreenWidth() - marginLeft)) {
 		n |= 1 << 3;
 	}
 
@@ -91,37 +92,37 @@ void Camera::Move(InputManager *receiver, Mouse *cursor, Terrain *terrain) {
 	if (n != 0) {
 		switch (n) {
 			// up stands for update (delta)
-		case 1:
-			Xup = (f32)camSpeed * sc->getDeltaTime() * direction.x;
-			Yup = (f32)camSpeed * sc->getDeltaTime() * direction.y;
+			case 1:
+				Xup = (f32)camSpeed * sc->getDeltaTime() * direction.x;
+				Yup = (f32)camSpeed * sc->getDeltaTime() * direction.y;
 			break;
-		case 2:
-			Xup = (f32)-camSpeed * sc->getDeltaTime() * direction.y;
-			Yup = (f32)camSpeed * sc->getDeltaTime() * direction.x;
+			case 2:
+				Xup = (f32)-camSpeed * sc->getDeltaTime() * direction.y;
+				Yup = (f32)camSpeed * sc->getDeltaTime() * direction.x;
 			break;
-		case 8:
-			Xup = (f32)camSpeed * sc->getDeltaTime() * direction.y;
-			Yup = (f32)-camSpeed * sc->getDeltaTime() * direction.x;
+			case 8:
+				Xup = (f32)camSpeed * sc->getDeltaTime() * direction.y;
+				Yup = (f32)-camSpeed * sc->getDeltaTime() * direction.x;
 			break;
-		case 4:
-			Xup = (f32)-camSpeed * sc->getDeltaTime() * direction.x;
-			Yup = (f32)-camSpeed * sc->getDeltaTime() * direction.y;
+			case 4:
+				Xup = (f32)-camSpeed * sc->getDeltaTime() * direction.x;
+				Yup = (f32)-camSpeed * sc->getDeltaTime() * direction.y;
 			break;
-		case 3:
-			Xup = (f32)camSpeed * sc->getDeltaTime() * (-direction.y + direction.x) * recipsqrt2;
-			Yup = (f32)camSpeed * sc->getDeltaTime() * (direction.x + direction.y) * recipsqrt2;
+			case 3:
+				Xup = (f32)camSpeed * sc->getDeltaTime() * (-direction.y + direction.x) * recipsqrt2;
+				Yup = (f32)camSpeed * sc->getDeltaTime() * (direction.x + direction.y) * recipsqrt2;
 			break;
-		case 9:
-			Xup = (f32)camSpeed * sc->getDeltaTime() * (direction.y + direction.x) * recipsqrt2;
-			Yup = (f32)camSpeed * sc->getDeltaTime() * (-direction.x + direction.y) * recipsqrt2;
+			case 9:
+				Xup = (f32)camSpeed * sc->getDeltaTime() * (direction.y + direction.x) * recipsqrt2;
+				Yup = (f32)camSpeed * sc->getDeltaTime() * (-direction.x + direction.y) * recipsqrt2;
 			break;
-		case 6:
-			Xup = (f32)-camSpeed * sc->getDeltaTime() * (direction.y + direction.x) * recipsqrt2;
-			Yup = (f32)camSpeed * sc->getDeltaTime() * (direction.x - direction.y) * recipsqrt2;
+			case 6:
+				Xup = (f32)-camSpeed * sc->getDeltaTime() * (direction.y + direction.x) * recipsqrt2;
+				Yup = (f32)camSpeed * sc->getDeltaTime() * (direction.x - direction.y) * recipsqrt2;
 			break;
-		case 12:
-			Xup = camSpeed * sc->getDeltaTime() * (direction.y - direction.x) * recipsqrt2;
-			Yup = -camSpeed * sc->getDeltaTime() * (direction.x + direction.y) * recipsqrt2;
+			case 12:
+				Xup = camSpeed * sc->getDeltaTime() * (direction.y - direction.x) * recipsqrt2;
+				Yup = -camSpeed * sc->getDeltaTime() * (direction.x + direction.y) * recipsqrt2;
 			break;
 		}
 
@@ -160,9 +161,6 @@ void Camera::Move(InputManager *receiver, Mouse *cursor, Terrain *terrain) {
 	currentHeight = terrain->getTerrain()->getHeight(camPos.x, camPos.z);
 
 	camPos.y = 0.85f*camPos.y + 0.15f*(currentHeight + camHeight);
-
-	//ToDo: revisar zoom
-	//camTar1.y = 0.85f*camTar1.y + 0.15f*(currentHeight + tarHeight);
     
 	camera->setPosition(camPos.getVectorF());
 	camera->setTarget(camTar1.getVectorF());

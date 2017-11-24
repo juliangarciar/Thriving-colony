@@ -15,6 +15,20 @@ Vector3<T>::Vector3(T x, T y, T z) {
 }
 
 template <class T>
+Vector3<T>::Vector3(core::vector3di position){
+    this->x = position.X;
+    this->y = position.Y;
+    this->z = position.Z;
+}
+
+template <class T>
+Vector3<T>::Vector3(core::vector3df position){
+    this->x = position.X;
+    this->y = position.Y;
+    this->z = position.Z;
+}
+
+template <class T>
 Vector3<T>::~Vector3() {
     
 }

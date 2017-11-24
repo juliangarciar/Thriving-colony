@@ -12,8 +12,8 @@ Mouse::~Mouse(){
     cursor = NULL;
 }
 
-core::position2d<s32> Mouse::getPosition() {
-    return cursor->getPosition();
+Vector2<float> Mouse::getPosition() {
+    return Vector2<float>(cursor->getPosition());
 }
 
 gui::ICursorControl *Mouse::getCursor(){

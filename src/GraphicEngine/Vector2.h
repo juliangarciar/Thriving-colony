@@ -12,6 +12,8 @@ class Vector2 {
 
         Vector2();
         Vector2(T x, T y);
+        Vector2(core::vector2di position);
+        Vector2(core::vector2df position);
         virtual ~Vector2();
 
         void setPosition(T x, T y);
