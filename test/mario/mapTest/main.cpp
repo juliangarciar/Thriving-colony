@@ -9,7 +9,7 @@ int main() {
 	// you can add more parameters if desired, check irr::SIrrlichtCreationParameters
 	irr::SIrrlichtCreationParameters params;
 	params.DriverType=video::EDT_OPENGL;
-	params.WindowSize=core::dimension2d<u32>(640, 480);
+	params.WindowSize=core::dimension2d<u32>(1280, 720);
 	IrrlichtDevice* device = createDeviceEx(params);
 
 	if (device == 0) return 1; // could not create selected driver.
@@ -55,12 +55,13 @@ int main() {
     scene::ISceneCollisionManager* collisionManager = smgr->getSceneCollisionManager();
     // this sphere will mark our collision point
     scene::ISceneNode* sphere = smgr->addSphereSceneNode();
+
     scene::IMesh* cube = smgr->getGeometryCreator()->createCubeMesh();
     scene::IMeshSceneNode *cubeNode = smgr->addCubeSceneNode(100); 
     //smgr->addMeshSceneNode(cube, 0, 0, core::vector3df(0,0,0));
     if(cubeNode) {
         cubeNode->setMaterialFlag(video::EMF_LIGHTING, false);
-        cubeNode->setPosition(core::vector3df(500,50,500));
+        cubeNode->setPosition(core::vector3df(0,1000,0));
     }
 
 	int lastFPS = -1;
@@ -87,7 +88,7 @@ int main() {
             env->drawAll();
 
             driver->endScene();
-
+            
             // display frames per second in window title
             int fps = driver->getFPS();
             if (lastFPS != fps) {
