@@ -20,15 +20,17 @@ class Camera {
 
         void setPosition(Vector3<float> position);
 
-        void setTargetPosition(Vector3<float> position);
+        void setInclination(Vector2<float> inclination);
 
         void setShadowDistance(float sd);
 
     private:
         scene::ICameraSceneNode* camera;
-        float camSpeed, camHeight, camRadius, recipsqrt2, tarHeight, Xup, Yup, currentHeight;
+        float camSpeed, camHeight, recipsqrt2, tarHeight, Xup, Yup, currentHeight;
+        int marginLeft, marginTop, minZoom, maxZoom; //ToDo: Esto no va aqui
+        int mapMarginLeft, mapMarginRight, mapMarginTop, mapMarginBottom; //ToDo: Esto no va aqui
         Vector3<float> camPos, camTar1;
-        Vector2<float> direction;
+        Vector2<float> direction, inclination;
 };
 
 #endif

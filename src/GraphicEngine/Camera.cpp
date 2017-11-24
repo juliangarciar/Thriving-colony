@@ -5,6 +5,22 @@ using namespace irr;
 
 Camera::Camera(scene::ISceneManager* sceneManager) {
     camera = sceneManager->addCameraSceneNode(0);
+	recipsqrt2 = core::reciprocal_squareroot((f32)2);
+	direction.x = camera->getTarget().X - camera->getPosition().X;
+	direction.y = camera->getTarget().Z - camera->getPosition().Z;
+	//direction.normalize();
+	camSpeed = 10.f;
+	camHeight = 200.f;
+	tarHeight = 160.f;
+	minZoom = 150;
+	maxZoom = 400;
+	marginTop = 20;
+	marginLeft = 30;
+	mapMarginTop = 100;
+	mapMarginLeft = 100;
+	mapMarginBottom = 9240;
+	mapMarginRight = 9240;
+	inclination.setPosition(100,100);
 }
 
 Camera::~Camera() {
@@ -14,12 +30,17 @@ Camera::~Camera() {
 
 //Posicion de la camara
 void Camera::setPosition(Vector3<float> position){
-    camera->setPosition(position.getVectorF());
+	camPos = position;
+    camera->setPosition(camPos.getVectorF());
+    camera->setTarget(core::vector3df(camPos.x+inclination.x, 0, camPos.z+inclination.y)); //ToDo: Mas inclinacion
+	direction.x = camera->getTarget().X - camera->getPosition().X;
+	direction.y = camera->getTarget().Z - camera->getPosition().Z;
 }
 
 //Hacia donde apunta la camara
-void Camera::setTargetPosition(Vector3<float> position){
-    camera->setTarget(position.getVectorF());
+void Camera::setInclination(Vector2<float> inclination){
+	this->inclination = inclination;
+	this->setPosition(this->camPos);
 }
 
 void Camera::setShadowDistance(float zoom){
@@ -28,16 +49,17 @@ void Camera::setShadowDistance(float zoom){
 
 void Camera::Move(InputManager *receiver, Mouse *cursor, Terrain *terrain) {
 	Screen *sc = Screen::Instance();
+
 	if (receiver->getWheelState()) {
 		receiver->setWheelState(false);
 		if (receiver->isWheelUp()) {
-			if (camHeight > 50) {
+			if (camHeight > minZoom) {
 				camHeight -= 20.0f;
 				tarHeight -= 20.0f;
 				camSpeed -= 0.02f;
 			}
 		} else {
-			if (camHeight < 210) {
+			if (camHeight < maxZoom) {
 				camHeight += 20.0f;
 				tarHeight += 20.0f;
 				camSpeed += 0.02f;
@@ -49,14 +71,18 @@ void Camera::Move(InputManager *receiver, Mouse *cursor, Terrain *terrain) {
 		| receiver->IsKeyDown(KEY_KEY_S) << 2 | receiver->IsKeyDown(KEY_KEY_D) << 3;
 
 	core::position2d<s32> cursorPosCurrent = cursor->getCursor()->getPosition();
-	if (cursorPosCurrent.Y < 1)
+	
+	if (cursorPosCurrent.Y < marginTop){
 		n |= 1 << 0;
-	else if (cursorPosCurrent.Y > (sc->getScreenWidth() - 20))
+	} else if (cursorPosCurrent.Y > (sc->getScreenHeight() - marginTop)) {
 		n |= 1 << 2;
-	if (cursorPosCurrent.X < 1)
+	}
+
+	if (cursorPosCurrent.X < marginLeft){
 		n |= 1 << 1;
-	else if (cursorPosCurrent.X > (sc->getScreenWidth() - 20))
+	} else if (cursorPosCurrent.X > (sc->getScreenWidth() - marginLeft)) {
 		n |= 1 << 3;
+	}
 
 	// =========================================================================
 	camPos.setPosition(camera->getPosition());
@@ -100,12 +126,12 @@ void Camera::Move(InputManager *receiver, Mouse *cursor, Terrain *terrain) {
 		}
 
 		// border collision + apply update
-		if (camPos.x < 100) {
+		if (camPos.x < mapMarginLeft) {
 			if (Xup > 0) {
 				camPos.x += Xup;
 				camTar1.x += Xup;
 			}
-		} else if (camPos.x > 924){
+		} else if (camPos.x > mapMarginRight){
 			if (Xup < 0) {
 				camPos.x += Xup;
 				camTar1.x += Xup;
@@ -115,12 +141,12 @@ void Camera::Move(InputManager *receiver, Mouse *cursor, Terrain *terrain) {
 			camTar1.x += Xup;
 		}
 
-		if (camPos.z < 100) {
+		if (camPos.z < mapMarginTop) {
 			if (Yup > 0) {
 				camPos.z += Yup;
 				camTar1.z += Yup;
 			}
-		} else if (camPos.z > 924) {
+		} else if (camPos.z > mapMarginBottom) {
 			if (Yup < 0) {
 				camPos.z += Yup;
 				camTar1.z += Yup;
@@ -133,9 +159,10 @@ void Camera::Move(InputManager *receiver, Mouse *cursor, Terrain *terrain) {
 
 	currentHeight = terrain->getTerrain()->getHeight(camPos.x, camPos.z);
 
-	std::cout << currentHeight << std::endl;
-	/*camPos.y = 0.85f*camPos.y + 0.15f*(currentHeight + camHeight);
-	camTar1.y = 0.85f*camTar1.y + 0.15f*(currentHeight + tarHeight);*/
+	camPos.y = 0.85f*camPos.y + 0.15f*(currentHeight + camHeight);
+
+	//ToDo: revisar zoom
+	//camTar1.y = 0.85f*camTar1.y + 0.15f*(currentHeight + tarHeight);
     
 	camera->setPosition(camPos.getVectorF());
 	camera->setTarget(camTar1.getVectorF());

@@ -16,6 +16,8 @@ Terrain::Terrain(const char* heightMap){
 		scene::ETPS_17,				// patchSize
 		4					// smoothFactor
     );
+
+	std::cout << terrain->getBoundingBox().getArea();
     /*selector = Screen::Instance()->getSceneManager()->createTerrainTriangleSelector(terrain);
     terrain->setTriangleSelector(selector);
     collisionManager = Screen::Instance()->getSceneManager()->getSceneCollisionManager();

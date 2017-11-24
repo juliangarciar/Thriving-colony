@@ -19,6 +19,8 @@ class Vector3 {
         void setPosition(core::vector3di position);
         void setPosition(core::vector3df position);
 
+        Vector3<T>& normalize();
+
         core::vector3di getVectorI();
         core::vector3df getVectorF();
         

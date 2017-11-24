@@ -7,7 +7,7 @@ Screen* Screen::pinstance = 0;
 Screen* Screen::Instance(){
     
     if(pinstance == 0){
-        pinstance = new Screen(640, 480);
+        pinstance = new Screen(1280, 720);
     }
     
     return pinstance;
@@ -21,7 +21,7 @@ Screen::Screen(int width, int height) {
 
     irr::SIrrlichtCreationParameters params;
 	params.DriverType=video::EDT_OPENGL;
-	params.WindowSize=core::dimension2d<u32>(640, 480);
+	params.WindowSize=core::dimension2d<u32>(width, height);
     params.EventReceiver=io;
     device = createDeviceEx(params);
     

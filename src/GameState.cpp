@@ -13,7 +13,8 @@ GameState::~GameState() {
 
 void GameState::Init(){
     camera->setPosition(Vector3<float>(500, 3000, 500));
-    camera->setTargetPosition(Vector3<float>(500, 0, 500));
+    camera->setInclination(Vector2<float>(200, 200));
+    camera->setShadowDistance(42000.f);
 
     map->setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
 }

@@ -18,6 +18,37 @@ Vector2<T>::~Vector2() {
 }
 
 template <class T>
+void Vector2<T>::setPosition(T x, T y){
+    this->x = x;
+    this->y = y;
+}
+
+template <class T>
+void Vector2<T>::setPosition(core::vector2di position){
+    this->x = position.X;
+    this->y = position.Y;
+}
+
+template <class T>
+void Vector2<T>::setPosition(core::vector2df position){
+    this->x = position.X;
+    this->y = position.Y;
+}
+
+template <class T>
+Vector2<T>& Vector2<T>::normalize() {
+    f64 length = x*x + y*y;
+    // this check isn't an optimization but prevents getting NAN in the sqrt.
+    if (length == 0) return *this;
+        
+    length = core::reciprocal_squareroot(length);
+
+    x = (T)(x * length);
+    y = (T)(y * length);
+    return *this;
+}
+
+template <class T>
 core::vector2di Vector2<T>::getVectorI() {
     return core::vector2di(x, y);
 }

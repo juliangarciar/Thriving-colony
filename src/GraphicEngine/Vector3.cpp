@@ -50,5 +50,19 @@ core::vector3df Vector3<T>::getVectorF() {
     return core::vector3df(x, y, z);
 }
 
+template <class T>
+Vector3<T>& Vector3<T>::normalize() {
+    f64 length = x*x + y*y + z*z;
+    // this check isn't an optimization but prevents getting NAN in the sqrt.
+    if (length == 0) return *this;
+        
+    length = core::reciprocal_squareroot(length);
+
+    x = (T)(x * length);
+    y = (T)(y * length);
+    z = (T)(z * length);
+    return *this;
+}
+
 template class Vector3<int>;
 template class Vector3<float>;
