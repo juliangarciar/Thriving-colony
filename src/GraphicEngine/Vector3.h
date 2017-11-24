@@ -9,13 +9,20 @@ template <class T>
 class Vector3 {
 
     public:
+        T x, y, z;
+        
         Vector3();
+        Vector3(T x, T y, T z);
         virtual ~Vector3();
 
-        core::vector3df getVector();
+        void setPosition(T x, T y, T z);
+        void setPosition(core::vector3di position);
+        void setPosition(core::vector3df position);
+
+        core::vector3di getVectorI();
+        core::vector3df getVectorF();
         
     private:
-        T x, y, z;
 };
 
 #endif

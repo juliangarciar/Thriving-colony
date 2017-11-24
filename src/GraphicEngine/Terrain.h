@@ -13,6 +13,8 @@ class Terrain{
         ~Terrain();
 
         void setTexture(Texture* terrainTexture, Texture* detailTexture);
+
+        scene::ITerrainSceneNode* getTerrain();
     private:
         scene::ITerrainSceneNode* terrain;
 };

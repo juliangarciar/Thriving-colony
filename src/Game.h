@@ -5,9 +5,19 @@
 #include "MenuState.h"
 #include "GameState.h"
 
+#include "GraphicEngine/Screen.h"
+
 class Game {
     public:
         static Game* Instance();
+
+        void Init();
+        void Input();
+        void Update();
+        void Render();
+        void CleanUp();
+
+        Screen *getWindow();
 
     protected:
         Game();
@@ -18,6 +28,7 @@ class Game {
     private:
         static Game* pinstance;
         State *state;
+        Screen *window;
 
         MenuState *menu;
         GameState *game;

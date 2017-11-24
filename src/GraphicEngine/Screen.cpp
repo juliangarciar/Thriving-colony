@@ -14,9 +14,15 @@ Screen* Screen::Instance(){
 }
 
 Screen::Screen(int width, int height) {
+    screenWidth = width;
+    screenHeight = height;
+
+    io = new InputManager();
+
     irr::SIrrlichtCreationParameters params;
 	params.DriverType=video::EDT_OPENGL;
 	params.WindowSize=core::dimension2d<u32>(640, 480);
+    params.EventReceiver=io;
     device = createDeviceEx(params);
     
     if (device == 0) exit(0); 
@@ -29,11 +35,40 @@ Screen::Screen(int width, int height) {
 
 	scene = device->getSceneManager();
 	gui = device->getGUIEnvironment();
+
+    dtThen = device->getTimer()->getTime();
 }
 
 Screen::~Screen() {
     delete device;
     device = NULL;
+}
+
+void Screen::beginScene(){
+    float now = device->getTimer()->getTime();
+    deltaTime = (float)(now - dtThen) / 1000.f; // Time in seconds
+    dtThen = now;
+
+    driver->beginScene(true, true, 0 );
+}
+
+void Screen::endScene(){
+    scene->drawAll();
+    gui->drawAll();
+
+    driver->endScene();
+}
+
+bool Screen::isOpen(){
+    return device->run();
+}
+
+bool Screen::isReady(){
+    return device->isWindowActive();
+}
+
+void Screen::close(){
+    device->drop();
 }
 
 IrrlichtDevice* Screen::getDevice() {
@@ -50,4 +85,20 @@ scene::ISceneManager* Screen::getSceneManager(){
 
 gui::IGUIEnvironment* Screen::getGUIEnvironment(){
     return gui;
+}
+
+int Screen::getScreenWidth(){
+    return screenWidth;
+}
+
+int Screen::getScreenHeight(){
+    return screenHeight;
+}
+
+float Screen::getDeltaTime(){
+    return deltaTime;
+}
+
+InputManager *Screen::getIO(){
+    return io;
 }

@@ -26,7 +26,12 @@ void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture){
     terrain->scaleTexture(1.0f, 20.0f);
 }
 
+<<<<<<< HEAD
 Terrain::~Terrain() {
     delete terrain;
     terrain = NULL;
+=======
+scene::ITerrainSceneNode* Terrain::getTerrain(){
+	return terrain;
+>>>>>>> 4ec8329b4bb04e89f8f1f91e1adfaa196d8f809c
 }

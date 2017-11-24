@@ -8,7 +8,7 @@ using namespace irr;
 class Texture {
 
     public:
-        Texture();
+        Texture(const char *path);
         ~Texture();
         
         video::ITexture *getTexture();

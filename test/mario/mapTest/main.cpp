@@ -49,20 +49,23 @@ int main() {
 	terrain->setMaterialType(video::EMT_DETAIL_MAP);
     terrain->scaleTexture(1.0f, 20.0f);
     
-    scene::ITriangleSelector* selector = smgr->createTerrainTriangleSelector(terrain);
+    /*scene::ITriangleSelector* selector = smgr->createTerrainTriangleSelector(terrain);
     terrain->setTriangleSelector(selector);
     gui::ICursorControl *cursor = device->getCursorControl();
     scene::ISceneCollisionManager* collisionManager = smgr->getSceneCollisionManager();
-    // this sphere will mark our collision point
     scene::ISceneNode* sphere = smgr->addSphereSceneNode();
 
     scene::IMesh* cube = smgr->getGeometryCreator()->createCubeMesh();
     scene::IMeshSceneNode *cubeNode = smgr->addCubeSceneNode(100); 
-    //smgr->addMeshSceneNode(cube, 0, 0, core::vector3df(0,0,0));
     if(cubeNode) {
         cubeNode->setMaterialFlag(video::EMF_LIGHTING, false);
+<<<<<<< HEAD
         cubeNode->setPosition(core::vector3df(0,1000,0));
     }
+=======
+        cubeNode->setPosition(core::vector3df(500,50,500));
+    }*/
+>>>>>>> 4ec8329b4bb04e89f8f1f91e1adfaa196d8f809c
 
 	int lastFPS = -1;
 
@@ -81,8 +84,6 @@ int main() {
                 sphere->setPosition(point);
                 std::cout << triangle.pointA.X << " " << triangle.pointA.Y << " " << triangle.pointA.Z << std::endl;
             }
-
-            //scene::ITerrainSceneNode* terrain = smgr->addTerrainSceneNode("gray.bmp", 0, 777);
 
             smgr->drawAll();
             env->drawAll();
