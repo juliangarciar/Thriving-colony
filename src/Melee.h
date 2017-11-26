@@ -7,7 +7,7 @@ class Melee : public Unit {
     
     public:
 
-        Melee();
+        Melee(int, int, int, int);
         virtual ~Melee();
 
     private:

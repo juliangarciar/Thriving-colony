@@ -6,7 +6,7 @@
 class Building : public Entity {
     
     public:
-        Building();
+        Building(int);
         virtual ~Building();
 
     private:

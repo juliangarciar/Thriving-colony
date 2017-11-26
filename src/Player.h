@@ -1,13 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-
-
 class Player {
     
-public:
-        void update();
-
+    public:
         Player();
         virtual ~Player();
 
@@ -21,11 +17,9 @@ public:
         int getCitizens();
 
         int getArmySize();
-
         int getMeleeAmount();
         int getRangeAmount();
         int getSiegeAmount();
-
         int getRamAmount();
         int getCatapultAmount();
 
@@ -41,6 +35,7 @@ public:
         int getTowerAmount();
 
         /////////////////////////////////
+        void update();
 
         void increaseHappiness(int h);
         void increaseCityLevel(int lvl);
@@ -64,7 +59,7 @@ public:
         void increaseTowerAmount();
         //Setters
 
-        protected:
+    protected:
         // Resources
         int happiness;
         int cityLevel;
@@ -92,8 +87,9 @@ public:
         bool barrackBuilt;
         bool barnBuilt;
         bool workshopBuilt;
+
+    private:
         
-        private:
 };
 
 #endif

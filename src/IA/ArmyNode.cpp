@@ -1,7 +1,11 @@
 #include "ArmyNode.h"
 #include "UnitNode.h"
 #include "BuildingNode.h"
+<<<<<<< HEAD
 
+=======
+#include "../IA.h"
+>>>>>>> 1147de1f482ed57f2dde249e809ffcf62fa097cc
 
 ArmyNode::ArmyNode(Node *fatherPnt) : Node() {
     father = fatherPnt;
@@ -22,7 +26,7 @@ void ArmyNode::question() {
     } else {
         //Second subbranch: Buildings
         std::cout << "Voy a hacer edificios" << std::endl;
-        if (ia->getBarrackBuilt() != true || (ia->getCityLevel() >= barnMilestone && ia->getBarnBuilt() != true) || (ia->getCityLevel() >= workshopMilestone && ia->getWorkshopBuilt() != true) || (ia->getCityLevel() >= wallMilestone && ia->getWallBuilt() != true) || ia->getCityLevel() >= towerMilestone) {
+        if (IA::getInstance()->getBarrackBuilt() != true || (IA::getInstance()->getCityLevel() >= barnMilestone && IA::getInstance()->getBarnBuilt() != true) || (IA::getInstance()->getCityLevel() >= workshopMilestone && IA::getInstance()->getWorkshopBuilt() != true) || (IA::getInstance()->getCityLevel() >= wallMilestone && IA::getInstance()->getWallBuilt() != true) || IA::getInstance()->getCityLevel() >= towerMilestone) {
             buildingsBranch();
         }
     }

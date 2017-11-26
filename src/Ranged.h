@@ -6,7 +6,7 @@
 class Ranged : public Unit {
     
     public:
-        Ranged();
+        Ranged(int, int, int, int);
         virtual ~Ranged();
 
     private:

@@ -1,6 +1,6 @@
 #include "Building.h"
 
-Building::Building() {
+Building::Building(int hpPnt) : Entity(hpPnt) {
 
 }
 
