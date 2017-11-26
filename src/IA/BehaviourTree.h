@@ -1,13 +1,12 @@
 #ifndef BEHAVIOUR_TREE_H
 #define BEHAVIOUR_TREE_H
 
-#include "../Player.h"
-#include "IA.h"
+//#include "../Player.h"
 
 class BehaviourTree {
     
     public:
-        BehaviourTree(IA*);
+        BehaviourTree();
         ~BehaviourTree();
         void makeChoice();
 
@@ -36,7 +35,6 @@ class BehaviourTree {
         void debugMessage();
 
     protected:
-        IA* ia;
 
         int happinessThreshold;
         int quarryMilestone;

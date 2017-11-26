@@ -6,8 +6,13 @@
 class Unit : public Entity {
     
     public:
-        Unit();
+        Unit(int, int, int, int);
         virtual ~Unit();
+
+    protected:
+        int moveSpeed;
+        int attackSpeed;
+        int damage;
 
     private:
         

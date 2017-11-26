@@ -1,6 +1,6 @@
 #include "IA.h"
 
-IA::IA() {
+IA::IA() : Player() {
     happiness = 0;
     cityLevel = 1;
     
@@ -22,8 +22,6 @@ IA::IA() {
     barrackBuilt = false;
     barnBuilt = false;
     workshopBuilt = false;
-
-    getInstance();
 }
 
 IA::~IA() {
@@ -32,7 +30,7 @@ IA::~IA() {
 
 IA* IA::getInstance() {
     if (instance == 0) {
-        instance = this;
+        instance = new IA();
     }
     return instance;
 }

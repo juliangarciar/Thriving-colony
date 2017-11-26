@@ -1,6 +1,6 @@
 #include "Melee.h"
 
-Melee::Melee() {
+Melee::Melee(int hpPnt, int moveSpeedPnt, int attackSpeedPnt, int damagePnt) : Unit(hpPnt, moveSpeedPnt, attackSpeedPnt, damagePnt) {
 
 }
 

@@ -1,6 +1,6 @@
 #include "Ranged.h"
 
-Ranged::Ranged() {
+Ranged::Ranged(int hpPnt, int moveSpeedPnt, int attackSpeedPnt, int damagePnt) : Unit(hpPnt, moveSpeedPnt, attackSpeedPnt, damagePnt) {
 
 }
 
