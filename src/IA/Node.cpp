@@ -7,3 +7,5 @@ Node::Node() {
 Node::~Node() {
     
 }
+
+void Node::question(){}
