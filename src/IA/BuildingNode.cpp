@@ -16,5 +16,28 @@ BuildingNode::BuildingNode(Node *fatherPnt) : Node() {
 }
 
 BuildingNode::~BuildingNode(){
+    delete father;
+    delete[] children;
+}
 
+void BuildingNode::question() {
+    if (tree -> getNeedBarracks()) {
+        children[0] -> question();
+    } else {
+        if (tree -> getNeedBarn()) {
+            children[1] -> question();
+        } else {
+            if (tree -> getNeedWorkshop()) {
+                children[2] -> question();
+            } else {
+                if (tree -> getNeedWall()) {
+                    children[3] -> question();
+                } else {
+                    if (tree -> getNeedTower()) {
+                        children[4] -> question();
+                    }
+                }
+            }
+        }
+    }
 }

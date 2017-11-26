@@ -277,7 +277,9 @@ bool BehaviourTree::readyToAttack() {
     return false;
 }
 
-void BehaviourTree::developCity() {}
+void BehaviourTree::developCity() {
+
+}
 
 
 /**
@@ -302,6 +304,11 @@ bool BehaviourTree::getNeedSoldiers() {
 bool BehaviourTree::getNeedBuildings() {
     return (needBarracks || needBarn || needWorkshop || needWall || needTower);
 }
+
+
+
+
+
 
 bool BehaviourTree::getShortOnCrystal() {
     return shortOnCrystal;

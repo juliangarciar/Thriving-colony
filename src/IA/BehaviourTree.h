@@ -6,7 +6,7 @@
 class BehaviourTree {
     
     public:
-        BehaviourTree(IA* iaPnt);
+        BehaviourTree(/*IA* iaPnt*/);
         ~BehaviourTree();
         void makeChoice();
 
@@ -36,11 +36,19 @@ class BehaviourTree {
         int getMarketMilestone();
         int getQuarryMilestone();
         
-        bool getNeedSoldiers();
-        bool getNeedBuildings();
+        
 
         bool getShortOnCrystal();
         bool getShortOnMetal(); 
+
+        bool getNeedSoldiers();
+        bool getNeedBuildings();
+
+        bool getNeedBarracks();
+        bool getNeedBarn();
+        bool getNeedWorkshop();
+        bool getNeedWall();
+        bool getNeedTower();
 
         void debugMessage();
 
