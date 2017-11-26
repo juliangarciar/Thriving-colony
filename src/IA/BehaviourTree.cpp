@@ -297,6 +297,23 @@ int BehaviourTree::getQuarryMilestone() {
     return quarryMilestone;
 }
 
+int BehaviourTree::getHappinessThreshold() {
+    return happinessThreshold;
+}
+
+float BehaviourTree::getMeleeThreshold() {
+    return meleeThreshold;
+}
+
+float BehaviourTree::getRangeThreshold() {
+    return rangeThreshold;
+}
+
+float BehaviourTree::getCitizensThreshold() {
+    return citizensThreshold;
+}
+
+
 bool BehaviourTree::getNeedSoldiers() {
     return needSoldiers;
 }
@@ -333,6 +350,8 @@ bool BehaviourTree::getShortOnCrystal() {
 bool BehaviourTree::getShortOnMetal() {
     return shortOnMetal;
 }
+
+
 
 
 

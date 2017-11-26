@@ -6,5 +6,11 @@ MountedRangeNode::MountedRangeNode(Node *fatherPnt) : Node() {
 }
 
 MountedRangeNode::~MountedRangeNode(){
+    delete father;
+}
 
+void MountedRangeNode::question() {
+    //std::cout << Genero un soldado montado de rango << std::endl;
+    //ToDo: Generar soldado montado de rango
+    IA::getInstance()-> increaseRangeAmount();
 }

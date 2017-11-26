@@ -10,5 +10,17 @@ RangeNode::RangeNode(Node *fatherPnt) : Node() {
 }
 
 RangeNode::~RangeNode(){
+    delete father;
+    delete[] children;
+}
 
+void RangeNode::question() {
+    //std::cout << "Voy a hacer rangos" << std::endl;
+    //First subsubsubbranch: With creature
+    if (IA::getInstance()->getCityLevel() >= tree ->getMountedCreatureMilestone()) {
+        children[0] -> question();
+    } else {
+        //Second subsubsubbranch: Without creature
+        children[1] -> question();
+    }
 }

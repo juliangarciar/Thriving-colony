@@ -1,11 +1,13 @@
 #include "Entity.h"
 
-Entity::Entity(int hpPnt) {
-    hp = hpPnt;
+Entity::Entity(int hitPoints, int attackDmg) {
+    hpMax = hitPoints;
+    hp = hpMax;
+    attackDamage = attackDmg;
 }
 
 Entity::~Entity() {
-
+    delete target;
 }
 
 int Entity::getHP() {
@@ -14,12 +16,22 @@ int Entity::getHP() {
 
 /*
 * Decreases Hp
-* h = quantity of hp to drecrease
+* dmg = quantity of hp to drecrease
 */
-void Entity::decreaseHP(int h) {
-    hp = hp-h;
+void Entity::takeDamage(int dmg) {
+    hp = hp-dmg;
     if (hp <= 0) {
         hp = 0;
-        //DIE()
+        die();
+    }
+}
+
+void Entity::die() {
+    delete this;
+}
+
+void Entity::attack() {
+    if (target != 0) {
+        target -> takeDamage(attackDamage);
     }
 }

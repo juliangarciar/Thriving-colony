@@ -6,5 +6,11 @@ RamNode::RamNode(Node *fatherPnt) : Node() {
 }
 
 RamNode::~RamNode(){
+    delete father;
+}
 
+void RamNode::question() {
+    //std::cout << Genero un ariete << std::endl;
+    //ToDo: Generar ariete
+    IA::getInstance()-> increaseSiegeAmount();
 }

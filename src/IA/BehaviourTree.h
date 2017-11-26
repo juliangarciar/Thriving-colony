@@ -36,6 +36,15 @@ class BehaviourTree {
         int getMarketMilestone();
         int getQuarryMilestone();
         
+        int getCreatureMilestone();
+        int getMountedCreatureMilestone();
+
+        int getHappinessThreshold();
+
+        float getMeleeThreshold();
+        float getRangeThreshold();
+        float getCitizensThreshold();
+        
         
 
         bool getShortOnCrystal();

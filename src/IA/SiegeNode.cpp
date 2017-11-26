@@ -10,5 +10,17 @@ SiegeNode::SiegeNode(Node *fatherPnt) : Node() {
 }
 
 SiegeNode::~SiegeNode(){
+    delete father;
+    delete[] children;
+}
 
+void SiegeNode::question() {
+    //std::cout << "Voy a hacer asedio" << std::endl;
+    //First subsubsubbranch: Ram
+    if (IA::getInstance()-> getRamAmount() <= IA::getInstance()-> getCatapultAmount()) {
+        children[0] -> question();
+    } else {
+        //Second subsubsubbranch: Catapult
+        children[1] -> question();
+    }
 }

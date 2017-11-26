@@ -6,5 +6,11 @@ MountedMeleeNode::MountedMeleeNode(Node *fatherPnt) : Node() {
 }
 
 MountedMeleeNode::~MountedMeleeNode(){
+    delete father;
+}
 
+void MountedMeleeNode::question() {
+    //std::cout << Genero un soldado montado melee << std::endl;
+    //ToDo: Generar soldado montado melee
+    IA::getInstance()-> increaseMeleeAmount();
 }

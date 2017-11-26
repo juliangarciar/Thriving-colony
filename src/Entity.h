@@ -4,15 +4,19 @@
 class Entity {
 
     public:
-        Entity(int);
+        Entity(int, int);
         virtual ~Entity();
 
         int getHP();
-        void decreaseHP(int);
+        void takeDamage(int);
+        void attack();
+        void die();
 
     protected:
+        int hpMax;
         int hp;  
-
+        int attackDamage;
+        Entity* target;
     private:
 };
 
