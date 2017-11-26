@@ -1,11 +1,8 @@
 #include "ArmyNode.h"
 #include "UnitNode.h"
 #include "BuildingNode.h"
-<<<<<<< HEAD
 
-=======
-#include "../IA.h"
->>>>>>> 1147de1f482ed57f2dde249e809ffcf62fa097cc
+
 
 ArmyNode::ArmyNode(Node *fatherPnt) : Node() {
     father = fatherPnt;
@@ -15,19 +12,18 @@ ArmyNode::ArmyNode(Node *fatherPnt) : Node() {
 }
 
 ArmyNode::~ArmyNode(){
-
+    delete father;
+    delete[] children;
 }
 
 void ArmyNode::question() {
     //First subbranch: Units
-    if (IA::getInstance() -> getTree() -> calculateArmyCitizensRate() < armyThreshold){
-        std::cout << "Voy a hacer unidades" << std::endl;
-        unitsBranch();
+    if (tree -> getNeedSoldiers()){
+        children[0] -> question();
     } else {
         //Second subbranch: Buildings
-        std::cout << "Voy a hacer edificios" << std::endl;
-        if (IA::getInstance()->getBarrackBuilt() != true || (IA::getInstance()->getCityLevel() >= barnMilestone && IA::getInstance()->getBarnBuilt() != true) || (IA::getInstance()->getCityLevel() >= workshopMilestone && IA::getInstance()->getWorkshopBuilt() != true) || (IA::getInstance()->getCityLevel() >= wallMilestone && IA::getInstance()->getWallBuilt() != true) || IA::getInstance()->getCityLevel() >= towerMilestone) {
-            buildingsBranch();
+        if (tree -> getNeedBuildings()) {
+            children[1] -> question();
         }
     }
 }

@@ -6,5 +6,11 @@ SiderurgyNode::SiderurgyNode(Node *fatherPnt) : Node() {
 }
 
 SiderurgyNode::~SiderurgyNode(){
+    delete father;
+}
 
+void SiderurgyNode::question() {
+    //std::cout << Construyo una siderurgia << std::endl;
+    //ToDo: Construir siderurgia
+    IA::getInstance()->increaseSiderurgyAmount();
 }

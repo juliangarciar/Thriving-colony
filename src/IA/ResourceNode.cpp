@@ -11,7 +11,8 @@ ResourceNode::ResourceNode(Node *fatherPnt) : Node() {
 }
 
 ResourceNode::~ResourceNode(){
-
+    delete father;
+    delete[] children;
 }
 
 void ResourceNode::question() {

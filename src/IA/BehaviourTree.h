@@ -1,12 +1,12 @@
 #ifndef BEHAVIOUR_TREE_H
 #define BEHAVIOUR_TREE_H
 
-//#include "../Player.h"
+#include "../IA.h"
 
 class BehaviourTree {
     
     public:
-        BehaviourTree();
+        BehaviourTree(IA* iaPnt);
         ~BehaviourTree();
         void makeChoice();
 
@@ -36,6 +36,9 @@ class BehaviourTree {
         int getMarketMilestone();
         int getQuarryMilestone();
         
+        bool getNeedSoldiers();
+        bool getNeedBuildings();
+
         bool getShortOnCrystal();
         bool getShortOnMetal(); 
 

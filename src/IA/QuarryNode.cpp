@@ -6,5 +6,11 @@ QuarryNode::QuarryNode(Node *fatherPnt) : Node() {
 }
 
 QuarryNode::~QuarryNode(){
+    delete father;
+}
 
+void QuarryNode::question() {
+    //std::cout << Construyo una cantera << std::endl;
+    //ToDo: Construir cantera
+    IA::getInstance()->increaseQuarryAmount();
 }

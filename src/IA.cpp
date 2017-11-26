@@ -22,6 +22,8 @@ IA::IA() : Player() {
     barrackBuilt = false;
     barnBuilt = false;
     workshopBuilt = false;
+
+    getInstance();
 }
 
 IA::~IA() {

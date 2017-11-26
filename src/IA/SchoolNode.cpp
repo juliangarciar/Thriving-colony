@@ -6,7 +6,7 @@ SchoolNode::SchoolNode(Node *fatherPnt) : Node() {
 }
 
 SchoolNode::~SchoolNode(){
-
+    delete father;
 }
 
 void SchoolNode::question() {

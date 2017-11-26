@@ -2,7 +2,8 @@
 #include "../IA.h"
 #include <iostream>
 
-BehaviourTree::BehaviourTree() {
+BehaviourTree::BehaviourTree(IA* iaPnt) {
+    ia=iaPnt;
 }
 
 BehaviourTree::~BehaviourTree() {
@@ -292,6 +293,14 @@ int BehaviourTree::getMarketMilestone() {
 
 int BehaviourTree::getQuarryMilestone() {
     return quarryMilestone;
+}
+
+bool BehaviourTree::getNeedSoldiers() {
+    return needSoldiers;
+}
+
+bool BehaviourTree::getNeedBuildings() {
+    return (needBarracks || needBarn || needWorkshop || needWall || needTower);
 }
 
 bool BehaviourTree::getShortOnCrystal() {

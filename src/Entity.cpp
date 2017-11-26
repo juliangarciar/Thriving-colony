@@ -18,7 +18,8 @@ int Entity::getHP() {
 */
 void Entity::decreaseHP(int h) {
     hp = hp-h;
-    if (hp < 0) {
+    if (hp <= 0) {
         hp = 0;
+        //DIE()
     }
 }

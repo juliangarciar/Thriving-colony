@@ -6,7 +6,7 @@ HospitalNode::HospitalNode(Node *fatherPnt) : Node() {
 }
 
 HospitalNode::~HospitalNode(){
-
+    delete father;
 }
 
 void HospitalNode::question() {
