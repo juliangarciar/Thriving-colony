@@ -8,3 +8,8 @@ SchoolNode::SchoolNode(Node *fatherPnt) : Node() {
 SchoolNode::~SchoolNode(){
 
 }
+
+void SchoolNode::question() {
+    //std::cout << "Contruyo una escuela" << std::endl;
+    //ToDo: Construir escuela
+}

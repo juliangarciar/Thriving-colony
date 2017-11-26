@@ -5,10 +5,25 @@
 ResourceNode::ResourceNode(Node *fatherPnt) : Node() {
     father = fatherPnt;
     children = new Node*[2];
-    children[0] = new SiderurgyNode(this);
-    children[1] = new QuarryNode(this);
+    children[0] = new QuarryNode(this);
+    children[1] = new SiderurgyNode(this);
+    
 }
 
 ResourceNode::~ResourceNode(){
 
+}
+
+void ResourceNode::question() {
+    //std::cout << Voy a invertir en recursos << std::endl;
+    //First subbranch: Quarry
+    if (tree -> getShortOnCrystal() && IA::getInstance() -> getCityLevel() >= tree -> getQuarryMilestone()) {
+        children[0] -> question();
+    } else {
+        //Second subbranch: Siderurgy
+        if (tree -> getShortOnMetal()) {            
+            children[1] -> question();
+        }
+        
+    }
 }

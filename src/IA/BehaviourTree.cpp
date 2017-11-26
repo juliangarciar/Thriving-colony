@@ -57,8 +57,6 @@ void BehaviourTree::resourcesBranch(){
 
 void BehaviourTree::unitsBranch() {
     
-
-
     //First subsubbranch: Melee
     if (calculateMeleeRate() < meleeThreshold) {
         std::cout << "Voy a hacer melees" << std::endl;
@@ -280,6 +278,35 @@ bool BehaviourTree::readyToAttack() {
 
 void BehaviourTree::developCity() {}
 
+
+/**
+ * GETTERS
+ */
+int BehaviourTree::getHospitalMilestone() {
+    return hospitalMilestone;
+}
+
+int BehaviourTree::getMarketMilestone() {
+    return marketMilestone;
+}
+
+int BehaviourTree::getQuarryMilestone() {
+    return quarryMilestone;
+}
+
+bool BehaviourTree::getShortOnCrystal() {
+    return shortOnCrystal;
+}
+
+bool BehaviourTree::getShortOnMetal() {
+    return shortOnMetal;
+}
+
+
+
+/**
+ * DEBUG
+ */
 void BehaviourTree::debugMessage() {
     std::cout << std::endl;
     std::cout << "////////////////////////////////////////////////////////" << std::endl;

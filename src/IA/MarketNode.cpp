@@ -8,3 +8,8 @@ MarketNode::MarketNode(Node *fatherPnt) : Node() {
 MarketNode::~MarketNode(){
 
 }
+
+void MarketNode::question() {
+    //std::cout << "Contruyo un mercado" << std::endl;
+    //ToDo: Construir mercado
+}

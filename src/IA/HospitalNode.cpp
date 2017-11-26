@@ -8,3 +8,8 @@ HospitalNode::HospitalNode(Node *fatherPnt) : Node() {
 HospitalNode::~HospitalNode(){
 
 }
+
+void HospitalNode::question() {
+    //std::cout << "Contruyo un hospital" << std::endl;
+    //ToDo: Construir hospital
+}

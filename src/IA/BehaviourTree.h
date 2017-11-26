@@ -33,6 +33,13 @@ class BehaviourTree {
         float calculateRangeRate();
         float calculateSiegeRate();
 
+        int getHospitalMilestone();
+        int getMarketMilestone();
+        int getQuarryMilestone();
+        
+        bool getShortOnCrystal();
+        bool getShortOnMetal(); 
+
         void debugMessage();
 
     protected:
@@ -46,6 +53,9 @@ class BehaviourTree {
         int barnMilestone;
         int workshopMilestone;
         int creatureMilestone;
+
+        int hospitalMilestone;
+        int marketMilestone;
 
         float metalThreshold;
         float crystalThreshold;

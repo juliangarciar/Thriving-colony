@@ -1,6 +1,8 @@
 #ifndef NODE_H
 #define NODE_H
 
+#include "BehaviourTree.h"
+
 class Node {
     
     public:
@@ -13,6 +15,7 @@ class Node {
         Node *father;
         Node **children;
 
+        BehaviourTree* tree;
     private:
 };
 
