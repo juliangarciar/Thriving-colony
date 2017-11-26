@@ -12,5 +12,9 @@ ServiceNode::ServiceNode(Node *fatherPnt) : Node() {
 }
 
 ServiceNode::~ServiceNode(){
+    delete[] children;
+}
 
+void ServiceNode::question() {
+    
 }

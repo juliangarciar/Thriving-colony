@@ -6,5 +6,5 @@ WorkshopNode::WorkshopNode(Node *fatherPnt) : Node() {
 }
 
 WorkshopNode::~WorkshopNode(){
-
+    delete[] children;
 }

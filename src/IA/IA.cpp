@@ -23,8 +23,20 @@ IA::IA() {
     barnBuilt = false;
     workshopBuilt = false;
 
+    getInstance();
 }
 
 IA::~IA() {
 
+}
+
+IA* IA::getInstance() {
+    if (instance == 0) {
+        instance = this;
+    }
+    return instance;
+}
+
+BehaviourTree* IA::getTree() {
+    return tree;
 }
