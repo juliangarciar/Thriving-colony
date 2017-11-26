@@ -1,4 +1,5 @@
 #include "VeryHappyTree.h"
+#include <iostream>
 
 VeryHappyTree::VeryHappyTree(IA* iaPnt) : BehaviourTree(iaPnt) {
     happinessThreshold = 80;
@@ -10,10 +11,10 @@ VeryHappyTree::VeryHappyTree(IA* iaPnt) : BehaviourTree(iaPnt) {
     workshopMilestone = 65;
     creatureMilestone = 100;
 
-    metalThreshold = 1.5;
-    crystalThreshold = 1.2;
-    citizensThreshold = 2.5;
-    armyThreshold = 0.1;
+    metalThreshold = 0.6;
+    crystalThreshold = 0.4;
+    citizensThreshold = 0.3;
+    armyThreshold = 0.2;
     meleeThreshold = 0.5;
     rangeThreshold = 0.45;
     siegeThreshold = 0.05;
@@ -24,22 +25,31 @@ VeryHappyTree::~VeryHappyTree() {
 }
 
 void VeryHappyTree::developCity() {
+
     //First branch: Services
     if (ia->getHappiness() < happinessThreshold) {
+        std::cout << "Voy a invertir en felicidad" << std::endl;
         serviceBranch();
     } else {
         //Second branch: Resources
         if (needResourcesInvestment()) {
+            std::cout << "Voy a invertir en recursos" << std::endl;
             resourcesBranch();
         } else {
             //Third branch: Homes
             if (calculateCitizensRate() < citizensThreshold) {
+                std::cout << "Voy a invertir en casas" << std::endl;
+                ia ->increaseCitizens();
                 //ToDo: Construir viviendas
             } else {
                 //Fourth branch: Army
                 if (needArmyInvestment()) {
+                    std::cout << "Voy a invertir en ejercito" << std::endl;
                     armyBranch();
-                } 
+                } else {
+                    std::cout << "No hago nada" << std::endl;
+                    ia ->increaseCitizens();
+                }
             }
         }
     }
