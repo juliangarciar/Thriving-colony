@@ -6,5 +6,11 @@ WorkshopNode::WorkshopNode(Node *fatherPnt) : Node() {
 }
 
 WorkshopNode::~WorkshopNode(){
-    delete[] children;
+    delete father;
+}
+
+void WorkshopNode::question() {
+    //std::cout << Construyo un taller << std::endl;
+    //ToDo: Construir taller
+    IA::getInstance()->buildWorkshop();
 }

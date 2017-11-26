@@ -6,5 +6,11 @@ WallNode::WallNode(Node *fatherPnt) : Node() {
 }
 
 WallNode::~WallNode(){
+    delete father;
+}
 
+void WallNode::question() {
+    //std::cout << Construyo una muralla << std::endl;
+    //ToDo: Construir muralla
+    IA::getInstance()->increaseWallAmount();
 }

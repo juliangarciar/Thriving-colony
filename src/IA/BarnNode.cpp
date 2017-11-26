@@ -6,5 +6,11 @@ BarnNode::BarnNode(Node *fatherPnt) : Node() {
 }
 
 BarnNode::~BarnNode(){
+    delete father;
+}
 
+void BarnNode::question() {
+    //std::cout << Construyo un establo << std::endl;
+    //ToDo: Construir establo
+    IA::getInstance()->buildBarn();
 }

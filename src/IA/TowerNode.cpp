@@ -6,5 +6,11 @@ TowerNode::TowerNode(Node *fatherPnt) : Node() {
 }
 
 TowerNode::~TowerNode(){
+    delete father;
+}
 
+void TowerNode::question() {
+    //std::cout << Construyo un torre << std::endl;
+    //ToDo: Construir torre
+    IA::getInstance()->increaseTowerAmount();
 }
