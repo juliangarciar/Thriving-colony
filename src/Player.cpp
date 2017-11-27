@@ -22,6 +22,10 @@ Player::Player() {
     barrackBuilt = false;
     barnBuilt = false;
     workshopBuilt = false;
+
+    melees = 0;
+    rangeds = 0;
+    buildings = 0;
 }
 
 Player::~Player() {

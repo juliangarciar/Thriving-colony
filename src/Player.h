@@ -1,6 +1,10 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "Melee.h"
+#include "Ranged.h"
+#include "Building.h"
+
 class Player {
     
     public:
@@ -87,6 +91,10 @@ class Player {
         bool barrackBuilt;
         bool barnBuilt;
         bool workshopBuilt;
+
+        Melee **melees;
+        Ranged **rangeds;
+        Building **buildings;
 
     private:
         

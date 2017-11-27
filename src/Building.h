@@ -9,7 +9,23 @@ class Building : public Entity {
         Building(int);
         virtual ~Building();
 
+        enum BuildingType {
+            MainBuilding,
+            House,
+            Quarry,
+            Siderurgy,
+            Market,
+            Hospital,
+            School,
+            Workshop,
+            Barrack,
+            Barn,
+            Tower,
+            Wall
+        };
+
     private:
+        BuildingType type;
         
 };
 
