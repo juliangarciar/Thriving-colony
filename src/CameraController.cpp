@@ -27,7 +27,7 @@ CameraController::CameraController(){
 	//direction.x = camera->getTargetPosition().x - camera->getCameraPosition().x;
 	//direction.y = camera->getTargetPosition().z - camera->getCameraPosition().z;
 	//direction.normalize(); 
-    camMove = false;
+    camMove = true;
 }
 
 CameraController::~CameraController(){
@@ -153,74 +153,45 @@ void CameraController::Move(InputManager *receiver, Mouse *cursor, Terrain *terr
 		}
 	}
 
-    if (camMove){
-        currentHeight = terrain->getTerrain()->getHeight(camPos.x, camPos.z);
-
-        camPos.y = 0.85f*camPos.y + 0.15f*(currentHeight + camHeight);
-    }
-
     if (rotationMode){
-        //Cursor Position
-        deltaX = screenCenter.x - cursorPosCurrent.x;
-        deltaY = screenCenter.y - cursorPosCurrent.y;
+		if (cursorPosCurrent.x < screenCenter.x){
+			delta.x += 10;
+		} else if (cursorPosCurrent.x > screenCenter.x) {
+			delta.x -= 10;
+		}
+
+		if (cursorPosCurrent.y < screenCenter.y){
+			delta.y += 10;
+		} else if (cursorPosCurrent.y > screenCenter.y) {
+			delta.y -= 10;
+		}
         
         // reset cursor position to center
         cursor->setPosition(screenCenter.getVectorF());
 
         // define deltas of cursor data
-        deltaX = (deltaX < 130) ? deltaX : 130;
-        deltaX = (deltaX > -130) ? deltaX : -130;
-        deltaY = (deltaY < 130) ? deltaY : 130;
-        deltaY = (deltaY > -130) ? deltaY : -130;
+        delta.x = (delta.x < 0) ? 360+delta.x : delta.x;
+        delta.x = (delta.x > 360) ? delta.x-360 : delta.x;
+        delta.y = (delta.y < 0) ? 360+delta.y : delta.y;
+        delta.y = (delta.y > 360) ? delta.y-360 : delta.y;
 
-        // complex number rotation along azimuthal angle theta ===================
-        tempAngle = deltaX*rotSpeed;
-        cosA = cos(tempAngle);
-        sinA = sin(tempAngle);
+		std::cout << "Deltas-- dX: " << delta.x << " dY: " << delta.y << std::endl;
 
-        camTar2 = camTar1 - camPos;
+		Vector2<float> position = Vector2<float>(camTar1.x, camTar1.z);
+		std::cout << "Pre-- dX: " << position.x << " dY: " << position.y << std::endl;
+		Vector2<float> newPosition = position.getFromPolarCoordinates(100, delta.x);
+		std::cout << "Pos-- dX: " << newPosition.x << " dY: " << newPosition.y << std::endl;
 
-        camTar1.x = cosA*camTar2.x - sinA*camTar2.z;
-        camTar1.y = camTar2.y;
-        camTar1.z = cosA*camTar2.z + sinA*camTar2.x;
+		camPos.set(newPosition.x, camPos.y, newPosition.y);
 
-        direction.x = camTar1.x;
-        direction.y = camTar1.z;
-        direction.normalize();
+		camMove = true;
+    }
 
-        // quaternion rotation along polar angle phi =============================
+    if (camMove){
+        currentHeight = terrain->getTerrain()->getHeight(camPos.x, camPos.z);
 
-        tempAngle = deltaY*rotSpeed / 2;
-        currentAngle = acos(camTar1.y / camTar1.getLength());
-
-        if (currentAngle > 2.84f)
-            tempAngle = tempAngle > 0 ? tempAngle : 0;
-        else if (currentAngle < 0.3f)
-            tempAngle = tempAngle < 0 ? tempAngle : 0;
-
-        cosA = cos(tempAngle);
-        sinA = sin(tempAngle);
-
-        aSinA = -sinA*direction.y;
-        bSinA = sinA*direction.x;
-
-        cosASq = cosA*cosA;
-        aSinASq = aSinA*aSinA;
-        bSinASq = bSinA*bSinA;
-
-        bSinATarTemp2X = bSinA*camTar1.x;
-        cosATarTemp2Y = cosA*camTar1.y;
-        aSinATarTemp2Z = aSinA*camTar1.z;
-
-        camTar2.x = camTar1.x*(cosASq + aSinASq - bSinASq) + 2.0f * bSinA*(aSinATarTemp2Z - cosATarTemp2Y);
-        camTar2.y = camTar1.y*(cosASq - aSinASq - bSinASq) + 2.0f * cosA*(bSinATarTemp2X - aSinATarTemp2Z);
-        camTar2.z = camTar1.z*(cosASq - aSinASq + bSinASq) + 2.0f * aSinA*(bSinATarTemp2X + cosATarTemp2Y);
-
-        tarHeight = camTar2.y + camHeight;
-
-        std::cout << camTar1.x << " " << camTar1.y << " " << camTar1.z << "\n";
-        camTar1 = camTar2 + camPos;
-        std::cout << camTar1.x << " " << camTar1.y << " " << camTar1.z << "\n";
+        camPos.y = 0.85f*camPos.y + 0.15f*(currentHeight + camHeight);
+		camMove = false;
     }
     
 	camera->setCameraPosition(camPos.getVectorF());
@@ -229,14 +200,12 @@ void CameraController::Move(InputManager *receiver, Mouse *cursor, Terrain *terr
 
 void CameraController::Rotate(InputManager *receiver, Mouse *cursor){
     // get cursor data
-    if (receiver->middleMousePressed())  {
+    if (receiver->rightMousePressed())  {
         rotationMode = true;
         cursorPosSaved = cursor->getPosition();
         cursor->setPosition(screenCenter);
-        deltaX = 0;
-        deltaY = 0;
     }
-    if (receiver->middleMouseReleased()) {
+    if (receiver->rightMouseReleased()) {
         rotationMode = false;
         cursor->setPosition(cursorPosSaved);
     }

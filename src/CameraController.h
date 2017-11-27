@@ -24,10 +24,11 @@ class CameraController {
         int mapMarginLeft, mapMarginRight, mapMarginTop, mapMarginBottom; //
         Vector2<int> screenCenter;
         // Helpers
-        float recipsqrt2, deltaX, deltaY;
+        float recipsqrt2;
         // Camera movement variables ============
         bool camMove;
         Vector3<float> camPos, camTar1;
+		Vector2<float> delta;
         Vector2<float> direction;
         Vector2<int> cursorPosSaved;
         float camSpeed, camHeight, tarHeight, Xup, Yup, currentHeight;

@@ -21,6 +21,7 @@ class Vector2 {
         void set(core::vector2df v);
 
         Vector2<T>& normalize();
+        Vector2<T> getFromPolarCoordinates(int r, int phi);
 
         core::vector2di getVectorI();
         core::vector2df getVectorF();
