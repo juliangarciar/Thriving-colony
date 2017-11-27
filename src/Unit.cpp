@@ -3,14 +3,14 @@
 Unit::Unit(int hpPnt, int moveSpeedPnt, int attackSpeedPnt, int damagePnt, int attackRangePnt, int viewRangePnt) : Entity(hpPnt) {
     moveSpeed = moveSpeedPnt;
     attackSpeed = attackSpeedPnt;
-    damage = damagePnt;
+    attackDamage = damagePnt;
     attackRange = attackRangePnt;
     viewRange = viewRangePnt;
 
     moving = false;
     attacking = false;
 
-    objetive = 0;
+    target = 0;
 }
 
 Unit::~Unit() {
@@ -23,10 +23,8 @@ void Unit::attack() {
     }
 }
 
-}
-
-Entity* Unit::getObjetive() {
-    return objetive;
+Entity* Unit::getTarget() {
+    return target;
 }
 
 void Unit::setMoving(bool movingPnt) {
@@ -37,9 +35,3 @@ void Unit::setAttacking(bool attackingPnt) {
     attacking = attackingPnt;
 }
 
-/*
-* Do damage to the objetive
-*/
-void Unit::attack() {
-    objetive -> takeDamage(damage);
-}

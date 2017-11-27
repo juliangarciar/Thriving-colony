@@ -10,7 +10,7 @@ class Unit : public Entity {
         virtual ~Unit();
 
         //Getters
-        Entity *getObjetive();
+        Entity *getTarget();
 
         //Setters
         void setMoving(bool);
@@ -22,14 +22,13 @@ class Unit : public Entity {
     protected:
         int moveSpeed;
         int attackSpeed;
-        int damage;
+        int attackDamage;
         int attackRange;
         int viewRange;
 
         bool moving;
         bool attacking;
 
-        Entity *objetive;
 
         Entity* target;
     private:
