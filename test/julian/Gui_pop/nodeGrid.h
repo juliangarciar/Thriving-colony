@@ -1,9 +1,9 @@
-#ifndef NODE_H
-#define NODE_H
+#ifndef NODEGRID_H
+#define NODEGRID_H
 
 #include <iostream>
 #include <irrlicht.h>
-class node{
+class nodeGrid{
     private:
         int posX;
         int posY;
@@ -14,15 +14,14 @@ class node{
         int weight;
         int priority;
         
-        node* cameFrom;
-        //sf::RectangleShape *rectangle;
+        nodeGrid* cameFrom;
         irr::scene::ISceneManager *smgr;
         irr::scene::IMeshSceneNode *cube;
 
       public:
-        node(int x, int y, irr::scene::ISceneManager *smgrData);
-        node(const node& orig);
-        virtual ~node();
+        nodeGrid(int x, int y, irr::scene::ISceneManager *smgrData);
+        nodeGrid(const nodeGrid& orig);
+        virtual ~nodeGrid();
 
         void swapColor(irr::video::SColor colorData);
         int getX();
@@ -37,10 +36,10 @@ class node{
         void setWeight(int weightData);
         bool itsCounted();
         void setCounted(bool countedData);
-        node* getCameFrom();
-        void setCameFrom(node* cameFromData);
+        nodeGrid* getCameFrom();
+        void setCameFrom(nodeGrid* cameFromData);
         irr::scene::IMeshSceneNode *getCube();
         int getPriority();
         void setPriority(int priorityData);
 };
-#endif /* NODE_H */
+#endif /* NODEGRID_H */

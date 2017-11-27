@@ -1,6 +1,6 @@
 #include <limits>
-#include "node.h"
-node::node(int x, int y, irr::scene::ISceneManager *smgrData)
+#include "nodeGrid.h"
+nodeGrid::nodeGrid(int x, int y, irr::scene::ISceneManager *smgrData)
 {
     posX = x;
     posY = y;
@@ -17,82 +17,82 @@ node::node(int x, int y, irr::scene::ISceneManager *smgrData)
         smgr->getMeshManipulator()->setVertexColors(cube->getMesh(), irr::video::SColor(0, 0, 255, 255));
     }
 }
-node::node(const node& orig){
+nodeGrid::nodeGrid(const nodeGrid& orig){
 
 }
-node::~node(){
+nodeGrid::~nodeGrid(){
     delete cube;
-    //delete smgr;
+    delete smgr;
 }
-irr::scene::IMeshSceneNode* node::getCube()
+irr::scene::IMeshSceneNode* nodeGrid::getCube()
 {
     return this->cube;
 }
-void node::swapColor(irr::video::SColor colorData){
+void nodeGrid::swapColor(irr::video::SColor colorData){
     smgr->getMeshManipulator()->setVertexColors(cube->getMesh(), colorData);
 }
 
-int node::getX()
+int nodeGrid::getX()
 {
     return posX;
 }
-int node::getY()
+int nodeGrid::getY()
 {
     return posY;
 }
-bool node::itsBlock()
+bool nodeGrid::itsBlock()
 {
     return block;
 }
-void node::setBlock(bool blockData)
+void nodeGrid::setBlock(bool blockData)
 {
     this->block = blockData;
 }
-bool node::itsVisited()
+bool nodeGrid::itsVisited()
 {
     return visited;
 }
-void node::setVisited(bool visitedData)
+void nodeGrid::setVisited(bool visitedData)
 {
     this->visited = visitedData;
 }
-bool node::itsFrontier()
+bool nodeGrid::itsFrontier()
 {
     return this->frontier;
 }
-void node::setFrontier(bool frontierData)
+void nodeGrid::setFrontier(bool frontierData)
 {
     this->frontier = frontierData;
 }
-int node::getWeight()
+int nodeGrid::getWeight()
 {
     return this->weight;
 }
-void node::setWeight(int weightData)
+void nodeGrid::setWeight(int weightData)
 {
     this->weight = weightData;
 }
-node *node::getCameFrom()
+nodeGrid *nodeGrid::getCameFrom()
 {
     return this->cameFrom;
 }
-void node::setCameFrom(node * last)
+void nodeGrid::setCameFrom(nodeGrid * last)
 {
     this->cameFrom = last;
 }
-bool node::itsCounted()
+bool nodeGrid::itsCounted()
 {
     return this->counted;
 }
-void node::setCounted(bool countedData)
+void nodeGrid::setCounted(bool countedData)
 {
     this->counted = countedData;
 }
-int node::getPriority()
+int nodeGrid::getPriority()
 {
     return this->priority;
 }
-void node::setPriority(int priorityData)
+void nodeGrid::setPriority(int priorityData)
 {
     this->priority = priorityData;
 }

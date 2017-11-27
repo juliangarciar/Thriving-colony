@@ -53,6 +53,28 @@ int main(){
     int newCost = 0;
     int currentCost = 0;
     int priority = 0;
+    //IRRLICHT
+    irr::SIrrlichtCreationParameters params;
+
+    params.DriverType = video::EDT_OPENGL;
+    params.WindowSize = core::dimension2d<u32>(640, 480);
+    IrrlichtDevice *device = createDeviceEx(params);
+
+    if (device == 0)
+        return 1; // could not create selected driver.
+
+    video::IVideoDriver *driver = device->getVideoDriver();
+    scene::ISceneManager *smgr = device->getSceneManager();
+    driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
+    
+    //ADD IRRLICHT CAMERA
+    scene::ICameraSceneNode *camera =
+        smgr->addCameraSceneNodeFPS();
+
+        camera->setPosition(core::vector3df(0, 500, 20));
+        camera->setTarget(core::vector3df(0, 0, 0));
+        camera->setFarValue(2000.0f);
+
     //INIT NEIGHBOURS DATA
     std::vector < node* > neighbors;
     //INIT MAP DATA
@@ -62,7 +84,7 @@ int main(){
         mapita[x] = new node*[25];
         for (int y = 0; y < 25; y++)
         {
-            mapita[x][y] = new node(x, y);
+            mapita[x][y] = new node(x, y, smgr);
         }
     }
     //INIT FRONTIER DATA
@@ -75,59 +97,26 @@ int main(){
     start->setWeight(0);
     node *end = mapita[18][13];
 
-        //start->swapColor(sf::Color::Blue);
-        //end->swapColor(sf::Color::Red);
+        start->swapColor(irr::video::SColor(0, 0, 0, 255));
+        end->swapColor(irr::video::SColor(0, 255, 0, 0));
 
-    //DRAW OBSTACLES
-    for (int x = 13, y = 15; x < 20; x++, y--)
-    {
-        //mapita[x][y]->swapColor(sf::Color::Black);
-        mapita[x][y]->setBlock(true);
+        //DRAW OBSTACLES
+        for (int x = 13, y = 15; x < 20; x++, y--)
+        {
+            mapita[x][y]->swapColor(irr::video::SColor(0, 0, 0, 0));
+            mapita[x][y]->setBlock(true);
     }
     //START FRONTIER
     node *current;
     frontier.push(start);
 
-    //INIT WINDOW SFML
-    //sf::RenderWindow window(sf::VideoMode(600, 600), "SFML works!");
 
-    //IRRLICHT
-    irr::SIrrlichtCreationParameters params;
-    params.DriverType = video::EDT_OPENGL;
-    params.WindowSize = core::dimension2d<u32>(640, 480);
-    IrrlichtDevice *device = createDeviceEx(params);
-
-    if (device == 0)
-        return 1; // could not create selected driver.
-
-    video::IVideoDriver *driver = device->getVideoDriver();
-    scene::ISceneManager *smgr = device->getSceneManager();
-        //gui::IGUIEnvironment *env = device->getGUIEnvironment();
-
-    driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
-    //ADD IRRLICHT CAMERA
-    scene::ICameraSceneNode *camera =
-        smgr->addCameraSceneNodeFPS(0, 100.0f, 1.2f);
-
-    camera->setPosition(core::vector3df(2700 * 2, 255 * 2, 2600 * 2));
-    camera->setTarget(core::vector3df(2700 * 2, 500 * 2, 2600 * 2));
-    camera->setFarValue(42000.0f);
-    //MAKE CUBES ON SCENE
-    scene::IMeshSceneNode *cubeNode = smgr->addCubeSceneNode(100);
-    //smgr->addMeshSceneNode(cube, 0, 0, core::vector3df(0,0,0));
-    if (cubeNode)
-    {
-        cubeNode->setMaterialFlag(video::EMF_LIGHTING, false);
-        cubeNode->setPosition(core::vector3df(500, 50, 500));
-    }
     //MAIN BUCLE
     while (device->run())
     {
         if (device->isWindowActive())
         {
             driver->beginScene(true, true, 0);
-
-
             //if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
             //{
 
@@ -143,32 +132,28 @@ int main(){
                     {
                         cout << "Sansacabao" << endl;
                         finish = true;
-                        //end->swapColor(sf::Color::Red);
+                        end->swapColor(irr::video::SColor(0, 255, 0, 0));
 
                         while (current != start)
                         {
                             current = current->getCameFrom();
-                            //current->swapColor(sf::Color::Red);
+                            current->swapColor(irr::video::SColor(0, 255, 0, 0));
                         }
-                        for (int x = 0; x < 25; x++)
-                        {
-                            for (int y = 0; y < 25; y++)
-                            {
-                                //window.draw(*mapita[x][y]->getRectangle());
-                            }
-                        }
-                        //window.display();
-                        cin >> insertKey;
+                        //for (int x = 0; x < 25; x++)
+                        //{
+                        //    for (int y = 0; y < 25; y++)
+                        //    {
+                        //        window.draw(*mapita[x][y]->getCube());
+                        //    }
+                        //}
                     }
-
                     neighbors = getNeighbours(current, mapita);
                     for (int i = 0; i < neighbors.size(); i++)
                     {
                         newCost = current->getWeight() + 1;
                         if (!frontier.top()->itsCounted() || newCost < neighbors[i]->getWeight())
                         {
-
-                            //neighbors[i]->swapColor(sf::Color::Magenta);
+                            neighbors[i]->swapColor(irr::video::SColor(0, 127, 0, 127));
                             neighbors[i]->setWeight(newCost);
                             neighbors[i]->setCounted(true);
                             priority = newCost + checkDistance(end, neighbors[i]);
@@ -179,39 +164,35 @@ int main(){
                     }
                     neighbors.clear();
                 }
+            //for (int x = 0; x < 25; x++)
+            //{
+            //    for (int y = 0; y < 25; y++)
+            //    {
+            //        window.draw(*mapita[x][y]->getRectangle());
+            //    }
             //}
-            //window.clear();
-
-            for (int x = 0; x < 25; x++)
-            {
-                for (int y = 0; y < 25; y++)
-                {
-                    //window.draw(*mapita[x][y]->getRectangle());
-                }
-            }
             smgr->drawAll();
             driver->endScene();
-            //window.display();
         }
     }
 
-        while (!frontier.empty())
-            frontier.pop();
-        //neighbors.clear();
+    while (!frontier.empty())
+        frontier.pop();
+    //neighbors.clear();
 
-        delete start;
-        delete end;
-        delete current;
+    delete start;
+    delete end;
+    delete current;
 
-        for (int i = 0; i < 24; i++)
+    for (int i = 0; i < 24; i++)
+    {
+        for (int j = 0; j < 24; j++)
         {
-            for (int j = 0; j < 24; j++)
-            {
-                delete mapita[i][j];
-            }
-            delete[] mapita[i];
+            delete mapita[i][j];
         }
+        delete[] mapita[i];
+    }
 
-        delete[] mapita;
-        return 0;
+    delete[] mapita;
+    return 0;
 }
