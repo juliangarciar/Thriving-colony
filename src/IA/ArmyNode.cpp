@@ -2,8 +2,6 @@
 #include "UnitNode.h"
 #include "BuildingNode.h"
 
-
-
 ArmyNode::ArmyNode(Node *fatherPnt) : Node() {
     father = fatherPnt;
     children = new Node*[2];

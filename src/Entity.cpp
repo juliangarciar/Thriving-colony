@@ -28,4 +28,3 @@ void Entity::takeDamage(int dmg) {
 void Entity::die() {
     delete this;
 }
-

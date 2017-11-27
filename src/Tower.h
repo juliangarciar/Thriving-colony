@@ -11,7 +11,9 @@ class Tower : public Building {
     
     private:
       int attackSpeed;
-      int damage;  
+      int damage;
+
+      Entity *objetive;
 };
 
 #endif

@@ -1,10 +1,16 @@
 #include "Unit.h"
 
-Unit::Unit(int hitPoints, int _moveSpeed, int _attackSpeed, int _damage) : Entity(hitPoints) {
-    moveSpeed = _moveSpeed;
-    attackSpeed = _attackSpeed;
-    attackDamage = _damage;
-    target = 0;
+Unit::Unit(int hpPnt, int moveSpeedPnt, int attackSpeedPnt, int damagePnt, int attackRangePnt, int viewRangePnt) : Entity(hpPnt) {
+    moveSpeed = moveSpeedPnt;
+    attackSpeed = attackSpeedPnt;
+    damage = damagePnt;
+    attackRange = attackRangePnt;
+    viewRange = viewRangePnt;
+
+    moving = false;
+    attacking = false;
+
+    objetive = 0;
 }
 
 Unit::~Unit() {
@@ -17,8 +23,23 @@ void Unit::attack() {
     }
 }
 
-void Unit::updateTarget(Entity* newTarget) {
-    if (newTarget != 0) {
-        target = newTarget;
-    }
+}
+
+Entity* Unit::getObjetive() {
+    return objetive;
+}
+
+void Unit::setMoving(bool movingPnt) {
+    moving = movingPnt;
+}
+
+void Unit::setAttacking(bool attackingPnt) {
+    attacking = attackingPnt;
+}
+
+/*
+* Do damage to the objetive
+*/
+void Unit::attack() {
+    objetive -> takeDamage(damage);
 }
