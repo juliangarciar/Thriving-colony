@@ -1,5 +1,4 @@
 #include "VeryHappyTree.h"
-<<<<<<< HEAD
 #include "ServiceNode.h"
 #include "ResourceNode.h"
 #include "HomeNode.h"
@@ -8,12 +7,6 @@
 #include <iostream>
 
 VeryHappyTree::VeryHappyTree(Node *fatherPnt) : BehaviourTree() {
-=======
-#include "../IA.h"
-#include <iostream>
-
-VeryHappyTree::VeryHappyTree() : BehaviourTree() {
->>>>>>> 171f5e90efc080f46f18c0f6e47090ea89178dc8
     happinessThreshold = 80;
     quarryMilestone = 50;
     mountedCreatureMilestone = 80;

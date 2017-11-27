@@ -42,13 +42,8 @@ void HappyTree::question() {
         children[0] -> question();
     } else{
         //Second branch: Services
-<<<<<<< HEAD
         if (IA::getInstance() -> getHappiness() < tree -> getHappinessThreshold()) {
             children[1] -> question();
-=======
-        if (IA::getInstance()->getHappiness() < happinessThreshold) {
-            serviceBranch();
->>>>>>> 171f5e90efc080f46f18c0f6e47090ea89178dc8
         } else {
             //Third branch: Resources
             if (tree -> needResourcesInvestment()) {
