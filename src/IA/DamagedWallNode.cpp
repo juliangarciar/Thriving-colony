@@ -8,3 +8,7 @@ DamagedWallNode::DamagedWallNode(Node *fatherPnt) : Node() {
 DamagedWallNode::~DamagedWallNode(){
     delete father;
 }
+
+void DamagedWallNode::question() {
+
+}

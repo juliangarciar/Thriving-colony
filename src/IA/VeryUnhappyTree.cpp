@@ -1,6 +1,7 @@
 #include "VeryUnhappyTree.h"
+#include "../IA.h"
 
-VeryUnhappyTree::VeryUnhappyTree(IA* iaPnt) : BehaviourTree(iaPnt) { 
+VeryUnhappyTree::VeryUnhappyTree() : BehaviourTree() { 
     happinessThreshold = 80;
     quarryMilestone = 50;
     mountedCreatureMilestone = 80;
@@ -36,7 +37,7 @@ void VeryUnhappyTree::developCity() {
                 resourcesBranch();
             } else{
                 //Fourth branch: Services
-                if (ia->getHappiness() < happinessThreshold) {
+                if (IA::getInstance()->getHappiness() < happinessThreshold) {
                     serviceBranch();
                 }
             }

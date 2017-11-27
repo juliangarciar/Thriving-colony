@@ -6,7 +6,7 @@
 class HappyTree : public BehaviourTree {
     
     public: 
-        HappyTree(IA*);
+        HappyTree();
         virtual ~HappyTree();
 
         virtual void developCity();

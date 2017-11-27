@@ -1,6 +1,7 @@
 #include "NeutralTree.h"
+#include "../IA.h"
 
-NeutralTree::NeutralTree(IA* iaPnt) : BehaviourTree(iaPnt) {
+NeutralTree::NeutralTree() : BehaviourTree() {
     happinessThreshold = 80;
     quarryMilestone = 50;
     mountedCreatureMilestone = 80;
@@ -33,7 +34,7 @@ void NeutralTree::developCity() { //Es asi?
             //ToDo: Construir viviendas
         } else {
             //Third branch: Services
-            if (ia->getHappiness() < happinessThreshold) {
+            if (IA::getInstance() -> getHappiness() < happinessThreshold) {
                 serviceBranch();
             } else {
                 //Fourth branch: Army

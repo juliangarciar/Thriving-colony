@@ -8,3 +8,7 @@ CloseBuildingNode::CloseBuildingNode(Node *fatherPnt) : Node() {
 CloseBuildingNode::~CloseBuildingNode(){
     delete father;
 }
+
+void CloseBuildingNode::question() {
+
+}

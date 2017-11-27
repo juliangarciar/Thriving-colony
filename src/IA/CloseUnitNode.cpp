@@ -13,3 +13,7 @@ CloseUnitNode::~CloseUnitNode(){
     delete father;
     delete[] children;
 }
+
+void CloseUnitNode::question() {
+
+}

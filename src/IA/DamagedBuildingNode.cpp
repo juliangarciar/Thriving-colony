@@ -8,3 +8,7 @@ DamagedBuildingNode::DamagedBuildingNode(Node *fatherPnt) : Node() {
 DamagedBuildingNode::~DamagedBuildingNode(){
     delete father;
 }
+
+void DamagedBuildingNode::question() {
+
+}

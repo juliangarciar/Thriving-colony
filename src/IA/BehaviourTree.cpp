@@ -2,8 +2,8 @@
 #include "../IA.h"
 #include <iostream>
 
-BehaviourTree::BehaviourTree(/*IA* iaPnt*/) {
-    //ia=iaPnt;
+BehaviourTree::BehaviourTree() {
+
 }
 
 BehaviourTree::~BehaviourTree() {
@@ -295,6 +295,14 @@ int BehaviourTree::getMarketMilestone() {
 
 int BehaviourTree::getQuarryMilestone() {
     return quarryMilestone;
+}
+
+int BehaviourTree::getMountedCreatureMilestone() {
+    return mountedCreatureMilestone;
+}
+
+int BehaviourTree::getCreatureMilestone() {
+    return creatureMilestone;
 }
 
 int BehaviourTree::getHappinessThreshold() {

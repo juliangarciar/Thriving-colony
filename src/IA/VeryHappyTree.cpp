@@ -1,7 +1,8 @@
 #include "VeryHappyTree.h"
+#include "../IA.h"
 #include <iostream>
 
-VeryHappyTree::VeryHappyTree(IA* iaPnt) : BehaviourTree(iaPnt) {
+VeryHappyTree::VeryHappyTree() : BehaviourTree() {
     happinessThreshold = 80;
     quarryMilestone = 50;
     mountedCreatureMilestone = 80;
@@ -23,11 +24,12 @@ VeryHappyTree::VeryHappyTree(IA* iaPnt) : BehaviourTree(iaPnt) {
 VeryHappyTree::~VeryHappyTree() {
 
 }
+///TODO quitar IA de los arboles
 
 void VeryHappyTree::developCity() {
 
     //First branch: Services
-    if (ia->getHappiness() < happinessThreshold) {
+    if (IA::getInstance()->getHappiness() < happinessThreshold) {
         std::cout << "Voy a invertir en felicidad" << std::endl;
         serviceBranch();
     } else {
@@ -39,7 +41,7 @@ void VeryHappyTree::developCity() {
             //Third branch: Homes
             if (calculateCitizensRate() < citizensThreshold) {
                 std::cout << "Voy a invertir en casas" << std::endl;
-                ia ->increaseCitizens();
+                IA::getInstance() ->increaseCitizens();
                 //ToDo: Construir viviendas
             } else {
                 //Fourth branch: Army
@@ -48,7 +50,7 @@ void VeryHappyTree::developCity() {
                     armyBranch();
                 } else {
                     std::cout << "No hago nada" << std::endl;
-                    ia ->increaseCitizens();
+                    IA::getInstance() ->increaseCitizens();
                 }
             }
         }

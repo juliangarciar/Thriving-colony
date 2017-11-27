@@ -6,7 +6,7 @@
 class VeryUnhappyTree : public BehaviourTree {
     
     public:
-        VeryUnhappyTree(IA*);
+        VeryUnhappyTree();
         virtual ~VeryUnhappyTree();
 
         virtual void developCity();
