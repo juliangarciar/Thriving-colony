@@ -8,3 +8,7 @@ WallAttackNode::WallAttackNode(Node *fatherPnt) : Node() {
 WallAttackNode::~WallAttackNode(){
 
 }
+
+void WallAttackNode::question() {
+
+}

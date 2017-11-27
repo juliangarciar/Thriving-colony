@@ -1,13 +1,13 @@
 #ifndef BEHAVIOUR_TREE_H
 #define BEHAVIOUR_TREE_H
 
-//#include "../IA.h"
+
 
 class BehaviourTree {
     
     public:
         BehaviourTree();
-        ~BehaviourTree();
+        virtual ~BehaviourTree();
         void makeChoice();
 
         virtual void developCity() = 0;

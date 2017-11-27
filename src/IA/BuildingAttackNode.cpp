@@ -21,3 +21,7 @@ BuildingAttackNode::~BuildingAttackNode(){
     delete father;
     delete[] children;
 }
+
+void BuildingAttackNode::question() {
+
+}

@@ -8,3 +8,7 @@ RangeAttackNode::RangeAttackNode(Node *fatherPnt) : Node() {
 RangeAttackNode::~RangeAttackNode(){
     delete father;
 }
+
+void RangeAttackNode::question() {
+
+}

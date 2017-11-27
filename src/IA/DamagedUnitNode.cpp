@@ -13,3 +13,7 @@ DamagedUnitNode::~DamagedUnitNode(){
     delete father;
     delete[] children;
 }
+
+void DamagedUnitNode::question() {
+
+}

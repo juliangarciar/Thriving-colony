@@ -28,9 +28,15 @@ Human::~Human() {
 
 }
 
+Human* Human::instance = 0;
+
 Human* Human::getInstance() {
     if (instance == 0) {
         instance = new Human();
     }
     return instance;
+}
+
+BehaviourTree* Human::getTree() {
+    return tree;
 }

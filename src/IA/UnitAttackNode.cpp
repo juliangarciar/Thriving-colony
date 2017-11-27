@@ -15,3 +15,7 @@ UnitAttackNode::~UnitAttackNode(){
     delete father;
     delete[] children;
 }
+
+void UnitAttackNode::question() {
+
+}

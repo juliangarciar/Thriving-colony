@@ -10,6 +10,7 @@ class AttackUnitRoot : public Node {
         virtual ~AttackUnitRoot();
 
     private:
+        virtual void question();
 };
 
 #endif

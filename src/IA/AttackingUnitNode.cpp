@@ -13,3 +13,7 @@ AttackingUnitNode::~AttackingUnitNode(){
     delete father;
     delete[] children;
 }
+
+void AttackingUnitNode::question() {
+
+}

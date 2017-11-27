@@ -12,3 +12,7 @@ AttackUnitRoot::AttackUnitRoot() : Node() {
 AttackUnitRoot::~AttackUnitRoot(){
     delete father;
 }
+
+void AttackUnitRoot::question() {
+
+}

@@ -8,3 +8,7 @@ TowerAttackNode::TowerAttackNode(Node *fatherPnt) : Node() {
 TowerAttackNode::~TowerAttackNode(){
     delete father;
 }
+
+void TowerAttackNode::question() {
+
+}

@@ -8,3 +8,7 @@ MainBuildingAttackNode::MainBuildingAttackNode(Node *fatherPnt) : Node() {
 MainBuildingAttackNode::~MainBuildingAttackNode(){
     delete father;
 }
+
+void MainBuildingAttackNode::question() {
+
+}
