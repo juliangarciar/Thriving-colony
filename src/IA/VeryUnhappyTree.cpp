@@ -1,6 +1,11 @@
 #include "VeryUnhappyTree.h"
+#include "ServiceNode.h"
+#include "ResourceNode.h"
+#include "HomeNode.h"
+#include "ArmyNode.h"
+#include "../IA.h"
 
-VeryUnhappyTree::VeryUnhappyTree(IA* iaPnt) : BehaviourTree(iaPnt) { 
+VeryUnhappyTree::VeryUnhappyTree(Node *fatherPnt) : BehaviourTree() { 
     happinessThreshold = 80;
     quarryMilestone = 50;
     mountedCreatureMilestone = 80;
@@ -17,27 +22,39 @@ VeryUnhappyTree::VeryUnhappyTree(IA* iaPnt) : BehaviourTree(iaPnt) {
     meleeThreshold = 0.5;
     rangeThreshold = 0.45;
     siegeThreshold = 0.05;
+
+    father = fatherPnt;
+    children = new Node*[4];
+    children[0] = new ArmyNode(this);
+    children[1] = new HomeNode(this);
+    children[2] = new ResourceNode(this);
+    children[3] = new ServiceNode(this);
 }
 
 VeryUnhappyTree::~VeryUnhappyTree() {
-    
+    delete father;
+    delete[] children;    
 }
-void VeryUnhappyTree::developCity() {
+void VeryUnhappyTree::question() {
     //First branch: Army
-    if (needArmyInvestment()) {
-        armyBranch();
+    if (tree -> needArmyInvestment()) {
+        children[0] -> question();
     } else {
         //Second branch: Homes
-        if (calculateCitizensRate() < citizensThreshold) {
-            //ToDo: Construir viviendas
+        if (tree -> calculateCitizensRate() < tree -> getCitizensThreshold()) {
+            children[1] -> question();
         } else {
             //Third branch: Resources
-            if (needResourcesInvestment()) {
-                resourcesBranch();
-            } else{
+            if (tree -> needResourcesInvestment()) {
+                children[2] -> question();
+            } else {
                 //Fourth branch: Services
-                if (ia->getHappiness() < happinessThreshold) {
-                    serviceBranch();
+                if (IA::getInstance() -> getHappiness() < tree -> getHappinessThreshold()) {
+                    children[3] -> question();
+                } else {
+                    //std::cout << "No hago nada" << std::endl;
+                    // Ultima oportunidad
+                    children[1] -> question();
                 }
             }
         }

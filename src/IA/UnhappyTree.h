@@ -2,14 +2,15 @@
 #define UNHAPPY_TREE_H
 
 #include "BehaviourTree.h"
+#include "Node.h"
 
-class UnhappyTree : public BehaviourTree {
+class UnhappyTree : public BehaviourTree, public Node {
 
     public:
-        UnhappyTree(IA*);
+        UnhappyTree(Node*);
         ~UnhappyTree();
 
-        virtual void developCity();
+        virtual void question();
 
         virtual bool readyToAttack();
         

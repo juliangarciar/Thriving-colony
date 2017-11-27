@@ -2,8 +2,8 @@
 #include "../IA.h"
 #include <iostream>
 
-BehaviourTree::BehaviourTree(/*IA* iaPnt*/) {
-    //ia=iaPnt;
+BehaviourTree::BehaviourTree() {
+    
 }
 
 BehaviourTree::~BehaviourTree() {

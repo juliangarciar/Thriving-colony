@@ -19,7 +19,7 @@ MeleeNode::~MeleeNode(){
 
 void MeleeNode::question() {
     //std::cout << Voy a hacer melees
-    if (IA::getInstance()->getCityLevel() >= tree -> getCreatureMilestone()) {
+    if (children[0] -> question()) {
             children[0] -> question();
         } else {
             //First subsubsubbranch: With creature

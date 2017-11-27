@@ -6,7 +6,7 @@
 class BehaviourTree {
     
     public:
-        BehaviourTree(/*IA* iaPnt*/);
+        BehaviourTree();
         ~BehaviourTree();
         void makeChoice();
 
@@ -44,8 +44,6 @@ class BehaviourTree {
         float getMeleeThreshold();
         float getRangeThreshold();
         float getCitizensThreshold();
-        
-        
 
         bool getShortOnCrystal();
         bool getShortOnMetal(); 
@@ -58,8 +56,7 @@ class BehaviourTree {
         bool getNeedWorkshop();
         bool getNeedWall();
         bool getNeedTower();
-
-
+        
         bool getUnderAttack();
         
         void debugMessage();

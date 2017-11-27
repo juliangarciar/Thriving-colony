@@ -1,7 +1,12 @@
 #include "VeryHappyTree.h"
+#include "ServiceNode.h"
+#include "ResourceNode.h"
+#include "HomeNode.h"
+#include "ArmyNode.h"
+#include "../IA.h"
 #include <iostream>
 
-VeryHappyTree::VeryHappyTree(IA* iaPnt) : BehaviourTree(iaPnt) {
+VeryHappyTree::VeryHappyTree(Node *fatherPnt) : BehaviourTree() {
     happinessThreshold = 80;
     quarryMilestone = 50;
     mountedCreatureMilestone = 80;
@@ -18,37 +23,40 @@ VeryHappyTree::VeryHappyTree(IA* iaPnt) : BehaviourTree(iaPnt) {
     meleeThreshold = 0.5;
     rangeThreshold = 0.45;
     siegeThreshold = 0.05;
+
+    father = fatherPnt;
+    children = new Node*[4];
+    children[0] = new ServiceNode(this);
+    children[1] = new ResourceNode(this);
+    children[2] = new HomeNode(this);
+    children[3] = new ArmyNode(this);
 }
 
 VeryHappyTree::~VeryHappyTree() {
-
+    delete father;
+    delete[] children;
 }
 
-void VeryHappyTree::developCity() {
-
+void VeryHappyTree::question() {
     //First branch: Services
-    if (ia->getHappiness() < happinessThreshold) {
-        std::cout << "Voy a invertir en felicidad" << std::endl;
-        serviceBranch();
+    if (IA::getInstance() -> getHappiness() < tree -> getHappinessThreshold()) {
+        children[0] -> question();
     } else {
         //Second branch: Resources
-        if (needResourcesInvestment()) {
-            std::cout << "Voy a invertir en recursos" << std::endl;
-            resourcesBranch();
+        if (tree -> needResourcesInvestment()) {
+            children[1] -> question();
         } else {
             //Third branch: Homes
-            if (calculateCitizensRate() < citizensThreshold) {
-                std::cout << "Voy a invertir en casas" << std::endl;
-                ia ->increaseCitizens();
-                //ToDo: Construir viviendas
+            if (tree -> calculateCitizensRate() < tree -> getCitizensThreshold()) {
+                children[2] -> question();
             } else {
                 //Fourth branch: Army
-                if (needArmyInvestment()) {
-                    std::cout << "Voy a invertir en ejercito" << std::endl;
-                    armyBranch();
+                if (tree -> needArmyInvestment()) {
+                    children[3] -> question();
                 } else {
-                    std::cout << "No hago nada" << std::endl;
-                    ia ->increaseCitizens();
+                    //std::cout << "No hago nada" << std::endl;
+                    // Ultima oportunidad
+                    children[2] -> question();
                 }
             }
         }

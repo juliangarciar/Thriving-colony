@@ -10,7 +10,8 @@ class CreatureNode : public Node {
         virtual ~CreatureNode();
 
     private:
-        virtual void question();
+        virtual bool question();
+        virtual void response();
 };
 
 #endif

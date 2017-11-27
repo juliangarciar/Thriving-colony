@@ -1,6 +1,11 @@
 #include "NeutralTree.h"
+#include "ServiceNode.h"
+#include "ResourceNode.h"
+#include "HomeNode.h"
+#include "ArmyNode.h"
+#include "../IA.h"
 
-NeutralTree::NeutralTree(IA* iaPnt) : BehaviourTree(iaPnt) {
+NeutralTree::NeutralTree(Node *fatherPnt) : BehaviourTree() {
     happinessThreshold = 80;
     quarryMilestone = 50;
     mountedCreatureMilestone = 80;
@@ -17,28 +22,40 @@ NeutralTree::NeutralTree(IA* iaPnt) : BehaviourTree(iaPnt) {
     meleeThreshold = 0.5;
     rangeThreshold = 0.45;
     siegeThreshold = 0.05;
+
+    father = fatherPnt;
+    children = new Node*[4];
+    children[0] = new ResourceNode(this);
+    children[1] = new HomeNode(this);
+    children[2] = new ServiceNode(this);
+    children[3] = new ArmyNode(this);
 }
 
 NeutralTree::~NeutralTree() {
-    
+    delete father;
+    delete[] children;    
 }
 
-void NeutralTree::developCity() { //Es asi?
+void NeutralTree::question() {
     //First branch: Resources
-    if (needResourcesInvestment()) {
-        resourcesBranch();
+    if (tree -> needResourcesInvestment()) {
+        children[0] -> question();
     } else {
         //Second branch: Homes
-        if (calculateCitizensRate() < citizensThreshold) {
-            //ToDo: Construir viviendas
+        if (tree -> calculateCitizensRate() < tree -> getCitizensThreshold()) {
+            children[1] -> question();
         } else {
             //Third branch: Services
-            if (ia->getHappiness() < happinessThreshold) {
-                serviceBranch();
+            if (IA::getInstance() -> getHappiness() < tree -> getHappinessThreshold()) {
+                children[2] -> question();
             } else {
                 //Fourth branch: Army
-                if (needArmyInvestment()) {
-                    armyBranch();
+                if (tree -> needArmyInvestment()) {
+                    children[3] -> question();
+                } else {
+                    //std::cout << "No hago nada" << std::endl;
+                    // Ultima oportunidad
+                    children[1] -> question();
                 }
             }
         }

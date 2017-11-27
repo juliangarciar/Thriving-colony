@@ -10,7 +10,11 @@ CreatureNode::~CreatureNode(){
     delete father;
 }
 
-void CreatureNode::question() {
+bool CreatureNode::question() {
+    return IA::getInstance()->getCityLevel() >= tree -> getCreatureMilestone();
+}
+
+void CreatureNode::response(){
     //std::cout << Genero una criatura << std::endl;
     //ToDo: Generar criatura
     IA::getInstance()-> increaseMeleeAmount();
