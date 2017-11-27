@@ -5,7 +5,8 @@
 #include "MenuState.h"
 #include "GameState.h"
 
-#include "GraphicEngine/Screen.h"
+#include <IOEngine/InputManager.h>
+#include <GraphicEngine/Screen.h>
 
 class Game {
     public:
@@ -18,6 +19,7 @@ class Game {
         void CleanUp();
 
         Screen *getWindow();
+        InputManager *getIO();
 
     protected:
         Game();
@@ -32,6 +34,8 @@ class Game {
 
         MenuState *menu;
         GameState *game;
+
+        InputManager *io;
 };
 
 #endif

@@ -12,13 +12,13 @@ class Vector2 {
 
         Vector2();
         Vector2(T x, T y);
-        Vector2(core::vector2di position);
-        Vector2(core::vector2df position);
+        Vector2(core::vector2di v);
+        Vector2(core::vector2df v);
         virtual ~Vector2();
 
-        void setPosition(T x, T y);
-        void setPosition(core::vector2di position);
-        void setPosition(core::vector2df position);
+        void set(T x, T y);
+        void set(core::vector2di v);
+        void set(core::vector2df v);
 
         Vector2<T>& normalize();
 

@@ -13,15 +13,15 @@ Vector2<T>::Vector2(T x, T y) {
 }
 
 template <class T>
-Vector2<T>::Vector2(core::vector2di position){
-    this->x = position.X;
-    this->y = position.Y;
+Vector2<T>::Vector2(core::vector2di v){
+    this->x = v.X;
+    this->y = v.Y;
 }
 
 template <class T>
-Vector2<T>::Vector2(core::vector2df position){
-    this->x = position.X;
-    this->y = position.Y;
+Vector2<T>::Vector2(core::vector2df v){
+    this->x = v.X;
+    this->y = v.Y;
 }
 
 template <class T>
@@ -30,21 +30,21 @@ Vector2<T>::~Vector2() {
 }
 
 template <class T>
-void Vector2<T>::setPosition(T x, T y){
+void Vector2<T>::set(T x, T y){
     this->x = x;
     this->y = y;
 }
 
 template <class T>
-void Vector2<T>::setPosition(core::vector2di position){
-    this->x = position.X;
-    this->y = position.Y;
+void Vector2<T>::set(core::vector2di v){
+    this->x = v.X;
+    this->y = v.Y;
 }
 
 template <class T>
-void Vector2<T>::setPosition(core::vector2df position){
-    this->x = position.X;
-    this->y = position.Y;
+void Vector2<T>::set(core::vector2df v){
+    this->x = v.X;
+    this->y = v.Y;
 }
 
 template <class T>

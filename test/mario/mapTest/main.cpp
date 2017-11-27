@@ -49,7 +49,7 @@ int main() {
 	terrain->setMaterialType(video::EMT_DETAIL_MAP);
     terrain->scaleTexture(1.0f, 20.0f);
     
-    /*scene::ITriangleSelector* selector = smgr->createTerrainTriangleSelector(terrain);
+    scene::ITriangleSelector* selector = smgr->createTerrainTriangleSelector(terrain);
     terrain->setTriangleSelector(selector);
     gui::ICursorControl *cursor = device->getCursorControl();
     scene::ISceneCollisionManager* collisionManager = smgr->getSceneCollisionManager();

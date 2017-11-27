@@ -12,9 +12,11 @@ class Mouse {
     public:
         Mouse();
         ~Mouse();
+
+        void setPosition(Vector2<int> position);
         
         gui::ICursorControl *getCursor();
-        Vector2<float> getPosition();
+        Vector2<int> getPosition();
 
     private:
         gui::ICursorControl *cursor;
