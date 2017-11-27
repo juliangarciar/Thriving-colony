@@ -2,6 +2,7 @@
 #include "CreatureNode.h"
 #include "MountedMeleeNode.h"
 #include "MeleeFootmenNode.h"
+#include "../IA.h"
 
 MeleeNode::MeleeNode(Node *fatherPnt) : Node() {
     father = fatherPnt;
@@ -12,7 +13,8 @@ MeleeNode::MeleeNode(Node *fatherPnt) : Node() {
 }
 
 MeleeNode::~MeleeNode(){
-
+    delete father;
+    delete[] children;
 }
 
 void MeleeNode::question() {

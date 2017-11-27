@@ -7,7 +7,7 @@ class CatapultNode : public Node {
 
     public:
         CatapultNode(Node *);
-        ~CatapultNode();
+        virtual ~CatapultNode();
 
     private:
         virtual void question();

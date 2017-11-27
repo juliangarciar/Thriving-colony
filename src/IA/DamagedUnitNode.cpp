@@ -10,5 +10,6 @@ DamagedUnitNode::DamagedUnitNode(Node *fatherPnt) : Node() {
 }
 
 DamagedUnitNode::~DamagedUnitNode(){
-
+    delete father;
+    delete[] children;
 }

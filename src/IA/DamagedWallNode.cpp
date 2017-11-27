@@ -6,5 +6,5 @@ DamagedWallNode::DamagedWallNode(Node *fatherPnt) : Node() {
 }
 
 DamagedWallNode::~DamagedWallNode(){
-
+    delete father;
 }

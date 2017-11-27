@@ -6,5 +6,5 @@ MainBuildingAttackNode::MainBuildingAttackNode(Node *fatherPnt) : Node() {
 }
 
 MainBuildingAttackNode::~MainBuildingAttackNode(){
-
+    delete father;
 }

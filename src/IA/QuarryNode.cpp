@@ -1,4 +1,5 @@
 #include "QuarryNode.h"
+#include "../IA.h"
 
 QuarryNode::QuarryNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

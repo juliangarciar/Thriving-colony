@@ -1,4 +1,5 @@
 #include "RangeFootmenNode.h"
+#include "../IA.h"
 
 RangeFootmenNode::RangeFootmenNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

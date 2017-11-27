@@ -1,4 +1,6 @@
 #include "BarrackNode.h"
+#include "../IA.h"
+
 
 BarrackNode::BarrackNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

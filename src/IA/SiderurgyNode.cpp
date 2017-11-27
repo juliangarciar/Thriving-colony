@@ -1,4 +1,5 @@
 #include "SiderurgyNode.h"
+#include "../IA.h"
 
 SiderurgyNode::SiderurgyNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

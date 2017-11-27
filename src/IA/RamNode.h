@@ -7,7 +7,7 @@ class RamNode : public Node {
 
     public:
         RamNode(Node *);
-        ~RamNode();
+        virtual ~RamNode();
 
     private:
         virtual void question();

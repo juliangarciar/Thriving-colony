@@ -7,7 +7,7 @@ class WallNode : public Node {
 
     public:
         WallNode(Node *);
-        ~WallNode();
+        virtual ~WallNode();
 
     private:
         virtual void question();

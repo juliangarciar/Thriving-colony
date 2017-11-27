@@ -6,5 +6,5 @@ MeleeAttackNode::MeleeAttackNode(Node *fatherPnt) : Node() {
 }
 
 MeleeAttackNode::~MeleeAttackNode(){
-
+    delete father;
 }

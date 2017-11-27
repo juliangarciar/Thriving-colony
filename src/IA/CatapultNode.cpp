@@ -1,4 +1,5 @@
 #include "CatapultNode.h"
+#include "../IA.h"
 
 CatapultNode::CatapultNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

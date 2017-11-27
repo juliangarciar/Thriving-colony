@@ -7,7 +7,7 @@ class DamagedBuildingNode : public Node {
 
     public:
         DamagedBuildingNode(Node *);
-        ~DamagedBuildingNode();
+        virtual ~DamagedBuildingNode();
 
     private:
         virtual void question();

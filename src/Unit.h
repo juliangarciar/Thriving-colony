@@ -9,11 +9,15 @@ class Unit : public Entity {
         Unit(int, int, int, int);
         virtual ~Unit();
 
+        void attack();
+        void updateTarget(Entity*);
+
     protected:
         int moveSpeed;
         int attackSpeed;
-        int damage;
+        int attackDamage;
 
+        Entity* target;
     private:
         
 };

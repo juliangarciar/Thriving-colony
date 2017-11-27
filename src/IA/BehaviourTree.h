@@ -1,7 +1,7 @@
 #ifndef BEHAVIOUR_TREE_H
 #define BEHAVIOUR_TREE_H
 
-#include "../IA.h"
+//#include "../IA.h"
 
 class BehaviourTree {
     
@@ -59,6 +59,9 @@ class BehaviourTree {
         bool getNeedWall();
         bool getNeedTower();
 
+
+        bool getUnderAttack();
+        
         void debugMessage();
 
     protected:

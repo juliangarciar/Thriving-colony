@@ -6,5 +6,5 @@ TowerAttackNode::TowerAttackNode(Node *fatherPnt) : Node() {
 }
 
 TowerAttackNode::~TowerAttackNode(){
-
+    delete father;
 }

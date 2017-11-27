@@ -7,7 +7,7 @@ class QuarryNode : public Node {
 
     public:
         QuarryNode(Node *);
-        ~QuarryNode();
+        virtual ~QuarryNode();
 
     private:
         virtual void question();

@@ -7,7 +7,7 @@ class SchoolNode : public Node {
 
     public:
         SchoolNode(Node *);
-        ~SchoolNode();
+        virtual ~SchoolNode();
 
     private:
         virtual void question();

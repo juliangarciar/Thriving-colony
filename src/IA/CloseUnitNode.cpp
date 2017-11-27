@@ -10,5 +10,6 @@ CloseUnitNode::CloseUnitNode(Node *fatherPnt) : Node() {
 }
 
 CloseUnitNode::~CloseUnitNode(){
-
+    delete father;
+    delete[] children;
 }

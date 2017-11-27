@@ -7,7 +7,7 @@ class CloseUnitNode : public Node {
 
     public:
         CloseUnitNode(Node *);
-        ~CloseUnitNode();
+        virtual ~CloseUnitNode();
 
     private:
         virtual void question();

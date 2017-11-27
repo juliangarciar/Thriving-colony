@@ -7,7 +7,7 @@ class WorkshopNode : public Node {
 
     public:
         WorkshopNode(Node *);
-        ~WorkshopNode();
+        virtual ~WorkshopNode();
 
     private:
         virtual void question();

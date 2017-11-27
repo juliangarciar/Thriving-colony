@@ -7,7 +7,7 @@ class UnitNode : public Node {
 
     public:
         UnitNode(Node *);
-        ~UnitNode();
+        virtual ~UnitNode();
 
     private:
         virtual void question();

@@ -6,5 +6,5 @@ RangeAttackNode::RangeAttackNode(Node *fatherPnt) : Node() {
 }
 
 RangeAttackNode::~RangeAttackNode(){
-
+    delete father;
 }

@@ -10,5 +10,6 @@ AttackingUnitNode::AttackingUnitNode(Node *fatherPnt) : Node() {
 }
 
 AttackingUnitNode::~AttackingUnitNode(){
-
+    delete father;
+    delete[] children;
 }

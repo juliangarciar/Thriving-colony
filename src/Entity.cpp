@@ -1,13 +1,12 @@
 #include "Entity.h"
 
-Entity::Entity(int hitPoints, int attackDmg) {
+Entity::Entity(int hitPoints) {
     hpMax = hitPoints;
     hp = hpMax;
-    attackDamage = attackDmg;
 }
 
 Entity::~Entity() {
-    delete target;
+
 }
 
 int Entity::getHP() {
@@ -30,8 +29,3 @@ void Entity::die() {
     delete this;
 }
 
-void Entity::attack() {
-    if (target != 0) {
-        target -> takeDamage(attackDamage);
-    }
-}

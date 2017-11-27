@@ -7,7 +7,7 @@ class Node {
     
     public:
         Node();
-        ~Node();
+        virtual ~Node();
 
         virtual void question();
 

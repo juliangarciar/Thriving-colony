@@ -1,4 +1,5 @@
 #include "HomeNode.h"
+#include "../IA.h"
 
 HomeNode::HomeNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

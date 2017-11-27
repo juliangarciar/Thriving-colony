@@ -7,7 +7,7 @@ class ServiceNode : public Node {
 
     public:
         ServiceNode(Node*);
-        ~ServiceNode();
+        virtual ~ServiceNode();
 
     private:
         virtual void question();

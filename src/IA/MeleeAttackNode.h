@@ -7,7 +7,7 @@ class MeleeAttackNode : public Node {
 
     public:
         MeleeAttackNode(Node *);
-        ~MeleeAttackNode();
+        virtual ~MeleeAttackNode();
 
     private:
         virtual void question();

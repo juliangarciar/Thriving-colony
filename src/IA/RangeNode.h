@@ -7,7 +7,7 @@ class RangeNode : public Node {
 
     public:
         RangeNode(Node *);
-        ~RangeNode();
+        virtual ~RangeNode();
 
     private:
         virtual void question();

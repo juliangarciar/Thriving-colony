@@ -34,6 +34,11 @@ class Player {
         int getWallAmount();
         int getTowerAmount();
 
+        bool getClosedDoors();
+        bool getDeployedTroops();
+
+        bool losingBattle();
+
         /////////////////////////////////
         void update();
 
@@ -57,6 +62,11 @@ class Player {
 
         void increaseWallAmount();
         void increaseTowerAmount();
+
+        void deployTroops();
+        void retractTroops();
+        void closeDoors();
+        void openDoors();
         //Setters
 
     protected:
@@ -87,6 +97,9 @@ class Player {
         bool barrackBuilt;
         bool barnBuilt;
         bool workshopBuilt;
+
+        bool deployedTroops;
+        bool closedDoors;
 
     private:
         

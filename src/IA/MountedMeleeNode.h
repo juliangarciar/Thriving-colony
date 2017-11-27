@@ -7,7 +7,7 @@ class MountedMeleeNode : public Node {
 
     public:
         MountedMeleeNode(Node *);
-        ~MountedMeleeNode();
+        virtual ~MountedMeleeNode();
 
     private:
         virtual void question();

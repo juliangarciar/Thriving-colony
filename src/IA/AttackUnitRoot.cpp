@@ -10,5 +10,5 @@ AttackUnitRoot::AttackUnitRoot() : Node() {
 }
 
 AttackUnitRoot::~AttackUnitRoot(){
-
+    delete father;
 }

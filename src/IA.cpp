@@ -1,3 +1,4 @@
+
 #include "IA.h"
 
 IA::IA() : Player() {
@@ -29,6 +30,7 @@ IA::IA() : Player() {
 IA::~IA() {
 
 }
+IA* IA::instance = 0;
 
 IA* IA::getInstance() {
     if (instance == 0) {

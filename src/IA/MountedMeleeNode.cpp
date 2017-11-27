@@ -1,4 +1,5 @@
 #include "MountedMeleeNode.h"
+#include "../IA.h"
 
 MountedMeleeNode::MountedMeleeNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

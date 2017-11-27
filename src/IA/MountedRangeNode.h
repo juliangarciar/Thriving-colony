@@ -7,7 +7,7 @@ class MountedRangeNode : public Node {
 
     public:
         MountedRangeNode(Node *);
-        ~MountedRangeNode();
+        virtual ~MountedRangeNode();
 
     private:
         virtual void question();

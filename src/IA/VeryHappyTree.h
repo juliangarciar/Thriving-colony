@@ -8,7 +8,7 @@ class VeryHappyTree : public BehaviourTree {
     
     public:
         VeryHappyTree(IA*);
-        ~VeryHappyTree();
+        virtual ~VeryHappyTree();
 
         virtual void developCity();
 

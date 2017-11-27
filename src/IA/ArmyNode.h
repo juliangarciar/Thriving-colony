@@ -7,7 +7,7 @@ class ArmyNode : public Node {
 
     public:
         ArmyNode(Node*);
-        ~ArmyNode();
+        virtual ~ArmyNode();
 
     private:
         virtual void question();

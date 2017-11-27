@@ -7,7 +7,7 @@ class BarnNode : public Node {
 
     public:
         BarnNode(Node *);
-        ~BarnNode();
+        virtual ~BarnNode();
 
     private:
         virtual void question();

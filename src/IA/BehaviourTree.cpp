@@ -342,6 +342,9 @@ bool BehaviourTree::getNeedTower() {
     return needTower;
 }
 
+bool BehaviourTree::getUnderAttack() {
+    return underAttack;
+}
 
 bool BehaviourTree::getShortOnCrystal() {
     return shortOnCrystal;

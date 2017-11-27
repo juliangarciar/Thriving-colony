@@ -1,4 +1,5 @@
 #include "WallNode.h"
+#include "../IA.h"
 
 WallNode::WallNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

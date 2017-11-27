@@ -7,7 +7,7 @@ class MarketNode : public Node {
 
     public:
         MarketNode(Node*);
-        ~MarketNode();
+        virtual ~MarketNode();
 
     private:
         virtual void question();

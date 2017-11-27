@@ -18,5 +18,6 @@ BuildingAttackNode::BuildingAttackNode(Node *fatherPnt) : Node() {
 }
 
 BuildingAttackNode::~BuildingAttackNode(){
-
+    delete father;
+    delete[] children;
 }

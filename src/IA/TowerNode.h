@@ -7,7 +7,7 @@ class TowerNode : public Node {
 
     public:
         TowerNode(Node *);
-        ~TowerNode();
+        virtual ~TowerNode();
 
     private:
         virtual void question();

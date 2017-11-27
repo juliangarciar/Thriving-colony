@@ -7,7 +7,7 @@ class CloseBuildingNode : public Node {
 
     public:
         CloseBuildingNode(Node *);
-        ~CloseBuildingNode();
+        virtual ~CloseBuildingNode();
 
     private:
         virtual void question();

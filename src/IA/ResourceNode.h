@@ -7,7 +7,7 @@ class ResourceNode : public Node {
 
     public:
         ResourceNode(Node*);
-        ~ResourceNode();
+        virtual ~ResourceNode();
 
     private:
         virtual void question();

@@ -7,7 +7,7 @@ class HospitalNode : public Node {
 
     public:
         HospitalNode(Node*);
-        ~HospitalNode();
+        virtual ~HospitalNode();
 
     private:
         virtual void question();

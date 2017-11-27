@@ -7,7 +7,7 @@ class RangeAttackNode : public Node {
 
     public:
         RangeAttackNode(Node *);
-        ~RangeAttackNode();
+        virtual ~RangeAttackNode();
 
     private:
         virtual void question();

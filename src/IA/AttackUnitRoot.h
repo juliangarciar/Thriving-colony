@@ -7,7 +7,7 @@ class AttackUnitRoot : public Node {
 
     public:
         AttackUnitRoot();
-        ~AttackUnitRoot();
+        virtual ~AttackUnitRoot();
 
     private:
 };

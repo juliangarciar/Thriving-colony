@@ -6,5 +6,5 @@ CloseBuildingNode::CloseBuildingNode(Node *fatherPnt) : Node() {
 }
 
 CloseBuildingNode::~CloseBuildingNode(){
-
+    delete father;
 }

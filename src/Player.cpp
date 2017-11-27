@@ -100,6 +100,19 @@ int Player::getQuarryAmount() {
     return quarryAmount;
 }
 
+bool Player::getClosedDoors() {
+    return closedDoors;
+}
+
+// Return wether or not our troops are deployed
+bool Player::getDeployedTroops() {
+    return deployedTroops;
+}
+
+/**
+ * CONTROL METHODS
+ */
+
 void Player::increaseHappiness(int h) {
     happiness += h;
 }
@@ -173,4 +186,29 @@ void Player::increaseWallAmount() {
 
 void Player::increaseTowerAmount() {
     towerAmount ++;
+}
+
+bool Player::losingBattle() {
+    //ToDo: calcular si estas perdiendo tu la  batalla
+    return false;
+}
+
+void Player::closeDoors() {
+    // ToDo: hacer de verdad
+    closedDoors = true;
+}
+
+void Player::openDoors() {
+    // ToDo: hacer de verdad
+    closedDoors = false;
+}
+
+void Player::deployTroops() {
+    // ToDo: hacer de verdad
+    deployedTroops = true;
+}
+
+void Player::retractTroops() {
+    // ToDo: hacer de verdad
+    deployedTroops = false;
 }

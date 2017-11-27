@@ -7,7 +7,7 @@ class UnitAttackNode : public Node {
 
     public:
         UnitAttackNode(Node *);
-        ~UnitAttackNode();
+        virtual ~UnitAttackNode();
 
     private:
         virtual void question();

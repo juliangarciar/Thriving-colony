@@ -1,6 +1,7 @@
 #include "RangeNode.h"
 #include "MountedRangeNode.h"
 #include "RangeFootmenNode.h"
+#include "../IA.h"
 
 RangeNode::RangeNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

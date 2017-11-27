@@ -7,7 +7,7 @@ class AttackingUnitNode : public Node {
 
     public:
         AttackingUnitNode(Node *);
-        ~AttackingUnitNode();
+        virtual ~AttackingUnitNode();
 
     private:
         virtual void question();

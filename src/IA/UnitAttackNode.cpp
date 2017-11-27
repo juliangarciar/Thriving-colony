@@ -12,5 +12,6 @@ UnitAttackNode::UnitAttackNode(Node *fatherPnt) : Node() {
 }
 
 UnitAttackNode::~UnitAttackNode(){
-
+    delete father;
+    delete[] children;
 }

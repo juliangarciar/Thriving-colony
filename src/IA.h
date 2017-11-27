@@ -14,6 +14,7 @@ class IA : public Player {
         BehaviourTree* getTree();
         
     private:
+        
         static IA* instance;
         BehaviourTree* tree;
 };
