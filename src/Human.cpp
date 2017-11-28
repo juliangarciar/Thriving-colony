@@ -37,6 +37,3 @@ Human* Human::getInstance() {
     return instance;
 }
 
-BehaviourTree* Human::getTree() {
-    return tree;
-}

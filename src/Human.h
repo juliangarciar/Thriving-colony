@@ -2,7 +2,6 @@
 #define HUMAN_H
 
 #include "Player.h"
-#include "IA/BehaviourTree.h"
 
 class Human : public Player {
     
