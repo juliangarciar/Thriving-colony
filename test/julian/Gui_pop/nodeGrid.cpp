@@ -1,18 +1,21 @@
 #include <limits>
 #include "nodeGrid.h"
-nodeGrid::nodeGrid(int x, int y, irr::scene::ISceneManager *smgrData)
+nodeGrid::nodeGrid(int x, int y, int z, irr::scene::ISceneManager *smgrData)
 {
     posX = x;
     posY = y;
-    visited = false;
+    diag = false;
     block = false;
     frontier = false;
-    weight = std::numeric_limits<int>::max();
+    priority = 0;
+    weight = 0;
     cameFrom = NULL;
+    counted = false;
     smgr = smgrData;
     cube = smgr->addCubeSceneNode(20.f);
+    diag = false;
     if(cube){
-        cube->setPosition(irr::core::vector3df(x * 20.f, 0, y * 20.f));
+        cube->setPosition(irr::core::vector3df(x * 20.f, z * 20.f, y * 20.f));
         cube->setMaterialFlag(irr::video::EMF_LIGHTING, false);
         smgr->getMeshManipulator()->setVertexColors(cube->getMesh(), irr::video::SColor(0, 0, 255, 255));
     }
@@ -48,13 +51,11 @@ void nodeGrid::setBlock(bool blockData)
 {
     this->block = blockData;
 }
-bool nodeGrid::itsVisited()
-{
-    return visited;
+void nodeGrid::setDiag(bool diagData){
+    this->diag = diagData;
 }
-void nodeGrid::setVisited(bool visitedData)
-{
-    this->visited = visitedData;
+bool nodeGrid::itsDiag(){
+    return this->diag;
 }
 bool nodeGrid::itsFrontier()
 {
@@ -64,11 +65,11 @@ void nodeGrid::setFrontier(bool frontierData)
 {
     this->frontier = frontierData;
 }
-int nodeGrid::getWeight()
+float nodeGrid::getWeight()
 {
     return this->weight;
 }
-void nodeGrid::setWeight(int weightData)
+void nodeGrid::setWeight(float weightData)
 {
     this->weight = weightData;
 }
@@ -88,11 +89,11 @@ void nodeGrid::setCounted(bool countedData)
 {
     this->counted = countedData;
 }
-int nodeGrid::getPriority()
+float nodeGrid::getPriority()
 {
     return this->priority;
 }
-void nodeGrid::setPriority(int priorityData)
+void nodeGrid::setPriority(float priorityData)
 {
     this->priority = priorityData;
 }

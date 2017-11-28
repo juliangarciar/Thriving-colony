@@ -7,7 +7,7 @@ using namespace std;
 //TYPE NEEDED FOR PRIORITY QUEUE
 struct comparePriority{
     bool operator()(node* const & p1, node* const & p2 ){
-        return p1->getPriority() > p2->getPriority();
+        return p1->getPriority() >= p2->getPriority();
     }
 };
 //CHECK NEIGHBOURS
@@ -24,11 +24,11 @@ std::vector < node* > getNeighbours(node* currentData, node*** mapData){
         neighbours.push_back(mapData[x][y + 1]);
     }
     if((x - 1) >= 0){
-        if(!mapData[x - 1][y]->itsBlock())
+        if(!mapData[x - 1][y]->itsBlock() )
         neighbours.push_back(mapData[x - 1][y]);
     }
-    if((y-  1) >= 0){
-        if(!mapData[x][y - 1]->itsBlock())
+    if((y - 1) >= 0){
+        if(!mapData[x][y - 1]->itsBlock() )
         neighbours.push_back(mapData[x][y - 1]);
     }
     return neighbours;
@@ -109,7 +109,7 @@ int main(){
             {
                 
                 current = frontier.top();
-                frontier.top()->setVisited(true);
+                //frontier.top()->setVisited(true);
                 frontier.pop();
                 //SHOW PATH
                 if (current == end)
@@ -140,16 +140,17 @@ int main(){
                     newCost = current->getWeight() + 1;
                     if (!frontier.top()->itsCounted() || newCost < neighbors[i]->getWeight())
                     {
-                        
                         neighbors[i]->swapColor(sf::Color::Magenta);
                         neighbors[i]->setWeight(newCost);
                         neighbors[i]->setCounted(true);
                         priority = newCost + checkDistance(end, neighbors[i]);
                         neighbors[i]->setPriority(priority);
-                        frontier.push(neighbors[i]);
                         neighbors[i]->setCameFrom(current);
+                        frontier.push(neighbors[i]);
+                        
                     }
                 }
+                
                 neighbors.clear();
             }
         }
