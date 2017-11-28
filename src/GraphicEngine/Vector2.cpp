@@ -72,6 +72,7 @@ core::vector2df Vector2<T>::getVectorF() {
 
 template <class T>
 Vector2<T> Vector2<T>::getFromPolarCoordinates(float r, float phi){
+    phi = phi * (PI/180);
     Vector2<T> point;
     point.x = x + (r * cosf(phi));  // Assign to the point member x
     point.y = y + (r * sinf(phi));  // Assign to the point member y.
