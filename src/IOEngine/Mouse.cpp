@@ -12,8 +12,12 @@ Mouse::~Mouse(){
     cursor = NULL;
 }
 
-core::position2d<s32> Mouse::getPosition() {
-    return cursor->getPosition();
+void Mouse::setPosition(Vector2<int> position){
+    cursor->setPosition(position.getVectorI());
+}
+
+Vector2<int> Mouse::getPosition() {
+    return Vector2<int>(cursor->getPosition());
 }
 
 gui::ICursorControl *Mouse::getCursor(){

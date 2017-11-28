@@ -7,7 +7,7 @@ Screen* Screen::pinstance = 0;
 Screen* Screen::Instance(){
     
     if(pinstance == 0){
-        pinstance = new Screen(640, 480);
+        pinstance = new Screen(1280, 720);
     }
     
     return pinstance;
@@ -17,12 +17,10 @@ Screen::Screen(int width, int height) {
     screenWidth = width;
     screenHeight = height;
 
-    io = new InputManager();
-
     irr::SIrrlichtCreationParameters params;
 	params.DriverType=video::EDT_OPENGL;
-	params.WindowSize=core::dimension2d<u32>(640, 480);
-    params.EventReceiver=io;
+	params.WindowSize=core::dimension2d<u32>(width, height);
+    //params.EventReceiver=Game::Instance()->get;
     device = createDeviceEx(params);
     
     if (device == 0) exit(0); 
@@ -41,9 +39,13 @@ Screen::Screen(int width, int height) {
 
 Screen::~Screen() {
     delete device;
-    device = NULL;
+    device = NULL; 
 }
 
+void Screen::setEventReceiver(IEventReceiver *receiver){
+    device->setEventReceiver(receiver);
+}
+ 
 void Screen::beginScene(){
     float now = device->getTimer()->getTime();
     deltaTime = (float)(now - dtThen) / 1000.f; // Time in seconds
@@ -97,8 +99,4 @@ int Screen::getScreenHeight(){
 
 float Screen::getDeltaTime(){
     return deltaTime;
-}
-
-InputManager *Screen::getIO(){
-    return io;
 }

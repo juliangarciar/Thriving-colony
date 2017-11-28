@@ -1,10 +1,10 @@
 #include "GameState.h"
-#include "GraphicEngine/Screen.h"
+#include "Game.h"
 
 GameState::GameState() : State() {
-    camera = new Camera(Screen::Instance()->getSceneManager());
-    map = new Terrain("media/heightmap.bmp"); //ToDo: mover a map
+    camera = new CameraController();
     cursor = new Mouse();
+    map = new Terrain("media/heightmap.bmp"); //ToDo: mover a map
 }
 
 GameState::~GameState() {
@@ -12,18 +12,18 @@ GameState::~GameState() {
 }
 
 void GameState::Init(){
-    camera->setPosition(Vector3<float>(500, 3000, 500));
-    camera->setTargetPosition(Vector3<float>(500, 0, 500));
-
     map->setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
 }
 
 void GameState::Input(){
-
+    camera->Move(Game::Instance()->getIO(), cursor, map);
+    camera->Rotate(Game::Instance()->getIO(), cursor);
+    Vector3<float> v = map->getPointCollision(cursor);
+    //std::cout << v.x << " " << v.y << " " << v.z << std::endl;
 }
 
 void GameState::Update(){
-    camera->Move(Screen::Instance()->getIO(), cursor, map);
+
 }
 
 void GameState::Render(){

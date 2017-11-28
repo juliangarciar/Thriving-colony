@@ -2,13 +2,14 @@
 #define SCREEN_H
 
 #include <irrlicht.h>
-#include <IOEngine/InputManager.h>
 
 using namespace irr;
 
 class Screen {
     public:
         static Screen* Instance();
+
+        void setEventReceiver(IEventReceiver *receiver);
 
         void beginScene();
         void endScene();
@@ -27,7 +28,6 @@ class Screen {
         int getScreenHeight();
 
         float getDeltaTime();
-        InputManager *getIO();
         
     protected:
         Screen(int width, int height);
@@ -41,8 +41,6 @@ class Screen {
         video::IVideoDriver* driver;
         scene::ISceneManager* scene;
         gui::IGUIEnvironment* gui;
-
-        InputManager *io;
 
         int screenWidth;
         int screenHeight;

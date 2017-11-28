@@ -3,7 +3,9 @@
 
 #include <iostream>
 #include <irrlicht.h>
+#include <IOEngine/Mouse.h>
 #include "Texture.h"
+#include "Vector3.h"
 
 using namespace irr;
 
@@ -14,16 +16,14 @@ class Terrain{
 
         void setTexture(Texture* terrainTexture, Texture* detailTexture);
 
+        Vector3<float> getPointCollision(Mouse *cursor);
+
         scene::ITerrainSceneNode* getTerrain();
     private:
         scene::ITerrainSceneNode* terrain;
-        /*scene::ITriangleSelector* selector;
+        scene::ITriangleSelector* selector;
         scene::ISceneCollisionManager* collisionManager;
-        scene::ISceneNode* sphere;
-        core::position2d<s32> pos;
-        core::vector3df point;
-        core::triangle3df triangle;
-        scene::ISceneNode *node;*/
+        //scene::ISceneNode* sphere;
 };
 
 #endif

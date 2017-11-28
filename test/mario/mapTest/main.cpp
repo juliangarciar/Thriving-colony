@@ -49,7 +49,10 @@ int main() {
 	terrain->setMaterialType(video::EMT_DETAIL_MAP);
     terrain->scaleTexture(1.0f, 20.0f);
     
+<<<<<<< HEAD
     // Cursor terrain
+=======
+>>>>>>> 8ae8946305316d07413c2c95c8154e53de84c29a
     scene::ITriangleSelector* selector = smgr->createTerrainTriangleSelector(terrain);
     terrain->setTriangleSelector(selector);
     gui::ICursorControl *cursor = device->getCursorControl();
