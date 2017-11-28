@@ -1,6 +1,11 @@
 #include "VeryUnhappyTree.h"
+#include "ServiceNode.h"
+#include "ResourceNode.h"
+#include "HomeNode.h"
+#include "ArmyNode.h"
+#include "../IA.h"
 
-VeryUnhappyTree::VeryUnhappyTree(IA* iaPnt) : BehaviourTree(iaPnt) { 
+VeryUnhappyTree::VeryUnhappyTree(Node *fatherPnt) : BehaviourTree() { 
     happinessThreshold = 80;
     quarryMilestone = 50;
     mountedCreatureMilestone = 80;
@@ -17,60 +22,39 @@ VeryUnhappyTree::VeryUnhappyTree(IA* iaPnt) : BehaviourTree(iaPnt) {
     meleeThreshold = 0.5;
     rangeThreshold = 0.45;
     siegeThreshold = 0.05;
+
+    father = fatherPnt;
+    children = new Node*[4];
+    children[0] = new ArmyNode(this);
+    children[1] = new HomeNode(this);
+    children[2] = new ResourceNode(this);
+    children[3] = new ServiceNode(this);
 }
 
 VeryUnhappyTree::~VeryUnhappyTree() {
-    
+    delete father;
+    delete[] children;    
 }
-void VeryUnhappyTree::developCity() {
+void VeryUnhappyTree::question() {
     //First branch: Army
-    //First subbranch: Units
-    if (calculateArmyCitizensRate() < armyThreshold) {
-        unitsBranch();
+    if (tree -> needArmyInvestment()) {
+        children[0] -> question();
     } else {
-        //Second subbranch: Buildings
-        //First subsubbranch: Barrack
-        if (ia->getBarrackBuilt() != true){
-            //To do: construir barraca
+        //Second branch: Homes
+        if (tree -> calculateCitizensRate() < tree -> getCitizensThreshold()) {
+            children[1] -> question();
         } else {
-            //Second subsubbranch: Barn
-            if (ia->getCityLevel() >= barnMilestone && ia->getBarnBuilt() != true) {
-                //To do: construir establo
+            //Third branch: Resources
+            if (tree -> needResourcesInvestment()) {
+                children[2] -> question();
             } else {
-                //Third subsubbranch: Workshop
-                if (ia->getCityLevel() >= workshopMilestone && ia->getWorkshopBuilt() != true) {
-                    //To do: construir taller
+                //Fourth branch: Services
+                if (IA::getInstance() -> getHappiness() < tree -> getHappinessThreshold()) {
+                    children[3] -> question();
                 } else {
-                    //Fourth subsubranch: Wall
-                    if (ia->getCityLevel() >= wallMilestone && ia->getWallBuilt() != true) {
-                        //To do: construir muralla
-                    } else {
-                        //Fifth subsubbranch: Tower
-                        if (ia->getCityLevel() >= towerMilestone) {
-                            //To do: construir torre
-                        } else {
-                            //Second branch: Homes
-                            if (calculateCitizensRate() < citizensThreshold) {
-                                //ToDo: Construir viviendas
-                            } else {
-                                //Third branch: Resources
-                                //First subbranch: Siderurgy
-                                if (calculateMetalProductionRate() < metalThreshold) {
-                                    //To do: Construir siderurgia
-                                } else {
-                                    //Second subbranch: Quarry
-                                    if (calculateCrystalProductionRate() < crystalThreshold && ia->getCityLevel() >= quarryMilestone) {
-                                        //To do: Construir cantera
-                                    } else{
-                                        //Fourth branch: Services
-                                        if (ia->getHappiness() < happinessThreshold) {
-                                            serviceBranch();
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    //std::cout << "No hago nada" << std::endl;
+                    // Ultima oportunidad
+                    children[1] -> question();
                 }
             }
         }

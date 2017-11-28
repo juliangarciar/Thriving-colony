@@ -1,6 +1,11 @@
 #include "UnhappyTree.h"
+#include "ServiceNode.h"
+#include "ResourceNode.h"
+#include "HomeNode.h"
+#include "ArmyNode.h"
+#include "../IA.h"
 
-UnhappyTree::UnhappyTree(IA* iaPnt) : BehaviourTree(iaPnt) {
+UnhappyTree::UnhappyTree(Node *fatherPnt) : BehaviourTree() {
     happinessThreshold = 80;
     quarryMilestone = 50;
     mountedCreatureMilestone = 80;
@@ -17,67 +22,45 @@ UnhappyTree::UnhappyTree(IA* iaPnt) : BehaviourTree(iaPnt) {
     meleeThreshold = 0.5;
     rangeThreshold = 0.45;
     siegeThreshold = 0.05;
+
+    father = fatherPnt;
+    children = new Node*[4];
+    children[0] = new ResourceNode(this);
+    children[1] = new ArmyNode(this);
+    children[2] = new HomeNode(this);
+    children[3] = new ServiceNode(this);
 }
 
 UnhappyTree::~UnhappyTree() {
-    
+    delete father;
+    delete[] children;
 }
 
-void UnhappyTree::developCity() {
+void UnhappyTree::question() {
     //First branch: Resources
-    //First subbranch: Siderurgy
-    if (calculateMetalProductionRate() < metalThreshold) {
-        //To do: Construir siderurgia
+    if (tree -> needResourcesInvestment()) {
+        children[0] -> question();
     } else {
-        //Second subbranch: Quarry
-        if (calculateCrystalProductionRate() < crystalThreshold && ia->getCityLevel() >= quarryMilestone) {
-            //To do: Construir cantera
+        //Second branch: Army
+        if (tree -> needArmyInvestment()) {
+            children[1] -> question();
         } else {
-            //Second branch: Army
-            //First subbranch: Units
-            if (calculateArmyCitizensRate() < armyThreshold) {
-                unitsBranch();
-            } else {
-                //Second subbranch: Buildings
-                //First subsubbranch: Barrack
-                if (ia->getBarrackBuilt() != true){
-                    //To do: construir barraca
-                } else {
-                    //Second subsubbranch: Barn
-                    if (ia->getCityLevel() >= barnMilestone && ia->getBarnBuilt() != true) {
-                        //To do: construir establo
-                    } else {
-                        //Third subsubbranch: Workshop
-                        if (ia->getCityLevel() >= workshopMilestone && ia->getWorkshopBuilt() != true) {
-                            //To do: construir taller
-                        } else {
-                            //Fourth subsubranch: Wall
-                            if (ia->getCityLevel() >= wallMilestone && ia->getWallBuilt() != true) {
-                                //To do: construir muralla
-                            } else {
-                                //Fifth subsubbranch: Tower
-                                if (ia->getCityLevel() >= towerMilestone) {
-                                    //To do: construir torre
-                                } else{
-                                    //Third branch: Homes
-                                    if (calculateCitizensRate() < citizensThreshold) {
-                                        //ToDo: Construir viviendas
-                                    } else{
-                                        //Fourth branch: Services
-                                        if (ia->getHappiness() < happinessThreshold) {
-                                            serviceBranch();
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+            //Third branch: Homes
+            if (tree -> calculateCitizensRate() < tree -> getCitizensThreshold()) {
+                children[2] -> question();
+            } else{
+                //First branch: Services
+                if (IA::getInstance() -> getHappiness() < tree -> getHappinessThreshold()) {
+                    children[3] -> question();
+                } else{
+                    //std::cout << "No hago nada" << std::endl;
+                    // Ultima oportunidad
+                    children[2] -> question();
                 }
             }
         }
     }
 }
-
 /**
  * Determines wheter or not you are ready to attack
  */

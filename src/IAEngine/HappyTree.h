@@ -2,16 +2,17 @@
 #define HAPPY_TREE_H
 
 #include "BehaviourTree.h"
+#include "Node.h"
 
-class HappyTree : public BehaviourTree {
+class HappyTree : public BehaviourTree, public Node {
     
     public: 
-        HappyTree(IA*);
-        ~HappyTree();
+        HappyTree(Node*);
+        virtual ~HappyTree();
 
-        void developCity();
+        virtual void question();
 
-        bool readyToAttack();
+        virtual bool readyToAttack();
 
     private:
 };

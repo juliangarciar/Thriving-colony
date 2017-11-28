@@ -6,11 +6,14 @@
 class Tower : public Building {
     
     public:
-        Tower();
+        Tower(int, int, int);
         virtual ~Tower();
-
+    
     private:
-        
+      int attackSpeed;
+      int damage;
+
+      Entity *objetive;
 };
 
 #endif

@@ -2,14 +2,15 @@
 #define NEUTRAL_TREE_H
 
 #include "BehaviourTree.h"
+#include "Node.h"
 
-class NeutralTree : public BehaviourTree {
+class NeutralTree : public BehaviourTree, public Node {
     
     public:
-        NeutralTree(IA*);
+        NeutralTree(Node *);
         ~NeutralTree();
 
-        virtual void developCity();
+        virtual void question();
 
         virtual bool readyToAttack();
 

@@ -1,6 +1,12 @@
 #include "VeryHappyTree.h"
+#include "ServiceNode.h"
+#include "ResourceNode.h"
+#include "HomeNode.h"
+#include "ArmyNode.h"
+#include "../IA.h"
+#include <iostream>
 
-VeryHappyTree::VeryHappyTree(IA* iaPnt) : BehaviourTree(iaPnt) {
+VeryHappyTree::VeryHappyTree(Node *fatherPnt) : BehaviourTree() {
     happinessThreshold = 80;
     quarryMilestone = 50;
     mountedCreatureMilestone = 80;
@@ -10,68 +16,48 @@ VeryHappyTree::VeryHappyTree(IA* iaPnt) : BehaviourTree(iaPnt) {
     workshopMilestone = 65;
     creatureMilestone = 100;
 
-    metalThreshold = 1.5;
-    crystalThreshold = 1.2;
-    citizensThreshold = 2.5;
-    armyThreshold = 0.1;
+    metalThreshold = 0.6;
+    crystalThreshold = 0.4;
+    citizensThreshold = 0.3;
+    armyThreshold = 0.2;
     meleeThreshold = 0.5;
     rangeThreshold = 0.45;
     siegeThreshold = 0.05;
+
+    father = fatherPnt;
+    children = new Node*[4];
+    children[0] = new ServiceNode(this);
+    children[1] = new ResourceNode(this);
+    children[2] = new HomeNode(this);
+    children[3] = new ArmyNode(this);
 }
 
 VeryHappyTree::~VeryHappyTree() {
-
+    delete father;
+    delete[] children;
 }
+///TODO quitar IA de los arboles
 
-void VeryHappyTree::developCity() { //Es asi?
+void VeryHappyTree::question() {
     //First branch: Services
-    if (ia->getHappiness() < happinessThreshold) {
-        serviceBranch();
+    if (IA::getInstance() -> getHappiness() < tree -> getHappinessThreshold()) {
+        children[0] -> question();
     } else {
         //Second branch: Resources
-        //First subbranch: Siderurgy
-        if (calculateMetalProductionRate() < metalThreshold) {
-            //To do: Construir siderurgia
+        if (tree -> needResourcesInvestment()) {
+            children[1] -> question();
         } else {
-            //Second subbranch: Quarry
-            if (calculateCrystalProductionRate() < crystalThreshold && ia->getCityLevel() >= quarryMilestone) {
-                //To do: Construir cantera
+            //Third branch: Homes
+            if (tree -> calculateCitizensRate() < tree -> getCitizensThreshold()) {
+                children[2] -> question();
             } else {
-                //Third branch: Homes
-                if (calculateCitizensRate() < citizensThreshold) {
-                    //ToDo: Construir viviendas
+                //Fourth branch: Army
+                if (tree -> needArmyInvestment()) {
+                    children[3] -> question();
                 } else {
-                    //Fourth branch: Army
-                    //First subbranch: Units
-                    if (calculateArmyCitizensRate() < armyThreshold) {
-                        unitsBranch();
-                    } else {
-                        //Second subbranch: Buildings
-                        //First subsubbranch: Barrack
-                        if (ia->getBarrackBuilt() != true){
-                            //To do: construir barraca
-                        } else {
-                            //Second subsubbranch: Barn
-                            if (ia->getCityLevel() >= barnMilestone && ia->getBarnBuilt() != true) {
-                                //To do: construir establo
-                            } else {
-                                //Third subsubbranch: Workshop
-                                if (ia->getCityLevel() >= workshopMilestone && ia->getWorkshopBuilt() != true) {
-                                    //To do: construir taller
-                                } else {
-                                    //Fourth subsubranch: Wall
-                                    if (ia->getCityLevel() >= wallMilestone && ia->getWallBuilt() != true) {
-                                        //To do: construir muralla
-                                    } else {
-                                        //Fifth subsubbranch: Tower
-                                        if (ia->getCityLevel() >= towerMilestone) {
-                                            //To do: construir torre
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    //std::cout << "No hago nada" << std::endl;
+                    // Ultima oportunidad
+                    children[2] -> question();
                 }
             }
         }

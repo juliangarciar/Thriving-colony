@@ -4,11 +4,17 @@
 class Entity {
 
     public:
-        Entity();
+        Entity(int);
         virtual ~Entity();
 
+        int getHP();
+        void takeDamage(int);
+        void die();
+
+    protected:
+        int hpMax;
+        int hp;
     private:
-    
 };
 
 #endif

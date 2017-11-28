@@ -1,6 +1,11 @@
 #include "NeutralTree.h"
+#include "ServiceNode.h"
+#include "ResourceNode.h"
+#include "HomeNode.h"
+#include "ArmyNode.h"
+#include "../IA.h"
 
-NeutralTree::NeutralTree(IA* iaPnt) : BehaviourTree(iaPnt) {
+NeutralTree::NeutralTree(Node *fatherPnt) : BehaviourTree() {
     happinessThreshold = 80;
     quarryMilestone = 50;
     mountedCreatureMilestone = 80;
@@ -17,61 +22,40 @@ NeutralTree::NeutralTree(IA* iaPnt) : BehaviourTree(iaPnt) {
     meleeThreshold = 0.5;
     rangeThreshold = 0.45;
     siegeThreshold = 0.05;
+
+    father = fatherPnt;
+    children = new Node*[4];
+    children[0] = new ResourceNode(this);
+    children[1] = new HomeNode(this);
+    children[2] = new ServiceNode(this);
+    children[3] = new ArmyNode(this);
 }
 
 NeutralTree::~NeutralTree() {
-    
+    delete father;
+    delete[] children;    
 }
 
-void NeutralTree::developCity() { //Es asi?
+void NeutralTree::question() {
     //First branch: Resources
-    //First subbranch: Siderurgy
-    if (calculateMetalProductionRate() < metalThreshold) {
-        //To do: Construir siderurgia
+    if (tree -> needResourcesInvestment()) {
+        children[0] -> question();
     } else {
-        //Second subbranch: Quarry
-        if (calculateCrystalProductionRate() < crystalThreshold && ia->getCityLevel() >= quarryMilestone) {
-            //To do: Construir cantera
+        //Second branch: Homes
+        if (tree -> calculateCitizensRate() < tree -> getCitizensThreshold()) {
+            children[1] -> question();
         } else {
-            //Second branch: Homes
-            if (calculateCitizensRate() < citizensThreshold) {
-                //ToDo: Construir viviendas
+            //Third branch: Services
+            if (IA::getInstance() -> getHappiness() < tree -> getHappinessThreshold()) {
+                children[2] -> question();
             } else {
-                //Third branch: Services
-                if (ia->getHappiness() < happinessThreshold) {
-                    serviceBranch();
+                //Fourth branch: Army
+                if (tree -> needArmyInvestment()) {
+                    children[3] -> question();
                 } else {
-                    //Fourth branch: Army
-                    //First subbranch: Units
-                    if (calculateArmyCitizensRate() < armyThreshold) {
-                        unitsBranch();
-                    } else {
-                        //Second subbranch: Buildings
-                        //First subsubbranch: Barrack
-                        if (ia->getBarrackBuilt() != true){
-                            //To do: construir barraca
-                        } else {
-                            //Second subsubbranch: Barn
-                            if (ia->getCityLevel() >= barnMilestone && ia->getBarnBuilt() != true) {
-                                //To do: construir establo
-                            } else {
-                                //Third subsubbranch: Workshop
-                                if (ia->getCityLevel() >= workshopMilestone && ia->getWorkshopBuilt() != true) {
-                                    //To do: construir taller
-                                } else {
-                                    //Fourth subsubranch: Wall
-                                    if (ia->getCityLevel() >= wallMilestone && ia->getWallBuilt() != true) {
-                                        //To do: construir muralla
-                                    } else {
-                                        //Fifth subsubbranch: Tower
-                                        if (ia->getCityLevel() >= towerMilestone) {
-                                            //To do: construir torre
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    //std::cout << "No hago nada" << std::endl;
+                    // Ultima oportunidad
+                    children[1] -> question();
                 }
             }
         }
