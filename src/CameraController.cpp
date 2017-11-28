@@ -4,29 +4,31 @@
 CameraController::CameraController(){
     camera = new Camera();
     camera->setCameraPosition(Vector3<float>(500, 3000, 500));
-    //camera->setInclination(Vector2<float>(200, 200));
+    camera->setTargetPosition(Vector3<float>(0, 0, 0));
     camera->setShadowDistance(42000.f);
+    //ToDo: conversion de vector2 a vector3 y viceversa
+    Vector2<float> newPos = Vector2<float>(camera->getTargetPosition().x, camera->getTargetPosition().z);
+    newPos = newPos.getFromPolarCoordinates(100.f, 0);
+    camera->setCameraPosition(Vector3<float>(newPos.x, 0, newPos.y));
 
 	recipsqrt2 = camera->getReciprocalSquareroot();
-	direction.x = camera->getTargetPosition().x - camera->getCameraPosition().x;
-	direction.y = camera->getTargetPosition().z - camera->getCameraPosition().z;
-	direction.normalize(); 
 	camSpeed = 500.f;
-	camHeight = 200.f;
-	tarHeight = 160.f;
+	camHeight = 500.f;
 	minZoom = 150;
 	maxZoom = 800;
-	marginTop = 50;
-	marginLeft = 60;
+    
+	screenMarginV = 50;
+	screenMarginH = 60;
 	mapMarginTop = 100;
 	mapMarginLeft = 100;
 	mapMarginBottom = 9240;
 	mapMarginRight = 9240;
     screenCenter = Vector2<int>(1280/2, 720/2);
-	//camPos = position;
-	//direction.x = camera->getTargetPosition().x - camera->getCameraPosition().x;
-	//direction.y = camera->getTargetPosition().z - camera->getCameraPosition().z;
-	//direction.normalize(); 
+
+	direction.x = camera->getTargetPosition().x - camera->getCameraPosition().x;
+	direction.y = camera->getTargetPosition().z - camera->getCameraPosition().z;
+	direction.normalize(); 
+
     camMove = true;
 }
 
@@ -43,14 +45,14 @@ void CameraController::Move(InputManager *receiver, Mouse *cursor, Terrain *terr
 		if (receiver->isWheelUp()) {
 			if (camHeight > minZoom) {
 				camHeight -= 20.0f;
-				tarHeight -= 20.0f;
 				camSpeed -= 0.02f;
+		        camMove = true;
 			}
 		} else {
 			if (camHeight < maxZoom) {
 				camHeight += 20.0f;
-				tarHeight += 20.0f;
 				camSpeed += 0.02f;
+		        camMove = true;
 			}
 		}
 	}
@@ -62,15 +64,15 @@ void CameraController::Move(InputManager *receiver, Mouse *cursor, Terrain *terr
 
 	Vector2<int> cursorPosCurrent = cursor->getPosition();
 	
-	if (cursorPosCurrent.y < marginTop){
+	if (cursorPosCurrent.y < screenMarginV){
 		n |= 1 << 0;
-	} else if (cursorPosCurrent.y > (sc->getScreenHeight() - marginTop)) {
+	} else if (cursorPosCurrent.y > (sc->getScreenHeight() - screenMarginV)) {
 		n |= 1 << 2;
 	}
 
-	if (cursorPosCurrent.x < marginLeft){
+	if (cursorPosCurrent.x < screenMarginH){
 		n |= 1 << 1;
-	} else if (cursorPosCurrent.x > (sc->getScreenWidth() - marginLeft)) {
+	} else if (cursorPosCurrent.x > (sc->getScreenWidth() - screenMarginH)) {
 		n |= 1 << 3;
 	}
 
@@ -155,15 +157,15 @@ void CameraController::Move(InputManager *receiver, Mouse *cursor, Terrain *terr
 
     if (rotationMode){
 		if (cursorPosCurrent.x < screenCenter.x){
-			delta.x += 10;
+			delta.x += 1;
 		} else if (cursorPosCurrent.x > screenCenter.x) {
-			delta.x -= 10;
+			delta.x -= 1;
 		}
 
 		if (cursorPosCurrent.y < screenCenter.y){
-			delta.y += 10;
+			delta.y += 1;
 		} else if (cursorPosCurrent.y > screenCenter.y) {
-			delta.y -= 10;
+			delta.y -= 1;
 		}
         
         // reset cursor position to center
@@ -175,12 +177,10 @@ void CameraController::Move(InputManager *receiver, Mouse *cursor, Terrain *terr
         delta.y = (delta.y < 0) ? 360+delta.y : delta.y;
         delta.y = (delta.y > 360) ? delta.y-360 : delta.y;
 
-		std::cout << "Deltas-- dX: " << delta.x << " dY: " << delta.y << std::endl;
+        
 
 		Vector2<float> position = Vector2<float>(camTar1.x, camTar1.z);
-		std::cout << "Pre-- dX: " << position.x << " dY: " << position.y << std::endl;
-		Vector2<float> newPosition = position.getFromPolarCoordinates(100, delta.x);
-		std::cout << "Pos-- dX: " << newPosition.x << " dY: " << newPosition.y << std::endl;
+		Vector2<float> newPosition = position.getFromPolarCoordinates(100.f, (delta.x/100.f));
 
 		camPos.set(newPosition.x, camPos.y, newPosition.y);
 
@@ -190,7 +190,7 @@ void CameraController::Move(InputManager *receiver, Mouse *cursor, Terrain *terr
     if (camMove){
         currentHeight = terrain->getTerrain()->getHeight(camPos.x, camPos.z);
 
-        camPos.y = 0.85f*camPos.y + 0.15f*(currentHeight + camHeight);
+        camPos.y = currentHeight + camHeight;
 		camMove = false;
     }
     

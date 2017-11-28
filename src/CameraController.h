@@ -19,10 +19,6 @@ class CameraController {
 
     private:
         Camera *camera;
-        //ToDo: Esto no va aqui
-        int marginLeft, marginTop, minZoom, maxZoom; //
-        int mapMarginLeft, mapMarginRight, mapMarginTop, mapMarginBottom; //
-        Vector2<int> screenCenter;
         // Helpers
         float recipsqrt2;
         // Camera movement variables ============
@@ -31,12 +27,18 @@ class CameraController {
 		Vector2<float> delta;
         Vector2<float> direction;
         Vector2<int> cursorPosSaved;
-        float camSpeed, camHeight, tarHeight, Xup, Yup, currentHeight;
+        int screenMarginV, screenMarginH; //Screen margin for movement
+        int minZoom, maxZoom; //Zoom for the camera
+        float camSpeed, camHeight, Xup, Yup, currentHeight;
         // Camera rotation optimization variables =================
         Vector3<float> camTar2;
         bool rotationMode;
         f32 cosA, sinA;
         f32 rotSpeed, currentAngle, tempAngle, aSinA, bSinA;
         f32 cosASq, aSinASq, bSinASq, bSinATarTemp2X, cosATarTemp2Y, aSinATarTemp2Z;
+
+        //ToDo: Esto no va aqui
+        int mapMarginLeft, mapMarginRight, mapMarginTop, mapMarginBottom; //
+        Vector2<int> screenCenter; //
 };
 #endif
