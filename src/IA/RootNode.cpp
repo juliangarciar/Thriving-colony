@@ -2,15 +2,15 @@
 #include "AttackNode.h"
 #include "DefendNode.h"
 #include "DevelopCityNode.h"
+#include "VeryHappyTree.h"
 
 
 RootNode::RootNode(Node *fatherPnt) : Node() {
     father = fatherPnt;
-    children = new Node*[4];
+    children = new Node*[3];
     children[0] = new AttackNode(this);
     children[1] = new DefendNode(this);
-    children[1] = new DevelopCityNode(this);
-
+    children[2] = new VeryHappyTree(this);
 }
 
 RootNode::~RootNode(){
@@ -19,7 +19,6 @@ RootNode::~RootNode(){
 }
 
 void RootNode::question() {
-    
     //First branch: Attacking the enemy
     if (tree -> readyToAttack()) {
         children[0] -> question();

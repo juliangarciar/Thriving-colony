@@ -9,14 +9,13 @@ class BehaviourTree {
         BehaviourTree();
         virtual ~BehaviourTree();
         void makeChoice();
-
-        virtual void developCity() = 0;
+/*
         void serviceBranch();
         void unitsBranch();
         void buildingsBranch();
         void armyBranch();
         void resourcesBranch();
-
+*/
         bool needResourcesInvestment();
         bool needArmyInvestment();
         

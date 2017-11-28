@@ -12,7 +12,7 @@ BehaviourTree::~BehaviourTree() {
 /**
  * Behaviour methods
  */
-
+/*
 void BehaviourTree::makeChoice() {
     debugMessage();
     //First branch: Attacking the enemy
@@ -154,7 +154,7 @@ void BehaviourTree::armyBranch(){
         }
     }
 }
-
+*/
 /**
  * Decision making methods
  */
@@ -276,11 +276,6 @@ bool BehaviourTree::readyToAttack() {
     return false;
 }
 
-void BehaviourTree::developCity() {
-
-}
-
-
 /**
  * GETTERS
  */
@@ -360,10 +355,6 @@ bool BehaviourTree::getShortOnCrystal() {
 bool BehaviourTree::getShortOnMetal() {
     return shortOnMetal;
 }
-
-
-
-
 
 /**
  * DEBUG

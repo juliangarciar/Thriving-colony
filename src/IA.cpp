@@ -1,4 +1,3 @@
-
 #include "IA.h"
 
 IA::IA() : Player() {
@@ -23,13 +22,12 @@ IA::IA() : Player() {
     barrackBuilt = false;
     barnBuilt = false;
     workshopBuilt = false;
-
-    getInstance();
 }
 
 IA::~IA() {
 
 }
+
 IA* IA::instance = 0;
 
 IA* IA::getInstance() {
