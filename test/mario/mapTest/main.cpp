@@ -49,6 +49,10 @@ int main() {
 	terrain->setMaterialType(video::EMT_DETAIL_MAP);
     terrain->scaleTexture(1.0f, 20.0f);
     
+<<<<<<< HEAD
+    // Cursor terrain
+=======
+>>>>>>> 8ae8946305316d07413c2c95c8154e53de84c29a
     scene::ITriangleSelector* selector = smgr->createTerrainTriangleSelector(terrain);
     terrain->setTriangleSelector(selector);
     gui::ICursorControl *cursor = device->getCursorControl();
@@ -56,7 +60,8 @@ int main() {
     scene::ISceneNode* sphere = smgr->addSphereSceneNode();
 
     scene::IMesh* cube = smgr->getGeometryCreator()->createCubeMesh();
-    scene::IMeshSceneNode *cubeNode = smgr->addCubeSceneNode(100); 
+    scene::IMeshSceneNode *cubeNode = smgr->addCubeSceneNode(100);
+
     if(cubeNode) {
         cubeNode->setMaterialFlag(video::EMF_LIGHTING, false);
         cubeNode->setPosition(core::vector3df(0,1000,0));
@@ -69,6 +74,9 @@ int main() {
             driver->beginScene(true, true, 0 );
 
             core::position2d<s32> pos = cursor->getPosition();
+
+            cout<<"x: "<<pos.X<<endl;
+            cout<<"y: "<<pos.Y<<endl;
 
             core::vector3df point;
             core::triangle3df triangle;
