@@ -7,19 +7,19 @@ class nodeGrid{
     private:
         int posX;
         int posY;
-        bool visited;
+        bool diag;
         bool block;
         bool frontier;
         bool counted;
-        int weight;
-        int priority;
+        float weight;
+        float priority;
         
         nodeGrid* cameFrom;
         irr::scene::ISceneManager *smgr;
         irr::scene::IMeshSceneNode *cube;
 
       public:
-        nodeGrid(int x, int y, irr::scene::ISceneManager *smgrData);
+        nodeGrid(int x, int y, int z, irr::scene::ISceneManager *smgrData);
         nodeGrid(const nodeGrid& orig);
         virtual ~nodeGrid();
 
@@ -28,18 +28,18 @@ class nodeGrid{
         int getY();
         bool itsBlock();
         void setBlock(bool blockData);
-        bool itsVisited();
-        void setVisited(bool visitedData);
+        bool itsDiag();
+        void setDiag(bool diagData);
         bool itsFrontier();
         void setFrontier(bool frontierData);
-        int getWeight();
-        void setWeight(int weightData);
+        float getWeight();
+        void setWeight(float weightData);
         bool itsCounted();
         void setCounted(bool countedData);
         nodeGrid* getCameFrom();
         void setCameFrom(nodeGrid* cameFromData);
         irr::scene::IMeshSceneNode *getCube();
-        int getPriority();
-        void setPriority(int priorityData);
+        float getPriority();
+        void setPriority(float priorityData);
 };
 #endif /* NODEGRID_H */

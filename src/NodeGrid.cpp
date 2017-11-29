@@ -1,5 +1,5 @@
 #include <limits>
-#include "nodeGrid.h"
+#include "NodeGrid.h"
 nodeGrid::nodeGrid(int x, int y, int z, irr::scene::ISceneManager *smgrData)
 {
     posX = x;
@@ -14,26 +14,31 @@ nodeGrid::nodeGrid(int x, int y, int z, irr::scene::ISceneManager *smgrData)
     smgr = smgrData;
     cube = smgr->addCubeSceneNode(20.f);
     diag = false;
-    if(cube){
+    if (cube)
+    {
         cube->setPosition(irr::core::vector3df(x * 20.f, z * 20.f, y * 20.f));
         cube->setMaterialFlag(irr::video::EMF_LIGHTING, false);
         smgr->getMeshManipulator()->setVertexColors(cube->getMesh(), irr::video::SColor(0, 0, 255, 255));
     }
 }
-nodeGrid::nodeGrid(const nodeGrid& orig){
-
+nodeGrid::nodeGrid(const nodeGrid &orig)
+{
 }
-nodeGrid::~nodeGrid(){
+nodeGrid::~nodeGrid()
+{
     delete cube;
     delete smgr;
 }
-irr::scene::IMeshSceneNode* nodeGrid::getCube()
+
+void nodeGrid::swapColor(irr::video::SColor colorData)
+{
+    smgr->getMeshManipulator()->setVertexColors(cube->getMesh(), colorData);
+}
+irr::scene::IMeshSceneNode *nodeGrid::getCube()
 {
     return this->cube;
 }
-void nodeGrid::swapColor(irr::video::SColor colorData){
-    smgr->getMeshManipulator()->setVertexColors(cube->getMesh(), colorData);
-}
+
 
 int nodeGrid::getX()
 {
@@ -43,6 +48,7 @@ int nodeGrid::getY()
 {
     return posY;
 }
+
 bool nodeGrid::itsBlock()
 {
     return block;
@@ -51,20 +57,16 @@ void nodeGrid::setBlock(bool blockData)
 {
     this->block = blockData;
 }
-void nodeGrid::setDiag(bool diagData){
+
+void nodeGrid::setDiag(bool diagData)
+{
     this->diag = diagData;
 }
-bool nodeGrid::itsDiag(){
+bool nodeGrid::itsDiag()
+{
     return this->diag;
 }
-bool nodeGrid::itsFrontier()
-{
-    return this->frontier;
-}
-void nodeGrid::setFrontier(bool frontierData)
-{
-    this->frontier = frontierData;
-}
+
 float nodeGrid::getWeight()
 {
     return this->weight;
@@ -73,14 +75,16 @@ void nodeGrid::setWeight(float weightData)
 {
     this->weight = weightData;
 }
+
 nodeGrid *nodeGrid::getCameFrom()
 {
     return this->cameFrom;
 }
-void nodeGrid::setCameFrom(nodeGrid * last)
+void nodeGrid::setCameFrom(nodeGrid *last)
 {
     this->cameFrom = last;
 }
+
 bool nodeGrid::itsCounted()
 {
     return this->counted;
@@ -89,6 +93,7 @@ void nodeGrid::setCounted(bool countedData)
 {
     this->counted = countedData;
 }
+
 float nodeGrid::getPriority()
 {
     return this->priority;

@@ -8,11 +8,11 @@ private:
     struct comparePriority{
         bool operator()(nodeGrid* const & p1, nodeGrid* const & p2 ){
             return p1->getPriority() > p2->getPriority();
-        };
+        }
     };
     bool finish;
-    int newCost;
-    int priority;
+    float newCost;
+    float priority;
     nodeGrid* start;
     nodeGrid* end;
     nodeGrid* current;
@@ -24,5 +24,5 @@ public:
     aStar(grid* mapData, nodeGrid* startData, nodeGrid* endData);
     aStar(const aStar &orig);
     virtual ~aStar();
-    void startAlgoritm();
+    std::vector< nodeGrid* > startAlgoritm();
 };

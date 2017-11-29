@@ -17,10 +17,10 @@ class grid
       grid(const grid &orig);
       virtual ~grid();
 
-      void getX();
-      void getY();
+      int getX(){return ox;};
+      int getY(){return oy;};
       nodeGrid* getNode(int x, int y);
-      int checkDistance(nodeGrid* a, nodeGrid* b);
+      float checkDistance(nodeGrid* a, nodeGrid* b, nodeGrid* startData);
       nodeGrid*** getGrid(){
           return map;
       };

@@ -1,8 +1,8 @@
-#include "aStar.h"
+#include "AStar.h"
 #include <iostream>
 
-
-aStar::aStar(grid* mapData, nodeGrid* startData, nodeGrid* endData){
+aStar::aStar(grid *mapData, nodeGrid *startData, nodeGrid *endData)
+{
     finish = false;
     start = startData;
     end = endData;
@@ -10,40 +10,45 @@ aStar::aStar(grid* mapData, nodeGrid* startData, nodeGrid* endData){
     priority = 0;
     map = mapData;
 }
-aStar::aStar(const aStar &orig){
-
+aStar::aStar(const aStar &orig)
+{
 }
-aStar::~aStar(){
+aStar::~aStar()
+{
     delete start;
     delete end;
     delete current;
     delete map;
-    for (std::vector< nodeGrid* >::iterator it = neighbors.begin() ; it != neighbors.end(); ++it)
+    for (std::vector<nodeGrid *>::iterator it = neighbors.begin(); it != neighbors.end(); ++it)
     {
         delete (*it);
-    } 
+    }
     neighbors.clear();
-    for (int i = 0; i < frontier.size(); i++){
+    for (int i = 0; i < frontier.size(); i++)
+    {
         frontier.pop();
     }
 }
-std::vector< nodeGrid* > aStar::startAlgoritm(){
+std::vector<nodeGrid *> aStar::startAlgoritm()
+{
 
-    std::vector< nodeGrid* > path;
+    std::vector<nodeGrid *> path;
     //Start algorithm
     frontier.push(start);
     while (!finish)
     {
         current = frontier.top();
         frontier.pop();
-        
+
         neighbors = map->getNeighbours(current);
         for (int i = 0; i < neighbors.size(); i++)
         {
-            if(neighbors[i]->itsDiag()){
+            if (neighbors[i]->itsDiag())
+            {
                 newCost = current->getWeight() + sqrt(2.00);
             }
-            else{
+            else
+            {
                 newCost = current->getWeight() + 1;
             }
             if ((neighbors[i]->itsCounted() == false) || (newCost < neighbors[i]->getWeight()))
@@ -65,7 +70,8 @@ std::vector< nodeGrid* > aStar::startAlgoritm(){
                 frontier.push(neighbors[i]);
             }
         }
-        if(current == end){
+        if (current == end)
+        {
             finish = true;
         }
         neighbors.clear();
@@ -80,7 +86,7 @@ std::vector< nodeGrid* > aStar::startAlgoritm(){
     }
     end->swapColor(irr::video::SColor(0, 0, 255, 0));
     start->swapColor(irr::video::SColor(0, 0, 0, 255));
-    
+
     path.swap(path);
     return path;
 }

@@ -125,7 +125,7 @@ int main(){
                 {
 
                     current = frontier.top();
-                    frontier.top()->setVisited(true);
+                    //frontier.top()->setVisited(true);
                     frontier.pop();
                     //SHOW PATH
                     if (current == end)
