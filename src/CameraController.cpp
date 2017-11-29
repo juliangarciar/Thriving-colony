@@ -4,8 +4,6 @@
 CameraController::CameraController(){
 	//Camera 
     camera = new Camera();
-    camera->setCameraPosition(Vector3<float>(0, 0, 0));
-    camera->setTargetPosition(Vector3<float>(0, 0, 0));
     camera->setShadowDistance(42000.f);
 
 	// Helper initializations
@@ -16,7 +14,7 @@ CameraController::CameraController(){
 	camSpeed = 500.f;
 	screenMarginV = 50;
 	screenMarginH = 60;
-    movementMode = true;
+    movementMode = false;
 
 	// Cam zoom initializations
 	camHeight = 3500.f;
@@ -29,9 +27,16 @@ CameraController::CameraController(){
     rotationMode = false;
 
 	// Cam inclination initializations
-    Vector2<float> newPos = Vector2<float>().getFromPolarCoordinates(100.f, 0);
-    camera->setCameraPosition(Vector3<float>(newPos.x, 0, newPos.y));
+	inclination = 500.f;
+	minInclination = 100.f;
+	maxInclination = 1000.f;
 	inclinationMode = false;
+
+	//Posiciones iniciales de la camara
+	Vector2<float> camPos2D = Vector2<float>().getFromPolarCoordinates(inclination, 0);
+	camera->setCameraPosition(Vector3<float>(camPos2D.x, camHeight, camPos2D.y));
+    camera->setTargetPosition(Vector3<float>(0, 0, 0));
+	std::cout << "camPos2D X " << camPos2D.x << " Z " << camPos2D.y << std::endl;
 
 	//ToDo: esto no va aqui
 	mapMarginTop = 100;
@@ -48,6 +53,14 @@ CameraController::~CameraController(){
 void CameraController::Update(Terrain *terrain, float deltaTime){
 	camPos.set(camera->getCameraPosition());
 	tarPos.set(camera->getTargetPosition());
+
+    if (rotationMode){
+		Vector2<float> camPos2D = Vector2<float>(tarPos.x, tarPos.z).getFromPolarCoordinates(inclination, delta.x);
+		camPos.set(camPos2D.x, camPos.y, camPos2D.y);
+    }
+
+	if (inclinationMode){
+	}
 
 	if (movementMode) {
 		int d = delta.x; 
@@ -132,16 +145,6 @@ void CameraController::Update(Terrain *terrain, float deltaTime){
 		}
 	}
 
-    if (rotationMode){
-		Vector2<float> camPos2D = Vector2<float>(tarPos.x, tarPos.z).getFromPolarCoordinates(100.f, delta.x);
-
-		camPos.set(camPos2D.x, camPos.y, camPos2D.y);
-    }
-
-	if (inclinationMode){
-		//ToDo: inclinacion
-	}
-
     if (movementMode || zoomMode || rotationMode || inclinationMode){
         currentHeight = terrain->getTerrain()->getHeight(camPos.x, camPos.z);
         camPos.y = currentHeight + camHeight;
@@ -178,7 +181,6 @@ void CameraController::Move(InputManager *receiver, Mouse *cursor) {
 		direction |= 1 << 3;
         movementMode = true;
 	}
-	std::cout << direction << std::endl;
 }
 
 void CameraController::Zoom(InputManager *receiver){
@@ -257,4 +259,8 @@ void CameraController::Inclinate(InputManager *receiver, Mouse *cursor){
         // reset cursor position to center
         cursor->setPosition(screenCenter.getVectorF());
 	}
+}
+
+Camera *CameraController::getCamera(){
+	return camera;
 }

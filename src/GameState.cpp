@@ -27,6 +27,11 @@ void GameState::Input(){
 
 void GameState::Update(){
     camera->Update(map, Game::Instance()->getWindow()->getDeltaTime());
+
+    Vector3<float> cam = camera->getCamera()->getCameraPosition();
+    std::cout << "cam " << cam.x << " " << cam.y << " " << cam.z << std::endl;
+    Vector3<float> tar = camera->getCamera()->getTargetPosition();
+    std::cout << "tar " << tar.x << " " << tar.y << " " << tar.z << std::endl;
 }
 
 void GameState::Render(){

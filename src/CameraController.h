@@ -21,6 +21,7 @@ class CameraController {
         void Inclinate(InputManager *receiver, Mouse *cursor);
         void Zoom(InputManager *receiver);
 
+        Camera *getCamera();
     private:
         //Camera
         Camera *camera;
@@ -44,12 +45,12 @@ class CameraController {
         // Camera rotation, inclination and cursor optimizacion variables
         float rotSpeed;
 		Vector2<float> delta;
+        float inclination, minInclination, maxInclination;
         Vector2<int> cursorPosSaved;
 
         //Camera zoom variables
         int minZoom, maxZoom;
         float camHeight, currentHeight;
-
 
         //ToDo: Esto no va aqui
         int mapMarginLeft, mapMarginRight, mapMarginTop, mapMarginBottom; //
