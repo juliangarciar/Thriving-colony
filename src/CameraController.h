@@ -14,28 +14,44 @@ class CameraController {
         CameraController();
         ~CameraController();
 
-        void Move(InputManager *receiver, Mouse *cursor, Terrain *terrain);
-        void Rotate(InputManager *receiver, Mouse *cursor);
+        void Update(Terrain *terrain, float deltaTime);
 
+        void Move(InputManager *receiver, Mouse *cursor);
+        void RotateAndInclinate(InputManager *receiver, Mouse *cursor);
+        void Zoom(InputManager *receiver);
+
+        Camera *getCamera();
     private:
+        //Camera
         Camera *camera;
+        //Camera modes
+        bool movementMode;
+        bool rotationOrInclinationMode;
+        bool zoomMode;
+
         // Helpers
         float recipsqrt2;
-        // Camera movement variables ============
-        bool camMove;
-        Vector3<float> camPos, camTar1;
+		Vector2<float> vector0;
+        Vector3<float> camPos, tarPos;
+
+        // Camera movement variables
+        int screenMarginV, screenMarginH;
+        int direction;
+        float camSpeed;
+        Vector2<float> camIncr;
+
+        // Camera rotation, inclination and cursor optimizacion variables
+        float rotSpeed;
+        float inclSpeed;
 		Vector2<float> delta;
-        Vector2<float> direction;
+        float minInclination, maxInclination;
+
+        int centerMargin;
         Vector2<int> cursorPosSaved;
-        int screenMarginV, screenMarginH; //Screen margin for movement
-        int minZoom, maxZoom; //Zoom for the camera
-        float camSpeed, camHeight, Xup, Yup, currentHeight;
-        // Camera rotation optimization variables =================
-        Vector3<float> camTar2;
-        bool rotationMode;
-        f32 cosA, sinA;
-        f32 rotSpeed, currentAngle, tempAngle, aSinA, bSinA;
-        f32 cosASq, aSinASq, bSinASq, bSinATarTemp2X, cosATarTemp2Y, aSinATarTemp2Z;
+
+        //Camera zoom variables
+        int minZoom, maxZoom;
+        float camHeight, currentHeight;
 
         //ToDo: Esto no va aqui
         int mapMarginLeft, mapMarginRight, mapMarginTop, mapMarginBottom; //

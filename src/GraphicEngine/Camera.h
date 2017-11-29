@@ -15,6 +15,8 @@ class Camera {
         void setCameraPosition(Vector3<float> position);
         void setTargetPosition(Vector3<float> position);
 
+        //void setCameraRotation(Vector3<float> rotation);
+
         void setShadowDistance(float sd);
 
         Vector3<float> getCameraPosition();

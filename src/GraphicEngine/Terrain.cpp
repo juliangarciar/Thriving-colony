@@ -21,10 +21,6 @@ Terrain::Terrain(const char* heightMap){
     selector = sc->getSceneManager()->createTerrainTriangleSelector(terrain);
     terrain->setTriangleSelector(selector);
     collisionManager = sc->getSceneManager()->getSceneCollisionManager();
-    //sphere = Screen::Instance()->getSceneManager()->addSphereSceneNode();
-	
-
-	std::cout << "Terrain: " << terrain->getBoundingBox().getArea() << std::endl;
 }
 
 Vector3<float> Terrain::getPointCollision(Mouse *cursor){
@@ -34,7 +30,6 @@ Vector3<float> Terrain::getPointCollision(Mouse *cursor){
 	scene::ISceneNode *node = 0;
     const core::line3d<f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
     if (collisionManager->getCollisionPoint (ray, selector, point, triangle, node)) {
-        //sphere->setPosition(point);
 		return Vector3<float>(point);
     }
 	return Vector3<float>();
