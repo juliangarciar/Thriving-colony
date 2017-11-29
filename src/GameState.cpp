@@ -17,8 +17,8 @@ void GameState::Init(){
 
 void GameState::Input(){
     camera->Move(Game::Instance()->getIO(), cursor);
-    camera->Rotate(Game::Instance()->getIO(), cursor);
-    camera->Inclinate(Game::Instance()->getIO(), cursor);
+    camera->RotateAndInclinate(Game::Instance()->getIO(), cursor);
+    //camera->Inclinate(Game::Instance()->getIO(), cursor);
     camera->Zoom(Game::Instance()->getIO());
 
     Vector3<float> v = map->getPointCollision(cursor);
@@ -29,9 +29,7 @@ void GameState::Update(){
     camera->Update(map, Game::Instance()->getWindow()->getDeltaTime());
 
     Vector3<float> cam = camera->getCamera()->getCameraPosition();
-    std::cout << "cam " << cam.x << " " << cam.y << " " << cam.z << std::endl;
     Vector3<float> tar = camera->getCamera()->getTargetPosition();
-    std::cout << "tar " << tar.x << " " << tar.y << " " << tar.z << std::endl;
 }
 
 void GameState::Render(){

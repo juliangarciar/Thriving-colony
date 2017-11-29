@@ -17,8 +17,7 @@ class CameraController {
         void Update(Terrain *terrain, float deltaTime);
 
         void Move(InputManager *receiver, Mouse *cursor);
-        void Rotate(InputManager *receiver, Mouse *cursor);
-        void Inclinate(InputManager *receiver, Mouse *cursor);
+        void RotateAndInclinate(InputManager *receiver, Mouse *cursor);
         void Zoom(InputManager *receiver);
 
         Camera *getCamera();
@@ -27,8 +26,7 @@ class CameraController {
         Camera *camera;
         //Camera modes
         bool movementMode;
-        bool rotationMode;
-        bool inclinationMode;
+        bool rotationOrInclinationMode;
         bool zoomMode;
 
         // Helpers
@@ -44,8 +42,11 @@ class CameraController {
 
         // Camera rotation, inclination and cursor optimizacion variables
         float rotSpeed;
+        float inclSpeed;
 		Vector2<float> delta;
-        float inclination, minInclination, maxInclination;
+        float minInclination, maxInclination;
+
+        int centerMargin;
         Vector2<int> cursorPosSaved;
 
         //Camera zoom variables
