@@ -25,21 +25,26 @@ class nodeGrid
     virtual ~nodeGrid();
 
     void swapColor(irr::video::SColor colorData);
+    irr::scene::IMeshSceneNode *getCube();
+
     int getX();
     int getY();
+
     bool itsBlock();
     void setBlock(bool blockData);
+
     bool itsDiag();
     void setDiag(bool diagData);
-    bool itsFrontier();
-    void setFrontier(bool frontierData);
+
     float getWeight();
     void setWeight(float weightData);
+
     bool itsCounted();
     void setCounted(bool countedData);
+    
     nodeGrid *getCameFrom();
     void setCameFrom(nodeGrid *cameFromData);
-    irr::scene::IMeshSceneNode *getCube();
+    
     float getPriority();
     void setPriority(float priorityData);
 };

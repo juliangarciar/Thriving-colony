@@ -29,14 +29,16 @@ nodeGrid::~nodeGrid()
     delete cube;
     delete smgr;
 }
-irr::scene::IMeshSceneNode *nodeGrid::getCube()
-{
-    return this->cube;
-}
+
 void nodeGrid::swapColor(irr::video::SColor colorData)
 {
     smgr->getMeshManipulator()->setVertexColors(cube->getMesh(), colorData);
 }
+irr::scene::IMeshSceneNode *nodeGrid::getCube()
+{
+    return this->cube;
+}
+
 
 int nodeGrid::getX()
 {
@@ -46,6 +48,7 @@ int nodeGrid::getY()
 {
     return posY;
 }
+
 bool nodeGrid::itsBlock()
 {
     return block;
@@ -54,6 +57,7 @@ void nodeGrid::setBlock(bool blockData)
 {
     this->block = blockData;
 }
+
 void nodeGrid::setDiag(bool diagData)
 {
     this->diag = diagData;
@@ -62,14 +66,7 @@ bool nodeGrid::itsDiag()
 {
     return this->diag;
 }
-bool nodeGrid::itsFrontier()
-{
-    return this->frontier;
-}
-void nodeGrid::setFrontier(bool frontierData)
-{
-    this->frontier = frontierData;
-}
+
 float nodeGrid::getWeight()
 {
     return this->weight;
@@ -78,6 +75,7 @@ void nodeGrid::setWeight(float weightData)
 {
     this->weight = weightData;
 }
+
 nodeGrid *nodeGrid::getCameFrom()
 {
     return this->cameFrom;
@@ -86,6 +84,7 @@ void nodeGrid::setCameFrom(nodeGrid *last)
 {
     this->cameFrom = last;
 }
+
 bool nodeGrid::itsCounted()
 {
     return this->counted;
@@ -94,6 +93,7 @@ void nodeGrid::setCounted(bool countedData)
 {
     this->counted = countedData;
 }
+
 float nodeGrid::getPriority()
 {
     return this->priority;
