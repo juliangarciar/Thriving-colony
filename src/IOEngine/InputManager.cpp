@@ -29,10 +29,16 @@ InputManager::~InputManager() {
 /// ==============================
 bool InputManager::OnEvent(const SEvent& event){
     bool eventprocessed = false;
+    id = 0;
 
     //////////////////////////////
     // Keyboard Input Event
     //////////////////////////////
+    if (event.EventType == EET_GUI_EVENT) {
+        if (event.GUIEvent.EventType == gui::EGET_BUTTON_CLICKED){
+            id = event.GUIEvent.Caller->getID();
+        }
+    }
     if (event.EventType == EET_KEY_INPUT_EVENT) {
         if (processState == STARTED) {
             // if key is Pressed Down
@@ -264,6 +270,10 @@ bool InputManager::keyReleased(char keycode) {
     }
 }
 
+int InputManager::getGUIID(){
+    return id;
+}
+
 
 // This is used so that the Key States will not be changed during execution of your Main game loop.
 // Place this at the very START of your Main Loop
@@ -297,4 +307,7 @@ void InputManager::startEventProcess() {
     }
     //Mouse Wheel state
     mouse.wheel = 0.0f;
+
+    //GUI cleaning
+    id = 0;
 }

@@ -1,4 +1,5 @@
 #include "Input.h"
+#include <iostream>
 #include <irrlicht.h>
 
 using namespace irr;
@@ -8,17 +9,13 @@ Input::Input(){
 
 }
 
-Input::~Input() {
-
-}
-
 bool Input::OnEvent(const SEvent& event) {
 
     if (event.EventType == EET_GUI_EVENT) {
 
         s32 id = event.GUIEvent.Caller->getID();
-        gui::IGUIEnvironment* env = device->getGUIEnvironment();
-
+        //gui::IGUIEnvironment* env = device->getGUIEnvironment();
+        
         switch(event.GUIEvent.EventType) {
         
         // Input del mouse al hacer click
@@ -38,15 +35,17 @@ bool Input::OnEvent(const SEvent& event) {
                 
                 // Aqui tenemos que hacer que cuando se haya apretado el boton de nueva ventana,
                 // tambien se cree una caja en las coordenadas actuales del cursor del raton.
-                //scene::ISceneManager* smgr2 = Context.device->getSceneManager();
-                
+                xyzPointCollision = terrain->getPointCollision();
+                x = xyzPointCollision.x;
+                y = xyzPointCollision.y;
+                z = xyzPointCollision.z;
                 
                 //scene::IMesh* cube = smgr2->getGeometryCreator()->createCubeMesh();
                 scene::IMeshSceneNode *cubeNode = smgr->addCubeSceneNode(100);
 
                 if(cubeNode) {
                     cubeNode->setMaterialFlag(video::EMF_LIGHTING, false);
-                    cubeNode->setPosition(core::vector3df(500 + Context.counter,500,2500));
+                    cubeNode->setPosition(core::vector3df(500 + counter,500,2500));
                 }
 
             }
@@ -64,7 +63,7 @@ bool Input::OnEvent(const SEvent& event) {
     return false;
 }
 
-void Terrain(IrrlichtDevice * device, IVideoDriver * driver, ISceneManager * smgr, IGUIEnvironment * env, ICameraSceneNode * camera, ITerrainSceneNode * terrain, ITriangleSelector * slector, ICursorControl * cursor, ISceneCollisionManager * collisionManager, ISceneNode * sphere) {
+void Input::Terrain(IrrlichtDevice * device, video::IVideoDriver * driver, scene::ISceneManager * smgr, gui::IGUIEnvironment * env, scene::ICameraSceneNode * camera, scene::ITerrainSceneNode * terrain, scene::ITriangleSelector * slector, gui::ICursorControl * cursor, scene::ISceneCollisionManager * collisionManager, scene::ISceneNode * sphere) {
     device = device;
     driver = driver;
     smgr = smgr;
@@ -101,4 +100,27 @@ void Terrain(IrrlichtDevice * device, IVideoDriver * driver, ISceneManager * smg
 	env->addButton(core::rect<s32>(core::position2d<s32>(1040, 630), core::dimension2d<s32>(200, 60)), 0, GUI_ID_FILE_OPEN_BUTTON,
             L"File Open", L"Opens a file");
             
+}
+
+Input::~Input() {
+    delete device;
+    device = NULL;
+    delete driver;
+    driver = NULL;
+    delete smgr;
+    smgr = NULL;
+    delete env;
+    env = NULL;
+    delete camera;
+    camera = NULL;
+    delete terrain;
+    terrain = NULL;
+    delete selector;
+    selector = NULL;
+    delete cursor;
+    cursor = NULL;
+    delete collisionManager;
+    collisionManager = NULL;
+    delete sphere;
+    sphere = NULL;
 }

@@ -5,6 +5,7 @@ GameState::GameState() : State() {
     camera = new CameraController();
     cursor = new Mouse();
     map = new Terrain("media/heightmap.bmp"); //ToDo: mover a map
+    hud = new Hud();
 }
 
 GameState::~GameState() {
@@ -18,6 +19,8 @@ void GameState::Init(){
 void GameState::Input(){
     camera->Move(Game::Instance()->getIO(), cursor, map);
     camera->Rotate(Game::Instance()->getIO(), cursor);
+    hud->showHud();
+    hud->drawCube(Game::Instance()->getIO(), cursor, map);
     Vector3<float> v = map->getPointCollision(cursor);
     //std::cout << v.x << " " << v.y << " " << v.z << std::endl;
 }

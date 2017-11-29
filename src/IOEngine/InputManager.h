@@ -60,6 +60,8 @@ class InputManager : public IEventReceiver {
         void endEventProcess();
         void startEventProcess();
 
+        int getGUIID();
+
     private:
 		// Enumeration for UP, DOWN, PRESSED and RELEASED key states. Also used for mouse button states.
 		enum keyStatesENUM {UP, DOWN, PRESSED, RELEASED};
@@ -81,6 +83,8 @@ class InputManager : public IEventReceiver {
 	    processStateENUM processState;
         //Wheel
         bool wheel[2];
+        //GUI ID
+        int id;
 };
 
 #endif

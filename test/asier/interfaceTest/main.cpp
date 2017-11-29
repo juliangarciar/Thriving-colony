@@ -57,14 +57,14 @@ int main() {
 	terrain->setMaterialTexture(0, driver->getTexture("terrain-texture.jpg"));
 	terrain->setMaterialTexture(1, driver->getTexture("detailmap3.jpg"));
 	terrain->setMaterialType(video::EMT_DETAIL_MAP);
-	terrain->scaleTexture(1.0f, 20.0f);
+	terrain->scaleTexture(1.0f, 20.0f);*/
 
 	// Cursor terrain
     scene::ITriangleSelector* selector = smgr->createTerrainTriangleSelector(terrain);
     terrain->setTriangleSelector(selector);
 	gui::ICursorControl *cursor = device->getCursorControl();
     scene::ISceneCollisionManager* collisionManager = smgr->getSceneCollisionManager();
-	scene::ISceneNode* sphere = smgr->addSphereSceneNode();*/
+	scene::ISceneNode* sphere = smgr->addSphereSceneNode();
 
 	
 	// Add cube in the scene
@@ -101,10 +101,10 @@ int main() {
 
 	// Then create the event receiver, giving it that context structure.
 	// El receptor guarda la informacion de las teclas pulsadas
-	Input receiver();
+	Input receiver;
 
 	// Call
-	receiver.Terrain(device, driver, smgr, env, camera, terrain, slector, cursor, collisionManager, sphere);
+	receiver.Terrain(device, driver, smgr, env, camera, terrain, selector, cursor, collisionManager, sphere);
 
 	// And tell the device to use our custom event receiver.
 	// Decirle al dispositivo que use nuestro receptor de eventos personalizados.
@@ -145,6 +145,3 @@ int main() {
 
 	return 0;
 }
-
-/*
-**/

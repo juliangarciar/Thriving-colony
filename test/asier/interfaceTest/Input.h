@@ -2,6 +2,9 @@
 #define INPUT_H*/
 
 #include <irrlicht.h>
+#include "../../../src/GraphicEngine/Vector2.h"
+#include "../../../src/GraphicEngine/Vector3.h"
+#include "../../../src/GraphicEngine/Terrain.h"
 
 using namespace irr;
 
@@ -24,20 +27,23 @@ class Input : public IEventReceiver {
         ~Input();
 
         bool OnEvent(const SEvent& event);
-        void Terrain(IrrlichtDevice *, video::IVideoDriver *, scene::ISceneManager *, gui::IGUIEnvironment *, ICameraSceneNode *, scene::ITerrainSceneNode *, scene::ITriangleSelector *, gui::ICursorControl *, scene::ISceneCollisionManager *, scene::ISceneNode *);
+        void Terrain(IrrlichtDevice *, video::IVideoDriver *, scene::ISceneManager *, gui::IGUIEnvironment *, scene::ICameraSceneNode *, scene::ITerrainSceneNode *, scene::ITriangleSelector *, gui::ICursorControl *, scene::ISceneCollisionManager *, scene::ISceneNode *);
     
     private:
         //SAppContext & Context;
         int counter = 0;
 
         IrrlichtDevice* device;
-        IVideoDriver* driver;
-        ISceneManager* smgr;
-        IGUIEnvironment* env;
-        ICameraSceneNode* camera;
-        ITerrainSceneNode* terrain;
-        ITriangleSelector* selector;
-        CursorControl* cursor;
-        ISceneCollisionManager* collisionManager;
-        ISceneNode* sphere;
+        video::IVideoDriver* driver;
+        scene::ISceneManager* smgr;
+        gui::IGUIEnvironment* env;
+        scene::ICameraSceneNode* camera;
+        scene::ITerrainSceneNode* terrain;
+        scene::ITriangleSelector* selector;
+        gui::ICursorControl* cursor;
+        scene::ISceneCollisionManager* collisionManager;
+        scene::ISceneNode* sphere;
+
+        Vector3<float> xyzPointCollision; // xyz del terreno
+        int x, y, z;
 };
