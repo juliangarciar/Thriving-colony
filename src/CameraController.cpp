@@ -1,6 +1,6 @@
 #include "CameraController.h"
 #include "GraphicEngine/Screen.h"
- 
+  
 CameraController::CameraController(){
 	//Camera 
     camera = new Camera();
@@ -16,9 +16,6 @@ CameraController::CameraController(){
 	camSpeed = 500.f;
 	screenMarginV = 50;
 	screenMarginH = 60;
-	camDir.x = camera->getTargetPosition().x - camera->getCameraPosition().x;
-	camDir.y = camera->getTargetPosition().z - camera->getCameraPosition().z;
-	camDir.normalize(); 
     movementMode = true;
 
 	// Cam zoom initializations
@@ -32,10 +29,9 @@ CameraController::CameraController(){
     rotationMode = false;
 
 	// Cam inclination initializations
-    //ToDo: conversion de vector2 a vector3 y viceversa
-    Vector2<float> newPos;
-    newPos = newPos.getFromPolarCoordinates(100.f, 0);
+    Vector2<float> newPos = Vector2<float>().getFromPolarCoordinates(100.f, 0);
     camera->setCameraPosition(Vector3<float>(newPos.x, 0, newPos.y));
+	inclinationMode = false;
 
 	//ToDo: esto no va aqui
 	mapMarginTop = 100;
@@ -58,43 +54,43 @@ void CameraController::Update(Terrain *terrain, float deltaTime){
 		switch (direction) {
 			// up stands for update (delta)
 			case 1: //arriba
-				camIncr.x = (float)camSpeed * deltaTime * camDir.x;
-				camIncr.y = (float)camSpeed * deltaTime * camDir.y;
+				camIncr.x = (float)camSpeed * deltaTime;
+				camIncr.y = (float)camSpeed * deltaTime;
 				d += 180;
 			break;
 			case 8: //derecha
-				camIncr.x = (float)camSpeed * deltaTime * camDir.y;
-				camIncr.y = (float)-camSpeed * deltaTime * camDir.x;
+				camIncr.x = (float)camSpeed * deltaTime;
+				camIncr.y = (float)-camSpeed * deltaTime;
 				d += 90;
 			break;
 			case 4: //abajo
-				camIncr.x = (float)-camSpeed * deltaTime * camDir.x;
-				camIncr.y = (float)-camSpeed * deltaTime * camDir.y;
+				camIncr.x = (float)-camSpeed * deltaTime;
+				camIncr.y = (float)-camSpeed * deltaTime;
 				d += 0;
 			break;
 			case 2: // izquierda
-				camIncr.x = (float)-camSpeed * deltaTime * camDir.y;
-				camIncr.y = (float)camSpeed * deltaTime * camDir.x;
+				camIncr.x = (float)-camSpeed * deltaTime;
+				camIncr.y = (float)camSpeed * deltaTime;
 				d += 270;
 			break;
 			case 9: // arriba derecha
-				camIncr.x = (float)camSpeed * deltaTime * (camDir.y + camDir.x) * recipsqrt2;
-				camIncr.y = (float)camSpeed * deltaTime * (-camDir.x + camDir.y) * recipsqrt2;
+				camIncr.x = (float)camSpeed * deltaTime * recipsqrt2;
+				camIncr.y = (float)camSpeed * deltaTime * recipsqrt2;
 				d+= 135;
 			break;
 			case 12: //abajo derecha
-				camIncr.x = camSpeed * deltaTime * (camDir.y - camDir.x) * recipsqrt2;
-				camIncr.y = -camSpeed * deltaTime * (camDir.x + camDir.y) * recipsqrt2;
+				camIncr.x = (float)camSpeed * deltaTime * recipsqrt2;
+				camIncr.y = (float)-camSpeed * deltaTime * recipsqrt2;
 				d += 45;
 			break;
 			case 6: //abajo izquierda
-				camIncr.x = (float)-camSpeed * deltaTime * (camDir.y + camDir.x) * recipsqrt2;
-				camIncr.y = (float)camSpeed * deltaTime * (camDir.x - camDir.y) * recipsqrt2;
+				camIncr.x = (float)-camSpeed * deltaTime * recipsqrt2;
+				camIncr.y = (float)camSpeed * deltaTime * recipsqrt2;
 				d += 315;
 			break;
 			case 3: // arriba izquierda
-				camIncr.x = (float)camSpeed * deltaTime * (-camDir.y + camDir.x) * recipsqrt2;
-				camIncr.y = (float)camSpeed * deltaTime * (camDir.x + camDir.y) * recipsqrt2;
+				camIncr.x = (float)camSpeed * deltaTime * recipsqrt2;
+				camIncr.y = (float)camSpeed * deltaTime * recipsqrt2;
 				d += 225;
 			break;
 		}
@@ -134,13 +130,10 @@ void CameraController::Update(Terrain *terrain, float deltaTime){
 			camPos.z += camIncr.y;
 			tarPos.z += camIncr.y;
 		}
-		movementMode = false;
 	}
 
     if (rotationMode){
-		//ToDo: conversion de vector2 a vector3 y viceversa
-		Vector2<float> tarPos2D = Vector2<float>(tarPos.x, tarPos.z);
-		Vector2<float> camPos2D = tarPos2D.getFromPolarCoordinates(100.f, delta.x);
+		Vector2<float> camPos2D = Vector2<float>(tarPos.x, tarPos.z).getFromPolarCoordinates(100.f, delta.x);
 
 		camPos.set(camPos2D.x, camPos.y, camPos2D.y);
     }
@@ -153,13 +146,9 @@ void CameraController::Update(Terrain *terrain, float deltaTime){
         currentHeight = terrain->getTerrain()->getHeight(camPos.x, camPos.z);
         camPos.y = currentHeight + camHeight;
 
-		movementMode = false;
-		zoomMode = false;
-		rotationMode = false;
+		camera->setCameraPosition(camPos.getVectorF());
+		camera->setTargetPosition(tarPos.getVectorF());
     }
-    
-	camera->setCameraPosition(camPos.getVectorF());
-	camera->setTargetPosition(tarPos.getVectorF());
 }
 
 //ToDo: Crear camera controller (fuera de fachada) y moverlo ahi
@@ -168,6 +157,9 @@ void CameraController::Move(InputManager *receiver, Mouse *cursor) {
 
     /*direction = (receiver->keyDown(KEY_KEY_W) << 0) | (receiver->keyDown(KEY_KEY_A) << 1)
 		| receiver->keyDown(KEY_KEY_S) << 2 | receiver->keyDown(KEY_KEY_D) << 3;*/
+
+	direction = 0;
+	movementMode = false;
 
 	Vector2<int> cursorPosCurrent = cursor->getPosition();
 	
@@ -186,11 +178,11 @@ void CameraController::Move(InputManager *receiver, Mouse *cursor) {
 		direction |= 1 << 3;
         movementMode = true;
 	}
-
-	
+	std::cout << direction << std::endl;
 }
 
 void CameraController::Zoom(InputManager *receiver){
+	zoomMode = false;
 	if (receiver->getWheelState()) {
 		receiver->setWheelState(false);
 		if (receiver->isWheelUp()) {

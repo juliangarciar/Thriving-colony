@@ -21,14 +21,12 @@ void GameState::Input(){
     camera->Inclinate(Game::Instance()->getIO(), cursor);
     camera->Zoom(Game::Instance()->getIO());
 
-    camera->Update(map, Game::Instance()->getWindow()->getDeltaTime());
-
     Vector3<float> v = map->getPointCollision(cursor);
     //std::cout << v.x << " " << v.y << " " << v.z << std::endl;
 }
 
 void GameState::Update(){
-
+    camera->Update(map, Game::Instance()->getWindow()->getDeltaTime());
 }
 
 void GameState::Render(){

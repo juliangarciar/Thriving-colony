@@ -39,7 +39,7 @@ class CameraController {
         int screenMarginV, screenMarginH;
         int direction;
         float camSpeed;
-        Vector2<float> camDir, camIncr;
+        Vector2<float> camIncr;
 
         // Camera rotation, inclination and cursor optimizacion variables
         float rotSpeed;
