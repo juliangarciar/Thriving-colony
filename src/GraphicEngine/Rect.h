@@ -52,10 +52,11 @@ class Rect {
         //Return
         core::rect<T> getRect();
         
-        friend std::ostream& operator << (std::ostream &o,const Rect<float> &p);
+        friend std::ostream& operator << (std::ostream &o,const Rect<T> &p);
 };
 
-inline std::ostream& operator << (std::ostream &o,const Rect<float> &p) {
+template <class T>
+inline std::ostream& operator << (std::ostream &o,const Rect<T> &p) {
     o << "(" << p.x << ", " << p.y << ", " << p.w << ", " << p.h << ")\n";
     return o;
 }
