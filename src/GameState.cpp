@@ -17,13 +17,10 @@ void GameState::Init(){
 }
 
 void GameState::Input(){
-    camera->Move(Game::Instance()->getIO(), cursor, map);
-    camera->Rotate(Game::Instance()->getIO(), cursor);
     hud->showHud();
     hud->drawCube(Game::Instance()->getIO(), cursor, map);
     camera->Move(Game::Instance()->getIO(), cursor);
     camera->RotateAndInclinate(Game::Instance()->getIO(), cursor);
-    //camera->Inclinate(Game::Instance()->getIO(), cursor);
     camera->Zoom(Game::Instance()->getIO());
 
     Vector3<float> v = map->getPointCollision(cursor);
