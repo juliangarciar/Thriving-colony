@@ -4,7 +4,8 @@
 using namespace irr;
 
 Hud::Hud() {
-    
+    buttonBuilding = new Button(Rect<int>(700, 600, 200, 60), GUI_ID_BUILDING_BUTTON, L"New Building", L"Add a new Building");
+    buttonBuilding = new Button(Rect<int>(950, 600, 200, 60), GUI_ID_QUIT_BUTTON, L"Quit", L"Quit Game");
 }
 
 Hud::~Hud() {
@@ -12,13 +13,7 @@ Hud::~Hud() {
 }
 
 void Hud::showHud(){
-    Screen *sc = Screen::Instance();
-    sc->getGUIEnvironment()->addButton(core::rect<s32>(core::position2d<s32>(540, 630), core::dimension2d<s32>(200, 60)), 0, GUI_ID_QUIT_BUTTON,
-            L"Quit", L"Exits Program");
-    sc->getGUIEnvironment()->addButton(core::rect<s32>(core::position2d<s32>(540, 350), core::dimension2d<s32>(200, 60)), 0, GUI_ID_NEW_WINDOW_BUTTON,
-            L"New Window", L"Launches a new Window");
-    sc->getGUIEnvironment()->addButton(core::rect<s32>(core::position2d<s32>(1040, 630), core::dimension2d<s32>(200, 60)), 0, GUI_ID_FILE_OPEN_BUTTON,
-            L"File Open", L"Opens a file");
+   
 }
 
 void Hud::drawCube(InputManager *receiver, Mouse *cursor, Terrain *terrain){
@@ -27,13 +22,8 @@ void Hud::drawCube(InputManager *receiver, Mouse *cursor, Terrain *terrain){
     id = receiver->getGUIID();
 
     switch(id){
-        case GUI_ID_QUIT_BUTTON:
-            //sc->getDevice()->closeDevice();
-            std::cout<<"entra en quit button"<<std::endl;
-            //return true;
-        break;
 
-        case GUI_ID_NEW_WINDOW_BUTTON:
+        case GUI_ID_BUILDING_BUTTON:
         std::cout<<"entra en window button"<<std::endl;
             //Context.listbox->addItem(L"Window created");
             counter += 200;
@@ -53,6 +43,12 @@ void Hud::drawCube(InputManager *receiver, Mouse *cursor, Terrain *terrain){
                 cubeNode->setMaterialFlag(video::EMF_LIGHTING, false);
                 cubeNode->setPosition(core::vector3df(500 + counter,500,2500));
             }*/
+        break;
+
+        case GUI_ID_QUIT_BUTTON:
+            sc->getDevice()->closeDevice();
+            std::cout<<"entra en quit button"<<std::endl;
+            //return true;
         break;
     }
 }

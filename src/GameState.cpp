@@ -17,7 +17,7 @@ void GameState::Init(){
 }
 
 void GameState::Input(){
-    hud->showHud();
+    //hud->showHud();
     hud->drawCube(Game::Instance()->getIO(), cursor, map);
     camera->Move(Game::Instance()->getIO(), cursor);
     camera->RotateAndInclinate(Game::Instance()->getIO(), cursor);

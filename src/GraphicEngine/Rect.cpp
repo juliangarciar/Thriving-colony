@@ -47,7 +47,7 @@ void Rect<T>::setRect(core::rect<T> rect){
 
 template <class T>
 core::rect<T> Rect<T>::getRect() {
-    return core::rect<T>(core::vector2d<T>(x, y), core::vector2d<T>(w, h));
+    return core::rect<T>(core::vector2d<T>(x, y), core::dimension2d<T>(w, h));
 }
 
 template class Rect<int>;
