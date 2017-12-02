@@ -9,7 +9,7 @@ int main() {
 	// you can add more parameters if desired, check irr::SIrrlichtCreationParameters
 	irr::SIrrlichtCreationParameters params;
 	params.DriverType=video::EDT_OPENGL;
-	params.WindowSize=core::dimension2d<u32>(640, 480);
+	params.WindowSize=core::dimension2d<u32>(1280, 720);
 	IrrlichtDevice* device = createDeviceEx(params);
 
 	if (device == 0) return 1; // could not create selected driver.
@@ -49,18 +49,22 @@ int main() {
 	terrain->setMaterialType(video::EMT_DETAIL_MAP);
     terrain->scaleTexture(1.0f, 20.0f);
     
+<<<<<<< HEAD
+    // Cursor terrain
+=======
+>>>>>>> 8ae8946305316d07413c2c95c8154e53de84c29a
     scene::ITriangleSelector* selector = smgr->createTerrainTriangleSelector(terrain);
     terrain->setTriangleSelector(selector);
     gui::ICursorControl *cursor = device->getCursorControl();
     scene::ISceneCollisionManager* collisionManager = smgr->getSceneCollisionManager();
-    // this sphere will mark our collision point
     scene::ISceneNode* sphere = smgr->addSphereSceneNode();
+
     scene::IMesh* cube = smgr->getGeometryCreator()->createCubeMesh();
-    scene::IMeshSceneNode *cubeNode = smgr->addCubeSceneNode(100); 
-    //smgr->addMeshSceneNode(cube, 0, 0, core::vector3df(0,0,0));
+    scene::IMeshSceneNode *cubeNode = smgr->addCubeSceneNode(100);
+
     if(cubeNode) {
         cubeNode->setMaterialFlag(video::EMF_LIGHTING, false);
-        cubeNode->setPosition(core::vector3df(500,50,500));
+        cubeNode->setPosition(core::vector3df(0,1000,0));
     }
 
 	int lastFPS = -1;
@@ -69,6 +73,7 @@ int main() {
         if (device->isWindowActive()) {
             driver->beginScene(true, true, 0 );
 
+<<<<<<< HEAD
             //core::position2d<s32> pos = cursor->getPosition();
 //
             //core::vector3df point;
@@ -82,12 +87,28 @@ int main() {
             //}
 //
             //scene::ITerrainSceneNode* terrain = smgr->addTerrainSceneNode("gray.bmp", 0, 777);
+=======
+            core::position2d<s32> pos = cursor->getPosition();
+
+            cout<<"x: "<<pos.X<<endl;
+            cout<<"y: "<<pos.Y<<endl;
+
+            core::vector3df point;
+            core::triangle3df triangle;
+
+            scene::ISceneNode *node = 0;
+            const core::line3d<f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
+            if (collisionManager->getCollisionPoint (ray, selector, point, triangle, node)) {
+                sphere->setPosition(point);
+                std::cout << triangle.pointA.X << " " << triangle.pointA.Y << " " << triangle.pointA.Z << std::endl;
+            }
+>>>>>>> GraphicEngine
 
             smgr->drawAll();
             env->drawAll();
 
             driver->endScene();
-
+            
             // display frames per second in window title
             int fps = driver->getFPS();
             if (lastFPS != fps) {

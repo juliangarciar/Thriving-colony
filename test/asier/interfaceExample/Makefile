@@ -2,7 +2,7 @@
 # Created by Mario Gonzalez and Julian Garcia
 
 # Name of the executable created
-TARGET = mapTest
+TARGET = interfaceExample
 # Path for the executable
 BINPATH = .
 # Path for the .o files
@@ -40,7 +40,7 @@ all: prepare $(OBJ)
     
 $(BUILDPATH)/%.o: $(SOURCEPATH)/%.cpp
 	$(warning Creando el binario $@...)
-	$(CC) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+	$(CC) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@ 
 
 prepare:
 	$(warning Creando la estructura de carpetas)
