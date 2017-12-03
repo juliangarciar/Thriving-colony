@@ -6,7 +6,7 @@
 class RootNode : public Node {
 
     public:
-        RootNode(Node*);
+        RootNode();
         virtual ~RootNode();
 
     private:

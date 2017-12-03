@@ -5,8 +5,8 @@
 #include "VeryHappyTree.h"
 
 
-RootNode::RootNode(Node *fatherPnt) : Node() {
-    father = fatherPnt;
+RootNode::RootNode() : Node() {
+    father = 0;
     children = new Node*[3];
     children[0] = new AttackNode(this);
     children[1] = new DefendNode(this);
