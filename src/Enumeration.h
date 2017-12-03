@@ -19,6 +19,12 @@ class Enumeration {
             Wall
         };
 
+        enum EventType {
+            BeingAttack,
+            Attacking,
+            StopBeingAttack,
+        };
+
     private:
         
 };

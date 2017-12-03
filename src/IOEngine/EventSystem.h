@@ -1,6 +1,10 @@
 #ifndef EVENT_SYSTEM_H
 #define EVENT_SYSTEM_H
 
+#include <map>
+#include <function>
+#include "../Enumeration.h"
+
 class EventSystem {
 
     public:
@@ -8,9 +12,10 @@ class EventSystem {
         ~EventSystem();
         
         void triggerEvent();
-        void addEvent();
+        void addEvent(Enumeration::EventType, std::function<void()>);
         
     private:
+        *std::map<Enumeration::EventType, std::function<void()» Events;
 };
 
 #endif
