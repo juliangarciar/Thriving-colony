@@ -17,5 +17,6 @@ int main(){
     }
 
     game->CleanUp();
+    
     return 0;
 }

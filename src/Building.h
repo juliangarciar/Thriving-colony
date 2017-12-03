@@ -11,7 +11,7 @@ class Building : public Entity {
         virtual ~Building();
 
     private:
-        BuildingType type;
+        Enumeration::BuildingType type;
         
 };
 

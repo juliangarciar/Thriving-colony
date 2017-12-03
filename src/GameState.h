@@ -18,6 +18,7 @@ class GameState : public State {
         void Update();
         void Render();
         void CleanUp();
+        
 
     private:
         CameraController *camera;
