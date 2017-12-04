@@ -2,7 +2,7 @@
 #define EVENT_SYSTEM_H
 
 #include <map>
-#include <function>
+#include <functional>
 #include "../Enumeration.h"
 
 class EventSystem {
@@ -15,7 +15,7 @@ class EventSystem {
         void addEvent(Enumeration::EventType, std::function<void()>);
         
     private:
-        *std::map<Enumeration::EventType, std::function<void()» Events;
+        std::map<Enumeration::EventType, std::function<void()>> *Events;
 };
 
 #endif

@@ -1,7 +1,7 @@
 #include "EventSystem.h"
 
 EventSystem::EventSystem() {
-    Events = new *std::map<Enumeration::EventType, std::function<void()»;
+    Events = new std::map<Enumeration::EventType, std::function<void()>>();
 }
 
 EventSystem::~EventSystem() {
@@ -9,6 +9,5 @@ EventSystem::~EventSystem() {
 }
 
 void EventSystem::addEvent(Enumeration::EventType event, std::function<void()> function) {
-    p = std::pair<event, function>;
-    Events -> insert(p);
+    Events -> insert(std::make_pair(event, function));
 }
