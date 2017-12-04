@@ -18,6 +18,9 @@ Game::Game() {
     window = Screen::Instance();
 
     io = new InputManager();
+
+    events = new EventSystem();
+
     window->setEventReceiver(io);
 }
 
