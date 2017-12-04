@@ -32,6 +32,22 @@ bool InputManager::OnEvent(const SEvent& event){
     bool eventprocessed = false;
 
     //////////////////////////////
+    // GUI Input Event
+    //////////////////////////////
+    
+    // id = 1;
+    // id = 1;
+    // id = 1;
+    // id = event.GUIEvent.Caller->getID();
+    // std::cout<<"Existe EET_GUI_EVENT"<<std::endl;
+
+    if (event.EventType == EET_GUI_EVENT) {
+        if (event.GUIEvent.EventType == gui::EGET_BUTTON_CLICKED){ //gui::EGET_BUTTON_CLICKED
+            id = event.GUIEvent.Caller->getID();
+        }
+    }
+
+    //////////////////////////////
     // Keyboard Input Event
     //////////////////////////////
     if (event.EventType == EET_KEY_INPUT_EVENT) {
@@ -52,23 +68,7 @@ bool InputManager::OnEvent(const SEvent& event){
                 }
             }
         }
-        eventprocessed = true;
-    }
-
-    //////////////////////////////
-    // GUI Input Event
-    //////////////////////////////
-    
-    //id = 1;
-
-    //id = event.GUIEvent.Caller->getID();
-    if (event.EventType == irr::EET_GUI_EVENT) {
-        id = 1;
-        //std::cout<<"Existe EET_GUI_EVENT"<<std::endl;
-        /*if (event.GUIEvent.EventType == gui::EGET_BUTTON_CLICKED){ //gui::EGET_BUTTON_CLICKED
-            id = event.GUIEvent.Caller->getID();
-            // id = 1;
-        }*/
+        //eventprocessed = true;
     }
 
     //////////////////////////////
@@ -136,7 +136,7 @@ bool InputManager::OnEvent(const SEvent& event){
                 }
             }
         }
-        eventprocessed = true;
+        //eventprocessed = true;
     }
     return eventprocessed;
 }
