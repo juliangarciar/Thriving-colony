@@ -11,7 +11,7 @@ class EventSystem {
         EventSystem();
         ~EventSystem();
         
-        void triggerEvent();
+        void triggerEvent(Enumeration::EventType);
         void addEvent(Enumeration::EventType, std::function<void()>);
         
     private:

@@ -20,7 +20,7 @@ class Enumeration {
         };
 
         enum EventType {
-            BeingAttack,
+            BeingAttacked,
             Attacking,
             StopBeingAttack,
         };
