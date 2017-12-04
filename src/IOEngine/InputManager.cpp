@@ -281,7 +281,7 @@ bool InputManager::keyReleased(char keycode) {
     }
 }
 
-int InputManager::getGUIID(){
+int InputManager::getGUIClickedID(){
     return id;
 }
 

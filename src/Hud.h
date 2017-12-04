@@ -18,8 +18,8 @@ class Hud {
         Hud();
         ~Hud();
 
-        void showHud();
-        void drawCube(InputManager *receiver, Mouse *cursor, Terrain *terrain);
+        void getHUDEvents();
+        void drawCube(Terrain *terrain);
 
     private:
         enum idGUI {
@@ -27,12 +27,11 @@ class Hud {
             GUI_ID_BUILDING_BUTTON,
             GUI_ID_QUIT_BUTTON
         };
-        idGUI idButtonGUI;
-        int id;
-        int counter;
-        Vector3<float> xyzPointCollision;
-        Button * buttonBuilding;    
         
+        Button *buttonBuilding;
+        bool buildingMode;
+
+        scene::IMeshSceneNode *cubeNode; //MAL: ESTO ES UNA GUARRADA
 };
 
 #endif
