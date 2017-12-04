@@ -1,4 +1,5 @@
 #include "InputManager.h"
+#include <iostream>
 
 using namespace irr;
 
@@ -29,22 +30,16 @@ InputManager::~InputManager() {
 /// ==============================
 bool InputManager::OnEvent(const SEvent& event){
     bool eventprocessed = false;
-    id = 0;
 
     //////////////////////////////
     // Keyboard Input Event
     //////////////////////////////
-    if (event.EventType == EET_GUI_EVENT) {
-        if (event.GUIEvent.EventType == gui::EGET_BUTTON_CLICKED){
-            id = event.GUIEvent.Caller->getID();
-        }
-    }
     if (event.EventType == EET_KEY_INPUT_EVENT) {
         if (processState == STARTED) {
             // if key is Pressed Down
             if (event.KeyInput.PressedDown == true) {
                 // If key was not down before
-                if (keyState[event.KeyInput.Key] != DOWN) {
+            if (keyState[event.KeyInput.Key] != DOWN) {
                     keyState[event.KeyInput.Key] = PRESSED; // Set to Pressed
                 } else {
                     // if key was down before
@@ -58,6 +53,22 @@ bool InputManager::OnEvent(const SEvent& event){
             }
         }
         eventprocessed = true;
+    }
+
+    //////////////////////////////
+    // GUI Input Event
+    //////////////////////////////
+    
+    //id = 1;
+
+    //id = event.GUIEvent.Caller->getID();
+    if (event.EventType == irr::EET_GUI_EVENT) {
+        id = 1;
+        //std::cout<<"Existe EET_GUI_EVENT"<<std::endl;
+        /*if (event.GUIEvent.EventType == gui::EGET_BUTTON_CLICKED){ //gui::EGET_BUTTON_CLICKED
+            id = event.GUIEvent.Caller->getID();
+            // id = 1;
+        }*/
     }
 
     //////////////////////////////

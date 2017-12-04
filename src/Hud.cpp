@@ -20,11 +20,13 @@ void Hud::drawCube(InputManager *receiver, Mouse *cursor, Terrain *terrain){
     Screen *sc = Screen::Instance();
     counter = 0;
     id = receiver->getGUIID();
-
+    //std::cout<<id<<std::endl;
+    int x, y, z;
+    //std::cout<<"id GUI: "<<GUI_ID_BUILDING_BUTTON<<std::endl;
     switch(id){
 
         case GUI_ID_BUILDING_BUTTON:
-        std::cout<<"entra en window button"<<std::endl;
+            std::cout<<"entra en building button"<<std::endl;
             //Context.listbox->addItem(L"Window created");
             counter += 200;
             if (counter > 5000)
@@ -33,22 +35,25 @@ void Hud::drawCube(InputManager *receiver, Mouse *cursor, Terrain *terrain){
             // Aqui tenemos que hacer que cuando se haya apretado el boton de nueva ventana,
             // tambien se cree una caja en las coordenadas actuales del cursor del raton.
             xyzPointCollision = terrain->getPointCollision(cursor);
-            /*x = xyzPointCollision.x;
+            x = xyzPointCollision.x;
             y = xyzPointCollision.y;
-            z = xyzPointCollision.z;*/
+            z = xyzPointCollision.z;
+            //std::cout<<"x: "<<x<<std::endl;
+            //std::cout<<"y: "<<y<<std::endl;
+            //std::cout<<"z: "<<z<<std::endl;
             
-            /*scene::IMeshSceneNode *cubeNode = sc->getSceneManager()->addCubeSceneNode(100);
+            scene::IMeshSceneNode *cubeNode = sc->getSceneManager()->addCubeSceneNode(100);
 
             if(cubeNode) {
                 cubeNode->setMaterialFlag(video::EMF_LIGHTING, false);
-                cubeNode->setPosition(core::vector3df(500 + counter,500,2500));
-            }*/
+                cubeNode->setPosition(core::vector3df(x,y,z));
+            }
         break;
 
-        case GUI_ID_QUIT_BUTTON:
+        /*case GUI_ID_QUIT_BUTTON:
             sc->getDevice()->closeDevice();
             std::cout<<"entra en quit button"<<std::endl;
             //return true;
-        break;
+        break;*/
     }
 }
