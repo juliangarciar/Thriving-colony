@@ -22,7 +22,6 @@ class GameState : public State {
     private:
         CameraController *camera;
         Terrain *map;
-        Mouse *cursor;
         Hud * hud;
 };
 
