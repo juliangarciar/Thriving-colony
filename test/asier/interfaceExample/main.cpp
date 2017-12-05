@@ -76,6 +76,7 @@ public:
 	{
 		if (event.EventType == EET_GUI_EVENT)
 		{
+			std::cout<<"Existe EET_GUI_EVENT example"<<std::endl;
 			s32 id = event.GUIEvent.Caller->getID();
 			IGUIEnvironment* env = Context.device->getGUIEnvironment();
 

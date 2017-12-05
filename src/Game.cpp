@@ -17,6 +17,7 @@ Game::Game() {
 
     window = Screen::Instance();
 
+    cursor = new Mouse();
     io = new InputManager();
 
     events = new EventSystem();
@@ -49,10 +50,14 @@ void Game::CleanUp(){
     window->close();
 }
 
-Screen* Game::getWindow(){
+Screen *Game::getWindow(){
     return window;
 }
 
 InputManager *Game::getIO(){
     return io;
+}
+
+Mouse *Game::getCursor(){
+    return cursor;
 }

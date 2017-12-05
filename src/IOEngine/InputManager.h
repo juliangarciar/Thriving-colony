@@ -23,6 +23,7 @@
 #define INPUTMANAGER_H
 
 #include <irrlicht.h>
+#include "GraphicEngine/Button.h"
 
 using namespace irr;
 
@@ -60,7 +61,7 @@ class InputManager : public IEventReceiver {
         void endEventProcess();
         void startEventProcess();
 
-        int getGUIID();
+        int getGUIClickedID();
 
     private:
 		// Enumeration for UP, DOWN, PRESSED and RELEASED key states. Also used for mouse button states.

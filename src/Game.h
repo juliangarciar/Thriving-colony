@@ -21,6 +21,7 @@ class Game {
 
         Screen *getWindow();
         InputManager *getIO();
+        Mouse *getCursor();
 
     protected:
         Game();
@@ -39,6 +40,8 @@ class Game {
         InputManager *io;
 
         EventSystem *events;
+        
+        Mouse *cursor;
 };
 
 #endif
