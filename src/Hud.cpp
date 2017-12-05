@@ -21,17 +21,9 @@ void Hud::getHUDEvents(){
             buildingMode = true;
             cubeNode = g->getWindow()->getSceneManager()->addCubeSceneNode(100);
         break;
-        /*case GUI_ID_QUIT_BUTTON:
-            sc->getDevice()->closeDevice();
-            std::cout<<"entra en quit button"<<std::endl;
-            //Context.listbox->addItem(L"Window created");
-            //std::cout<<"x: "<<x<<std::endl;
-            //std::cout<<"y: "<<y<<std::endl;
-            //std::cout<<"z: "<<z<<std::endl;
-            //std::cout<<id<<std::endl;
-            //std::cout<<"id GUI: "<<GUI_ID_BUILDING_BUTTON<<std::endl;
-            //return true;
-        break;*/
+        case GUI_ID_QUIT_BUTTON:
+            g->getWindow()->getDevice()->closeDevice();
+        break;
     }
 }
 

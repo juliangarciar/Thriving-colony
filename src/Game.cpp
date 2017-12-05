@@ -62,6 +62,6 @@ Mouse *Game::getCursor(){
     return cursor;
 }
 
-Event *Game::getEvents() {
+EventSystem *Game::getEvents() {
     return events;
 }
