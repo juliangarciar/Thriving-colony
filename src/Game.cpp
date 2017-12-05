@@ -61,3 +61,7 @@ InputManager *Game::getIO(){
 Mouse *Game::getCursor(){
     return cursor;
 }
+
+Event *Game::getEvents() {
+    return events;
+}

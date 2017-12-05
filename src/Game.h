@@ -4,7 +4,7 @@
 #include "State.h"
 #include "MenuState.h"
 #include "GameState.h"
-#include "IOEngine/EventSystem"
+#include "IOEngine/EventSystem.h"
 
 #include <IOEngine/InputManager.h>
 #include <GraphicEngine/Screen.h>
@@ -22,6 +22,7 @@ class Game {
         Screen *getWindow();
         InputManager *getIO();
         Mouse *getCursor();
+        EventSystem *getEvents();
 
     protected:
         Game();

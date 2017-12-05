@@ -17,7 +17,6 @@ void GameState::Init(){
 }
 
 void GameState::Input(){
-<<<<<<< HEAD
     camera->Move(Game::Instance()->getIO(), cursor);
     camera->RotateAndInclinate(Game::Instance()->getIO(), cursor);
     hud->showHud();
@@ -25,11 +24,6 @@ void GameState::Input(){
     camera->Move(Game::Instance()->getIO(), cursor);
     camera->RotateAndInclinate(Game::Instance()->getIO(), cursor);
     //camera->Inclinate(Game::Instance()->getIO(), cursor);
-=======
-    hud->getHUDEvents();
-    camera->Move(Game::Instance()->getIO(), Game::Instance()->getCursor());
-    camera->RotateAndInclinate(Game::Instance()->getIO(), Game::Instance()->getCursor());
->>>>>>> 89f0d93ee231c28e26216850bb8ee12640a55b2a
     camera->Zoom(Game::Instance()->getIO());
 
     Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
