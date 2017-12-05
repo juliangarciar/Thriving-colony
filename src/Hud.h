@@ -31,6 +31,8 @@ class Hud {
         Button *buttonBuilding;
         bool buildingMode;
 
+        int gridAlignment;
+
         scene::IMeshSceneNode *cubeNode; //MAL: ESTO ES UNA GUARRADA
 };
 

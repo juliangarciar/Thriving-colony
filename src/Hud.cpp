@@ -7,6 +7,8 @@ Hud::Hud() {
     buildingMode = false;
     buttonBuilding = new Button(Rect<int>(700, 600, 200, 60), GUI_ID_BUILDING_BUTTON, L"New Building", L"Add a new Building");
     buttonBuilding = new Button(Rect<int>(950, 600, 200, 60), GUI_ID_QUIT_BUTTON, L"Quit", L"Quit Game");
+
+    gridAlignment = 50;
 }
 
 Hud::~Hud() {
@@ -34,9 +36,13 @@ void Hud::drawCube(Terrain *terrain){
         // tambien se cree una caja en las coordenadas actuales del cursor del raton.
         Vector3<float> xyzPointCollision = terrain->getPointCollision(g->getCursor());
         
+        float x = roundf(xyzPointCollision.x/gridAlignment)*gridAlignment;
+        float y = roundf(xyzPointCollision.y/gridAlignment)*gridAlignment;
+        float z = roundf(xyzPointCollision.z/gridAlignment)*gridAlignment;
+        //ToDo: irr::core::aabbox3d< T >
         if(cubeNode) {
             cubeNode->setMaterialFlag(video::EMF_LIGHTING, false);
-            cubeNode->setPosition(core::vector3df(xyzPointCollision.x,xyzPointCollision.y,xyzPointCollision.z));
+            cubeNode->setPosition(core::vector3df(x,y,z));
         }
     }
     if (g->getIO()->leftMouseDown()){
