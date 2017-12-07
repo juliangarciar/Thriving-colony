@@ -1,4 +1,4 @@
-#ifndef RAML_NODE_H
+#ifndef RAM_NODE_H
 #define RAM_NODE_H
 
 #include "Node.h"

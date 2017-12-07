@@ -12,7 +12,7 @@ SOURCEPATH = src
 #Directories
 SOURCE_DIRS = . GraphicEngine IOEngine SoundEngine IAEngine
 #C++ compiler
-CXX = g++
+CXX = clang++
 
 
 ####
@@ -21,7 +21,7 @@ CXX = g++
 # Include paths
 CPPFLAGS = -I/usr/include -I/usr/local/include -I/usr/include/irrlicht -I./$(SOURCEPATH)
 # Compiler params
-CXXFLAGS = -O3 -ffast-math -g -Wall
+CXXFLAGS = -O3 -ffast-math -g -Wall -std=c++11
 # Lib paths
 LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L/usr/local/lib
 # Libs
