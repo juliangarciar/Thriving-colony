@@ -11,8 +11,8 @@ CreatureNode::~CreatureNode(){
 }
 
 void CreatureNode::question() {
-    IA::getInstance()->getCityLevel() >= tree -> getCreatureMilestone();
+    if (IA::getInstance()->getCityLevel() >= tree -> getCreatureMilestone())
+    	IA::getInstance()-> increaseMeleeAmount();
     //std::cout << Genero una criatura << std::endl;
     //ToDo: Generar criatura
-    IA::getInstance()-> increaseMeleeAmount();
 }
