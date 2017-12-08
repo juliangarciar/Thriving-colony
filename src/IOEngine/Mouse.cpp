@@ -1,10 +1,10 @@
 #include "Mouse.h"
-#include "../GraphicEngine/Screen.h"
+#include "../GraphicEngine/Window.h"
 
 using namespace irr;
 
 Mouse::Mouse(){
-    cursor = Screen::Instance()->getDevice()->getCursorControl();
+    cursor = Window::Instance()->getDevice()->getCursorControl();
 }
 
 Mouse::~Mouse(){

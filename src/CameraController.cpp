@@ -1,5 +1,5 @@
 #include "CameraController.h"
-#include "GraphicEngine/Screen.h"
+#include "GraphicEngine/Window.h"
   
 CameraController::CameraController(){
 	//Camera 
@@ -151,7 +151,7 @@ void CameraController::Update(Terrain *terrain, float deltaTime){
 
 //ToDo: Crear camera controller (fuera de fachada) y moverlo ahi
 void CameraController::Move(InputManager *receiver, Mouse *cursor) {
-	Screen *sc = Screen::Instance();
+	Window *sc = Window::Instance();
 
     /*direction = (receiver->keyDown(KEY_KEY_W) << 0) | (receiver->keyDown(KEY_KEY_A) << 1)
 		| receiver->keyDown(KEY_KEY_S) << 2 | receiver->keyDown(KEY_KEY_D) << 3;*/

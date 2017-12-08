@@ -1,19 +1,19 @@
-#include "Screen.h"
+#include "Window.h"
 
 using namespace irr;
 
-Screen* Screen::pinstance = 0;
+Window* Window::pinstance = 0;
 
-Screen* Screen::Instance(){
+Window* Window::Instance(){
     
     if(pinstance == 0){
-        pinstance = new Screen(1280, 720);
+        pinstance = new Window(1280, 720);
     }
     
     return pinstance;
 }
 
-Screen::Screen(int width, int height) {
+Window::Window(int width, int height) {
     screenWidth = width;
     screenHeight = height;
 
@@ -37,16 +37,16 @@ Screen::Screen(int width, int height) {
     dtThen = device->getTimer()->getTime();
 }
 
-Screen::~Screen() {
+Window::~Window() {
     delete device;
     device = NULL; 
 }
 
-void Screen::setEventReceiver(IEventReceiver *receiver){
+void Window::setEventReceiver(IEventReceiver *receiver){
     device->setEventReceiver(receiver);
 }
  
-void Screen::beginScene(){
+void Window::beginScene(){
     float now = device->getTimer()->getTime();
     deltaTime = (float)(now - dtThen) / 1000.f; // Time in seconds
     dtThen = now;
@@ -54,49 +54,49 @@ void Screen::beginScene(){
     driver->beginScene(true, true, 0 );
 }
 
-void Screen::endScene(){
+void Window::endScene(){
     scene->drawAll();
     gui->drawAll();
 
     driver->endScene();
 }
 
-bool Screen::isOpen(){
+bool Window::isOpen(){
     return device->run();
 }
 
-bool Screen::isReady(){
+bool Window::isReady(){
     return device->isWindowActive();
 }
 
-void Screen::close(){
+void Window::close(){
     device->drop();
 }
 
-IrrlichtDevice* Screen::getDevice() {
+IrrlichtDevice* Window::getDevice() {
     return device;
 }
 
-video::IVideoDriver* Screen::getVideoDriver(){
+video::IVideoDriver* Window::getVideoDriver(){
     return driver;
 }
 
-scene::ISceneManager* Screen::getSceneManager(){
+scene::ISceneManager* Window::getSceneManager(){
     return scene;
 }
 
-gui::IGUIEnvironment* Screen::getGUIEnvironment(){
+gui::IGUIEnvironment* Window::getGUIEnvironment(){
     return gui;
 }
 
-int Screen::getScreenWidth(){
+int Window::getScreenWidth(){
     return screenWidth;
 }
 
-int Screen::getScreenHeight(){
+int Window::getScreenHeight(){
     return screenHeight;
 }
 
-float Screen::getDeltaTime(){
+float Window::getDeltaTime(){
     return deltaTime;
 }

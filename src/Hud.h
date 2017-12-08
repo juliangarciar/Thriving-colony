@@ -4,11 +4,10 @@
 #include <irrlicht.h>
 #include <GraphicEngine/Vector2.h>
 #include <GraphicEngine/Vector3.h>
-#include <GraphicEngine/Rect.h>
-#include <GraphicEngine/Terrain.h>
+#include <GraphicEngine/Rect2D.h>
+#include <GraphicEngine/Button.h>
 #include <IOEngine/InputManager.h>
 #include <IOEngine/Mouse.h>
-#include <GraphicEngine/Button.h>
 
 using namespace irr;
 
@@ -19,8 +18,6 @@ class Hud {
         ~Hud();
 
         void getHUDEvents();
-        void drawCube(Terrain *terrain);
-
     private:
         enum idGUI {
             ID0,
@@ -29,11 +26,6 @@ class Hud {
         };
         
         Button *buttonBuilding;
-        bool buildingMode;
-
-        int gridAlignment;
-
-        scene::IMeshSceneNode *cubeNode; //MAL: ESTO ES UNA GUARRADA
 };
 
 #endif

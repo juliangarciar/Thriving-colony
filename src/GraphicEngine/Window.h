@@ -1,13 +1,13 @@
-#ifndef SCREEN_H
-#define SCREEN_H
+#ifndef WINDOW_H
+#define WINDOW_H
 
 #include <irrlicht.h>
 
 using namespace irr;
 
-class Screen {
+class Window {
     public:
-        static Screen* Instance();
+        static Window* Instance();
 
         void setEventReceiver(IEventReceiver *receiver);
 
@@ -30,13 +30,13 @@ class Screen {
         float getDeltaTime();
         
     protected:
-        Screen(int width, int height);
-        virtual ~Screen();
-        Screen(const Screen & );
-        Screen &operator = (const Screen & );
+        Window(int width, int height);
+        virtual ~Window();
+        Window(const Window & );
+        Window &operator = (const Window & );
 
     private:
-        static Screen* pinstance;
+        static Window* pinstance;
         IrrlichtDevice* device;
         video::IVideoDriver* driver;
         scene::ISceneManager* scene;

@@ -15,7 +15,7 @@ Game::Game() {
     game = new GameState();
     state = game; //ToDo: cambiar por menu
 
-    window = Screen::Instance();
+    window = Window::Instance();
 
     cursor = new Mouse();
     io = new InputManager();
@@ -50,7 +50,7 @@ void Game::CleanUp(){
     window->close();
 }
 
-Screen *Game::getWindow(){
+Window *Game::getWindow(){
     return window;
 }
 
@@ -64,4 +64,12 @@ Mouse *Game::getCursor(){
 
 EventSystem *Game::getEvents() {
     return events;
+}
+
+MenuState *Game::getMenuState(){
+	return menu;
+}
+
+GameState *Game::getGameState(){
+	return game;
 }

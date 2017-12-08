@@ -1,10 +1,10 @@
 #include "Terrain.h"
-#include "Screen.h"
+#include "Window.h"
 
 using namespace irr;
 
 Terrain::Terrain(const char* heightMap){
-	Screen *sc = Screen::Instance();
+	Window *sc = Window::Instance();
     terrain = sc->getSceneManager()->addTerrainSceneNode(
 		heightMap,
 		0,					// parent node

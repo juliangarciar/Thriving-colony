@@ -7,10 +7,13 @@
 using namespace irr;
 
 template <class T>
-class Rect {
+class Rect2D {
     private:
     public:
         T x, y, w, h;
+
+		//ToDo: constructor con primer y ultimo puntos
+
         /**
          * Crea un objeto zona de impresion
          * @param rX: Coordenada x
@@ -18,21 +21,21 @@ class Rect {
          * @param rW: Ancho
          * @param rH: Alto
          */
-        Rect(T rX, T rY, T rW, T rH);
+        Rect2D(T rX, T rY, T rW, T rH);
         
         /**
          * Crea un objeto zona de impresion
          * @param rect: Zona a imprimir
          */
-        Rect(core::rect<T> rect);
+        Rect2D(core::rect<T> rect);
         
         /**
          * Crea un objeto zona de impresion
          * @param rect: Zona a imprimir
          */
-        Rect(const Rect<T>& rect);
+        Rect2D(const Rect2D<T>& rect);
         
-        virtual ~Rect();
+        virtual ~Rect2D();
         
         /**
          * Establece la zona de corte
@@ -41,26 +44,26 @@ class Rect {
          * @param rW: Ancho
          * @param rH: Alto
          */
-        void setRect(T rX, T rY, T rW, T rH);
+        void setRect2D(T rX, T rY, T rW, T rH);
         
         /**
          * Establece la zona de corte
          * @param rect: Zona de core
          */
-        void setRect(core::rect<T> rect);
+        void setRect2D(core::rect<T> rect);
         
         //Return
-        core::rect<T> getRect();
+        core::rect<T> getRect2D();
         
-        friend std::ostream& operator << (std::ostream &o,const Rect<float> &p);
-        friend std::ostream& operator << (std::ostream &o,const Rect<int> &p);
+        friend std::ostream& operator << (std::ostream &o,const Rect2D<float> &p);
+        friend std::ostream& operator << (std::ostream &o,const Rect2D<int> &p);
 };
 
-inline std::ostream& operator << (std::ostream &o,const Rect<float> &p) {
+inline std::ostream& operator << (std::ostream &o,const Rect2D<float> &p) {
     o << "(" << p.x << ", " << p.y << ", " << p.w << ", " << p.h << ")\n";
     return o;
 }
-inline std::ostream& operator << (std::ostream &o,const Rect<int> &p) {
+inline std::ostream& operator << (std::ostream &o,const Rect2D<int> &p) {
     o << "(" << p.x << ", " << p.y << ", " << p.w << ", " << p.h << ")\n";
     return o;
 }

@@ -7,7 +7,7 @@
 #include "IOEngine/EventSystem.h"
 
 #include <IOEngine/InputManager.h>
-#include <GraphicEngine/Screen.h>
+#include <GraphicEngine/Window.h>
 
 class Game {
     public:
@@ -19,10 +19,12 @@ class Game {
         void Render();
         void CleanUp();
 
-        Screen *getWindow();
+        Window *getWindow();
         InputManager *getIO();
         Mouse *getCursor();
         EventSystem *getEvents();
+		MenuState *getMenuState();
+		GameState *getGameState();
 
     protected:
         Game();
@@ -33,7 +35,7 @@ class Game {
     private:
         static Game* pinstance;
         State *state;
-        Screen *window;
+        Window *window;
 
         MenuState *menu;
         GameState *game;

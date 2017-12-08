@@ -1,15 +1,11 @@
 #include "Button.h"
-#include "Screen.h"
+#include "Window.h"
 
 using namespace irr;
 
-Button::Button(Rect<int> dimPos, int id, const wchar_t *buttonText, const wchar_t *tooltipText) {
-    Screen *sc = Screen::Instance();
-    //std::cout<<dimPos<<std::endl;
-    //std::cout<<dimPos.getRect().getWidth()<<std::endl;
-    //std::cout<<dimPos.getRect().getHeight()<<std::endl;
-    button = sc->getGUIEnvironment()->addButton(dimPos.getRect(), 0, id, buttonText, tooltipText);
-    std::cout<<"buttonText"<<std::endl;
+Button::Button(Rect2D<int> dimPos, int id, const wchar_t *buttonText, const wchar_t *tooltipText) {
+    Window *sc = Window::Instance();
+    button = sc->getGUIEnvironment()->addButton(dimPos.getRect2D(), 0, id, buttonText, tooltipText);
 }
 
 bool Button::isButtonPressed(){

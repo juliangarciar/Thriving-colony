@@ -2,7 +2,7 @@
 #define BUTTON_H
 
 #include <irrlicht.h>
-#include <GraphicEngine/Rect.h>
+#include <GraphicEngine/Rect2D.h>
 #include <GraphicEngine/Vector3.h>
 #include <IOEngine/InputManager.h>
 #include <IOEngine/Mouse.h>
@@ -12,7 +12,7 @@ using namespace irr;
 class Button {
     
     public:
-        Button(Rect<int> dimPos, int id, const wchar_t *buttonText, const wchar_t *tooltipText);
+        Button(Rect2D<int> dimPos, int id, const wchar_t *buttonText, const wchar_t *tooltipText);
         ~Button();
 
         bool isButtonPressed();
