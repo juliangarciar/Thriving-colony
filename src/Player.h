@@ -67,7 +67,7 @@ class Player {
         void increaseWallAmount();
         void increaseTowerAmount();
 
-        void deployTroops();
+        static void deployTroops();
         void retractTroops();
         void closeDoors();
         void openDoors();
@@ -102,7 +102,7 @@ class Player {
         bool barnBuilt;
         bool workshopBuilt;
 
-        bool deployedTroops;
+        static bool deployedTroops;
         bool closedDoors;
         
         Melee **melees;

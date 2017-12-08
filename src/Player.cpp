@@ -1,4 +1,7 @@
 #include "Player.h"
+#include "Game.h"
+
+bool Player::deployedTroops = false;
 
 Player::Player() {
     happiness = 0;
@@ -26,6 +29,8 @@ Player::Player() {
     melees = 0;
     rangeds = 0;
     buildings = 0;
+
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DeployTroops, deployTroops);
 }
 
 Player::~Player() {
@@ -104,6 +109,14 @@ int Player::getQuarryAmount() {
     return quarryAmount;
 }
 
+int Player::getWallAmount() {
+    return wallAmount;
+}
+
+int Player::getTowerAmount() {
+    return towerAmount;
+}
+
 bool Player::getClosedDoors() {
     return closedDoors;
 }
@@ -126,19 +139,16 @@ void Player::increaseCityLevel(int lvl) {
 }
 
 void Player::increaseSiderurgyAmount() {
-
     increaseCityLevel(5);
     siderurgyAmount ++;
 }
 
 void Player::increaseQuarryAmount() {
-
     increaseCityLevel(5);
     quarryAmount ++;
 }
 
 void Player::increaseCitizens() {
-
     increaseCityLevel(3);
     citizens += 5;
 }
@@ -174,14 +184,6 @@ void Player::buildBarn() {
 
 void Player::buildWorkshop() {
     workshopBuilt = true;
-}
-
-int Player::getWallAmount() {
-    return wallAmount;
-}
-
-int Player::getTowerAmount() {
-    return towerAmount;
 }
 
 void Player::increaseWallAmount() {

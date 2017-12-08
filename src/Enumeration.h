@@ -5,24 +5,26 @@ class Enumeration {
     
     public:
         enum BuildingType {
-            MainBuilding,
+            Barn,
+            Barrack,
+            Hospital,
             House,
+            MainBuilding,
+            Market,
             Quarry,
             Siderurgy,
-            Market,
-            Hospital,
             School,
-            Workshop,
-            Barrack,
-            Barn,
             Tower,
-            Wall
+            Wall,
+            Workshop
         };
 
         enum EventType {
-            BeingAttacked,
             Attacking,
-            StopBeingAttack,
+            BeingAttacked,
+            DeployTroops,
+            RetractTroops,
+            StopBeingAttack
         };
 
     private:

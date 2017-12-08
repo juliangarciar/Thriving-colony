@@ -19,6 +19,7 @@ class Game {
         void Render();
         void CleanUp();
 
+        //Getters
         Screen *getWindow();
         InputManager *getIO();
         Mouse *getCursor();

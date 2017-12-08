@@ -7,11 +7,11 @@
 class Building : public Entity {
     
     public:
-        Building(int hpPnt);
+        Building(int hpPnt, Enumeration::BuildingType);
         virtual ~Building();
 
     private:
-        //Enumeration::BuildingType type;
+        Enumeration::BuildingType type;
         
 };
 

@@ -22,11 +22,15 @@ Game::Game() {
 
     events = new EventSystem();
 
-    window->setEventReceiver(io);
+    window -> setEventReceiver(io);
 }
 
 Game::~Game() {
-     
+     delete menu;
+     delete game;
+     delete cursor;
+     delete io;
+     delete events;
 }
 
 void Game::Init(){
