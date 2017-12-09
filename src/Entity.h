@@ -1,6 +1,8 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#include "IOEngine/Vector3.h"
+
 class Entity {
 
     public:
@@ -11,7 +13,10 @@ class Entity {
         void takeDamage(int);
         void die();
 
+        Vector3 getPosition();
+
     protected:
+        Vector3 *position;
         int hpMax;
         int hp;
     private:

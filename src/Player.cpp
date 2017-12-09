@@ -3,15 +3,15 @@
 
 bool Player::deployedTroops = false;
 
+#define RESOURCEPRODUCTION 10
+
 Player::Player() {
     happiness = 0;
     cityLevel = 10;
     
     siderurgyAmount = 1;
-    metalProduction = 10;
-
     quarryAmount= 0;
-    crystalProduction = 10;
+
     citizens = 0;
 
     armySize = 0;
@@ -26,6 +26,8 @@ Player::Player() {
     barnBuilt = false;
     workshopBuilt = false;
 
+    //ToDo: Dejar asi o solo un ejercito???
+    //      Depende de como vaya a quedarse la IA de combate
     melees = 0;
     rangeds = 0;
     buildings = 0;
@@ -50,11 +52,11 @@ int Player::getCityLevel() {
 }
 
 int Player::getMetalProduction() {
-    return siderurgyAmount * metalProduction;
+    return siderurgyAmount * RESOURCEPRODUCTION;
 }
 
 int Player::getCrystalProduction() {
-    return quarryAmount * crystalProduction;
+    return quarryAmount * RESOURCEPRODUCTION;
 }
 
 int Player::getCitizens() {

@@ -2,23 +2,31 @@
 #define BATTLE_H
 
 #include "Unit.h"
+#include <vector>
 
 class Battle {
     
     public:
-        Battle();
+        Battle(int, int);
         virtual ~Battle();
 
         //Getters
-        Unit **getHumanTroops();
-        Unit **getIaTroops();
+        std::vector<Unit*> getHumanTroops();
+        std::vector<Unit*> getIaTroops();
 
         /////////
-        void determinateWinnerSide();
+        void update();
+        void fetchUnits();
+        void determinateWinningSide();
+        bool determineWithingRange(Vector3);
 
     private:
-        Unit **humanTroops;
-        Unit **iaTroops;
+        //VECTOR??
+        std::vector<Unit*> *humanTroops;
+        std::vector<Unit*> *iaTroops;
+
+        //VECTOR3??
+        Vector3 position;
 };
 
 #endif

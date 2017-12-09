@@ -79,10 +79,8 @@ class Player {
         int cityLevel;
 
         int siderurgyAmount;
-        int metalProduction;
 
         int quarryAmount;
-        int crystalProduction;
 
         int citizens;
         // Army

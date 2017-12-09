@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 
+
 class Unit : public Entity {
     
     public:
@@ -20,6 +21,7 @@ class Unit : public Entity {
         void attack();
 
     protected:
+
         int moveSpeed;
         int attackSpeed;
         int attackDamage;
