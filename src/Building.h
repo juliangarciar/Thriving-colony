@@ -8,7 +8,7 @@
 class Building : public Entity {
     
     public:
-        Building(int, Vector3<float>*, Enumeration::BuildingType);
+        Building(int, Vector3<float>*, Enumeration::BuildingType, bool);
         virtual ~Building();
 
     private:

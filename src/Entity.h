@@ -6,7 +6,7 @@
 class Entity {
 
     public:
-        Entity(int, Vector3<float>*);
+        Entity(int, Vector3<float>*, bool);
         virtual ~Entity();
 
         int getHP();
@@ -20,6 +20,13 @@ class Entity {
 
         int hpMax;
         int hp;
+
+        /*
+        * Indicates the propetary of the entity
+        * False -> IA
+        * True -> Human
+        */
+        bool team; 
 
     private:
 };

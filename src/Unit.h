@@ -7,7 +7,7 @@
 class Unit : public Entity {
     
     public:
-        Unit(int, Vector3<float>*, int, int, int, int, int);
+        Unit(int, Vector3<float>*, int, int, int, int, int, bool);
         virtual ~Unit();
 
         //Getters

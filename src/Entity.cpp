@@ -1,10 +1,11 @@
 #include "Entity.h"
 
-Entity::Entity(int hitPoints, Vector3<float>* pos) {
+Entity::Entity(int hitPoints, Vector3<float>* pos, bool _team) {
     //ToDo: hacer aumento de felicidad, tropas nivel y tal
     hpMax = hitPoints;
     hp = hpMax;
     position = pos;
+    team = _team;
 }
 
 Entity::~Entity() {
