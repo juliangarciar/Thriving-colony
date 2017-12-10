@@ -1,12 +1,12 @@
 #include "Battle.h"
 #include "IA.h"
 #include "Human.h"
+#include "Game.h"
 
 #define BATTLERADIUS 60
 
-Battle::Battle(int _x, int _y) {
-    x = _x;
-    y = _y;
+Battle::Battle(float _x, float _y) {
+    position = new Vector2<float>(_x, _y);
 
     fetchUnits();
     humanTroops = new std::vector<Unit*>;
@@ -16,6 +16,7 @@ Battle::Battle(int _x, int _y) {
 Battle::~Battle() {
     delete humanTroops;
     delete iaTroops;
+    delete position;
 }
 
 std::vector<Unit*> Battle::getHumanTroops() {
@@ -51,14 +52,14 @@ void Battle::fetchUnits() {
     Unit** iaArmy = IA::getInstance() -> getTroops();
     // Check every unit in the human army, if any is in range of the battle, add it to the vector
     for (int i = 0; i < Human::getInstance() -> getArmySize(); i++) {
-        if (determineWithinRange(humanArmy[i].getPosition())) {
-            humanTroops.push(humanArmy[i]);
+        if (determineWithinRange(humanArmy[i] -> getPosition())) {
+            humanTroops -> push_back(humanArmy[i]);
         }
     }
     // Check every unit in the IA army, if any is in range of the battle, add it to the vector
     for (int i = 0; i < IA::getInstance() -> getArmySize(); i++) {
         if (determineWithinRange(iaArmy[i] -> getPosition())) {
-            iaTroops.push(iaArmy[i]);
+            iaTroops -> push_back(iaArmy[i]);
         }
     }
 }
@@ -68,12 +69,12 @@ void Battle::fetchUnits() {
 * an army is outnumbered 7 to 3.
 */
 void Battle::determinateWinningSide() {
-    int totalUnits = iaTroops -> size + humanTroops -> size;
-    float iaPercentatge = iAArmySize / totalUnits;
+    int totalUnits = iaTroops -> size() + humanTroops -> size();
+    float iaPercentatge = iaTroops -> size() / totalUnits;
 
     if (iaPercentatge <= 0.3f) {
         // The IA is losing
-        Game::Instance -> getEvents() -> triggerEvent(Enumeration::EventType::RetractTroops);
+        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::RetractTroops);
     } else if (iaPercentatge >= 0.7f) {
         //The player is losing
         //ToDo?: trigger algo?
@@ -84,9 +85,9 @@ void Battle::determinateWinningSide() {
  * Determines and returns wether or not the unit whose position is passed as argument
  * is within the range of the battle.
  */
-bool Battle::determineWithingRange(Vector3 unit) {
+bool Battle::determineWithinRange(Vector3<float>* unit) {
     float xComponent = unit -> x - position -> x;
     float yComponent = unit -> y - position -> y;
-    float distance = sqrtf(xComponent² - yComponent²);
+    float distance = sqrtf(pow(xComponent, 2) - pow(yComponent, 2));
     return (distance <= BATTLERADIUS);
 }

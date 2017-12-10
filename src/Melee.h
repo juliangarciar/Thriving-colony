@@ -7,7 +7,7 @@ class Melee : public Unit {
     
     public:
 
-        Melee(int, int, int, int, int, int);
+        Melee(int, Vector3<float>*, int, int, int, int, int);
         virtual ~Melee();
 
     private:

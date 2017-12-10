@@ -3,12 +3,12 @@
 
 #include "Unit.h"
 #include <vector>
-#include "GraphicEngine/Vector3.h"
+#include "GraphicEngine/Vector2.h"
 
 class Battle {
     
     public:
-        Battle(int, int);
+        Battle(float, float);
         virtual ~Battle();
 
         //Getters
@@ -19,7 +19,7 @@ class Battle {
         void update();
         void fetchUnits();
         void determinateWinningSide();
-        bool determineWithingRange(Vector3);
+        bool determineWithinRange(Vector3<float>*);
 
     private:
         //VECTOR??
@@ -27,7 +27,7 @@ class Battle {
         std::vector<Unit*> *iaTroops;
 
         //VECTOR3??
-        Vector3 position;
+        Vector2<float> *position;
 };
 
 #endif

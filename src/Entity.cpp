@@ -1,18 +1,14 @@
 #include "Entity.h"
-#include "GraphicEngine/Vector3.h"
-#include "Player.h"
 
-Entity::Entity(int hitPoints, Vector3<float> pos, Player* _team) {
+Entity::Entity(int hitPoints, Vector3<float>* pos) {
     //ToDo: hacer aumento de felicidad, tropas nivel y tal
     hpMax = hitPoints;
     hp = hpMax;
-    &position = pos;
-    &team = _team;
+    position = pos;
 }
 
 Entity::~Entity() {
     delete position;
-    delete team;
 }
 
 int Entity::getHP() {

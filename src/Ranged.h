@@ -6,7 +6,7 @@
 class Ranged : public Unit {
     
     public:
-        Ranged(int, int, int, int, int, int);
+        Ranged(int, Vector3<float>*, int, int, int, int, int);
         virtual ~Ranged();
 
     private:

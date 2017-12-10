@@ -1,8 +1,6 @@
 #include "Unit.h"
-#include "GraphicEngine/Vector3.h"
-#include "Player.h"
 
-Unit::Unit(int hitPoints, Vector3<float>* pos, Player* _team, int _moveSpeed, int _attackSpeed, int damage, int attackRadius, int viewRadius) : Entity(hitPoints, pos, _team) {
+Unit::Unit(int hitPoints, Vector3<float>* pos, int _moveSpeed, int _attackSpeed, int damage, int attackRadius, int viewRadius) : Entity(hitPoints, pos) {
     moveSpeed = _moveSpeed;
     attackSpeed = _attackSpeed;
     attackDamage = damage;

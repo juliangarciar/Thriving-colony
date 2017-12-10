@@ -2,12 +2,11 @@
 #define ENTITY_H
 
 #include "GraphicEngine/Vector3.h"
-#include "Player.h"
 
 class Entity {
 
     public:
-        Entity(int, Vector3<float>, Player*);
+        Entity(int, Vector3<float>*);
         virtual ~Entity();
 
         int getHP();
@@ -22,7 +21,6 @@ class Entity {
         int hpMax;
         int hp;
 
-        Player* team;
     private:
 };
 
