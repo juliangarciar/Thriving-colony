@@ -72,6 +72,7 @@ class Player {
         void closeDoors();
         void openDoors();
 
+        Unit** getTroops();
         //Setters
 
     protected:

@@ -3,6 +3,7 @@
 
 #include "Unit.h"
 #include <vector>
+#include "GraphicEngine/Vector3.h"
 
 class Battle {
     

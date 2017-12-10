@@ -225,3 +225,9 @@ void Player::retractTroops() {
     // ToDo: hacer de verdad
     deployedTroops = false;
 }
+
+Unit** Player::getTroops() {
+    //ToDo: Devolver tropas
+    //TODO al cuadrado: Decidir como va a ser lo de las tropas   
+    return 0;
+}

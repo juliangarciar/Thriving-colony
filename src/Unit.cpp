@@ -1,11 +1,13 @@
 #include "Unit.h"
+#include "GraphicEngine/Vector3.h"
+#include "Player.h"
 
-Unit::Unit(int hpPnt, int moveSpeedPnt, int attackSpeedPnt, int damagePnt, int attackRangePnt, int viewRangePnt) : Entity(hpPnt) {
-    moveSpeed = moveSpeedPnt;
-    attackSpeed = attackSpeedPnt;
-    attackDamage = damagePnt;
-    attackRange = attackRangePnt;
-    viewRange = viewRangePnt;
+Unit::Unit(int hitPoints, Vector3<float>* pos, Player* _team, int _moveSpeed, int _attackSpeed, int damage, int attackRadius, int viewRadius) : Entity(hitPoints, pos, _team) {
+    moveSpeed = _moveSpeed;
+    attackSpeed = _attackSpeed;
+    attackDamage = damage;
+    attackRange = attackRadius;
+    viewRange = viewRadius;
 
     moving = false;
     attacking = false;

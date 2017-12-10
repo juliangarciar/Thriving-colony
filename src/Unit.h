@@ -2,12 +2,13 @@
 #define UNIT_H
 
 #include "Entity.h"
-
+#include "GraphicEngine/Vector3.h"
+#include "Player.h"
 
 class Unit : public Entity {
     
     public:
-        Unit(int, int, int, int, int, int);
+        Unit(int, Vector3<float>*, Player*, int, int, int, int, int);
         virtual ~Unit();
 
         //Getters
