@@ -68,9 +68,10 @@ class Player {
         void increaseTowerAmount();
 
         static void deployTroops();
-        void retractTroops();
+        static void retractTroops();
         void closeDoors();
         void openDoors();
+
         //Setters
 
     protected:

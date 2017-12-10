@@ -1,7 +1,7 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "IOEngine/Vector3.h"
+#include "GraphicEngine/Vector3.h"
 
 class Entity {
 
@@ -19,6 +19,7 @@ class Entity {
         Vector3 *position;
         int hpMax;
         int hp;
+
     private:
 };
 

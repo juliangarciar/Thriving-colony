@@ -33,6 +33,7 @@ Player::Player() {
     buildings = 0;
 
     Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DeployTroops, deployTroops);
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::RetractTroops, retractTroops);
 }
 
 Player::~Player() {
@@ -196,6 +197,7 @@ void Player::increaseTowerAmount() {
     towerAmount ++;
 }
 
+//Es necesario?
 bool Player::losingBattle() {
     //ToDo: calcular si estas perdiendo tu la  batalla
     return false;
@@ -216,6 +218,9 @@ void Player::deployTroops() {
     deployedTroops = true;
 }
 
+/*
+* Troops come back to their building (barn, barrack or workshop)
+*/
 void Player::retractTroops() {
     // ToDo: hacer de verdad
     deployedTroops = false;

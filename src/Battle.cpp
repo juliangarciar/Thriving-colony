@@ -1,7 +1,6 @@
 #include "Battle.h"
 #include "IA.h"
 #include "Human.h"
-#include <vector>
 
 #define BATTLERADIUS 60
 
@@ -54,7 +53,6 @@ void Battle::fetchUnits() {
     for (int i = 0; i < Human::getInstance() -> getArmySize(); i++) {
         if (determineWithinRange(humanArmy[i].getPosition())) {
             humanTroops.push(humanArmy[i]);
-
         }
     }
     // Check every unit in the IA army, if any is in range of the battle, add it to the vector
@@ -75,7 +73,7 @@ void Battle::determinateWinningSide() {
 
     if (iaPercentatge <= 0.3f) {
         // The IA is losing
-        //ToDo: trigger retirada
+        Game::Instance -> getEvents() -> triggerEvent(Enumeration::EventType::RetractTroops);
     } else if (iaPercentatge >= 0.7f) {
         //The player is losing
         //ToDo?: trigger algo?
@@ -87,8 +85,8 @@ void Battle::determinateWinningSide() {
  * is within the range of the battle.
  */
 bool Battle::determineWithingRange(Vector3 unit) {
-    float xComponent = unit->x - position ->x;
-    float yComponent = unit->y - position ->y;
+    float xComponent = unit -> x - position -> x;
+    float yComponent = unit -> y - position -> y;
     float distance = sqrtf(xComponent² - yComponent²);
     return (distance <= BATTLERADIUS);
 }
