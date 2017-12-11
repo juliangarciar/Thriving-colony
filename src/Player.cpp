@@ -38,7 +38,9 @@ Player::Player() {
 }
 
 Player::~Player() {
-
+    delete melees;
+    delete rangeds;
+    delete buildings;
 }
 
 //==========

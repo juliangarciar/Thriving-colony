@@ -15,7 +15,6 @@ class grid
 
   public:
     grid(int x, int y, irr::scene::ISceneManager *smgrData);
-    grid(const grid &orig);
     virtual ~grid();
 
     int getX() { return ox; };

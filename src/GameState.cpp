@@ -8,7 +8,9 @@ GameState::GameState() : State() {
 }
 
 GameState::~GameState() {
-    
+    delete camera;
+    delete map;
+    delete hud;
 }
 
 void GameState::Init(){

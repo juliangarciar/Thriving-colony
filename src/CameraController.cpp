@@ -4,10 +4,10 @@
 CameraController::CameraController(){
 	//Camera 
     camera = new Camera();
-    camera->setShadowDistance(42000.f);
+    camera -> setShadowDistance(42000.f);
 
 	// Helper initializations
-	recipsqrt2 = camera->getReciprocalSquareroot();
+	recipsqrt2 = camera -> getReciprocalSquareroot();
 
 	// Cam movement initializations
 	direction = 0;
@@ -33,8 +33,8 @@ CameraController::CameraController(){
 
 	//Posiciones iniciales de la camara
 	Vector2<float> camPos2D = Vector2<float>().getFromPolarCoordinates(delta.y, 0);
-	camera->setCameraPosition(Vector3<float>(camPos2D.x, camHeight, camPos2D.y));
-    camera->setTargetPosition(Vector3<float>(0, 0, 0));
+	camera -> setCameraPosition(Vector3<float>(camPos2D.x, camHeight, camPos2D.y));
+    camera -> setTargetPosition(Vector3<float>(0, 0, 0));
 
 	//ToDo: esto no va aqui
 	mapMarginTop = 100;
@@ -45,7 +45,7 @@ CameraController::CameraController(){
 }
 
 CameraController::~CameraController(){
-
+	delete camera;
 }
 
 void CameraController::Update(Terrain *terrain, float deltaTime){

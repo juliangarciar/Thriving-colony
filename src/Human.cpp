@@ -23,7 +23,7 @@ Human::Human() : Player() {
 }
 
 Human::~Human() {
-
+    
 }
 
 Human* Human::instance = 0;

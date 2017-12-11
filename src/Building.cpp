@@ -5,5 +5,5 @@ Building::Building(int hitPoints, Vector3<float>* pos, Enumeration::BuildingType
 }
 
 Building::~Building() {
-
+    
 }

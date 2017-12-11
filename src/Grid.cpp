@@ -18,9 +18,7 @@ grid::grid(int x, int y, irr::scene::ISceneManager *smgrData)
         }
     }
 }
-grid::grid(const grid &orig)
-{
-}
+
 //Delete
 grid::~grid()
 {

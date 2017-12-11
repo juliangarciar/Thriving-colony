@@ -34,24 +34,24 @@ Game::~Game() {
 }
 
 void Game::Init(){
-    state->Init();
+    state ->Init();
 }
 void Game::Input(){
-    io->endEventProcess();
-    state->Input();
-    io->startEventProcess();
+    io -> endEventProcess();
+    state -> Input();
+    io -> startEventProcess();
 }
 void Game::Update(){
-    state->Update();
+    state -> Update();
 }
 void Game::Render(){
-    window->beginScene();
-    state->Render();
-    window->endScene();
+    window -> beginScene();
+    state -> Render();
+    window -> endScene();
 }
 void Game::CleanUp(){
-    state->CleanUp();
-    window->close();
+    state -> CleanUp();
+    window -> close();
 }
 
 Screen *Game::getWindow(){

@@ -12,7 +12,6 @@ class Human : public Player {
 
         
     private:
-        
         static Human* instance;
 };
 

@@ -8,5 +8,5 @@ Tower::Tower(int hitPoints, int attackSpeedPnt, int damagePnt, Vector3<float>* p
 }
 
 Tower::~Tower() {
-
+    delete objetive;
 }
