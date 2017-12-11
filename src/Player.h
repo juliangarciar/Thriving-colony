@@ -72,6 +72,8 @@ class Player {
         void closeDoors();
         void openDoors();
 
+        void increaseBuildableRange();
+
         Unit** getTroops();
         //Setters
 
@@ -107,7 +109,10 @@ class Player {
         
         Melee **melees;
         Ranged **rangeds;
+        //ToDo: Tambien para lo demas no?
         std::vector<Building*> *buildings;
+
+        float buildableRange;
 
     private:
         

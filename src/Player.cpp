@@ -201,6 +201,11 @@ void Player::buildTower(int hitPoints, int attackSpeedPnt, int damagePnt, Vector
     buildings -> push_back(new Tower(hitPoints, attackSpeedPnt, damagePnt, pos, _team));
 }
 
+void Player::increaseBuildableRange() {
+    //ToDo: equilibrar la cantidad de aumento
+    buildableRange *= 1.5;
+}
+
 void Player::increaseWallAmount() {
     wallAmount ++;
 }
