@@ -6,7 +6,7 @@
 class Tower : public Building {
     
     public:
-        Tower(int, int, int, Vector3<float>*, bool);
+        Tower(int, int, int, Vector3<float>*, bool, Box3D<float>*, Model*);
         virtual ~Tower();
     
     private:

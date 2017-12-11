@@ -7,6 +7,8 @@
 #include <GraphicEngine/Box3D.h>
 #include <GraphicEngine/Terrain.h>
 #include <GraphicEngine/Model.h>
+#include <Enumeration.h>
+#include <Building.h>
 
 using namespace irr;
 
@@ -18,10 +20,13 @@ class BuildingManager {
 		void getHoverBuilding();
 
 		void setBuildingMode(bool mode);
-        void drawCube(Terrain *terrain);
+        //void drawCube(Terrain *terrain);
+		void buildBuilding(Terrain*, int, Vector3<float>*, Enumeration::BuildingType, bool);
+
 	private:
 		SceneNode *buildingLayer;
-		std::vector< Box3D<float> > buildings;
+		//std::vector< Box3D<float> > *buildings;
+		std::vector<Building*> *buildings;
         bool buildingMode;
         int gridAlignment;
 

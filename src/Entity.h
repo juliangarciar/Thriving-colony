@@ -2,11 +2,13 @@
 #define ENTITY_H
 
 #include "GraphicEngine/Vector3.h"
+#include "GraphicEngine/Box3D.h"
+#include "GraphicEngine/Model.h"
 
 class Entity {
 
     public:
-        Entity(int, Vector3<float>*, bool);
+        Entity(int, Vector3<float>*, bool, Box3D<float>*, Model*);
         virtual ~Entity();
 
         int getHP();
@@ -14,6 +16,9 @@ class Entity {
         void die();
 
         Vector3<float>* getPosition();
+
+        Box3D<float>* getHitbox();
+        Model* getModel();
 
     protected:
         Vector3<float>* position;
@@ -26,7 +31,10 @@ class Entity {
         * False -> IA
         * True -> Human
         */
-        bool team; 
+        bool team;
+
+        Box3D<float>* hitbox;
+        Model* model;
 
     private:
 };

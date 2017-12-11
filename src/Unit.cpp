@@ -1,6 +1,6 @@
 #include "Unit.h"
 
-Unit::Unit(int hitPoints, Vector3<float>* pos, int _moveSpeed, int _attackSpeed, int damage, int attackRadius, int viewRadius, bool _team) : Entity(hitPoints, pos, _team) {
+Unit::Unit(int hitPoints, Vector3<float>* pos, int _moveSpeed, int _attackSpeed, int damage, int attackRadius, int viewRadius, bool _team, Box3D<float>* hitboxPnt, Model* modelPnt) : Entity(hitPoints, pos, _team, hitboxPnt, modelPnt) {
     moveSpeed = _moveSpeed;
     attackSpeed = _attackSpeed;
     attackDamage = damage;

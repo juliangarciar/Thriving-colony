@@ -13,6 +13,6 @@ WallNode::~WallNode(){
 void WallNode::question() {
     //std::cout << Construyo una muralla << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
-    IA::getInstance() -> buildBuilding(200, new Vector3<float>(0, 0, 0), Enumeration::BuildingType::Wall, false);
+    //IA::getInstance() -> buildBuilding(200, new Vector3<float>(0, 0, 0), Enumeration::BuildingType::Wall, false);
     IA::getInstance()-> increaseWallAmount();
 }

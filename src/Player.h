@@ -61,8 +61,8 @@ class Player {
         void increaseRangeAmount();
         void increaseSiegeAmount();
 
-        void buildBuilding(int, Vector3<float>*, Enumeration::BuildingType, bool);
-        void buildTower(int, int, int, Vector3<float>*, bool);
+        //void buildBuilding(int, Vector3<float>*, Enumeration::BuildingType, bool);
+        //void buildTower(int, int, int, Vector3<float>*, bool);
 
         void increaseWallAmount();
         void increaseTowerAmount();

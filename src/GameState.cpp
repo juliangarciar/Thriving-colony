@@ -37,7 +37,8 @@ void GameState::Update(){
     Vector3<float> cam = camera->getCamera()->getCameraPosition();
     Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
-    buildingManager->drawCube(map);
+    //buildingManager->drawCube(map);
+    buildingManager->buildBuilding(map, 200, new Vector3<float>(0, 0, 0), Enumeration::BuildingType::House, true);
 }
 
 void GameState::Render(){

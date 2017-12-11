@@ -179,7 +179,7 @@ void Player::increaseSiegeAmount() {
     siegeAmount ++;
     increaseArmySize();
 }
-
+/*
 void Player::buildBuilding(int hitPoints, Vector3<float>* pos, Enumeration::BuildingType _type, bool _team) {
     switch (_type) {
         case Enumeration::BuildingType::Barn:
@@ -200,7 +200,7 @@ void Player::buildBuilding(int hitPoints, Vector3<float>* pos, Enumeration::Buil
 void Player::buildTower(int hitPoints, int attackSpeedPnt, int damagePnt, Vector3<float>* pos, bool _team) {
     buildings -> push_back(new Tower(hitPoints, attackSpeedPnt, damagePnt, pos, _team));
 }
-
+*/
 void Player::increaseBuildableRange() {
     //ToDo: equilibrar la cantidad de aumento
     buildableRange *= 1.5;
