@@ -1,10 +1,10 @@
 #include "Camera.h"
-#include "Screen.h"
+#include "Window.h"
 
 using namespace irr;
 
 Camera::Camera() {
-    camera = Screen::Instance()->getSceneManager()->addCameraSceneNode(0);
+    camera = Window::Instance()->getSceneManager()->addCameraSceneNode(0);
 }
 
 Camera::~Camera() {

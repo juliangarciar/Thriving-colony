@@ -1,7 +1,7 @@
-#include "Rect.h"
+#include "Rect2D.h"
 
 template <class T>
-Rect<T>::Rect(T rX, T rY, T rW, T rH) {
+Rect2D<T>::Rect2D(T rX, T rY, T rW, T rH) {
     x = rX;
     y = rY;
     w = rW;
@@ -9,7 +9,7 @@ Rect<T>::Rect(T rX, T rY, T rW, T rH) {
 }
 
 template <class T>
-Rect<T>::Rect(core::rect<T> rect){
+Rect2D<T>::Rect2D(core::rect<T> rect){
     x = rect.UpperLeftCorner.X;
     y = rect.UpperLeftCorner.Y;
     w = rect.getWidth();
@@ -17,7 +17,7 @@ Rect<T>::Rect(core::rect<T> rect){
 }
 
 template <class T>
-Rect<T>::Rect(const Rect<T>& rect) {
+Rect2D<T>::Rect2D(const Rect2D<T>& rect) {
     x = rect.x;
     y = rect.y;
     w = rect.w;
@@ -25,12 +25,12 @@ Rect<T>::Rect(const Rect<T>& rect) {
 }
 
 template <class T>
-Rect<T>::~Rect() {
+Rect2D<T>::~Rect2D() {
     
 }
 
 template <class T>
-void Rect<T>::setRect(T rX, T rY, T rW, T rH){
+void Rect2D<T>::setRect2D(T rX, T rY, T rW, T rH){
     x = rX;
     y = rY;
     w = rW;
@@ -38,7 +38,7 @@ void Rect<T>::setRect(T rX, T rY, T rW, T rH){
 }
 
 template <class T>
-void Rect<T>::setRect(core::rect<T> rect){
+void Rect2D<T>::setRect2D(core::rect<T> rect){
     x = rect.UpperLeftCorner.X;
     y = rect.UpperLeftCorner.Y;
     w = rect.getWidth();
@@ -46,9 +46,9 @@ void Rect<T>::setRect(core::rect<T> rect){
 }
 
 template <class T>
-core::rect<T> Rect<T>::getRect() {
+core::rect<T> Rect2D<T>::getRect2D() {
     return core::rect<T>(core::vector2d<T>(x, y), core::dimension2d<T>(w, h));
 }
 
-template class Rect<int>;
-template class Rect<float>;
+template class Rect2D<int>;
+template class Rect2D<float>;

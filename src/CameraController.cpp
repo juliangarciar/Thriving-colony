@@ -1,5 +1,5 @@
 #include "CameraController.h"
-#include "GraphicEngine/Screen.h"
+#include "GraphicEngine/Window.h"
   
 CameraController::CameraController(){
 	//Camera 
@@ -31,17 +31,17 @@ CameraController::CameraController(){
 	centerMargin = 20;
     rotationOrInclinationMode = false;
 
-	//Posiciones iniciales de la camara
-	Vector2<float> camPos2D = Vector2<float>().getFromPolarCoordinates(delta.y, 0);
-	camera -> setCameraPosition(Vector3<float>(camPos2D.x, camHeight, camPos2D.y));
-    camera -> setTargetPosition(Vector3<float>(0, 0, 0));
-
 	//ToDo: esto no va aqui
-	mapMarginTop = 100;
-	mapMarginLeft = 100;
-	mapMarginBottom = 9240;
-	mapMarginRight = 9240;
+	mapMarginTop = 1500;
+	mapMarginLeft = 1500;
+	mapMarginBottom = 8000;
+	mapMarginRight = 8000;
     screenCenter = Vector2<int>(1280/2, 720/2);
+
+	//Posiciones iniciales de la camara
+	Vector2<float> camPos2D = Vector2<float>(mapMarginLeft, mapMarginTop).getFromPolarCoordinates(delta.y, 0);
+	camera->setCameraPosition(Vector3<float>(camPos2D.x, camHeight, camPos2D.y));
+    camera->setTargetPosition(Vector3<float>(mapMarginLeft, 0, mapMarginTop));
 }
 
 CameraController::~CameraController(){
@@ -151,7 +151,7 @@ void CameraController::Update(Terrain *terrain, float deltaTime){
 
 //ToDo: Crear camera controller (fuera de fachada) y moverlo ahi
 void CameraController::Move(InputManager *receiver, Mouse *cursor) {
-	Screen *sc = Screen::Instance();
+	Window *sc = Window::Instance();
 
     /*direction = (receiver->keyDown(KEY_KEY_W) << 0) | (receiver->keyDown(KEY_KEY_A) << 1)
 		| receiver->keyDown(KEY_KEY_S) << 2 | receiver->keyDown(KEY_KEY_D) << 3;*/

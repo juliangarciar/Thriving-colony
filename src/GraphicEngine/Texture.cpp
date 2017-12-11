@@ -1,10 +1,10 @@
 #include "Texture.h"
-#include "Screen.h"
+#include "Window.h"
 
 using namespace irr;
 
 Texture::Texture(const char* path) {
-    texture = Screen::Instance()->getVideoDriver()->getTexture(path);
+    texture = Window::Instance()->getVideoDriver()->getTexture(path);
 }
 
 Texture::~Texture() {

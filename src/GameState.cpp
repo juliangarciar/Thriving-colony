@@ -5,6 +5,7 @@ GameState::GameState() : State() {
     camera = new CameraController();
     map = new Terrain("media/heightmap.bmp"); //ToDo: mover a map
     hud = new Hud();
+	buildingManager = new BuildingManager();
 }
 
 GameState::~GameState() {
@@ -26,6 +27,7 @@ void GameState::Input(){
     camera->Zoom(Game::Instance()->getIO());
 
     Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
+	buildingManager->getHoverBuilding();
     //std::cout << v.x << " " << v.y << " " << v.z << std::endl;
 }
 
@@ -35,7 +37,7 @@ void GameState::Update(){
     Vector3<float> cam = camera->getCamera()->getCameraPosition();
     Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
-    hud->drawCube(map);
+    buildingManager->drawCube(map);
 }
 
 void GameState::Render(){
@@ -44,4 +46,8 @@ void GameState::Render(){
 
 void GameState::CleanUp(){
 
+}
+
+BuildingManager *GameState::getBuildingManager(){
+	return buildingManager;
 }

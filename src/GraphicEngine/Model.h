@@ -1,13 +1,20 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-class Model {
+#include <irrlicht.h>
+#include "SceneNode.h"
 
+using namespace irr;
+
+class Model {
     public:
         Model();
+        Model(SceneNode *parent);
         ~Model();
 
+		scene::IMeshSceneNode *getModel();
     private:
+        scene::IMeshSceneNode *cubeNode;
 };
 
 #endif

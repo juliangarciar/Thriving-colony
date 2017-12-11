@@ -2,9 +2,10 @@
 #define GAMESTATE_H
 
 #include "State.h"
+#include <GraphicEngine/Terrain.h>
+#include <IOEngine/InputManager.h>
 #include "CameraController.h"
-#include "GraphicEngine/Terrain.h"
-#include "IOEngine/InputManager.h"
+#include "BuildingManager.h"
 #include "Hud.h"
 
 class GameState : public State {
@@ -19,11 +20,12 @@ class GameState : public State {
         void Render();
         void CleanUp();
         
-
+		BuildingManager *getBuildingManager();
     private:
         CameraController *camera;
         Terrain *map;
         Hud * hud;
+		BuildingManager *buildingManager;
 };
 
 #endif

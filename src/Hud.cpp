@@ -4,9 +4,8 @@
 using namespace irr;
 
 Hud::Hud() {
-    buildingMode = false;
-    buttonBuilding = new Button(Rect<int>(700, 600, 200, 60), GUI_ID_BUILDING_BUTTON, L"New Building", L"Add a new Building");
-    buttonBuilding = new Button(Rect<int>(950, 600, 200, 60), GUI_ID_QUIT_BUTTON, L"Quit", L"Quit Game");
+    buttonBuilding = new Button(Rect2D<int>(700, 600, 200, 60), GUI_ID_BUILDING_BUTTON, L"New Building", L"Add a new Building");
+    buttonBuilding = new Button(Rect2D<int>(950, 600, 200, 60), GUI_ID_QUIT_BUTTON, L"Quit", L"Quit Game");
 }
 
 Hud::~Hud() {
@@ -18,28 +17,10 @@ void Hud::getHUDEvents(){
     int id = g->getIO()->getGUIClickedID();
     switch(id){
         case GUI_ID_BUILDING_BUTTON:
-            buildingMode = true;
-            cubeNode = g->getWindow()->getSceneManager()->addCubeSceneNode(100);
+			g->getGameState()->getBuildingManager()->setBuildingMode(true);
         break;
         case GUI_ID_QUIT_BUTTON:
             g->getWindow()->getDevice()->closeDevice();
         break;
-    }
-}
-
-void Hud::drawCube(Terrain *terrain){
-    Game *g = Game::Instance();
-    if (buildingMode){
-        // Aqui tenemos que hacer que cuando se haya apretado el boton de nueva ventana,
-        // tambien se cree una caja en las coordenadas actuales del cursor del raton.
-        Vector3<float> xyzPointCollision = terrain->getPointCollision(g->getCursor());
-        
-        if(cubeNode) {
-            cubeNode->setMaterialFlag(video::EMF_LIGHTING, false);
-            cubeNode->setPosition(core::vector3df(xyzPointCollision.x,xyzPointCollision.y,xyzPointCollision.z));
-        }
-    }
-    if (g->getIO()->leftMouseDown()){
-        buildingMode = false;
     }
 }
