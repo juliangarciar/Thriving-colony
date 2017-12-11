@@ -22,11 +22,11 @@ class Battle {
         bool determineWithinRange(Vector3<float>*);
 
     private:
-        //VECTOR??
+        //VECTOR
         std::vector<Unit*> *humanTroops;
         std::vector<Unit*> *iaTroops;
 
-        //VECTOR3??
+        //VECTOR2
         Vector2<float> *position;
 };
 

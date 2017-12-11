@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "Game.h"
+#include "Tower.h"
 
 bool Player::deployedTroops = false;
 
@@ -177,16 +178,25 @@ void Player::increaseSiegeAmount() {
     increaseArmySize();
 }
 
-void Player::buildBarrack() {
-    barrackBuilt= true;
+void Player::buildBuilding(int hitPoints, Vector3<float>* pos, Enumeration::BuildingType _type, bool _team) {
+    switch (_type) {
+        case Enumeration::BuildingType::Barn:
+            barnBuilt = true; 
+        break;
+        
+        case Enumeration::BuildingType::Barrack:
+            barrackBuilt= true;
+        break;
+
+        case Enumeration::BuildingType::Workshop:
+            workshopBuilt = true;
+        break;
+    }
+    buildings -> push_back(new Building(hitPoints, pos, _type, _team));
 }
 
-void Player::buildBarn() {
-    barnBuilt = true;
-}
-
-void Player::buildWorkshop() {
-    workshopBuilt = true;
+void Player::buildTower(int hitPoints, int attackSpeedPnt, int damagePnt, Vector3<float>* pos, bool _team) {
+    buildings -> push_back(new Tower(hitPoints, attackSpeedPnt, damagePnt, pos, _team));
 }
 
 void Player::increaseWallAmount() {

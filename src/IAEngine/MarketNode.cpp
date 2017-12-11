@@ -1,4 +1,5 @@
 #include "MarketNode.h"
+#include "../IA.h"
 
 MarketNode::MarketNode(Node *fatherPnt) : Node() {
     father = fatherPnt;
@@ -11,5 +12,6 @@ MarketNode::~MarketNode(){
 
 void MarketNode::question() {
     //std::cout << "Contruyo un mercado" << std::endl;
-    //ToDo: Construir mercado
+    //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
+    IA::getInstance() -> buildBuilding(600, new Vector3<float>(0, 0, 0), Enumeration::BuildingType::Market, false);
 }

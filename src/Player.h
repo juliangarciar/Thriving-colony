@@ -4,6 +4,7 @@
 #include "Melee.h"
 #include "Ranged.h"
 #include "Building.h"
+#include <vector>
 
 class Player {
     
@@ -60,9 +61,8 @@ class Player {
         void increaseRangeAmount();
         void increaseSiegeAmount();
 
-        void buildBarrack();
-        void buildBarn();
-        void buildWorkshop();
+        void buildBuilding(int, Vector3<float>*, Enumeration::BuildingType, bool);
+        void buildTower(int, int, int, Vector3<float>*, bool);
 
         void increaseWallAmount();
         void increaseTowerAmount();
@@ -107,7 +107,7 @@ class Player {
         
         Melee **melees;
         Ranged **rangeds;
-        Building **buildings;
+        std::vector<Building*> *buildings;
 
     private:
         
