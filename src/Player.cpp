@@ -45,6 +45,12 @@ Player::~Player() {
     delete buildings;
 }
 
+void Player::update() {
+    //if (timer) {
+        //gainResource();
+    //}
+}
+
 //==========
 // Getters
 //==========

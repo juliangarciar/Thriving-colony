@@ -81,12 +81,13 @@ class Player {
         // Resources
         int happiness;
         int cityLevel;
+        int metalAmount;
+        int crystalAmount;
 
-        int siderurgyAmount;
 
-        int quarryAmount;
 
         int citizens;
+
         // Army
         int armySize;
 
@@ -96,13 +97,18 @@ class Player {
         int catapultAmount;
         int ramAmount;
 
-        int wallAmount;
-        int towerAmount;
-
-        bool wallBuilt;
+        //Buildings
+        //Resource
+        int siderurgyAmount;
+        int quarryAmount;
+        //Military       
         bool barrackBuilt;
         bool barnBuilt;
         bool workshopBuilt;
+
+        bool wallBuilt;
+        int wallAmount;
+        int towerAmount;
 
         static bool deployedTroops;
         bool closedDoors;
