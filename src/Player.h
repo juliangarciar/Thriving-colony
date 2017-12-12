@@ -80,6 +80,12 @@ class Player {
 
         void increaseBuildableRange();
 
+<<<<<<< HEAD
+=======
+        std::vector<Unit*>* getTroops();
+        //Setters
+
+>>>>>>> 40ab2c873475fe98b9498144ab898cf501669116
     protected:
         // Resources
         int happiness;
@@ -110,10 +116,11 @@ class Player {
         static bool deployedTroops;
         bool closedDoors;
         
-        Melee **melees;
-        Ranged **rangeds;
-
-        BuildingManager* buildings;
+        //Melee **melees;
+        //Ranged **rangeds;
+        std::vector<Unit*> *troops;
+        
+        BuildingManager *buildings;
 
         float buildableRange;
 

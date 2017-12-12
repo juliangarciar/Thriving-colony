@@ -29,8 +29,7 @@ Player::Player() {
 
     //ToDo: Dejar asi o solo un ejercito???
     //      Depende de como vaya a quedarse la IA de combate
-    melees = 0;
-    rangeds = 0;
+    troops = 0;
     buildings = new BuildingManager;
 
     //Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DeployTroops, deployTroops);
@@ -38,8 +37,9 @@ Player::Player() {
 }
 
 Player::~Player() {
-    delete melees;
-    delete rangeds;
+    //delete melees;
+    //delete rangeds;
+    delete troops;
     delete buildings;
 }
 
@@ -68,7 +68,7 @@ int Player::getCitizens() {
 }
 
 int Player::getArmySize() {
-    return armySize;
+    return troops->size();
 }
 
 int Player::getMeleeAmount() {
@@ -242,8 +242,8 @@ void Player::retractTroops() {
     deployedTroops = false;
 }
 
-Unit** Player::getTroops() {
+std::vector<Unit*>* Player::getTroops() {
     //ToDo: Devolver tropas
     //TODO al cuadrado: Decidir como va a ser lo de las tropas   
-    return 0;
+    return troops;
 }
