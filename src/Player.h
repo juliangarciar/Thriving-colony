@@ -42,7 +42,7 @@ class Player {
         bool getClosedDoors();
         bool getDeployedTroops();
 
-        Unit** getTroops();
+        std::vector<Unit*> * getTroops();
 
         bool losingBattle();
 
