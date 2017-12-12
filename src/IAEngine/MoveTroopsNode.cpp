@@ -11,7 +11,7 @@ MoveTroopsNode::~MoveTroopsNode(){
 }
 
 void MoveTroopsNode::question() {
-    //std::cout << Despliego mis tropas para defender << std::endl;
-    //ToDo: Desplegar tropas
+    //std::cout <<Ataco al enemigo << std::endl;
+    //ToDo: Fijar cento de mando como objetivo
     IA::getInstance()-> deployTroops();
 }

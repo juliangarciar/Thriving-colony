@@ -26,6 +26,18 @@ class Unit : public Entity {
       void attack();
       void moveTroop();
       void updateTroop();
+        Unit(int, Vector3<float>*, int, int, int, int, int, bool, Box3D<float>*, Model*);
+        virtual ~Unit();
+
+        //Getters
+        Entity *getTarget();
+
+        //Setters
+        void setMoving(bool);
+        void setAttacking(bool);
+
+        /////////////////////////
+        void attack();
 
     protected:
         //Unit stats
@@ -50,6 +62,7 @@ class Unit : public Entity {
 
         
         Entity* target;
+
     private:
         
 };

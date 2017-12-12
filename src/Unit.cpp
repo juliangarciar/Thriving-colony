@@ -12,6 +12,12 @@ Unit::Unit(irr::core::vector3df *vectorData) : Entity(50)
     attackDamage = 0;
     attackRange = 0;
     viewRange = 0;
+Unit::Unit(int hitPoints, Vector3<float>* pos, int _moveSpeed, int _attackSpeed, int damage, int attackRadius, int viewRadius, bool _team, Box3D<float>* hitboxPnt, Model* modelPnt) : Entity(hitPoints, pos, _team, hitboxPnt, modelPnt) {
+    moveSpeed = _moveSpeed;
+    attackSpeed = _attackSpeed;
+    attackDamage = damage;
+    attackRange = attackRadius;
+    viewRange = viewRadius;
 
     moving = false;
     attacking = false;

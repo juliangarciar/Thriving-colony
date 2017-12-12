@@ -11,7 +11,7 @@ RetractTroopsNode::~RetractTroopsNode(){
 }
 
 void RetractTroopsNode::question() {
-    //std::cout << Despliego mis tropas para defender << std::endl;
-    //ToDo: Desplegar tropas
+    //std::cout << Me retiro << std::endl;
+    //ToDo: Retirar tropas tropas
     IA::getInstance()-> retractTroops();
 }

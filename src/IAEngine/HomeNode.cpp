@@ -12,6 +12,6 @@ HomeNode::~HomeNode(){
 
 void HomeNode::question() {
     //std::cout << Voy a invertir en casas << std::endl;
-    //ToDo: Construir casas
-    IA::getInstance() ->increaseCitizens();
+    //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
+    //IA::getInstance() -> buildBuilding(200, new Vector3<float>(0, 0, 0), Enumeration::BuildingType::House, false);
 }

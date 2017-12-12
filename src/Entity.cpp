@@ -1,12 +1,19 @@
 #include "Entity.h"
 
-Entity::Entity(int hitPoints) {
+Entity::Entity(int hitPoints, Vector3<float>* pos, bool _team, Box3D<float>* hitboxPnt, Model* modelPnt) {
+    //ToDo: hacer aumento de felicidad, tropas nivel y tal
     hpMax = hitPoints;
     hp = hpMax;
+    position = pos;
+    team = _team;
+    hitbox = hitboxPnt;
+    model = modelPnt;
 }
 
 Entity::~Entity() {
-
+    delete position;
+    delete hitbox;
+    delete model;
 }
 
 int Entity::getHP() {
@@ -27,4 +34,16 @@ void Entity::takeDamage(int dmg) {
 
 void Entity::die() {
     delete this;
+}
+
+Vector3<float>* Entity::getPosition() {
+    return position;
+}
+
+Box3D<float>* Entity::getHitbox() {
+    return hitbox;
+}
+
+Model* Entity::getModel() {
+    return model;
 }

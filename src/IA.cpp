@@ -5,10 +5,8 @@ IA::IA() : Player() {
     cityLevel = 1;
     
     siderurgyAmount = 1;
-    metalProduction = 10;
-
     quarryAmount= 0;
-    crystalProduction = 10;
+    
     citizens = 0;
 
     armySize = 0;
@@ -25,7 +23,7 @@ IA::IA() : Player() {
 }
 
 IA::~IA() {
-
+    delete tree;
 }
 
 IA* IA::instance = 0;

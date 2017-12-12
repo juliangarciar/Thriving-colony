@@ -10,9 +10,7 @@ aStar::aStar(grid *mapData, nodeGrid *startData, nodeGrid *endData)
     priority = 0;
     map = mapData;
 }
-aStar::aStar(const aStar &orig)
-{
-}
+
 aStar::~aStar()
 {
     delete start;
@@ -29,6 +27,7 @@ aStar::~aStar()
         frontier.pop();
     }
 }
+
 std::vector<nodeGrid *> aStar::startAlgoritm()
 {
 

@@ -5,10 +5,8 @@ Human::Human() : Player() {
     cityLevel = 1;
     
     siderurgyAmount = 1;
-    metalProduction = 10;
-
     quarryAmount= 0;
-    crystalProduction = 10;
+    
     citizens = 0;
 
     armySize = 0;
@@ -25,7 +23,7 @@ Human::Human() : Player() {
 }
 
 Human::~Human() {
-
+    
 }
 
 Human* Human::instance = 0;

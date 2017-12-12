@@ -28,7 +28,6 @@ class aStar
 
   public:
     aStar(grid *mapData, nodeGrid *startData, nodeGrid *endData);
-    aStar(const aStar &orig);
     virtual ~aStar();
     std::vector<nodeGrid *> startAlgoritm();
 };

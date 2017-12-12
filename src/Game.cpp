@@ -22,32 +22,36 @@ Game::Game() {
 
     events = new EventSystem();
 
-    window->setEventReceiver(io);
+    window -> setEventReceiver(io);
 }
 
 Game::~Game() {
-     
+     delete menu;
+     delete game;
+     delete cursor;
+     delete io;
+     delete events;
 }
 
 void Game::Init(){
-    state->Init();
+    state ->Init();
 }
 void Game::Input(){
-    io->endEventProcess();
-    state->Input();
-    io->startEventProcess();
+    io -> endEventProcess();
+    state -> Input();
+    io -> startEventProcess();
 }
 void Game::Update(){
-    state->Update();
+    state -> Update();
 }
 void Game::Render(){
-    window->beginScene();
-    state->Render();
-    window->endScene();
+    window -> beginScene();
+    state -> Render();
+    window -> endScene();
 }
 void Game::CleanUp(){
-    state->CleanUp();
-    window->close();
+    state -> CleanUp();
+    window -> close();
 }
 
 Window *Game::getWindow(){

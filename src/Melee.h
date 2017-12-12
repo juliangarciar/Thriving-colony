@@ -10,6 +10,7 @@ class Melee : public Unit {
     public:
 
         Melee(irr::core::vector3df* vectorData);
+        Melee(int, Vector3<float>*, int, int, int, int, int, bool, Box3D<float>*, Model*);
         virtual ~Melee();
 
     private:

@@ -10,7 +10,7 @@ Hud::Hud() {
 }
 
 Hud::~Hud() {
-      
+    delete buttonBuilding;
 }
 
 void Hud::getHUDEvents(){

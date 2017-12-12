@@ -1,14 +1,18 @@
 #include "Player.h"
+#include "Game.h"
+#include "Tower.h"
+
+bool Player::deployedTroops = false;
+
+#define RESOURCEPRODUCTION 10
 
 Player::Player() {
     happiness = 0;
     cityLevel = 10;
     
     siderurgyAmount = 1;
-    metalProduction = 10;
-
     quarryAmount= 0;
-    crystalProduction = 10;
+
     citizens = 0;
 
     armySize = 0;
@@ -23,13 +27,20 @@ Player::Player() {
     barnBuilt = false;
     workshopBuilt = false;
 
+    //ToDo: Dejar asi o solo un ejercito???
+    //      Depende de como vaya a quedarse la IA de combate
     melees = 0;
     rangeds = 0;
     buildings = 0;
+
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DeployTroops, deployTroops);
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::RetractTroops, retractTroops);
 }
 
 Player::~Player() {
-
+    delete melees;
+    delete rangeds;
+    delete buildings;
 }
 
 //==========
@@ -45,11 +56,11 @@ int Player::getCityLevel() {
 }
 
 int Player::getMetalProduction() {
-    return siderurgyAmount * metalProduction;
+    return siderurgyAmount * RESOURCEPRODUCTION;
 }
 
 int Player::getCrystalProduction() {
-    return quarryAmount * crystalProduction;
+    return quarryAmount * RESOURCEPRODUCTION;
 }
 
 int Player::getCitizens() {
@@ -104,6 +115,14 @@ int Player::getQuarryAmount() {
     return quarryAmount;
 }
 
+int Player::getWallAmount() {
+    return wallAmount;
+}
+
+int Player::getTowerAmount() {
+    return towerAmount;
+}
+
 bool Player::getClosedDoors() {
     return closedDoors;
 }
@@ -126,19 +145,16 @@ void Player::increaseCityLevel(int lvl) {
 }
 
 void Player::increaseSiderurgyAmount() {
-
     increaseCityLevel(5);
     siderurgyAmount ++;
 }
 
 void Player::increaseQuarryAmount() {
-
     increaseCityLevel(5);
     quarryAmount ++;
 }
 
 void Player::increaseCitizens() {
-
     increaseCityLevel(3);
     citizens += 5;
 }
@@ -163,25 +179,31 @@ void Player::increaseSiegeAmount() {
     siegeAmount ++;
     increaseArmySize();
 }
+/*
+void Player::buildBuilding(int hitPoints, Vector3<float>* pos, Enumeration::BuildingType _type, bool _team) {
+    switch (_type) {
+        case Enumeration::BuildingType::Barn:
+            barnBuilt = true; 
+        break;
+        
+        case Enumeration::BuildingType::Barrack:
+            barrackBuilt= true;
+        break;
 
-void Player::buildBarrack() {
-    barrackBuilt= true;
+        case Enumeration::BuildingType::Workshop:
+            workshopBuilt = true;
+        break;
+    }
+    buildings -> push_back(new Building(hitPoints, pos, _type, _team));
 }
 
-void Player::buildBarn() {
-    barnBuilt = true;
+void Player::buildTower(int hitPoints, int attackSpeedPnt, int damagePnt, Vector3<float>* pos, bool _team) {
+    buildings -> push_back(new Tower(hitPoints, attackSpeedPnt, damagePnt, pos, _team));
 }
-
-void Player::buildWorkshop() {
-    workshopBuilt = true;
-}
-
-int Player::getWallAmount() {
-    return wallAmount;
-}
-
-int Player::getTowerAmount() {
-    return towerAmount;
+*/
+void Player::increaseBuildableRange() {
+    //ToDo: equilibrar la cantidad de aumento
+    buildableRange *= 1.5;
 }
 
 void Player::increaseWallAmount() {
@@ -192,6 +214,7 @@ void Player::increaseTowerAmount() {
     towerAmount ++;
 }
 
+//Es necesario?
 bool Player::losingBattle() {
     //ToDo: calcular si estas perdiendo tu la  batalla
     return false;
@@ -212,7 +235,16 @@ void Player::deployTroops() {
     deployedTroops = true;
 }
 
+/*
+* Troops come back to their building (barn, barrack or workshop)
+*/
 void Player::retractTroops() {
     // ToDo: hacer de verdad
     deployedTroops = false;
+}
+
+Unit** Player::getTroops() {
+    //ToDo: Devolver tropas
+    //TODO al cuadrado: Decidir como va a ser lo de las tropas   
+    return 0;
 }

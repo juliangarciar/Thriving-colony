@@ -4,6 +4,7 @@
 #include "Melee.h"
 #include "Ranged.h"
 #include "Building.h"
+#include <vector>
 
 class Player {
     
@@ -60,17 +61,20 @@ class Player {
         void increaseRangeAmount();
         void increaseSiegeAmount();
 
-        void buildBarrack();
-        void buildBarn();
-        void buildWorkshop();
+        //void buildBuilding(int, Vector3<float>*, Enumeration::BuildingType, bool);
+        //void buildTower(int, int, int, Vector3<float>*, bool);
 
         void increaseWallAmount();
         void increaseTowerAmount();
 
-        void deployTroops();
-        void retractTroops();
+        static void deployTroops();
+        static void retractTroops();
         void closeDoors();
         void openDoors();
+
+        void increaseBuildableRange();
+
+        Unit** getTroops();
         //Setters
 
     protected:
@@ -79,10 +83,8 @@ class Player {
         int cityLevel;
 
         int siderurgyAmount;
-        int metalProduction;
 
         int quarryAmount;
-        int crystalProduction;
 
         int citizens;
         // Army
@@ -102,12 +104,15 @@ class Player {
         bool barnBuilt;
         bool workshopBuilt;
 
-        bool deployedTroops;
+        static bool deployedTroops;
         bool closedDoors;
         
         Melee **melees;
         Ranged **rangeds;
-        Building **buildings;
+        //ToDo: Tambien para lo demas no?
+        std::vector<Building*> *buildings;
+
+        float buildableRange;
 
     private:
         

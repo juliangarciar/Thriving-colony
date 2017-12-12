@@ -4,10 +4,10 @@
 CameraController::CameraController(){
 	//Camera 
     camera = new Camera();
-    camera->setShadowDistance(42000.f);
+    camera -> setShadowDistance(42000.f);
 
 	// Helper initializations
-	recipsqrt2 = camera->getReciprocalSquareroot();
+	recipsqrt2 = camera -> getReciprocalSquareroot();
 
 	// Cam movement initializations
 	direction = 0;
@@ -45,7 +45,7 @@ CameraController::CameraController(){
 }
 
 CameraController::~CameraController(){
-
+	delete camera;
 }
 
 void CameraController::Update(Terrain *terrain, float deltaTime){

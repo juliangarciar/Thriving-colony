@@ -9,11 +9,11 @@ GameState::GameState() : State() {
 }
 
 GameState::~GameState() {
-    delete unitManager;
     delete buildingManager;
+    delete camera;
+    delete hud;
 }
 
-void GameState::Init(){
     map->setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
     //hud->drawCube(Game::Instance()->getIO(), cursor, map);
 }
@@ -36,7 +36,8 @@ void GameState::Update(){
     Vector3<float> cam = camera->getCamera()->getCameraPosition();
     Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
-    buildingManager->drawCube(map);
+    //buildingManager->drawCube(map);
+    buildingManager->buildBuilding(map, 200, new Vector3<float>(0, 0, 0), Enumeration::BuildingType::House, true);
 }
 
 void GameState::Render(){

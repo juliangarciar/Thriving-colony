@@ -13,6 +13,6 @@ BarrackNode::~BarrackNode(){
 
 void BarrackNode::question() {
     //std::cout << Construyo un cuartel << std::endl;
-    //ToDo: Construir cuartel
-    IA::getInstance()->buildBarrack();
+    //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
+    //IA::getInstance() -> buildBuilding(720, new Vector3<float>(0, 0, 0), Enumeration::BuildingType::Barrack, false);
 }

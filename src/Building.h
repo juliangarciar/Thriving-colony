@@ -3,15 +3,16 @@
 
 #include "Entity.h"
 #include "Enumeration.h"
+#include "GraphicEngine/Vector3.h"
 
 class Building : public Entity {
     
     public:
-        Building(int hpPnt);
+        Building(int, Vector3<float>*, Enumeration::BuildingType, bool, Box3D<float>*, Model*);
         virtual ~Building();
 
     private:
-        //Enumeration::BuildingType type;
+        Enumeration::BuildingType type;
         
 };
 
