@@ -48,16 +48,16 @@ void Battle::fetchUnits() {
     //      y dependiendo de como acabe siendo la ia habra que hacerlo de
     //      una forma u otra
 
-    std::vector<Unit*> humanArmy = Human::getInstance() -> getTroops();
-    std::vector<Unit*> iaArmy = IA::getInstance() -> getTroops();
+    std::vector<Unit*> *humanArmy = Human::getInstance() -> getTroops();
+    std::vector<Unit*> *iaArmy = IA::getInstance() -> getTroops();
     // Check every unit in the human army, if any is in range of the battle, add it to the vector
-    for (int i = 0; i < humanArmy -> size; i++) {
+    for (int i = 0; i < humanArmy -> size(); i++) {
         if (determineWithinRange(humanArmy->at(i) -> getPosition())) {
             humanTroops -> push_back(humanArmy->at(i));
         }
     }
     // Check every unit in the IA army, if any is in range of the battle, add it to the vector
-    for (int i = 0; i < iaArmy -> size; i++) {
+    for (int i = 0; i < iaArmy -> size(); i++) {
         if (determineWithinRange(iaArmy->at(i) -> getPosition())) {
             iaTroops -> push_back(iaArmy->at(i));
         }
@@ -69,8 +69,8 @@ void Battle::fetchUnits() {
 * an army is outnumbered 7 to 3.
 */
 void Battle::determinateWinningSide() {
-    int totalUnits = iaTroops -> size + humanTroops -> size;
-    float iaPercentatge = iaTroops -> size / totalUnits;
+    int totalUnits = iaTroops -> size() + humanTroops -> size();
+    float iaPercentatge = iaTroops -> size() / totalUnits;
 
     if (iaPercentatge <= 0.3f) {
         // The IA is losing

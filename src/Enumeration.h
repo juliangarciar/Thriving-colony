@@ -25,6 +25,12 @@ class Enumeration {
             DeployTroops,
             RetractTroops,
             StopBeingAttack
+        }; 
+
+        enum idGUI {
+            ID0,
+            GUI_ID_BUILDING_BUTTON,
+            GUI_ID_QUIT_BUTTON
         };
 
     private:

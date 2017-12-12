@@ -74,7 +74,7 @@ class Player {
 
         void increaseBuildableRange();
 
-        std::vector<Unit*> getTroops();
+        std::vector<Unit*>* getTroops();
         //Setters
 
     protected:

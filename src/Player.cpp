@@ -31,7 +31,7 @@ Player::Player() {
     //      Depende de como vaya a quedarse la IA de combate
     //melees = 0;
     //rangeds = 0;
-    units = 0;
+    troops = 0;
     buildings = 0;
 
     Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DeployTroops, deployTroops);
@@ -39,8 +39,9 @@ Player::Player() {
 }
 
 Player::~Player() {
-    delete melees;
-    delete rangeds;
+    //delete melees;
+    //delete rangeds;
+    delete troops;
     delete buildings;
 }
 
@@ -69,7 +70,7 @@ int Player::getCitizens() {
 }
 
 int Player::getArmySize() {
-    return army->size;
+    return troops->size();
 }
 
 int Player::getMeleeAmount() {
