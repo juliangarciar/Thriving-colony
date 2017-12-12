@@ -15,6 +15,7 @@ class Model {
 		scene::IMeshSceneNode *getModel();
     private:
         scene::IMeshSceneNode *cubeNode;
+        scene::ITriangleSelector *selector = 0;
 };
 
 #endif

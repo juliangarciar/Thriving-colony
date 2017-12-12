@@ -7,11 +7,16 @@ SceneNode::SceneNode(){
 	scene::ISceneManager *w = Window::Instance()->getSceneManager();
 	node = w->addEmptySceneNode(w->getRootSceneNode());
 	collisionManager = w->getSceneCollisionManager();
+
+	collisionNode = NULL;
 }
 
 SceneNode::SceneNode(SceneNode *parent){
 	scene::ISceneManager *w = Window::Instance()->getSceneManager();
 	node = w->addEmptySceneNode(parent->getSceneNode()); 
+	collisionManager = w->getSceneCollisionManager();
+
+	collisionNode = NULL;
 }
 
 SceneNode::SceneNode(scene::ISceneNode *node){
@@ -20,23 +25,31 @@ SceneNode::SceneNode(scene::ISceneNode *node){
 
 SceneNode::~SceneNode(){
 	delete node;
+	delete collisionNode;
 	node = NULL;
+	collisionNode = NULL;
 }
  
-SceneNode SceneNode::getNodeCollision(Mouse *cursor){
+SceneNode *SceneNode::getNodeCollision(Mouse *cursor){
 	scene::ISceneManager *w = Window::Instance()->getSceneManager();
 	core::position2d<s32> pos = cursor->getCursor()->getPosition();
 	core::vector3df point;
 	core::triangle3df triangle;
-	//scene::ISceneNode *node = 0;
     const core::line3d<f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
 
-	scene::ISceneNode *n = w->getSceneCollisionManager()->getSceneNodeAndCollisionPointFromRay(ray, point, triangle, 0, node);
+	if (!collisionNode) {
+		delete collisionNode;
+		collisionNode = NULL;
+	}
 
-	//ToDo: bien
-	if (n) std::cout << n->getID() << std::endl;
+	scene::ISceneNode *n = collisionManager->getSceneNodeAndCollisionPointFromRay(ray, point, triangle, 0, node);
 
-	return SceneNode(n);
+	if (n) {
+		collisionNode = new SceneNode(n);
+		return collisionNode;
+	}
+
+	return NULL;
 }
 
 scene::ISceneNode *SceneNode::getSceneNode(){

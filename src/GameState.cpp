@@ -27,7 +27,10 @@ void GameState::Input(){
     camera->Zoom(Game::Instance()->getIO());
 
     Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
-	buildingManager->getHoverBuilding();
+    if (Game::Instance()->getIO()->leftMousePressed()){
+		buildingManager->getHoverBuilding();
+	}
+	
     //std::cout << v.x << " " << v.y << " " << v.z << std::endl;
 }
 

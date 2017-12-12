@@ -22,10 +22,17 @@ void BuildingManager::setBuildingMode(bool mode){
 	cube = new Model(buildingLayer);
 }
 
-void BuildingManager::getHoverBuilding(){
-	SceneNode collision = buildingLayer -> getNodeCollision(Game::Instance() -> getCursor());
+int BuildingManager::getHoverBuilding(){
+	Game *g = Game::Instance();
+	if (!buildingMode) {
+		SceneNode *collision = buildingLayer -> getNodeCollision(Game::Instance() -> getCursor());
+		if (collision != NULL){
+			return collision->getSceneNode()->getID();
+		}
+	}
+	return -1;
 }
-
+ 
 void BuildingManager::buildBuilding(Terrain *terrain, int hitPoints, Vector3<float>* pos, Enumeration::BuildingType _type, bool _team){
     Game *g = Game::Instance();
     if (buildingMode && cube != NULL){
