@@ -80,12 +80,6 @@ class Player {
 
         void increaseBuildableRange();
 
-<<<<<<< HEAD
-=======
-        std::vector<Unit*>* getTroops();
-        //Setters
-
->>>>>>> 40ab2c873475fe98b9498144ab898cf501669116
     protected:
         // Resources
         int happiness;
