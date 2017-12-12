@@ -9,8 +9,9 @@ class HomeNode : public Node {
         HomeNode(Node*);
         virtual ~HomeNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

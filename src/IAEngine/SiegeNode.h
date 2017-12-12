@@ -9,8 +9,9 @@ class SiegeNode : public Node {
         SiegeNode(Node *);
         virtual ~SiegeNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

@@ -9,8 +9,9 @@ class RamNode : public Node {
         RamNode(Node *);
         virtual ~RamNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

@@ -1,5 +1,5 @@
 #include "Player.h"
-#include "Game.h"
+//#include "Game.h"
 #include "Tower.h"
 
 bool Player::deployedTroops = false;
@@ -31,10 +31,10 @@ Player::Player() {
     //      Depende de como vaya a quedarse la IA de combate
     melees = 0;
     rangeds = 0;
-    buildings = 0;
+    buildings = new BuildingManager;
 
-    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DeployTroops, deployTroops);
-    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::RetractTroops, retractTroops);
+    //Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DeployTroops, deployTroops);
+    //Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::RetractTroops, retractTroops);
 }
 
 Player::~Player() {
@@ -132,6 +132,26 @@ bool Player::getDeployedTroops() {
     return deployedTroops;
 }
 
+BuildingManager* Player::getBuildings() {
+    return buildings;
+}
+
+/*
+* SETTERS
+*/
+
+void Player::setBarnBuilt(bool _barn) {
+    barnBuilt = _barn;
+}
+
+void Player::setBarrackBuilt(bool _barrack) {
+    barrackBuilt = _barrack;
+}
+
+void Player::setWorkshopBuilt(bool _workshop) {
+    workshopBuilt = _workshop;
+}
+
 /**
  * CONTROL METHODS
  */
@@ -179,28 +199,7 @@ void Player::increaseSiegeAmount() {
     siegeAmount ++;
     increaseArmySize();
 }
-/*
-void Player::buildBuilding(int hitPoints, Vector3<float>* pos, Enumeration::BuildingType _type, bool _team) {
-    switch (_type) {
-        case Enumeration::BuildingType::Barn:
-            barnBuilt = true; 
-        break;
-        
-        case Enumeration::BuildingType::Barrack:
-            barrackBuilt= true;
-        break;
 
-        case Enumeration::BuildingType::Workshop:
-            workshopBuilt = true;
-        break;
-    }
-    buildings -> push_back(new Building(hitPoints, pos, _type, _team));
-}
-
-void Player::buildTower(int hitPoints, int attackSpeedPnt, int damagePnt, Vector3<float>* pos, bool _team) {
-    buildings -> push_back(new Tower(hitPoints, attackSpeedPnt, damagePnt, pos, _team));
-}
-*/
 void Player::increaseBuildableRange() {
     //ToDo: equilibrar la cantidad de aumento
     buildableRange *= 1.5;

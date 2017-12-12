@@ -9,8 +9,9 @@ class WorkshopNode : public Node {
         WorkshopNode(Node *);
         virtual ~WorkshopNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

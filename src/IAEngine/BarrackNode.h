@@ -9,8 +9,9 @@ class BarrackNode : public Node {
         BarrackNode(Node *);
         virtual ~BarrackNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

@@ -8,9 +8,10 @@ class ResourceNode : public Node {
     public:
         ResourceNode(Node*);
         virtual ~ResourceNode();
+        
+        virtual void question();
 
     private:
-        virtual void question();
 };
 
 #endif

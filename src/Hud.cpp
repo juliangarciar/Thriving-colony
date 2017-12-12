@@ -1,5 +1,6 @@
 #include "Hud.h"
 #include "Game.h"
+#include "Human.h"
 
 using namespace irr;
 
@@ -17,7 +18,7 @@ void Hud::getHUDEvents(){
     int id = g->getIO()->getGUIClickedID();
     switch(id){
         case GUI_ID_BUILDING_BUTTON:
-			g->getGameState()->getBuildingManager()->setBuildingMode(true);
+			Human::getInstance() -> getBuildings() -> setBuildingMode(true);
         break;
         case GUI_ID_QUIT_BUTTON:
             g->getWindow()->getDevice()->closeDevice();

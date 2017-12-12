@@ -9,8 +9,9 @@ class MountedRangeNode : public Node {
         MountedRangeNode(Node *);
         virtual ~MountedRangeNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif
