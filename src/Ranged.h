@@ -6,8 +6,8 @@
 class Ranged : public Unit {
     
     public:
-        Ranged(int, int, int, int, int, int, int, int , int, irr::scene::ISceneManager *smgr);
-        virtual ~Ranged();
+      Ranged(irr::core::vector3df *vectorData);
+      virtual ~Ranged();
 
     private:
         

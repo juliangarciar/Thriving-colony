@@ -7,6 +7,7 @@
 #include "CameraController.h"
 #include "BuildingManager.h"
 #include "Hud.h"
+#include "UnitManager.h"
 
 class GameState : public State {
     
@@ -21,11 +22,15 @@ class GameState : public State {
         void CleanUp();
         
 		BuildingManager *getBuildingManager();
+        //Returns the unit manager 
+        UnitManager* getUnitManager();
     private:
         CameraController *camera;
         Terrain *map;
         Hud * hud;
 		BuildingManager *buildingManager;
+        //Needed for unit creation
+        UnitManager* unitManager;
 };
 
 #endif

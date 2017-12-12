@@ -3,15 +3,17 @@
 
 #include "Unit.h"
 #include <irrlicht.h>
+
+
 class Melee : public Unit {
     
     public:
 
-        Melee(int, int, int, int, int, int, int x, int y, int z, irr::scene::ISceneManager *smgr);
+        Melee(irr::core::vector3df* vectorData);
         virtual ~Melee();
 
     private:
-        
+
 };
 
 #endif

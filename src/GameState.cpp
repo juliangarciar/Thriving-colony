@@ -9,7 +9,8 @@ GameState::GameState() : State() {
 }
 
 GameState::~GameState() {
-    
+    delete unitManager;
+    delete buildingManager;
 }
 
 void GameState::Init(){
