@@ -20,6 +20,10 @@ void Button::setButtonPressed(bool pressed){
     button->setPressed(pressed);   
 }
 
+void Button::setText(const wchar_t* text){
+    button->setText(text);
+}
+
 Button::~Button() {
     
 }

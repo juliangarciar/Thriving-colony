@@ -19,6 +19,8 @@ class Button {
         void setIsPushButton(bool pushPresed);
         void setButtonPressed(bool pressed); 
 
+        void setText(const wchar_t* text);
+
     private:
         gui::IGUIButton *button;
 };

@@ -18,6 +18,8 @@ class Hud {
         ~Hud();
 
         void getHUDEvents();
+
+        Button *getInfoButton(); //ESTO ES TEMPORAL
     private:
         enum idGUI {
             ID0,
@@ -26,6 +28,8 @@ class Hud {
         };
         
         Button *buttonBuilding;
+        Button *buttonExit;
+        Button *buttonInfo; //ESTO ES TEMPORAL
 };
 
 #endif
