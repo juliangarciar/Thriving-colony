@@ -74,7 +74,7 @@ class Player {
 
         void increaseBuildableRange();
 
-        Unit** getTroops();
+        std::vector<Unit*> getTroops();
         //Setters
 
     protected:
@@ -107,8 +107,9 @@ class Player {
         static bool deployedTroops;
         bool closedDoors;
         
-        Melee **melees;
-        Ranged **rangeds;
+        //Melee **melees;
+        //Ranged **rangeds;
+        std::vector<Unit*> *troops;
         //ToDo: Tambien para lo demas no?
         std::vector<Building*> *buildings;
 
