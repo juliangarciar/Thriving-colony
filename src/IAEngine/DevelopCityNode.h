@@ -9,8 +9,9 @@ class DevelopCityNode : public Node {
         DevelopCityNode(Node*);
         virtual ~DevelopCityNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

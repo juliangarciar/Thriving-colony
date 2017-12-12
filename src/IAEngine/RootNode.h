@@ -9,8 +9,10 @@ class RootNode : public Node {
         RootNode();
         virtual ~RootNode();
 
-    private:
         virtual void question();
+
+    private:
+        int clock;
 };
 
 #endif

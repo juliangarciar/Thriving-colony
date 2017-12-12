@@ -9,8 +9,9 @@ class RangeFootmenNode : public Node {
         RangeFootmenNode(Node *);
         virtual ~RangeFootmenNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

@@ -9,8 +9,9 @@ class MeleeNode : public Node {
         MeleeNode(Node *);
         virtual ~MeleeNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

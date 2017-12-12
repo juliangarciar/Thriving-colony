@@ -4,26 +4,8 @@
 #include "HomeNode.h"
 #include "ArmyNode.h"
 #include "../IA.h"
-#include <iostream>
 
-VeryHappyTree::VeryHappyTree(Node *fatherPnt) : BehaviourTree() {
-    happinessThreshold = 80;
-    quarryMilestone = 50;
-    mountedCreatureMilestone = 80;
-    wallMilestone = 70;
-    towerMilestone = 90;
-    barnMilestone = 60;
-    workshopMilestone = 65;
-    creatureMilestone = 100;
-
-    metalThreshold = 0.6;
-    crystalThreshold = 0.4;
-    citizensThreshold = 0.3;
-    armyThreshold = 0.2;
-    meleeThreshold = 0.5;
-    rangeThreshold = 0.45;
-    siegeThreshold = 0.05;
-
+VeryHappyTree::VeryHappyTree(Node *fatherPnt) : Node() {
     father = fatherPnt;
     children = new Node*[4];
     children[0] = new ServiceNode(this);

@@ -3,7 +3,7 @@
 
 #include "Melee.h"
 #include "Ranged.h"
-#include "Building.h"
+#include "BuildingManager.h"
 #include <vector>
 
 class Player {
@@ -42,7 +42,16 @@ class Player {
         bool getClosedDoors();
         bool getDeployedTroops();
 
+        Unit** getTroops();
+
         bool losingBattle();
+
+        BuildingManager* getBuildings();
+
+        //Setters
+        void setBarnBuilt(bool);
+        void setBarrackBuilt(bool);
+        void setWorkshopBuilt(bool);
 
         /////////////////////////////////
         void update();
@@ -60,10 +69,7 @@ class Player {
         void increaseMeleeAmount();
         void increaseRangeAmount();
         void increaseSiegeAmount();
-
-        //void buildBuilding(int, Vector3<float>*, Enumeration::BuildingType, bool);
-        //void buildTower(int, int, int, Vector3<float>*, bool);
-
+        
         void increaseWallAmount();
         void increaseTowerAmount();
 
@@ -74,9 +80,12 @@ class Player {
 
         void increaseBuildableRange();
 
+<<<<<<< HEAD
+=======
         std::vector<Unit*>* getTroops();
         //Setters
 
+>>>>>>> 40ab2c873475fe98b9498144ab898cf501669116
     protected:
         // Resources
         int happiness;
@@ -116,8 +125,8 @@ class Player {
         //Melee **melees;
         //Ranged **rangeds;
         std::vector<Unit*> *troops;
-        //ToDo: Tambien para lo demas no?
-        std::vector<Building*> *buildings;
+        
+        BuildingManager *buildings;
 
         float buildableRange;
 

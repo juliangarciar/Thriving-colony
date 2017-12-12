@@ -9,8 +9,9 @@ class RangeNode : public Node {
         RangeNode(Node *);
         virtual ~RangeNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

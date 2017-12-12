@@ -9,8 +9,9 @@ class MoveTroopsNode : public Node {
         MoveTroopsNode(Node*);
         virtual ~MoveTroopsNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

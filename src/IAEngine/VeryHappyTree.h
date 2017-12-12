@@ -2,9 +2,8 @@
 #define VERYHAPPY_TREE_H
 
 #include "Node.h"
-#include "BehaviourTree.h"
 
-class VeryHappyTree : public BehaviourTree, public Node {
+class VeryHappyTree : public Node {
     
     public:
         VeryHappyTree(Node*);

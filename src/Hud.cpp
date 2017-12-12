@@ -1,5 +1,6 @@
 #include "Hud.h"
 #include "Game.h"
+#include "Human.h"
 #include "Enumeration.h"
 
 using namespace irr;
@@ -17,8 +18,8 @@ void Hud::getHUDEvents(){
     Game *g = Game::Instance();
     int id = g->getIO()->getGUIClickedID();
     switch(id){
-        case Enumeration::idGUI::GUI_ID_BUILDING_BUTTON:
-			g->getGameState()->getBuildingManager()->setBuildingMode(true);
+        case GUI_ID_BUILDING_BUTTON:
+			Human::getInstance() -> getBuildings() -> setBuildingMode(true);
         break;
         case Enumeration::idGUI::GUI_ID_QUIT_BUTTON:
             g->getWindow()->getDevice()->closeDevice();
