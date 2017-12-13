@@ -19,6 +19,8 @@ class Terrain{
         Vector3<float> getPointCollision(Mouse *cursor);
 
         scene::ITerrainSceneNode* getTerrain();
+
+        float getY(float, float);
     private:
         scene::ITerrainSceneNode* terrain;
         scene::ITriangleSelector* selector;

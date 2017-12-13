@@ -18,6 +18,8 @@ BehaviourTree::BehaviourTree() {
     meleeThreshold = 0.5;
     rangeThreshold = 0.45;
     siegeThreshold = 0.05;
+
+    underAttack = false;
 }
 
 BehaviourTree::~BehaviourTree() {

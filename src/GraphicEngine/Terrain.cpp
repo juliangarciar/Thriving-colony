@@ -56,6 +56,11 @@ void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture){
     terrain->scaleTexture(1.0f, 20.0f);
 }
 
+float Terrain::getY(float x, float z) {
+	float y = terrain -> getHeight(x, z);
+	return y;
+}
+
 Terrain::~Terrain() {
     delete terrain;
     terrain = NULL;

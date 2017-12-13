@@ -50,3 +50,7 @@ void GameState::Render(){
 void GameState::CleanUp(){
 
 }
+
+Terrain* GameState::getMap() {
+    return map;
+}
