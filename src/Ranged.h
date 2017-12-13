@@ -8,7 +8,7 @@ class Ranged : public Unit {
   public:
     //Enum: Standard, Advanced, Launcher, Desintegrator
     //teamData sepecifies the unit team and vectorData the position
-    Ranged(Enumeration::RangedType unitData, Vector3<float> *vectorData, bool teamData);
+    Ranged(Enumeration::UnitType::SubClass unitData, Vector3<float> *vectorData, bool teamData);
     virtual ~Ranged();
 
   private:

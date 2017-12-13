@@ -8,7 +8,7 @@ class Melee : public Unit {
     public:
         //Enum: Standard, Advanced, Idol
         //teamData sepecifies the unit team and vectorData the position
-        Melee(Enumeration::MeleeType unitData, Vector3<float> *vectorData, bool teamData);
+        Melee(Enumeration::UnitType::SubClass unitData, Vector3<float> *vectorData, bool teamData);
         virtual ~Melee();
 
     private:

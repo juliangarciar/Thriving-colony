@@ -2,13 +2,13 @@
 
 //The teamData and vectorData are passed to the father, because as the ranged class,
 //also share the same components
-Melee::Melee(Enumeration::MeleeType unitData, Vector3<float> *vectorData, bool teamData) : Unit(vectorData, teamData)
+Melee::Melee(Enumeration::UnitType::SubClass unitData, Vector3<float> *vectorData, bool teamData) : Unit(vectorData, teamData)
 {
     switch (unitData)
     {
     //Basic stats of each unit are here
     //Basic melee soldier
-    case Enumeration::StandardM:
+    case Enumeration::UnitType::SubClass::StandardM:
         this->moveSpeed = 420;
         this->attackDamage = 15;
         this->attackRange = 150;
@@ -18,7 +18,7 @@ Melee::Melee(Enumeration::MeleeType unitData, Vector3<float> *vectorData, bool t
         this->hp = 80;
         break;
     //Advanced melee soldier (mounted)
-    case Enumeration::AdvancedM:
+    case Enumeration::UnitType::SubClass::AdvancedM:
         this->moveSpeed = 530;
         this->attackDamage = 21;
         this->attackRange = 180;
@@ -28,7 +28,7 @@ Melee::Melee(Enumeration::MeleeType unitData, Vector3<float> *vectorData, bool t
         this->hp = 140;
         break;
     //Idol (to be defined)
-    case Enumeration::Idol:
+    case Enumeration::UnitType::SubClass::Idol:
         this->moveSpeed = 250;
         this->attackDamage = 27;
         this->attackRange = 850;

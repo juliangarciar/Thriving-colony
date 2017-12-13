@@ -19,16 +19,6 @@ class Enumeration {
             Workshop
         };
 
-        enum UnitType {
-            MeleeFootman,
-            MeleeMounted,
-            Creature,
-            RangedFootman,
-            RangedMounted,
-            Catapult,
-            Ram
-        };
-
         enum Race {
             Drorania,
             Kaonov
@@ -48,19 +38,26 @@ class Enumeration {
             GUI_ID_QUIT_BUTTON,
             GUI_ID_UNIT_BUTTON
         };
-        
 
-        enum RangedType{
-            StandardR,
-            AdvancedR,
-            Launcher,
-            Desintegrator
-        };
-
-        enum MeleeType{
-            StandardM,
-            AdvancedM,
-            Idol
+        //Special type, used to pass info to the UnitManager
+        //in order to control which unit is created
+        struct UnitType{
+            enum Class{
+                Ranged,
+                Melee
+            };
+            enum SubClass
+            {
+                StandardR,
+                AdvancedR,
+                Launcher,
+                Desintegrator,
+                StandardM,
+                AdvancedM,
+                Idol
+            };
+            Class unitClass;
+            SubClass unitSubClass;
         };
 
     private:

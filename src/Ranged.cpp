@@ -2,12 +2,12 @@
 
 //The teamData and vectorData are passed to the father, because as the melee class,
 //also share the same components
-Ranged::Ranged(Enumeration::RangedType unitData, Vector3<float> *vectorData, bool teamData) : Unit(vectorData, teamData)
+Ranged::Ranged(Enumeration::UnitType::SubClass unitData, Vector3<float> *vectorData, bool teamData) : Unit(vectorData, teamData)
 {
     switch(unitData){
         //Basic stats of each unit are here
         //Basic ranged soldier
-        case Enumeration::StandardR:
+        case Enumeration::UnitType::SubClass::StandardR:
             this->moveSpeed = 350;
             this->attackDamage = 13;
             this->attackRange = 500;
@@ -17,7 +17,7 @@ Ranged::Ranged(Enumeration::RangedType unitData, Vector3<float> *vectorData, boo
             this->hp = 60;  
         break;
         //Advanced ranged soldier (mounted)
-        case Enumeration::AdvancedR:
+        case Enumeration::UnitType::SubClass::AdvancedR:
             this->moveSpeed = 530;
             this->attackDamage = 18;
             this->attackRange = 550;
@@ -27,7 +27,7 @@ Ranged::Ranged(Enumeration::RangedType unitData, Vector3<float> *vectorData, boo
             this->hp = 110;
         break;
         //Rock launcher
-        case Enumeration::Launcher:
+        case Enumeration::UnitType::SubClass::Launcher:
             this->moveSpeed = 250;
             this->attackDamage = 27;
             this->attackRange = 850;
@@ -37,7 +37,7 @@ Ranged::Ranged(Enumeration::RangedType unitData, Vector3<float> *vectorData, boo
             this->hp = 180;
         break;
         //Wall desintegrator
-        case Enumeration::Desintegrator:
+        case Enumeration::UnitType::SubClass::Desintegrator:
             this->moveSpeed = 250;
             this->attackDamage = 41;
             this->attackRange = 180;

@@ -1,9 +1,9 @@
 #include "UnitManager.h"
 
 //Constructor
-UnitManager::UnitManager(){
+UnitManager::UnitManager(bool teamData){
     //selectedTroop = NULL;
-
+    this->teamManager = teamData;
 }
 //Destroyer
 UnitManager::~UnitManager(){
@@ -22,9 +22,22 @@ void UnitManager::updateUnitManager(){
         totalTroops[i]->updateTroop();
     }
 }
-//Create a new troops (not defined yet)
-void UnitManager::createTroop(){
-
+//Create a new troops
+//In order to add a new unit, you must specify which one
+// ie: 
+//Enumeration::UnitType unitData; 
+//unitData.unitClass = Enumeration::UnitType::Class::Ranged; 
+//unitData.unitSubClass = Enumeration::UnitType::SubClass::Idol;
+void UnitManager::createTroop(Vector3<float> *vectorData, Enumeration::UnitType unitData){
+    if(unitData.unitClass == Enumeration::UnitType::Ranged){
+        Ranged *rangedUnit = new Ranged(unitData.unitSubClass, vectorData, this->teamManager);
+        this->totalTroops.push_back(rangedUnit);
+    }
+    else if (unitData.unitClass == Enumeration::UnitType::Melee)
+    {
+        Melee *meleeUnit = new Melee(unitData.unitSubClass, vectorData, this->teamManager);
+        this->totalTroops.push_back(meleeUnit);
+    }
 }
 //Select a troop
 void UnitManager::selectTroop(Unit *troopData){

@@ -2,6 +2,7 @@
 
 Unit::Unit(Vector3<float> *vectorData, bool teamData) : Entity()
 {
+    
     //Actions of the units
     this->moving = false;
     this->attacking = false;
