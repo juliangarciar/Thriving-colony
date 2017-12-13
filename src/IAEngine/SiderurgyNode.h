@@ -9,8 +9,9 @@ class SiderurgyNode : public Node {
         SiderurgyNode(Node *);
         virtual ~SiderurgyNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

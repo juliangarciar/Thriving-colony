@@ -13,5 +13,5 @@ SchoolNode::~SchoolNode(){
 void SchoolNode::question() {
     //std::cout << "Contruyo una escuela" << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
-    //IA::getInstance() -> buildBuilding(550, new Vector3<float>(0, 0, 0), Enumeration::BuildingType::School, false);
+    IA::getInstance() -> getBuildings() -> buildBuilding(550, new Vector3<float>(0, 0, 0), Enumeration::BuildingType::School, false);
 }

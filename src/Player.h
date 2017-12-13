@@ -3,7 +3,7 @@
 
 #include "Melee.h"
 #include "Ranged.h"
-#include "Building.h"
+#include "BuildingManager.h"
 #include <vector>
 
 class Player {
@@ -42,7 +42,16 @@ class Player {
         bool getClosedDoors();
         bool getDeployedTroops();
 
+        std::vector<Unit*> * getTroops();
+
         bool losingBattle();
+
+        BuildingManager* getBuildings();
+
+        //Setters
+        void setBarnBuilt(bool);
+        void setBarrackBuilt(bool);
+        void setWorkshopBuilt(bool);
 
         /////////////////////////////////
         void update();
@@ -60,10 +69,7 @@ class Player {
         void increaseMeleeAmount();
         void increaseRangeAmount();
         void increaseSiegeAmount();
-
-        //void buildBuilding(int, Vector3<float>*, Enumeration::BuildingType, bool);
-        //void buildTower(int, int, int, Vector3<float>*, bool);
-
+        
         void increaseWallAmount();
         void increaseTowerAmount();
 
@@ -74,19 +80,17 @@ class Player {
 
         void increaseBuildableRange();
 
-        Unit** getTroops();
-        //Setters
-
     protected:
         // Resources
         int happiness;
         int cityLevel;
+        int metalAmount;
+        int crystalAmount;
 
-        int siderurgyAmount;
 
-        int quarryAmount;
 
         int citizens;
+
         // Army
         int armySize;
 
@@ -96,21 +100,27 @@ class Player {
         int catapultAmount;
         int ramAmount;
 
-        int wallAmount;
-        int towerAmount;
-
-        bool wallBuilt;
+        //Buildings
+        //Resource
+        int siderurgyAmount;
+        int quarryAmount;
+        //Military       
         bool barrackBuilt;
         bool barnBuilt;
         bool workshopBuilt;
 
+        bool wallBuilt;
+        int wallAmount;
+        int towerAmount;
+
         static bool deployedTroops;
         bool closedDoors;
         
-        Melee **melees;
-        Ranged **rangeds;
-        //ToDo: Tambien para lo demas no?
-        std::vector<Building*> *buildings;
+        //Melee **melees;
+        //Ranged **rangeds;
+        std::vector<Unit*> *troops;
+        
+        BuildingManager *buildings;
 
         float buildableRange;
 

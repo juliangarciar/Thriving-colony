@@ -9,8 +9,9 @@ class UnitAttackNode : public Node {
         UnitAttackNode(Node *);
         virtual ~UnitAttackNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

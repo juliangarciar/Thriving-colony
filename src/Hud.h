@@ -19,6 +19,7 @@ class Hud {
 
         void getHUDEvents();
     private:
+<<<<<<< HEAD
       enum idGUI
       {
           ID0,
@@ -28,6 +29,17 @@ class Hud {
       };
 
       Button *buttonBuilding;
+=======
+        /*
+        enum idGUI {
+            ID0,
+            GUI_ID_BUILDING_BUTTON,
+            GUI_ID_QUIT_BUTTON
+        }; */
+        
+        Button *buttonBuilding;
+        Button *buttonQuit;
+>>>>>>> master
 };
 
 #endif

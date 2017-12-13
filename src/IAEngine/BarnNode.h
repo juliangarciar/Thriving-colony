@@ -9,8 +9,9 @@ class BarnNode : public Node {
         BarnNode(Node *);
         virtual ~BarnNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

@@ -9,8 +9,9 @@ class RangeAttackNode : public Node {
         RangeAttackNode(Node *);
         virtual ~RangeAttackNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

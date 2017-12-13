@@ -9,8 +9,9 @@ class BuildingNode : public Node {
         BuildingNode(Node *);
         virtual ~BuildingNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

@@ -1,11 +1,12 @@
 #include "GameState.h"
 #include "Game.h"
+#include "Human.h"
 
 GameState::GameState() : State() {
     camera = new CameraController();
     map = new Terrain("media/heightmap.bmp"); //ToDo: mover a map
     hud = new Hud();
-	buildingManager = new BuildingManager();
+    nodeRootIA = new RootNode();
 }
 
 GameState::~GameState() {
@@ -26,7 +27,7 @@ void GameState::Input(){
     camera->Zoom(Game::Instance()->getIO());
 
     Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
-	buildingManager->getHoverBuilding();
+	Human::getInstance() -> getBuildings() -> getHoverBuilding();
     //std::cout << v.x << " " << v.y << " " << v.z << std::endl;
 }
 
@@ -37,7 +38,8 @@ void GameState::Update(){
     Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
     //buildingManager->drawCube(map);
-    buildingManager->buildBuilding(map, 200, new Vector3<float>(0, 0, 0), Enumeration::BuildingType::House, true);
+    Human::getInstance() -> getBuildings() -> drawBuilding(map, 200, Enumeration::BuildingType::House, true);
+    nodeRootIA -> question();
 }
 
 void GameState::Render(){
@@ -46,8 +48,4 @@ void GameState::Render(){
 
 void GameState::CleanUp(){
 
-}
-
-BuildingManager *GameState::getBuildingManager(){
-	return buildingManager;
 }

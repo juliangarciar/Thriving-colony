@@ -9,8 +9,9 @@ class DamagedUnitNode : public Node {
         DamagedUnitNode(Node *);
         virtual ~DamagedUnitNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

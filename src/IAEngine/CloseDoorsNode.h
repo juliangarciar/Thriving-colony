@@ -9,8 +9,9 @@ class CloseDoorsNode : public Node {
         CloseDoorsNode(Node*);
         virtual ~CloseDoorsNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif
