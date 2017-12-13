@@ -27,6 +27,19 @@ class Enumeration {
             StopBeingAttack
         };
 
+        enum RangedType{
+            StandardR,
+            AdvancedR,
+            Launcher,
+            Desintegrator
+        };
+
+        enum MeleeType{
+            StandardM,
+            AdvancedM,
+            Idol
+        };
+
     private:
         
 };

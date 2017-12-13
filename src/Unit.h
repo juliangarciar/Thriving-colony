@@ -2,42 +2,28 @@
 #define UNIT_H
 
 #include "Entity.h"
-#include "GraphicEngine/Vector3.h"
-#include "GraphicEngine/Model.h"
 #include <iostream>
-#include <irrlicht.h>
-
+#include <cmath>
 class Unit : public Entity {
     
     public:
-      Unit(irr::core::vector3df *vectorData);
-      virtual ~Unit();
-
-      //Getters
-      Entity* getTarget();
-      Model* getModel();
-      //Setters
-      void setMoving(bool);
-      void setAttacking(bool);
-
-      void setPos(irr::core::vector3df *vectorData);
-      void setDes(irr::core::vector3df *vectorData);
-      /////////////////////////
-      void attack();
-      void moveTroop();
-      void updateTroop();
-        Unit(int, Vector3<float>*, int, int, int, int, int, bool, Box3D<float>*, Model*);
+        //The consctructor is empty because the object it's constructed in the child
+        Unit(Vector3<float> *vectorData, bool teamData);
         virtual ~Unit();
 
         //Getters
-        Entity *getTarget();
-
+        Entity* getTarget();
+        Model* getModel();
         //Setters
         void setMoving(bool);
         void setAttacking(bool);
 
+        void setPos(Vector3<float> *vectorData);
+        void setDes(Vector3<float> *vectorData);
         /////////////////////////
         void attack();
+        void moveTroop();
+        void updateTroop();
 
     protected:
         //Unit stats
@@ -51,15 +37,11 @@ class Unit : public Entity {
         bool moving;
         bool attacking;
 
-        //Graphic engine
-        //irr::scene::ISceneManager *smgr;
-        //irr::scene::IMeshSceneNode *cube;
-        Model *unitModel;
         //Space vectors used for unit movement
-        irr::core::vector3df *vectorDes;
-        irr::core::vector3df *vectorPos;
-        irr::core::vector3df *vectorMov;
-
+        //Vector position is in the father
+        Vector3 <float> *vectorDes;
+            //Vector3 <float> *vectorPos;
+        Vector3 <float> *vectorMov;
         
         Entity* target;
 

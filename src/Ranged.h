@@ -2,14 +2,16 @@
 #define RANGED_H
 
 #include "Unit.h"
-#include <irrlicht.h>
+
 class Ranged : public Unit {
     
-    public:
-      Ranged(irr::core::vector3df *vectorData);
-      virtual ~Ranged();
+  public:
+    //Enum: Standard, Advanced, Launcher, Desintegrator
+    //teamData sepecifies the unit team and vectorData the position
+    Ranged(Enumeration::RangedType unitData, Vector3<float> *vectorData, bool teamData);
+    virtual ~Ranged();
 
-    private:
+  private:
         
 };
 
