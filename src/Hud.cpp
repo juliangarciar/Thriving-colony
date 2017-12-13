@@ -24,7 +24,7 @@ void Hud::getHUDEvents(){
         case Enumeration::idGUI::GUI_ID_QUIT_BUTTON:
             g->getWindow()->getDevice()->closeDevice();
             break;
-        case GUI_ID_UNIT_BUTTON:
+        case Enumeration::idGUI::GUI_ID_UNIT_BUTTON:
             //g->getGameState()->getUnitManager()->setUnitMode(true);
             break;
         //break;

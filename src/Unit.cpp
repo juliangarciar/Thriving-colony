@@ -11,8 +11,8 @@ Unit::Unit(Vector3<float> *vectorData, bool teamData) : Entity()
     this->position = vectorData;
     //Team defined by the constructor parameter
     this->team = teamData;
-        //Defining model position
-        this->model->getModel()->setPosition(this->position->getVectorF());
+    //Defining model position
+    this->model->getModel()->setPosition(this->position->getVectorF());
     //unitModel->getModel()->setPosition(irr::core::vector3df(vectorPos->X, vectorPos->Y, vectorPos->Z));
 }
 

@@ -10,11 +10,13 @@ GameState::GameState() : State() {
 }
 
 GameState::~GameState() {
-    delete buildingManager;
+    delete nodeRootIA;
     delete camera;
     delete hud;
+    delete map;
 }
 
+void GameState::Init(){
     map->setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
     //hud->drawCube(Game::Instance()->getIO(), cursor, map);
 }
