@@ -104,10 +104,11 @@ void BuildingManager::buildBuilding(int hitPoints, Vector3<float>* pos, Enumerat
         break;
 
 		case Enumeration::BuildingType::Tower:
-			buildings -> push_back(new Tower(hitPoints, pos, _team, new Box3D<float>(cube -> getModel() -> getTransformedBoundingBox()), cube));
+			buildings->push_back(new Tower(pos, _team, cube, new Box3D<float>(cube->getModel()->getTransformedBoundingBox())));
 			return;
     }
-	buildings -> push_back(new Building(hitPoints, pos, _type, _team, new Box3D<float>(cube -> getModel() -> getTransformedBoundingBox()), cube));
+	//buildings -> push_back(new Building(hitPoints, pos, _type, _team, new Box3D<float>(cube -> getModel() -> getTransformedBoundingBox()), cube));
+	buildings->push_back(new Building(_type, pos, _team, cube, new Box3D<float>(cube->getModel()->getTransformedBoundingBox())));
 }
 
 /*

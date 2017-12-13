@@ -44,8 +44,10 @@ class Unit : public Entity {
         Vector3 <float> *vectorMov;
         
         Entity* target;
+        //Unit type
+        Enumeration::UnitType::SubClass type;
 
-    private:
+      private:
         
 };
 

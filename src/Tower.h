@@ -6,8 +6,8 @@
 class Tower : public Building {
     
     public:
-        Tower(int, Vector3<float>*, bool, Box3D<float>*, Model*);
-        virtual ~Tower();
+      Tower(Vector3<float> *vectorData, bool teamData, Model *modelData, Box3D<float> *boxData);
+      virtual ~Tower();
     
     private:
       int attackSpeed;
