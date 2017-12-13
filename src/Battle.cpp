@@ -63,7 +63,7 @@ void Battle::fetchUnits() {
     for (int i = 0; i < humanArmy -> size(); i++) {
         if (determineWithinRange(humanArmy->at(i) -> getPosition())) {
             humanTroops -> push_back(humanArmy->at(i));
-            humanTroops -> at(i) -> assignBattle(this);
+            //humanTroops -> at(i) -> assignBattle(this);
         }
     }
 
@@ -71,7 +71,7 @@ void Battle::fetchUnits() {
     for (int i = 0; i < iaArmy -> size(); i++) {
         if (determineWithinRange(iaArmy->at(i) -> getPosition())) {
             iaTroops -> push_back(iaArmy->at(i));
-            iaTroops -> at(i) -> assignBattle(this);
+            //iaTroops -> at(i) -> assignBattle(this);
         }
     }
 }
@@ -85,14 +85,14 @@ void Battle::fetchBuildings() {
     iaBuildings -> clear();
 
     //Fetch the buildings vector from each player
-    std::vector<Building*> *humanCity = Human::getInstance() -> getBuildings();
-    std::vector<Building*> *iaCity = IA::getInstance() -> getBuildings();
+    std::vector<Building*> *humanCity = Human::getInstance() -> getBuildings() -> getBuildings();
+    std::vector<Building*> *iaCity = IA::getInstance() -> getBuildings() -> getBuildings();
 
     // Check every unit in the human army, if any is in range of the battle, add it to the vector
     for (int i = 0; i < humanCity -> size(); i++) {
         if (determineWithinRange(humanCity->at(i) -> getPosition())) {
             humanBuildings -> push_back(humanCity->at(i));
-            humanBuildings -> at(i) -> assignBattle(this);
+            //humanBuildings -> at(i) -> assignBattle(this);
         }
     }
 
@@ -100,7 +100,7 @@ void Battle::fetchBuildings() {
     for (int i = 0; i < iaCity -> size(); i++) {
         if (determineWithinRange(iaCity->at(i) -> getPosition())) {
             iaBuildings -> push_back(iaCity->at(i));
-            iaBuildings -> at(i) -> assignBattle(this);
+            //iaBuildings -> at(i) -> assignBattle(this);
         }
     }
 }
@@ -134,10 +134,10 @@ bool Battle::determineWithinRange(Vector3<float>* unit) {
 }
 
 /**
- * Receives the position of a unit and it's team, and return the closest
+ * Receives the position of a unit and its team, and return the closest
  * unit pertaining to the enemy team.
  */
-Entity* Battle::getClosestTarget(Vector3 pos, Enumeration::Team team) {
+Entity* Battle::getClosestTarget(Vector3<float>* pos, Enumeration::Team team) {
     Entity* target = NULL;
     float minDistance = FLT_MAX; // Maximum value of float
     

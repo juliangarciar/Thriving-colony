@@ -25,7 +25,7 @@ class Battle {
 
         void determinateWinningSide();
         bool determineWithinRange(Vector3<float>*);
-        Entity* getClosestTarget(Vector3<float>, Enumeration::Team);
+        Entity* getClosestTarget(Vector3<float>*, Enumeration::Team);
 
     private:
         //VECTOR

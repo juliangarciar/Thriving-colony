@@ -11,7 +11,7 @@ Unit::Unit(int hitPoints, Vector3<float>* pos, int _moveSpeed, int _attackSpeed,
     attacking = false;
 
     target = 0;
-    battleInvolved = 0;
+    //battleInvolved = 0;
 }
 
 Unit::~Unit() {
@@ -35,7 +35,7 @@ void Unit::setMoving(bool movingPnt) {
 void Unit::setAttacking(bool attackingPnt) {
     attacking = attackingPnt;
 }
-
+/*
 void Unit::assignBattle(Battle* _battle) {
     battleInvolved = _battle;
 }
@@ -46,4 +46,4 @@ void Unit::updateTarget() {
         //      por ahora esta que siempre es humano 
         target = battleInvolved -> getClosestTarget(*position, Enumeration::Team::Human);
     }
-}
+}*/
