@@ -11,7 +11,7 @@ MarketNode::~MarketNode(){
 }
 
 void MarketNode::question() {
-    //std::cout << "Contruyo un mercado" << std::endl;
+    std::cout << "Contruyo un mercado" << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
     Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
     IA::getInstance() -> getBuildings() -> buildBuilding(600, v, Enumeration::BuildingType::Market, false);
