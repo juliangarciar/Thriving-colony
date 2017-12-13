@@ -7,11 +7,7 @@
 #include "CameraController.h"
 #include "BuildingManager.h"
 #include "Hud.h"
-<<<<<<< HEAD
-#include "UnitManager.h"
-=======
 #include "IAEngine/RootNode.h"
->>>>>>> master
 
 class GameState : public State {
     
@@ -25,23 +21,11 @@ class GameState : public State {
         void Render();
         void CleanUp();
         
-<<<<<<< HEAD
-		BuildingManager *getBuildingManager();
-        //Returns the unit manager 
-        UnitManager* getUnitManager();
-=======
->>>>>>> master
     private:
         CameraController *camera;
         Terrain *map;
         Hud * hud;
-<<<<<<< HEAD
-		BuildingManager *buildingManager;
-        //Needed for unit creation
-        UnitManager* unitManager;
-=======
         RootNode *nodeRootIA;
->>>>>>> master
 };
 
 #endif

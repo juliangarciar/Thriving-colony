@@ -2,11 +2,6 @@
 #define MELEE_H
 
 #include "Unit.h"
-#include "Enumeration.h"
-#include <iostream>
-#include "GraphicEngine/Vector3.h"
-#include "GraphicEngine/Model.h"
-#include "GraphicEngine/Box3D.h"
 
 class Melee : public Unit {
     
