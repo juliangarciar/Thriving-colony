@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include "GraphicEngine/Vector3.h"
+#include "Battle.h"
 
 class Unit : public Entity {
     
@@ -19,6 +20,8 @@ class Unit : public Entity {
 
         /////////////////////////
         void attack();
+        void updateTarget();
+        void assignBattle(Battle*);
 
     protected:
         int moveSpeed;
@@ -31,6 +34,8 @@ class Unit : public Entity {
         bool attacking;
 
         Entity* target;
+
+        Battle* battleInvolved;
 
     private:
         

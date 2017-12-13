@@ -34,6 +34,11 @@ class Enumeration {
             Kaonov
         };
 
+        enum Team {
+            Human,
+            IA
+        };
+
         enum EventType {
             Attacking,
             BeingAttacked,

@@ -7,30 +7,43 @@
 
 Battle::Battle(float _x, float _y) {
     position = new Vector2<float>(_x, _y);
-
-    fetchUnits();
     humanTroops = new std::vector<Unit*>;
     iaTroops = new std::vector<Unit*>;
+    humanBuildings = new std::vector<Building*>;
+    iaBuildings = new std::vector<Building*>;
+    fetchUnits();
 }
 
 Battle::~Battle() {
     delete humanTroops;
     delete iaTroops;
+    delete humanBuildings;
+    delete iaBuildings;
     delete position;
 }
 
-std::vector<Unit*> Battle::getHumanTroops() {
-    return *humanTroops;
+std::vector<Unit*>* Battle::getHumanTroops() {
+    return humanTroops;
 }
 
-std::vector<Unit*> Battle::getIaTroops() {
-    return *iaTroops;
+std::vector<Unit*>* Battle::getIaTroops() {
+    return iaTroops;
 }
 
 void Battle::update() {
     //if Timer
         fetchUnits();
     // }
+    //if Timer2
+        fetchBuildings();
+    // }
+    //Determine if there is only a team involved
+    bool noIAPresence = (iaTroops -> size() == 0) && (iaBuildings -> size() == 0);
+    bool noHumanPresence = (humanTroops -> size() == 0) && (humanBuildings -> size() == 0);
+    if (noIAPresence || noHumanPresence) {
+        //Battle is over
+        this -> ~Battle();
+    }
     determinateWinningSide();
 }
 
@@ -42,24 +55,52 @@ void Battle::fetchUnits() {
     humanTroops ->clear();
     iaTroops -> clear();
 
-    //Fetch the units array from each player
-    //ToDo: metodo get troops de player que te devuelva todas las unidades
-    //      porque ahora esta por partes(getmelees, getranged, getsiege)
-    //      y dependiendo de como acabe siendo la ia habra que hacerlo de
-    //      una forma u otra
-
+    //Fetch the units vector from each player
     std::vector<Unit*> *humanArmy = Human::getInstance() -> getTroops();
     std::vector<Unit*> *iaArmy = IA::getInstance() -> getTroops();
+
     // Check every unit in the human army, if any is in range of the battle, add it to the vector
     for (int i = 0; i < humanArmy -> size(); i++) {
         if (determineWithinRange(humanArmy->at(i) -> getPosition())) {
             humanTroops -> push_back(humanArmy->at(i));
+            humanTroops -> at(i) -> assignBattle(this);
         }
     }
+
     // Check every unit in the IA army, if any is in range of the battle, add it to the vector
     for (int i = 0; i < iaArmy -> size(); i++) {
         if (determineWithinRange(iaArmy->at(i) -> getPosition())) {
             iaTroops -> push_back(iaArmy->at(i));
+            iaTroops -> at(i) -> assignBattle(this);
+        }
+    }
+}
+
+/**
+ * Fetches all buildings that are in the battle
+ */
+void Battle::fetchBuildings() {
+    //Empty the vector
+    humanBuildings ->clear();
+    iaBuildings -> clear();
+
+    //Fetch the buildings vector from each player
+    std::vector<Building*> *humanCity = Human::getInstance() -> getBuildings();
+    std::vector<Building*> *iaCity = IA::getInstance() -> getBuildings();
+
+    // Check every unit in the human army, if any is in range of the battle, add it to the vector
+    for (int i = 0; i < humanCity -> size(); i++) {
+        if (determineWithinRange(humanCity->at(i) -> getPosition())) {
+            humanBuildings -> push_back(humanCity->at(i));
+            humanBuildings -> at(i) -> assignBattle(this);
+        }
+    }
+
+    // Check every unit in the IA army, if any is in range of the battle, add it to the vector
+    for (int i = 0; i < iaCity -> size(); i++) {
+        if (determineWithinRange(iaCity->at(i) -> getPosition())) {
+            iaBuildings -> push_back(iaCity->at(i));
+            iaBuildings -> at(i) -> assignBattle(this);
         }
     }
 }
@@ -90,4 +131,94 @@ bool Battle::determineWithinRange(Vector3<float>* unit) {
     float yComponent = unit -> y - position -> y;
     float distance = sqrtf(pow(xComponent, 2) - pow(yComponent, 2));
     return (distance <= BATTLERADIUS);
+}
+
+/**
+ * Receives the position of a unit and it's team, and return the closest
+ * unit pertaining to the enemy team.
+ */
+Entity* Battle::getClosestTarget(Vector3 pos, Enumeration::Team team) {
+    Entity* target = NULL;
+    float minDistance = FLT_MAX; // Maximum value of float
+    
+    float xaux = 0;
+    float yaux = 0;
+    float dist = 0;
+
+    // Look units as targets
+
+    if (team == Enumeration::Team::Human) {
+        // The unit requesting a target is human's
+        for (int i = 0; i < iaTroops -> size(); i++) {
+            if (iaTroops ->at(i) != NULL) {
+                // Calculate distance between troop requesting target and posible targets
+                xaux = iaTroops ->at(i) ->getPosition() -> x - position -> x;
+                yaux = iaTroops ->at(i) ->getPosition() -> y - position -> y;
+                dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
+
+                if (dist < minDistance) {
+                    minDistance = dist;
+                    target = iaTroops -> at(i);
+                }
+            }
+        }
+    } else {
+        // The unit requesting a target is bot's
+        for (int i = 0; i < humanTroops -> size(); i++) {
+            if (humanTroops ->at(i) != NULL) {
+                // Calculate distance between troop requesting target and posible targets
+                xaux = humanTroops ->at(i) ->getPosition() -> x - position -> x;
+                yaux = humanTroops ->at(i) ->getPosition() -> y - position -> y;
+                dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
+
+                if (dist < minDistance) {
+                    minDistance = dist;
+                    target = humanTroops -> at(i);
+                }
+            }
+        }
+    }
+
+    // If there are no units to attack, look for buildings as targets
+
+    if (target == NULL) {
+        if (team == Enumeration::Team::Human) {
+            // The unit requesting a target is human's
+            for (int i = 0; i < iaBuildings -> size(); i++) {
+                if (iaBuildings ->at(i) != NULL) {
+                    // Calculate distance between troop requesting target and posible targets
+                    xaux = iaBuildings ->at(i) ->getPosition() -> x - position -> x;
+                    yaux = iaBuildings ->at(i) ->getPosition() -> y - position -> y;
+                    dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
+
+                    if (dist < minDistance) {
+                        minDistance = dist;
+                        target = iaBuildings -> at(i);
+                    }
+                }
+            }
+        } else {
+            // The unit requesting a target is bot's
+            for (int i = 0; i < humanBuildings -> size(); i++) {
+                if (humanBuildings ->at(i) != NULL) {
+                    // Calculate distance between troop requesting target and posible targets
+                    xaux = humanBuildings ->at(i) ->getPosition() -> x - position -> x;
+                    yaux = humanBuildings ->at(i) ->getPosition() -> y - position -> y;
+                    dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
+
+                    if (dist < minDistance) {
+                        minDistance = dist;
+                        target = humanBuildings -> at(i);
+                    }
+                }
+            }
+        }
+    }
+
+    // If there are still no targets, no battle is probably over and this should have destroyed itself?
+
+    if (target == NULL) {
+
+    }
+    return target;
 }
