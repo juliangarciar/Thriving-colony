@@ -12,6 +12,8 @@ class IA : public Player {
         static IA* getInstance();
 
         BehaviourTree* getTree();
+
+        Vector3<float>* determinatePositionBuilding();
         
     private:
         

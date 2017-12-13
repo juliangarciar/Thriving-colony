@@ -42,7 +42,7 @@ class Player {
         bool getClosedDoors();
         bool getDeployedTroops();
 
-        Unit** getTroops();
+        std::vector<Unit*>* getTroops();
 
         bool losingBattle();
 
@@ -86,9 +86,6 @@ class Player {
         int cityLevel;
         int metalAmount;
         int crystalAmount;
-
-
-
         int citizens;
 
         // Army

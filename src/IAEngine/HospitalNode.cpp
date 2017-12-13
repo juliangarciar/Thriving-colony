@@ -13,5 +13,6 @@ HospitalNode::~HospitalNode(){
 void HospitalNode::question() {
     //std::cout << "Contruyo un hospital" << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
-    IA::getInstance() -> getBuildings() -> buildBuilding(750, new Vector3<float>(0, 0, 0), Enumeration::BuildingType::Hospital, false);
+    Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
+    IA::getInstance() -> getBuildings() -> buildBuilding(750, v, Enumeration::BuildingType::Hospital, false);
 }

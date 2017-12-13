@@ -18,6 +18,7 @@ class BuildingManager {
 		virtual ~BuildingManager();
 
 		void getHoverBuilding();
+		std::vector<Building*>* getBuildings();
 
 		void setBuildingMode(bool mode);
         void drawBuilding(Terrain *terrain, int, Enumeration::BuildingType, bool);

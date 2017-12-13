@@ -14,5 +14,6 @@ BarrackNode::~BarrackNode(){
 void BarrackNode::question() {
     //std::cout << Construyo un cuartel << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
-    IA::getInstance() -> getBuildings() -> buildBuilding(720, new Vector3<float>(0, 0, 0), Enumeration::BuildingType::Barrack, false);
+    Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
+    IA::getInstance() -> getBuildings() -> buildBuilding(720, v, Enumeration::BuildingType::Barrack, false);
 }

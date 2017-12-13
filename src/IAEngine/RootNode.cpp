@@ -4,6 +4,8 @@
 #include "DevelopCityNode.h"
 #include "VeryHappyTree.h"
 
+#include <iostream>
+
 RootNode::RootNode() : Node() {
     clock = 200;
     father = 0;
@@ -20,16 +22,20 @@ RootNode::~RootNode(){
 
 void RootNode::question() {
     if (clock == 0) {
-        clock = 200;
+        clock = 100;
+        std::cout<<"llega2"<<std::endl;
         //First branch: Attacking the enemy
         if (tree -> readyToAttack()) {
+            std::cout<<"llega3"<<std::endl;
             children[0] -> question();
         } else  {
             //Second branch: Being attacked
             if (tree -> getUnderAttack()){
+                std::cout<<"llega4"<<std::endl;
                 children[1] -> question();
             } else {
                 //Third branch: Peaceful, develop the city
+                std::cout<<"llega5"<<std::endl;
                 children[2] -> question();
             }
         }

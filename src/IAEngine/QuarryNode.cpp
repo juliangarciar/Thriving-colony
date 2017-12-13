@@ -13,6 +13,7 @@ QuarryNode::~QuarryNode(){
 void QuarryNode::question() {
     //std::cout << Construyo una cantera << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
-    IA::getInstance() -> getBuildings() -> buildBuilding(1000, new Vector3<float>(0, 0, 0), Enumeration::BuildingType::Quarry, false);
+    Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
+    IA::getInstance() -> getBuildings() -> buildBuilding(1000, v, Enumeration::BuildingType::Quarry, false);
     IA::getInstance()->increaseQuarryAmount();
 }

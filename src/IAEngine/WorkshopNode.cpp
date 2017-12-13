@@ -13,5 +13,6 @@ WorkshopNode::~WorkshopNode(){
 void WorkshopNode::question() {
     //std::cout << Construyo un taller << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
-    IA::getInstance() -> getBuildings() -> buildBuilding(800, new Vector3<float>(0, 0, 0), Enumeration::BuildingType::Workshop, false);
+    Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
+    IA::getInstance() -> getBuildings() -> buildBuilding(800, v, Enumeration::BuildingType::Workshop, false);
 }

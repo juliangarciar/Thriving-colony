@@ -72,6 +72,7 @@ void BuildingManager::drawBuilding(Terrain *terrain, int hitPoints, Enumeration:
 
 void BuildingManager::buildBuilding(int hitPoints, Vector3<float>* pos, Enumeration::BuildingType _type, bool _team) {
 	if (_team == false) {
+		std::cout<<"llega"<<std::endl;
 		cube = new Model(buildingLayer);
 		cube -> getModel() -> setMaterialFlag(video::EMF_LIGHTING, false);
 		cube -> getModel() -> setPosition(core::vector3df(1600,300,1450));
@@ -108,6 +109,10 @@ void BuildingManager::buildBuilding(int hitPoints, Vector3<float>* pos, Enumerat
 			return;
     }
 	buildings -> push_back(new Building(hitPoints, pos, _type, _team, new Box3D<float>(cube -> getModel() -> getTransformedBoundingBox()), cube));
+}
+
+std::vector<Building*>* BuildingManager::getBuildings() {
+	return buildings;
 }
 
 /*
