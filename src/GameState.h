@@ -20,6 +20,8 @@ class GameState : public State {
         void Update();
         void Render();
         void CleanUp();
+
+        Terrain* getMap();
         
     private:
         CameraController *camera;

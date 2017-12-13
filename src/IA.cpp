@@ -1,4 +1,5 @@
 #include "IA.h"
+#include "Game.h"
 
 IA::IA() : Player() {
     happiness = 0;
@@ -43,7 +44,7 @@ BehaviourTree* IA::getTree() {
 
 /*
 * Return a position of the map where there is nothing built
-* Goes over the vector of building looking up, right, down and left of every building built
+* Goes over the vector of buildings looking up, right, down and left of every building built
 * until find the first empty position
 */
 Vector3<float>* IA::determinatePositionBuilding() {
@@ -112,6 +113,7 @@ Vector3<float>* IA::determinatePositionBuilding() {
                 }
             }
         }
+        v -> y = Game::Instance() -> getGameState() ->getMap() -> getY(v -> x, v -> z);
     }
     return v;
 }
