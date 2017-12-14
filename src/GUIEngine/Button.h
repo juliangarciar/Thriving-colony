@@ -2,8 +2,7 @@
 #define BUTTON_H
 
 #include <irrlicht.h>
-#include <GraphicEngine/Rect2D.h>
-#include <GraphicEngine/Vector3.h>
+#include <GUIEngine/Rect2D.h>
 #include <IOEngine/InputManager.h>
 #include <IOEngine/Mouse.h>
 

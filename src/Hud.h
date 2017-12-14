@@ -4,8 +4,9 @@
 #include <irrlicht.h>
 #include <GraphicEngine/Vector2.h>
 #include <GraphicEngine/Vector3.h>
-#include <GraphicEngine/Rect2D.h>
-#include <GraphicEngine/Button.h>
+#include <GUIEngine/Rect2D.h>
+#include <GUIEngine/Button.h>
+#include <GUIEngine/Panel.h>
 #include <IOEngine/InputManager.h>
 #include <IOEngine/Mouse.h>
 
@@ -21,20 +22,12 @@ class Hud {
 
         Button *getInfoButton(); //ESTO ES TEMPORAL
     private:
-        /*
-        enum idGUI {
-            ID0,
-            GUI_ID_BUILDING_BUTTON,
-            GUI_ID_QUIT_BUTTON
-        }; */
-        
         Button *buttonBuilding;
-<<<<<<< HEAD
-        Button *buttonExit;
-        Button *buttonInfo; //ESTO ES TEMPORAL
-=======
         Button *buttonQuit;
->>>>>>> master
+
+        Button *buttonInfo; //ESTO ES TEMPORAL
+
+        Panel *tabs;
 };
 
 #endif

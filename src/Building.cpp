@@ -53,7 +53,7 @@ Building::Building(Enumeration::BuildingType buildingData, Vector3<float> *vecto
         break;
     }
     //Graphic engine, this should be in the switch (when models done)
-    this->model = modeData;
+    this->model = modelData;
     this->hitbox = boxData;
     this->type = buildingData;
     this->position = vectorData;

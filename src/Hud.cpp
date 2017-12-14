@@ -6,14 +6,13 @@
 using namespace irr;
 
 Hud::Hud() {
-<<<<<<< HEAD
-    buttonBuilding = new Button(Rect2D<int>(700, 600, 200, 60), GUI_ID_BUILDING_BUTTON, L"New Building", L"Add a new Building");
-    buttonExit = new Button(Rect2D<int>(950, 600, 200, 60), GUI_ID_QUIT_BUTTON, L"Quit", L"Quit Game");
-    buttonInfo = new Button(Rect2D<int>(100, 600, 200, 60), 8, L"", L"Temporary info button");
-=======
     buttonBuilding = new Button(Rect2D<int>(700, 600, 200, 60), Enumeration::idGUI::GUI_ID_BUILDING_BUTTON, L"New Building", L"Add a new Building");
     buttonQuit = new Button(Rect2D<int>(950, 600, 200, 60), Enumeration::idGUI::GUI_ID_QUIT_BUTTON, L"Quit", L"Quit Game");
->>>>>>> master
+    buttonInfo = new Button(Rect2D<int>(100, 600, 200, 60), 8, L"", L"Temporary info button");
+
+    tabs = new Panel(Rect2D<int>(300, 300, 400, 200), 11);
+    tabs->addTab(L"Hola!", 12);
+    tabs->addTab(L"Hola2!", 13);
 }
 
 Hud::~Hud() {

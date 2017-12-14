@@ -29,7 +29,7 @@ void GameState::Input(){
 
     Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
     if (Game::Instance()->getIO()->leftMousePressed()){
-        int id = buildingManager->getHoverBuilding();
+        int id = Human::getInstance() -> getBuildings()->getHoverBuilding();
         if (id != -1){
             std::wstringstream o;
             o << "Has hecho click en: " << id;

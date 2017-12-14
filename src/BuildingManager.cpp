@@ -26,7 +26,7 @@ void BuildingManager::setBuildingMode(bool mode){
 }
 
 int BuildingManager::getHoverBuilding(){
-	Game *g = Game::Instance();
+	//Game *g = Game::Instance();
 	if (!buildingMode) {
 		SceneNode *collision = buildingLayer -> getNodeCollision(Game::Instance() -> getCursor());
 		if (collision != NULL){

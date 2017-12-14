@@ -31,7 +31,7 @@ SceneNode::~SceneNode(){
 }
  
 SceneNode *SceneNode::getNodeCollision(Mouse *cursor){
-	scene::ISceneManager *w = Window::Instance()->getSceneManager();
+	//scene::ISceneManager *w = Window::Instance()->getSceneManager();
 	core::position2d<s32> pos = cursor->getCursor()->getPosition();
 	core::vector3df point;
 	core::triangle3df triangle;
