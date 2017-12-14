@@ -9,8 +9,9 @@ class DefendNode : public Node {
         DefendNode(Node*);
         virtual ~DefendNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

@@ -9,8 +9,9 @@ class CreatureNode : public Node {
         CreatureNode(Node *);
         virtual ~CreatureNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

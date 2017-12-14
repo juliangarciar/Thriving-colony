@@ -1,17 +1,19 @@
 #include "GameState.h"
 #include "Game.h"
+#include "Human.h"
 
 GameState::GameState() : State() {
     camera = new CameraController();
     map = new Terrain("media/heightmap.bmp"); //ToDo: mover a map
     hud = new Hud();
-	buildingManager = new BuildingManager();
+    nodeRootIA = new RootNode();
 }
 
 GameState::~GameState() {
+    delete nodeRootIA;
     delete camera;
-    delete map;
     delete hud;
+    delete map;
 }
 
 void GameState::Init(){
@@ -42,7 +44,9 @@ void GameState::Update(){
     Vector3<float> cam = camera->getCamera()->getCameraPosition();
     Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
-    buildingManager->buildBuilding(map, 200, new Vector3<float>(0, 0, 0), Enumeration::BuildingType::House, true);
+    //buildingManager->drawCube(map);
+    Human::getInstance() -> getBuildings() -> drawBuilding(map, 200, Enumeration::BuildingType::House, true);
+    nodeRootIA -> question();
 }
 
 void GameState::Render(){
@@ -51,8 +55,4 @@ void GameState::Render(){
 
 void GameState::CleanUp(){
 
-}
-
-BuildingManager *GameState::getBuildingManager(){
-	return buildingManager;
 }

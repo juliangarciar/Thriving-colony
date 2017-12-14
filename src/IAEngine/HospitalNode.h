@@ -9,8 +9,9 @@ class HospitalNode : public Node {
         HospitalNode(Node*);
         virtual ~HospitalNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

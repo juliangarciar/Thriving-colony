@@ -13,5 +13,5 @@ SiderurgyNode::~SiderurgyNode(){
 void SiderurgyNode::question() {
     //std::cout << Construyo una siderurgia << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
-    //IA::getInstance() -> buildBuilding(1000, new Vector3<float>(0, 0, 0), Enumeration::BuildingType::Siderurgy, false);
+    IA::getInstance() -> getBuildings() -> buildBuilding(1000, new Vector3<float>(0, 0, 0), Enumeration::BuildingType::Siderurgy, false);
 }

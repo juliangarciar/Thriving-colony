@@ -20,6 +20,8 @@ IA::IA() : Player() {
     barrackBuilt = false;
     barnBuilt = false;
     workshopBuilt = false;
+
+    tree = new BehaviourTree();
 }
 
 IA::~IA() {

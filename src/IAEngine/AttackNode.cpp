@@ -2,7 +2,7 @@
 #include "MoveTroopsNode.h"
 #include "RetractTroopsNode.h"
 #include "../IA.h"
-#include "../Game.h"
+//#include "../Game.h"
 
 
 AttackNode::AttackNode(Node *fatherPnt) : Node() {
@@ -27,7 +27,7 @@ void AttackNode::question() {
         if (IA::getInstance() -> losingBattle()) {
             children[1] -> question();
         } else {
-            Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::DeployTroops);
+            //Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::DeployTroops);
         }
     }
 }

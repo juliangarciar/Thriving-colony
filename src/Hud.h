@@ -21,15 +21,20 @@ class Hud {
 
         Button *getInfoButton(); //ESTO ES TEMPORAL
     private:
+        /*
         enum idGUI {
             ID0,
             GUI_ID_BUILDING_BUTTON,
             GUI_ID_QUIT_BUTTON
-        };
+        }; */
         
         Button *buttonBuilding;
+<<<<<<< HEAD
         Button *buttonExit;
         Button *buttonInfo; //ESTO ES TEMPORAL
+=======
+        Button *buttonQuit;
+>>>>>>> master
 };
 
 #endif

@@ -8,6 +8,7 @@
 #include "CameraController.h"
 #include "BuildingManager.h"
 #include "Hud.h"
+#include "IAEngine/RootNode.h"
 
 class GameState : public State {
     
@@ -21,12 +22,11 @@ class GameState : public State {
         void Render();
         void CleanUp();
         
-		BuildingManager *getBuildingManager();
     private:
         CameraController *camera;
         Terrain *map;
         Hud * hud;
-		BuildingManager *buildingManager;
+        RootNode *nodeRootIA;
 };
 
 #endif

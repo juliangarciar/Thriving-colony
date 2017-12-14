@@ -9,8 +9,9 @@ class ServiceNode : public Node {
         ServiceNode(Node*);
         virtual ~ServiceNode();
 
-    private:
         virtual void question();
+        
+    private:
 };
 
 #endif

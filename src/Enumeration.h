@@ -19,12 +19,45 @@ class Enumeration {
             Workshop
         };
 
+        enum Race {
+            Drorania,
+            Kaonov
+        };
+
         enum EventType {
             Attacking,
             BeingAttacked,
             DeployTroops,
             RetractTroops,
             StopBeingAttack
+        }; 
+
+        enum idGUI {
+            ID0,
+            GUI_ID_BUILDING_BUTTON,
+            GUI_ID_QUIT_BUTTON,
+            GUI_ID_UNIT_BUTTON
+        };
+
+        //Special type, used to pass info to the UnitManager
+        //in order to control which unit is created
+        struct UnitType{
+            enum Class{
+                Ranged,
+                Melee
+            };
+            enum SubClass
+            {
+                StandardR,
+                AdvancedR,
+                Launcher,
+                Desintegrator,
+                StandardM,
+                AdvancedM,
+                Idol
+            };
+            Class unitClass;
+            SubClass unitSubClass;
         };
 
     private:

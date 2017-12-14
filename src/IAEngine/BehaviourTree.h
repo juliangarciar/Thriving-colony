@@ -1,8 +1,6 @@
 #ifndef BEHAVIOUR_TREE_H
 #define BEHAVIOUR_TREE_H
 
-
-
 class BehaviourTree {
     
     public:
@@ -21,7 +19,7 @@ class BehaviourTree {
         
         bool evaluateWallNeed();
 
-        virtual bool readyToAttack() = 0;
+        bool readyToAttack();
 
         float calculateMetalProductionRate();
         float calculateCrystalProductionRate();
