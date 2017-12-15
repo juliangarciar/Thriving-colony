@@ -20,9 +20,11 @@ BuildingManager::~BuildingManager(){
 	delete buildings;
 }
 
-void BuildingManager::setBuildingMode(bool mode){
-	buildingMode = mode;
-	cube = new Model(buildingLayer, buildings->size());
+void BuildingManager::setBuildingMode(){
+	if (!buildingMode){
+		buildingMode = true;
+		cube = new Model(buildingLayer, buildings->size());
+	}
 }
 
 int BuildingManager::getHoverBuilding(){

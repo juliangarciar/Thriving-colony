@@ -43,7 +43,7 @@ void Hud::getHUDEvents(){
     int id = g->getIO()->getGUIClickedID();
     switch(id){
         case Enumeration::idGUI::GUI_ID_BUILDING_BUTTON:
-			Human::getInstance() -> getBuildings() -> setBuildingMode(true);
+			Human::getInstance() -> getBuildings() -> setBuildingMode();
         break;
         case Enumeration::idGUI::GUI_ID_QUIT_BUTTON:
             g->getWindow()->getDevice()->closeDevice();
