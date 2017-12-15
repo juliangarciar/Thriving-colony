@@ -1,6 +1,6 @@
 #include "Tower.h"
 
-Tower::Tower(Vector3<float> *vectorData, bool teamData) : Building(Enumeration::BuildingType::Tower, vectorData, teamData)
+Tower::Tower(SceneNode *parent, Vector3<float> *vectorData, bool teamData) : Building(parent, Enumeration::BuildingType::Tower, vectorData, teamData)
 {
     attackSpeed = 350;
     damage = 15;

@@ -31,7 +31,7 @@ class BuildingManager {
         int gridAlignment;
 
 		//ToDo: no se yo esto...
-		Model *cube;
+		Building *tempBuilding;
 };
 
 #endif

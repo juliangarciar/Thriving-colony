@@ -1,6 +1,6 @@
 #include "Building.h"
 
-Building::Building(Enumeration::BuildingType buildingData, Vector3<float> *vectorData, bool teamData) : Entity()
+Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Vector3<float> *vectorData, bool teamData) : Entity()
 {
     switch(buildingData){
         case Enumeration::BuildingType::Barn:
@@ -53,8 +53,11 @@ Building::Building(Enumeration::BuildingType buildingData, Vector3<float> *vecto
         break;
     }
     //Graphic engine, this should be in the switch (when models done)
-    this->modelLayer = new SceneNode();
-    this->model = new Model(modelLayer, std::rand()); //ToDo: cambiar
+    //this->modelLayer = new SceneNode();
+    this->model = new Model(parent, std::rand()); //ToDo: cambiar
+    hitbox = new Box3D<float>(
+        this -> model ->getModel() -> getTransformedBoundingBox()
+    ); //ToDo: esto es fachada
     this->model->getModel()->setPosition(vectorData->getVectorF());
     this->model->getModel()->setMaterialFlag(video::EMF_LIGHTING, false);
     Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(125, 125, 0, 125));    
