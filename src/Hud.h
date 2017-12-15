@@ -29,6 +29,9 @@ class Hud {
         Button *buttonCloseTab1;
         Button *buttonCloseTab2;
 
+        Button *createTroop1;
+        Button *createTroop2;
+
         Panel *tabs;
         Tab *t1;
         Tab *t2;
