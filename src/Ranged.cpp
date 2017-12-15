@@ -48,17 +48,12 @@ Ranged::Ranged(Enumeration::UnitType::SubClass unitData, Vector3<float> *vectorD
         break;
     }
     //Graphic engine, this should be in the switch (when models done)
-<<<<<<< HEAD
     //this->hitbox = new Box3D<float>();
     this->modelLayer = new SceneNode();
-    this->model = new Model(modelLayer);
+    this->model = new Model(modelLayer, std::rand()); //ToDo: cambiar
     this->model->getModel()->setPosition(vectorData->getVectorF());
     this->model->getModel()->setMaterialFlag(video::EMF_LIGHTING, false);
     Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(125, 125, 0, 125));
-=======
-    this->hitbox = new Box3D<float>();
-    this->model = new Model(std::rand());
->>>>>>> GraphicEngine
     this->type = unitData;
 }
 //It's empty because there are nothing to delete
