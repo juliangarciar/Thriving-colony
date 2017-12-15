@@ -2,15 +2,14 @@
 #define BUILDING_H
 
 #include "Entity.h"
-#include "Enumeration.h"
-#include "GraphicEngine/Vector3.h"
+
 
 class Building : public Entity {
     
     public:
         //Enum: Barn,Barrack,Hospital,House,MainBuilding,Market,Quarry,Siderurgy,School,Tower,Wall,Workshop
         //teamData sepecifies the building team and vectorData the position
-        Building(Enumeration::BuildingType buildingData, Vector3<float> *vectorData, Enumeration::Team teamData, Model *modelData, Box3D<float> *boxData);
+        Building(Enumeration::BuildingType buildingData, Vector3<float> *vectorData, Enumeration::Team teamData);
         virtual ~Building();
 
     private:

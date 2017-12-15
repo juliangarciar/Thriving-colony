@@ -2,6 +2,8 @@
 #define MELEE_H
 
 #include "Unit.h"
+#include "GraphicEngine/Window.h"
+#include "GraphicEngine/SceneNode.h"
 
 class Melee : public Unit {
     
@@ -12,7 +14,7 @@ class Melee : public Unit {
         virtual ~Melee();
 
     private:
-
+      
 };
 
 #endif

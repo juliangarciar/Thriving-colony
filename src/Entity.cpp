@@ -9,6 +9,7 @@ Entity::~Entity() {
     delete position;
     delete hitbox;
     delete model;
+    delete modelLayer;
 }
 
 int Entity::getHP() {

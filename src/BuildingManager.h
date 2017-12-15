@@ -17,10 +17,10 @@ class BuildingManager {
 		BuildingManager();
 		virtual ~BuildingManager();
 
-		void getHoverBuilding();
+		int getHoverBuilding();
 		std::vector<Building*>* getBuildings();
 
-		void setBuildingMode(bool mode);
+		void setBuildingMode();
         void drawBuilding(Terrain *terrain, Enumeration::BuildingType, Enumeration::Team);
 		void buildBuilding(Vector3<float>*, Enumeration::BuildingType, Enumeration::Team);
 

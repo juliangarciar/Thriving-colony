@@ -11,7 +11,7 @@ BuildingManager::BuildingManager(){
     gridAlignment = 50;
 	buildingLayer = new SceneNode();
 	buildings = new std::vector<Building*>();
-	cube = new Model(buildingLayer);
+	cube = NULL;
 }
  
 BuildingManager::~BuildingManager(){
@@ -20,13 +20,22 @@ BuildingManager::~BuildingManager(){
 	delete buildings;
 }
 
-void BuildingManager::setBuildingMode(bool mode){
-	buildingMode = mode;
-	cube = new Model(buildingLayer);
+void BuildingManager::setBuildingMode(){
+	if (!buildingMode){
+		buildingMode = true;
+		cube = new Model(buildingLayer, buildings->size());
+	}
 }
 
-void BuildingManager::getHoverBuilding(){
-	SceneNode collision = buildingLayer -> getNodeCollision(Game::Instance() -> getCursor());
+int BuildingManager::getHoverBuilding(){
+	//Game *g = Game::Instance();
+	if (!buildingMode) {
+		SceneNode *collision = buildingLayer -> getNodeCollision(Game::Instance() -> getCursor());
+		if (collision != NULL){
+			return collision->getSceneNode()->getID();
+		}
+	}
+	return -1;
 }
 
 void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _type, Enumeration::Team _team){
@@ -51,7 +60,7 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
 		*/
 		bool collision = false;
 		for (int i = 0; i < buildings -> size() && !collision; i++){
-			Box3D<float> box = Box3D<float>(cube -> getModel() -> getTransformedBoundingBox());
+			Box3D<float> box = Box3D<float>(cube -> getModel() -> getTransformedBoundingBox()); //ToDo: esto en building
 			collision = buildings -> at(i) -> getHitbox() -> intersects(box);
 		}
 		if (collision){
@@ -71,19 +80,19 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
 }
 
 void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
-	if (_team == Enumeration::Team::IA) {
+	/*if (_team == Enumeration::Team::IA) {
 		cube = new Model(buildingLayer);
 		cube -> getModel() -> setMaterialFlag(video::EMF_LIGHTING, false);
 		cube -> getModel() -> setPosition(core::vector3df(pos -> x, pos -> y, pos -> z));
 		Game::Instance() -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(cube -> getModel() -> getMesh(), video::SColor(255,255,255,255));
-	}
+	}*/
 	
 	if(_type == Enumeration::BuildingType::Tower) {
-			buildings->push_back(new Tower(pos, _team, cube, new Box3D<float>(cube->getModel()->getTransformedBoundingBox())));
+			buildings->push_back(new Tower(pos, _team));
 			return;
     }
 	//buildings -> push_back(new Building(hitPoints, pos, _type, _team, new Box3D<float>(cube -> getModel() -> getTransformedBoundingBox()), cube));
-	buildings->push_back(new Building(_type, pos, _team, cube, new Box3D<float>(cube->getModel()->getTransformedBoundingBox())));
+	//buildings->push_back(new Building(_type, pos, _team));
 }
 
 std::vector<Building*>* BuildingManager::getBuildings() {
@@ -115,7 +124,7 @@ void BuildingManager::drawCube(Terrain *terrain){
 			g->getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(cube -> getModel() -> getMesh(), video::SColor(255,255,255,255));
 			if (g->getIO() -> leftMouseDown()){
 				buildingMode = false;
-				buildings -> push_back(Box3D<float>(cube -> getModel() -> getTransformedBoundingBox()));
+				buildings -> push_back(Box3D<float>(cube -> getModel() -> getTransformedBoundingBox()));Window::Instance()->getSceneManager()
 			}
 		}
     }

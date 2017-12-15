@@ -16,12 +16,14 @@ class SceneNode {
 		virtual ~SceneNode();
 
 		void addChild(scene::ISceneNode);
-		SceneNode getNodeCollision(Mouse *cursor);
+		SceneNode *getNodeCollision(Mouse *cursor);
 		
 		scene::ISceneNode *getSceneNode();
 	private:
 		scene::ISceneNode *node;
 		scene::ISceneCollisionManager *collisionManager;
+
+		SceneNode *collisionNode;
 };
 
 #endif

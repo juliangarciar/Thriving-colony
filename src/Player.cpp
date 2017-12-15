@@ -31,7 +31,7 @@ Player::Player() {
     //      Depende de como vaya a quedarse la IA de combate
     troops = 0;
     buildings = new BuildingManager;
-
+    units = new UnitManager(Enumeration::Team::Human);
     //Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DeployTroops, deployTroops);
     //Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::RetractTroops, retractTroops);
 }
@@ -141,7 +141,9 @@ bool Player::getDeployedTroops() {
 BuildingManager* Player::getBuildings() {
     return buildings;
 }
-
+UnitManager* Player::getUnits(){
+    return this->units;
+}
 /*
 * SETTERS
 */

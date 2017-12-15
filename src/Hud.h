@@ -4,8 +4,9 @@
 #include <irrlicht.h>
 #include <GraphicEngine/Vector2.h>
 #include <GraphicEngine/Vector3.h>
-#include <GraphicEngine/Rect2D.h>
-#include <GraphicEngine/Button.h>
+#include <GUIEngine/Rect2D.h>
+#include <GUIEngine/Button.h>
+#include <GUIEngine/Panel.h>
 #include <IOEngine/InputManager.h>
 #include <IOEngine/Mouse.h>
 
@@ -17,17 +18,23 @@ class Hud {
         Hud();
         ~Hud();
 
+        void showPopup(int tabId);
+        void hidePopup();
+
         void getHUDEvents();
     private:
-        /*
-        enum idGUI {
-            ID0,
-            GUI_ID_BUILDING_BUTTON,
-            GUI_ID_QUIT_BUTTON
-        }; */
-        
         Button *buttonBuilding;
         Button *buttonQuit;
+
+        Button *buttonCloseTab1;
+        Button *buttonCloseTab2;
+
+        Button *createTroop1;
+        Button *createTroop2;
+
+        Panel *tabs;
+        Tab *t1;
+        Tab *t2;
 };
 
 #endif

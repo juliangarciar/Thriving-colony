@@ -4,6 +4,8 @@
 #include "GraphicEngine/Vector3.h"
 #include "GraphicEngine/Box3D.h"
 #include "GraphicEngine/Model.h"
+#include "GraphicEngine/SceneNode.h"
+#include "GraphicEngine/Window.h"
 #include "Enumeration.h"
 
 
@@ -37,8 +39,9 @@ class Entity {
 
         Box3D<float>* hitbox;
         Model* model;
+        SceneNode *modelLayer;
 
-    private:
+      private:
 };
 
 #endif

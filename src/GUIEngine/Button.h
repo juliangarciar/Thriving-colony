@@ -2,8 +2,7 @@
 #define BUTTON_H
 
 #include <irrlicht.h>
-#include <GraphicEngine/Rect2D.h>
-#include <GraphicEngine/Vector3.h>
+#include <GUIEngine/Rect2D.h>
 #include <IOEngine/InputManager.h>
 #include <IOEngine/Mouse.h>
 
@@ -19,6 +18,9 @@ class Button {
         void setIsPushButton(bool pushPresed);
         void setButtonPressed(bool pressed); 
 
+        void setText(const wchar_t* text);
+
+        gui::IGUIButton *getButton();
     private:
         gui::IGUIButton *button;
 };

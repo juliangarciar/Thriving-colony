@@ -1,6 +1,7 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
+#include <sstream>
 #include "State.h"
 #include <GraphicEngine/Terrain.h>
 #include <IOEngine/InputManager.h>
@@ -28,6 +29,8 @@ class GameState : public State {
         Terrain *map;
         Hud * hud;
         RootNode *nodeRootIA;
+        //Try for creating units, this wont be here
+        bool unitDone = false;
 };
 
 #endif

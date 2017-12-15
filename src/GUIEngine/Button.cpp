@@ -1,11 +1,15 @@
 #include "Button.h"
-#include "Window.h"
+#include <GraphicEngine/Window.h>
 
 using namespace irr;
 
 Button::Button(Rect2D<int> dimPos, int id, const wchar_t *buttonText, const wchar_t *tooltipText) {
     Window *sc = Window::Instance();
     button = sc->getGUIEnvironment()->addButton(dimPos.getRect2D(), 0, id, buttonText, tooltipText);
+}
+
+Button::~Button() {
+    
 }
 
 bool Button::isButtonPressed(){
@@ -20,6 +24,10 @@ void Button::setButtonPressed(bool pressed){
     button->setPressed(pressed);   
 }
 
-Button::~Button() {
-    
+void Button::setText(const wchar_t* text){
+    button->setText(text);
+}
+
+gui::IGUIButton *Button::getButton(){
+    return button;
 }

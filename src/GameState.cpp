@@ -19,7 +19,6 @@ GameState::~GameState() {
 
 void GameState::Init(){
     map->setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
-    //hud->drawCube(Game::Instance()->getIO(), cursor, map);
 }
 
 void GameState::Input(){
@@ -30,8 +29,15 @@ void GameState::Input(){
     camera->Zoom(Game::Instance()->getIO());
 
     Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
-	Human::getInstance() -> getBuildings() -> getHoverBuilding();
-    //std::cout << v.x << " " << v.y << " " << v.z << std::endl;
+    if (Game::Instance()->getIO()->leftMousePressed()){
+        int id = Human::getInstance() -> getBuildings()->getHoverBuilding();
+        if (id != -1){
+           /* std::wstringstream o;
+            o << "Has hecho click en: " << id;
+            hud->getInfoButton()->setText(o.str().c_str());*/
+            hud->showPopup(id);
+        }
+	}
 }
 
 void GameState::Update(){
@@ -41,7 +47,16 @@ void GameState::Update(){
     Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
     //buildingManager->drawCube(map);
-    Human::getInstance() -> getBuildings() -> drawBuilding(map, Enumeration::BuildingType::House, Enumeration::Team::Human);
+    Human::getInstance() -> getBuildings() -> drawBuilding(map, Enumeration::BuildingType::House,  Enumeration::Team::Human);
+    if(!unitDone){
+        Vector3<float> *vectorData = new Vector3<float>(200, 200, 200);
+        Enumeration::UnitType unitData;
+        unitData.unitClass = Enumeration::UnitType::Class::Ranged;
+        unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardR;
+        Human::getInstance()->getUnits()->createTroop(vectorData, unitData);
+        this->unitDone = true;
+    }
+    
     nodeRootIA -> question();
 }
 
