@@ -3,7 +3,7 @@
 
 BehaviourTree::BehaviourTree() {
     happinessThreshold = 50;
-    quarryMilestone = 50;
+    quarryMilestone = 300;
     mountedCreatureMilestone = 80;
     wallMilestone = 70;
     towerMilestone = 90;
@@ -11,8 +11,8 @@ BehaviourTree::BehaviourTree() {
     workshopMilestone = 65;
     creatureMilestone = 100;
 
-    metalThreshold = 0.6;
-    crystalThreshold = 0.4;
+    metalThreshold = 0.2;
+    crystalThreshold = 0.2;
     citizensThreshold = 0.3;
     armyThreshold = 0.2;
     meleeThreshold = 0.5;
@@ -201,7 +201,6 @@ float BehaviourTree::calculateMetalProductionRate() {
 float BehaviourTree::calculateCrystalProductionRate() {
     float cityLvl = IA::getInstance()->getCityLevel();
     float crystalPr = IA::getInstance()->getCrystalProduction();
-    std::cout << crystalPr / cityLvl << std::endl;
     return (crystalPr / cityLvl);
 }
 
@@ -209,8 +208,8 @@ float BehaviourTree::calculateCrystalProductionRate() {
 * Calculates the ratio between citizens and city level
 */
 float BehaviourTree::calculateCitizensRate() {
-    float cityLvl = IA::getInstance()->getCityLevel();
-    float citizens = IA::getInstance()->getCitizens();
+    float cityLvl = IA::getInstance() -> getCityLevel();
+    float citizens = IA::getInstance() -> getCitizens();
     return (citizens / cityLvl);
 }
 

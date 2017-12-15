@@ -35,16 +35,17 @@ void VeryHappyTree::question() {
             if (tree -> calculateCitizensRate() < tree -> getCitizensThreshold()) {
                 std::cout << "Viviendas" << std::endl;
                 children[2] -> question();
-            } else {
+                //ToDo: Si no hay cosas de hacer ejercito, da violacion de segmento
+            }/* else {
                 //Fourth branch: Army
                 if (tree -> needArmyInvestment()) {
                     std::cout << "Ejercito" << std::endl;
                     children[3] -> question();
-                } else {
+                } */else {
                     std::cout << "No hago nada" << std::endl;
                     // Ultima oportunidad
                     children[2] -> question();
-                }
+                //}
             }
         }
     }

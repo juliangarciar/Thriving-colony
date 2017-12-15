@@ -171,17 +171,14 @@ void Player::increaseCityLevel(int lvl) {
 }
 
 void Player::increaseSiderurgyAmount() {
-    increaseCityLevel(5);
     siderurgyAmount ++;
 }
 
 void Player::increaseQuarryAmount() {
-    increaseCityLevel(5);
     quarryAmount ++;
 }
 
 void Player::increaseCitizens() {
-    increaseCityLevel(3);
     citizens += 5;
 }
 
