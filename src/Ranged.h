@@ -12,7 +12,6 @@ class Ranged : public Unit {
     virtual ~Ranged();
 
   private:
-        
 };
 
 #endif

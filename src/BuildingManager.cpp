@@ -104,11 +104,11 @@ void BuildingManager::buildBuilding(int hitPoints, Vector3<float>* pos, Enumerat
         break;
 
 		case Enumeration::BuildingType::Tower:
-			buildings->push_back(new Tower(pos, _team, cube, new Box3D<float>(cube->getModel()->getTransformedBoundingBox())));
+			//buildings->push_back(new Tower(pos, _team, cube, new Box3D<float>(cube->getModel()->getTransformedBoundingBox())));
 			return;
     }
 	//buildings -> push_back(new Building(hitPoints, pos, _type, _team, new Box3D<float>(cube -> getModel() -> getTransformedBoundingBox()), cube));
-	buildings->push_back(new Building(_type, pos, _team, cube, new Box3D<float>(cube->getModel()->getTransformedBoundingBox())));
+	//buildings->push_back(new Building(_type, pos, _team));
 }
 
 /*
@@ -136,7 +136,7 @@ void BuildingManager::drawCube(Terrain *terrain){
 			g->getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(cube -> getModel() -> getMesh(), video::SColor(255,255,255,255));
 			if (g->getIO() -> leftMouseDown()){
 				buildingMode = false;
-				buildings -> push_back(Box3D<float>(cube -> getModel() -> getTransformedBoundingBox()));
+				buildings -> push_back(Box3D<float>(cube -> getModel() -> getTransformedBoundingBox()));Window::Instance()->getSceneManager()
 			}
 		}
     }

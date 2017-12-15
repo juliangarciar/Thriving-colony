@@ -41,6 +41,15 @@ void GameState::Update(){
 
     //buildingManager->drawCube(map);
     Human::getInstance() -> getBuildings() -> drawBuilding(map, 200, Enumeration::BuildingType::House, true);
+    if(!unitDone){
+        Vector3<float> *vectorData = new Vector3<float>(200, 200, 200);
+        Enumeration::UnitType unitData;
+        unitData.unitClass = Enumeration::UnitType::Class::Ranged;
+        unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardR;
+        Human::getInstance()->getUnits()->createTroop(vectorData, unitData);
+        this->unitDone = true;
+    }
+    
     nodeRootIA -> question();
 }
 

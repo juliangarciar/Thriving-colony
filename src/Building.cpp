@@ -1,6 +1,6 @@
 #include "Building.h"
 
-Building::Building(Enumeration::BuildingType buildingData, Vector3<float> *vectorData, bool teamData, Model *modelData, Box3D<float> *boxData) : Entity()
+Building::Building(Enumeration::BuildingType buildingData, Vector3<float> *vectorData, bool teamData) : Entity()
 {
     switch(buildingData){
         case Enumeration::BuildingType::Barn:
@@ -53,8 +53,11 @@ Building::Building(Enumeration::BuildingType buildingData, Vector3<float> *vecto
         break;
     }
     //Graphic engine, this should be in the switch (when models done)
-    this->model = modeData;
-    this->hitbox = boxData;
+    this->modelLayer = new SceneNode();
+    this->model = new Model(modelLayer);
+    this->model->getModel()->setPosition(vectorData->getVectorF());
+    this->model->getModel()->setMaterialFlag(video::EMF_LIGHTING, false);
+    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(125, 125, 0, 125));    
     this->type = buildingData;
     this->position = vectorData;
 }

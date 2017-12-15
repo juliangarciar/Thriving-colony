@@ -4,6 +4,7 @@
 #include "Melee.h"
 #include "Ranged.h"
 #include "BuildingManager.h"
+#include "UnitManager.h"
 #include <vector>
 
 class Player {
@@ -47,7 +48,7 @@ class Player {
         bool losingBattle();
 
         BuildingManager* getBuildings();
-
+        UnitManager* getUnits();
         //Setters
         void setBarnBuilt(bool);
         void setBarrackBuilt(bool);
@@ -121,7 +122,7 @@ class Player {
         std::vector<Unit*> *troops;
         
         BuildingManager *buildings;
-
+        UnitManager *units;
         float buildableRange;
 
     private:
