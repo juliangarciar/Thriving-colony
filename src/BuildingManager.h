@@ -21,8 +21,8 @@ class BuildingManager {
 		std::vector<Building*>* getBuildings();
 
 		void setBuildingMode(bool mode);
-        void drawBuilding(Terrain *terrain, int, Enumeration::BuildingType, bool);
-		void buildBuilding(int, Vector3<float>*, Enumeration::BuildingType, bool);
+        void drawBuilding(Terrain *terrain, Enumeration::BuildingType, Enumeration::Team);
+		void buildBuilding(Vector3<float>*, Enumeration::BuildingType, Enumeration::Team);
 
 	private:
 		SceneNode *buildingLayer;

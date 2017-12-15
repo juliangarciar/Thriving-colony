@@ -2,7 +2,7 @@
 #include "../IA.h"
 
 BehaviourTree::BehaviourTree() {
-    happinessThreshold = 80;
+    happinessThreshold = 50;
     quarryMilestone = 50;
     mountedCreatureMilestone = 80;
     wallMilestone = 70;

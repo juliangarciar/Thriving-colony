@@ -1,6 +1,7 @@
 #include "Tower.h"
 
-Tower::Tower(int hitPoints, Vector3<float>* pos, bool _team, Box3D<float>* hitboxPnt, Model* modelPnt) : Building(hitPoints, pos, Enumeration::BuildingType::Tower, _team, hitboxPnt, modelPnt) {
+Tower::Tower(Vector3<float> *vectorData, Enumeration::Team teamData, Model *modelData ,Box3D<float> *boxData) : Building(Enumeration::BuildingType::Tower, vectorData, teamData, modelData, boxData)
+{
     attackSpeed = 350;
     damage = 15;
 

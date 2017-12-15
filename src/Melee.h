@@ -6,12 +6,13 @@
 class Melee : public Unit {
     
     public:
-
-        Melee(int, Vector3<float>*, int, int, int, int, int, bool, Box3D<float>*, Model*);
+        //Enum: Standard, Advanced, Idol
+        //teamData sepecifies the unit team and vectorData the position
+        Melee(Enumeration::UnitType::SubClass unitData, Vector3<float> *vectorData, Enumeration::Team teamData);
         virtual ~Melee();
 
     private:
-        
+
 };
 
 #endif

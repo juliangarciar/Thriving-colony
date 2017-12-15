@@ -18,11 +18,15 @@ void Hud::getHUDEvents(){
     Game *g = Game::Instance();
     int id = g->getIO()->getGUIClickedID();
     switch(id){
-        case Enumeration::GUI_ID_BUILDING_BUTTON:
+        case Enumeration::idGUI::GUI_ID_BUILDING_BUTTON:
 			Human::getInstance() -> getBuildings() -> setBuildingMode(true);
         break;
         case Enumeration::idGUI::GUI_ID_QUIT_BUTTON:
             g->getWindow()->getDevice()->closeDevice();
-        break;
+            break;
+        case Enumeration::idGUI::GUI_ID_UNIT_BUTTON:
+            //g->getGameState()->getUnitManager()->setUnitMode(true);
+            break;
+        //break;
     }
 }

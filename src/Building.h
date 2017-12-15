@@ -8,7 +8,9 @@
 class Building : public Entity {
     
     public:
-        Building(int, Vector3<float>*, Enumeration::BuildingType, bool, Box3D<float>*, Model*);
+        //Enum: Barn,Barrack,Hospital,House,MainBuilding,Market,Quarry,Siderurgy,School,Tower,Wall,Workshop
+        //teamData sepecifies the building team and vectorData the position
+        Building(Enumeration::BuildingType buildingData, Vector3<float> *vectorData, Enumeration::Team teamData, Model *modelData, Box3D<float> *boxData);
         virtual ~Building();
 
     private:

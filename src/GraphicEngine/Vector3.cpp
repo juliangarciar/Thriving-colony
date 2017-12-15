@@ -119,5 +119,6 @@ template <class T>
 Vector3<T> Vector3<T>::operator - (const float &p) const {
     return Vector3<T>(this->x-p, this->y-p, this->z-p);
 }
+
 template class Vector3<int>;
 template class Vector3<float>; 

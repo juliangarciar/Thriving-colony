@@ -42,13 +42,13 @@ class Player {
         bool getClosedDoors();
         bool getDeployedTroops();
 
-        std::vector<Unit*>* getTroops();
+        std::vector<Unit*> * getTroops();
 
         bool losingBattle();
 
         BuildingManager* getBuildings();
 
-        //Setters
+        // Setters
         void setBarnBuilt(bool);
         void setBarrackBuilt(bool);
         void setWorkshopBuilt(bool);

@@ -5,11 +5,13 @@
 
 class Ranged : public Unit {
     
-    public:
-        Ranged(int, Vector3<float>*, int, int, int, int, int, bool, Box3D<float>*, Model*);
-        virtual ~Ranged();
+  public:
+    //Enum: Standard, Advanced, Launcher, Desintegrator
+    //teamData sepecifies the unit team and vectorData the position
+    Ranged(Enumeration::UnitType::SubClass unitData, Vector3<float> *vectorData, Enumeration::Team teamData);
+    virtual ~Ranged();
 
-    private:
+  private:
         
 };
 

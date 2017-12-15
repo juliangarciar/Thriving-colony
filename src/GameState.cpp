@@ -1,6 +1,7 @@
 #include "GameState.h"
 #include "Game.h"
 #include "Human.h"
+#include "IA.h"
 
 GameState::GameState() : State() {
     camera = new CameraController();
@@ -10,9 +11,10 @@ GameState::GameState() : State() {
 }
 
 GameState::~GameState() {
+    delete nodeRootIA;
     delete camera;
-    delete map;
     delete hud;
+    delete map;
 }
 
 void GameState::Init(){
@@ -39,7 +41,7 @@ void GameState::Update(){
     Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
     //buildingManager->drawCube(map);
-    Human::getInstance() -> getBuildings() -> drawBuilding(map, 200, Enumeration::BuildingType::House, true);
+    Human::getInstance() -> getBuildings() -> drawBuilding(map, Enumeration::BuildingType::House, Enumeration::Team::Human);
     nodeRootIA -> question();
 }
 
