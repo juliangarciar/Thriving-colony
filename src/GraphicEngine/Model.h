@@ -8,13 +8,14 @@ using namespace irr;
 
 class Model {
     public:
-        Model();
-        Model(SceneNode *parent);
+        Model(int id);
+        Model(SceneNode *parent, int id);
         ~Model();
 
 		scene::IMeshSceneNode *getModel();
     private:
         scene::IMeshSceneNode *cubeNode;
+        scene::ITriangleSelector *selector = 0;
 };
 
 #endif

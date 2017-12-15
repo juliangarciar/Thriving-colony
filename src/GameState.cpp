@@ -18,7 +18,6 @@ GameState::~GameState() {
 
 void GameState::Init(){
     map->setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
-    //hud->drawCube(Game::Instance()->getIO(), cursor, map);
 }
 
 void GameState::Input(){
@@ -29,8 +28,15 @@ void GameState::Input(){
     camera->Zoom(Game::Instance()->getIO());
 
     Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
-	Human::getInstance() -> getBuildings() -> getHoverBuilding();
-    //std::cout << v.x << " " << v.y << " " << v.z << std::endl;
+    if (Game::Instance()->getIO()->leftMousePressed()){
+        int id = Human::getInstance() -> getBuildings()->getHoverBuilding();
+        if (id != -1){
+           /* std::wstringstream o;
+            o << "Has hecho click en: " << id;
+            hud->getInfoButton()->setText(o.str().c_str());*/
+            hud->showPopup(id);
+        }
+	}
 }
 
 void GameState::Update(){

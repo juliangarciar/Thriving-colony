@@ -11,7 +11,7 @@ BuildingManager::BuildingManager(){
     gridAlignment = 50;
 	buildingLayer = new SceneNode();
 	buildings = new std::vector<Building*>();
-	cube = new Model(buildingLayer);
+	cube = NULL;
 }
  
 BuildingManager::~BuildingManager(){
@@ -20,13 +20,22 @@ BuildingManager::~BuildingManager(){
 	delete buildings;
 }
 
-void BuildingManager::setBuildingMode(bool mode){
-	buildingMode = mode;
-	cube = new Model(buildingLayer);
+void BuildingManager::setBuildingMode(){
+	if (!buildingMode){
+		buildingMode = true;
+		cube = new Model(buildingLayer, buildings->size());
+	}
 }
 
-void BuildingManager::getHoverBuilding(){
-	SceneNode collision = buildingLayer -> getNodeCollision(Game::Instance() -> getCursor());
+int BuildingManager::getHoverBuilding(){
+	//Game *g = Game::Instance();
+	if (!buildingMode) {
+		SceneNode *collision = buildingLayer -> getNodeCollision(Game::Instance() -> getCursor());
+		if (collision != NULL){
+			return collision->getSceneNode()->getID();
+		}
+	}
+	return -1;
 }
 
 void BuildingManager::drawBuilding(Terrain *terrain, int hitPoints, Enumeration::BuildingType _type, bool _team){
@@ -51,7 +60,7 @@ void BuildingManager::drawBuilding(Terrain *terrain, int hitPoints, Enumeration:
 		*/
 		bool collision = false;
 		for (int i = 0; i < buildings -> size() && !collision; i++){
-			Box3D<float> box = Box3D<float>(cube -> getModel() -> getTransformedBoundingBox());
+			Box3D<float> box = Box3D<float>(cube -> getModel() -> getTransformedBoundingBox()); //ToDo: esto en building
 			collision = buildings -> at(i) -> getHitbox() -> intersects(box);
 		}
 		if (collision){
@@ -72,7 +81,7 @@ void BuildingManager::drawBuilding(Terrain *terrain, int hitPoints, Enumeration:
 
 void BuildingManager::buildBuilding(int hitPoints, Vector3<float>* pos, Enumeration::BuildingType _type, bool _team) {
 	if (_team == false) {
-		cube = new Model(buildingLayer);
+	    cube = new Model(buildingLayer, buildings->size());
 		cube -> getModel() -> setMaterialFlag(video::EMF_LIGHTING, false);
 		cube -> getModel() -> setPosition(core::vector3df(1600,300,1450));
 		Game::Instance() -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(cube -> getModel() -> getMesh(), video::SColor(255,255,255,255));

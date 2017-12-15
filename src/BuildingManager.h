@@ -17,9 +17,9 @@ class BuildingManager {
 		BuildingManager();
 		virtual ~BuildingManager();
 
-		void getHoverBuilding();
+		int getHoverBuilding();
 
-		void setBuildingMode(bool mode);
+		void setBuildingMode();
         void drawBuilding(Terrain *terrain, int, Enumeration::BuildingType, bool);
 		void buildBuilding(int, Vector3<float>*, Enumeration::BuildingType, bool);
 

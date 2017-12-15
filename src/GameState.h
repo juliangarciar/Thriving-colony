@@ -1,6 +1,7 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
+#include <sstream>
 #include "State.h"
 #include <GraphicEngine/Terrain.h>
 #include <IOEngine/InputManager.h>
