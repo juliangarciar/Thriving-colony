@@ -53,11 +53,16 @@ Building::Building(Enumeration::BuildingType buildingData, Vector3<float> *vecto
         break;
     }
     //Graphic engine, this should be in the switch (when models done)
+<<<<<<< HEAD
     this->modelLayer = new SceneNode();
     this->model = new Model(modelLayer);
     this->model->getModel()->setPosition(vectorData->getVectorF());
     this->model->getModel()->setMaterialFlag(video::EMF_LIGHTING, false);
     Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(125, 125, 0, 125));    
+=======
+    this->model = modelData;
+    this->hitbox = boxData;
+>>>>>>> 35de86d4edc6bc1c3908d49c972798a3aab5b8cd
     this->type = buildingData;
     this->position = vectorData;
 }
