@@ -2,9 +2,9 @@
 #include <GraphicEngine/Window.h>
 
 using namespace irr;
- 
-Tab::Tab(Panel *panel, const wchar_t *text, int id){
-    tab = panel->getTabControl->addTab(text, id);
+
+Tab::Tab(gui::IGUITab *tab){ 
+    this->tab = tab;
 }
 
 Tab::~Tab(){
@@ -12,6 +12,18 @@ Tab::~Tab(){
     tab = NULL;
 }
 
-void Tab::addChildButton(){
-    
+void Tab::addChild(Button *button){
+    tab->addChild(button->getButton());
+}
+
+const wchar_t *Tab::getText(){
+    return tab->getText();
+}
+
+int Tab::getID(){
+    return tab->getID();
+}
+
+gui::IGUITab *Tab::getTab(){
+    return tab;
 }

@@ -3,9 +3,9 @@
 
 using namespace irr;
 
-Model::Model() {
+Model::Model(int id) {
     cubeNode = Window::Instance()->getSceneManager()->addCubeSceneNode(100);
-    cubeNode->setID(std::rand());
+    cubeNode->setID(id);
 
     selector = Window::Instance()->getSceneManager()->createTriangleSelectorFromBoundingBox(cubeNode);
     if (selector) {
@@ -14,9 +14,9 @@ Model::Model() {
     }
 }
 
-Model::Model(SceneNode *parent) {
+Model::Model(SceneNode *parent, int id) {
     cubeNode = Window::Instance()->getSceneManager()->addCubeSceneNode(100);
-    cubeNode->setID(std::rand());
+    cubeNode->setID(id);
 
     selector = Window::Instance()->getSceneManager()->createTriangleSelectorFromBoundingBox(cubeNode);
     if (selector) {

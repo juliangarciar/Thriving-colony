@@ -31,9 +31,10 @@ void GameState::Input(){
     if (Game::Instance()->getIO()->leftMousePressed()){
         int id = Human::getInstance() -> getBuildings()->getHoverBuilding();
         if (id != -1){
-            std::wstringstream o;
+           /* std::wstringstream o;
             o << "Has hecho click en: " << id;
-            hud->getInfoButton()->setText(o.str().c_str());
+            hud->getInfoButton()->setText(o.str().c_str());*/
+            hud->showPopup(id);
         }
 	}
 }

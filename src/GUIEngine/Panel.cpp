@@ -13,10 +13,29 @@ Panel::~Panel(){
     ctrl = NULL;
 }
 
+Tab *Panel::addTab(const wchar_t *text, int id){
+    return new Tab(ctrl->addTab(text, id)); 
+} 
+
+Tab *Panel::getTab(int id){
+    return new Tab(ctrl->getTab(id)); 
+}
+
+void Panel::enable(){
+   ctrl->setEnabled(true);
+   ctrl->setVisible(true);
+}
+
+void Panel::disable(){
+   ctrl->setEnabled(false);
+   ctrl->setVisible(false);
+}
+
+void Panel::changeActiveTab(int id){
+   ctrl->setActiveTab(id);
+}
+
 gui::IGUITabControl *Panel::getTabControl(){
     return ctrl;
 }
-
-/*void Panel::addTab(Tab *tab){
-    skin->addTab(tab->getText(), tab->getId());
-} */
+ 

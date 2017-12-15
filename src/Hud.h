@@ -18,16 +18,20 @@ class Hud {
         Hud();
         ~Hud();
 
-        void getHUDEvents();
+        void showPopup(int tabId);
+        void hidePopup();
 
-        Button *getInfoButton(); //ESTO ES TEMPORAL
+        void getHUDEvents();
     private:
         Button *buttonBuilding;
         Button *buttonQuit;
 
-        Button *buttonInfo; //ESTO ES TEMPORAL
+        Button *buttonCloseTab1;
+        Button *buttonCloseTab2;
 
         Panel *tabs;
+        Tab *t1;
+        Tab *t2;
 };
 
 #endif

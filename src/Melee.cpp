@@ -40,7 +40,7 @@ Melee::Melee(Enumeration::UnitType::SubClass unitData, Vector3<float> *vectorDat
     }
     //Graphic engine, this should be in the switch (when models done)
     this->hitbox = new Box3D<float>();
-    this->model = new Model();
+    this->model = new Model(std::rand());
     this->type = unitData;
 }
 //It's empty because there are nothing to delete

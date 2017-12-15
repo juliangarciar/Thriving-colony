@@ -20,6 +20,7 @@ class Button {
 
         void setText(const wchar_t* text);
 
+        gui::IGUIButton *getButton();
     private:
         gui::IGUIButton *button;
 };

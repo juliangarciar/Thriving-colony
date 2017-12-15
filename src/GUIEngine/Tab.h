@@ -2,16 +2,21 @@
 #define TAB_H
 
 #include <irrlicht.h>
-#include <GUIEngine/Panel.h>
+#include "Button.h"
 
 using namespace irr;
 
 class Tab {
     public:
-        Tab(Panel *panel, const wchar_t *text, int id);
+        Tab(gui::IGUITab *tab);
         ~Tab();
 
-        //void addTab(const wchar_t *text, int id);
+        void addChild(Button *button);
+
+        const wchar_t *getText();
+        int getID();
+
+        gui::IGUITab *getTab();
     private:
         gui::IGUITab *tab;
 };

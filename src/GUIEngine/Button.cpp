@@ -8,6 +8,10 @@ Button::Button(Rect2D<int> dimPos, int id, const wchar_t *buttonText, const wcha
     button = sc->getGUIEnvironment()->addButton(dimPos.getRect2D(), 0, id, buttonText, tooltipText);
 }
 
+Button::~Button() {
+    
+}
+
 bool Button::isButtonPressed(){
     return button->isPressed();
 }
@@ -24,6 +28,6 @@ void Button::setText(const wchar_t* text){
     button->setText(text);
 }
 
-Button::~Button() {
-    
+gui::IGUIButton *Button::getButton(){
+    return button;
 }

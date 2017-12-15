@@ -36,6 +36,7 @@ class Enumeration {
             ID0,
             GUI_ID_BUILDING_BUTTON,
             GUI_ID_QUIT_BUTTON,
+            GUI_ID_CLOSE_PANEL_BUTTON,
             GUI_ID_UNIT_BUTTON
         };
 
