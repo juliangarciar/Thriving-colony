@@ -80,19 +80,11 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
 }
 
 void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
-	/*if (_team == Enumeration::Team::IA) {
-		cube = new Model(buildingLayer);
-		cube -> getModel() -> setMaterialFlag(video::EMF_LIGHTING, false);
-		cube -> getModel() -> setPosition(core::vector3df(pos -> x, pos -> y, pos -> z));
-		Game::Instance() -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(cube -> getModel() -> getMesh(), video::SColor(255,255,255,255));
-	}*/
-	
 	if(_type == Enumeration::BuildingType::Tower) {
 			buildings->push_back(new Tower(pos, _team));
 			return;
     }
-	//buildings -> push_back(new Building(hitPoints, pos, _type, _team, new Box3D<float>(cube -> getModel() -> getTransformedBoundingBox()), cube));
-	//buildings->push_back(new Building(_type, pos, _team));
+	buildings->push_back(new Building(_type, pos, _team));
 }
 
 std::vector<Building*>* BuildingManager::getBuildings() {

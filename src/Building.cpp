@@ -108,10 +108,8 @@ Building::Building(Enumeration::BuildingType buildingData, Vector3<float> *pos, 
 	model -> getModel() -> setMaterialFlag(video::EMF_LIGHTING, false);
     model -> getModel() -> setPosition(core::vector3df(pos -> x, pos -> y, pos -> z));
     Game::Instance() -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255,255,255,255));
-    /*this->model = new Model(modelLayer, std::rand()); //ToDo: cambiar
-    this->model->getModel()->setPosition(vectorData));
-    this->model->getModel()->setMaterialFlag(video::EMF_LIGHTING, false);
-    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(125, 125, 0, 125));  */  
+    hitbox = new Box3D<float>(model->getModel()->getTransformedBoundingBox());
+    
     this->type = buildingData;
     this->position = pos;
     if (teamData == Enumeration::Team::Human) {
