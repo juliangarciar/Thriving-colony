@@ -18,6 +18,11 @@ Box3D<T>::~Box3D(){
 }
 
 template <class T>
+void Box3D<T>::setPosition(core::aabbox3d<T> box){
+	this->box = box;
+}
+
+template <class T>
 bool Box3D<T>::intersects(Box3D<T> other){
 	return box.intersectsWithBox(other.getAABBox3D());
 }

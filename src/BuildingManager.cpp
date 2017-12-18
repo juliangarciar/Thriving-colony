@@ -11,11 +11,11 @@ BuildingManager::BuildingManager(){
     gridAlignment = 50;
 	buildingLayer = new SceneNode();
 	buildings = new std::vector<Building*>();
-	cube = NULL;
+	tempBuilding = NULL;
 }
  
 BuildingManager::~BuildingManager(){
-	delete cube;
+	delete tempBuilding;
 	delete buildingLayer;
 	delete buildings;
 }
@@ -23,7 +23,7 @@ BuildingManager::~BuildingManager(){
 void BuildingManager::setBuildingMode(){
 	if (!buildingMode){
 		buildingMode = true;
-		cube = new Model(buildingLayer, buildings->size());
+		tempBuilding = new Building(buildingLayer, Enumeration::BuildingType::House, new Vector3<float>(0, 0, 0), Enumeration::Team::Human);
 	}
 }
 
@@ -40,7 +40,7 @@ int BuildingManager::getHoverBuilding(){
 
 void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _type, Enumeration::Team _team){
     Game *g = Game::Instance();
-    if (buildingMode && cube != NULL){
+    if (buildingMode && tempBuilding != NULL){
         // Aqui tenemos que hacer que cuando se haya apretado el boton de nueva ventana,
         // tambien se cree una caja en las coordenadas actuales del cursor del raton.
 		/*
@@ -50,23 +50,25 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
         float x = roundf(xyzPointCollision.x / gridAlignment) * gridAlignment;
         float y = roundf(xyzPointCollision.y / gridAlignment) * gridAlignment;
         float z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
-        //ToDo: irr::core::aabbox3d< T >
 
-		cube -> getModel() -> setMaterialFlag(video::EMF_LIGHTING, false);
-		cube -> getModel() -> setPosition(core::vector3df(x,y,z));
+		tempBuilding -> getModel() -> getModel() -> setPosition(core::vector3df(x,y,z)); //ToDo: esto es irrlicht
+		tempBuilding -> getHitbox() -> setPosition(tempBuilding -> getModel() ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es irrlicht
 
-		/*
+		/* 
 		* Look if there is any other building built there
 		*/
 		bool collision = false;
 		for (int i = 0; i < buildings -> size() && !collision; i++){
-			Box3D<float> box = Box3D<float>(cube -> getModel() -> getTransformedBoundingBox()); //ToDo: esto en building
-			collision = buildings -> at(i) -> getHitbox() -> intersects(box);
+			collision = buildings -> at(i) -> getHitbox() -> intersects(*tempBuilding->getHitbox());
 		}
 		if (collision){
-			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(cube -> getModel() -> getMesh(), video::SColor(255,0,0,255));
+			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
+				tempBuilding -> getModel() -> getModel() -> getMesh(), video::SColor(255,0,0,255)
+			); //ToDo: esto es fachada
 		} else {
-			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(cube -> getModel() -> getMesh(), video::SColor(255,255,255,255));
+			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
+				tempBuilding -> getModel() -> getModel() -> getMesh(), video::SColor(255,255,255,255)
+			); //ToDo: esto es fachada
 			/*
 			* If there is no collision and the player press left button of the mouse,
 			* build the building
@@ -81,10 +83,14 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
 
 void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
 	if(_type == Enumeration::BuildingType::Tower) {
-			buildings->push_back(new Tower(pos, _team));
-			return;
+		buildings->push_back(new Tower(buildingLayer, pos, _team));
+		return;
     }
-	buildings->push_back(new Building(_type, pos, _team));
+	if (_team == Enumeration::Team::IA){
+		buildings->push_back(new Building(buildingLayer, _type, pos, _team));
+	} else {
+		buildings -> push_back(tempBuilding);
+	}
 }
 
 std::vector<Building*>* BuildingManager::getBuildings() {
@@ -94,7 +100,7 @@ std::vector<Building*>* BuildingManager::getBuildings() {
 /*
 void BuildingManager::drawCube(Terrain *terrain){
     Game *g = Game::Instance();
-    if (buildingMode && cube != NULL){
+    if (buildingMode && tempBuilding != NULL){
         // Aqui tenemos que hacer que cuando se haya apretado el boton de nueva ventana,
         // tambien se cree una caja en las coordenadas actuales del cursor del raton.
         Vector3<float> xyzPointCollision = terrain -> getPointCollision(g -> getCursor());
@@ -103,20 +109,20 @@ void BuildingManager::drawCube(Terrain *terrain){
         float y = roundf(xyzPointCollision.y / gridAlignment) * gridAlignment;
         float z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
         //ToDo: irr::core::aabbox3d< T >
-		cube -> getModel() -> setMaterialFlag(video::EMF_LIGHTING, false);
-		cube -> getModel() -> setPosition(core::vector3df(x,y,z));
+		tempBuilding -> getModel() -> setMaterialFlag(video::EMF_LIGHTING, false);
+		tempBuilding -> getModel() -> setPosition(core::vector3df(x,y,z));
 		bool collision = false;
 		for (int i = 0; i < buildings -> size() && !collision; i++){
-			Box3D<float> box = Box3D<float>(cube -> getModel() -> getTransformedBoundingBox());
+			Box3D<float> box = Box3D<float>(tempBuilding -> getModel() -> getTransformedBoundingBox());
 			collision = buildings -> at(i).intersects(box);
 		}
 		if (collision){
-			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(cube -> getModel() -> getMesh(), video::SColor(255,0,0,255));
+			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(tempBuilding -> getModel() -> getMesh(), video::SColor(255,0,0,255));
 		} else {
-			g->getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(cube -> getModel() -> getMesh(), video::SColor(255,255,255,255));
+			g->getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(tempBuilding -> getModel() -> getMesh(), video::SColor(255,255,255,255));
 			if (g->getIO() -> leftMouseDown()){
 				buildingMode = false;
-				buildings -> push_back(Box3D<float>(cube -> getModel() -> getTransformedBoundingBox()));Window::Instance()->getSceneManager()
+				buildings -> push_back(Box3D<float>(tempBuilding -> getModel() -> getTransformedBoundingBox()));Window::Instance()->getSceneManager()
 			}
 		}
     }

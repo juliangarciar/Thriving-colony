@@ -6,7 +6,7 @@
 class Tower : public Building {
     
     public:
-      Tower(Vector3<float> *vectorData, Enumeration::Team teamData);
+      Tower(SceneNode *parent, Vector3<float> *vectorData, Enumeration::Team teamData);
       virtual ~Tower();
     
     private:
