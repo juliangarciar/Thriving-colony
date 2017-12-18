@@ -11,7 +11,7 @@ Terrain::Terrain(const char* heightMap){
 		-1,					// node id
 		core::vector3df(0.f, 0.f, 0.f),		// position
 		core::vector3df(0.f, 0.f, 0.f),		// rotation
-		core::vector3df(40.f, 4.4f, 40.f),	// scale
+		core::vector3df(40.f, 10.4f, 40.f),	// scale
 		video::SColor ( 255, 255, 255, 255 ),	// vertexColor
 		5,					// maxLOD
 		scene::ETPS_17,				// patchSize

@@ -5,7 +5,7 @@
 
 GameState::GameState() : State() {
     camera = new CameraController();
-    map = new Terrain("media/heightmap.bmp"); //ToDo: mover a map
+    map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
     hud = new Hud();
     nodeRootIA = new RootNode();
 }
