@@ -105,7 +105,8 @@ Building::Building(Enumeration::BuildingType buildingData, Vector3<float> *pos, 
     //Graphic engine, this should be in the switch (when models done)
     this->modelLayer = new SceneNode();
     model = new Model(modelLayer, std::rand());
-	model -> getModel() -> setMaterialFlag(video::EMF_LIGHTING, false);
+    model -> getModel() -> setMaterialFlag(video::EMF_LIGHTING, false);
+    // NO FACHADA??? core::vector3df -> vector3
     model -> getModel() -> setPosition(core::vector3df(pos -> x, pos -> y, pos -> z));
     Game::Instance() -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255,255,255,255));
     hitbox = new Box3D<float>(model->getModel()->getTransformedBoundingBox());
