@@ -14,6 +14,8 @@ class Box3D {
 
 		~Box3D();
 
+		void setPosition(core::aabbox3d<T> box);
+
 		bool intersects(Box3D<T> other);
 
 		core::aabbox3d<T> getAABBox3D();
