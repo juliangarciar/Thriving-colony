@@ -25,7 +25,19 @@ class Hud {
     private:
         Button *buttonBuilding;
         Button *buttonQuit;
-
+        
+        Button *buttonSchool;
+        Button *buttonMarket;
+        Button *buttonHospital;
+        Button *buttonSiderurgy;
+        Button *buttonQuarry;
+        Button *buttonHome;
+        Button *buttonBarrack;
+        Button *buttonBarn;
+        Button *buttonWorkshop;
+        Button *buttonWall;
+        Button *buttonTower;
+        
         Button *buttonCloseTab1;
         Button *buttonCloseTab2;
 
