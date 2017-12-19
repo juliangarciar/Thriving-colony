@@ -58,6 +58,8 @@ void Hud::getHUDEvents(){
             tabs->disable();
         break;
         case Enumeration::idGUI::GUI_ID_CREATE_TROOP_1_BUTTON:
+            
+            //Human::getInstance()->getUnits()->createTroop(vectorData, unitData);
             std::cout << "Hola 1" << std::endl;
         break;
         case Enumeration::idGUI::GUI_ID_CREATE_TROOP_2_BUTTON:

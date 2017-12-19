@@ -48,6 +48,6 @@ Melee::Melee(Enumeration::UnitType::SubClass unitData, Vector3<float> *vectorDat
 }
 //It's empty because there are nothing to delete
 //maybe this will change in a futur
-Melee::~Melee() {
+Melee::~Melee() {   
 
 }

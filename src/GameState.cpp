@@ -2,12 +2,14 @@
 #include "Game.h"
 #include "Human.h"
 #include "IA.h"
+#include "SoundEngine/Music.h"
 
 GameState::GameState() : State() {
     camera = new CameraController();
     map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
     hud = new Hud();
     nodeRootIA = new RootNode();
+    music = new Music();
 }
 
 GameState::~GameState() {
@@ -15,6 +17,7 @@ GameState::~GameState() {
     delete camera;
     delete hud;
     delete map;
+    delete music;
 }
 
 void GameState::Init(){
@@ -56,6 +59,8 @@ void GameState::Update(){
         Human::getInstance()->getUnits()->createTroop(vectorData, unitData);
         this->unitDone = true;
     }
+    //Sound try
+    music->updateSound();
     
     nodeRootIA -> question();
 }

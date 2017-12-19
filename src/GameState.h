@@ -9,6 +9,7 @@
 #include "BuildingManager.h"
 #include "Hud.h"
 #include "IAEngine/RootNode.h"
+#include "SoundEngine/Music.h"
 
 class GameState : public State {
     
@@ -25,6 +26,9 @@ class GameState : public State {
         Terrain* getMap();
         
     private:
+    //Music try
+        Music *music;
+    //
         CameraController *camera;
         Terrain *map;
         Hud * hud;
