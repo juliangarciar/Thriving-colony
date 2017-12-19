@@ -64,6 +64,7 @@ void GameState::Update(){
         Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
         //buildingManager->drawCube(map);
+
         Human::getInstance() -> getBuildings() -> drawBuilding(map, Enumeration::BuildingType::House,  Enumeration::Team::Human);
         if(!unitDone){
             Vector3<float> *vectorData = new Vector3<float>(200, 200, 200);
@@ -73,7 +74,8 @@ void GameState::Update(){
             Human::getInstance()->getUnits()->createTroop(vectorData, unitData);
             this->unitDone = true;
         }
-        
+        Human::getInstance() -> update();
+        IA::getInstance() -> update();
         nodeRootIA -> question();
     }
 }

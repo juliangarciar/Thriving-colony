@@ -57,6 +57,8 @@ class Player {
         /////////////////////////////////
         void update();
 
+        void gainResources();
+
         void increaseHappiness(int h);
         void increaseCityLevel(int lvl);
 
@@ -82,6 +84,7 @@ class Player {
         void increaseBuildableRange();
 
     protected:
+        float updateTimer;
         // Resources
         int happiness;
         int cityLevel;

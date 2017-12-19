@@ -7,11 +7,16 @@ bool Player::deployedTroops = false;
 #define RESOURCEPRODUCTION 10
 
 Player::Player() {
+    updateTimer = 120;
+
     happiness = 0;
     cityLevel = 10;
     
     siderurgyAmount = 1;
     quarryAmount= 0;
+
+    metalAmount = 0;
+    crystalAmount = 0;
 
     citizens = 0;
 
@@ -29,7 +34,7 @@ Player::Player() {
 
     //ToDo: Dejar asi o solo un ejercito???
     //      Depende de como vaya a quedarse la IA de combate
-    troops = 0;
+    //troops = 0;
     buildings = new BuildingManager;
     units = new UnitManager(Enumeration::Team::Human);
     //Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DeployTroops, deployTroops);
@@ -44,9 +49,12 @@ Player::~Player() {
 }
 
 void Player::update() {
-    //if (timer) {
-        //gainResource();
-    //}
+    if (updateTimer <= 0) {
+        gainResources();
+    } else {
+        updateTimer --;
+    }
+    std::cout<<"Metal: " << metalAmount << " - Crystal: " << crystalAmount <<std::endl;
 }
 
 //==========
@@ -163,6 +171,10 @@ void Player::setWorkshopBuilt(bool _workshop) {
 /**
  * CONTROL METHODS
  */
+void Player::gainResources() {
+    metalAmount += getMetalProduction();
+    crystalAmount += getCrystalProduction();
+}
 
 void Player::increaseHappiness(int h) {
     happiness += h;

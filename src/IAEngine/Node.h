@@ -10,7 +10,7 @@ class Node {
         virtual ~Node();
 
         virtual void question();
-
+        bool isSolvent(int, int);
     protected:
         Node *father;
         Node **children;
