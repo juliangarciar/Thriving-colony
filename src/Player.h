@@ -114,10 +114,6 @@ class Player {
         static bool deployedTroops;
         bool closedDoors;
         
-        //Melee **melees;
-        //Ranged **rangeds;
-        std::vector<Unit*> *troops;
-        
         BuildingManager *buildings;
         UnitManager *units;
         float buildableRange;

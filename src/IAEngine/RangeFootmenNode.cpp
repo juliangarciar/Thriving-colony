@@ -11,7 +11,7 @@ RangeFootmenNode::~RangeFootmenNode(){
 }
 
 void RangeFootmenNode::question() {
-    //std::cout << Genero un soldado a pie de rango << std::endl;
+    std::cout << "Genero un soldado a pie de rango" << std::endl;
     //ToDo: Generar soldado a pie de rango
     IA::getInstance()-> increaseRangeAmount();
 }

@@ -20,6 +20,8 @@ Human::Human() : Player() {
     barrackBuilt = false;
     barnBuilt = false;
     workshopBuilt = false;
+
+    units = new UnitManager(Enumeration::Team::Human);
 }
 
 Human::~Human() {

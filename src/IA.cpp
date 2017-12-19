@@ -3,6 +3,8 @@
 
 IA::IA() : Player() {
     tree = new BehaviourTree();
+
+    units = new UnitManager(Enumeration::Team::IA);
 }
 
 IA::~IA() {

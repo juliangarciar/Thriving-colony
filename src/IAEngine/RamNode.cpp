@@ -11,7 +11,7 @@ RamNode::~RamNode(){
 }
 
 void RamNode::question() {
-    //std::cout << Genero un ariete << std::endl;
+    std::cout << "Genero un ariete" << std::endl;
     //ToDo: Generar ariete
     IA::getInstance()-> increaseSiegeAmount();
 }

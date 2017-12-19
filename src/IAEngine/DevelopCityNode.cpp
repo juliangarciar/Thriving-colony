@@ -41,6 +41,7 @@ void DevelopCityNode::question() {
                 children[2] -> question();
             } else {
                 //Fourth branch: Army
+                std::cout << "Llega" << std::endl;
                 if (tree -> needArmyInvestment()) {
                     children[3] -> question();
                 } else {

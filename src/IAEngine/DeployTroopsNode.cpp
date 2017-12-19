@@ -11,7 +11,7 @@ DeployTroopsNode::~DeployTroopsNode(){
 }
 
 void DeployTroopsNode::question() {
-    //std::cout << Despliego mis tropas para defender << std::endl;
+    std::cout << "Despliego mis tropas para defender" << std::endl;
     //ToDo: Desplegar tropas
     IA::getInstance()-> deployTroops();
 }
