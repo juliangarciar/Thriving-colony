@@ -247,6 +247,7 @@ void Player::retractTroops() {
     deployedTroops = false;
 }
 
+//ToDo: las tropas no deberian ir en unit manager?
 std::vector<Unit*>* Player::getTroops() {
     //ToDo: Devolver tropas
     //TODO al cuadrado: Decidir como va a ser lo de las tropas   
