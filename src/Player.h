@@ -43,7 +43,7 @@ class Player {
         bool getClosedDoors();
         bool getDeployedTroops();
 
-        std::vector<Unit*> * getTroops();
+        std::vector<Unit*> * getTroops(); //ToDo: lo del cpp
 
         bool losingBattle();
 
