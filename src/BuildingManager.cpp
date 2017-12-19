@@ -20,10 +20,10 @@ BuildingManager::~BuildingManager(){
 	delete buildings;
 }
 
-void BuildingManager::setBuildingMode(){
+void BuildingManager::setBuildingMode(Enumeration::BuildingType type){
 	if (!buildingMode){
 		buildingMode = true;
-		tempBuilding = new Building(buildingLayer, Enumeration::BuildingType::House, new Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+		tempBuilding = new Building(buildingLayer, type, new Vector3<float>(0, 0, 0), Enumeration::Team::Human);
 	}
 }
 

@@ -25,7 +25,7 @@ class Hud {
     private:
         Button *buttonBuilding;
         Button *buttonQuit;
-        /*
+        
         Button *buttonSchool;
         Button *buttonMarket;
         Button *buttonHospital;
@@ -37,7 +37,7 @@ class Hud {
         Button *buttonWorkshop;
         Button *buttonWall;
         Button *buttonTower;
-        */
+        
         Button *buttonCloseTab1;
         Button *buttonCloseTab2;
 
