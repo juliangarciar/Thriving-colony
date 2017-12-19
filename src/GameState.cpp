@@ -32,7 +32,7 @@ void GameState::Init(){
 }
 
 void GameState::Input(){
-    if (gamePaused) {
+    //if (gamePaused) {
         hud->getHUDEvents();
 
         camera->Move(Game::Instance()->getIO(), Game::Instance()->getCursor());
@@ -49,15 +49,15 @@ void GameState::Input(){
                 hud->showPopup(id);
             }
         }
-    }
+    //}
 }
 
 void GameState::Update(){
-    if (Game::Instance() -> getIO()->keyDown((char)27)) {
+    //if (Game::Instance() -> getIO()->keyDown((char)27)) {
         //Escape is pressed
-        gamePaused = !gamePaused;
-    }
-    if (gamePaused) {
+        //gamePaused = !gamePaused;
+    //}
+    //if (gamePaused) {
         camera->Update(map, Game::Instance()->getWindow()->getDeltaTime());
 
         Vector3<float> cam = camera->getCamera()->getCameraPosition();
@@ -75,7 +75,7 @@ void GameState::Update(){
         }
         
         nodeRootIA -> question();
-    }
+    //}
 }
 
 void GameState::Render(){
