@@ -67,7 +67,7 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
 			); //ToDo: esto es fachada
 		} else {
 			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
-				tempBuilding -> getModel() -> getModel() -> getMesh(), video::SColor(255,255,255,255)
+				tempBuilding -> getModel() -> getModel() -> getMesh(), tempBuilding -> getColor()
 			); //ToDo: esto es fachada
 			/*
 			* If there is no collision and the player press left button of the mouse,

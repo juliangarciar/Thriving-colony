@@ -12,9 +12,11 @@ class Building : public Entity {
         Building(SceneNode *parent, Enumeration::BuildingType buildingData, Vector3<float> *vectorData, Enumeration::Team teamData);
         virtual ~Building();
 
+        irr::video::SColor getColor();
     private:
         Enumeration::BuildingType type;
-        
+
+        irr::video::SColor color;
 };
 
 #endif
