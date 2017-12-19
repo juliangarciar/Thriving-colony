@@ -218,11 +218,8 @@ float BehaviourTree::calculateCitizensRate() {
 */
 float BehaviourTree::calculateArmyCitizensRate() {
     float armySize = IA::getInstance() -> getUnits() -> getTotalTroops() -> size();
-    std::cout<<"unidades="<<armySize<<std::endl;
     // Numbers of soldiers / Number of total cicitzens (citizens + soldiers)
     float totalCitizens = IA::getInstance() -> getCitizens() + armySize;
-    std::cout<<"ciudadanos="<<totalCitizens<<std::endl;
-    std::cout<<armySize / totalCitizens<<std::endl;
     return (armySize / totalCitizens);
 }
 
