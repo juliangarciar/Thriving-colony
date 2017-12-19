@@ -11,7 +11,7 @@ BehaviourTree::BehaviourTree() {
     workshopMilestone = 65;
     creatureMilestone = 100;
 
-    metalThreshold = 0.1;
+    metalThreshold = 0.2;
     crystalThreshold = 0.2;
     citizensThreshold = 0.3;
     armyThreshold = 0.2;
