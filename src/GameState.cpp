@@ -19,6 +19,14 @@ GameState::~GameState() {
 
 void GameState::Init(){
     map->setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
+    
+    // Build the main building of IA
+    Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
+    IA::getInstance() -> getBuildings() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::IA);
+
+    //Build the first siderurgy of IA
+    v = IA::getInstance() -> determinatePositionBuilding();
+    IA::getInstance() -> getBuildings() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::IA);
 }
 
 void GameState::Input(){
