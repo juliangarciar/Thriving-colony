@@ -1,4 +1,5 @@
 #include "Human.h"
+#include "Game.h"
 
 Human::Human() : Player() {
     happiness = 0;
@@ -36,4 +37,3 @@ Human* Human::getInstance() {
     }
     return instance;
 }
-

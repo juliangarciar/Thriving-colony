@@ -3,6 +3,7 @@
 #include "Tower.h"
 
 bool Player::deployedTroops = false;
+bool Player::closedDoors = false;
 
 #define RESOURCEPRODUCTION 10
 
