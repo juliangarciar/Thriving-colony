@@ -13,7 +13,9 @@ TowerNode::~TowerNode(){
 void TowerNode::question() {
     //std::cout << Construyo un torre << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
-    Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
-    IA::getInstance() -> getBuildings() -> buildBuilding(v, Enumeration::BuildingType::Tower, Enumeration::Team::IA);
-    IA::getInstance() -> increaseTowerAmount();
+    if (IA::getInstance() -> getBuildings() -> isSolvent(Enumeration::BuildingCost::TowerMetalCost, Enumeration::BuildingCost::TowerCrystalCost, Enumeration::Team::IA)) {
+        Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
+        IA::getInstance() -> getBuildings() -> buildBuilding(v, Enumeration::BuildingType::Tower, Enumeration::Team::IA);
+        //AUmentar el numero de torres va en el constructorinoinoioinoino
+    }
 }

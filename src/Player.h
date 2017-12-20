@@ -86,6 +86,8 @@ class Player {
 
         void increaseBuildableRange();
 
+        void spendResources(int, int);
+
     protected:
         float updateTimer;
         // Resources

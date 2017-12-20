@@ -168,6 +168,12 @@ void Player::gainResources() {
     crystalAmount += getCrystalProduction();
 }
 
+void Player::spendResources(int metalCost, int crystalCost) {
+    // Nunca acabaran siendo menor que 0
+    metalAmount -= metalCost;
+    crystalAmount -= crystalAmount;
+}
+
 void Player::increaseHappiness(int h) {
     happiness += h;
 }

@@ -13,6 +13,9 @@ HomeNode::~HomeNode(){
 void HomeNode::question() {
     std::cout << "Voy a invertir en casas" << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
-    Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
-    IA::getInstance() -> getBuildings() -> buildBuilding(v, Enumeration::BuildingType::House, Enumeration::Team::IA);
+    //TODO NODE
+    if (IA::getInstance() -> getBuildings() -> isSolvent(Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost, Enumeration::Team::IA)) {
+        Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
+        IA::getInstance() -> getBuildings() -> buildBuilding(v, Enumeration::BuildingType::House, Enumeration::Team::IA);
+    }
 }

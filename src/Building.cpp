@@ -7,6 +7,10 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
 {
     int happiness = 0;
     int cityLevel = 0;
+
+    int metalCost = 0;
+    int crystalCost = 0;
+
     float r = 0;
     float g = 0;
     float b = 0;
@@ -21,12 +25,16 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
             this->hp = 1100;
             happiness = 0;
             cityLevel = 15;
+
             if (teamData == Enumeration::Team::Human) {
                 Human::getInstance() -> setBarnBuilt(true);
-                Human::getInstance() -> increaseHappiness(happiness);
 			} else {
 				IA::getInstance() -> setBarnBuilt(true);
             }
+
+            metalCost = Enumeration::BuildingCost::BarnMetalCost;
+            crystalCost = Enumeration::BuildingCost::BarnCrystalCost;
+
         break;
         case Enumeration::BuildingType::Barrack:
             // Different color for diferent buildings
@@ -42,7 +50,11 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
 				Human::getInstance() -> setBarrackBuilt(true);
 			} else {
 				IA::getInstance() -> setBarrackBuilt(true);
-			}
+            }
+            
+            metalCost = Enumeration::BuildingCost::BarrackMetalCost;
+            crystalCost = Enumeration::BuildingCost::BarrackCrystalCost;
+
         break;
         case Enumeration::BuildingType::Hospital:
             // Different color for diferent buildings
@@ -54,7 +66,11 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
             this->hp = 750;
             happiness = 15;
             cityLevel = 5;
-            break;
+
+            metalCost = Enumeration::BuildingCost::HospitalMetalCost;
+            crystalCost = Enumeration::BuildingCost::HospitalCrystalCost;
+
+        break;
         case Enumeration::BuildingType::House:
             // Different color for diferent buildings
             r = 0;
@@ -70,7 +86,11 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
 				Human::getInstance() -> increaseCitizens();
 			} else {
 				IA::getInstance() -> increaseCitizens();
-			}
+            }
+            
+            metalCost = Enumeration::BuildingCost::HomeMetalCost;
+            crystalCost = Enumeration::BuildingCost::HomeCrystalCost;
+
         break;
         case Enumeration::BuildingType::MainBuilding:
             // Different color for diferent buildings
@@ -92,6 +112,10 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
             this->hp = 600;
             happiness = 10;
             cityLevel = 5;
+
+            metalCost = Enumeration::BuildingCost::MarketMetalCost;
+            crystalCost = Enumeration::BuildingCost::MarketCrystalCost;
+
         break;
         case Enumeration::BuildingType::Quarry:
             // Different color for diferent buildings
@@ -108,7 +132,11 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
 				Human::getInstance() -> increaseQuarryAmount();
 			} else {
 				IA::getInstance() -> increaseQuarryAmount();
-			}
+            }
+            
+            metalCost = Enumeration::BuildingCost::QuarryMetalCost;
+            crystalCost = Enumeration::BuildingCost::QuarryCrystalCost;
+
         break;
         case Enumeration::BuildingType::Siderurgy:
             // Different color for diferent buildings
@@ -125,7 +153,10 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
 				Human::getInstance() -> increaseSiderurgyAmount();
 			} else {
 				IA::getInstance() -> increaseSiderurgyAmount();
-			}
+            }
+            
+            metalCost = Enumeration::BuildingCost::SiderurgyMetalCost;
+            crystalCost = Enumeration::BuildingCost::SiderurgyCrystalCost;
 
         break;
         case Enumeration::BuildingType::School:
@@ -138,6 +169,10 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
             this->hp = 550;
             happiness = 5;
             cityLevel = 5;
+
+            metalCost = Enumeration::BuildingCost::SchoolMetalCost;
+            crystalCost = Enumeration::BuildingCost::SchoolCrystalCost;
+
         break;
         case Enumeration::BuildingType::Tower:
             // Different color for diferent buildings
@@ -149,6 +184,10 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
             this->hp = 500;
             happiness = 1;
             cityLevel = 5;
+
+            metalCost = Enumeration::BuildingCost::TowerMetalCost;
+            crystalCost = Enumeration::BuildingCost::TowerCrystalCost;
+
         break;
         case Enumeration::BuildingType::Wall:
             // Different color for diferent buildings
@@ -160,6 +199,10 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
             this->hp = 200;
             happiness = 1;
             cityLevel = 1;
+
+            metalCost = Enumeration::BuildingCost::WallMetalCost;
+            crystalCost = Enumeration::BuildingCost::WallCrystalCost;
+
         break;
         case Enumeration::BuildingType::Workshop:
             // Different color for diferent buildings
@@ -175,7 +218,11 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
 				Human::getInstance() -> setWorkshopBuilt(true);
 			} else {
 				IA::getInstance() -> setWorkshopBuilt(true);
-			}
+            }
+            
+            metalCost = Enumeration::BuildingCost::WorkshopMetalCost;
+            crystalCost = Enumeration::BuildingCost::WorkshopCrystalCost;
+
         break;
     }
     //Graphic engine, this should be in the switch (when models done)
@@ -190,9 +237,11 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
     if (teamData == Enumeration::Team::Human) {
         Human::getInstance() -> increaseHappiness(happiness);
         Human::getInstance() -> increaseCityLevel(cityLevel);
+        Human::getInstance() -> spendResources(metalCost, crystalCost);
     } else {
         IA::getInstance() -> increaseHappiness(happiness);
         IA::getInstance() -> increaseCityLevel(cityLevel);
+        IA::getInstance() -> spendResources(metalCost, crystalCost);
     }
 }
 

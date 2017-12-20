@@ -13,7 +13,10 @@ WallNode::~WallNode(){
 void WallNode::question() {
     //std::cout << Construyo una muralla << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
-    Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
-    IA::getInstance() -> getBuildings() -> buildBuilding(v, Enumeration::BuildingType::Wall, Enumeration::Team::IA);
-    IA::getInstance()-> increaseWallAmount();
+    if (IA::getInstance() -> getBuildings() -> isSolvent(Enumeration::BuildingCost::WallMetalCost, Enumeration::BuildingCost::WallCrystalCost, Enumeration::Team::IA)) {
+        Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
+        IA::getInstance() -> getBuildings() -> buildBuilding(v, Enumeration::BuildingType::Wall, Enumeration::Team::IA);
+    //Esto va en el constructor
+    //IA::getInstance()-> increaseWallAmount();
+    }
 }
