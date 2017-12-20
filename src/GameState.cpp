@@ -8,7 +8,9 @@ GameState::GameState() : State() {
     camera = new CameraController();
     hud = new Hud();
     nodeRootIA = new RootNode();
+<<<<<<< HEAD
     music = new Music();
+=======
 
     gamePaused = false;
 }
