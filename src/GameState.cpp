@@ -8,12 +8,9 @@ GameState::GameState() : State() {
     camera = new CameraController();
     hud = new Hud();
     nodeRootIA = new RootNode();
-<<<<<<< HEAD
     music = new Music();
-=======
 
     gamePaused = false;
->>>>>>> master
 }
 
 GameState::~GameState() {
@@ -76,27 +73,6 @@ void GameState::Input(){
 }
 
 void GameState::Update(){
-<<<<<<< HEAD
-    camera->Update(map, Game::Instance()->getWindow()->getDeltaTime());
-
-    Vector3<float> cam = camera->getCamera()->getCameraPosition();
-    Vector3<float> tar = camera->getCamera()->getTargetPosition();
-
-    //buildingManager->drawCube(map);
-    Human::getInstance() -> getBuildings() -> drawBuilding(map, Enumeration::BuildingType::House,  Enumeration::Team::Human);
-    if(!unitDone){
-        Vector3<float> *vectorData = new Vector3<float>(200, 200, 200);
-        Enumeration::UnitType unitData;
-        unitData.unitClass = Enumeration::UnitType::Class::Ranged;
-        unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardR;
-        Human::getInstance()->getUnits()->createTroop(vectorData, unitData);
-        this->unitDone = true;
-    }
-    //Sound try
-    music->updateSound();
-    
-    nodeRootIA -> question();
-=======
     //if (Game::Instance() -> getIO()->keyDown((char)27)) {
         //Escape is pressed
         //gamePaused = !gamePaused;
@@ -120,7 +96,6 @@ void GameState::Update(){
         
         nodeRootIA -> question();
     //}
->>>>>>> master
 }
 
 void GameState::Render(){
