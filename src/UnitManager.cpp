@@ -48,3 +48,76 @@ void UnitManager::selectTroop(Unit *troopData){
 void UnitManager::newOrder(){
 
 }
+
+//////PARTE DE LA ECONOMIA PARA EL FUTURO
+
+/**
+ * Checks if the player, either the human or the AI can afford to build a specific building 
+ */
+ /*
+bool BuildingManager::isSolvent(int metalCost, int crystalCost, Enumeration::Team team) {
+ int metalAmt = 0;
+ int crystalAmt = 0;
+ if (team == Enumeration::Team::Human) {
+  metalAmt = Human::getInstance() -> getMetalAmount();
+  crystalAmt = Human::getInstance() -> getCrystalAmount();
+ } else {
+  metalAmt = IA::getInstance() -> getMetalAmount();
+  crystalAmt = IA::getInstance() -> getCrystalAmount();
+  ////std::cout << metalAmt << "/" << metalCost << std::endl;
+ }
+ bool canPayMetal = metalAmt >= metalCost;
+ bool canPayCrystal = crystalAmt >= crystalCost;
+    
+    return (canPayMetal && canPayCrystal);
+}
+*/
+/**
+ * This method is responsible for managing calls to isSolvent() for the human, registering the type
+ * of the desired building and sending the aforementhioned method the prices. It has its own method
+ * to avoid cluttering the setBuildingMode() method, as it used to be there in the first place.
+ */
+ /*
+bool BuildingManager::checkCanPay(Enumeration::BuildingType type) {
+ //ESto esta aqui para no hacer clutter arriba
+ bool canPay = false;
+
+ //CHECK IF YOU CAN PAY THE BUILDING
+ switch(type){
+        case Enumeration::BuildingType::School:
+   canPay = isSolvent(Enumeration::BuildingCost::SchoolMetalCost, Enumeration::BuildingCost::SchoolCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Market:
+   canPay = isSolvent(Enumeration::BuildingCost::MarketMetalCost, Enumeration::BuildingCost::MarketCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Hospital:
+   canPay = isSolvent(Enumeration::BuildingCost::HospitalMetalCost, Enumeration::BuildingCost::HospitalCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Siderurgy:
+   canPay = isSolvent(Enumeration::BuildingCost::SiderurgyMetalCost, Enumeration::BuildingCost::SiderurgyCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Quarry:
+   canPay = isSolvent(Enumeration::BuildingCost::QuarryMetalCost, Enumeration::BuildingCost::QuarryCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::House:
+   canPay = isSolvent(Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Barrack:
+   canPay = isSolvent(Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Barn:
+   canPay = isSolvent(Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Workshop:
+   canPay = isSolvent(Enumeration::BuildingCost::WorkshopMetalCost, Enumeration::BuildingCost::WorkshopCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Wall:
+   canPay = isSolvent(Enumeration::BuildingCost::WallMetalCost, Enumeration::BuildingCost::WallCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Tower:
+   canPay = isSolvent(Enumeration::BuildingCost::TowerMetalCost, Enumeration::BuildingCost::TowerCrystalCost, Enumeration::Team::Human);
+        break;
+ }
+ return canPay;
+}
+*/

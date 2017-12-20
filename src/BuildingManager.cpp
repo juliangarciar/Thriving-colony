@@ -10,7 +10,7 @@ BuildingManager::BuildingManager(){
     buildingMode = false;
     gridAlignment = 50;
 	buildingLayer = new SceneNode();
-	buildings = new std::vector<Building*>();
+	buildings = new std::map<int, Building*>();
 	tempBuilding = NULL;
 }
  
@@ -23,19 +23,28 @@ BuildingManager::~BuildingManager(){
 void BuildingManager::setBuildingMode(Enumeration::BuildingType type){
 	if (!buildingMode){
 		buildingMode = true;
-		tempBuilding = new Building(buildingLayer, type, new Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+		tempBuilding = new Building(0, buildingLayer, type, new Vector3<float>(0, 0, 0), Enumeration::Team::Human);
 	}
 }
 
-int BuildingManager::getHoverBuilding(){
-	//Game *g = Game::Instance();
+void BuildingManager::testRaycastCollisions(){
 	if (!buildingMode) {
-		SceneNode *collision = buildingLayer -> getNodeCollision(Game::Instance() -> getCursor());
-		if (collision != NULL){
-			return collision->getSceneNode()->getID();
-		}
+		currentCollision = buildingLayer -> getNodeCollision(Game::Instance() -> getCursor());
+	}
+}
+
+int BuildingManager::getCollisionID(){
+	if (currentCollision != NULL){
+		return currentCollision->getSceneNode()->getID();
 	}
 	return -1;
+}
+
+std::string BuildingManager::getCollisionName(){
+	if (currentCollision != NULL){
+		return currentCollision->getSceneNode()->getName();
+	}
+	return NULL;
 }
 
 void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _type, Enumeration::Team _team){
@@ -51,15 +60,17 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
         float y = roundf(xyzPointCollision.y / gridAlignment) * gridAlignment;
         float z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
 
-		tempBuilding -> getModel() -> getModel() -> setPosition(core::vector3df(x,y,z)); //ToDo: esto es irrlicht
+        tempBuilding -> getModel() -> setPosition(Vector3<float>(x, y, z));
+
+        //std::cout << tempBuilding -> getModel() -> getPosition() << std::endl;
 		tempBuilding -> getHitbox() -> setPosition(tempBuilding -> getModel() ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es irrlicht
 
 		/* 
 		* Look if there is any other building built there
 		*/
 		bool collision = false;
-		for (int i = 0; i < buildings -> size() && !collision; i++){
-			collision = buildings -> at(i) -> getHitbox() -> intersects(*tempBuilding->getHitbox());
+		for (std::map<int,Building*>::iterator it = buildings->begin(); it != buildings->end() && !collision; ++it){
+			collision = it -> second -> getHitbox() -> intersects(*tempBuilding->getHitbox());
 		}
 		if (collision){
 			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
@@ -83,17 +94,22 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
 
 void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
 	if(_type == Enumeration::BuildingType::Tower) {
-		buildings->push_back(new Tower(buildingLayer, pos, _team));
+		int id = std::rand();
+		buildings->insert(std::pair<int,Building*>(id, new Tower(id, buildingLayer, pos, _team)));
+		//buildings->push_back(
 		return;
     }
 	if (_team == Enumeration::Team::IA){
-		buildings->push_back(new Building(buildingLayer, _type, pos, _team));
+		int id = std::rand();
+		buildings->insert(std::pair<int,Building*>(id, new Building(id, buildingLayer, _type, pos, _team)));
 	} else {
-		buildings -> push_back(tempBuilding);
+		int id = std::rand();
+		tempBuilding->getModel()->setID(id);
+		buildings->insert(std::pair<int,Building*>(id, tempBuilding));
 	}
 }
 
-std::vector<Building*>* BuildingManager::getBuildings() {
+std::map<int, Building*>* BuildingManager::getBuildings() {
 	return buildings;
 }
 

@@ -1,6 +1,7 @@
 #ifndef VECTOR2_H
 #define VECTOR2_H
 
+#include <iostream>
 #include <irrlicht.h>
 
 #define PI 3.14159265
@@ -30,5 +31,10 @@ class Vector2 {
         
     private:
 };
+
+template<class T> inline std::ostream& operator<<(std::ostream& out, const Vector2<T>& val){
+    out << "x: " << val.x << " y " << val.y;
+    return out;
+}
 
 #endif

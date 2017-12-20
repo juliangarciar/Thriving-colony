@@ -135,10 +135,10 @@ bool Player::getDeployedTroops() {
     return deployedTroops;
 }
 
-BuildingManager* Player::getBuildings() {
+BuildingManager* Player::getBuildingManager() {
     return buildings;
 }
-UnitManager* Player::getUnits(){
+UnitManager* Player::getUnitManager(){
     return units;
 }
 /*
