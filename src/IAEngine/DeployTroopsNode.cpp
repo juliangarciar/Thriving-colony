@@ -1,5 +1,5 @@
 #include "DeployTroopsNode.h"
-#include "../IA.h"
+#include "../Game.h"
 
 DeployTroopsNode::DeployTroopsNode(Node *fatherPnt) : Node() {
     father = fatherPnt;
@@ -13,5 +13,5 @@ DeployTroopsNode::~DeployTroopsNode(){
 void DeployTroopsNode::question() {
     std::cout << "Despliego mis tropas para defender" << std::endl;
     //ToDo: Desplegar tropas
-    IA::getInstance()-> deployTroops();
+    Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::DeployTroopsIA);
 }

@@ -1,5 +1,5 @@
 #include "CloseDoorsNode.h"
-#include "../IA.h"
+#include "../Game.h"
 
 CloseDoorsNode::CloseDoorsNode(Node *fatherPnt) : Node() {
     father = fatherPnt;
@@ -13,5 +13,5 @@ CloseDoorsNode::~CloseDoorsNode(){
 void CloseDoorsNode::question() {
     std::cout << "Cierro las puertas" << std::endl;
     //ToDo: Cerrar puertas
-    IA::getInstance()-> closeDoors();
+    Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::CloseDoorsIA);
 }

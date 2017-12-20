@@ -30,11 +30,17 @@ class Enumeration {
         };
 
         enum EventType {
-            Attacking,
-            BeingAttacked,
-            DeployTroops,
-            RetractTroops,
-            StopBeingAttack
+            //IA
+            CloseDoorsIA,
+            DeployTroopsIA,
+            OpenDoorsIA,
+            RetractTroopsIA,
+
+            //Human
+            CloseDoorsHuman,
+            DeployTroopsHuman,
+            OpenDoorsHuman,
+            RetractTroopsHuman,
         }; 
 
         enum idGUI {
@@ -66,6 +72,7 @@ class Enumeration {
                 Ranged,
                 Melee
             };
+
             enum SubClass
             {
                 StandardR,
@@ -76,6 +83,7 @@ class Enumeration {
                 AdvancedM,
                 Idol
             };
+
             Class unitClass;
             SubClass unitSubClass;
         };

@@ -1,5 +1,5 @@
 #include "RetractTroopsNode.h"
-#include "../IA.h"
+#include "../Game.h"
 
 RetractTroopsNode::RetractTroopsNode(Node *fatherPnt) : Node() {
     father = fatherPnt;
@@ -13,5 +13,5 @@ RetractTroopsNode::~RetractTroopsNode(){
 void RetractTroopsNode::question() {
     std::cout << "Me retiro" << std::endl;
     //ToDo: Retirar tropas tropas
-    IA::getInstance()-> retractTroops();
+    Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::RetractTroopsIA);
 }
