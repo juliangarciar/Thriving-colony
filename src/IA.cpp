@@ -3,6 +3,8 @@
 
 IA::IA() : Player() {
     tree = new BehaviourTree();
+
+    units = new UnitManager(Enumeration::Team::IA);
 }
 
 IA::~IA() {
@@ -35,9 +37,16 @@ Vector3<float>* IA::determinatePositionBuilding() {
 
     // If it is the first building start always on the same position
     // ToDo: como el primer edificio va a ser el centro de mandos que ya va a estar
-    // construido, esto no haria falta
+    // construido, esto no haria falta. La ciudad empieza tambien con una cantera.
     if (b -> size() == 0) {
-        v = new Vector3<float>(1600, 300, 1500);
+        /**
+         * These coordinates determine the position of the main building
+         * the y component of it is determined based on the map
+         */
+        float startingX = 2000;
+        float startingZ = 2000;
+        v = new Vector3<float>(startingX, 0, startingZ);
+        v -> y = Game::Instance() -> getGameState() ->getMap() -> getY(v -> x, v -> z);
     } else {
 
         //When there are some buildings

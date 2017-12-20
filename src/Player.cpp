@@ -29,17 +29,13 @@ Player::Player() {
 
     //ToDo: Dejar asi o solo un ejercito???
     //      Depende de como vaya a quedarse la IA de combate
-    troops = 0;
     buildings = new BuildingManager;
-    units = new UnitManager(Enumeration::Team::Human);
     //Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DeployTroops, deployTroops);
     //Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::RetractTroops, retractTroops);
 }
 
 Player::~Player() {
-    //delete melees;
-    //delete rangeds;
-    delete troops;
+    delete units;
     delete buildings;
 }
 
@@ -74,7 +70,7 @@ int Player::getCitizens() {
 }
 
 int Player::getArmySize() {
-    return troops->size();
+    return units -> getTotalTroops() -> size();
 }
 
 int Player::getMeleeAmount() {
@@ -142,7 +138,7 @@ BuildingManager* Player::getBuildings() {
     return buildings;
 }
 UnitManager* Player::getUnits(){
-    return this->units;
+    return units;
 }
 /*
 * SETTERS
@@ -247,8 +243,9 @@ void Player::retractTroops() {
     deployedTroops = false;
 }
 
+//ToDo: las tropas no deberian ir en unit manager?
 std::vector<Unit*>* Player::getTroops() {
     //ToDo: Devolver tropas
     //TODO al cuadrado: Decidir como va a ser lo de las tropas   
-    return troops;
+    return units -> getTotalTroops();
 }

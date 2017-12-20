@@ -11,8 +11,7 @@ TowerNode::~TowerNode(){
 }
 
 void TowerNode::question() {
-    //std::cout << Construyo un torre << std::endl;
-    //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
+    std::cout << "Construyo un torre" << std::endl;
     Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
     IA::getInstance() -> getBuildings() -> buildBuilding(v, Enumeration::BuildingType::Tower, Enumeration::Team::IA);
     IA::getInstance() -> increaseTowerAmount();

@@ -11,7 +11,7 @@ CloseDoorsNode::~CloseDoorsNode(){
 }
 
 void CloseDoorsNode::question() {
-    //std::cout << Cierro las puertas << std::endl;
+    std::cout << "Cierro las puertas" << std::endl;
     //ToDo: Cerrar puertas
     IA::getInstance()-> closeDoors();
 }

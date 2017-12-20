@@ -20,10 +20,10 @@ BuildingManager::~BuildingManager(){
 	delete buildings;
 }
 
-void BuildingManager::setBuildingMode(){
+void BuildingManager::setBuildingMode(Enumeration::BuildingType type){
 	if (!buildingMode){
 		buildingMode = true;
-		tempBuilding = new Building(buildingLayer, Enumeration::BuildingType::House, new Vector3<float>(0, 0, 0), false);
+		tempBuilding = new Building(buildingLayer, type, new Vector3<float>(0, 0, 0), Enumeration::Team::Human);
 	}
 }
 
@@ -67,7 +67,7 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
 			); //ToDo: esto es fachada
 		} else {
 			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
-				tempBuilding -> getModel() -> getModel() -> getMesh(), video::SColor(255,255,255,255)
+				tempBuilding -> getModel() -> getModel() -> getMesh(), tempBuilding -> getColor()
 			); //ToDo: esto es fachada
 			/*
 			* If there is no collision and the player press left button of the mouse,
@@ -81,46 +81,16 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
     }
 }
 
-void BuildingManager::buildBuilding(int hitPoints, Vector3<float>* pos, Enumeration::BuildingType _type, bool _team) {
-	if (_team == false) {
-	    tempBuilding = new Building(buildingLayer, Enumeration::BuildingType::House, new Vector3<float>(0, 0, 0), false);
-		tempBuilding -> getModel() -> getModel() -> setPosition(core::vector3df(1600,300,1450)); //ToDo: esto es fachada
-		Game::Instance() -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
-			tempBuilding -> getModel() -> getModel() -> getMesh(), video::SColor(255,255,255,255)
-		); //ToDo: Esto es fachada
-	}
-	
-	switch (_type) {
-        case Enumeration::BuildingType::Barn:
-			if (_team==true) {
-				Human::getInstance() -> setBarnBuilt(true);
-			} else {
-				IA::getInstance() -> setBarnBuilt(true);
-			}
-        break;
-        
-        case Enumeration::BuildingType::Barrack:
-            if (_team==true) {
-				Human::getInstance() -> setBarrackBuilt(true);
-			} else {
-				IA::getInstance() -> setBarrackBuilt(true);
-			}
-        break;
-
-        case Enumeration::BuildingType::Workshop:
-            if (_team==true) {
-				Human::getInstance() -> setWorkshopBuilt(true);
-			} else {
-				IA::getInstance() -> setWorkshopBuilt(true);
-			}
-        break;
-
-		case Enumeration::BuildingType::Tower:
-			buildings->push_back(tempBuilding);
-			return;
-		break;
+void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
+	if(_type == Enumeration::BuildingType::Tower) {
+		buildings->push_back(new Tower(buildingLayer, pos, _team));
+		return;
     }
-	buildings -> push_back(tempBuilding);
+	if (_team == Enumeration::Team::IA){
+		buildings->push_back(new Building(buildingLayer, _type, pos, _team));
+	} else {
+		buildings -> push_back(tempBuilding);
+	}
 }
 
 std::vector<Building*>* BuildingManager::getBuildings() {

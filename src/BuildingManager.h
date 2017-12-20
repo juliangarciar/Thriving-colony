@@ -20,7 +20,7 @@ class BuildingManager {
 		int getHoverBuilding();
 		std::vector<Building*>* getBuildings();
 
-		void setBuildingMode();
+		void setBuildingMode(Enumeration::BuildingType);
         void drawBuilding(Terrain *terrain, Enumeration::BuildingType, Enumeration::Team);
 		void buildBuilding(Vector3<float>*, Enumeration::BuildingType, Enumeration::Team);
 

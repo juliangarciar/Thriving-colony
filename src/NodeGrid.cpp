@@ -1,6 +1,9 @@
 #include <limits>
 #include "NodeGrid.h"
 
+// NO FACHADA??? using namespace irr
+
+// NO FACHADA??? irr::scene::ISceneManager -> scene::ISceneManager
 nodeGrid::nodeGrid(int x, int y, int z, irr::scene::ISceneManager *smgrData)
 {
     posX = x;
@@ -17,8 +20,11 @@ nodeGrid::nodeGrid(int x, int y, int z, irr::scene::ISceneManager *smgrData)
     diag = false;
     if (cube)
     {
+        // NO FACHADA??? irr::core::vector3df -> vector3
         cube -> setPosition(irr::core::vector3df(x * 20.f, z * 20.f, y * 20.f));
+        // NO FACHADA??? irr::video::EMF_LIGHTING -> video::EMF_LIGHTING
         cube -> setMaterialFlag(irr::video::EMF_LIGHTING, false);
+        // NO FACHADA??? irr::video::Scolor(0,0,255,255) -> videoSColor(0,0,255,255)
         smgr -> getMeshManipulator() -> setVertexColors(cube -> getMesh(), irr::video::SColor(0, 0, 255, 255));
     }
 }

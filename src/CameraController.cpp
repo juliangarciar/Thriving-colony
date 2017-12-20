@@ -11,13 +11,13 @@ CameraController::CameraController(){
 
 	// Cam movement initializations
 	direction = 0;
-	camSpeed = 500.f;
+	camSpeed = 700.0f; // Esto estaba a 500
 	screenMarginV = 50;
 	screenMarginH = 60;
     movementMode = false;
 
 	// Cam zoom initializations
-	camHeight = 750.f;
+	camHeight = 750.0f;
 	minZoom = 500;
 	maxZoom = 1000;
     zoomMode = false;
