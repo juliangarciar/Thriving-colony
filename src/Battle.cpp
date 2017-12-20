@@ -85,8 +85,8 @@ void Battle::fetchBuildings() {
     iaBuildings -> clear();
 
     //Fetch the buildings vector from each player
-    std::map<int, Building*> *humanCity = Human::getInstance() -> getBuildings() -> getBuildings();
-    std::map<int, Building*> *iaCity = IA::getInstance() -> getBuildings() -> getBuildings();
+    std::map<int, Building*> *humanCity = Human::getInstance() -> getBuildingManager() -> getBuildings();
+    std::map<int, Building*> *iaCity = IA::getInstance() -> getBuildingManager() -> getBuildings();
 
     // Check every unit in the human army, if any is in range of the battle, add it to the vector
     for (int i = 0; i < humanCity -> size(); i++) {

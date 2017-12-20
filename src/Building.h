@@ -12,8 +12,9 @@ class Building : public Entity {
         Building(int id, SceneNode *parent, Enumeration::BuildingType buildingData, Vector3<float> *vectorData, Enumeration::Team teamData);
         virtual ~Building();
 
+        int getType();
     private:
-        Enumeration::BuildingType type;
+        int type;
         
 };
 

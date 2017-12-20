@@ -67,10 +67,9 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
 		* Look if there is any other building built there
 		*/
 		bool collision = false;
-		for (std::map<int,Building*>::iterator it = buildings.begin(); it != buildings.end(); ++it){
-			collision = buildings -> at(i) -> getHitbox() -> intersects(*tempBuilding->getHitbox());
+		for (std::map<int,Building*>::iterator it = buildings->begin(); it != buildings->end() && !collision; ++it){
+			collision = it -> second -> getHitbox() -> intersects(*tempBuilding->getHitbox());
 		}
-		for (int i = 0; i < buildings -> size() && !collision; i++)
 		if (collision){
 			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
 				tempBuilding -> getModel() -> getModel() -> getMesh(), video::SColor(255,0,0,255)

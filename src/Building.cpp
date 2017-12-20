@@ -188,7 +188,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
         model->getModel()->getMesh(), video::SColor(r, g, b, 125)
     ); //ToDo: esto es fachada 
 
-    this->type = buildingData;
+    this->type = (int)buildingData;
     this->position = pos;
     if (teamData == Enumeration::Team::Human) {
         Human::getInstance() -> increaseHappiness(happiness);
@@ -197,8 +197,13 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
         IA::getInstance() -> increaseHappiness(happiness);
         IA::getInstance() -> increaseCityLevel(cityLevel);
     }
+    std::cout << this->type << std::endl;
 }
 
 Building::~Building() {
     
 }
+
+int Building::getType(){
+    return this->type;
+} 
