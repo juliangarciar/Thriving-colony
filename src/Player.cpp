@@ -219,6 +219,16 @@ void Player::increaseSiegeAmount() {
     increaseArmySize();
 }
 
+void Player::increaseCatapultAmount() {
+    catapultAmount ++;
+    increaseArmySize();
+}
+
+void Player::increaseRamAmount() {
+    ramAmount ++;
+    increaseArmySize();
+}
+
 void Player::increaseBuildableRange() {
     //ToDo: equilibrar la cantidad de aumento
     buildableRange *= 1.5;

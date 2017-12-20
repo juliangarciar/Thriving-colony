@@ -109,7 +109,7 @@ class Enumeration {
             MeleeFootmenMetalCost = 125,
             MeleeFootmenCrystalCost = 0,
 
-            RangeFootmenMetalCost = 150,
+            RangedFootmenMetalCost = 150,
             RangedFootmenCrystalCost = 0,
 
             MountedMeleeMetalCost = 235,

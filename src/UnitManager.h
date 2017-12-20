@@ -6,6 +6,7 @@
 #include "Ranged.h"
 #include "Melee.h"
 class UnitManager{
+    // POR QUE ESTA CLASE ESTA DEL REVES WTF?
     private:
         std::vector<Unit*> *totalInHallTroops;
         std::vector<Unit*> *totalInMapTroops;
@@ -27,6 +28,9 @@ class UnitManager{
         void createTroop(Vector3<float> *vectorData, Enumeration::UnitType unitData);                     
         void selectTroop(Unit *troopData);      //Call for selecting a troop
         void newOrder();                        //Order for selected troop
+
+        bool isSolvent(int, int, Enumeration::Team);
+        bool checkCanPay(Enumeration::UnitType::SubClass);
 };
 
 #endif

@@ -84,6 +84,9 @@ class Player {
         static void closeDoors();
         static void openDoors();
 
+        void increaseRamAmount();
+        void increaseCatapultAmount();
+
         void increaseBuildableRange();
 
         void spendResources(int, int);
