@@ -12,8 +12,8 @@ Tab::~Tab(){
     tab = NULL;
 }
 
-void Tab::addChild(Button *button){
-    tab->addChild(button->getButton());
+void Tab::addChild(GUIElement *elem){
+    tab->addChild(elem->getGUIElement());
 }
 
 const wchar_t *Tab::getText(){
@@ -24,6 +24,6 @@ int Tab::getID(){
     return tab->getID();
 }
 
-gui::IGUITab *Tab::getTab(){
+gui::IGUIElement *Tab::getGUIElement(){
     return tab;
 }

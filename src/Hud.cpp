@@ -42,7 +42,7 @@ Hud::Hud() {
     createMonster = new Button(Rect2D<int>(10, 90, 200, 30), Enumeration::idGUI::GUI_ID_CREATE_MONSTER_BUTTON, L"Crear ente.", L"Probando");
     createMachine = new Button(Rect2D<int>(10, 10, 200, 30), Enumeration::idGUI::GUI_ID_CREATE_MACHINE_BUTTON, L"Crear maquina de asedio.", L"Probando");
 
-    tabs = new Panel(Rect2D<int>(300, 300, 400, 200), 11);
+    tabs = new TabPanel(Rect2D<int>(300, 300, 400, 200), 11);
 
     mainBuildingMenu = tabs->addTab(L"Main Building", Enumeration::BuildingType::MainBuilding);
     barnMenu = tabs->addTab(L"Barn", Enumeration::BuildingType::Barn);
@@ -76,6 +76,12 @@ Hud::Hud() {
     barnMenu->addChild(createMountedRanged);
     barnMenu->addChild(createMonster);
     workshopMenu->addChild(createMachine);
+
+    //ToDo: fachada
+    hallTroopText = new Text(Rect2D<int>(10, 10, 100, 15), L"Tropas en el ayuntamiento");
+    mainBuildingMenu->addChild(hallTroopText);
+    hallTroopList = new ListBox(Rect2D<int>(10, 40, 350, 150));
+    mainBuildingMenu->addChild(hallTroopList);
 
     tabs->disable();
 }

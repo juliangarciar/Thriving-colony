@@ -1,44 +1,44 @@
-#include "Panel.h"
+#include "TabPanel.h"
 #include <GraphicEngine/Window.h>
 
 using namespace irr;
 
-Panel::Panel(Rect2D<int> dimPos, int id){
+TabPanel::TabPanel(Rect2D<int> dimPos, int id){
     Window *sc = Window::Instance();
     ctrl = sc->getGUIEnvironment()->addTabControl(dimPos.getRect2D(), 0, true, true, id);
 }
 
-Panel::~Panel(){
+TabPanel::~TabPanel(){
     delete ctrl;
     ctrl = NULL;
 }
 
-Tab *Panel::addTab(const wchar_t *text, int id){
+Tab *TabPanel::addTab(const wchar_t *text, int id){
     //std::cout << ctrl << std::endl;
     gui::IGUITab *tab = ctrl->addTab(text, id);
     Tab *t = new Tab(tab);
     return t;
 } 
 
-Tab *Panel::getTab(int id){
+Tab *TabPanel::getTab(int id){
     return new Tab(ctrl->getTab(id)); 
 }
 
-void Panel::enable(){
+void TabPanel::enable(){
    ctrl->setEnabled(true);
    ctrl->setVisible(true);
 }
 
-void Panel::disable(){
+void TabPanel::disable(){
    ctrl->setEnabled(false);
    ctrl->setVisible(false);
 }
 
-void Panel::changeActiveTab(int id){
+void TabPanel::changeActiveTab(int id){
    ctrl->setActiveTab(id);
 }
 
-gui::IGUITabControl *Panel::getTabControl(){
+gui::IGUIElement *TabPanel::getGUIElement(){
     return ctrl;
 }
  
