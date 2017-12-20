@@ -22,6 +22,15 @@ BehaviourTree* IA::getTree() {
     return tree;
 }
 
+void IA::update() {
+    if (updateTimer <= 0) {
+        gainResources();
+        updateTimer = 1;
+    } else {
+        updateTimer -= Window::Instance() -> getDeltaTime();
+    }
+}
+
 /*
 * Return a position of the map where there is nothing built
 * Goes over the vector of buildings looking up, right, down and left of every building built

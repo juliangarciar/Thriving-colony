@@ -20,6 +20,9 @@ class Player {
         int getMetalProduction();
         int getCrystalProduction();
 
+        int getMetalAmount();
+        int getCrystalAmount();
+
         int getCitizens();
 
         int getArmySize();
@@ -55,7 +58,7 @@ class Player {
         void setWorkshopBuilt(bool);
 
         /////////////////////////////////
-        void update();
+        virtual void update() = 0;
 
         void gainResources();
 
@@ -117,8 +120,7 @@ class Player {
         static bool deployedTroops;
         bool closedDoors;
         
-        //Melee **melees;
-        //Ranged **rangeds;
+        //Esto ya se quitara esta mientras no se depure el codigo
         std::vector<Unit*> *troops;
         
         BuildingManager *buildings;

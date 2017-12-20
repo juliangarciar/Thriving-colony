@@ -28,6 +28,9 @@ class GameState : public State {
         CameraController *camera;
         Terrain *map;
         Hud * hud;
+        // ESTO NO VA A QUI POR QUE ESTA AQUIIIIIIIIIIIIIIIIIIIII
+        // PERO YA QUE ESTAMOS VOY A ECHAR MAS SPAGUETTI LLAMADLE ILL CHEFF RAFAELO
+        float iaUpdateTimer;
         RootNode *nodeRootIA;
         //Try for creating units, this wont be here
         bool unitDone = false;

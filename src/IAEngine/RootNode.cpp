@@ -7,7 +7,6 @@
 #include <iostream>
 
 RootNode::RootNode() : Node() {
-    clock = 200;
     father = 0;
     children = new Node*[3];
     children[0] = new AttackNode(this);
@@ -21,21 +20,16 @@ RootNode::~RootNode(){
 }
 
 void RootNode::question() {
-    if (clock == 0) {
-        clock = 100;
-        //First branch: Attacking the enemy
-        if (tree -> readyToAttack()) {
-            children[0] -> question();
-        } else  {
-            //Second branch: Being attacked
-            if (tree -> getUnderAttack()){
-                children[1] -> question();
-            } else {
-                //Third branch: Peaceful, develop the city
-                children[2] -> question();
-            }
+    //First branch: Attacking the enemy
+    if (tree -> readyToAttack()) {
+        children[0] -> question();
+    } else  {
+        //Second branch: Being attacked
+        if (tree -> getUnderAttack()){
+            children[1] -> question();
+        } else {
+            //Third branch: Peaceful, develop the city
+            children[2] -> question();
         }
-    } else {
-        clock--;
     }
 }

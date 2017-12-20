@@ -1,5 +1,6 @@
 #include "Player.h"
 //#include "Game.h"
+#include "GraphicEngine/Window.h"
 #include "Tower.h"
 
 bool Player::deployedTroops = false;
@@ -7,7 +8,7 @@ bool Player::deployedTroops = false;
 #define RESOURCEPRODUCTION 10
 
 Player::Player() {
-    updateTimer = 120;
+    updateTimer = 1;
 
     happiness = 0;
     cityLevel = 10;
@@ -15,7 +16,8 @@ Player::Player() {
     siderurgyAmount = 1;
     quarryAmount= 0;
 
-    metalAmount = 0;
+    //ToDo: creo que se dijo que el player empezaba con 500 o con 700 
+    metalAmount = 500;
     crystalAmount = 0;
 
     citizens = 0;
@@ -32,9 +34,6 @@ Player::Player() {
     barnBuilt = false;
     workshopBuilt = false;
 
-    //ToDo: Dejar asi o solo un ejercito???
-    //      Depende de como vaya a quedarse la IA de combate
-    //troops = 0;
     buildings = new BuildingManager;
     units = new UnitManager(Enumeration::Team::Human);
     //Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DeployTroops, deployTroops);
@@ -42,19 +41,12 @@ Player::Player() {
 }
 
 Player::~Player() {
-    //delete melees;
-    //delete rangeds;
     delete troops;
     delete buildings;
 }
 
 void Player::update() {
-    if (updateTimer <= 0) {
-        gainResources();
-    } else {
-        updateTimer --;
-    }
-    std::cout<<"Metal: " << metalAmount << " - Crystal: " << crystalAmount <<std::endl;
+
 }
 
 //==========
@@ -231,6 +223,7 @@ void Player::increaseTowerAmount() {
 }
 
 //Es necesario?
+//por ahora si
 bool Player::losingBattle() {
     //ToDo: calcular si estas perdiendo tu la  batalla
     return false;
@@ -264,4 +257,12 @@ std::vector<Unit*>* Player::getTroops() {
     //ToDo: Devolver tropas
     //TODO al cuadrado: Decidir como va a ser lo de las tropas   
     return troops;
+}
+
+int Player::getMetalAmount() {
+    return metalAmount;
+}
+
+int Player::getCrystalAmount() {
+    return crystalAmount;
 }

@@ -12,7 +12,6 @@ class RootNode : public Node {
         virtual void question();
 
     private:
-        int clock;
 };
 
 #endif

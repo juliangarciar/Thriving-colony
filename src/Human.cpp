@@ -35,3 +35,12 @@ Human* Human::getInstance() {
     return instance;
 }
 
+void Human::update() {
+    if (updateTimer <= 0) {
+        gainResources();
+        updateTimer = 1;
+    } else {
+        updateTimer -= Window::Instance() -> getDeltaTime();
+    }
+}
+

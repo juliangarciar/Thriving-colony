@@ -79,7 +79,7 @@ class Enumeration {
             HomeMetalCost = 100,
             HomeCrystalCost = 0,
 
-            BarackMetalCost = 500,
+            BarrackMetalCost = 500,
             BarrackCrystalCost = 0,
 
             BarnMetalCost = 675,

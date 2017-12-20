@@ -24,6 +24,8 @@ class BuildingManager {
         void drawBuilding(Terrain *terrain, Enumeration::BuildingType, Enumeration::Team);
 		void buildBuilding(Vector3<float>*, Enumeration::BuildingType, Enumeration::Team);
 
+		bool isSolvent(int, int, Enumeration::Team);
+		bool checkCanPay(Enumeration::BuildingType);
 	private:
 		SceneNode *buildingLayer;
 		//std::vector< Box3D<float> > *buildings;

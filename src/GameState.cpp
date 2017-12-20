@@ -7,6 +7,9 @@ GameState::GameState() : State() {
     camera = new CameraController();
     map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
     hud = new Hud();
+
+    //IL PICCOLO SPAGUETTIO
+    iaUpdateTimer = 1;
     nodeRootIA = new RootNode();
 
     gamePaused = false;
@@ -32,7 +35,7 @@ void GameState::Init(){
 }
 
 void GameState::Input(){
-    if (gamePaused) {
+    //if (gamePaused) {
         hud->getHUDEvents();
 
         camera->Move(Game::Instance()->getIO(), Game::Instance()->getCursor());
@@ -49,15 +52,16 @@ void GameState::Input(){
                 hud->showPopup(id);
             }
         }
-    }
+    //}
 }
 
 void GameState::Update(){
-    if (Game::Instance() -> getIO()->keyDown((char)27)) {
+    /*if (Game::Instance() -> getIO()->keyDown((char)27)) {
+        // El getKeyDown es el unico que va y va a la virule
         //Escape is pressed
         gamePaused = !gamePaused;
     }
-    if (gamePaused) {
+    if (gamePaused) {*/
         camera->Update(map, Game::Instance()->getWindow()->getDeltaTime());
 
         Vector3<float> cam = camera->getCamera()->getCameraPosition();
@@ -76,8 +80,17 @@ void GameState::Update(){
         }
         Human::getInstance() -> update();
         IA::getInstance() -> update();
-        nodeRootIA -> question();
-    }
+        
+        // ESTO VA EN EL UPDATE DE LA IA, PERO SI ME PONGO A CAMBIARLO DA ERRORES DE LINKADO
+        // ASI QUE LO VOY A DEJAR ASI QUE FUNCIONA Y YA SE VERA QUE PASA CON LA PICCOLA ITALIA
+        // HOGAR DEL SPAGUETIO
+        if (iaUpdateTimer <= 0) {
+            nodeRootIA -> question();
+            iaUpdateTimer = 1;
+        } else {
+            iaUpdateTimer -= Window::Instance() -> getDeltaTime();
+        }
+    //}
 }
 
 void GameState::Render(){
