@@ -41,11 +41,11 @@ void VeryHappyTree::question() {
                 /*if (tree -> needArmyInvestment()) {
                     //std::cout << "Ejercito" << std::endl;
                     children[3] -> question();
-                } else {
+                } else {*/
                     std::cout << "No hago nada" << std::endl;
                     // Ultima oportunidad
                     children[2] -> question();
-                }
+                /*}*/
             }
         }
     }
