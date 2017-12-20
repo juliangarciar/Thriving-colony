@@ -6,7 +6,11 @@
 class Tower : public Building {
     
     public:
+<<<<<<< HEAD
       Tower(Vector3<float> *vectorData, Enumeration::Team teamData);
+=======
+      Tower(SceneNode *parent, Vector3<float> *vectorData, bool teamData);
+>>>>>>> GraphicEngine
       virtual ~Tower();
     
     private:
