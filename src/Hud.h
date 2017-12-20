@@ -65,9 +65,12 @@ class Hud {
         Button *buttonCloseTab10;
         Button *buttonCloseTab11;
 
-        Button *createTroop1;
-        Button *createTroop2;
-        Button *createTroop3;
+        Button *createMelee;
+        Button *createRanged;
+        Button *createMountedMelee;
+        Button *createMountedRanged;
+        Button *createMonster;
+        Button *createMachine;
 };
 
 #endif

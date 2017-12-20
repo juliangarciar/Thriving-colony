@@ -39,7 +39,7 @@ void VeryHappyTree::question() {
             } else {
                 //Fourth branch: Army
                 /*if (tree -> needArmyInvestment()) {
-                    std::cout << "Ejercito" << std::endl;
+                    //std::cout << "Ejercito" << std::endl;
                     children[3] -> question();
                 } else {*/
                     //std::cout << "No hago nada" << std::endl;

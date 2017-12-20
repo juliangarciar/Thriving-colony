@@ -19,6 +19,12 @@ GameState::~GameState() {
 void GameState::Init(){
     map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
     map->setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
+
+    /*for (int i=0; i < 100; i++){
+        Model *m = new Model(std::rand());
+        m->setPosition(Vector3<float>(200,1800,200));
+        models.push_back(m);
+    }*/
 }
 
 void GameState::Input(){
@@ -62,6 +68,11 @@ void GameState::Update(){
     }
     
     nodeRootIA -> question();
+
+   /* for (int i=0; i < models.size(); i++){
+        models.at(i)->setPosition(Vector3<float>(models.at(i)->getPosition().x+1, models.at(i)->getPosition().y, models.at(i)->getPosition().z+1)); 
+        //std::cout << " i " << i << " data " << models.at(i)->getPosition() << std::endl;
+    }*/
 }
 
 void GameState::Render(){

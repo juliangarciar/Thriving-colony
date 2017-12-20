@@ -31,6 +31,9 @@ class GameState : public State {
         RootNode *nodeRootIA;
         //Try for creating units, this wont be here
         bool unitDone = false;
+
+
+        std::vector<Model*> models;
 };
 
 #endif

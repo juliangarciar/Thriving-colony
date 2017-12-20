@@ -197,7 +197,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
         IA::getInstance() -> increaseHappiness(happiness);
         IA::getInstance() -> increaseCityLevel(cityLevel);
     }
-    std::cout << this->type << std::endl;
+    //std::cout << this->type << std::endl;
 }
 
 Building::~Building() {

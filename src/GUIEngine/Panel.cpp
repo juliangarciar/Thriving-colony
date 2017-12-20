@@ -14,7 +14,7 @@ Panel::~Panel(){
 }
 
 Tab *Panel::addTab(const wchar_t *text, int id){
-    std::cout << ctrl << std::endl;
+    //std::cout << ctrl << std::endl;
     gui::IGUITab *tab = ctrl->addTab(text, id);
     Tab *t = new Tab(tab);
     return t;

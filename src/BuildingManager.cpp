@@ -60,7 +60,9 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
         float y = roundf(xyzPointCollision.y / gridAlignment) * gridAlignment;
         float z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
 
-		tempBuilding -> getModel() -> getModel() -> setPosition(core::vector3df(x,y,z)); //ToDo: esto es irrlicht
+        tempBuilding -> getModel() -> setPosition(Vector3<float>(x, y, z));
+
+        //std::cout << tempBuilding -> getModel() -> getPosition() << std::endl;
 		tempBuilding -> getHitbox() -> setPosition(tempBuilding -> getModel() ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es irrlicht
 
 		/* 
