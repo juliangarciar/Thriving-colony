@@ -31,7 +31,7 @@ Vector3<float>* IA::determinatePositionBuilding() {
     Vector3<float> *v = 0;
     bool found = false;
     bool occupied = false;
-    std::vector<Building*> *b = buildings -> getBuildings();
+    std::map<int, Building*> *b = buildings -> getBuildings();
 
     // If it is the first building start always on the same position
     // ToDo: como el primer edificio va a ser el centro de mandos que ya va a estar

@@ -55,8 +55,10 @@ class Enumeration {
 
             GUI_ID_QUIT_BUTTON,
             GUI_ID_CLOSE_PANEL_BUTTON,
+            
             GUI_ID_CREATE_TROOP_1_BUTTON,
-            GUI_ID_CREATE_TROOP_2_BUTTON
+            GUI_ID_CREATE_TROOP_2_BUTTON,
+            GUI_ID_CREATE_TROOP_3_BUTTON
         };
 
         //Special type, used to pass info to the UnitManager

@@ -11,7 +11,7 @@ HomeNode::~HomeNode(){
 }
 
 void HomeNode::question() {
-    std::cout << "Voy a invertir en casas" << std::endl;
+    //std::cout << "Voy a invertir en casas" << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
     Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
     IA::getInstance() -> getBuildings() -> buildBuilding(v, Enumeration::BuildingType::House, Enumeration::Team::IA);

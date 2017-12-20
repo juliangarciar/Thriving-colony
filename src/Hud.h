@@ -23,7 +23,12 @@ class Hud {
 
         void getHUDEvents();
     private:
-        Button *buttonBuilding;
+        Panel *tabs;
+
+        Tab *barrackMenu;
+        Tab *barnMenu;
+        Tab *workshopMenu;
+
         Button *buttonQuit;
         
         Button *buttonSchool;
@@ -40,13 +45,11 @@ class Hud {
         
         Button *buttonCloseTab1;
         Button *buttonCloseTab2;
+        Button *buttonCloseTab3;
 
         Button *createTroop1;
         Button *createTroop2;
-
-        Panel *tabs;
-        Tab *t1;
-        Tab *t2;
+        Button *createTroop3;
 };
 
 #endif

@@ -30,8 +30,12 @@ void GameState::Input(){
 
     Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
     if (Game::Instance()->getIO()->leftMousePressed()){
-        int id = Human::getInstance() -> getBuildings()->getHoverBuilding();
+        Human::getInstance() -> getBuildings()->testRaycastCollisions();
+        int id = Human::getInstance() -> getBuildings() -> getCollisionID();
         if (id != -1){
+            std::string name = Human::getInstance() -> getBuildings() -> getCollisionName();
+
+            std::cout << name << "\n";
            /* std::wstringstream o;
             o << "Has hecho click en: " << id;
             hud->getInfoButton()->setText(o.str().c_str());*/

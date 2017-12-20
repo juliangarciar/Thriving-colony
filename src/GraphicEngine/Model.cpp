@@ -25,19 +25,19 @@ Model::Model(SceneNode *parent, int id) {
     }
 
     parent->getSceneNode()->addChild(cubeNode);
-
-    /*scene::ISceneNode *n;
-	if ((n = w->getSceneCollisionManager()->getSceneNodeAndCollisionPointFromRay(ray, point, triangle, 0, node))){
-		std::cout << n->getID() << std::endl;
-		return SceneNode(n);
-	}
-
-	return SceneNode();*/
-} 
+}
 
 Model::~Model() {
     delete selector;
     delete cubeNode;
+}
+
+void Model::setID(int id){
+    cubeNode->setID(id);
+}
+
+void Model::setName(const wchar_t *name){
+    cubeNode->setName(core::stringw(name).c_str());
 }
 
 scene::IMeshSceneNode *Model::getModel(){
