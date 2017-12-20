@@ -3,6 +3,10 @@
 
 BehaviourTree::BehaviourTree() {
     happinessThreshold = 50;
+
+    marketMilestone = 150;
+    hospitalMilestone = 450;
+
     quarryMilestone = 300;
     mountedCreatureMilestone = 80;
     wallMilestone = 70;

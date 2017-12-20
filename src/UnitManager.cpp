@@ -92,7 +92,7 @@ bool UnitManager::checkCanPay(Enumeration::UnitType::SubClass type) {
     //ESto esta aqui para no hacer clutter arriba
     bool canPay = false;
     //CHECK IF YOU CAN PAY THE BUILDING
-    int foo = Enumeration::UnitType::StandardM;
+    
     switch(type){
     case Enumeration::UnitType::SubClass::StandardM:
         canPay = isSolvent(Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost, Enumeration::Team::Human);

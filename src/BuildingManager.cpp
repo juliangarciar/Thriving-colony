@@ -155,7 +155,7 @@ bool BuildingManager::isSolvent(int metalCost, int crystalCost, Enumeration::Tea
 	} else {
 		metalAmt = IA::getInstance() -> getMetalAmount();
 		crystalAmt = IA::getInstance() -> getCrystalAmount();
-		////std::cout << metalAmt << "/" << metalCost << std::endl;
+		std::cout << metalAmt << "/" << metalCost << std::endl;
 	}
 	bool canPayMetal = metalAmt >= metalCost;
 	bool canPayCrystal = crystalAmt >= crystalCost;
