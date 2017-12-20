@@ -181,14 +181,19 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
 
     //ToDo: Graphic engine, this should be in the switch (when models done)
     color = video::SColor(255, r, g, b); //ToDo: esto es fachada 
+    
     this->model = new Model(parent, id);
-
     Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
         model->getModel()->getMesh(), color
     ); //ToDo: esto es fachada 
+    this->model->getModel()->setPosition(pos->getVectorF()); //ToDo: esto es fachada
+    this->model->getModel()->setMaterialFlag(video::EMF_LIGHTING, false); //ToDo: esto es fachada
+
+    this->hitbox = new Box3D<float>(this -> model ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
 
     this->type = (int)buildingData;
     this->position = pos;
+
     if (teamData == Enumeration::Team::Human) {
         Human::getInstance() -> increaseHappiness(happiness);
         Human::getInstance() -> increaseCityLevel(cityLevel);
