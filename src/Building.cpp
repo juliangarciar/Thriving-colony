@@ -64,7 +64,7 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
 
             this->hpMax = 750;
             this->hp = 750;
-            happiness = 15;
+            happiness = 40;
             cityLevel = 5;
 
             metalCost = Enumeration::BuildingCost::HospitalMetalCost;
@@ -110,7 +110,7 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
 
             this->hpMax = 600;
             this->hp = 600;
-            happiness = 10;
+            happiness = 30;
             cityLevel = 5;
 
             metalCost = Enumeration::BuildingCost::MarketMetalCost;
@@ -167,7 +167,7 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
             
             this->hpMax = 550;
             this->hp = 550;
-            happiness = 5;
+            happiness = 20;
             cityLevel = 5;
 
             metalCost = Enumeration::BuildingCost::SchoolMetalCost;
