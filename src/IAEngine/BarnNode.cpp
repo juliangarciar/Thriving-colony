@@ -11,8 +11,8 @@ BarnNode::~BarnNode(){
 }
 
 void BarnNode::question() {
-    //std::cout << Construyo un establo << std::endl;
+    std::cout << "Construyo un establo" << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
     Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
-    IA::getInstance() -> getBuildings() -> buildBuilding(v, Enumeration::BuildingType::Barn, Enumeration::Team::IA);
+    IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barn, Enumeration::Team::IA);
 }

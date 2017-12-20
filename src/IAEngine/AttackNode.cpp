@@ -19,7 +19,7 @@ AttackNode::~AttackNode(){
 }
 
 void AttackNode::question() {
-    //std::cout << "Voy a atacar" << std::endl;
+    std::cout << "Voy a atacar" << std::endl;
     //To Do: Attack the enemy
     if (IA::getInstance() -> getDeployedTroops()) {
         children[0] -> question();

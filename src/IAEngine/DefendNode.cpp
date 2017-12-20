@@ -20,7 +20,7 @@ DefendNode::~DefendNode(){
 }
 
 void DefendNode::question() {
-    //std::cout << "Me atacan" << std::endl;
+    std::cout << "Me atacan" << std::endl;
     //To Do:defend
     if (IA::getInstance() -> getClosedDoors()) {
         children[0] -> question();

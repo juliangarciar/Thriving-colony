@@ -3,6 +3,8 @@
 
 IA::IA() : Player() {
     tree = new BehaviourTree();
+
+    units = new UnitManager(Enumeration::Team::IA);
 }
 
 IA::~IA() {
@@ -31,7 +33,7 @@ Vector3<float>* IA::determinatePositionBuilding() {
     Vector3<float> *v = 0;
     bool found = false;
     bool occupied = false;
-    std::vector<Building*> *b = buildings -> getBuildings();
+    std::map<int, Building*> *b = buildings -> getBuildings();
 
     // If it is the first building start always on the same position
     // ToDo: como el primer edificio va a ser el centro de mandos que ya va a estar
@@ -50,12 +52,12 @@ Vector3<float>* IA::determinatePositionBuilding() {
         //When there are some buildings
         Vector3<float> *v2 = 0;
         Vector3<float> *v3 = 0;
-        for (int i = 0; i < b -> size() && found == false; i++) {
-            v2 = b -> at(i) -> getPosition();
+        for (std::map<int,Building*>::iterator it = b->begin(); it != b->end(); ++it){
+            v2 = it -> second -> getPosition();
             occupied = false;
             v = new Vector3<float>(v2 -> x, v2 -> y, v2 -> z + 100);
             for (int j = 0; j < b -> size() && occupied == false; j++) {
-                v3 = b -> at(j) -> getPosition();
+                v3 = it -> second -> getPosition();
                 if (v3 -> x == v -> x && v3 -> z == v -> z) {
                     occupied = true;
                 }
@@ -66,7 +68,7 @@ Vector3<float>* IA::determinatePositionBuilding() {
                 v = new Vector3<float>(v2 -> x + 100, v2 -> y, v2 -> z);
                 occupied = false;
                 for (int j = 0; j < b -> size() && occupied == false; j++) {
-                    v3 = b -> at(j) -> getPosition();
+                    v3 = it -> second -> getPosition();
                     if (v3 -> x == v -> x && v3 -> z == v -> z) {
                         occupied = true;
                     }
@@ -77,7 +79,7 @@ Vector3<float>* IA::determinatePositionBuilding() {
                     v = new Vector3<float>(v2 -> x, v2 -> y, v2 -> z - 100);
                     occupied = false;
                     for (int j = 0; j < b -> size() && occupied == false; j++) {
-                        v3 = b -> at(j) -> getPosition();
+                        v3 = it -> second -> getPosition();
                         if (v3 -> x == v -> x && v3 -> z == v -> z) {
                             occupied = true;
                         }
@@ -88,7 +90,7 @@ Vector3<float>* IA::determinatePositionBuilding() {
                         v = new Vector3<float>(v2 -> x - 100, v2 -> y, v2 -> z);
                         occupied = false;
                         for (int j = 0; j < b -> size() && occupied == false; j++) {
-                            v3 = b -> at(j) -> getPosition();
+                            v3 = it -> second -> getPosition();
                             if (v3 -> x == v -> x && v3 -> z == v -> z) {
                                 occupied = true;
                             }

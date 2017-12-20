@@ -12,6 +12,12 @@ class Model {
         Model(SceneNode *parent, int id);
         ~Model();
 
+        void setID(int id);
+        void setName(const wchar_t *name);
+
+        void setPosition(Vector3<float> pos);
+        Vector3<float> getPosition();
+
 		scene::IMeshSceneNode *getModel();
     private:
         scene::IMeshSceneNode *cubeNode;

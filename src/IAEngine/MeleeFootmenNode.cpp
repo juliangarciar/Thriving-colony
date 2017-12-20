@@ -11,7 +11,7 @@ MeleeFootmenNode::~MeleeFootmenNode(){
 }
 
 void MeleeFootmenNode::question() {
-    //std::cout << Genero un soldado a pie melee << std::endl;
+    std::cout << "Genero un soldado a pie melee" << std::endl;
     //ToDo: Generar soldado a pie melee
     IA::getInstance()-> increaseMeleeAmount();
 }
