@@ -4,6 +4,7 @@
 #include "Tower.h"
 
 bool Player::deployedTroops = false;
+bool Player::closedDoors = false;
 
 #define RESOURCEPRODUCTION 10
 
@@ -36,14 +37,15 @@ Player::Player() {
     barnBuilt = false;
     workshopBuilt = false;
 
+    //ToDo: Dejar asi o solo un ejercito???
+    //      Depende de como vaya a quedarse la IA de combate
     buildings = new BuildingManager;
-    units = new UnitManager(Enumeration::Team::Human);
     //Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DeployTroops, deployTroops);
     //Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::RetractTroops, retractTroops);
 }
 
 Player::~Player() {
-    delete troops;
+    delete units;
     delete buildings;
 }
 
@@ -76,7 +78,7 @@ int Player::getCitizens() {
 }
 
 int Player::getArmySize() {
-    return troops->size();
+    return units -> getTotalTroops() -> size();
 }
 
 int Player::getMeleeAmount() {
@@ -140,11 +142,11 @@ bool Player::getDeployedTroops() {
     return deployedTroops;
 }
 
-BuildingManager* Player::getBuildings() {
+BuildingManager* Player::getBuildingManager() {
     return buildings;
 }
-UnitManager* Player::getUnits(){
-    return this->units;
+UnitManager* Player::getUnitManager(){
+    return units;
 }
 /*
 * SETTERS
@@ -264,7 +266,9 @@ void Player::retractTroops() {
 std::vector<Unit*>* Player::getTroops() {
     //ToDo: Devolver tropas
     //TODO al cuadrado: Decidir como va a ser lo de las tropas   
-    return troops;
+    // las tropas van en el unit manager oogili boogili
+    //return troops;
+    return units -> getTotalTroops();
 }
 
 int Player::getMetalAmount() {

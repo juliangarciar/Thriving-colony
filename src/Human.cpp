@@ -1,4 +1,5 @@
 #include "Human.h"
+#include "Game.h"
 
 Human::Human() : Player() {
     happiness = 0;
@@ -20,6 +21,8 @@ Human::Human() : Player() {
     barrackBuilt = false;
     barnBuilt = false;
     workshopBuilt = false;
+
+    units = new UnitManager(Enumeration::Team::Human);
 }
 
 Human::~Human() {

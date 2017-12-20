@@ -3,7 +3,7 @@
 #include "Human.h"
 #include "Game.h"
 
-Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Vector3<float> *pos, Enumeration::Team teamData) : Entity()
+Building::Building(int id, SceneNode *parent, Enumeration::BuildingType buildingData, Vector3<float> *pos, Enumeration::Team teamData) : Entity()
 {
     int happiness = 0;
     int cityLevel = 0;
@@ -225,14 +225,16 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
 
         break;
     }
-    //Graphic engine, this should be in the switch (when models done)
-    color = video::SColor(255, r, g, b);
-    this->model = new Model(parent, std::rand()); //ToDo: cambiar
-    hitbox = new Box3D<float>(this -> model ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
-    this->model->getModel()->setPosition(pos->getVectorF());
-    this->model->getModel()->setMaterialFlag(video::EMF_LIGHTING, false);
-    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(255, r, g, b));    
-    this->type = buildingData;
+
+    //ToDo: Graphic engine, this should be in the switch (when models done)
+    color = video::SColor(255, r, g, b); //ToDo: esto es fachada 
+    this->model = new Model(parent, id);
+
+    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
+        model->getModel()->getMesh(), color
+    ); //ToDo: esto es fachada 
+
+    this->type = (int)buildingData;
     this->position = pos;
     if (teamData == Enumeration::Team::Human) {
         Human::getInstance() -> increaseHappiness(happiness);
@@ -243,6 +245,7 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
         IA::getInstance() -> increaseCityLevel(cityLevel);
         IA::getInstance() -> spendResources(metalCost, crystalCost);
     }
+    //std::cout << this->type << std::endl;
 }
 
 Building::~Building() {
@@ -252,3 +255,7 @@ Building::~Building() {
 irr::video::SColor Building::getColor() {
     return color;
 }
+
+int Building::getType(){ 
+    return this->type;
+} 

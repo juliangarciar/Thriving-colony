@@ -5,7 +5,6 @@
 
 GameState::GameState() : State() {
     camera = new CameraController();
-    map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
     hud = new Hud();
 
     //IL PICCOLO SPAGUETTIO
@@ -23,15 +22,29 @@ GameState::~GameState() {
 }
 
 void GameState::Init(){
+    map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
     map->setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
-    
+
+    //Initialize the event system
+    //IA Events
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DeployTroopsIA, IA::deployTroops);
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::RetractTroopsIA, IA::retractTroops);
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::OpenDoorsIA, IA::openDoors);
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::CloseDoorsIA, IA::closeDoors);
+
+    //Human events
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DeployTroopsHuman, Human::deployTroops);
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::RetractTroopsHuman, Human::retractTroops);
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::OpenDoorsHuman, Human::openDoors);
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::CloseDoorsHuman, Human::closeDoors);
+
     // Build the main building of IA
     Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
-    IA::getInstance() -> getBuildings() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::IA);
+    IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::IA);
 
     //Build the first siderurgy of IA
     v = IA::getInstance() -> determinatePositionBuilding();
-    IA::getInstance() -> getBuildings() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::IA);
+    IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::IA);
 }
 
 void GameState::Input(){
@@ -44,38 +57,40 @@ void GameState::Input(){
 
         Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
         if (Game::Instance()->getIO()->leftMousePressed()){
-            int id = Human::getInstance() -> getBuildings()->getHoverBuilding();
+            Human::getInstance() -> getBuildingManager()->testRaycastCollisions();
+            int id = Human::getInstance() -> getBuildingManager() -> getCollisionID();
             if (id != -1){
-            /* std::wstringstream o;
-                o << "Has hecho click en: " << id;
-                hud->getInfoButton()->setText(o.str().c_str());*/
-                hud->showPopup(id);
+                std::map<int,Building*> *b = Human::getInstance() -> getBuildingManager() -> getBuildings();
+                std::map<int,Building*>::iterator it;
+                it = b->find(id);
+                if (it->second != NULL){
+                    int t = (int)it->second->getType();
+                    hud->showPopup(t);
+                }
             }
         }
     //}
 }
 
 void GameState::Update(){
-    /*if (Game::Instance() -> getIO()->keyDown((char)27)) {
-        // El getKeyDown es el unico que va y va a la virule
+    //if (Game::Instance() -> getIO()->keyDown((char)27)) {
         //Escape is pressed
-        gamePaused = !gamePaused;
-    }
-    if (gamePaused) {*/
+        //gamePaused = !gamePaused;
+    //}
+    //if (gamePaused) {
         camera->Update(map, Game::Instance()->getWindow()->getDeltaTime());
 
         Vector3<float> cam = camera->getCamera()->getCameraPosition();
         Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
         //buildingManager->drawCube(map);
-
-        Human::getInstance() -> getBuildings() -> drawBuilding(map, Enumeration::BuildingType::House,  Enumeration::Team::Human);
+        Human::getInstance() -> getBuildingManager() -> drawBuilding(map, Enumeration::BuildingType::House,  Enumeration::Team::Human);
         if(!unitDone){
             Vector3<float> *vectorData = new Vector3<float>(200, 200, 200);
             Enumeration::UnitType unitData;
             unitData.unitClass = Enumeration::UnitType::Class::Ranged;
             unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardR;
-            Human::getInstance()->getUnits()->createTroop(vectorData, unitData);
+            Human::getInstance()->getUnitManager()->createTroop(vectorData, unitData);
             this->unitDone = true;
         }
         Human::getInstance() -> update();

@@ -1,6 +1,7 @@
 #ifndef VECTOR3_H
 #define VECTOR3_H
 
+#include <iostream>
 #include <irrlicht.h>
 
 using namespace irr;
@@ -37,5 +38,10 @@ class Vector3 {
 
     private:
 };
+
+template<class T> inline std::ostream& operator<<(std::ostream& out, const Vector3<T>& val){
+    out << "x: " << val.x << " y " << val.y << " z " << val.z;
+    return out;
+}
 
 #endif

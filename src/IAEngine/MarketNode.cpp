@@ -11,10 +11,10 @@ MarketNode::~MarketNode(){
 }
 
 void MarketNode::question() {
-    std::cout << "Contruyo un mercado" << std::endl;
+    //std::cout << "Contruyo un mercado" << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
-    if (IA::getInstance() -> getBuildings() -> isSolvent(Enumeration::BuildingCost::MarketMetalCost, Enumeration::BuildingCost::MarketCrystalCost, Enumeration::Team::IA)) {
+    if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::MarketMetalCost, Enumeration::BuildingCost::MarketCrystalCost, Enumeration::Team::IA)) {
         Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
-        IA::getInstance() -> getBuildings() -> buildBuilding(v, Enumeration::BuildingType::Market, Enumeration::Team::IA);
+        IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Market, Enumeration::Team::IA);
     }
 }

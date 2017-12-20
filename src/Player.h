@@ -50,8 +50,8 @@ class Player {
 
         bool losingBattle();
 
-        BuildingManager* getBuildings();
-        UnitManager* getUnits();
+        BuildingManager* getBuildingManager();
+        UnitManager* getUnitManager();
         //Setters
         void setBarnBuilt(bool);
         void setBarrackBuilt(bool);
@@ -81,8 +81,8 @@ class Player {
 
         static void deployTroops();
         static void retractTroops();
-        void closeDoors();
-        void openDoors();
+        static void closeDoors();
+        static void openDoors();
 
         void increaseBuildableRange();
 
@@ -120,10 +120,7 @@ class Player {
         int towerAmount;
 
         static bool deployedTroops;
-        bool closedDoors;
-        
-        //Esto ya se quitara esta mientras no se depure el codigo
-        std::vector<Unit*> *troops;
+        static bool closedDoors;
         
         BuildingManager *buildings;
         UnitManager *units;

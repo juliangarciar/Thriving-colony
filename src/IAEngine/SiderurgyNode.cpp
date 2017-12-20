@@ -11,10 +11,10 @@ SiderurgyNode::~SiderurgyNode(){
 }
 
 void SiderurgyNode::question() {
-    std::cout << "Construyo una siderurgia" << std::endl;
+    //std::cout << "Construyo una siderurgia" << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
-    if (IA::getInstance() -> getBuildings() -> isSolvent(Enumeration::BuildingCost::SiderurgyMetalCost, Enumeration::BuildingCost::SiderurgyCrystalCost, Enumeration::Team::IA)) {
+    if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::SiderurgyMetalCost, Enumeration::BuildingCost::SiderurgyCrystalCost, Enumeration::Team::IA)) {
         Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
-        IA::getInstance() -> getBuildings() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::IA);
+        IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::IA);
     }
 }

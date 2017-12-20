@@ -11,10 +11,10 @@ BarnNode::~BarnNode(){
 }
 
 void BarnNode::question() {
-    //std::cout << Construyo un establo << std::endl;
+    std::cout << "Construyo un establo" << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
-    if (IA::getInstance() -> getBuildings() -> isSolvent(Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost, Enumeration::Team::IA)) {
+    if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost, Enumeration::Team::IA)) {
         Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
-        IA::getInstance() -> getBuildings() -> buildBuilding(v, Enumeration::BuildingType::Barn, Enumeration::Team::IA);
+        IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barn, Enumeration::Team::IA);
     }
 }

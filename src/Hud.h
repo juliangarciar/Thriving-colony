@@ -23,30 +23,54 @@ class Hud {
 
         void getHUDEvents();
     private:
-        Button *buttonBuilding;
+        Panel *tabs;
+
+        Tab *mainBuildingMenu;
+        Tab *barnMenu;
+        Tab *barrackMenu;
+        Tab *hospitalMenu;
+        Tab *homeMenu;
+        Tab *marketMenu;
+        Tab *quarryMenu;
+        Tab *siderurgyMenu;
+        Tab *schoolMenu;
+        Tab *towerMenu;
+        Tab *wallMenu;
+        Tab *workshopMenu;
+
         Button *buttonQuit;
         
-        Button *buttonSchool;
-        Button *buttonMarket;
-        Button *buttonHospital;
-        Button *buttonSiderurgy;
-        Button *buttonQuarry;
-        Button *buttonHome;
-        Button *buttonBarrack;
         Button *buttonBarn;
-        Button *buttonWorkshop;
-        Button *buttonWall;
+        Button *buttonBarrack;
+        Button *buttonHospital;
+        Button *buttonHome;
+        Button *buttonMarket;
+        Button *buttonQuarry;
+        Button *buttonSiderurgy;
+        Button *buttonSchool;
         Button *buttonTower;
+        Button *buttonWall;
+        Button *buttonWorkshop;
         
+        Button *buttonCloseTab0;
         Button *buttonCloseTab1;
         Button *buttonCloseTab2;
+        Button *buttonCloseTab3;
+        Button *buttonCloseTab4;
+        Button *buttonCloseTab5;
+        Button *buttonCloseTab6;
+        Button *buttonCloseTab7;
+        Button *buttonCloseTab8;
+        Button *buttonCloseTab9;
+        Button *buttonCloseTab10;
+        Button *buttonCloseTab11;
 
-        Button *createTroop1;
-        Button *createTroop2;
-
-        Panel *tabs;
-        Tab *t1;
-        Tab *t2;
+        Button *createMelee;
+        Button *createRanged;
+        Button *createMountedMelee;
+        Button *createMountedRanged;
+        Button *createMonster;
+        Button *createMachine;
 };
 
 #endif

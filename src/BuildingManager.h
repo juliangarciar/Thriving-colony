@@ -1,7 +1,7 @@
 #ifndef BUILDING_MANAGER_H
 #define BUILDING_MANAGER_H
 
-#include <vector>
+#include <map>
 #include <irrlicht.h>
 #include <GraphicEngine/SceneNode.h>
 #include <GraphicEngine/Box3D.h>
@@ -17,8 +17,11 @@ class BuildingManager {
 		BuildingManager();
 		virtual ~BuildingManager();
 
-		int getHoverBuilding();
-		std::vector<Building*>* getBuildings();
+		void testRaycastCollisions();
+		int getCollisionID();
+		std::string getCollisionName();
+
+		std::map<int, Building*>* getBuildings();
 
 		void setBuildingMode(Enumeration::BuildingType);
         void drawBuilding(Terrain *terrain, Enumeration::BuildingType, Enumeration::Team);
@@ -28,8 +31,10 @@ class BuildingManager {
 		bool checkCanPay(Enumeration::BuildingType);
 	private:
 		SceneNode *buildingLayer;
+		SceneNode *currentCollision;
 		//std::vector< Box3D<float> > *buildings;
-		std::vector<Building*> *buildings;
+		//std::vector<Building*> *buildings;
+		std::map<int, Building*> *buildings;
         bool buildingMode;
         int gridAlignment;
 

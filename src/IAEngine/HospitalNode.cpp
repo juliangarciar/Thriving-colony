@@ -11,10 +11,10 @@ HospitalNode::~HospitalNode(){
 }
 
 void HospitalNode::question() {
-    std::cout << "Contruyo un hospital" << std::endl;
+    //std::cout << "Contruyo un hospital" << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
-    if (IA::getInstance() -> getBuildings() -> isSolvent(Enumeration::BuildingCost::HospitalMetalCost, Enumeration::BuildingCost::HospitalCrystalCost, Enumeration::Team::IA)) {
+    if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::HospitalMetalCost, Enumeration::BuildingCost::HospitalCrystalCost, Enumeration::Team::IA)) {
         Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
-        IA::getInstance() -> getBuildings() -> buildBuilding(v, Enumeration::BuildingType::Hospital, Enumeration::Team::IA);
+        IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Hospital, Enumeration::Team::IA);
     }
 }
