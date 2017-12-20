@@ -7,10 +7,14 @@
 #include "Melee.h"
 class UnitManager{
     private:
-        std::vector<Unit*> *totalTroops;
-        Unit *selectedTroop;
-        Enumeration::Team teamManager;
+        std::vector<Unit*> *totalInHallTroops;
+        std::vector<Unit*> *totalInMapTroops;
 
+        std::vector<Unit*> *totalTroops;
+
+        Unit *selectedTroop;
+
+        Enumeration::Team teamManager;
     public:
         UnitManager(Enumeration::Team teamData);             //Constructor
         virtual ~UnitManager();                 //Destroyer
