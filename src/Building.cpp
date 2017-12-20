@@ -3,11 +3,7 @@
 #include "Human.h"
 #include "Game.h"
 
-<<<<<<< HEAD
-Building::Building(Enumeration::BuildingType buildingData, Vector3<float> *pos, Enumeration::Team teamData) : Entity()
-=======
 Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Vector3<float> *vectorData, bool teamData) : Entity()
->>>>>>> GraphicEngine
 {
     int happiness = 0;
     int cityLevel = 0;
@@ -107,22 +103,12 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
         break;
     }
     //Graphic engine, this should be in the switch (when models done)
-<<<<<<< HEAD
-    this->modelLayer = new SceneNode();
-    model = new Model(modelLayer, std::rand());
-	model -> getModel() -> setMaterialFlag(video::EMF_LIGHTING, false);
-    model -> getModel() -> setPosition(core::vector3df(pos -> x, pos -> y, pos -> z));
-    Game::Instance() -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255,255,255,255));
-    /*this->model = new Model(modelLayer, std::rand()); //ToDo: cambiar
-    this->model->getModel()->setPosition(vectorData));
-=======
     //this->modelLayer = new SceneNode();
     this->model = new Model(parent, std::rand()); //ToDo: cambiar
     hitbox = new Box3D<float>(
         this -> model ->getModel() -> getTransformedBoundingBox()
     ); //ToDo: esto es fachada
     this->model->getModel()->setPosition(vectorData->getVectorF());
->>>>>>> GraphicEngine
     this->model->getModel()->setMaterialFlag(video::EMF_LIGHTING, false);
     Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(125, 125, 0, 125));  */  
     this->type = buildingData;
