@@ -47,8 +47,8 @@ class Player {
 
         bool losingBattle();
 
-        BuildingManager* getBuildings();
-        UnitManager* getUnits();
+        BuildingManager* getBuildingManager();
+        UnitManager* getUnitManager();
         //Setters
         void setBarnBuilt(bool);
         void setBarrackBuilt(bool);

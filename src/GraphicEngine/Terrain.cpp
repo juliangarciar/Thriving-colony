@@ -17,7 +17,7 @@ Terrain::Terrain(const char* heightMap){
 		scene::ETPS_17,				// patchSize
 		4					// smoothFactor
     );
-
+    std::cout << sc->getSceneManager() << std::endl;
     selector = sc->getSceneManager()->createTerrainTriangleSelector(terrain);
     terrain->setTriangleSelector(selector);
     collisionManager = sc->getSceneManager()->getSceneCollisionManager();
@@ -34,19 +34,6 @@ Vector3<float> Terrain::getPointCollision(Mouse *cursor){
     }
 	return Vector3<float>();
 }
-
-/*void Terrain::getTriangleCollision(Mouse *cursor){
-	core::position2d<s32> pos = cursor->getCursor()->getPosition();
-	core::vector3df point;
-	core::triangle3df triangle;
-	scene::ISceneNode *node = 0;
-    const core::line3d<f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
-    if (collisionManager->getCollisionPoint (ray, selector, point, triangle, node)) {
-        //std::cout << triangle.pointA.X << " " << triangle.pointA.Y << " " << triangle.pointA.Z << std::endl;
-        //std::cout << triangle.pointB.X << " " << triangle.pointB.Y << " " << triangle.pointB.Z << std::endl;
-        //std::cout << triangle.pointC.X << " " << triangle.pointC.Y << " " << triangle.pointC.Z << std::endl;
-    }
-}*/
 
 void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture){
 	terrain->setMaterialFlag(video::EMF_LIGHTING, false);

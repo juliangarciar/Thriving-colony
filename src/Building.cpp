@@ -3,7 +3,7 @@
 #include "Human.h"
 #include "Game.h"
 
-Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Vector3<float> *pos, Enumeration::Team teamData) : Entity()
+Building::Building(int id, SceneNode *parent, Enumeration::BuildingType buildingData, Vector3<float> *pos, Enumeration::Team teamData) : Entity()
 {
     int happiness = 0;
     int cityLevel = 0;
@@ -179,12 +179,16 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
         break;
     }
     //Graphic engine, this should be in the switch (when models done)
-    this->model = new Model(parent, std::rand()); //ToDo: cambiar
+    this->model = new Model(parent, id);
+
     hitbox = new Box3D<float>(this -> model ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
-    this->model->getModel()->setPosition(pos->getVectorF());
-    this->model->getModel()->setMaterialFlag(video::EMF_LIGHTING, false);
-    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(r, g, b, 125));    
-    this->type = buildingData;
+    this->model->getModel()->setPosition(pos->getVectorF());  //ToDo: esto es fachada
+    this->model->getModel()->setMaterialFlag(video::EMF_LIGHTING, false); //ToDo: esto es fachada
+    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
+        model->getModel()->getMesh(), video::SColor(r, g, b, 125)
+    ); //ToDo: esto es fachada 
+
+    this->type = (int)buildingData;
     this->position = pos;
     if (teamData == Enumeration::Team::Human) {
         Human::getInstance() -> increaseHappiness(happiness);
@@ -193,8 +197,13 @@ Building::Building(SceneNode *parent, Enumeration::BuildingType buildingData, Ve
         IA::getInstance() -> increaseHappiness(happiness);
         IA::getInstance() -> increaseCityLevel(cityLevel);
     }
+    std::cout << this->type << std::endl;
 }
 
 Building::~Building() {
     
 }
+
+int Building::getType(){
+    return this->type;
+} 

@@ -5,7 +5,6 @@
 
 GameState::GameState() : State() {
     camera = new CameraController();
-    map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
     hud = new Hud();
     nodeRootIA = new RootNode();
 }
@@ -18,6 +17,7 @@ GameState::~GameState() {
 }
 
 void GameState::Init(){
+    map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
     map->setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
 }
 
@@ -30,12 +30,16 @@ void GameState::Input(){
 
     Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
     if (Game::Instance()->getIO()->leftMousePressed()){
-        int id = Human::getInstance() -> getBuildings()->getHoverBuilding();
+        Human::getInstance() -> getBuildingManager()->testRaycastCollisions();
+        int id = Human::getInstance() -> getBuildingManager() -> getCollisionID();
         if (id != -1){
-           /* std::wstringstream o;
-            o << "Has hecho click en: " << id;
-            hud->getInfoButton()->setText(o.str().c_str());*/
-            hud->showPopup(id);
+            std::map<int,Building*> *b = Human::getInstance() -> getBuildingManager() -> getBuildings();
+            std::map<int,Building*>::iterator it;
+            it = b->find(id);
+            if (it->second != NULL){
+                int t = (int)it->second->getType();
+                hud->showPopup(t);
+            }
         }
 	}
 }
@@ -47,13 +51,13 @@ void GameState::Update(){
     Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
     //buildingManager->drawCube(map);
-    Human::getInstance() -> getBuildings() -> drawBuilding(map, Enumeration::BuildingType::House,  Enumeration::Team::Human);
+    Human::getInstance() -> getBuildingManager() -> drawBuilding(map, Enumeration::BuildingType::House,  Enumeration::Team::Human);
     if(!unitDone){
         Vector3<float> *vectorData = new Vector3<float>(200, 200, 200);
         Enumeration::UnitType unitData;
         unitData.unitClass = Enumeration::UnitType::Class::Ranged;
         unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardR;
-        Human::getInstance()->getUnits()->createTroop(vectorData, unitData);
+        Human::getInstance()->getUnitManager()->createTroop(vectorData, unitData);
         this->unitDone = true;
     }
     

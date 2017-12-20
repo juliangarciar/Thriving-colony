@@ -12,6 +12,9 @@ class Model {
         Model(SceneNode *parent, int id);
         ~Model();
 
+        void setID(int id);
+        void setName(const wchar_t *name);
+
 		scene::IMeshSceneNode *getModel();
     private:
         scene::IMeshSceneNode *cubeNode;
