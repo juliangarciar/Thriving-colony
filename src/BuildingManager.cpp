@@ -63,8 +63,6 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
         float z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
 
         tempBuilding -> getModel() -> setPosition(Vector3<float>(x, y, z));
-
-        //std::cout << tempBuilding -> getModel() -> getPosition() << std::endl;
 		tempBuilding -> getHitbox() -> setPosition(tempBuilding -> getModel() ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es irrlicht
 
 		/* 
@@ -98,7 +96,6 @@ void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingTy
 	if(_type == Enumeration::BuildingType::Tower) {
 		int id = std::rand();
 		buildings->insert(std::pair<int,Building*>(id, new Tower(id, buildingLayer, pos, _team)));
-		//buildings->push_back(
 		return;
     }
 	if (_team == Enumeration::Team::IA){

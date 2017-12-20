@@ -38,14 +38,14 @@ void VeryHappyTree::question() {
                 //ToDo: Si no hay cosas de hacer ejercito, da violacion de segmento
             } else {
                 //Fourth branch: Army
-                /*if (tree -> needArmyInvestment()) {
+                if (tree -> needArmyInvestment()) {
                     //std::cout << "Ejercito" << std::endl;
                     children[3] -> question();
-                } else {*/
-                    std::cout << "No hago nada" << std::endl;
+                } else {
+                    //std::cout << "No hago nada" << std::endl;
                     // Ultima oportunidad
                     children[2] -> question();
-                /*}*/
+                }
             }
         }
     }

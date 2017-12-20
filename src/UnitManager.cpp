@@ -4,23 +4,28 @@
 UnitManager::UnitManager(Enumeration::Team teamData){
     selectedTroop = 0;
     this->teamManager = teamData;
+    totalInHallTroops = new std::vector<Unit*>();
+    totalInMapTroops = new std::vector<Unit*>();
     totalTroops = new std::vector<Unit*>();
 }
 //Destroyer
 UnitManager::~UnitManager(){
     delete selectedTroop;
-    for (int i = 0; i < totalTroops -> size(); i++){
-        delete totalTroops -> at(i);
-    }
+
+    totalInHallTroops->clear();
+    delete totalInHallTroops;
 }
 //Returns all troops the player has
 std::vector<Unit*> *UnitManager::getTotalTroops(){
-    return this -> totalTroops;
-}
+    totalTroops->reserve( totalInHallTroops->size() + totalInMapTroops->size() ); // preallocate memory
+    totalTroops->insert( totalTroops->end(), totalInHallTroops->begin(), totalInHallTroops->end() );
+    totalTroops->insert( totalTroops->end(), totalInMapTroops->begin(), totalInMapTroops->end() );
+    return totalTroops;
+} 
 //Update all troops
 void UnitManager::updateUnitManager(){
-    for (int i = 0; i < totalTroops -> size(); i++){
-        totalTroops -> at(i) -> updateTroop();
+    for (int i = 0; i < totalInHallTroops -> size(); i++){
+        totalInHallTroops -> at(i) -> updateTroop();
     }
 }
 //Create a new troops
@@ -32,12 +37,12 @@ void UnitManager::updateUnitManager(){
 void UnitManager::createTroop(Vector3<float> *vectorData, Enumeration::UnitType unitData){
     if(unitData.unitClass == Enumeration::UnitType::Ranged){
         Ranged *rangedUnit = new Ranged(unitData.unitSubClass, vectorData, this->teamManager);
-        this->totalTroops -> push_back(rangedUnit);
+        this->totalInHallTroops -> push_back(rangedUnit);
     }
     else if (unitData.unitClass == Enumeration::UnitType::Melee)
     {
         Melee *meleeUnit = new Melee(unitData.unitSubClass, vectorData, this->teamManager);
-        this->totalTroops -> push_back(meleeUnit);
+        this->totalInHallTroops -> push_back(meleeUnit);
     }
 }
 //Select a troop
