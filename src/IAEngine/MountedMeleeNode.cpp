@@ -16,8 +16,6 @@ MountedMeleeNode::~MountedMeleeNode(){
 void MountedMeleeNode::question() {
     if (IA::getInstance() -> getBarnBuilt()) {
         std::cout << "Genero un soldado montado melee" << std::endl;
-        //ToDo: Generar soldado montado melee
-        //IA::getInstance()-> increaseMeleeAmount();
         if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MountedMeleeMetalCost, Enumeration::UnitCost::MountedMeleeCrystalCost, Enumeration::Team::IA)) {
             // Unit type
             Enumeration::UnitType unitData; 

@@ -16,8 +16,6 @@ RamNode::~RamNode(){
 void RamNode::question() {
     if (IA::getInstance() -> getWorkshopBuilt()) {
         std::cout << "Genero un ariete" << std::endl;
-        //ToDo: Generar ariete
-        //IA::getInstance()-> increaseSiegeAmount();
         if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::RamMetalCost, Enumeration::UnitCost::RamCrystalCost, Enumeration::Team::IA)) {
             // Unit type
             Enumeration::UnitType unitData; 
