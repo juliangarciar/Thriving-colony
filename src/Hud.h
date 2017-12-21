@@ -27,6 +27,8 @@ class Hud {
         void hidePopup();
 
         void getHUDEvents();
+
+        void update();
     private:
         Button *buttonQuit;
 
@@ -50,6 +52,11 @@ class Hud {
         //ToDo: mejorar
         std::vector<Tab*> *menus;
         std::vector<Button*> *buttons;
+        
+        Text *resourceText;
+        Text *iaResourceText;
+
+        float updateTimer;
 };
 
 #endif

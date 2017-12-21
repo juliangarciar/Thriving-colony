@@ -51,6 +51,8 @@ void GameState::Input(){
     //if (gamePaused) {
         hud->getHUDEvents();
 
+        hud ->update();
+
         camera->Move(Game::Instance()->getIO(), Game::Instance()->getCursor());
         camera->RotateAndInclinate(Game::Instance()->getIO(), Game::Instance()->getCursor());
         camera->Zoom(Game::Instance()->getIO());
