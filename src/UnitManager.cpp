@@ -74,9 +74,10 @@ void UnitManager::newOrder(){
 /**
  * Checks if the player, either the human or the AI can afford to build a specific building 
  */
+/*
 // TODO ESTE METODO ESTA EXATCAMENTE IGUAL EN EL BUILDING MANAGER (IGUAL DEBERIAN HEREDAR DE UNA CLASE
 // MANAGER QUE TENGA COMO COSAS COMPARTIDAS? QUIEN SABE
-bool BuildingManager::isSolvent(int metalCost, int crystalCost, Enumeration::Team team) {
+bool UnitManager::isSolvent(int metalCost, int crystalCost, Enumeration::Team team) {
 	int metalAmt = 0;
 	int crystalAmt = 0;
 	if (team == Enumeration::Team::Human) {
@@ -92,7 +93,7 @@ bool BuildingManager::isSolvent(int metalCost, int crystalCost, Enumeration::Tea
     
     return (canPayMetal && canPayCrystal);
 }
-
+*/
 //TODO CAMBIAR PERO PARA TROPAS Y NO EDIFICIOS
 
 /**
@@ -100,6 +101,7 @@ bool BuildingManager::isSolvent(int metalCost, int crystalCost, Enumeration::Tea
  * of the desired building and sending the aforementhioned method the prices. It has its own method
  * to avoid cluttering the setBuildingMode() method, as it used to be there in the first place.
  */
+/*
 bool BuildingManager::checkCanPay(Enumeration::BuildingType type) {
 	//ESto esta aqui para no hacer clutter arriba
 	bool canPay = false;
@@ -142,3 +144,4 @@ bool BuildingManager::checkCanPay(Enumeration::BuildingType type) {
 	}
 	return canPay;
 }
+*/

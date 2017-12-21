@@ -25,6 +25,8 @@ class Hud {
         void hidePopup();
 
         void getHUDEvents();
+
+        void update();
     private:
         TabPanel *tabs;
 
@@ -78,6 +80,11 @@ class Hud {
         Text *hallTroopText;
         ListBox *hallTroopList;
         Button *buttonDeployTroops;
+
+        Text *resourceText;
+        Text *iaResourceText;
+
+        float updateTimer;
 };
 
 #endif

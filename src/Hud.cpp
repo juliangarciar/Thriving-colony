@@ -1,7 +1,11 @@
 #include "Hud.h"
 #include "Game.h"
 #include "Human.h"
+#include "IA.h"
 #include "Enumeration.h"
+#include "GraphicEngine/Window.h"
+
+#include <string>
 
 using namespace irr;
 
@@ -86,6 +90,12 @@ Hud::Hud() {
     mainBuildingMenu->addChild(buttonDeployTroops);
 
     tabs->disable();
+
+    updateTimer = 0.5;
+    resourceText = new Text(Rect2D<int>(200, 0, 100, 55), L"Hola mundo", true);
+    // Solo de debug
+    iaResourceText = new Text(Rect2D<int>(300, 0, 100, 55), L"Hola mundo", true);
+    
 }
 
 Hud::~Hud() {
@@ -143,6 +153,9 @@ Hud::~Hud() {
     delete hallTroopText;
     delete hallTroopList;
     delete buttonDeployTroops;
+
+    delete resourceText;
+    delete iaResourceText;
 }
 
 void Hud::showPopup(int tabId){
@@ -269,5 +282,20 @@ void Hud::getHUDEvents(){
                 }
             }
         break;
+    }
+}
+
+void Hud::update() {
+    if (updateTimer <= 0) {
+        //ToDo: añadir los metodos de getmetalamount y getcrystalamount
+        std::wstringstream os;
+        os << L"Player resources:\n" << "Metal: " << std::to_wstring(100) << "\nCrystal: " << std::to_wstring(100) << "\nCitizens: " << std::to_wstring(Human::getInstance() -> getCitizens()) << "\nHappiness: " << std::to_wstring(Human::getInstance() -> getHappiness());
+        resourceText -> setText(os.str().c_str());
+        std::wstringstream iaos;
+        iaos << L"IA resources:\n" << "Metal: " << std::to_wstring(100) << "\nCrystal: " << std::to_wstring(100) << "\nCitizens: " << std::to_wstring(IA::getInstance() -> getCitizens()) << "\nHappiness: " << std::to_wstring(IA::getInstance() -> getHappiness());
+        iaResourceText -> setText(iaos.str().c_str());
+        updateTimer = 0.5;
+    } else {
+        updateTimer -= Window::Instance() ->getDeltaTime();
     }
 }
