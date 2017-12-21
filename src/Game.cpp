@@ -31,6 +31,7 @@ Game::~Game() {
      delete cursor;
      delete io;
      delete events;
+    // delete state;
 }
 
 void Game::Init(){

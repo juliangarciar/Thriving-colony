@@ -5,8 +5,11 @@
 #include <GraphicEngine/Vector2.h>
 #include <GraphicEngine/Vector3.h>
 #include <GUIEngine/Rect2D.h>
+#include <GUIEngine/Text.h>
 #include <GUIEngine/Button.h>
-#include <GUIEngine/Panel.h>
+#include <GUIEngine/TabPanel.h>
+#include <GUIEngine/Tab.h>
+#include <GUIEngine/ListBox.h>
 #include <IOEngine/InputManager.h>
 #include <IOEngine/Mouse.h>
 
@@ -23,7 +26,7 @@ class Hud {
 
         void getHUDEvents();
     private:
-        Panel *tabs;
+        TabPanel *tabs;
 
         Tab *mainBuildingMenu;
         Tab *barnMenu;
@@ -65,9 +68,16 @@ class Hud {
         Button *buttonCloseTab10;
         Button *buttonCloseTab11;
 
-        Button *createTroop1;
-        Button *createTroop2;
-        Button *createTroop3;
+        Button *createMelee;
+        Button *createRanged;
+        Button *createMountedMelee;
+        Button *createMountedRanged;
+        Button *createMonster;
+        Button *createMachine;
+
+        Text *hallTroopText;
+        ListBox *hallTroopList;
+        Button *buttonDeployTroops;
 };
 
 #endif

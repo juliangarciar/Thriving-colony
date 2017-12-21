@@ -60,7 +60,7 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
         float y = roundf(xyzPointCollision.y / gridAlignment) * gridAlignment;
         float z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
 
-		tempBuilding -> getModel() -> getModel() -> setPosition(core::vector3df(x,y,z)); //ToDo: esto es irrlicht
+        tempBuilding -> getModel() -> setPosition(Vector3<float>(x, y, z));
 		tempBuilding -> getHitbox() -> setPosition(tempBuilding -> getModel() ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es irrlicht
 
 		/* 
@@ -76,7 +76,7 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
 			); //ToDo: esto es fachada
 		} else {
 			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
-				tempBuilding -> getModel() -> getModel() -> getMesh(), video::SColor(255,255,255,255)
+				tempBuilding -> getModel() -> getModel() -> getMesh(), tempBuilding -> getColor()
 			); //ToDo: esto es fachada
 			/*
 			* If there is no collision and the player press left button of the mouse,
@@ -94,7 +94,6 @@ void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingTy
 	if(_type == Enumeration::BuildingType::Tower) {
 		int id = std::rand();
 		buildings->insert(std::pair<int,Building*>(id, new Tower(id, buildingLayer, pos, _team)));
-		//buildings->push_back(
 		return;
     }
 	if (_team == Enumeration::Team::IA){
@@ -110,34 +109,3 @@ void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingTy
 std::map<int, Building*>* BuildingManager::getBuildings() {
 	return buildings;
 }
-
-/*
-void BuildingManager::drawCube(Terrain *terrain){
-    Game *g = Game::Instance();
-    if (buildingMode && tempBuilding != NULL){
-        // Aqui tenemos que hacer que cuando se haya apretado el boton de nueva ventana,
-        // tambien se cree una caja en las coordenadas actuales del cursor del raton.
-        Vector3<float> xyzPointCollision = terrain -> getPointCollision(g -> getCursor());
-        
-        float x = roundf(xyzPointCollision.x / gridAlignment) * gridAlignment;
-        float y = roundf(xyzPointCollision.y / gridAlignment) * gridAlignment;
-        float z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
-        //ToDo: irr::core::aabbox3d< T >
-		tempBuilding -> getModel() -> setMaterialFlag(video::EMF_LIGHTING, false);
-		tempBuilding -> getModel() -> setPosition(core::vector3df(x,y,z));
-		bool collision = false;
-		for (int i = 0; i < buildings -> size() && !collision; i++){
-			Box3D<float> box = Box3D<float>(tempBuilding -> getModel() -> getTransformedBoundingBox());
-			collision = buildings -> at(i).intersects(box);
-		}
-		if (collision){
-			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(tempBuilding -> getModel() -> getMesh(), video::SColor(255,0,0,255));
-		} else {
-			g->getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(tempBuilding -> getModel() -> getMesh(), video::SColor(255,255,255,255));
-			if (g->getIO() -> leftMouseDown()){
-				buildingMode = false;
-				buildings -> push_back(Box3D<float>(tempBuilding -> getModel() -> getTransformedBoundingBox()));Window::Instance()->getSceneManager()
-			}
-		}
-    }
-}*/

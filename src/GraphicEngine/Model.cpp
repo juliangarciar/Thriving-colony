@@ -40,6 +40,14 @@ void Model::setName(const wchar_t *name){
     cubeNode->setName(core::stringw(name).c_str());
 }
 
+void Model::setPosition(Vector3<float> pos){
+    cubeNode->setPosition(pos.getVectorF());
+}
+
+Vector3<float> Model::getPosition(){
+    return Vector3<float>(cubeNode->getPosition());
+}
+
 scene::IMeshSceneNode *Model::getModel(){
 	return cubeNode;
 }

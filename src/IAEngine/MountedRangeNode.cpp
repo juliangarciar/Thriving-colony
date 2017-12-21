@@ -11,7 +11,7 @@ MountedRangeNode::~MountedRangeNode(){
 }
 
 void MountedRangeNode::question() {
-    //std::cout << Genero un soldado montado de rango << std::endl;
+    std::cout << "Genero un soldado montado de rango" << std::endl;
     //ToDo: Generar soldado montado de rango
     IA::getInstance()-> increaseRangeAmount();
 }

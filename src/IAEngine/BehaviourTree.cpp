@@ -11,7 +11,7 @@ BehaviourTree::BehaviourTree() {
     workshopMilestone = 65;
     creatureMilestone = 100;
 
-    metalThreshold = 0.1;
+    metalThreshold = 0.2;
     crystalThreshold = 0.2;
     citizensThreshold = 0.3;
     armyThreshold = 0.2;
@@ -217,9 +217,9 @@ float BehaviourTree::calculateCitizensRate() {
 * Calculates the ratio between citizens and army
 */
 float BehaviourTree::calculateArmyCitizensRate() {
-    float armySize = IA::getInstance()->getArmySize();
+    float armySize = IA::getInstance() -> getUnitManager() -> getTotalTroops() -> size();
     // Numbers of soldiers / Number of total cicitzens (citizens + soldiers)
-    float totalCitizens = IA::getInstance()->getCitizens() + armySize;
+    float totalCitizens = IA::getInstance() -> getCitizens() + armySize;
     return (armySize / totalCitizens);
 }
 

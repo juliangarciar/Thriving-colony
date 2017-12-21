@@ -76,8 +76,8 @@ class Player {
 
         static void deployTroops();
         static void retractTroops();
-        void closeDoors();
-        void openDoors();
+        static void closeDoors();
+        static void openDoors();
 
         void increaseBuildableRange();
 
@@ -112,11 +112,7 @@ class Player {
         int towerAmount;
 
         static bool deployedTroops;
-        bool closedDoors;
-        
-        //Melee **melees;
-        //Ranged **rangeds;
-        std::vector<Unit*> *troops;
+        static bool closedDoors;
         
         BuildingManager *buildings;
         UnitManager *units;

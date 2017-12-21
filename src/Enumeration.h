@@ -30,11 +30,17 @@ class Enumeration {
         };
 
         enum EventType {
-            Attacking,
-            BeingAttacked,
-            DeployTroops,
-            RetractTroops,
-            StopBeingAttack
+            //IA
+            CloseDoorsIA,
+            DeployTroopsIA,
+            OpenDoorsIA,
+            RetractTroopsIA,
+
+            //Human
+            CloseDoorsHuman,
+            DeployTroopsHuman,
+            OpenDoorsHuman,
+            RetractTroopsHuman,
         }; 
 
         enum idGUI {
@@ -55,9 +61,14 @@ class Enumeration {
             GUI_ID_QUIT_BUTTON,
             GUI_ID_CLOSE_PANEL_BUTTON,
             
-            GUI_ID_CREATE_TROOP_1_BUTTON,
-            GUI_ID_CREATE_TROOP_2_BUTTON,
-            GUI_ID_CREATE_TROOP_3_BUTTON
+            GUI_ID_CREATE_MELEE_TROOP_BUTTON,
+            GUI_ID_CREATE_RANGED_TROOP_BUTTON,
+            GUI_ID_CREATE_MOUNTED_MELEE_TROOP_BUTTON,
+            GUI_ID_CREATE_MOUNTED_RANGED_TROOP_BUTTON,
+            GUI_ID_CREATE_MONSTER_BUTTON,
+            GUI_ID_CREATE_MACHINE_BUTTON,
+
+            GUI_ID_DEPLOY_TROOPS_BUTTON
         };
 
         //Special type, used to pass info to the UnitManager
@@ -67,6 +78,7 @@ class Enumeration {
                 Ranged,
                 Melee
             };
+
             enum SubClass
             {
                 StandardR,
@@ -77,6 +89,7 @@ class Enumeration {
                 AdvancedM,
                 Idol
             };
+
             Class unitClass;
             SubClass unitSubClass;
         };

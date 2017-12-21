@@ -2,24 +2,37 @@
 
 //Constructor
 UnitManager::UnitManager(Enumeration::Team teamData){
-    //selectedTroop = NULL;
+    selectedTroop = 0;
     this->teamManager = teamData;
+    inHallTroops = new std::vector<Unit*>();
+    inMapTroops = new std::vector<Unit*>();
+    totalTroops = new std::vector<Unit*>();
 }
 //Destroyer
 UnitManager::~UnitManager(){
     delete selectedTroop;
-    for (int i = 0; i < totalTroops.size(); i++){
-        delete totalTroops[i];
-    }
+
+    inHallTroops->clear();
+    delete inHallTroops;
+
+    inMapTroops->clear();
+    delete inMapTroops;
+
+    totalTroops->clear();
+    delete totalTroops;
 }
 //Returns all troops the player has
-std::vector < Unit* > UnitManager::getTotalTroops(){
-    return this->totalTroops;
-}
+std::vector<Unit*> *UnitManager::getTotalTroops(){
+    totalTroops->clear();
+    totalTroops->reserve( inHallTroops->size() + inMapTroops->size() ); // preallocate memory
+    totalTroops->insert( totalTroops->end(), inHallTroops->begin(), inHallTroops->end() );
+    totalTroops->insert( totalTroops->end(), inMapTroops->begin(), inMapTroops->end() );
+    return totalTroops;
+} 
 //Update all troops
 void UnitManager::updateUnitManager(){
-    for (int i = 0; i < totalTroops.size(); i++){
-        totalTroops[i]->updateTroop();
+    for (int i = 0; i < inMapTroops -> size(); i++){
+        inMapTroops -> at(i) -> updateTroop();
     }
 }
 //Create a new troops
@@ -31,14 +44,21 @@ void UnitManager::updateUnitManager(){
 void UnitManager::createTroop(Vector3<float> *vectorData, Enumeration::UnitType unitData){
     if(unitData.unitClass == Enumeration::UnitType::Ranged){
         Ranged *rangedUnit = new Ranged(unitData.unitSubClass, vectorData, this->teamManager);
-        this->totalTroops.push_back(rangedUnit);
+        this->inHallTroops -> push_back(rangedUnit);
     }
     else if (unitData.unitClass == Enumeration::UnitType::Melee)
     {
         Melee *meleeUnit = new Melee(unitData.unitSubClass, vectorData, this->teamManager);
-        this->totalTroops.push_back(meleeUnit);
+        this->inHallTroops -> push_back(meleeUnit);
     }
 }
+
+void UnitManager::deployTroop(int index){
+    this->inMapTroops->push_back(inHallTroops->at(index));
+    this->inHallTroops->erase(inHallTroops->begin() + index);
+    //ToDo: mostrar en el mapa
+}
+
 //Select a troop
 void UnitManager::selectTroop(Unit *troopData){
     this->selectedTroop = troopData;

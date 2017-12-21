@@ -11,7 +11,7 @@ CatapultNode::~CatapultNode(){
 }
 
 void CatapultNode::question() {
-    //std::cout << Genero una catapulta << std::endl;
+    std::cout << "Genero una catapulta" << std::endl;
     //ToDo: Generar catapulta
     IA::getInstance()-> increaseSiegeAmount();
 }

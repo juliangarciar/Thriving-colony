@@ -115,7 +115,7 @@ void Battle::determinateWinningSide() {
 
     if (iaPercentatge <= 0.3f) {
         // The IA is losing
-        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::RetractTroops);
+        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::RetractTroopsIA);
     } else if (iaPercentatge >= 0.7f) {
         //The player is losing
         //ToDo?: trigger algo?

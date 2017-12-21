@@ -7,9 +7,9 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
 {
     int happiness = 0;
     int cityLevel = 0;
-    irr::u32 r = 0;
-    irr::u32 g = 0;
-    irr::u32 b = 0;
+    float r = 0;
+    float g = 0;
+    float b = 0;
     switch (buildingData) {
         case Enumeration::BuildingType::Barn:
             // Different color for diferent buildings
@@ -178,18 +178,22 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
 			}
         break;
     }
-    //Graphic engine, this should be in the switch (when models done)
-    this->model = new Model(parent, id);
 
-    hitbox = new Box3D<float>(this -> model ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
-    this->model->getModel()->setPosition(pos->getVectorF());  //ToDo: esto es fachada
-    this->model->getModel()->setMaterialFlag(video::EMF_LIGHTING, false); //ToDo: esto es fachada
+    //ToDo: Graphic engine, this should be in the switch (when models done)
+    color = video::SColor(255, r, g, b); //ToDo: esto es fachada 
+    
+    this->model = new Model(parent, id);
     Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
-        model->getModel()->getMesh(), video::SColor(r, g, b, 125)
+        model->getModel()->getMesh(), color
     ); //ToDo: esto es fachada 
+    this->model->getModel()->setPosition(pos->getVectorF()); //ToDo: esto es fachada
+    this->model->getModel()->setMaterialFlag(video::EMF_LIGHTING, false); //ToDo: esto es fachada
+
+    this->hitbox = new Box3D<float>(this -> model ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
 
     this->type = (int)buildingData;
     this->position = pos;
+
     if (teamData == Enumeration::Team::Human) {
         Human::getInstance() -> increaseHappiness(happiness);
         Human::getInstance() -> increaseCityLevel(cityLevel);
@@ -197,13 +201,17 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
         IA::getInstance() -> increaseHappiness(happiness);
         IA::getInstance() -> increaseCityLevel(cityLevel);
     }
-    std::cout << this->type << std::endl;
+    //std::cout << this->type << std::endl;
 }
 
 Building::~Building() {
     
 }
 
-int Building::getType(){
+irr::video::SColor Building::getColor() {
+    return color;
+}
+
+int Building::getType(){ 
     return this->type;
 } 

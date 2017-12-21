@@ -14,7 +14,7 @@ class GameState : public State {
     
     public:
         GameState();
-        ~GameState();
+        virtual ~GameState();
 
         void Init();
         void Input();
@@ -29,8 +29,8 @@ class GameState : public State {
         Terrain *map;
         Hud * hud;
         RootNode *nodeRootIA;
-        //Try for creating units, this wont be here
-        bool unitDone = false;
+        // This is for pausing, in a future it will be a gamestate different?
+        bool gamePaused;
 };
 
 #endif
