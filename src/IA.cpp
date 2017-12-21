@@ -65,7 +65,7 @@ Vector3<float>* IA::determinatePositionBuilding() {
             v2 = it -> second -> getPosition();
             occupied = false;
             v = new Vector3<float>(v2 -> x, v2 -> y, v2 -> z + 100);
-            for (std::map<int,Building*>::iterator it2 = b->begin(); it != b->end() && occupied == false; ++it){
+            for (std::map<int,Building*>::iterator it2 = b->begin(); it2 != b->end() && occupied == false; ++it2){
                 v3 = it2 -> second -> getPosition();
                 if (v3 -> x == v -> x && v3 -> z == v -> z) {
                     occupied = true;
@@ -76,7 +76,7 @@ Vector3<float>* IA::determinatePositionBuilding() {
             } else {
                 v = new Vector3<float>(v2 -> x + 100, v2 -> y, v2 -> z);
                 occupied = false;
-                for (std::map<int,Building*>::iterator it2 = b->begin(); it != b->end() && occupied == false; ++it){
+                for (std::map<int,Building*>::iterator it2 = b->begin(); it2 != b->end() && occupied == false; ++it2){
                     v3 = it2 -> second -> getPosition();
                     if (v3 -> x == v -> x && v3 -> z == v -> z) {
                         occupied = true;
@@ -87,7 +87,7 @@ Vector3<float>* IA::determinatePositionBuilding() {
                 } else {
                     v = new Vector3<float>(v2 -> x, v2 -> y, v2 -> z - 100);
                     occupied = false;
-                    for (std::map<int,Building*>::iterator it2 = b->begin(); it != b->end() && occupied == false; ++it){
+                    for (std::map<int,Building*>::iterator it2 = b->begin(); it2 != b->end() && occupied == false; ++it2){
                         v3 = it2 -> second -> getPosition();
                         if (v3 -> x == v -> x && v3 -> z == v -> z) {
                             occupied = true;
@@ -98,7 +98,7 @@ Vector3<float>* IA::determinatePositionBuilding() {
                     } else {
                         v = new Vector3<float>(v2 -> x - 100, v2 -> y, v2 -> z);
                         occupied = false;
-                        for (std::map<int,Building*>::iterator it2 = b->begin(); it != b->end() && occupied == false; ++it){
+                        for (std::map<int,Building*>::iterator it2 = b->begin(); it2 != b->end() && occupied == false; ++it2){
                             v3 = it2 -> second -> getPosition();
                             if (v3 -> x == v -> x && v3 -> z == v -> z) {
                                 occupied = true;
