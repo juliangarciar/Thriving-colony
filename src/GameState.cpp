@@ -67,7 +67,8 @@ void GameState::Input(){
                 it = b->find(id);
                 if (it->second != NULL){
                     int t = (int)it->second->getType();
-                    hud->showPopup(t);
+                    hud->addTab(id, t);
+                    hud->showPopup(id);
                 }
             }
         }

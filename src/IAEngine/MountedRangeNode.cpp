@@ -22,9 +22,9 @@ void MountedRangeNode::question() {
             unitData.unitClass = Enumeration::UnitType::Class::Ranged; 
             unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardR;
             // WTF?
-            Vector3<float>* vectorData = new Vector3<float>();
+            //Vector3<float>* vectorData = new Vector3<float>();
 
-            IA::getInstance() -> getUnitManager() -> createTroop(vectorData, unitData);
+            IA::getInstance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {
         children[0] -> question();

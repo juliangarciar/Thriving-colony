@@ -40,6 +40,7 @@ Human* Human::getInstance() {
 
 void Human::update() {
     if (updateTimer <= 0) {
+        std::cout << "PRobando" << std::endl;
         gainResources();
         updateTimer = 1;
     } else {

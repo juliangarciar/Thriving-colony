@@ -23,9 +23,9 @@ void MeleeFootmenNode::question() {
             unitData.unitClass = Enumeration::UnitType::Class::Melee; 
             unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardM;
             // WTF?
-            Vector3<float>* vectorData = new Vector3<float>();
+            //Vector3<float>* vectorData = new Vector3<float>();
 
-            IA::getInstance() -> getUnitManager() -> createTroop(vectorData, unitData);
+            IA::getInstance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {
         children[0] -> question();
