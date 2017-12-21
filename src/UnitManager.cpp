@@ -113,19 +113,23 @@ void UnitManager::newOrder(){
 bool UnitManager::isSolvent(int metalCost, int crystalCost, Enumeration::Team team) {
     int metalAmt = 0;
     int crystalAmt = 0;
+    int citizensAmt = 0;
     if (team == Enumeration::Team::Human) {
         metalAmt = Human::getInstance() -> getMetalAmount();
         crystalAmt = Human::getInstance() -> getCrystalAmount();
+        citizensAmt = Human::getInstance() -> getCitizens();
         //std::cout << metalAmt << " - " << metalCost << std::endl;
         //std::cout << crystalAmt << " - " << crystalCost << std::endl;
     } else {
         metalAmt = IA::getInstance() -> getMetalAmount();
         crystalAmt = IA::getInstance() -> getCrystalAmount();
+        citizensAmt = IA::getInstance() -> getCitizens();
     }
     bool canPayMetal = metalAmt >= metalCost;
     bool canPayCrystal = crystalAmt >= crystalCost;
+    bool hasCitizens = citizensAmt >= 10;
 
-    return (canPayMetal && canPayCrystal);
+    return (canPayMetal && canPayCrystal && hasCitizens);
 }
 
 /**

@@ -45,7 +45,15 @@ void GameState::Init(){
     //Build the first siderurgy of IA
     v = IA::getInstance() -> determinatePositionBuilding();
     IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::IA);
-}
+
+    /*// Build the main building of Human
+    Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
+    IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::IA);
+
+    //Build the first siderurgy of Human
+    v = IA::getInstance() -> determinatePositionBuilding();
+    IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::IA);
+*/}
 
 void GameState::Input(){
     //if (gamePaused) {
