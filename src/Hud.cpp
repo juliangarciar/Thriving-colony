@@ -237,8 +237,8 @@ void Hud::getHUDEvents(){
                 int index = hallTroopList->getSelected();
                 if (index >= 0){
                     hallTroopList->removeItem(index);
-                    Vector3<float> *vectorData = new Vector3<float>(300, 300, 300);
-                    Human::getInstance()->getUnitManager()->deployTroop(index, vectorData);
+                    Vector3<float> *vectorData = new Vector3<float>(900, 900, 900);
+                    Human::getInstance()->getUnitManager()->startDeployingTroop(index);
                 }
             }
         break;

@@ -1,14 +1,19 @@
 #include "UnitManager.h"
 #include "IA.h"
 #include "Human.h"
+#include "Game.h"
 
 //Constructor
 UnitManager::UnitManager(Enumeration::Team teamData){
-    selectedTroop = 0;
+    gridAlignment = 20;
+    selectedTroop = 0; 
     this->teamManager = teamData;
     inHallTroops = new std::vector<Unit*>();
     inMapTroops = new std::vector<Unit*>();
     totalTroops = new std::vector<Unit*>();
+
+    isDeployingTroop = false;
+    currentDeployingTroop = NULL;
 }
 //Destroyer
 UnitManager::~UnitManager(){
@@ -60,11 +65,31 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData){
     return false;
 }
 
-void UnitManager::deployTroop(int index, Vector3<float> *vectorData){
+void UnitManager::deployTroopAtPosition(int index, Vector3<float> *vectorData){
     this->inHallTroops->at(index)->setPos(vectorData);
     this->inMapTroops->push_back(inHallTroops->at(index));
     this->inHallTroops->erase(inHallTroops->begin() + index);
-    //ToDo: mostrar en el mapa
+}
+
+void UnitManager::startDeployingTroop(int index){
+    if (!isDeployingTroop){
+        isDeployingTroop = true;
+        currentDeployingTroop = new Unit(new Vector3<float>(0, 0, 0), Enumeration::Team::IA);
+        this->inMapTroops->push_back(inHallTroops->at(index));
+        this->inHallTroops->erase(inHallTroops->begin() + index);
+    }
+} 
+
+void UnitManager::deployTroop(Terrain *terrain){ 
+    Game *g = Game::Instance();
+    if (isDeployingTroop && currentDeployingTroop == NULL){ 
+        Vector3<float> xyzPointCollision = terrain -> getPointCollision(g -> getCursor());
+        float x = roundf(xyzPointCollision.x / gridAlignment) * gridAlignment;
+        float y = roundf(xyzPointCollision.y / gridAlignment) * gridAlignment;
+        float z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
+
+
+    }
 }
 
 //Select a troop

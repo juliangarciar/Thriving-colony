@@ -85,7 +85,7 @@ void GameState::Update(){
         Vector3<float> cam = camera->getCamera()->getCameraPosition();
         Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
-        Human::getInstance() -> getBuildingManager() -> drawBuilding(map, (Enumeration::BuildingType)0,  Enumeration::Team::Human);
+        Human::getInstance() -> getBuildingManager() -> drawBuilding(map);
 
         Human::getInstance() -> update();
         IA::getInstance() -> update();
