@@ -40,6 +40,7 @@ class BuildingManager {
 
 		//ToDo: no se yo esto...
 		Building *tempBuilding;
+		int id;
 };
 
 #endif

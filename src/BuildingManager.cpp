@@ -12,6 +12,7 @@ BuildingManager::BuildingManager(){
 	buildingLayer = new SceneNode();
 	buildings = new std::map<int, Building*>();
 	tempBuilding = NULL;
+	id = 0;
 }
  
 BuildingManager::~BuildingManager(){
@@ -94,17 +95,17 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
 
 void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
 	if(_type == Enumeration::BuildingType::Tower) {
-		int id = std::rand();
 		buildings->insert(std::pair<int,Building*>(id, new Tower(id, buildingLayer, pos, _team)));
+		id++;
 		return;
     }
 	if (_team == Enumeration::Team::IA){
-		int id = std::rand();
 		buildings->insert(std::pair<int,Building*>(id, new Building(id, buildingLayer, _type, pos, _team)));
+		id++;
 	} else {
-		int id = std::rand();
 		tempBuilding->getModel()->setID(id);
 		buildings->insert(std::pair<int,Building*>(id, tempBuilding));
+		id++;
 	}
 }
 
