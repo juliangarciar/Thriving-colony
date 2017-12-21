@@ -15,7 +15,7 @@ class GameState : public State {
     
     public:
         GameState();
-        ~GameState();
+        virtual ~GameState();
 
         void Init();
         void Input();
@@ -24,6 +24,7 @@ class GameState : public State {
         void CleanUp();
 
         Terrain* getMap();
+        Hud* getHud();
         
     private:
     //Music try
@@ -32,9 +33,10 @@ class GameState : public State {
         CameraController *camera;
         Terrain *map;
         Hud * hud;
+        // ESTO NO VA A QUI POR QUE ESTA AQUIIIIIIIIIIIIIIIIIIIII
+        // PERO YA QUE ESTAMOS VOY A ECHAR MAS SPAGUETTI LLAMADLE ILL CHEFF RAFAELO
+        float iaUpdateTimer;
         RootNode *nodeRootIA;
-        //Try for creating units, this wont be here
-        bool unitDone = false;
         // This is for pausing, in a future it will be a gamestate different?
         bool gamePaused;
 };

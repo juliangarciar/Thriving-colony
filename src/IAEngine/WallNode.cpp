@@ -11,8 +11,9 @@ WallNode::~WallNode(){
 }
 
 void WallNode::question() {
-    std::cout << "Construyo una muralla" << std::endl;
-    Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
-    IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Wall, Enumeration::Team::IA);
-    IA::getInstance()-> increaseWallAmount();
+    //std::cout << Construyo una muralla << std::endl;
+    if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::WallMetalCost, Enumeration::BuildingCost::WallCrystalCost, Enumeration::Team::IA)) {
+        Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
+        IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Wall, Enumeration::Team::IA);
+    }
 }

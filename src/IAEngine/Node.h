@@ -10,7 +10,6 @@ class Node {
         virtual ~Node();
 
         virtual void question();
-
     protected:
         Node *father;
         Node **children;

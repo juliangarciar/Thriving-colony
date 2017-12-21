@@ -10,6 +10,7 @@ class Human : public Player {
         virtual ~Human();
         static Human* getInstance();
 
+        virtual void update();
     private:
         static Human* instance;
 };

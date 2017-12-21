@@ -7,6 +7,9 @@
 GameState::GameState() : State() {
     camera = new CameraController();
     hud = new Hud();
+
+    //IL PICCOLO SPAGUETTIO
+    iaUpdateTimer = 1;
     nodeRootIA = new RootNode();
     music = new Music();
 
@@ -55,18 +58,20 @@ void GameState::Input(){
         camera->RotateAndInclinate(Game::Instance()->getIO(), Game::Instance()->getCursor());
         camera->Zoom(Game::Instance()->getIO());
 
+
+
         Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
         if (Game::Instance()->getIO()->leftMousePressed()){
             Human::getInstance() -> getBuildingManager()->testRaycastCollisions();
             int id = Human::getInstance() -> getBuildingManager() -> getCollisionID();
             if (id != -1){
-                std::map<int,Building*> *b = Human::getInstance() -> getBuildingManager() -> getBuildings();
+                hud->showPopup(id);
+                /*std::map<int,Building*> *b = Human::getInstance() -> getBuildingManager() -> getBuildings();
                 std::map<int,Building*>::iterator it;
                 it = b->find(id);
                 if (it->second != NULL){
-                    int t = (int)it->second->getType();
-                    hud->showPopup(t);
-                }
+                    //int t = (int)it->second->getType();
+                }*/
             }
         }
     //}
@@ -83,6 +88,7 @@ void GameState::Update(){
         Vector3<float> cam = camera->getCamera()->getCameraPosition();
         Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
+<<<<<<< HEAD
         //buildingManager->drawCube(map);
         Human::getInstance() -> getBuildingManager() -> drawBuilding(map, Enumeration::BuildingType::House,  Enumeration::Team::Human);
         if(!unitDone){
@@ -95,6 +101,22 @@ void GameState::Update(){
         }
         music->updateSound();
         nodeRootIA -> question();
+=======
+        Human::getInstance() -> getBuildingManager() -> drawBuilding(map, (Enumeration::BuildingType)0,  Enumeration::Team::Human);
+
+        Human::getInstance() -> update();
+        IA::getInstance() -> update();
+        
+        // ESTO VA EN EL UPDATE DE LA IA, PERO SI ME PONGO A CAMBIARLO DA ERRORES DE LINKADO
+        // ASI QUE LO VOY A DEJAR ASI QUE FUNCIONA Y YA SE VERA QUE PASA CON LA PICCOLA ITALIA
+        // HOGAR DEL SPAGUETIO
+        if (iaUpdateTimer <= 0) {
+            nodeRootIA -> question();
+            iaUpdateTimer = 1;
+        } else {
+            iaUpdateTimer -= Window::Instance() -> getDeltaTime();
+        }
+>>>>>>> master
     //}
 }
 
@@ -108,4 +130,8 @@ void GameState::CleanUp(){
 
 Terrain* GameState::getMap() {
     return map;
+}
+
+Hud* GameState::getHud() {
+    return hud;
 }

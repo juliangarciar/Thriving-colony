@@ -3,6 +3,10 @@
 
 BehaviourTree::BehaviourTree() {
     happinessThreshold = 50;
+
+    marketMilestone = 150;
+    hospitalMilestone = 450;
+
     quarryMilestone = 300;
     mountedCreatureMilestone = 80;
     wallMilestone = 70;
@@ -26,152 +30,6 @@ BehaviourTree::~BehaviourTree() {
 
 }
 
-/**
- * Behaviour methods
- */
-/*
-void BehaviourTree::makeChoice() {
-    debugMessage();
-    //First branch: Attacking the enemy
-    if (readyToAttack()) {
-        std::cout << "Voy a atacar" << std::endl;
-        //To Do: Attack the enemy
-    } else  {
-        //Second branch: Being attacked
-        if (underAttack){
-            std::cout << "Me atacan" << std::endl;
-            //To Do:
-        } else {
-            //Third branch: Peaceful, develop the city
-            std::cout << "Voy a desarrollar la ciudad" << std::endl;
-            developCity();
-        }
-    }
-}
-
-void BehaviourTree::serviceBranch() {
-    IA::getInstance()->increaseHappiness(5);
-    std::cout << "Construyo un edificio de servicios. Tengo " << IA::getInstance()->getHappiness() << " felicidad";
-    //ToDo: Elegir el servicio a construir
-}
-
-void BehaviourTree::resourcesBranch(){
-    //First subbranch: Quarry
-    if (shortOnCrystal && IA::getInstance()->getCityLevel() >= quarryMilestone) {
-
-    IA::getInstance()->increaseQuarryAmount();
-    std::cout << "Construyo una cantera. Ahora genero " << IA::getInstance()->getCrystalProduction() << " cristal por segundo";
-        //To do: Construir Cantera
-    } else {
-        //Second subbranch: Siderurgy
-        if (shortOnMetal) {            
-            IA::getInstance()->increaseSiderurgyAmount();
-            std::cout << "Construyo una siderurgia. Ahora genero " << IA::getInstance()->getMetalProduction() << " metal por segundo";
-        }
-        
-    }
-}
-
-void BehaviourTree::unitsBranch() {
-    
-    //First subsubbranch: Melee
-    if (calculateMeleeRate() < meleeThreshold) {
-        std::cout << "Voy a hacer melees" << std::endl;
-
-        IA::getInstance() -> increaseMeleeAmount();
-        //First subsubsubbranch: Creature
-        if (IA::getInstance()->getCityLevel() >= creatureMilestone) {
-            //To do: generar criatura
-        } else {
-            //First subsubsubbranch: With creature
-            if (IA::getInstance()->getCityLevel() >= mountedCreatureMilestone) {
-                //To do: generar melees en criatura
-            } else {
-                //Second subsubsubbranch: Without creature
-                //To do: generar melees
-            }
-        }
-    } else {
-        //Second subsubbranch: Range
-        if (calculateRangeRate() < rangeThreshold) {
-            std::cout << "Voy a hacer rangos" << std::endl;
-            IA::getInstance() -> increaseRangeAmount();
-            //First subsubsubbranch: With creature
-            if (IA::getInstance()->getCityLevel() >= mountedCreatureMilestone) {
-                //To do: generar rango en criatura
-            } else {
-                //Second subsubsubbranch: Without creature
-                //To do: generar rango
-            }
-        } else {
-            //Third subsubbranch: Siege
-            //if (calculateSiegeRate() < siegeThreshold) {
-
-            std::cout << "Voy a hacer asedio" << std::endl;
-            IA::getInstance() -> increaseSiegeAmount();
-            //First subsubsubbranch: Ram
-            if (IA::getInstance()->getRamAmount() <= IA::getInstance()->getCatapultAmount()) {
-                //To do: generar ariete
-            } else {
-                //Second subsubsubbranch: Catapult
-                //To do: generar catapulta
-            }
-        }
-    }
-}
-
-
-void BehaviourTree::buildingsBranch(){
-    //First subsubbranch: Barrack
-    if (needBarracks){
-        IA::getInstance()->buildBarrack();
-        std::cout << "Construyo una barraca.";
-        //To do: construir barraca
-    } else {
-        //Second subsubbranch: Barn
-        if (needBarn) {
-            IA::getInstance()->buildBarn();
-            std::cout << "Construyo un establo";
-            //To do: construir establo
-        } else {
-            //Third subsubbranch: Workshop
-            IA::getInstance()->buildWorkshop();
-            std::cout << "Construyo un taller" << std::endl;
-            if (needWorkshop) {
-                //To do: construir taller
-            } else {
-                //Fourth subsubranch: Wall
-                if (needWall) {
-                    std::cout << "Construyo una muralla" << std::endl;
-                    IA::getInstance() -> increaseWallAmount();
-                    //To do: construir muralla
-                } else {
-                    //Fifth subsubbranch: Tower
-                    if (needTower) {
-                        std::cout << "Construyo una torre" << std::endl;
-                        IA::getInstance() -> increaseTowerAmount();
-                        //To do: construir torre
-                    }
-                }
-            }
-        }
-    }
-}
-
-void BehaviourTree::armyBranch(){
-    //First subbranch: Units
-    if (calculateArmyCitizensRate() < armyThreshold){
-        std::cout << "Voy a hacer unidades" << std::endl;
-        unitsBranch();
-    } else {
-        //Second subbranch: Buildings
-        std::cout << "Voy a hacer edificios" << std::endl;
-        if (IA::getInstance()->getBarrackBuilt() != true || (IA::getInstance()->getCityLevel() >= barnMilestone && IA::getInstance()->getBarnBuilt() != true) || (IA::getInstance()->getCityLevel() >= workshopMilestone && IA::getInstance()->getWorkshopBuilt() != true) || (IA::getInstance()->getCityLevel() >= wallMilestone && IA::getInstance()->getWallBuilt() != true) || IA::getInstance()->getCityLevel() >= towerMilestone) {
-            buildingsBranch();
-        }
-    }
-}
-*/
 /**
  * Decision making methods
  */

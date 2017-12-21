@@ -34,6 +34,12 @@ Window::Window(int width, int height) {
 	scene = device->getSceneManager();
 	gui = device->getGUIEnvironment();
 
+    for (s32 i=0; i<irr::gui::EGDC_COUNT; ++i) {
+        video::SColor col = gui->getSkin()->getColor((gui::EGUI_DEFAULT_COLOR)i);
+        col.setAlpha(225);
+        gui->getSkin()->setColor((gui::EGUI_DEFAULT_COLOR)i, col);
+    }
+
     dtThen = device->getTimer()->getTime();
 }
 

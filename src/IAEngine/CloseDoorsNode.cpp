@@ -12,6 +12,5 @@ CloseDoorsNode::~CloseDoorsNode(){
 
 void CloseDoorsNode::question() {
     std::cout << "Cierro las puertas" << std::endl;
-    //ToDo: Cerrar puertas
     Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::CloseDoorsIA);
 }

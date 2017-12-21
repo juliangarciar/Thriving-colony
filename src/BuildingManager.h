@@ -27,6 +27,8 @@ class BuildingManager {
         void drawBuilding(Terrain *terrain, Enumeration::BuildingType, Enumeration::Team);
 		void buildBuilding(Vector3<float>*, Enumeration::BuildingType, Enumeration::Team);
 
+		bool isSolvent(int, int, Enumeration::Team);
+		bool checkCanPay(Enumeration::BuildingType);
 	private:
 		SceneNode *buildingLayer;
 		SceneNode *currentCollision;
@@ -38,6 +40,7 @@ class BuildingManager {
 
 		//ToDo: no se yo esto...
 		Building *tempBuilding;
+		int id;
 };
 
 #endif

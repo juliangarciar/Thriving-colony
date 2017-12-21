@@ -1,17 +1,18 @@
-#ifndef PANEL_H
-#define PANEL_H
+#ifndef TABPANEL_H
+#define TABPANEL_H
 
 #include <irrlicht.h>
 #include <vector>
 #include <GUIEngine/Rect2D.h>
 #include <GUIEngine/Tab.h>
+#include "GUIElement.h"
 
 using namespace irr;
 
-class Panel {
+class TabPanel : public GUIElement {
     public:
-        Panel(Rect2D<int> dimPos,  int id);
-        ~Panel();
+        TabPanel(Rect2D<int> dimPos,  int id);
+        virtual ~TabPanel();
 
         Tab *addTab(const wchar_t *text, int id);
         Tab *getTab(int id);
@@ -20,7 +21,7 @@ class Panel {
         void disable();
         void changeActiveTab(int id);
 
-        gui::IGUITabControl *getTabControl();
+        gui::IGUIElement *getGUIElement();
     private:
         gui::IGUITabControl *ctrl;
 };

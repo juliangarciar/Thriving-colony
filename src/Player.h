@@ -20,6 +20,9 @@ class Player {
         int getMetalProduction();
         int getCrystalProduction();
 
+        int getMetalAmount();
+        int getCrystalAmount();
+
         int getCitizens();
 
         int getArmySize();
@@ -55,7 +58,9 @@ class Player {
         void setWorkshopBuilt(bool);
 
         /////////////////////////////////
-        void update();
+        virtual void update() = 0;
+
+        void gainResources();
 
         void increaseHappiness(int h);
         void increaseCityLevel(int lvl);
@@ -79,9 +84,15 @@ class Player {
         static void closeDoors();
         static void openDoors();
 
+        void increaseRamAmount();
+        void increaseCatapultAmount();
+
         void increaseBuildableRange();
 
+        void spendResources(int, int);
+
     protected:
+        float updateTimer;
         // Resources
         int happiness;
         int cityLevel;

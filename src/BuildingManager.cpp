@@ -12,6 +12,7 @@ BuildingManager::BuildingManager(){
 	buildingLayer = new SceneNode();
 	buildings = new std::map<int, Building*>();
 	tempBuilding = NULL;
+	id = 0;
 }
  
 BuildingManager::~BuildingManager(){
@@ -21,9 +22,11 @@ BuildingManager::~BuildingManager(){
 }
 
 void BuildingManager::setBuildingMode(Enumeration::BuildingType type){
-	if (!buildingMode){
-		buildingMode = true;
-		tempBuilding = new Building(0, buildingLayer, type, new Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+	if (checkCanPay(type)) {
+		if (!buildingMode){
+			buildingMode = true;
+			tempBuilding = new Building(0, buildingLayer, type, new Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+		}
 	}
 }
 
@@ -61,8 +64,6 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
         float z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
 
         tempBuilding -> getModel() -> setPosition(Vector3<float>(x, y, z));
-
-        //std::cout << tempBuilding -> getModel() -> getPosition() << std::endl;
 		tempBuilding -> getHitbox() -> setPosition(tempBuilding -> getModel() ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es irrlicht
 
 		/* 
@@ -93,19 +94,24 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
 }
 
 void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
-	if(_type == Enumeration::BuildingType::Tower) {
-		int id = std::rand();
-		buildings->insert(std::pair<int,Building*>(id, new Tower(id, buildingLayer, pos, _team)));
-		//buildings->push_back(
-		return;
-    }
 	if (_team == Enumeration::Team::IA){
-		int id = std::rand();
-		buildings->insert(std::pair<int,Building*>(id, new Building(id, buildingLayer, _type, pos, _team)));
+		if(_type == Enumeration::BuildingType::Tower)
+			buildings->insert(std::pair<int,Building*>(id, new Tower(id, buildingLayer, pos, _team)));
+		else
+			buildings->insert(std::pair<int,Building*>(id, new Building(id, buildingLayer, _type, pos, _team)));
+
+		id++;
 	} else {
-		int id = std::rand();
 		tempBuilding->getModel()->setID(id);
-		buildings->insert(std::pair<int,Building*>(id, tempBuilding));
+
+		if(_type == Enumeration::BuildingType::Tower)
+			buildings->insert(std::pair<int,Building*>(id, new Tower(id, buildingLayer, pos, _team)));
+		else
+			buildings->insert(std::pair<int,Building*>(id, tempBuilding));
+
+		Game::Instance()->getGameState()->getHud()->addTab(id, tempBuilding->getType());
+
+		id++;
 	}
 }
 
@@ -113,33 +119,70 @@ std::map<int, Building*>* BuildingManager::getBuildings() {
 	return buildings;
 }
 
-/*
-void BuildingManager::drawCube(Terrain *terrain){
-    Game *g = Game::Instance();
-    if (buildingMode && tempBuilding != NULL){
-        // Aqui tenemos que hacer que cuando se haya apretado el boton de nueva ventana,
-        // tambien se cree una caja en las coordenadas actuales del cursor del raton.
-        Vector3<float> xyzPointCollision = terrain -> getPointCollision(g -> getCursor());
-        
-        float x = roundf(xyzPointCollision.x / gridAlignment) * gridAlignment;
-        float y = roundf(xyzPointCollision.y / gridAlignment) * gridAlignment;
-        float z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
-        //ToDo: irr::core::aabbox3d< T >
-		tempBuilding -> getModel() -> setMaterialFlag(video::EMF_LIGHTING, false);
-		tempBuilding -> getModel() -> setPosition(core::vector3df(x,y,z));
-		bool collision = false;
-		for (int i = 0; i < buildings -> size() && !collision; i++){
-			Box3D<float> box = Box3D<float>(tempBuilding -> getModel() -> getTransformedBoundingBox());
-			collision = buildings -> at(i).intersects(box);
-		}
-		if (collision){
-			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(tempBuilding -> getModel() -> getMesh(), video::SColor(255,0,0,255));
-		} else {
-			g->getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(tempBuilding -> getModel() -> getMesh(), video::SColor(255,255,255,255));
-			if (g->getIO() -> leftMouseDown()){
-				buildingMode = false;
-				buildings -> push_back(Box3D<float>(tempBuilding -> getModel() -> getTransformedBoundingBox()));Window::Instance()->getSceneManager()
-			}
-		}
-    }
-}*/
+/**
+ * Checks if the player, either the human or the AI can afford to build a specific building 
+ */
+bool BuildingManager::isSolvent(int metalCost, int crystalCost, Enumeration::Team team) {
+	int metalAmt = 0;
+	int crystalAmt = 0;
+	if (team == Enumeration::Team::Human) {
+		metalAmt = Human::getInstance() -> getMetalAmount();
+		crystalAmt = Human::getInstance() -> getCrystalAmount();
+	} else {
+		metalAmt = IA::getInstance() -> getMetalAmount();
+		crystalAmt = IA::getInstance() -> getCrystalAmount();
+		//std::cout << metalAmt << "/" << metalCost << std::endl;
+	}
+	bool canPayMetal = metalAmt >= metalCost;
+	bool canPayCrystal = crystalAmt >= crystalCost;
+    
+    return (canPayMetal && canPayCrystal);
+}
+
+/**
+ * This method is responsible for managing calls to isSolvent() for the human, registering the type
+ * of the desired building and sending the aforementhioned method the prices. It has its own method
+ * to avoid cluttering the setBuildingMode() method, as it used to be there in the first place.
+ */
+bool BuildingManager::checkCanPay(Enumeration::BuildingType type) {
+	//ESto esta aqui para no hacer clutter arriba
+	bool canPay = false;
+
+	//CHECK IF YOU CAN PAY THE BUILDING
+	switch(type){
+        case Enumeration::BuildingType::School:
+			canPay = isSolvent(Enumeration::BuildingCost::SchoolMetalCost, Enumeration::BuildingCost::SchoolCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Market:
+			canPay = isSolvent(Enumeration::BuildingCost::MarketMetalCost, Enumeration::BuildingCost::MarketCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Hospital:
+			canPay = isSolvent(Enumeration::BuildingCost::HospitalMetalCost, Enumeration::BuildingCost::HospitalCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Siderurgy:
+			canPay = isSolvent(Enumeration::BuildingCost::SiderurgyMetalCost, Enumeration::BuildingCost::SiderurgyCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Quarry:
+			canPay = isSolvent(Enumeration::BuildingCost::QuarryMetalCost, Enumeration::BuildingCost::QuarryCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::House:
+			canPay = isSolvent(Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Barrack:
+			canPay = isSolvent(Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Barn:
+			canPay = isSolvent(Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Workshop:
+			canPay = isSolvent(Enumeration::BuildingCost::WorkshopMetalCost, Enumeration::BuildingCost::WorkshopCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Wall:
+			canPay = isSolvent(Enumeration::BuildingCost::WallMetalCost, Enumeration::BuildingCost::WallCrystalCost, Enumeration::Team::Human);
+        break;
+        case Enumeration::BuildingType::Tower:
+			canPay = isSolvent(Enumeration::BuildingCost::TowerMetalCost, Enumeration::BuildingCost::TowerCrystalCost, Enumeration::Team::Human);
+        break;
+	}
+	return canPay;
+}
