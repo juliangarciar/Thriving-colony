@@ -14,7 +14,7 @@ Terrain::Terrain(const char* heightMap){
 		core::vector3df(40.f, 10.4f, 40.f),	// scale
 		video::SColor ( 255, 255, 255, 255 ),	// vertexColor
 		5,					// maxLOD
-		scene::ETPS_17,				// patchSize
+		scene::ETPS_9,				// patchSize
 		4					// smoothFactor
     );
     //std::cout << sc->getSceneManager() << std::endl;
