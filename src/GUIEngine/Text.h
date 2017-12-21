@@ -9,7 +9,7 @@ class Text : public GUIElement {
 
     public:
         Text(Rect2D<int> dimPos, const wchar_t *text);
-        ~Text();
+        virtual ~Text();
         
         gui::IGUIElement *getGUIElement();
     private:

@@ -9,7 +9,7 @@ using namespace irr;
 class Tab : public GUIElement{
     public:
         Tab(gui::IGUITab *tab);
-        ~Tab();
+        virtual ~Tab();
 
         void addChild(GUIElement *elem);
 

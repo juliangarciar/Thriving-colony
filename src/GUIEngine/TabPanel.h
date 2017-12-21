@@ -12,7 +12,7 @@ using namespace irr;
 class TabPanel : public GUIElement {
     public:
         TabPanel(Rect2D<int> dimPos,  int id);
-        ~TabPanel();
+        virtual ~TabPanel();
 
         Tab *addTab(const wchar_t *text, int id);
         Tab *getTab(int id);

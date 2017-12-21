@@ -77,6 +77,7 @@ class Hud {
 
         Text *hallTroopText;
         ListBox *hallTroopList;
+        Button *buttonDeployTroops;
 };
 
 #endif

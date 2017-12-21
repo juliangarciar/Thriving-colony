@@ -13,7 +13,7 @@ class Button : public GUIElement{
     
     public:
         Button(Rect2D<int> dimPos, int id, const wchar_t *buttonText, const wchar_t *tooltipText);
-        ~Button();
+        virtual ~Button();
 
         bool isButtonPressed();
         void setIsPushButton(bool pushPresed);

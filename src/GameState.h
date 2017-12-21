@@ -14,7 +14,7 @@ class GameState : public State {
     
     public:
         GameState();
-        ~GameState();
+        virtual ~GameState();
 
         void Init();
         void Input();
