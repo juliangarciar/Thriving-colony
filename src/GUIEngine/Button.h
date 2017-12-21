@@ -5,14 +5,15 @@
 #include <GUIEngine/Rect2D.h>
 #include <IOEngine/InputManager.h>
 #include <IOEngine/Mouse.h>
+#include "GUIElement.h"
 
 using namespace irr;
 
-class Button {
+class Button : public GUIElement{
     
     public:
         Button(Rect2D<int> dimPos, int id, const wchar_t *buttonText, const wchar_t *tooltipText);
-        ~Button();
+        virtual ~Button();
 
         bool isButtonPressed();
         void setIsPushButton(bool pushPresed);
@@ -20,7 +21,7 @@ class Button {
 
         void setText(const wchar_t* text);
 
-        gui::IGUIButton *getButton();
+        gui::IGUIElement *getGUIElement();
     private:
         gui::IGUIButton *button;
 };

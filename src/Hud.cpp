@@ -44,7 +44,7 @@ Hud::Hud() {
     createMonster = new Button(Rect2D<int>(10, 90, 200, 30), Enumeration::idGUI::GUI_ID_CREATE_MONSTER_BUTTON, L"Crear ente.", L"Probando");
     createMachine = new Button(Rect2D<int>(10, 10, 200, 30), Enumeration::idGUI::GUI_ID_CREATE_MACHINE_BUTTON, L"Crear maquina de asedio.", L"Probando");
 
-    tabs = new Panel(Rect2D<int>(300, 300, 400, 200), 11);
+    tabs = new TabPanel(Rect2D<int>(300, 300, 400, 200), 11);
 
     mainBuildingMenu = tabs->addTab(L"Main Building", Enumeration::BuildingType::MainBuilding);
     barnMenu = tabs->addTab(L"Barn", Enumeration::BuildingType::Barn);
@@ -78,6 +78,14 @@ Hud::Hud() {
     barnMenu->addChild(createMountedRanged);
     barnMenu->addChild(createMonster);
     workshopMenu->addChild(createMachine);
+
+    //ToDo
+    hallTroopText = new Text(Rect2D<int>(20, 10, 100, 15), L"Tropas en el ayuntamiento");
+    mainBuildingMenu->addChild(hallTroopText);
+    hallTroopList = new ListBox(Rect2D<int>(10, 40, 350, 150));
+    mainBuildingMenu->addChild(hallTroopList);
+    buttonDeployTroops = new Button(Rect2D<int>(120, 10, 100, 20), Enumeration::idGUI::GUI_ID_DEPLOY_TROOPS_BUTTON, L"Deploy selected troop", L"Deploy a troop");
+    mainBuildingMenu->addChild(buttonDeployTroops);
 
     tabs->disable();
 }
@@ -133,6 +141,10 @@ Hud::~Hud() {
     delete createMountedRanged;
     delete createMonster;
     delete createMachine;
+
+    delete hallTroopText;
+    delete hallTroopList;
+    delete buttonDeployTroops;
 }
 
 void Hud::showPopup(int tabId){
@@ -197,6 +209,7 @@ void Hud::getHUDEvents(){
                 unitData.unitClass = Enumeration::UnitType::Class::Melee;
                 unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardM;
                 Human::getInstance() -> getUnitManager() -> createTroop(vectorData, unitData);
+                hallTroopList->addItem(L"Tropa melee a pie");
             }
         break;
         case Enumeration::idGUI::GUI_ID_CREATE_RANGED_TROOP_BUTTON:
@@ -206,6 +219,7 @@ void Hud::getHUDEvents(){
                 unitData.unitClass = Enumeration::UnitType::Class::Ranged;
                 unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardR;
                 Human::getInstance() -> getUnitManager() -> createTroop(vectorData, unitData);
+                hallTroopList->addItem(L"Tropa rango a pie");
             }
         break;
         case Enumeration::idGUI::GUI_ID_CREATE_MOUNTED_MELEE_TROOP_BUTTON:
@@ -215,6 +229,7 @@ void Hud::getHUDEvents(){
                 unitData.unitClass = Enumeration::UnitType::Class::Ranged;
                 unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedM;
                 Human::getInstance() -> getUnitManager() -> createTroop(vectorData, unitData);
+                hallTroopList->addItem(L"Tropa melee en montura");
             }
         break;
         case Enumeration::idGUI::GUI_ID_CREATE_MOUNTED_RANGED_TROOP_BUTTON:
@@ -224,6 +239,7 @@ void Hud::getHUDEvents(){
                 unitData.unitClass = Enumeration::UnitType::Class::Ranged;
                 unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedR;
                 Human::getInstance() -> getUnitManager() -> createTroop(vectorData, unitData);
+                hallTroopList->addItem(L"Tropa rango en montura");
             }
         break;
         case Enumeration::idGUI::GUI_ID_CREATE_MONSTER_BUTTON:
@@ -233,6 +249,7 @@ void Hud::getHUDEvents(){
                 unitData.unitClass = Enumeration::UnitType::Class::Ranged;
                 unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedM;
                 Human::getInstance() -> getUnitManager() -> createTroop(vectorData, unitData);
+                hallTroopList->addItem(L"Ente");
             }
         break;
         case Enumeration::idGUI::GUI_ID_CREATE_MACHINE_BUTTON:
@@ -242,6 +259,16 @@ void Hud::getHUDEvents(){
                 unitData.unitClass = Enumeration::UnitType::Class::Ranged;
                 unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedR;
                 Human::getInstance() -> getUnitManager() -> createTroop(vectorData, unitData);
+                hallTroopList->addItem(L"Maquina de guerra 1");
+            }
+        break;
+        case Enumeration::idGUI::GUI_ID_DEPLOY_TROOPS_BUTTON:
+            {
+                int index = hallTroopList->getSelected();
+                if (index >= 0){
+                    hallTroopList->removeItem(index);
+                    Human::getInstance()->getUnitManager()->deployTroop(index);
+                }
             }
         break;
     }

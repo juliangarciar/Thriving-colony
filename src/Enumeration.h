@@ -67,7 +67,9 @@ class Enumeration {
             GUI_ID_CREATE_MOUNTED_MELEE_TROOP_BUTTON,
             GUI_ID_CREATE_MOUNTED_RANGED_TROOP_BUTTON,
             GUI_ID_CREATE_MONSTER_BUTTON,
-            GUI_ID_CREATE_MACHINE_BUTTON
+            GUI_ID_CREATE_MACHINE_BUTTON,
+
+            GUI_ID_DEPLOY_TROOPS_BUTTON
         };
 
         enum BuildingCost {

@@ -28,6 +28,6 @@ void Button::setText(const wchar_t* text){
     button->setText(text);
 }
 
-gui::IGUIButton *Button::getButton(){
+gui::IGUIElement *Button::getGUIElement(){
     return button;
 }

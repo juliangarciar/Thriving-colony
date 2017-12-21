@@ -7,7 +7,7 @@ class MenuState : public State {
     
     public:
         MenuState();
-        ~MenuState();
+        virtual ~MenuState();
 
         void Init();
         void Input();

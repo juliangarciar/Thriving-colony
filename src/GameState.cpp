@@ -55,6 +55,8 @@ void GameState::Input(){
         camera->RotateAndInclinate(Game::Instance()->getIO(), Game::Instance()->getCursor());
         camera->Zoom(Game::Instance()->getIO());
 
+
+
         Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
         if (Game::Instance()->getIO()->leftMousePressed()){
             Human::getInstance() -> getBuildingManager()->testRaycastCollisions();
@@ -83,16 +85,8 @@ void GameState::Update(){
         Vector3<float> cam = camera->getCamera()->getCameraPosition();
         Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
-        //buildingManager->drawCube(map);
         Human::getInstance() -> getBuildingManager() -> drawBuilding(map, Enumeration::BuildingType::House,  Enumeration::Team::Human);
-        if(!unitDone){
-            Vector3<float> *vectorData = new Vector3<float>(200, 200, 200);
-            Enumeration::UnitType unitData;
-            unitData.unitClass = Enumeration::UnitType::Class::Ranged;
-            unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardR;
-            Human::getInstance()->getUnitManager()->createTroop(vectorData, unitData);
-            this->unitDone = true;
-        }
+
         Human::getInstance() -> update();
         IA::getInstance() -> update();
         
