@@ -57,8 +57,6 @@ void GameState::Input(){
         camera->RotateAndInclinate(Game::Instance()->getIO(), Game::Instance()->getCursor());
         camera->Zoom(Game::Instance()->getIO());
 
-
-
         Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
         if (Game::Instance()->getIO()->leftMousePressed()){
             Human::getInstance() -> getBuildingManager()->testRaycastCollisions();
@@ -88,6 +86,7 @@ void GameState::Update(){
         Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
         Human::getInstance() -> getBuildingManager() -> drawBuilding(map);
+        Human::getInstance() -> getUnitManager() -> deployTroop(map);
 
         Human::getInstance() -> update();
         IA::getInstance() -> update();

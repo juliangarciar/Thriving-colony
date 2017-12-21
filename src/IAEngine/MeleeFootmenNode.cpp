@@ -15,7 +15,7 @@ MeleeFootmenNode::~MeleeFootmenNode(){
 
 void MeleeFootmenNode::question() {
     if (IA::getInstance() -> getBarrackBuilt()) {
-        std::cout << "Genero un soldado a pie melee" << std::endl;
+        //std::cout << "Genero un soldado a pie melee" << std::endl;
         //Esto va en el constructor
         if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost, Enumeration::Team::IA)) {
             // Unit type

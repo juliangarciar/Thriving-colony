@@ -73,6 +73,7 @@ void UnitManager::deployTroopAtPosition(int index, Vector3<float> *vectorData){
 
 void UnitManager::startDeployingTroop(int index){
     if (!isDeployingTroop){
+        std::cout << "Cosa" << std::endl;
         isDeployingTroop = true;
         currentDeployingTroop = new Unit(new Vector3<float>(0, 0, 0), Enumeration::Team::IA);
         this->inMapTroops->push_back(inHallTroops->at(index));
@@ -83,12 +84,13 @@ void UnitManager::startDeployingTroop(int index){
 void UnitManager::deployTroop(Terrain *terrain){ 
     Game *g = Game::Instance();
     if (isDeployingTroop && currentDeployingTroop == NULL){ 
+        std::cout << "Holaaa" << std::endl;
         Vector3<float> xyzPointCollision = terrain -> getPointCollision(g -> getCursor());
         float x = roundf(xyzPointCollision.x / gridAlignment) * gridAlignment;
         float y = roundf(xyzPointCollision.y / gridAlignment) * gridAlignment;
         float z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
 
-
+        currentDeployingTroop->setPos(new Vector3<float>(x, y, z));
     }
 }
 
@@ -114,8 +116,8 @@ bool UnitManager::isSolvent(int metalCost, int crystalCost, Enumeration::Team te
     if (team == Enumeration::Team::Human) {
         metalAmt = Human::getInstance() -> getMetalAmount();
         crystalAmt = Human::getInstance() -> getCrystalAmount();
-        std::cout << metalAmt << " - " << metalCost << std::endl;
-        std::cout << crystalAmt << " - " << crystalCost << std::endl;
+        //std::cout << metalAmt << " - " << metalCost << std::endl;
+        //std::cout << crystalAmt << " - " << crystalCost << std::endl;
     } else {
         metalAmt = IA::getInstance() -> getMetalAmount();
         crystalAmt = IA::getInstance() -> getCrystalAmount();
