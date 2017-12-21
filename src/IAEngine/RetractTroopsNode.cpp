@@ -11,7 +11,6 @@ RetractTroopsNode::~RetractTroopsNode(){
 }
 
 void RetractTroopsNode::question() {
-    //std::cout << "Me retiro" << std::endl;
-    //ToDo: Retirar tropas tropas
+    std::cout << "Me retiro" << std::endl;
     Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::RetractTroopsIA);
 }

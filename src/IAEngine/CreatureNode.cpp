@@ -15,7 +15,6 @@ CreatureNode::~CreatureNode(){
 void CreatureNode::question() {
     if (IA::getInstance() -> getBarnBuilt()) {
         std::cout << "Genero una criatura" << std::endl;
-        //ToDo: Generar criatura
         if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::CreatureMetalCost, Enumeration::UnitCost::CreatureCrystalCost, Enumeration::Team::IA)) {
             // Unit type
             Enumeration::UnitType unitData; 
