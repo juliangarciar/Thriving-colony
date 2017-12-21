@@ -94,17 +94,23 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
 }
 
 void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
-	if(_type == Enumeration::BuildingType::Tower) {
-		buildings->insert(std::pair<int,Building*>(id, new Tower(id, buildingLayer, pos, _team)));
-		id++;
-		return;
-    }
 	if (_team == Enumeration::Team::IA){
-		buildings->insert(std::pair<int,Building*>(id, new Building(id, buildingLayer, _type, pos, _team)));
+		if(_type == Enumeration::BuildingType::Tower)
+			buildings->insert(std::pair<int,Building*>(id, new Tower(id, buildingLayer, pos, _team)));
+		else
+			buildings->insert(std::pair<int,Building*>(id, new Building(id, buildingLayer, _type, pos, _team)));
+
 		id++;
 	} else {
 		tempBuilding->getModel()->setID(id);
-		buildings->insert(std::pair<int,Building*>(id, tempBuilding));
+
+		if(_type == Enumeration::BuildingType::Tower)
+			buildings->insert(std::pair<int,Building*>(id, new Tower(id, buildingLayer, pos, _team)));
+		else
+			buildings->insert(std::pair<int,Building*>(id, tempBuilding));
+
+		Game::Instance()->getGameState()->getHud()->addTab(id, tempBuilding->getType());
+
 		id++;
 	}
 }

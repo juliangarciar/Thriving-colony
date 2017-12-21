@@ -62,14 +62,13 @@ void GameState::Input(){
             Human::getInstance() -> getBuildingManager()->testRaycastCollisions();
             int id = Human::getInstance() -> getBuildingManager() -> getCollisionID();
             if (id != -1){
-                std::map<int,Building*> *b = Human::getInstance() -> getBuildingManager() -> getBuildings();
+                hud->showPopup(id);
+                /*std::map<int,Building*> *b = Human::getInstance() -> getBuildingManager() -> getBuildings();
                 std::map<int,Building*>::iterator it;
                 it = b->find(id);
                 if (it->second != NULL){
-                    int t = (int)it->second->getType();
-                    hud->addTab(id, t);
-                    hud->showPopup(id);
-                }
+                    //int t = (int)it->second->getType();
+                }*/
             }
         }
     //}
@@ -86,7 +85,7 @@ void GameState::Update(){
         Vector3<float> cam = camera->getCamera()->getCameraPosition();
         Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
-        Human::getInstance() -> getBuildingManager() -> drawBuilding(map, Enumeration::BuildingType::House,  Enumeration::Team::Human);
+        Human::getInstance() -> getBuildingManager() -> drawBuilding(map, (Enumeration::BuildingType)0,  Enumeration::Team::Human);
 
         Human::getInstance() -> update();
         IA::getInstance() -> update();
@@ -113,4 +112,8 @@ void GameState::CleanUp(){
 
 Terrain* GameState::getMap() {
     return map;
+}
+
+Hud* GameState::getHud() {
+    return hud;
 }

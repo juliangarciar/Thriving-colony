@@ -23,6 +23,7 @@ class GameState : public State {
         void CleanUp();
 
         Terrain* getMap();
+        Hud* getHud();
         
     private:
         CameraController *camera;
