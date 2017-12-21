@@ -11,10 +11,13 @@ Unit::Unit(Vector3<float> *vectorData, Enumeration::Team teamData) : Entity()
     this->target = 0;
     //Position defined by the constructor parameter
     this->position = vectorData;
+    this->vectorDes = new Vector3<float>();
+    this->vectorMov = new Vector3<float>();
     //Team defined by the constructor parameter
     this->team = teamData;
     //Defining model position
-    //this->model->getModel()->setPosition(vectorData->getVectorF());
+    this->model = new Model(std::rand());
+    this->model->getModel()->setPosition(vectorData->getVectorF());
     //unitModel->getModel()->setPosition(irr::core::vector3df(vectorPos->X, vectorPos->Y, vectorPos->Z));
 }
 

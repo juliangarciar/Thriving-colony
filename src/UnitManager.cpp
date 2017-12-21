@@ -73,24 +73,31 @@ void UnitManager::deployTroopAtPosition(int index, Vector3<float> *vectorData){
 
 void UnitManager::startDeployingTroop(int index){
     if (!isDeployingTroop){
-        std::cout << "Cosa" << std::endl;
-        isDeployingTroop = true;
-        currentDeployingTroop = new Unit(new Vector3<float>(0, 0, 0), Enumeration::Team::IA);
+        currentDeployingTroop = new Unit(new Vector3<float>(900, 1800, 2000), Enumeration::Team::IA);
         this->inMapTroops->push_back(inHallTroops->at(index));
         this->inHallTroops->erase(inHallTroops->begin() + index);
+        isDeployingTroop = true;
     }
 } 
 
 void UnitManager::deployTroop(Terrain *terrain){ 
     Game *g = Game::Instance();
-    if (isDeployingTroop && currentDeployingTroop == NULL){ 
-        std::cout << "Holaaa" << std::endl;
+    if (isDeployingTroop && currentDeployingTroop != NULL){ 
         Vector3<float> xyzPointCollision = terrain -> getPointCollision(g -> getCursor());
         float x = roundf(xyzPointCollision.x / gridAlignment) * gridAlignment;
         float y = roundf(xyzPointCollision.y / gridAlignment) * gridAlignment;
         float z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
 
-        currentDeployingTroop->setPos(new Vector3<float>(x, y, z));
+
+        if (g->getIO() -> leftMouseDown()){
+            isDeployingTroop = false;
+
+            Vector3<float> *newPos = new Vector3<float>(x, y, z);
+            currentDeployingTroop->setDes(newPos);
+
+            currentDeployingTroop = NULL;
+            //buildBuilding(new Vector3<float>(x, y, z), (Enumeration::BuildingType)tempBuilding->getType(), Enumeration::Team::Human);
+        }
     }
 }
 
