@@ -7,8 +7,8 @@
 #include "Melee.h"
 class UnitManager{
     private:
-        std::vector<Unit*> *totalInHallTroops;
-        std::vector<Unit*> *totalInMapTroops;
+        std::vector<Unit*> *inHallTroops;
+        std::vector<Unit*> *inMapTroops;
 
         std::vector<Unit*> *totalTroops;
 
@@ -24,7 +24,8 @@ class UnitManager{
 
         //Call for creating new troops, see the .cpp for more info on how to insert
         //the desired unit
-        void createTroop(Vector3<float> *vectorData, Enumeration::UnitType unitData);                     
+        void createTroop(Vector3<float> *vectorData, Enumeration::UnitType unitData);
+        void deployTroop(int index);
         void selectTroop(Unit *troopData);      //Call for selecting a troop
         void newOrder();                        //Order for selected troop
 };

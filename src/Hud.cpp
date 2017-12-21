@@ -262,7 +262,11 @@ void Hud::getHUDEvents(){
         break;
         case Enumeration::idGUI::GUI_ID_DEPLOY_TROOPS_BUTTON:
             {
-                std::cout << hallTroopList->getSelected() << std::endl;
+                int index = hallTroopList->getSelected();
+                if (index >= 0){
+                    hallTroopList->removeItem(index);
+                    Human::getInstance()->getUnitManager()->deployTroop(index);
+                }
             }
         break;
     }
