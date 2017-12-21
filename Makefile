@@ -25,7 +25,7 @@ CXXFLAGS = -O3 -ffast-math -g -Wall -std=c++11 -m64 -pthread
 # Lib paths
 LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L/usr/local/lib
 # Libs
-LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lIrrlicht -lfmod -lfmodL
+LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lIrrlicht -lfmod -lfmodstudio
 
 ###-lfmodex_vc.lib -lfmod -lfmodL
 ######## DON'T EDIT ANYTHING BELOW THIS LINE

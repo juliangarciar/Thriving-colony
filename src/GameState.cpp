@@ -8,9 +8,7 @@ GameState::GameState() : State() {
     camera = new CameraController();
     hud = new Hud();
     nodeRootIA = new RootNode();
-<<<<<<< HEAD
     music = new Music();
-=======
 
     gamePaused = false;
 }
@@ -95,7 +93,7 @@ void GameState::Update(){
             Human::getInstance()->getUnitManager()->createTroop(vectorData, unitData);
             this->unitDone = true;
         }
-        
+        music->updateSound();
         nodeRootIA -> question();
     //}
 }

@@ -188,15 +188,6 @@ void Hud::getHUDEvents(){
         case Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON:
             tabs->disable();
         break;
-<<<<<<< HEAD
-        case Enumeration::idGUI::GUI_ID_CREATE_TROOP_1_BUTTON:
-            
-            //Human::getInstance()->getUnits()->createTroop(vectorData, unitData);
-            std::cout << "Hola 1" << std::endl;
-        break;
-        case Enumeration::idGUI::GUI_ID_CREATE_TROOP_2_BUTTON:
-            std::cout << "Hola 2" << std::endl;
-=======
         case Enumeration::idGUI::GUI_ID_CREATE_MELEE_TROOP_BUTTON:
             {
                 Vector3<float> *vectorData = new Vector3<float>(200, 200, 200);
@@ -250,7 +241,6 @@ void Hud::getHUDEvents(){
                 unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedR;
                 Human::getInstance() -> getUnitManager() -> createTroop(vectorData, unitData);
             }
->>>>>>> master
         break;
     }
 }
