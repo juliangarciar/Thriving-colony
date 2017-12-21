@@ -11,7 +11,7 @@ CatapultNode::~CatapultNode(){
 }
 
 void CatapultNode::question() {
-    std::cout << "Genero una catapulta" << std::endl;
+    //std::cout << "Genero una catapulta" << std::endl;
     //ToDo: Generar catapulta
     //TODO PRECIO
     //IA::getInstance()-> increaseSiegeAmount();
@@ -21,8 +21,8 @@ void CatapultNode::question() {
         unitData.unitClass = Enumeration::UnitType::Class::Ranged; // ????????????
         unitData.unitSubClass = Enumeration::UnitType::SubClass::Launcher;
         // WTF?
-        Vector3<float>* vectorData = new Vector3<float>();
+        //Vector3<float>* vectorData = new Vector3<float>();
 
-        IA::getInstance() -> getUnitManager() -> createTroop(vectorData, unitData);
+        IA::getInstance() -> getUnitManager() -> createTroop(unitData);
     }
 }

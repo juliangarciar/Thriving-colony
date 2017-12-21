@@ -11,7 +11,7 @@ MeleeFootmenNode::~MeleeFootmenNode(){
 }
 
 void MeleeFootmenNode::question() {
-    std::cout << "Genero un soldado a pie melee" << std::endl;
+    //std::cout << "Genero un soldado a pie melee" << std::endl;
     //ToDo: Generar soldado a pie melee
     //Esto va en el constructor
     //IA::getInstance()-> increaseMeleeAmount();
@@ -21,8 +21,8 @@ void MeleeFootmenNode::question() {
         unitData.unitClass = Enumeration::UnitType::Class::Melee; 
         unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardM;
         // WTF?
-        Vector3<float>* vectorData = new Vector3<float>();
+        //Vector3<float>* vectorData = new Vector3<float>();
 
-        IA::getInstance() -> getUnitManager() -> createTroop(vectorData, unitData);
+        IA::getInstance() -> getUnitManager() -> createTroop(unitData);
     }
 }

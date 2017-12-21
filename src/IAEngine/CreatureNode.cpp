@@ -12,7 +12,7 @@ CreatureNode::~CreatureNode(){
 
 void CreatureNode::question() {
     //IA::getInstance()-> increaseMeleeAmount();
-    std::cout << "Genero una criatura" << std::endl;
+    //std::cout << "Genero una criatura" << std::endl;
     //ToDo: Generar criatura
     if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::CreatureMetalCost, Enumeration::UnitCost::CreatureCrystalCost, Enumeration::Team::IA)) {
         // Unit type
@@ -20,8 +20,8 @@ void CreatureNode::question() {
         unitData.unitClass = Enumeration::UnitType::Class::Melee; 
         unitData.unitSubClass = Enumeration::UnitType::SubClass::Idol; //????????
         // WTF?
-        Vector3<float>* vectorData = new Vector3<float>();
+        //Vector3<float>* vectorData = new Vector3<float>();
 
-        IA::getInstance() -> getUnitManager() -> createTroop(vectorData, unitData);
+        IA::getInstance() -> getUnitManager() -> createTroop(unitData);
     }
 }

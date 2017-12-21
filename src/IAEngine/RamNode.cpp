@@ -11,7 +11,7 @@ RamNode::~RamNode(){
 }
 
 void RamNode::question() {
-    std::cout << "Genero un ariete" << std::endl;
+    //std::cout << "Genero un ariete" << std::endl;
     //ToDo: Generar ariete
     //IA::getInstance()-> increaseSiegeAmount();
     if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::RamMetalCost, Enumeration::UnitCost::RamCrystalCost, Enumeration::Team::IA)) {
@@ -20,8 +20,8 @@ void RamNode::question() {
         unitData.unitClass = Enumeration::UnitType::Class::Ranged; // ????????????
         unitData.unitSubClass = Enumeration::UnitType::SubClass::Desintegrator;
         // WTF?
-        Vector3<float>* vectorData = new Vector3<float>();
+        //Vector3<float>* vectorData = new Vector3<float>();
 
-        IA::getInstance() -> getUnitManager() -> createTroop(vectorData, unitData);
+        IA::getInstance() -> getUnitManager() -> createTroop(unitData);
     }
 }

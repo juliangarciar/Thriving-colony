@@ -12,7 +12,7 @@ BarrackNode::~BarrackNode(){
 }
 
 void BarrackNode::question() {
-    std::cout << "Construyo un cuartel" << std::endl;
+    //std::cout << "Construyo un cuartel" << std::endl;
     //ToDo: Mirar coordenadas donde construir y ponerselas en el vector3
     //TODO PRECIO
     if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost, Enumeration::Team::IA)) {

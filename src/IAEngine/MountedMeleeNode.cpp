@@ -11,7 +11,7 @@ MountedMeleeNode::~MountedMeleeNode(){
 }
 
 void MountedMeleeNode::question() {
-    std::cout << "Genero un soldado montado melee" << std::endl;
+    //std::cout << "Genero un soldado montado melee" << std::endl;
     //ToDo: Generar soldado montado melee
     //IA::getInstance()-> increaseMeleeAmount();
     if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MountedMeleeMetalCost, Enumeration::UnitCost::MountedMeleeCrystalCost, Enumeration::Team::IA)) {
@@ -20,8 +20,8 @@ void MountedMeleeNode::question() {
         unitData.unitClass = Enumeration::UnitType::Class::Melee; 
         unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedM;
         // WTF?
-        Vector3<float>* vectorData = new Vector3<float>();
+        //Vector3<float>* vectorData = new Vector3<float>();
 
-        IA::getInstance() -> getUnitManager() -> createTroop(vectorData, unitData);
+        IA::getInstance() -> getUnitManager() -> createTroop(unitData);
     }
 }

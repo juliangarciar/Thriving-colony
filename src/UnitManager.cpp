@@ -43,21 +43,25 @@ void UnitManager::updateUnitManager(){
 //Enumeration::UnitType unitData; 
 //unitData.unitClass = Enumeration::UnitType::Class::Ranged; 
 //unitData.unitSubClass = Enumeration::UnitType::SubClass::Idol;
-void UnitManager::createTroop(Vector3<float> *vectorData, Enumeration::UnitType unitData){
+bool UnitManager::createTroop(Enumeration::UnitType unitData){
     if (checkCanPay(unitData.unitSubClass)) {
         if(unitData.unitClass == Enumeration::UnitType::Ranged){
-            Ranged *rangedUnit = new Ranged(unitData.unitSubClass, vectorData, this->teamManager);
+            Ranged *rangedUnit = new Ranged(unitData.unitSubClass, new Vector3<float>(), this->teamManager);
             this->inHallTroops -> push_back(rangedUnit);
+            return true;
         }
         else if (unitData.unitClass == Enumeration::UnitType::Melee)
         {
-            Melee *meleeUnit = new Melee(unitData.unitSubClass, vectorData, this->teamManager);
+            Melee *meleeUnit = new Melee(unitData.unitSubClass, new Vector3<float>(), this->teamManager);
             this->inHallTroops -> push_back(meleeUnit);
+            return true;
         }
     }
+    return false;
 }
 
-void UnitManager::deployTroop(int index){
+void UnitManager::deployTroop(int index, Vector3<float> *vectorData){
+    this->inHallTroops->at(index)->setPos(vectorData);
     this->inMapTroops->push_back(inHallTroops->at(index));
     this->inHallTroops->erase(inHallTroops->begin() + index);
     //ToDo: mostrar en el mapa
@@ -85,10 +89,11 @@ bool UnitManager::isSolvent(int metalCost, int crystalCost, Enumeration::Team te
     if (team == Enumeration::Team::Human) {
         metalAmt = Human::getInstance() -> getMetalAmount();
         crystalAmt = Human::getInstance() -> getCrystalAmount();
+        std::cout << metalAmt << " - " << metalCost << std::endl;
+        std::cout << crystalAmt << " - " << crystalCost << std::endl;
     } else {
         metalAmt = IA::getInstance() -> getMetalAmount();
         crystalAmt = IA::getInstance() -> getCrystalAmount();
-        ////std::cout << metalAmt << "/" << metalCost << std::endl;
     }
     bool canPayMetal = metalAmt >= metalCost;
     bool canPayCrystal = crystalAmt >= crystalCost;
