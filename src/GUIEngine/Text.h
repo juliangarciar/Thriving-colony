@@ -9,9 +9,14 @@ class Text : public GUIElement {
 
     public:
         Text(Rect2D<int> dimPos, const wchar_t *text);
+        Text(Rect2D<int> dimPos, const wchar_t *text, bool bg);
         virtual ~Text();
         
         gui::IGUIElement *getGUIElement();
+        void setText(const wchar_t *text);
+
+        void disable();
+        void enable();
     private:
         gui::IGUIStaticText *text;
 };

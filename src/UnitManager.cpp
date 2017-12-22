@@ -1,14 +1,19 @@
 #include "UnitManager.h"
 #include "IA.h"
 #include "Human.h"
+#include "Game.h"
 
 //Constructor
 UnitManager::UnitManager(Enumeration::Team teamData){
-    selectedTroop = 0;
+    gridAlignment = 20;
+    selectedTroop = 0; 
     this->teamManager = teamData;
     inHallTroops = new std::vector<Unit*>();
     inMapTroops = new std::vector<Unit*>();
     totalTroops = new std::vector<Unit*>();
+
+    isDeployingTroop = false;
+    currentDeployingTroop = -1;
 }
 //Destroyer
 UnitManager::~UnitManager(){
@@ -46,13 +51,15 @@ void UnitManager::updateUnitManager(){
 bool UnitManager::createTroop(Enumeration::UnitType unitData){
     if (checkCanPay(unitData.unitSubClass)) {
         if(unitData.unitClass == Enumeration::UnitType::Ranged){
-            Ranged *rangedUnit = new Ranged(unitData.unitSubClass, new Vector3<float>(), this->teamManager);
+            Ranged *rangedUnit = new Ranged(std::rand(), unitData.unitSubClass, Vector3<float>(), this->teamManager);
+            rangedUnit->getModel()->setActive(false);
             this->inHallTroops -> push_back(rangedUnit);
             return true;
         }
         else if (unitData.unitClass == Enumeration::UnitType::Melee)
         {
-            Melee *meleeUnit = new Melee(unitData.unitSubClass, new Vector3<float>(), this->teamManager);
+            Melee *meleeUnit = new Melee(std::rand(), unitData.unitSubClass, Vector3<float>(), this->teamManager);
+            meleeUnit->getModel()->setActive(false);
             this->inHallTroops -> push_back(meleeUnit);
             return true;
         }
@@ -60,11 +67,38 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData){
     return false;
 }
 
-void UnitManager::deployTroop(int index, Vector3<float> *vectorData){
-    this->inHallTroops->at(index)->setPos(vectorData);
+void UnitManager::deployTroopAtPosition(int index, Vector3<float> vectorData){
+    this->inHallTroops->at(index)->setPosition(vectorData);
     this->inMapTroops->push_back(inHallTroops->at(index));
     this->inHallTroops->erase(inHallTroops->begin() + index);
-    //ToDo: mostrar en el mapa
+}
+
+void UnitManager::startDeployingTroop(int index){ 
+    Game *g = Game::Instance();
+    if (!isDeployingTroop){
+        isDeployingTroop = true;
+        currentDeployingTroop = index;
+        g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_CROSS); //ToDo: fachada
+    }
+} 
+
+void UnitManager::deployTroop(Terrain *terrain){ 
+    Game *g = Game::Instance();
+    if (isDeployingTroop && currentDeployingTroop >= 0 && g->getIO() -> leftMouseDown()){ 
+        Unit *temp = inHallTroops->at(currentDeployingTroop);
+
+        this->inHallTroops->erase(inHallTroops->begin() + currentDeployingTroop);
+        this->inMapTroops->push_back(temp);
+
+        temp->setTroopPosition(Vector3<float>(HUMAN_CITY_HALL_X, terrain->getY(HUMAN_CITY_HALL_X, HUMAN_CITY_HALL_Z), HUMAN_CITY_HALL_Z)); //ToDo
+        temp->setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
+        temp->getModel()->setActive(true);
+        
+        g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NORMAL); //ToDo: fachada
+
+        currentDeployingTroop = -1;
+        isDeployingTroop = false;
+    }
 }
 
 //Select a troop
@@ -76,7 +110,7 @@ void UnitManager::newOrder(){
 
 }
 
-//////PARTE DE LA ECONOMIA PARA
+//////PARTE DE LA ECONOMIA PARA RAFA
 
 /**
  * Checks if the player, either the human or the AI can afford to build a specific building 
@@ -86,19 +120,23 @@ void UnitManager::newOrder(){
 bool UnitManager::isSolvent(int metalCost, int crystalCost, Enumeration::Team team) {
     int metalAmt = 0;
     int crystalAmt = 0;
+    int citizensAmt = 0;
     if (team == Enumeration::Team::Human) {
         metalAmt = Human::getInstance() -> getMetalAmount();
         crystalAmt = Human::getInstance() -> getCrystalAmount();
-        std::cout << metalAmt << " - " << metalCost << std::endl;
-        std::cout << crystalAmt << " - " << crystalCost << std::endl;
+        citizensAmt = Human::getInstance() -> getCitizens();
+        //std::cout << metalAmt << " - " << metalCost << std::endl;
+        //std::cout << crystalAmt << " - " << crystalCost << std::endl;
     } else {
         metalAmt = IA::getInstance() -> getMetalAmount();
         crystalAmt = IA::getInstance() -> getCrystalAmount();
+        citizensAmt = IA::getInstance() -> getCitizens();
     }
     bool canPayMetal = metalAmt >= metalCost;
     bool canPayCrystal = crystalAmt >= crystalCost;
+    bool hasCitizens = citizensAmt >= 10;
 
-    return (canPayMetal && canPayCrystal);
+    return (canPayMetal && canPayCrystal && hasCitizens);
 }
 
 /**

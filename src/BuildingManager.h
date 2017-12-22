@@ -24,8 +24,8 @@ class BuildingManager {
 		std::map<int, Building*>* getBuildings();
 
 		void setBuildingMode(Enumeration::BuildingType);
-        void drawBuilding(Terrain *terrain, Enumeration::BuildingType, Enumeration::Team);
-		void buildBuilding(Vector3<float>*, Enumeration::BuildingType, Enumeration::Team);
+        void drawBuilding(Terrain *terrain);
+		void buildBuilding(Vector3<float>, Enumeration::BuildingType, Enumeration::Team);
 
 		bool isSolvent(int, int, Enumeration::Team);
 		bool checkCanPay(Enumeration::BuildingType);

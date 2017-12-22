@@ -13,7 +13,7 @@ HomeNode::~HomeNode(){
 void HomeNode::question() {
     //std::cout << "Voy a invertir en casas" << std::endl;
     if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost, Enumeration::Team::IA)) {
-        Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
+        Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();
         IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::House, Enumeration::Team::IA);
     }
 }

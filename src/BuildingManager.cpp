@@ -14,7 +14,7 @@ BuildingManager::BuildingManager(){
 	tempBuilding = NULL;
 	id = 0;
 }
- 
+
 BuildingManager::~BuildingManager(){
 	delete tempBuilding;
 	delete buildingLayer;
@@ -25,7 +25,7 @@ void BuildingManager::setBuildingMode(Enumeration::BuildingType type){
 	if (checkCanPay(type)) {
 		if (!buildingMode){
 			buildingMode = true;
-			tempBuilding = new Building(0, buildingLayer, type, new Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+			tempBuilding = new Building(0, buildingLayer, type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
 		}
 	}
 }
@@ -50,7 +50,7 @@ std::string BuildingManager::getCollisionName(){
 	return NULL;
 }
 
-void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _type, Enumeration::Team _team){
+void BuildingManager::drawBuilding(Terrain *terrain){
     Game *g = Game::Instance();
     if (buildingMode && tempBuilding != NULL){
         // Aqui tenemos que hacer que cuando se haya apretado el boton de nueva ventana,
@@ -81,19 +81,21 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
 			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
 				tempBuilding -> getModel() -> getModel() -> getMesh(), tempBuilding -> getColor()
 			); //ToDo: esto es fachada
+			
 			/*
 			* If there is no collision and the player press left button of the mouse,
 			* build the building
 			*/
 			if (g->getIO() -> leftMouseDown()){
 				buildingMode = false;
-				buildBuilding(new Vector3<float>(x, y, z), _type, _team);
+				buildBuilding(Vector3<float>(x, y, z), (Enumeration::BuildingType)tempBuilding->getType(), Enumeration::Team::Human);
+				tempBuilding = NULL;
 			}
 		}
     }
 }
 
-void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
+void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
 	if (_team == Enumeration::Team::IA){
 		if(_type == Enumeration::BuildingType::Tower)
 			buildings->insert(std::pair<int,Building*>(id, new Tower(id, buildingLayer, pos, _team)));
@@ -102,6 +104,9 @@ void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingTy
 
 		id++;
 	} else {
+		if (tempBuilding == NULL){
+			tempBuilding = new Building(id, buildingLayer, _type, pos, _team);
+		}
 		tempBuilding->getModel()->setID(id);
 
 		if(_type == Enumeration::BuildingType::Tower)
@@ -112,7 +117,10 @@ void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingTy
 		Game::Instance()->getGameState()->getHud()->addTab(id, tempBuilding->getType());
 
 		id++;
+		tempBuilding = NULL;
+		Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);
 	}
+	
 }
 
 std::map<int, Building*>* BuildingManager::getBuildings() {

@@ -4,7 +4,7 @@
 
 //The teamData and vectorData are passed to the father, because as the melee class,
 //also share the same components
-Ranged::Ranged(Enumeration::UnitType::SubClass unitData, Vector3<float> *vectorData, Enumeration::Team teamData) : Unit(vectorData, teamData)
+Ranged::Ranged(int id, Enumeration::UnitType::SubClass unitData, Vector3<float> vectorData, Enumeration::Team teamData) : Unit(id, vectorData, teamData)
 {
 
     int metalCost = 0;
@@ -67,10 +67,7 @@ Ranged::Ranged(Enumeration::UnitType::SubClass unitData, Vector3<float> *vectorD
     }
     //Graphic engine, this should be in the switch (when models done)
     //this->hitbox = new Box3D<float>();
-    this->modelLayer = new SceneNode();
-    this->model = new Model(modelLayer, std::rand()); //ToDo: cambiar
-    this->model->getModel()->setPosition(vectorData->getVectorF());
-    this->model->getModel()->setMaterialFlag(video::EMF_LIGHTING, false);
+    //this->modelLayer = new SceneNode();
     Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(125, 125, 0, 125));
     this->type = unitData;
 

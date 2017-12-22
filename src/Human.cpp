@@ -8,7 +8,7 @@ Human::Human() : Player() {
     siderurgyAmount = 1;
     quarryAmount= 0;
     
-    citizens = 0;
+    citizens = 500; //ToDo: bajar a 10 o asi
 
     armySize = 0;
     meleeAmount = 0;
@@ -22,6 +22,7 @@ Human::Human() : Player() {
     barnBuilt = false;
     workshopBuilt = false;
 
+    
     units = new UnitManager(Enumeration::Team::Human);
 }
 
@@ -40,7 +41,7 @@ Human* Human::getInstance() {
 
 void Human::update() {
     if (updateTimer <= 0) {
-        std::cout << "PRobando" << std::endl;
+        //std::cout << "PRobando" << std::endl;
         gainResources();
         updateTimer = 1;
     } else {

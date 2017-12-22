@@ -1,25 +1,26 @@
 #include "Unit.h"
+#include "Game.h"
 
-
-Unit::Unit(Vector3<float> *vectorData, Enumeration::Team teamData) : Entity()
-{
-    
+Unit::Unit(int id, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(id) {
     //Actions of the units
     this->moving = false;
     this->attacking = false;
     //Default target
     this->target = 0;
     //Position defined by the constructor parameter
-    this->position = vectorData;
+    this->vectorPos = new Vector3<float>();
+    this->vectorDes = new Vector3<float>();
+    this->vectorMov = new Vector3<float>();
     //Team defined by the constructor parameter
     this->team = teamData;
     //Defining model position
-    //this->model->getModel()->setPosition(vectorData->getVectorF());
+    this->model->getModel()->setPosition(vectorData.getVectorF());
     //unitModel->getModel()->setPosition(irr::core::vector3df(vectorPos->X, vectorPos->Y, vectorPos->Z));
 }
 
 Unit::~Unit() {
     delete target;
+    delete vectorPos;
     delete vectorDes;
     delete vectorMov;
 }
@@ -41,6 +42,42 @@ void Unit::setMoving(bool movingPnt) {
 void Unit::setAttacking(bool attackingPnt) {
     attacking = attackingPnt;
 }
+void Unit::moveTroop() {
+    if (moving) {
+        if (std::abs(vectorDes->x - position->x) < 5.0 && std::abs(vectorDes->z - position->z) < 5.0) {
+            moving = false;
+        } else {
+            this->setTroopPosition(*vectorPos + *vectorMov);
+        }
+    }
+}
+
+void Unit::updateTroop() {
+    moveTroop();
+}
+
+void Unit::setTroopPosition(Vector3<float> vectorData) {
+    this->vectorPos->set(vectorData);
+    this->setPosition(vectorData);
+}
+
+void Unit::setTroopDestination(Vector3<float> vectorData) {
+    vectorDes->set(vectorData);
+
+    Vector3<float> desp = *vectorDes - *vectorPos;
+
+    float distance = std::abs(std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2)));
+
+    vectorMov->x = (desp.x / distance) * moveSpeed * Game::Instance()->getWindow()->getDeltaTime();
+    vectorMov->z = (desp.z / distance) * moveSpeed * Game::Instance()->getWindow()->getDeltaTime();
+
+    moving = true;
+}
+
+Model* Unit::getModel() {
+    return this->model;
+}
+
 /*
 void Unit::assignBattle(Battle* _battle) {
     battleInvolved = _battle;
@@ -53,49 +90,3 @@ void Unit::updateTarget() {
         target = battleInvolved -> getClosestTarget(*position, Enumeration::Team::Human);
     }
 }*/
-void Unit::moveTroop()
-{
-    if (moving)
-    {
-
-        if (std::abs(vectorDes->x - position->x) < 5.0 && std::abs(vectorDes->z - position->z) < 5.0)
-        {
-            moving = false;
-        }
-        else
-        {
-            //position = model->getModel()->getPosition();
-            position->x += vectorMov->x;
-            position->z += vectorMov->z;
-            model->getModel()->setPosition(position->getVectorF());
-        }
-    }
-}
-void Unit::updateTroop()
-{
-    moveTroop();
-}
-void Unit::setPos(Vector3<float> *vectorData)
-{
-    this->position = vectorData;
-}
-void Unit::setDes(Vector3<float> *vectorData)
-{
-    vectorDes->x = vectorData->x;
-    vectorDes->z = vectorData->z;
-
-    float distance, distX, distZ;
-    
-    distX = vectorData->x - position->x;
-    distZ = vectorData->z - position->z;
-    distance = sqrt(std::abs(distX) + std::abs(distZ));
-
-    vectorMov->x = (distX / distance) * moveSpeed / 10;
-    vectorMov->z = (distZ / distance) * moveSpeed / 10;
-
-    moving = true;
-}
-
-Model* Unit::getModel(){
-    return this->model;
-}

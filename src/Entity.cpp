@@ -1,15 +1,17 @@
 #include "Entity.h"
 
-Entity::Entity() {
+Entity::Entity(int id) {
+    this->ID = id;
     //ToDo: hacer aumento de felicidad, tropas nivel y tal
+    model = new Model(id);
     hitbox = new Box3D<float>();
+    position = new Vector3<float>();
 }
 
 Entity::~Entity() {
     delete position;
     delete hitbox;
     delete model;
-    delete modelLayer;
 }
 
 int Entity::getHP() {
@@ -29,7 +31,12 @@ void Entity::takeDamage(int dmg) {
 }
 
 void Entity::die() {
-    delete this;
+    delete this; 
+}
+
+void Entity::setPosition(Vector3<float> vectorData){
+    this->position->set(vectorData);
+    this->model->setPosition(vectorData);
 }
 
 Vector3<float>* Entity::getPosition() {

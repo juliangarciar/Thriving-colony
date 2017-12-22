@@ -3,6 +3,7 @@
 
 #include "Player.h"
 #include "IAEngine/BehaviourTree.h"
+#include "IAEngine/RootNode.h"
 
 class IA : public Player {
     
@@ -13,12 +14,14 @@ class IA : public Player {
 
         BehaviourTree* getTree();
 
-        Vector3<float>* determinatePositionBuilding();
+        Vector3<float> determinatePositionBuilding();
         virtual void update();
     private:
         
         static IA* instance;
         BehaviourTree* tree;
+        RootNode *nodeRootIA;
+
 };
 
 #endif

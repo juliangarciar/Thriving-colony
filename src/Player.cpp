@@ -179,7 +179,14 @@ void Player::spendResources(int metalCost, int crystalCost) {
 }
 
 void Player::increaseHappiness(int h) {
+    //clamp mejor?
     happiness += h;
+    if (happiness <= -100) {
+        happiness = -100;
+    }
+    if (happiness >= 100) {
+        happiness = 100;
+    }
 }
 
 void Player::increaseCityLevel(int lvl) {

@@ -5,12 +5,10 @@
 #include "SoundEngine/Music.h"
 
 GameState::GameState() : State() {
-    camera = new CameraController();
+    map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
+    camera = new CameraController(map);
     hud = new Hud();
 
-    //IL PICCOLO SPAGUETTIO
-    iaUpdateTimer = 1;
-    nodeRootIA = new RootNode();
     music = new Music();
     this->MusicSystem = new Music();
     this->MusicSystem->setPause(false);
@@ -18,7 +16,6 @@ GameState::GameState() : State() {
 }
 
 GameState::~GameState() {
-    delete nodeRootIA;
     delete camera;
     delete hud;
     delete map;
@@ -26,7 +23,6 @@ GameState::~GameState() {
 }
 
 void GameState::Init(){
-    map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
     map->setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
 
     //Initialize the event system
@@ -42,24 +38,40 @@ void GameState::Init(){
     Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::OpenDoorsHuman, Human::openDoors);
     Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::CloseDoorsHuman, Human::closeDoors);
 
+    //Hud events
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::EnableText, Hud::drawWarning);
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DisableText, Hud::deleteWarning);
+
     // Build the main building of IA
-    Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
+    Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();
     IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::IA);
 
     //Build the first siderurgy of IA
     v = IA::getInstance() -> determinatePositionBuilding();
     IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::IA);
+
+    // Build the main building of Human
+
+    v.x = HUMAN_CITY_HALL_X;
+    v.z = HUMAN_CITY_HALL_Z; 
+    v.y = map -> getY(v.x, v.z);
+    Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::Human);
+
+    //Build the first siderurgy of Human
+    v.z = HUMAN_CITY_HALL_Z+100;
+    v.y = map -> getY(v.x, v.z);
+    Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::Human);
 }
 
 void GameState::Input(){
     //if (gamePaused) {
         hud->getHUDEvents();
 
+        hud ->update();
+
         camera->Move(Game::Instance()->getIO(), Game::Instance()->getCursor());
         camera->RotateAndInclinate(Game::Instance()->getIO(), Game::Instance()->getCursor());
         camera->Zoom(Game::Instance()->getIO());
-
-
 
         Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
         if (Game::Instance()->getIO()->leftMousePressed()){
@@ -84,25 +96,18 @@ void GameState::Update(){
         //gamePaused = !gamePaused;
     //}
     //if (gamePaused) {
-        camera->Update(map, Game::Instance()->getWindow()->getDeltaTime());
+        camera->Update(Game::Instance()->getWindow()->getDeltaTime());
 
         Vector3<float> cam = camera->getCamera()->getCameraPosition();
         Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
-        Human::getInstance() -> getBuildingManager() -> drawBuilding(map, (Enumeration::BuildingType)0,  Enumeration::Team::Human);
+        Human::getInstance() -> getBuildingManager() -> drawBuilding(map);
+        Human::getInstance() -> getUnitManager() -> deployTroop(map);
+
+        Human::getInstance() -> getUnitManager() -> updateUnitManager();
 
         Human::getInstance() -> update();
         IA::getInstance() -> update();
-        
-        // ESTO VA EN EL UPDATE DE LA IA, PERO SI ME PONGO A CAMBIARLO DA ERRORES DE LINKADO
-        // ASI QUE LO VOY A DEJAR ASI QUE FUNCIONA Y YA SE VERA QUE PASA CON LA PICCOLA ITALIA
-        // HOGAR DEL SPAGUETIO
-        if (iaUpdateTimer <= 0) {
-            nodeRootIA -> question();
-            iaUpdateTimer = 1;
-        } else {
-            iaUpdateTimer -= Window::Instance() -> getDeltaTime();
-        }
         MusicSystem->playVoice("UnitMovementDroraniaMeleeS");
         MusicSystem->updateSound();
     //}

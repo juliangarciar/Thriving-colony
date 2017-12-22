@@ -15,7 +15,7 @@ MountedRangeNode::~MountedRangeNode(){
 
 void MountedRangeNode::question() {
     if (IA::getInstance() -> getBarnBuilt()) {
-        std::cout << "Genero un soldado montado de rango" << std::endl;
+        //std::cout << "Genero un soldado montado de rango" << std::endl;
         if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MountedRangedMetalCost, Enumeration::UnitCost::MountedRangedCrystalCost, Enumeration::Team::IA)) {
             // Unit type
             Enumeration::UnitType unitData; 
