@@ -31,7 +31,8 @@ Hud::Hud() {
     tabs = new TabPanel(Rect2D<int>(300, 300, 400, 200), 0);
     tabs->disable();
 
-    this->addTab(0, Enumeration::BuildingType::MainBuilding);
+    //this->addTab(0, Enumeration::BuildingType::MainBuilding);
+    
     updateTimer = 0.5;
     resourceText = new Text(Rect2D<int>(200, 0, 100, 55), L"Hola mundo", true);
     // Solo de debug

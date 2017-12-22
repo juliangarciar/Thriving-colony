@@ -25,7 +25,7 @@ void BuildingManager::setBuildingMode(Enumeration::BuildingType type){
 	if (checkCanPay(type)) {
 		if (!buildingMode){
 			buildingMode = true;
-			tempBuilding = new Building(0, buildingLayer, type, new Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+			tempBuilding = new Building(0, buildingLayer, type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
 		}
 	}
 }
@@ -88,14 +88,14 @@ void BuildingManager::drawBuilding(Terrain *terrain){
 			*/
 			if (g->getIO() -> leftMouseDown()){
 				buildingMode = false;
-				buildBuilding(new Vector3<float>(x, y, z), (Enumeration::BuildingType)tempBuilding->getType(), Enumeration::Team::Human);
+				buildBuilding(Vector3<float>(x, y, z), (Enumeration::BuildingType)tempBuilding->getType(), Enumeration::Team::Human);
 				tempBuilding = NULL;
 			}
 		}
     }
 }
 
-void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
+void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
 	if (_team == Enumeration::Team::IA){
 		if(_type == Enumeration::BuildingType::Tower)
 			buildings->insert(std::pair<int,Building*>(id, new Tower(id, buildingLayer, pos, _team)));

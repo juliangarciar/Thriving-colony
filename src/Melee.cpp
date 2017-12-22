@@ -4,7 +4,7 @@
 
 //The teamData and vectorData are passed to the father, because as the ranged class,
 //also share the same components
-Melee::Melee(Enumeration::UnitType::SubClass unitData, Vector3<float> vectorData, Enumeration::Team teamData) : Unit(vectorData, teamData)
+Melee::Melee(int id, Enumeration::UnitType::SubClass unitData, Vector3<float> vectorData, Enumeration::Team teamData) : Unit(id, vectorData, teamData)
 {
     int metalCost = 0;
     int crystalCost = 0;
@@ -56,8 +56,8 @@ Melee::Melee(Enumeration::UnitType::SubClass unitData, Vector3<float> vectorData
         break;
     }
     //Graphic engine, this should be in the switch (when models done)
-    this->modelLayer = new SceneNode();
-    this->model = new Model(modelLayer, std::rand()); //ToDo: cambiar
+    //this->modelLayer = new SceneNode();
+    this->model = new Model(id); //ToDo: cambiar
     this->model->getModel()->setPosition(vectorData.getVectorF());
     this->model->getModel()->setMaterialFlag(video::EMF_LIGHTING, false);
     Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(125, 125, 0, 125));

@@ -51,14 +51,14 @@ void UnitManager::updateUnitManager(){
 bool UnitManager::createTroop(Enumeration::UnitType unitData){
     if (checkCanPay(unitData.unitSubClass)) {
         if(unitData.unitClass == Enumeration::UnitType::Ranged){
-            Ranged *rangedUnit = new Ranged(unitData.unitSubClass, Vector3<float>(), this->teamManager);
+            Ranged *rangedUnit = new Ranged(std::rand(), unitData.unitSubClass, Vector3<float>(), this->teamManager);
             rangedUnit->getModel()->setActive(false);
             this->inHallTroops -> push_back(rangedUnit);
             return true;
         }
         else if (unitData.unitClass == Enumeration::UnitType::Melee)
         {
-            Melee *meleeUnit = new Melee(unitData.unitSubClass, Vector3<float>(), this->teamManager);
+            Melee *meleeUnit = new Melee(std::rand(), unitData.unitSubClass, Vector3<float>(), this->teamManager);
             meleeUnit->getModel()->setActive(false);
             this->inHallTroops -> push_back(meleeUnit);
             return true;
@@ -90,7 +90,7 @@ void UnitManager::deployTroop(Terrain *terrain){
         this->inHallTroops->erase(inHallTroops->begin() + currentDeployingTroop);
         this->inMapTroops->push_back(temp);
 
-        temp->setPosition(Vector3<float>(0, 0, 0)); //ToDo
+        temp->setPosition(Vector3<float>(HUMAN_CITY_HALL_X, terrain->getY(HUMAN_CITY_HALL_X, HUMAN_CITY_HALL_Z), HUMAN_CITY_HALL_Z)); //ToDo
         temp->setDestination(terrain -> getPointCollision(g -> getCursor()));
         temp->getModel()->setActive(true);
         
