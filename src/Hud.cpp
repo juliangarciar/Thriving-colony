@@ -36,11 +36,11 @@ Hud::Hud() {
     //this->addTab(0, Enumeration::BuildingType::MainBuilding);
     
     updateTimer = 0.5;
-    resourceText = new Text(Rect2D<int>(200, 0, 100, 55), L"Hola mundo", true);
+    resourceText = new Text(Rect2D<int>(200, 0, 100, 91), L"Hola mundo", true);
     // Solo de debug
-    iaResourceText = new Text(Rect2D<int>(300, 0, 100, 55), L"Hola mundo", true);
+    iaResourceText = new Text(Rect2D<int>(300, 0, 100, 91), L"Hola mundo", true);
 
-    warningText = new Text(Rect2D<int>(200, 60, 50, 20), L"Edificio construido", true);
+    warningText = new Text(Rect2D<int>(200, 100, 100, 10), L"Edificio construido", true);
     //warningText -> disable();
     deleteWarning();
 
@@ -271,10 +271,10 @@ void Hud::update() {
     if (updateTimer <= 0) {
         //ToDo: añadir los metodos de getmetalamount y getcrystalamount
         std::wstringstream os;
-        os << L"Player resources:\n" << "Metal: " << std::to_wstring(Human::getInstance() -> getMetalAmount()) << "\nCrystal: " << std::to_wstring(Human::getInstance() -> getCrystalAmount()) << "\nCitizens: " << std::to_wstring(Human::getInstance() -> getCitizens()) << "\nHappiness: " << std::to_wstring(Human::getInstance() -> getHappiness());
+        os << L"Player resources:\n" << "Metal: " << std::to_wstring(Human::getInstance() -> getMetalAmount()) << "\nCrystal: " << std::to_wstring(Human::getInstance() -> getCrystalAmount()) << "\nCitizens: " << std::to_wstring(Human::getInstance() -> getCitizens()) << "\nHappiness: " << std::to_wstring(Human::getInstance() -> getHappiness()) << "\nArmy size: " << std::to_wstring(Human::getInstance() -> getArmySize()) << "\n - Melees: " << std::to_wstring(Human::getInstance() -> getMeleeAmount()) << "\n - Ranged: " << std::to_wstring(Human::getInstance() -> getRangeAmount()) << "\n - Siege: " << std::to_wstring(Human::getInstance() -> getSiegeAmount());
         resourceText -> setText(os.str().c_str());
         std::wstringstream iaos;
-        iaos << L"IA resources:\n" << "Metal: " << std::to_wstring(IA::getInstance() -> getMetalAmount()) << "\nCrystal: " << std::to_wstring(IA::getInstance() -> getCrystalAmount()) << "\nCitizens: " << std::to_wstring(IA::getInstance() -> getCitizens()) << "\nHappiness: " << std::to_wstring(IA::getInstance() -> getHappiness());
+        iaos << L"IA resources:\n" << "Metal: " << std::to_wstring(IA::getInstance() -> getMetalAmount()) << "\nCrystal: " << std::to_wstring(IA::getInstance() -> getCrystalAmount()) << "\nCitizens: " << std::to_wstring(IA::getInstance() -> getCitizens()) << "\nHappiness: " << std::to_wstring(IA::getInstance() -> getHappiness()) << "\nArmy size: " << std::to_wstring(IA::getInstance() -> getArmySize()) << "\n - Melees: " << std::to_wstring(IA::getInstance() -> getMeleeAmount()) << "\n - Ranged: " << std::to_wstring(IA::getInstance() -> getRangeAmount()) << "\n - Siege: " << std::to_wstring(IA::getInstance() -> getSiegeAmount());
         iaResourceText -> setText(iaos.str().c_str());
         updateTimer = 0.5;
 
