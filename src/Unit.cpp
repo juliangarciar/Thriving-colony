@@ -67,9 +67,8 @@ void Unit::moveTroop()
         else
         {
             //position = model->getModel()->getPosition();
-            position->x += vectorMov->x;
-            position->z += vectorMov->z;
-            model->getModel()->setPosition(position->getVectorF());
+            this->setPosition(*vectorMov);
+            std::cout << *position << std::endl;
         }
     }
 }
@@ -77,10 +76,10 @@ void Unit::updateTroop()
 {
     moveTroop();
 }
-void Unit::setPosition(Vector3<float> vectorData)
+void Unit::setTroopPosition(Vector3<float> vectorData)
 {
-    this->position->set(vectorData);
     this->vectorPos->set(vectorData);
+    this->setPosition(vectorData); 
 }
 void Unit::setDestination(Vector3<float> vectorData)
 {

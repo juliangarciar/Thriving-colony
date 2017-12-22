@@ -21,7 +21,7 @@ class Unit : public Entity {
         //Setters
         void setMoving(bool);
         void setAttacking(bool);
-        void setPosition(Vector3<float> vectorData);
+        void setTroopPosition(Vector3<float> vectorData);
         void setDestination(Vector3<float> vectorData);
 
         /////////////////////////

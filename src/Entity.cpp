@@ -34,6 +34,11 @@ void Entity::die() {
     delete this; 
 }
 
+void Entity::setPosition(Vector3<float> vectorData){
+    this->position->set(vectorData);
+    this->model->setPosition(vectorData);
+}
+
 Vector3<float>* Entity::getPosition() {
     return position;
 }
