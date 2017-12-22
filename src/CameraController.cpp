@@ -1,7 +1,9 @@
 #include "CameraController.h"
-#include "GraphicEngine/Window.h"
+#include "Game.h"
   
-CameraController::CameraController(){
+CameraController::CameraController(Terrain *t){
+	terrain = t;
+
 	//Camera 
     camera = new Camera();
     camera -> setShadowDistance(42000.f);
@@ -38,17 +40,21 @@ CameraController::CameraController(){
 	mapMarginRight = 8000;
     screenCenter = Vector2<int>(1280/2, 720/2);
 
+	int posX = HUMAN_CITY_HALL_X;
+	int posZ = HUMAN_CITY_HALL_Z;
+	int posY = terrain->getY(posX, posZ) + camHeight;
+
 	//Posiciones iniciales de la camara
-	Vector2<float> camPos2D = Vector2<float>(mapMarginLeft, mapMarginTop).getFromPolarCoordinates(delta.y, 0);
-	camera->setCameraPosition(Vector3<float>(camPos2D.x, camHeight, camPos2D.y));
-    camera->setTargetPosition(Vector3<float>(mapMarginLeft, 0, mapMarginTop));
+	Vector2<float> camPos2D = Vector2<float>(posX, posZ).getFromPolarCoordinates(delta.y, 0);
+	camera->setCameraPosition(Vector3<float>(camPos2D.x, posY, camPos2D.y));
+    camera->setTargetPosition(Vector3<float>(posX, terrain->getY(posX, posZ), posZ));
 }
 
 CameraController::~CameraController(){
 	delete camera;
 }
 
-void CameraController::Update(Terrain *terrain, float deltaTime){
+void CameraController::Update(float deltaTime){
 	camPos.set(camera->getCameraPosition());
 	tarPos.set(camera->getTargetPosition());
 

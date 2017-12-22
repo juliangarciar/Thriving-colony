@@ -11,7 +11,7 @@ class Unit : public Entity {
     
     public:
         //The consctructor is empty because the object it's constructed in the child
-        Unit(Vector3<float> vectorData, Enumeration::Team teamData);
+        Unit(int id, Vector3<float> vectorData, Enumeration::Team teamData);
         virtual ~Unit();
 
         //Getters
@@ -21,7 +21,7 @@ class Unit : public Entity {
         //Setters
         void setMoving(bool);
         void setAttacking(bool);
-        void setPosition(Vector3<float> vectorData);
+        void setTroopPosition(Vector3<float> vectorData);
         void setDestination(Vector3<float> vectorData);
 
         /////////////////////////

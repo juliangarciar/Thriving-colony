@@ -4,7 +4,8 @@
 #include "IA.h"
 
 GameState::GameState() : State() {
-    camera = new CameraController();
+    map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
+    camera = new CameraController(map);
     hud = new Hud();
 
     //IL PICCOLO SPAGUETTIO
@@ -20,7 +21,6 @@ GameState::~GameState() {
 }
 
 void GameState::Init(){
-    map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
     map->setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
 
     //Initialize the event system
@@ -41,7 +41,7 @@ void GameState::Init(){
     Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DisableText, Hud::deleteWarning);
 
     // Build the main building of IA
-    Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
+    Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();
     IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::IA);
 
     //Build the first siderurgy of IA
@@ -49,16 +49,15 @@ void GameState::Init(){
     IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::IA);
 
     // Build the main building of Human
-    v = 0;
-    v = new Vector3<float>();
-    v -> x = 8000;
-    v -> z = 8000;
-    v -> y = Game::Instance() -> getGameState() ->getMap() -> getY(v -> x, v -> z);
+
+    v.x = HUMAN_CITY_HALL_X;
+    v.z = HUMAN_CITY_HALL_Z; 
+    v.y = map -> getY(v.x, v.z);
     Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::Human);
 
     //Build the first siderurgy of Human
-    v -> z = 8100;
-    v -> y = Game::Instance() -> getGameState() ->getMap() -> getY(v -> x, v -> z);
+    v.z = HUMAN_CITY_HALL_Z+100;
+    v.y = map -> getY(v.x, v.z);
     Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::Human);
 }
 
@@ -95,13 +94,15 @@ void GameState::Update(){
         //gamePaused = !gamePaused;
     //}
     //if (gamePaused) {
-        camera->Update(map, Game::Instance()->getWindow()->getDeltaTime());
+        camera->Update(Game::Instance()->getWindow()->getDeltaTime());
 
         Vector3<float> cam = camera->getCamera()->getCameraPosition();
         Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
         Human::getInstance() -> getBuildingManager() -> drawBuilding(map);
         Human::getInstance() -> getUnitManager() -> deployTroop(map);
+
+        Human::getInstance() -> getUnitManager() -> updateUnitManager();
 
         Human::getInstance() -> update();
         IA::getInstance() -> update();

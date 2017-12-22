@@ -13,19 +13,27 @@ class Entity {
 
     public:
         //The consctructor is empty because the object it's constructed in the child
-        Entity();
+        Entity(int id);
         virtual ~Entity();
 
         int getHP();
         void takeDamage(int);
         void die();
 
+        void setPosition(Vector3<float> vectorData);
+
         Vector3<float> *getPosition();
         Box3D<float> *getHitbox();
         Model *getModel();
 
     protected:
+        //SceneNode *modelLayer;
+        Model* model;
         Vector3<float> *position;
+        Box3D<float>* hitbox;
+
+        int ID;
+
         int hpMax;
         int hp;
         int happiness;
@@ -36,10 +44,6 @@ class Entity {
         * True -> Human
         */
         bool team;
-
-        Box3D<float>* hitbox;
-        Model* model;
-        SceneNode *modelLayer;
 
       private:
 };

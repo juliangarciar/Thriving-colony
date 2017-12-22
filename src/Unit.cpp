@@ -1,9 +1,8 @@
 #include "Unit.h"
 
 
-Unit::Unit(Vector3<float> vectorData, Enumeration::Team teamData) : Entity()
+Unit::Unit(int id, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(id)
 {
-    
     //Actions of the units
     this->moving = false;
     this->attacking = false;
@@ -16,7 +15,6 @@ Unit::Unit(Vector3<float> vectorData, Enumeration::Team teamData) : Entity()
     //Team defined by the constructor parameter
     this->team = teamData;
     //Defining model position
-    this->model = new Model(std::rand());
     this->model->getModel()->setPosition(vectorData.getVectorF());
     //unitModel->getModel()->setPosition(irr::core::vector3df(vectorPos->X, vectorPos->Y, vectorPos->Z));
 }
@@ -69,9 +67,8 @@ void Unit::moveTroop()
         else
         {
             //position = model->getModel()->getPosition();
-            position->x += vectorMov->x;
-            position->z += vectorMov->z;
-            model->getModel()->setPosition(position->getVectorF());
+            this->setPosition(*vectorMov);
+            std::cout << *position << std::endl;
         }
     }
 }
@@ -79,9 +76,10 @@ void Unit::updateTroop()
 {
     moveTroop();
 }
-void Unit::setPosition(Vector3<float> vectorData)
+void Unit::setTroopPosition(Vector3<float> vectorData)
 {
     this->vectorPos->set(vectorData);
+    this->setPosition(vectorData); 
 }
 void Unit::setDestination(Vector3<float> vectorData)
 {

@@ -7,14 +7,15 @@
 #include <GraphicEngine/Terrain.h>
 #include <IOEngine/InputManager.h>
 #include <IOEngine/Mouse.h>
+#include "Enumeration.h"
 
 class CameraController {
     
     public:
-        CameraController();
+        CameraController(Terrain *t);
         ~CameraController();
 
-        void Update(Terrain *terrain, float deltaTime);
+        void Update(float deltaTime);
 
         void Move(InputManager *receiver, Mouse *cursor);
         void RotateAndInclinate(InputManager *receiver, Mouse *cursor);
@@ -22,6 +23,8 @@ class CameraController {
 
         Camera *getCamera();
     private:
+        //Helpers
+        Terrain *terrain;
         //Camera
         Camera *camera;
         //Camera modes

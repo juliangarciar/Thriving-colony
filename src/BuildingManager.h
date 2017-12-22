@@ -25,7 +25,7 @@ class BuildingManager {
 
 		void setBuildingMode(Enumeration::BuildingType);
         void drawBuilding(Terrain *terrain);
-		void buildBuilding(Vector3<float>*, Enumeration::BuildingType, Enumeration::Team);
+		void buildBuilding(Vector3<float>, Enumeration::BuildingType, Enumeration::Team);
 
 		bool isSolvent(int, int, Enumeration::Team);
 		bool checkCanPay(Enumeration::BuildingType);

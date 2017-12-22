@@ -14,7 +14,7 @@ class IA : public Player {
 
         BehaviourTree* getTree();
 
-        Vector3<float>* determinatePositionBuilding();
+        Vector3<float> determinatePositionBuilding();
         virtual void update();
     private:
         
