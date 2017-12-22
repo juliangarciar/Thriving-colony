@@ -22,6 +22,7 @@ Human::Human() : Player() {
     barnBuilt = false;
     workshopBuilt = false;
 
+    
     units = new UnitManager(Enumeration::Team::Human);
 }
 
