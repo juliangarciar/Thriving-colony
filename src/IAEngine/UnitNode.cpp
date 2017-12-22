@@ -2,6 +2,7 @@
 #include "MeleeNode.h"
 #include "RangeNode.h"
 #include "SiegeNode.h"
+#include "../IA.h"
 
 #include <iostream>
 
@@ -20,12 +21,12 @@ UnitNode::~UnitNode(){
 
 void UnitNode::question() {
     //First subsubbranch: Melee
-    if (tree -> calculateMeleeRate() < tree -> getMeleeThreshold()) {
+    if (IA::getInstance() -> getTree() -> calculateMeleeRate() < IA::getInstance() -> getTree() -> getMeleeThreshold()) {
         //std::cout << "Voy a hacer melees" << std::endl;
         children[0] -> question();
     } else {
         //Second subsubbranch: Range
-        if (tree -> calculateRangeRate() < tree ->getRangeThreshold()) {
+        if (IA::getInstance() -> getTree() -> calculateRangeRate() < IA::getInstance() -> getTree() ->getRangeThreshold()) {
             //std::cout << "Voy a hacer rangos" << std::endl;
             children[1] -> question();
         } else {

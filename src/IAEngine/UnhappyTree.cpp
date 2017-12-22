@@ -38,19 +38,19 @@ UnhappyTree::~UnhappyTree() {
 
 void UnhappyTree::question() {
     //First branch: Resources
-    if (tree -> needResourcesInvestment()) {
+    if (IA::getInstance() -> getTree() -> needResourcesInvestment()) {
         children[0] -> question();
     } else {
         //Second branch: Army
-        if (tree -> needArmyInvestment()) {
+        if (IA::getInstance() -> getTree() -> needArmyInvestment()) {
             children[1] -> question();
         } else {
             //Third branch: Homes
-            if (tree -> calculateCitizensRate() < tree -> getCitizensThreshold()) {
+            if (IA::getInstance() -> getTree() -> calculateCitizensRate() < IA::getInstance() -> getTree() -> getCitizensThreshold()) {
                 children[2] -> question();
             } else{
                 //First branch: Services
-                if (IA::getInstance() -> getHappiness() < tree -> getHappinessThreshold()) {
+                if (IA::getInstance() -> getHappiness() < IA::getInstance() -> getTree() -> getHappinessThreshold()) {
                     children[3] -> question();
                 } else{
                     //std::cout << "No hago nada" << std::endl;

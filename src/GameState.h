@@ -31,7 +31,6 @@ class GameState : public State {
         // ESTO NO VA A QUI POR QUE ESTA AQUIIIIIIIIIIIIIIIIIIIII
         // PERO YA QUE ESTAMOS VOY A ECHAR MAS SPAGUETTI LLAMADLE ILL CHEFF RAFAELO
         float iaUpdateTimer;
-        RootNode *nodeRootIA;
         // This is for pausing, in a future it will be a gamestate different?
         bool gamePaused;
 };

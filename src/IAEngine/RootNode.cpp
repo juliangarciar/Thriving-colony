@@ -2,6 +2,7 @@
 #include "AttackNode.h"
 #include "DefendNode.h"
 #include "VeryHappyTree.h"
+#include "../IA.h"
 
 #include <iostream>
 
@@ -20,11 +21,11 @@ RootNode::~RootNode(){
 
 void RootNode::question() {
     //First branch: Attacking the enemy
-    if (tree -> readyToAttack()) {
+    if (IA::getInstance() -> getTree() -> readyToAttack()) {
         children[0] -> question();
     } else  {
         //Second branch: Being attacked
-        if (tree -> getUnderAttack()){
+        if (IA::getInstance() -> getTree() -> getUnderAttack()){
             children[1] -> question();
         } else {
             //Third branch: Peaceful, develop the city
