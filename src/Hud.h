@@ -61,6 +61,7 @@ class Hud {
         static Text *warningText;
 
         float updateTimer;
+        float deleteTextTimer;
 };
 
 #endif

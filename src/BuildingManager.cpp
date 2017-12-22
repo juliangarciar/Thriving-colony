@@ -14,7 +14,7 @@ BuildingManager::BuildingManager(){
 	tempBuilding = NULL;
 	id = 0;
 }
- 
+
 BuildingManager::~BuildingManager(){
 	delete tempBuilding;
 	delete buildingLayer;
@@ -118,8 +118,9 @@ void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingTy
 
 		id++;
 		tempBuilding = NULL;
+		Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);
 	}
-	Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);
+	
 }
 
 std::map<int, Building*>* BuildingManager::getBuildings() {

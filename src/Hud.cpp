@@ -9,7 +9,7 @@
 
 using namespace irr;
 
-Text *Hud::warningText = new Text(Rect2D<int>(200, 60, 50, 20), L"Edificio construido", true);
+Text *Hud::warningText = 0;//new Text(Rect2D<int>(200, 60, 50, 20), L"Edificio construido", true);
 
 Hud::Hud() {
     //Le botone iniciale
@@ -40,7 +40,10 @@ Hud::Hud() {
     iaResourceText = new Text(Rect2D<int>(300, 0, 100, 55), L"Hola mundo", true);
 
     warningText = new Text(Rect2D<int>(200, 60, 50, 20), L"Edificio construido", true);
-    warningText -> disable();
+    //warningText -> disable();
+    deleteWarning();
+
+    deleteTextTimer = 0;
 }
 
 Hud::~Hud() {
@@ -263,6 +266,7 @@ void Hud::getHUDEvents(){
 }
 
 void Hud::update() {
+    float dt = Window::Instance() ->getDeltaTime();
     if (updateTimer <= 0) {
         //ToDo: añadir los metodos de getmetalamount y getcrystalamount
         std::wstringstream os;
@@ -273,17 +277,21 @@ void Hud::update() {
         iaResourceText -> setText(iaos.str().c_str());
         updateTimer = 0.5;
 
+        
         Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::DisableText);
     } else {
-        updateTimer -= Window::Instance() ->getDeltaTime();
+        updateTimer -= dt;
     }
+    
 }
 
 void Hud::drawWarning() {
+    std::cout <<  "¡Se ha construido un edificio!" << std::endl;
     warningText -> enable();
 }
 
 void Hud::deleteWarning() {
+    //std::cout << "¡Se ha borrado un texto que dice que se ha dibujado un texto!" << std::endl;
     warningText -> disable();
 }
 

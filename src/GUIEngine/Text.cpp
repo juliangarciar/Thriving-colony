@@ -23,13 +23,12 @@ void Text::setText(const wchar_t *t) {
 }
 
 void Text::disable() {
-    text -> setEnabled(false);
     text -> setVisible(false);
-    std::cout<<"llega"<<std::endl;
+    text -> setEnabled(false);
+    
 }
 
 void Text::enable() {
-    text -> setEnabled(true);
     text -> setVisible(true);
-    std::cout<<"llega1"<<std::endl;
+    text -> setEnabled(true);
 }
