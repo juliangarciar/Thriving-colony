@@ -12,7 +12,8 @@ GameState::GameState() : State() {
     iaUpdateTimer = 1;
     nodeRootIA = new RootNode();
     music = new Music();
-
+    this->MusicSystem = new Music();
+    this->MusicSystem->setPause(false);
     gamePaused = false;
 }
 
@@ -88,20 +89,6 @@ void GameState::Update(){
         Vector3<float> cam = camera->getCamera()->getCameraPosition();
         Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
-<<<<<<< HEAD
-        //buildingManager->drawCube(map);
-        Human::getInstance() -> getBuildingManager() -> drawBuilding(map, Enumeration::BuildingType::House,  Enumeration::Team::Human);
-        if(!unitDone){
-            Vector3<float> *vectorData = new Vector3<float>(200, 200, 200);
-            Enumeration::UnitType unitData;
-            unitData.unitClass = Enumeration::UnitType::Class::Ranged;
-            unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardR;
-            Human::getInstance()->getUnitManager()->createTroop(vectorData, unitData);
-            this->unitDone = true;
-        }
-        music->updateSound();
-        nodeRootIA -> question();
-=======
         Human::getInstance() -> getBuildingManager() -> drawBuilding(map, (Enumeration::BuildingType)0,  Enumeration::Team::Human);
 
         Human::getInstance() -> update();
@@ -116,7 +103,8 @@ void GameState::Update(){
         } else {
             iaUpdateTimer -= Window::Instance() -> getDeltaTime();
         }
->>>>>>> master
+        MusicSystem->playVoice("UnitMovementDroraniaMeleeS");
+        MusicSystem->updateSound();
     //}
 }
 

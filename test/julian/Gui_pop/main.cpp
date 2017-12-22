@@ -15,6 +15,22 @@ int main(){
     int gridX = 24;
     int gridY = 24;
 
+    //INIT START AND END
+    int pStartX;
+    int pStartY;
+    int pEndX;
+    int pEndY;
+    std::cout << "Introduzca las coordenadas de un waypoint de inicio (0 a 19)." << endl;
+    std::cout << "X: ";
+    std::cin >> pStartX;
+    std::cout << "Y: ";
+    std::cin >> pStartY;
+    std::cout << "Introduzca las coordenadas de un waypoint de destino (0 a 19)." << endl;
+    std::cout << "X: ";
+    std::cin >> pEndX;
+    std::cout << "Y: ";
+    std::cin >> pEndY;
+
     //IRRLICHT
     irr::SIrrlichtCreationParameters params;
 
@@ -28,23 +44,12 @@ int main(){
     video::IVideoDriver *driver = device->getVideoDriver();
     scene::ISceneManager *smgr = device->getSceneManager();
     driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
-    
-    //ADD IRRLICHT CAMERA
-    scene::ICameraSceneNode *camera =
-        smgr->addCameraSceneNodeFPS();
-
-        camera->setPosition(core::vector3df(0, 500, 20));
-        camera->setTarget(core::vector3df(0, 0, 0));
-        camera->setFarValue(2000.0f);
-
     //INIT MAP DATA
     grid* mapita = new grid(gridX, gridY, smgr);
     
-    //INIT START AND END
-    nodeGrid *start = mapita->getGrid()[0][0];
-    nodeGrid *end = mapita->getGrid()[20][20];
     
-
+    nodeGrid *start = mapita->getGrid()[pStartX][pStartY];
+    nodeGrid *end = mapita->getGrid()[pEndX][pEndY];
     start->setCameFrom(NULL);
     start->setCounted(true);
     start->setWeight(0);
@@ -52,98 +57,113 @@ int main(){
         start->swapColor(irr::video::SColor(0, 0, 0, 255));
         end->swapColor(irr::video::SColor(0, 255, 0, 0));
 
-
+        
         //DRAW OBSTACLES
         for (int x = 13, y = 15; x < 20; x++, y--)
         {
-            mapita->getGrid()[x][y]->swapColor(irr::video::SColor(0, 0, 0, 0));
-            mapita->getGrid()[x][y]->setBlock(true);
+            if(start->getX() != x && end->getX() != x && start->getY() != y && end->getY() != y){
+                mapita->getGrid()[x][y]->swapColor(irr::video::SColor(0, 0, 0, 0));
+                mapita->getGrid()[x][y]->setBlock(true);
+            }
+            
         }
         for (int x = 12, y = 15; x < 20; x++, y--)
         {
-            mapita->getGrid()[x][y]->swapColor(irr::video::SColor(0, 0, 0, 0));
-            mapita->getGrid()[x][y]->setBlock(true);
+            if (start->getX() != x && end->getX() != x && start->getY() != y && end->getY() != y)
+            {
+                mapita->getGrid()[x][y]->swapColor(irr::video::SColor(0, 0, 0, 0));
+                mapita->getGrid()[x][y]->setBlock(true);
+            }
+            
         }
         aStar *estrella = new aStar(mapita, start, end);
+       
 
-    bool done = false;
-    std::vector<nodeGrid *> pathFind;
-    //irr::core::vector3df *movData = new irr::core::vector3df(0, 0, 20.f);
-    irr::core::vector3df movData;
-    troop *selectedTroop = NULL;
-    troop *character = NULL;
-    character = new troop(0, 0, 1, smgr);
-    MyEventReceiver event;
-    device->setEventReceiver(&event);
-    //NUEVO VERSION
-    irr::scene::ISceneManager* sceneManager;
-    sceneManager = device->getSceneManager();
-    irr::scene::ISceneCollisionManager* collisionManager;
-    collisionManager = sceneManager->getSceneCollisionManager();
-    irr::core::triangle3df triangle;
-    irr::scene::ISceneNode *node = 0;
-    clock_t gameTime;
-    //NUEVO TERRENO
-    scene::ITerrainSceneNode *currentTerrain =
-        sceneManager->addTerrainSceneNode(
+        //ADD IRRLICHT CAMERA
+        scene::ICameraSceneNode *camera =
+            smgr->addCameraSceneNodeFPS();
 
-            "media/heightmap.bmp",       // height map
-            0,                              // parent node
-            -1,                             // node id
-            core::vector3df(0.f, -60.f, 0.f), // position
+        camera->setPosition(core::vector3df(0, 500, 20));
+        camera->setTarget(core::vector3df(0, 0, 0));
+        camera->setFarValue(2000.0f);
+        //MORE THINGS
+        //bool done = false;
+        std::vector<nodeGrid *> pathFind;
+        //irr::core::vector3df *movData = new irr::core::vector3df(0, 0, 20.f);
+        irr::core::vector3df movData;
+        //troop *selectedTroop = NULL;
+        troop *character = NULL;
+        character = new troop(0, 0, 1, smgr);
+        MyEventReceiver event;
+        device->setEventReceiver(&event);
+        //NUEVO VERSION
+        irr::scene::ISceneManager *sceneManager;
+        sceneManager = device->getSceneManager();
+        irr::scene::ISceneCollisionManager *collisionManager;
+        collisionManager = sceneManager->getSceneCollisionManager();
+        irr::core::triangle3df triangle;
+        //irr::scene::ISceneNode *node = 0;
+        //clock_t gameTime;
+        //NUEVO TERRENO
+        scene::ITerrainSceneNode *currentTerrain =
+            sceneManager->addTerrainSceneNode(
 
-            core::vector3df(0.f, 0.f, 0.f),     // rotation
-            core::vector3df(100.f, 1.f, 100.f), // scale
+                "media/heightmap.bmp",            // height map
+                0,                                // parent node
+                -1,                               // node id
+                core::vector3df(0.f, -60.f, 0.f), // position
 
-            video::SColor(125, 125, 125, 125), // vertexColor
+                core::vector3df(0.f, 0.f, 0.f),     // rotation
+                core::vector3df(100.f, 1.f, 100.f), // scale
 
-            5,              // maxLOD
-            scene::ETPS_17, // patchSize
-            4);
-    irr::scene::ITriangleSelector *selector = sceneManager->createTerrainTriangleSelector(currentTerrain);
+                video::SColor(125, 125, 125, 125), // vertexColor
 
-    currentTerrain->setTriangleSelector(selector);
-    
-    //MAIN BUCLE
-    while (device->run())
-    {
-        if (device->isWindowActive())
+                5,              // maxLOD
+                scene::ETPS_17, // patchSize
+                4);
+        irr::scene::ITriangleSelector *selector = sceneManager->createTerrainTriangleSelector(currentTerrain);
+
+        currentTerrain->setTriangleSelector(selector);
+
+        //MAIN BUCLE
+        while (device->run())
         {
-
-            driver->beginScene(true, true, 0);
-
-            if (event.GetMouseState().RightButtonDown)
+            if (device->isWindowActive())
             {
 
-                irr::gui::ICursorControl *myCursor = device->getCursorControl();
-                irr::core::vector2di pos = myCursor->getPosition();
+                driver->beginScene(true, true, 0);
 
-                irr::core::line3df ray = collisionManager->getRayFromScreenCoordinates(pos);
-                //std::cout << "X :" << pos.X << "Y :" << pos.Y << endl;
-
-                if (collisionManager->getCollisionPoint(ray, selector, movData, triangle, node))
+                if (event.GetMouseState().RightButtonDown)
                 {
-                    if(!done){
-                        cout << "OMG" << endl;
-                        cout << "X: " << movData.X << " Y: " << movData.Z << endl;
-                        
-                        character->setDes(movData);
-                        done = true;
-                    }
-                    else{
-                        done = false;
-                    }
-                }
-                
-                
-            }
 
-            //Character update
-            character->updateTroop();
-            //Draw scene
-            smgr->drawAll();
-            driver->endScene();
-        }
+                    //irr::gui::ICursorControl *myCursor = device->getCursorControl();
+                    //irr::core::vector2di pos = myCursor->getPosition();
+                    //
+                    //irr::core::line3df ray = collisionManager->getRayFromScreenCoordinates(pos);
+                    ////std::cout << "X :" << pos.X << "Y :" << pos.Y << endl;
+                    //
+                    //if (collisionManager->getCollisionPoint(ray, selector, movData, triangle, node))
+                    //{
+                    //    if(!done){
+                    //        cout << "OMG" << endl;
+                    //        cout << "X: " << movData.X << " Y: " << movData.Z << endl;
+                    //
+                    //        character->setDes(movData);
+                    //        done = true;
+                    //    }
+                    //    else{
+                    //        done = false;
+                    //    }
+                    //}
+                    estrella->startAlgoritm();
+                }
+
+                //Character update
+                //character->updateTroop();
+                //Draw scene
+                smgr->drawAll();
+                driver->endScene();
+            }
     }
     delete start;
     delete end;

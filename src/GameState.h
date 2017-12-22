@@ -39,6 +39,7 @@ class GameState : public State {
         RootNode *nodeRootIA;
         // This is for pausing, in a future it will be a gamestate different?
         bool gamePaused;
+        Music *MusicSystem;
 };
 
 #endif
