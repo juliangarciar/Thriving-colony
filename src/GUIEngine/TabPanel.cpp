@@ -6,6 +6,8 @@ using namespace irr;
 TabPanel::TabPanel(Rect2D<int> dimPos, int id){
     Window *sc = Window::Instance();
     ctrl = sc->getGUIEnvironment()->addTabControl(dimPos.getRect2D(), 0, true, true, id);
+
+    tabs = new std::map<int, Tab*>();
 }
 
 TabPanel::~TabPanel(){
@@ -17,6 +19,7 @@ Tab *TabPanel::addTab(const wchar_t *text, int id){
     //std::cout << ctrl << std::endl;
     gui::IGUITab *tab = ctrl->addTab(text, id);
     Tab *t = new Tab(tab);
+    tabs->insert(std::pair<int, Tab*>(id, t));
     return t;
 } 
 
@@ -35,7 +38,8 @@ void TabPanel::disable(){
 }
 
 void TabPanel::changeActiveTab(int id){
-   ctrl->setActiveTab(id);
+    std::map<int,Tab*>::iterator it = tabs->find(id);
+    if (it != tabs->end()) ctrl->setActiveTab((gui::IGUITab*)it->second->getGUIElement());
 }
 
 gui::IGUIElement *TabPanel::getGUIElement(){
