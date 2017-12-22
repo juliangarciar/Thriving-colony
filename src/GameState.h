@@ -29,9 +29,6 @@ class GameState : public State {
         CameraController *camera;
         Terrain *map;
         Hud * hud;
-        // ESTO NO VA A QUI POR QUE ESTA AQUIIIIIIIIIIIIIIIIIIIII
-        // PERO YA QUE ESTAMOS VOY A ECHAR MAS SPAGUETTI LLAMADLE ILL CHEFF RAFAELO
-        float iaUpdateTimer;
         // This is for pausing, in a future it will be a gamestate different?
         bool gamePaused;
 };
