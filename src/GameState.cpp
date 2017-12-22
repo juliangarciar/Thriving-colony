@@ -8,9 +8,6 @@ GameState::GameState() : State() {
     camera = new CameraController(map);
     hud = new Hud();
 
-    //IL PICCOLO SPAGUETTIO
-    iaUpdateTimer = 1;
-
     gamePaused = false;
 }
 
