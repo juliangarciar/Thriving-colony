@@ -11,24 +11,25 @@ class Unit : public Entity {
     
     public:
         //The consctructor is empty because the object it's constructed in the child
-        Unit(Vector3<float> *vectorData, Enumeration::Team teamData);
+        Unit(Vector3<float> vectorData, Enumeration::Team teamData);
         virtual ~Unit();
 
         //Getters
         Entity* getTarget();
         Model* getModel();
+
         //Setters
         void setMoving(bool);
         void setAttacking(bool);
+        void setPosition(Vector3<float> vectorData);
+        void setDestination(Vector3<float> vectorData);
 
-        void setPos(Vector3<float> *vectorData);
-        void setDes(Vector3<float> *vectorData);
         /////////////////////////
         void attack();
         void updateTarget();
-        //void assignBattle(Battle*);
         void moveTroop();
         void updateTroop();
+        //void assignBattle(Battle*);
 
     protected:
         //Unit stats
@@ -44,8 +45,8 @@ class Unit : public Entity {
 
         //Space vectors used for unit movement
         //Vector position is in the father
+        Vector3 <float> *vectorPos;
         Vector3 <float> *vectorDes;
-            //Vector3 <float> *vectorPos;
         Vector3 <float> *vectorMov;
         
         Entity* target;

@@ -25,7 +25,7 @@ class Entity {
         Model *getModel();
 
     protected:
-        Vector3<float>* position;
+        Vector3<float> *position;
         int hpMax;
         int hp;
         int happiness;

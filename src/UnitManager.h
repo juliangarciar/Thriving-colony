@@ -19,7 +19,7 @@ class UnitManager{
         Enumeration::Team teamManager;
 
         bool isDeployingTroop;
-        Unit *currentDeployingTroop;
+        int currentDeployingTroop;
 
         int gridAlignment;
     public:
@@ -33,7 +33,8 @@ class UnitManager{
         //the desired unit
         bool createTroop(Enumeration::UnitType unitData);
 
-        void deployTroopAtPosition(int index, Vector3<float> *vectorData);
+        void deployTroopAtPosition(int index, Vector3<float> vectorData);
+        
         void startDeployingTroop(int index);
         void deployTroop(Terrain *terrain);
 
