@@ -7,6 +7,8 @@ Model::Model(int id) {
     cubeNode = Window::Instance()->getSceneManager()->addCubeSceneNode(100);
     cubeNode->setID(id);
 
+    cubeNode->setMaterialFlag(video::EMF_LIGHTING, false);
+    
     selector = Window::Instance()->getSceneManager()->createTriangleSelectorFromBoundingBox(cubeNode);
     if (selector) {
         cubeNode->setTriangleSelector(selector);
@@ -17,6 +19,8 @@ Model::Model(int id) {
 Model::Model(SceneNode *parent, int id) {
     cubeNode = Window::Instance()->getSceneManager()->addCubeSceneNode(100);
     cubeNode->setID(id);
+
+    cubeNode->setMaterialFlag(video::EMF_LIGHTING, false);
 
     selector = Window::Instance()->getSceneManager()->createTriangleSelectorFromBoundingBox(cubeNode);
     if (selector) {
@@ -50,6 +54,10 @@ void Model::setActive(bool a){
 
 Vector3<float> Model::getPosition(){
     return Vector3<float>(cubeNode->getPosition());
+}
+
+int Model::getID(){
+    return cubeNode->getID();
 }
 
 scene::IMeshSceneNode *Model::getModel(){

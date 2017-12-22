@@ -1,12 +1,12 @@
 #include "Entity.h"
 
-Entity::Entity(int id) {
+Entity::Entity(SceneNode *layer, int id) {
     this->ID = id;
     //ToDo: hacer aumento de felicidad, tropas nivel y tal
-    model = new Model(id);
+    model = new Model(layer, id);
     hitbox = new Box3D<float>();
     position = new Vector3<float>();
-}
+} 
 
 Entity::~Entity() {
     delete position;
@@ -37,6 +37,7 @@ void Entity::die() {
 void Entity::setPosition(Vector3<float> vectorData){
     this->position->set(vectorData);
     this->model->setPosition(vectorData);
+    this->hitbox->set(model -> getModel() -> getTransformedBoundingBox());
 }
 
 Vector3<float>* Entity::getPosition() {

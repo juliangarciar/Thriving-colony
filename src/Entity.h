@@ -1,11 +1,11 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include "GraphicEngine/Vector3.h"
-#include "GraphicEngine/Box3D.h"
-#include "GraphicEngine/Model.h"
-#include "GraphicEngine/SceneNode.h"
-#include "GraphicEngine/Window.h"
+#include <GraphicEngine/Vector3.h>
+#include <GraphicEngine/Box3D.h>
+#include <GraphicEngine/Model.h>
+#include <GraphicEngine/SceneNode.h>
+#include <GraphicEngine/Window.h>
 #include "Enumeration.h"
 
 
@@ -13,7 +13,7 @@ class Entity {
 
     public:
         //The consctructor is empty because the object it's constructed in the child
-        Entity(int id);
+        Entity(SceneNode *layer, int id);
         virtual ~Entity();
 
         int getHP();

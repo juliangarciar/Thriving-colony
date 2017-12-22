@@ -11,7 +11,7 @@ class Melee : public Unit {
     public:
         //Enum: Standard, Advanced, Idol
         //teamData sepecifies the unit team and vectorData the position
-        Melee(int id, Enumeration::UnitType::SubClass unitData, Vector3<float> vectorData, Enumeration::Team teamData);
+        Melee(int id, SceneNode *layer, Enumeration::UnitType::SubClass unitData, Vector3<float> vectorData, Enumeration::Team teamData);
         virtual ~Melee();
 
     string getAttackEvent();

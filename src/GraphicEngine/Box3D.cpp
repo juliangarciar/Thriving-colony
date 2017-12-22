@@ -18,7 +18,7 @@ Box3D<T>::~Box3D(){
 }
 
 template <class T>
-void Box3D<T>::setPosition(core::aabbox3d<T> box){
+void Box3D<T>::set(core::aabbox3d<T> box){
 	this->box = box;
 }
 

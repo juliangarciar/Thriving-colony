@@ -4,7 +4,7 @@
 
 //The teamData and vectorData are passed to the father, because as the melee class,
 //also share the same components
-Ranged::Ranged(int id, Enumeration::UnitType::SubClass unitData, Vector3<float> vectorData, Enumeration::Team teamData) : Unit(id, vectorData, teamData)
+Ranged::Ranged(int id, SceneNode *layer, Enumeration::UnitType::SubClass unitData, Vector3<float> vectorData, Enumeration::Team teamData) : Unit(id, layer, vectorData, teamData)
 {
 
     int metalCost = 0;

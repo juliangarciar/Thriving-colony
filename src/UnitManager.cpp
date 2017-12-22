@@ -7,13 +7,20 @@
 UnitManager::UnitManager(Enumeration::Team teamData){
     gridAlignment = 20;
     selectedTroop = 0; 
-    this->teamManager = teamData;
+
+    teamManager = teamData;
+
     inHallTroops = new std::vector<Unit*>();
-    inMapTroops = new std::vector<Unit*>();
+    //inMapTroops = new std::vector<Unit*>();
+    inMapTroops = new std::map<int, Unit*>();
     totalTroops = new std::vector<Unit*>();
 
     isDeployingTroop = false;
     currentDeployingTroop = -1;
+
+    unitLayer = new SceneNode();
+
+    selectedTroop = NULL;
 }
 //Destroyer
 UnitManager::~UnitManager(){
@@ -27,19 +34,17 @@ UnitManager::~UnitManager(){
 
     totalTroops->clear();
     delete totalTroops;
+
+    delete unitLayer;
 }
 //Returns all troops the player has
-std::vector<Unit*> *UnitManager::getTotalTroops(){
-    totalTroops->clear();
-    totalTroops->reserve( inHallTroops->size() + inMapTroops->size() ); // preallocate memory
-    totalTroops->insert( totalTroops->end(), inHallTroops->begin(), inHallTroops->end() );
-    totalTroops->insert( totalTroops->end(), inMapTroops->begin(), inMapTroops->end() );
-    return totalTroops;
+int UnitManager::getTotalTroops(){
+    return inHallTroops->size() + inMapTroops->size();
 } 
 //Update all troops
 void UnitManager::updateUnitManager(){
-    for (int i = 0; i < inMapTroops -> size(); i++){
-        inMapTroops -> at(i) -> updateTroop();
+    for (std::map<int,Unit*>::iterator it = inMapTroops->begin(); it != inMapTroops->end(); ++it){
+        it -> second-> updateTroop();
     }
 }
 //Create a new troops
@@ -51,14 +56,14 @@ void UnitManager::updateUnitManager(){
 bool UnitManager::createTroop(Enumeration::UnitType unitData){
     if (checkCanPay(unitData.unitSubClass)) {
         if(unitData.unitClass == Enumeration::UnitType::Ranged){
-            Ranged *rangedUnit = new Ranged(std::rand(), unitData.unitSubClass, Vector3<float>(), this->teamManager);
+            Ranged *rangedUnit = new Ranged(std::rand(), unitLayer, unitData.unitSubClass, Vector3<float>(), this->teamManager);
             rangedUnit->getModel()->setActive(false);
             this->inHallTroops -> push_back(rangedUnit);
             return true;
         }
         else if (unitData.unitClass == Enumeration::UnitType::Melee)
         {
-            Melee *meleeUnit = new Melee(std::rand(), unitData.unitSubClass, Vector3<float>(), this->teamManager);
+            Melee *meleeUnit = new Melee(std::rand(), unitLayer, unitData.unitSubClass, Vector3<float>(), this->teamManager);
             meleeUnit->getModel()->setActive(false);
             this->inHallTroops -> push_back(meleeUnit);
             return true;
@@ -67,9 +72,30 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData){
     return false;
 }
 
+void UnitManager::testRaycastCollisions(){
+	if (!isDeployingTroop) {
+		currentCollision = unitLayer -> getNodeCollision(Game::Instance() -> getCursor());
+	}
+} 
+
+int UnitManager::getCollisionID(){
+	if (currentCollision != NULL){
+		return currentCollision->getSceneNode()->getID();
+	}
+	return -1;
+}
+
+std::string UnitManager::getCollisionName(){
+	if (currentCollision != NULL){
+		return currentCollision->getSceneNode()->getName();
+	}
+	return NULL;
+}
+
 void UnitManager::deployTroopAtPosition(int index, Vector3<float> vectorData){
-    this->inHallTroops->at(index)->setPosition(vectorData);
-    this->inMapTroops->push_back(inHallTroops->at(index));
+    Unit *u = this->inHallTroops->at(index);
+    u->setPosition(vectorData);
+    this->inMapTroops->insert(std::pair<int, Unit*>(u->getModel()->getID(), u));
     this->inHallTroops->erase(inHallTroops->begin() + index);
 }
 
@@ -78,6 +104,7 @@ void UnitManager::startDeployingTroop(int index){
     if (!isDeployingTroop){
         isDeployingTroop = true;
         currentDeployingTroop = index;
+        selectedTroop = inHallTroops->at(currentDeployingTroop);
         g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_CROSS); //ToDo: fachada
     }
 } 
@@ -88,7 +115,7 @@ void UnitManager::deployTroop(Terrain *terrain){
         Unit *temp = inHallTroops->at(currentDeployingTroop);
 
         this->inHallTroops->erase(inHallTroops->begin() + currentDeployingTroop);
-        this->inMapTroops->push_back(temp);
+         this->inMapTroops->insert(std::pair<int, Unit*>(temp->getModel()->getID(), temp));
 
         //g -> getSoundSystem() -> playVoice(troopData->getMoveEvent());
         temp->setTroopPosition(Vector3<float>(HUMAN_CITY_HALL_X, terrain->getY(HUMAN_CITY_HALL_X, HUMAN_CITY_HALL_Z), HUMAN_CITY_HALL_Z)); //ToDo
@@ -98,18 +125,38 @@ void UnitManager::deployTroop(Terrain *terrain){
         g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NORMAL); //ToDo: fachada
 
         currentDeployingTroop = -1;
+        selectedTroop = NULL;
         isDeployingTroop = false;
     }
 }
 
 //Select a troop
-void UnitManager::selectTroop(Unit *troopData){
-    this->selectedTroop = troopData;
-    Game::Instance() -> getSoundSystem() -> playVoice(troopData->getSelectEvent());
+void UnitManager::selectTroop(int troopID){ 
+    Game *g = Game::Instance();
+    std::map<int,Unit*>::iterator it = inMapTroops->find(troopID);
+    if (it != inMapTroops->end()) {
+        this->selectedTroop = it->second;
+        Game::Instance()->getSoundSystem()->playVoice(troopData->getSelectEvent());
+        g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_CROSS); //ToDo: fachada
+    }
 }
-//Pass the order to the selected unit
-void UnitManager::newOrder(){
 
+//Select a troop
+void UnitManager::unSelectTroop(){ 
+    Game *g = Game::Instance();
+    if (this->selectedTroop != NULL){
+        this->selectedTroop = NULL;
+        g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NORMAL); //ToDo: fachada
+    }
+}
+
+
+//Pass the order to the selected unit
+void UnitManager::newOrder(Terrain *terrain){
+    Game *g = Game::Instance();
+    if (this->selectedTroop != NULL){
+        this->selectedTroop->setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
+    }
 }
 
 //////PARTE DE LA ECONOMIA PARA RAFA
@@ -176,4 +223,9 @@ bool UnitManager::checkCanPay(Enumeration::UnitType::SubClass type) {
     break;
     }
     return canPay;
+}
+
+bool UnitManager::isTroopSelected(){
+    if (selectedTroop != NULL) return true;
+    else return false;
 }

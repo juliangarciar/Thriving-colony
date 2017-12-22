@@ -2,7 +2,7 @@
 #define TABPANEL_H
 
 #include <irrlicht.h>
-#include <vector>
+#include <map>
 #include <GUIEngine/Rect2D.h>
 #include <GUIEngine/Tab.h>
 #include "GUIElement.h"
@@ -19,11 +19,12 @@ class TabPanel : public GUIElement {
 
         void enable();
         void disable();
-        void changeActiveTab(int id);
+        bool changeActiveTab(int id);
 
         gui::IGUIElement *getGUIElement();
     private:
         gui::IGUITabControl *ctrl;
+        std::map<int, Tab*> *tabs;
 };
 
 #endif

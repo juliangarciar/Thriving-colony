@@ -3,14 +3,20 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 #include <GraphicEngine/Terrain.h>
 #include "Ranged.h"
 #include "Melee.h"
 class UnitManager{
     // POR QUE ESTA CLASE ESTA DEL REVES WTF?
     private:
+        SceneNode *unitLayer;
+
+		SceneNode *currentCollision;
+
         std::vector<Unit*> *inHallTroops;
-        std::vector<Unit*> *inMapTroops;
+        //std::vector<Unit*> *inMapTroops;
+        std::map<int, Unit*> *inMapTroops;
 
         std::vector<Unit*> *totalTroops;
 
@@ -26,7 +32,10 @@ class UnitManager{
         UnitManager(Enumeration::Team teamData);             //Constructor
         virtual ~UnitManager();                 //Destroyer
 
-        std::vector<Unit*> *getTotalTroops(); //Returns all troops player has
+        void testRaycastCollisions();
+		int getCollisionID();
+		std::string getCollisionName();
+
         void updateUnitManager();               //Updates the UnitManager
 
         //Call for creating new troops, see the .cpp for more info on how to insert
@@ -38,11 +47,16 @@ class UnitManager{
         void startDeployingTroop(int index);
         void deployTroop(Terrain *terrain);
 
-        void selectTroop(Unit *troopData);      //Call for selecting a troop
-        void newOrder();                        //Order for selected troop
+        void selectTroop(int troopID);      //Call for selecting a troop
+        void unSelectTroop();
+        void newOrder(Terrain *terrain);                        //Order for selected troop
 
         bool isSolvent(int, int, Enumeration::Team);
         bool checkCanPay(Enumeration::UnitType::SubClass);
+
+        int getTotalTroops(); //Returns troop size
+
+        bool isTroopSelected();
 };
 
 #endif

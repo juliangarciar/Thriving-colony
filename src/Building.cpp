@@ -3,7 +3,7 @@
 #include "Human.h"
 #include "Game.h"
 
-Building::Building(int id, SceneNode *parent, Enumeration::BuildingType buildingData, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(id)
+Building::Building(int id, SceneNode *parent, Enumeration::BuildingType buildingData, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(parent, id)
 {
     int happiness = 0;
     int cityLevel = 0;
@@ -229,17 +229,14 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
     //ToDo: Graphic engine, this should be in the switch (when models done)
     color = video::SColor(255, r, g, b); //ToDo: esto es fachada 
     
-    this->model = new Model(parent, id);
     Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
-        model->getModel()->getMesh(), color
+        this->model->getModel()->getMesh(), color
     ); //ToDo: esto es fachada 
-    this->model->getModel()->setPosition(vectorData.getVectorF()); //ToDo: esto es fachada
-    this->model->getModel()->setMaterialFlag(video::EMF_LIGHTING, false); //ToDo: esto es fachada
 
-    this->hitbox = new Box3D<float>(this -> model ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
+    this->setPosition(vectorData);
+    this->hitbox->set(this -> model ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
 
     this->type = (int)buildingData;
-    this->position = new Vector3<float>(vectorData);
 
     if (teamData == Enumeration::Team::Human) {
         Human::getInstance() -> increaseHappiness(happiness);

@@ -63,8 +63,9 @@ void BuildingManager::drawBuilding(Terrain *terrain){
         float y = roundf(xyzPointCollision.y / gridAlignment) * gridAlignment;
         float z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
 
-        tempBuilding -> getModel() -> setPosition(Vector3<float>(x, y, z));
-		tempBuilding -> getHitbox() -> setPosition(tempBuilding -> getModel() ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es irrlicht
+		tempBuilding -> setPosition (Vector3<float>(x, y, z));
+
+		//tempBuilding -> getHitbox() -> set(tempBuilding -> getModel() ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es irrlicht
 
 		/* 
 		* Look if there is any other building built there

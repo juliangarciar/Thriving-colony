@@ -12,7 +12,7 @@ class Unit : public Entity {
     
     public:
         //The consctructor is empty because the object it's constructed in the child
-        Unit(int id, Vector3<float> vectorData, Enumeration::Team teamData);
+        Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Team teamData);
         virtual ~Unit();
 
         //Getters
