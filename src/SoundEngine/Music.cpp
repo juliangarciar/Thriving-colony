@@ -149,7 +149,7 @@ void Music::playMusic(string musicData){
                 musicPlaying = true;
             }
             ERRCHECK(musicInstance->start());
-            //ERRCHECK(musicInstance->release());
+            ERRCHECK(musicInstance->release());
         }
     }
 }

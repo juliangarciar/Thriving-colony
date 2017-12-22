@@ -117,7 +117,7 @@ void UnitManager::deployTroop(Terrain *terrain){
         this->inHallTroops->erase(inHallTroops->begin() + currentDeployingTroop);
          this->inMapTroops->insert(std::pair<int, Unit*>(temp->getModel()->getID(), temp));
 
-        //g -> getSoundSystem() -> playVoice(troopData->getMoveEvent());
+        //g -> getSoundSystem() -> playVoice(temp->getMoveEvent());
         temp->setTroopPosition(Vector3<float>(HUMAN_CITY_HALL_X, terrain->getY(HUMAN_CITY_HALL_X, HUMAN_CITY_HALL_Z), HUMAN_CITY_HALL_Z)); //ToDo
         temp->setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
         temp->getModel()->setActive(true);
@@ -136,7 +136,7 @@ void UnitManager::selectTroop(int troopID){
     std::map<int,Unit*>::iterator it = inMapTroops->find(troopID);
     if (it != inMapTroops->end()) {
         this->selectedTroop = it->second;
-        Game::Instance()->getSoundSystem()->playVoice(troopData->getSelectEvent());
+        //Game::Instance()->getSoundSystem()->playVoice(this->selectedTroop->getSelectEvent());
         g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_CROSS); //ToDo: fachada
     }
 }
@@ -156,6 +156,7 @@ void UnitManager::newOrder(Terrain *terrain){
     Game *g = Game::Instance();
     if (this->selectedTroop != NULL){
         this->selectedTroop->setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
+        //Game::Instance()->getSoundSystem()->playVoice(this->selectedTroop->getMoveEvent());
     }
 }
 
