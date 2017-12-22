@@ -1,6 +1,7 @@
 #include "ArmyNode.h"
 #include "UnitNode.h"
 #include "BuildingNode.h"
+#include "../IA.h"
 
 ArmyNode::ArmyNode(Node *fatherPnt) : Node() {
     father = fatherPnt;
@@ -16,11 +17,11 @@ ArmyNode::~ArmyNode(){
 
 void ArmyNode::question() {
     //First subbranch: Units
-    if (tree -> getNeedSoldiers()){
+    if (IA::getInstance() -> getTree() -> getNeedSoldiers()){
         children[0] -> question();
     } else {
         //Second subbranch: Buildings
-        if (tree -> getNeedBuildings()) {
+        if (IA::getInstance() -> getTree() -> getNeedBuildings()) {
             children[1] -> question();
         }
     }

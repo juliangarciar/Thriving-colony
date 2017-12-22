@@ -22,23 +22,23 @@ VeryHappyTree::~VeryHappyTree() {
 
 void VeryHappyTree::question() {
     //First branch: Services
-    if (IA::getInstance() -> getHappiness() < tree -> getHappinessThreshold()) {
+    if (IA::getInstance() -> getHappiness() < IA::getInstance() -> getTree() -> getHappinessThreshold()) {
         //std::cout << "Servicios" << std::endl;
         children[0] -> question();
     } else {
         //Second branch: Resources
-        if (tree -> needResourcesInvestment()) {
+        if (IA::getInstance() -> getTree() -> needResourcesInvestment()) {
             //std::cout << "Recursos" << std::endl;
             children[1] -> question();
         } else {
             //Third branch: Homes
-            if (tree -> calculateCitizensRate() < tree -> getCitizensThreshold()) {
+            if (IA::getInstance() -> getTree() -> calculateCitizensRate() < IA::getInstance() -> getTree() -> getCitizensThreshold()) {
                 //std::cout << "Viviendas" << std::endl;
                 children[2] -> question();
                 //ToDo: Si no hay cosas de hacer ejercito, da violacion de segmento
             } else {
                 //Fourth branch: Army
-                if (tree -> needArmyInvestment()) {
+                if (IA::getInstance() -> getTree() -> needArmyInvestment()) {
                     //std::cout << "Ejercito" << std::endl;
                     children[3] -> question();
                 } else {
