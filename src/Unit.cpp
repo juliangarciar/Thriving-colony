@@ -1,4 +1,5 @@
 #include "Unit.h"
+#include "Game.h"
 
 Unit::Unit(int id, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(id) {
     //Actions of the units
@@ -46,7 +47,7 @@ void Unit::moveTroop() {
         if (std::abs(vectorDes->x - position->x) < 5.0 && std::abs(vectorDes->z - position->z) < 5.0) {
             moving = false;
         } else {
-            this->setPosition(*vectorDes);
+            this->setTroopPosition(*vectorPos + *vectorMov);
         }
     }
 }
@@ -63,15 +64,12 @@ void Unit::setTroopPosition(Vector3<float> vectorData) {
 void Unit::setTroopDestination(Vector3<float> vectorData) {
     vectorDes->set(vectorData);
 
-    /*float distance;
-    distance = sqrt(std::abs(vectorMov->x) + std::abs(vectorMov->z));
-
     Vector3<float> desp = *vectorDes - *vectorPos;
-    vectorMov->set(desp);
-    vectorMov->x = (vectorMov->x / distance) * moveSpeed / 10;
-    vectorMov->z = (vectorMov->z / distance) * moveSpeed / 10;
 
-    std::cout << "Pos Mov " << *vectorMov << std::endl;*/
+    float distance = std::abs(std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2)));
+
+    vectorMov->x = (desp.x / distance) * moveSpeed * Game::Instance()->getWindow()->getDeltaTime();
+    vectorMov->z = (desp.z / distance) * moveSpeed * Game::Instance()->getWindow()->getDeltaTime();
 
     moving = true;
 }
