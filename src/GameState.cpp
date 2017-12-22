@@ -108,7 +108,8 @@ void GameState::Update(){
 
         Human::getInstance() -> update();
         IA::getInstance() -> update();
-        MusicSystem->playVoice("UnitMovementDroraniaMeleeS");
+
+        MusicSystem->playMusic("DroraniaMusic");
         MusicSystem->updateSound();
     //}
 }

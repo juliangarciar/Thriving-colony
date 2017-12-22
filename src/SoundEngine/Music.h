@@ -25,12 +25,15 @@ class Music {
         void setSfxVolumne(float sfxVolume);
         void setListenerPosition(Vector3<float> posData);
         void setPause(bool pauseData);
+        void stopAll();
+        bool getMusicPlaying();
     private:
     //NUEVO
       //map<string, FMOD::Studio::Bank *> banks;
       //map<string, FMOD::Studio::EventDescription *> eventDescriptions;
       map<string, FMOD::Studio::EventInstance*> soundEvent;
       //
+      bool musicPlaying = false;
       bool pause = false;
       FMOD::System *lowLevelSystem = NULL;
       FMOD::Studio::System *studioSystem = NULL;
@@ -69,7 +72,8 @@ class Music {
         FMOD::Studio::EventDescription *_KaonovAttackMeleeA;
         FMOD::Studio::EventDescription *_KaonovAttackRangedS;
         FMOD::Studio::EventDescription *_KaonovAttackRangedA;
-
+    //MUSIC
+        FMOD::Studio::EventDescription *_DroraniaMusic;
     //EVENTS INSTANCE
     //SELECT
         //DRORANIA
@@ -104,15 +108,19 @@ class Music {
         FMOD::Studio::EventInstance *KaonovAttackMeleeA;
         FMOD::Studio::EventInstance *KaonovAttackRangedS;
         FMOD::Studio::EventInstance *KaonovAttackRangedA;
+    //MUSIC
+        FMOD::Studio::EventInstance *DroraniaMusic;
     //BANKS
         FMOD::Studio::Bank *masterBank;
         FMOD::Studio::Bank *stringsBank;
         FMOD::Studio::Bank *droraniaBank;
         FMOD::Studio::Bank *kaonovBank;
     //CHECKS
-        FMOD_STUDIO_PLAYBACK_STATE playBackState;
-        FMOD::Studio::EventInstance *voiceInstance;
-        FMOD::Studio::EventInstance *musicInstance;
-        FMOD::Studio::EventInstance *sfxInstance;
+        FMOD_STUDIO_PLAYBACK_STATE voicePlayBackState;
+        FMOD_STUDIO_PLAYBACK_STATE musicPlayBackState;
+    //INSTANCE TYPES
+        FMOD::Studio::EventInstance *voiceInstance = NULL;
+        FMOD::Studio::EventInstance *musicInstance = NULL;
+        FMOD::Studio::EventInstance *sfxInstance = NULL;
 };
 #endif

@@ -90,3 +90,12 @@ void Unit::updateTarget() {
         target = battleInvolved -> getClosestTarget(*position, Enumeration::Team::Human);
     }
 }*/
+string Unit::getAttackEvent(){
+    return attackEvent;
+}
+string Unit::getMoveEvent(){
+    return moveEvent;
+}
+string Unit::getSelectEvent(){
+    return selectEvent;
+}

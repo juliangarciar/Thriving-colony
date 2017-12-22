@@ -21,7 +21,9 @@ Melee::Melee(int id, Enumeration::UnitType::SubClass unitData, Vector3<float> ve
         this->viewRange = 600;
         this->hpMax = 80;
         this->hp = 80;
-
+        attackEvent = "UnitAttackDroraniaMeleeS";
+        moveEvent = "UnitMovementDroraniaMeleeS";
+        selectEvent = "UnitSelectDroraniaMeleeS";
         metalCost = Enumeration::UnitCost::MeleeFootmenMetalCost;
         crystalCost = Enumeration::UnitCost::MeleeFootmenCrystalCost;
 
@@ -35,7 +37,9 @@ Melee::Melee(int id, Enumeration::UnitType::SubClass unitData, Vector3<float> ve
         this->viewRange = 600;
         this->hpMax = 140;
         this->hp = 140;
-
+        attackEvent = "UnitAttackDroraniaMeleeA";
+        moveEvent = "UnitMovementDroraniaMeleeA";
+        selectEvent = "UnitSelectDroraniaMeleeA";
         metalCost = Enumeration::UnitCost::MountedMeleeMetalCost;
         crystalCost = Enumeration::UnitCost::MountedMeleeCrystalCost;
 
@@ -49,7 +53,10 @@ Melee::Melee(int id, Enumeration::UnitType::SubClass unitData, Vector3<float> ve
         this->viewRange = 600;
         this->hpMax = 180;
         this->hp = 180;
-
+        //TO CHANGE
+        attackEvent = "UnitAttackDroraniaMeleeA";
+        moveEvent = "UnitMovementDroraniaMeleeA";
+        selectEvent = "UnitSelectDroraniaMeleeA";
         metalCost = Enumeration::UnitCost::CreatureMetalCost;
         crystalCost = Enumeration::UnitCost::CreatureCrystalCost;
 

@@ -4,7 +4,8 @@
 #include "Unit.h"
 #include "GraphicEngine/Window.h"
 #include "GraphicEngine/SceneNode.h"
-
+#include <string>
+using namespace std;
 class Melee : public Unit {
     
     public:
@@ -13,7 +14,13 @@ class Melee : public Unit {
         Melee(int id, Enumeration::UnitType::SubClass unitData, Vector3<float> vectorData, Enumeration::Team teamData);
         virtual ~Melee();
 
-    private:
+    string getAttackEvent();
+    string getMoveEvent();
+    string getSelectEvent();
+  private:
+    string attackEvent;
+    string moveEvent;
+    string selectEvent;
       
 };
 

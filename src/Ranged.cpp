@@ -21,7 +21,9 @@ Ranged::Ranged(int id, Enumeration::UnitType::SubClass unitData, Vector3<float> 
             this->viewRange = 600;
             this->hpMax = 60;
             this->hp = 60;
-
+            attackEvent = "UnitAttackDroraniaRangedS";
+            moveEvent = "UnitMovementDroraniaRangedS";
+            selectEvent = "UnitSelectDroraniaRangedS";
             metalCost = Enumeration::UnitCost::RangedFootmenMetalCost;
             crystalCost = Enumeration::UnitCost::RangedFootmenCrystalCost;  
         break;
@@ -34,7 +36,9 @@ Ranged::Ranged(int id, Enumeration::UnitType::SubClass unitData, Vector3<float> 
             this->viewRange = 600;
             this->hpMax = 110;
             this->hp = 110;
-
+            attackEvent = "UnitAttackDroraniaRangedA";
+            moveEvent = "UnitMovementDroraniaRangedA";
+            selectEvent = "UnitSelectDroraniaRangedA";
             metalCost = Enumeration::UnitCost::MountedRangedMetalCost;
             crystalCost = Enumeration::UnitCost::MountedRangedCrystalCost;
         break;
@@ -47,7 +51,10 @@ Ranged::Ranged(int id, Enumeration::UnitType::SubClass unitData, Vector3<float> 
             this->viewRange = 600;
             this->hpMax = 180;
             this->hp = 180;
-
+            //CHANGE
+            attackEvent = "UnitAttackDroraniaRangedS";
+            moveEvent = "UnitMovementDroraniaRangedS";
+            selectEvent = "UnitSelectDroraniaRangedS";
             metalCost = Enumeration::UnitCost::CatapultMetalCost;
             crystalCost = Enumeration::UnitCost::CatapultCrystalCost;
         break;
@@ -60,7 +67,10 @@ Ranged::Ranged(int id, Enumeration::UnitType::SubClass unitData, Vector3<float> 
             this->viewRange = 600;
             this->hpMax = 220;
             this->hp = 220;
-
+            //CHANGE
+            attackEvent = "UnitAttackDroraniaRangedA";
+            moveEvent = "UnitMovementDroraniaRangedA";
+            selectEvent = "UnitSelectDroraniaRangedA";
             metalCost = Enumeration::UnitCost::RamMetalCost;
             crystalCost = Enumeration::UnitCost::RamCrystalCost;
         break;
@@ -99,4 +109,13 @@ Ranged::Ranged(int id, Enumeration::UnitType::SubClass unitData, Vector3<float> 
 //maybe this will change in a future
 Ranged::~Ranged() {
     
+}
+string Ranged::getAttackEvent(){
+    return attackEvent;
+}
+string Ranged::getMoveEvent(){
+    return moveEvent;
+}
+string Ranged::getSelectEvent(){
+    return selectEvent;
 }

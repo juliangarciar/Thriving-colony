@@ -23,6 +23,9 @@ Game::Game() {
     events = new EventSystem();
 
     window -> setEventReceiver(io);
+    soundSystem = new Music();
+    soundSystem->setPause(false);
+    soundSystem->setMusicVolume(1);
 }
 
 Game::~Game() {
@@ -77,4 +80,7 @@ MenuState *Game::getMenuState(){
 
 GameState *Game::getGameState(){
 	return game;
+}
+Music* Game::getSoundSystem(){
+    return soundSystem;
 }

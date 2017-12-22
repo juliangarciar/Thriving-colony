@@ -79,7 +79,9 @@ Music::Music() {
         ERRCHECK(_KaonovAttackRangedS->createInstance(&KaonovAttackRangedS));
         ERRCHECK(_KaonovAttackRangedA->createInstance(&KaonovAttackRangedA));
 
-    
+    //MUSIC
+        ERRCHECK(studioSystem->getEvent("event:/Music/DroraniaMusic", &_DroraniaMusic));
+        ERRCHECK(_DroraniaMusic->createInstance(&DroraniaMusic));
     //MAP SOUND
     soundEvent["UnitMovementDroraniaMeleeS"] = DroraniaMovementMeleeS;
     soundEvent["UnitMovementDroraniaMeleeA"] = DroraniaMovementMeleeA;
@@ -105,6 +107,8 @@ Music::Music() {
     soundEvent["UnitSelectKaonovMeleeA"] = KaonovSelectMeleeA;
     soundEvent["UnitSelectKaonovRangedS"] = KaonovSelectRangedS;
     soundEvent["UnitSelectKaonovRangedA"] = KaonovSelectRangedA;
+
+    soundEvent["DroraniaMusic"] = DroraniaMusic;
     //result = studioSystem->init(32, FMOD_INIT_NORMAL, extradriverdata);
     //result = studioSystem->createSound(Common_MediaPath("../media/drumloop.wav"), FMOD_DEFAULT, 0, &sound1);
     //result = sound1->setMode(FMOD_LOOP_OFF);
@@ -121,13 +125,12 @@ Music::~Music() {
 }
 void Music::playVoice(string voiceData){
     if(!pause){
-        voiceInstance->getPlaybackState(&playBackState);
-        if (playBackState != FMOD_STUDIO_PLAYBACK_PLAYING)
+        voiceInstance->getPlaybackState(&voicePlayBackState);
+        if (voicePlayBackState != FMOD_STUDIO_PLAYBACK_PLAYING)
         {
             if(rand() % 100 < 50){
                 const char *c = voiceData.c_str();
                 voiceInstance = soundEvent.find(c)->second;
-
                 ERRCHECK(voiceInstance->start());
                 ERRCHECK(voiceInstance->release());
             }
@@ -137,18 +140,23 @@ void Music::playVoice(string voiceData){
 void Music::playMusic(string musicData){
     if (!pause)
     {
-        //musicInstance->getPlaybackState(&playBackState);
-        //if (playBackState != FMOD_STUDIO_PLAYBACK_PLAYING)
-        //{
-        //    const char *c = musicData.c_str();
-        //    musicInstance = soundEvent.find(c)->second;
-        //    ERRCHECK(musicInstance->start());
-        //}
+        musicInstance->getPlaybackState(&musicPlayBackState);
+        if (musicPlayBackState != FMOD_STUDIO_PLAYBACK_PLAYING)
+        {
+            if(!musicPlaying){
+                const char *c = musicData.c_str();
+                musicInstance = soundEvent.find(c)->second;
+                musicPlaying = true;
+            }
+            ERRCHECK(musicInstance->start());
+            //ERRCHECK(musicInstance->release());
+        }
     }
 }
 void Music::playSFX(string sfxData){
     if (!pause)
     {
+        //NOT IMPLEMENTED
         //sfxInstance->getPlaybackState(&playBackState);
         //if (playBackState != FMOD_STUDIO_PLAYBACK_PLAYING)
         //{
@@ -162,7 +170,6 @@ void Music::playSFX(string sfxData){
 void Music::updateSound(){
     if(!pause){
         Common_Update();
-
         this->studioSystem->update();
     }
 }
@@ -190,4 +197,14 @@ void setListenerPosition(Vector3<float> posData){
 }
 void Music::setPause(bool pauseData){
     this->pause = pauseData;
+}
+void Music::stopAll(){
+    this->voiceInstance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+    this->sfxInstance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+    this->musicInstance->stop(FMOD_STUDIO_STOP_IMMEDIATE);
+    this->pause = true;
+    this->musicPlaying = false;
+}
+bool Music::getMusicPlaying(){
+
 }

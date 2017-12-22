@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <cmath>
+using namespace std;
 class Unit : public Entity {
     
     public:
@@ -30,7 +31,10 @@ class Unit : public Entity {
         void moveTroop();
         void updateTroop();
         //void assignBattle(Battle*);
-
+        //Music
+        string getAttackEvent();
+        string getMoveEvent();
+        string getSelectEvent();
     protected:
         //Unit stats
         int moveSpeed;
@@ -55,7 +59,11 @@ class Unit : public Entity {
 
         //Battle* battleInvolved;
 
-    private:
+    
+  private:
+    string attackEvent;
+    string moveEvent;
+    string selectEvent;
         
 };
 
