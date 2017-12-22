@@ -44,6 +44,10 @@ void Model::setPosition(Vector3<float> pos){
     cubeNode->setPosition(pos.getVectorF());
 }
 
+void Model::setActive(bool a){
+    cubeNode->setVisible(a);
+}
+
 Vector3<float> Model::getPosition(){
     return Vector3<float>(cubeNode->getPosition());
 }

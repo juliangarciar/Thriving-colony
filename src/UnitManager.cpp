@@ -52,12 +52,14 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData){
     if (checkCanPay(unitData.unitSubClass)) {
         if(unitData.unitClass == Enumeration::UnitType::Ranged){
             Ranged *rangedUnit = new Ranged(unitData.unitSubClass, Vector3<float>(), this->teamManager);
+            rangedUnit->getModel()->setActive(false);
             this->inHallTroops -> push_back(rangedUnit);
             return true;
         }
         else if (unitData.unitClass == Enumeration::UnitType::Melee)
         {
             Melee *meleeUnit = new Melee(unitData.unitSubClass, Vector3<float>(), this->teamManager);
+            meleeUnit->getModel()->setActive(false);
             this->inHallTroops -> push_back(meleeUnit);
             return true;
         }
@@ -83,14 +85,19 @@ void UnitManager::startDeployingTroop(int index){
 void UnitManager::deployTroop(Terrain *terrain){ 
     Game *g = Game::Instance();
     if (isDeployingTroop && currentDeployingTroop >= 0 && g->getIO() -> leftMouseDown()){ 
-        isDeployingTroop = false;
         Unit *temp = inHallTroops->at(currentDeployingTroop);
+
         this->inHallTroops->erase(inHallTroops->begin() + currentDeployingTroop);
         this->inMapTroops->push_back(temp);
+
         temp->setPosition(Vector3<float>(0, 0, 0)); //ToDo
         temp->setDestination(terrain -> getPointCollision(g -> getCursor()));
-        currentDeployingTroop = -1;
+        temp->getModel()->setActive(true);
+        
         g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NORMAL); //ToDo: fachada
+
+        currentDeployingTroop = -1;
+        isDeployingTroop = false;
     }
 }
 
