@@ -46,7 +46,8 @@ void GameState::Init(){
 
     // Build the main building of Human
 
-
+    v = 0;
+    v = new Vector3<float>();
     v -> x = 8000;
     v -> z = 8000;
     v -> y = Game::Instance() -> getGameState() ->getMap() -> getY(v -> x, v -> z);
