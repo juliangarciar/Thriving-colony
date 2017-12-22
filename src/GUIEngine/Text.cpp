@@ -20,4 +20,16 @@ gui::IGUIElement *Text::getGUIElement(){
 
 void Text::setText(const wchar_t *t) {
     text ->setText(t);
-} 
+}
+
+void Text::disable() {
+    text -> setEnabled(false);
+    text -> setVisible(false);
+    std::cout<<"llega"<<std::endl;
+}
+
+void Text::enable() {
+    text -> setEnabled(true);
+    text -> setVisible(true);
+    std::cout<<"llega1"<<std::endl;
+}

@@ -36,6 +36,10 @@ void GameState::Init(){
     Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::OpenDoorsHuman, Human::openDoors);
     Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::CloseDoorsHuman, Human::closeDoors);
 
+    //Hud events
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::EnableText, Hud::drawWarning);
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DisableText, Hud::deleteWarning);
+
     // Build the main building of IA
     Vector3<float> *v = IA::getInstance() -> determinatePositionBuilding();
     IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::IA);
@@ -45,7 +49,6 @@ void GameState::Init(){
     IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::IA);
 
     // Build the main building of Human
-
     v = 0;
     v = new Vector3<float>();
     v -> x = 8000;
@@ -56,7 +59,6 @@ void GameState::Init(){
     //Build the first siderurgy of Human
     v -> z = 8100;
     v -> y = Game::Instance() -> getGameState() ->getMap() -> getY(v -> x, v -> z);
-    std::cout << "hola" << std::endl;
     Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::Human);
 }
 

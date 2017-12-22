@@ -41,6 +41,10 @@ class Enumeration {
             DeployTroopsHuman,
             OpenDoorsHuman,
             RetractTroopsHuman,
+
+            //Text
+            DisableText,
+            EnableText
         }; 
 
         enum idGUI {

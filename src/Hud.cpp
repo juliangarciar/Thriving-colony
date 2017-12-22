@@ -9,6 +9,8 @@
 
 using namespace irr;
 
+Text *Hud::warningText = new Text(Rect2D<int>(200, 60, 50, 20), L"Edificio construido", true);
+
 Hud::Hud() {
     //Le botone iniciale
     buttonQuit = new Button(Rect2D<int>(1100, 50, 100, 30), Enumeration::idGUI::GUI_ID_QUIT_BUTTON, L"Quit", L"Quit Game");
@@ -36,7 +38,9 @@ Hud::Hud() {
     resourceText = new Text(Rect2D<int>(200, 0, 100, 55), L"Hola mundo", true);
     // Solo de debug
     iaResourceText = new Text(Rect2D<int>(300, 0, 100, 55), L"Hola mundo", true);
-    
+
+    warningText = new Text(Rect2D<int>(200, 60, 50, 20), L"Edificio construido", true);
+    warningText -> disable();
 }
 
 Hud::~Hud() {
@@ -63,6 +67,8 @@ Hud::~Hud() {
     
     delete resourceText;
     delete iaResourceText;
+
+    delete warningText;
 }
 
 void Hud::addTab(int id, int type){
@@ -266,9 +272,19 @@ void Hud::update() {
         iaos << L"IA resources:\n" << "Metal: " << std::to_wstring(IA::getInstance() -> getMetalAmount()) << "\nCrystal: " << std::to_wstring(IA::getInstance() -> getCrystalAmount()) << "\nCitizens: " << std::to_wstring(IA::getInstance() -> getCitizens()) << "\nHappiness: " << std::to_wstring(IA::getInstance() -> getHappiness());
         iaResourceText -> setText(iaos.str().c_str());
         updateTimer = 0.5;
+
+        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::DisableText);
     } else {
         updateTimer -= Window::Instance() ->getDeltaTime();
     }
+}
+
+void Hud::drawWarning() {
+    warningText -> enable();
+}
+
+void Hud::deleteWarning() {
+    warningText -> disable();
 }
 
 /*hospitalMenu = tabs->addTab(L"Hospital", Enumeration::BuildingType::Hospital);

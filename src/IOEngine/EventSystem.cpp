@@ -1,5 +1,7 @@
 #include "EventSystem.h"
 
+#include <iostream>
+
 EventSystem::EventSystem() {
     Events = new std::map<Enumeration::EventType, std::function<void()>>();
 }
