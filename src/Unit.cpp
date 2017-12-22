@@ -1,8 +1,6 @@
 #include "Unit.h"
 
-
-Unit::Unit(int id, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(id)
-{
+Unit::Unit(int id, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(id) {
     //Actions of the units
     this->moving = false;
     this->attacking = false;
@@ -43,6 +41,45 @@ void Unit::setMoving(bool movingPnt) {
 void Unit::setAttacking(bool attackingPnt) {
     attacking = attackingPnt;
 }
+void Unit::moveTroop() {
+    if (moving) {
+        if (std::abs(vectorDes->x - position->x) < 5.0 && std::abs(vectorDes->z - position->z) < 5.0) {
+            moving = false;
+        } else {
+            this->setPosition(*vectorDes);
+        }
+    }
+}
+
+void Unit::updateTroop() {
+    moveTroop();
+}
+
+void Unit::setTroopPosition(Vector3<float> vectorData) {
+    this->vectorPos->set(vectorData);
+    this->setPosition(vectorData);
+}
+
+void Unit::setTroopDestination(Vector3<float> vectorData) {
+    vectorDes->set(vectorData);
+
+    /*float distance;
+    distance = sqrt(std::abs(vectorMov->x) + std::abs(vectorMov->z));
+
+    Vector3<float> desp = *vectorDes - *vectorPos;
+    vectorMov->set(desp);
+    vectorMov->x = (vectorMov->x / distance) * moveSpeed / 10;
+    vectorMov->z = (vectorMov->z / distance) * moveSpeed / 10;
+
+    std::cout << "Pos Mov " << *vectorMov << std::endl;*/
+
+    moving = true;
+}
+
+Model* Unit::getModel() {
+    return this->model;
+}
+
 /*
 void Unit::assignBattle(Battle* _battle) {
     battleInvolved = _battle;
@@ -55,50 +92,3 @@ void Unit::updateTarget() {
         target = battleInvolved -> getClosestTarget(*position, Enumeration::Team::Human);
     }
 }*/
-void Unit::moveTroop()
-{
-    if (moving)
-    {
-
-        if (std::abs(vectorDes->x - position->x) < 5.0 && std::abs(vectorDes->z - position->z) < 5.0)
-        {
-            moving = false;
-        }
-        else
-        {
-            //position = model->getModel()->getPosition();
-            this->setPosition(*vectorMov);
-            std::cout << *position << std::endl;
-        }
-    }
-}
-void Unit::updateTroop()
-{
-    moveTroop();
-}
-void Unit::setTroopPosition(Vector3<float> vectorData)
-{
-    this->vectorPos->set(vectorData);
-    this->setPosition(vectorData); 
-}
-void Unit::setDestination(Vector3<float> vectorData)
-{
-    vectorDes->set(vectorData);
-
-    float distance;
-
-    Vector3<float> desp = *vectorDes - *vectorPos;
-
-    vectorMov->set(desp);
-    
-    distance = sqrt(std::abs(vectorMov->x) + std::abs(vectorMov->z));
-
-    vectorMov->x = (vectorMov->x / distance) * moveSpeed / 10;
-    vectorMov->z = (vectorMov->z / distance) * moveSpeed / 10;
-
-    moving = true;
-}
-
-Model* Unit::getModel(){
-    return this->model;
-}
