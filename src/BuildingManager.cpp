@@ -104,6 +104,9 @@ void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingTy
 
 		id++;
 	} else {
+		if (tempBuilding == NULL){
+			tempBuilding = new Building(id, buildingLayer, _type, pos, _team);
+		}
 		tempBuilding->getModel()->setID(id);
 
 		if(_type == Enumeration::BuildingType::Tower)
