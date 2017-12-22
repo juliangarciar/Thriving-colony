@@ -104,6 +104,7 @@ void UnitManager::startDeployingTroop(int index){
     if (!isDeployingTroop){
         isDeployingTroop = true;
         currentDeployingTroop = index;
+        selectedTroop = inHallTroops->at(currentDeployingTroop);
         g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_CROSS); //ToDo: fachada
     }
 } 
@@ -123,6 +124,7 @@ void UnitManager::deployTroop(Terrain *terrain){
         g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NORMAL); //ToDo: fachada
 
         currentDeployingTroop = -1;
+        selectedTroop = NULL;
         isDeployingTroop = false;
     }
 }
