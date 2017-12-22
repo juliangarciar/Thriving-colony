@@ -36,6 +36,10 @@ void GameState::Init(){
     Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::OpenDoorsHuman, Human::openDoors);
     Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::CloseDoorsHuman, Human::closeDoors);
 
+    //Hud events
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::EnableText, Hud::drawWarning);
+    Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DisableText, Hud::deleteWarning);
+
     // Build the main building of IA
     Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();
     IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::IA);

@@ -14,6 +14,9 @@ class Text : public GUIElement {
         
         gui::IGUIElement *getGUIElement();
         void setText(const wchar_t *text);
+
+        void disable();
+        void enable();
     private:
         gui::IGUIStaticText *text;
 };

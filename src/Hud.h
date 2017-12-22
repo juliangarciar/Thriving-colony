@@ -29,6 +29,9 @@ class Hud {
         void getHUDEvents();
 
         void update();
+
+        static void drawWarning();
+        static void deleteWarning();
     private:
         Button *buttonQuit;
 
@@ -55,8 +58,10 @@ class Hud {
         
         Text *resourceText;
         Text *iaResourceText;
+        static Text *warningText;
 
         float updateTimer;
+        float deleteTextTimer;
 };
 
 #endif

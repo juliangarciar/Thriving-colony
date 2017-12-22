@@ -20,4 +20,15 @@ gui::IGUIElement *Text::getGUIElement(){
 
 void Text::setText(const wchar_t *t) {
     text ->setText(t);
-} 
+}
+
+void Text::disable() {
+    text -> setVisible(false);
+    text -> setEnabled(false);
+    
+}
+
+void Text::enable() {
+    text -> setVisible(true);
+    text -> setEnabled(true);
+}

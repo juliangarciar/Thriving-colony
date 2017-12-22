@@ -9,6 +9,8 @@
 
 using namespace irr;
 
+Text *Hud::warningText = 0;//new Text(Rect2D<int>(200, 60, 50, 20), L"Edificio construido", true);
+
 Hud::Hud() {
     //Le botone iniciale
     buttonQuit = new Button(Rect2D<int>(1100, 50, 100, 30), Enumeration::idGUI::GUI_ID_QUIT_BUTTON, L"Quit", L"Quit Game");
@@ -37,7 +39,12 @@ Hud::Hud() {
     resourceText = new Text(Rect2D<int>(200, 0, 100, 55), L"Hola mundo", true);
     // Solo de debug
     iaResourceText = new Text(Rect2D<int>(300, 0, 100, 55), L"Hola mundo", true);
-    
+
+    warningText = new Text(Rect2D<int>(200, 60, 50, 20), L"Edificio construido", true);
+    //warningText -> disable();
+    deleteWarning();
+
+    deleteTextTimer = 0;
 }
 
 Hud::~Hud() {
@@ -64,6 +71,8 @@ Hud::~Hud() {
     
     delete resourceText;
     delete iaResourceText;
+
+    delete warningText;
 }
 
 void Hud::addTab(int id, int type){
@@ -258,6 +267,7 @@ void Hud::getHUDEvents(){
 }
 
 void Hud::update() {
+    float dt = Window::Instance() ->getDeltaTime();
     if (updateTimer <= 0) {
         //ToDo: añadir los metodos de getmetalamount y getcrystalamount
         std::wstringstream os;
@@ -267,9 +277,23 @@ void Hud::update() {
         iaos << L"IA resources:\n" << "Metal: " << std::to_wstring(IA::getInstance() -> getMetalAmount()) << "\nCrystal: " << std::to_wstring(IA::getInstance() -> getCrystalAmount()) << "\nCitizens: " << std::to_wstring(IA::getInstance() -> getCitizens()) << "\nHappiness: " << std::to_wstring(IA::getInstance() -> getHappiness());
         iaResourceText -> setText(iaos.str().c_str());
         updateTimer = 0.5;
+
+        
+        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::DisableText);
     } else {
-        updateTimer -= Window::Instance() ->getDeltaTime();
+        updateTimer -= dt;
     }
+    
+}
+
+void Hud::drawWarning() {
+    std::cout <<  "¡Se ha construido un edificio!" << std::endl;
+    warningText -> enable();
+}
+
+void Hud::deleteWarning() {
+    //std::cout << "¡Se ha borrado un texto que dice que se ha dibujado un texto!" << std::endl;
+    warningText -> disable();
 }
 
 /*hospitalMenu = tabs->addTab(L"Hospital", Enumeration::BuildingType::Hospital);
