@@ -13,7 +13,7 @@ UnitManager::UnitManager(Enumeration::Team teamData){
     totalTroops = new std::vector<Unit*>();
 
     isDeployingTroop = false;
-    currentDeployingTroop = NULL;
+    currentDeployingTroop = -1;
 }
 //Destroyer
 UnitManager::~UnitManager(){
@@ -51,13 +51,15 @@ void UnitManager::updateUnitManager(){
 bool UnitManager::createTroop(Enumeration::UnitType unitData){
     if (checkCanPay(unitData.unitSubClass)) {
         if(unitData.unitClass == Enumeration::UnitType::Ranged){
-            Ranged *rangedUnit = new Ranged(unitData.unitSubClass, new Vector3<float>(), this->teamManager);
+            Ranged *rangedUnit = new Ranged(unitData.unitSubClass, Vector3<float>(), this->teamManager);
+            rangedUnit->getModel()->setActive(false);
             this->inHallTroops -> push_back(rangedUnit);
             return true;
         }
         else if (unitData.unitClass == Enumeration::UnitType::Melee)
         {
-            Melee *meleeUnit = new Melee(unitData.unitSubClass, new Vector3<float>(), this->teamManager);
+            Melee *meleeUnit = new Melee(unitData.unitSubClass, Vector3<float>(), this->teamManager);
+            meleeUnit->getModel()->setActive(false);
             this->inHallTroops -> push_back(meleeUnit);
             return true;
         }
@@ -65,39 +67,37 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData){
     return false;
 }
 
-void UnitManager::deployTroopAtPosition(int index, Vector3<float> *vectorData){
-    this->inHallTroops->at(index)->setPos(vectorData);
+void UnitManager::deployTroopAtPosition(int index, Vector3<float> vectorData){
+    this->inHallTroops->at(index)->setPosition(vectorData);
     this->inMapTroops->push_back(inHallTroops->at(index));
     this->inHallTroops->erase(inHallTroops->begin() + index);
 }
 
-void UnitManager::startDeployingTroop(int index){
+void UnitManager::startDeployingTroop(int index){ 
+    Game *g = Game::Instance();
     if (!isDeployingTroop){
-        currentDeployingTroop = new Unit(new Vector3<float>(900, 1800, 2000), Enumeration::Team::IA);
-        this->inMapTroops->push_back(inHallTroops->at(index));
-        this->inHallTroops->erase(inHallTroops->begin() + index);
         isDeployingTroop = true;
+        currentDeployingTroop = index;
+        g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_CROSS); //ToDo: fachada
     }
 } 
 
 void UnitManager::deployTroop(Terrain *terrain){ 
     Game *g = Game::Instance();
-    if (isDeployingTroop && currentDeployingTroop != NULL){ 
-        Vector3<float> xyzPointCollision = terrain -> getPointCollision(g -> getCursor());
-        float x = roundf(xyzPointCollision.x / gridAlignment) * gridAlignment;
-        float y = roundf(xyzPointCollision.y / gridAlignment) * gridAlignment;
-        float z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
+    if (isDeployingTroop && currentDeployingTroop >= 0 && g->getIO() -> leftMouseDown()){ 
+        Unit *temp = inHallTroops->at(currentDeployingTroop);
 
+        this->inHallTroops->erase(inHallTroops->begin() + currentDeployingTroop);
+        this->inMapTroops->push_back(temp);
 
-        if (g->getIO() -> leftMouseDown()){
-            isDeployingTroop = false;
+        temp->setPosition(Vector3<float>(0, 0, 0)); //ToDo
+        temp->setDestination(terrain -> getPointCollision(g -> getCursor()));
+        temp->getModel()->setActive(true);
+        
+        g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NORMAL); //ToDo: fachada
 
-            Vector3<float> *newPos = new Vector3<float>(x, y, z);
-            currentDeployingTroop->setDes(newPos);
-
-            currentDeployingTroop = NULL;
-            //buildBuilding(new Vector3<float>(x, y, z), (Enumeration::BuildingType)tempBuilding->getType(), Enumeration::Team::Human);
-        }
+        currentDeployingTroop = -1;
+        isDeployingTroop = false;
     }
 }
 

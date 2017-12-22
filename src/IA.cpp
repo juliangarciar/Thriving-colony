@@ -3,6 +3,7 @@
 
 IA::IA() : Player() {
     tree = new BehaviourTree();
+    nodeRootIA = new RootNode();
 
     units = new UnitManager(Enumeration::Team::IA);
 }
@@ -27,6 +28,7 @@ BehaviourTree* IA::getTree() {
 void IA::update() {
     if (updateTimer <= 0) {
         gainResources();
+        nodeRootIA -> question();
         updateTimer = 1;
     } else {
         updateTimer -= Window::Instance() -> getDeltaTime();

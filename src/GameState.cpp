@@ -9,13 +9,11 @@ GameState::GameState() : State() {
 
     //IL PICCOLO SPAGUETTIO
     iaUpdateTimer = 1;
-    nodeRootIA = new RootNode();
 
     gamePaused = false;
 }
 
 GameState::~GameState() {
-    delete nodeRootIA;
     delete camera;
     delete hud;
     delete map;
@@ -104,16 +102,6 @@ void GameState::Update(){
 
         Human::getInstance() -> update();
         IA::getInstance() -> update();
-        
-        // ESTO VA EN EL UPDATE DE LA IA, PERO SI ME PONGO A CAMBIARLO DA ERRORES DE LINKADO
-        // ASI QUE LO VOY A DEJAR ASI QUE FUNCIONA Y YA SE VERA QUE PASA CON LA PICCOLA ITALIA
-        // HOGAR DEL SPAGUETIO
-        if (iaUpdateTimer <= 0) {
-            nodeRootIA -> question();
-            iaUpdateTimer = 1;
-        } else {
-            iaUpdateTimer -= Window::Instance() -> getDeltaTime();
-        }
     //}
 }
 

@@ -14,6 +14,7 @@ class Model {
 
         void setID(int id);
         void setName(const wchar_t *name);
+        void setActive(bool a);
 
         void setPosition(Vector3<float> pos);
         Vector3<float> getPosition();
