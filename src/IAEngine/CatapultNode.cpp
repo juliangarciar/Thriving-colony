@@ -15,7 +15,7 @@ CatapultNode::~CatapultNode(){
 
 void CatapultNode::question() {
     if (IA::getInstance() -> getWorkshopBuilt()) {
-        std::cout << "Genero una catapulta" << std::endl;
+        //std::cout << "Genero una catapulta" << std::endl;
         if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::CatapultMetalCost, Enumeration::UnitCost::CatapultCrystalCost, Enumeration::Team::IA)) {
             // Unit type
             Enumeration::UnitType unitData; 

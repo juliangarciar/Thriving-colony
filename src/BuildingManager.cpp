@@ -50,7 +50,7 @@ std::string BuildingManager::getCollisionName(){
 	return NULL;
 }
 
-void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _type, Enumeration::Team _team){
+void BuildingManager::drawBuilding(Terrain *terrain){
     Game *g = Game::Instance();
     if (buildingMode && tempBuilding != NULL){
         // Aqui tenemos que hacer que cuando se haya apretado el boton de nueva ventana,
@@ -81,30 +81,41 @@ void BuildingManager::drawBuilding(Terrain *terrain, Enumeration::BuildingType _
 			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
 				tempBuilding -> getModel() -> getModel() -> getMesh(), tempBuilding -> getColor()
 			); //ToDo: esto es fachada
+			
 			/*
 			* If there is no collision and the player press left button of the mouse,
 			* build the building
 			*/
 			if (g->getIO() -> leftMouseDown()){
 				buildingMode = false;
-				buildBuilding(new Vector3<float>(x, y, z), _type, _team);
+				buildBuilding(new Vector3<float>(x, y, z), (Enumeration::BuildingType)tempBuilding->getType(), Enumeration::Team::Human);
+				tempBuilding = NULL;
 			}
 		}
     }
 }
 
 void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
-	if(_type == Enumeration::BuildingType::Tower) {
-		buildings->insert(std::pair<int,Building*>(id, new Tower(id, buildingLayer, pos, _team)));
-		id++;
-		return;
-    }
 	if (_team == Enumeration::Team::IA){
-		buildings->insert(std::pair<int,Building*>(id, new Building(id, buildingLayer, _type, pos, _team)));
+		if(_type == Enumeration::BuildingType::Tower)
+			buildings->insert(std::pair<int,Building*>(id, new Tower(id, buildingLayer, pos, _team)));
+		else
+			buildings->insert(std::pair<int,Building*>(id, new Building(id, buildingLayer, _type, pos, _team)));
+
 		id++;
 	} else {
+		if (tempBuilding == NULL){
+			tempBuilding = new Building(id, buildingLayer, _type, pos, _team);
+		}
 		tempBuilding->getModel()->setID(id);
-		buildings->insert(std::pair<int,Building*>(id, tempBuilding));
+
+		if(_type == Enumeration::BuildingType::Tower)
+			buildings->insert(std::pair<int,Building*>(id, new Tower(id, buildingLayer, pos, _team)));
+		else
+			buildings->insert(std::pair<int,Building*>(id, tempBuilding));
+
+		Game::Instance()->getGameState()->getHud()->addTab(id, tempBuilding->getType());
+
 		id++;
 	}
 }

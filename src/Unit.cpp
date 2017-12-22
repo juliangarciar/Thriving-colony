@@ -1,7 +1,7 @@
 #include "Unit.h"
 
 
-Unit::Unit(Vector3<float> *vectorData, Enumeration::Team teamData) : Entity()
+Unit::Unit(Vector3<float> vectorData, Enumeration::Team teamData) : Entity()
 {
     
     //Actions of the units
@@ -10,16 +10,20 @@ Unit::Unit(Vector3<float> *vectorData, Enumeration::Team teamData) : Entity()
     //Default target
     this->target = 0;
     //Position defined by the constructor parameter
-    this->position = vectorData;
+    this->vectorPos = new Vector3<float>();
+    this->vectorDes = new Vector3<float>();
+    this->vectorMov = new Vector3<float>();
     //Team defined by the constructor parameter
     this->team = teamData;
     //Defining model position
-    //this->model->getModel()->setPosition(vectorData->getVectorF());
+    this->model = new Model(std::rand());
+    this->model->getModel()->setPosition(vectorData.getVectorF());
     //unitModel->getModel()->setPosition(irr::core::vector3df(vectorPos->X, vectorPos->Y, vectorPos->Z));
 }
 
 Unit::~Unit() {
     delete target;
+    delete vectorPos;
     delete vectorDes;
     delete vectorMov;
 }
@@ -75,23 +79,24 @@ void Unit::updateTroop()
 {
     moveTroop();
 }
-void Unit::setPos(Vector3<float> *vectorData)
+void Unit::setPosition(Vector3<float> vectorData)
 {
-    this->position = vectorData;
+    this->vectorPos->set(vectorData);
 }
-void Unit::setDes(Vector3<float> *vectorData)
+void Unit::setDestination(Vector3<float> vectorData)
 {
-    vectorDes->x = vectorData->x;
-    vectorDes->z = vectorData->z;
+    vectorDes->set(vectorData);
 
-    float distance, distX, distZ;
+    float distance;
+
+    Vector3<float> desp = *vectorDes - *vectorPos;
+
+    vectorMov->set(desp);
     
-    distX = vectorData->x - position->x;
-    distZ = vectorData->z - position->z;
-    distance = sqrt(std::abs(distX) + std::abs(distZ));
+    distance = sqrt(std::abs(vectorMov->x) + std::abs(vectorMov->z));
 
-    vectorMov->x = (distX / distance) * moveSpeed / 10;
-    vectorMov->z = (distZ / distance) * moveSpeed / 10;
+    vectorMov->x = (vectorMov->x / distance) * moveSpeed / 10;
+    vectorMov->z = (vectorMov->z / distance) * moveSpeed / 10;
 
     moving = true;
 }

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <GraphicEngine/Terrain.h>
 #include "Ranged.h"
 #include "Melee.h"
 class UnitManager{
@@ -16,6 +17,11 @@ class UnitManager{
         Unit *selectedTroop;
 
         Enumeration::Team teamManager;
+
+        bool isDeployingTroop;
+        int currentDeployingTroop;
+
+        int gridAlignment;
     public:
         UnitManager(Enumeration::Team teamData);             //Constructor
         virtual ~UnitManager();                 //Destroyer
@@ -26,7 +32,12 @@ class UnitManager{
         //Call for creating new troops, see the .cpp for more info on how to insert
         //the desired unit
         bool createTroop(Enumeration::UnitType unitData);
-        void deployTroop(int index, Vector3<float> *vectorData);
+
+        void deployTroopAtPosition(int index, Vector3<float> vectorData);
+        
+        void startDeployingTroop(int index);
+        void deployTroop(Terrain *terrain);
+
         void selectTroop(Unit *troopData);      //Call for selecting a troop
         void newOrder();                        //Order for selected troop
 

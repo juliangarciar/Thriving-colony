@@ -43,31 +43,45 @@ void GameState::Init(){
     //Build the first siderurgy of IA
     v = IA::getInstance() -> determinatePositionBuilding();
     IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::IA);
+
+    // Build the main building of Human
+
+    /*
+    float startingX = 4000;
+    float startingZ = 4000;
+    Vector3<float> *v2 = new Vector3<float>(startingX, 0, startingZ);
+    v2 -> y = Game::Instance() -> getGameState() ->getMap() -> getY(v2 -> x, v2 -> z);*/
+    Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::Human);
+
+    //Build the first siderurgy of Human
+    /*
+    v = new Vector3<float>(startingX + 100, 0, startingZ);
+    v -> y = Game::Instance() -> getGameState() ->getMap() -> getY(v -> x, v -> z);*/
+    //Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::Human);
 }
 
 void GameState::Input(){
     //if (gamePaused) {
         hud->getHUDEvents();
 
+        hud ->update();
+
         camera->Move(Game::Instance()->getIO(), Game::Instance()->getCursor());
         camera->RotateAndInclinate(Game::Instance()->getIO(), Game::Instance()->getCursor());
         camera->Zoom(Game::Instance()->getIO());
-
-
 
         Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
         if (Game::Instance()->getIO()->leftMousePressed()){
             Human::getInstance() -> getBuildingManager()->testRaycastCollisions();
             int id = Human::getInstance() -> getBuildingManager() -> getCollisionID();
             if (id != -1){
-                std::map<int,Building*> *b = Human::getInstance() -> getBuildingManager() -> getBuildings();
+                hud->showPopup(id);
+                /*std::map<int,Building*> *b = Human::getInstance() -> getBuildingManager() -> getBuildings();
                 std::map<int,Building*>::iterator it;
                 it = b->find(id);
                 if (it->second != NULL){
-                    int t = (int)it->second->getType();
-                    hud->addTab(id, t);
-                    hud->showPopup(id);
-                }
+                    //int t = (int)it->second->getType();
+                }*/
             }
         }
     //}
@@ -84,7 +98,8 @@ void GameState::Update(){
         Vector3<float> cam = camera->getCamera()->getCameraPosition();
         Vector3<float> tar = camera->getCamera()->getTargetPosition();
 
-        Human::getInstance() -> getBuildingManager() -> drawBuilding(map, Enumeration::BuildingType::House,  Enumeration::Team::Human);
+        Human::getInstance() -> getBuildingManager() -> drawBuilding(map);
+        Human::getInstance() -> getUnitManager() -> deployTroop(map);
 
         Human::getInstance() -> update();
         IA::getInstance() -> update();
@@ -101,4 +116,8 @@ void GameState::CleanUp(){
 
 Terrain* GameState::getMap() {
     return map;
+}
+
+Hud* GameState::getHud() {
+    return hud;
 }

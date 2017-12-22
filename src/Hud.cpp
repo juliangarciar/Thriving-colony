@@ -1,7 +1,11 @@
 #include "Hud.h"
 #include "Game.h"
 #include "Human.h"
+#include "IA.h"
 #include "Enumeration.h"
+#include "GraphicEngine/Window.h"
+
+#include <string>
 
 using namespace irr;
 
@@ -28,6 +32,11 @@ Hud::Hud() {
     tabs->disable();
 
     this->addTab(0, Enumeration::BuildingType::MainBuilding);
+    updateTimer = 0.5;
+    resourceText = new Text(Rect2D<int>(200, 0, 100, 55), L"Hola mundo", true);
+    // Solo de debug
+    iaResourceText = new Text(Rect2D<int>(300, 0, 100, 55), L"Hola mundo", true);
+    
 }
 
 Hud::~Hud() {
@@ -51,6 +60,9 @@ Hud::~Hud() {
 
     delete hallTroopText;
     delete hallTroopList;
+    
+    delete resourceText;
+    delete iaResourceText;
 }
 
 void Hud::addTab(int id, int type){
@@ -237,37 +249,51 @@ void Hud::getHUDEvents(){
                 int index = hallTroopList->getSelected();
                 if (index >= 0){
                     hallTroopList->removeItem(index);
-                    Vector3<float> *vectorData = new Vector3<float>(300, 300, 300);
-                    Human::getInstance()->getUnitManager()->deployTroop(index, vectorData);
+                    Human::getInstance()->getUnitManager()->startDeployingTroop(index);
                 }
             }
         break;
     }
 }
 
-    /*hospitalMenu = tabs->addTab(L"Hospital", Enumeration::BuildingType::Hospital);
-    hospitalMenu->addChild(buttonCloseTab3);
-    homeMenu = tabs->addTab(L"Home", Enumeration::BuildingType::House);
-    homeMenu->addChild(buttonCloseTab4);
-    marketMenu = tabs->addTab(L"Market", Enumeration::BuildingType::Market);
-    marketMenu->addChild(buttonCloseTab5);
-    quarryMenu = tabs->addTab(L"Quarry", Enumeration::BuildingType::Quarry);
-    quarryMenu->addChild(buttonCloseTab6);
-    siderurgyMenu = tabs->addTab(L"Siderurgy", Enumeration::BuildingType::Siderurgy);
-    siderurgyMenu->addChild(buttonCloseTab7);
-    schoolMenu = tabs->addTab(L"School", Enumeration::BuildingType::School);
-    schoolMenu->addChild(buttonCloseTab8);
-    towerMenu = tabs->addTab(L"Tower", Enumeration::BuildingType::Tower);
-    towerMenu->addChild(buttonCloseTab9);
-    wallMenu = tabs->addTab(L"Wall", Enumeration::BuildingType::Wall); 
-    wallMenu->addChild(buttonCloseTab10);
-    buttonCloseTab3 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-    buttonCloseTab4 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-    buttonCloseTab5 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-    buttonCloseTab6 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-    buttonCloseTab7 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-    buttonCloseTab8 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-    buttonCloseTab9 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-    buttonCloseTab10 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-    buttonCloseTab11 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-    */
+void Hud::update() {
+    if (updateTimer <= 0) {
+        //ToDo: añadir los metodos de getmetalamount y getcrystalamount
+        std::wstringstream os;
+        os << L"Player resources:\n" << "Metal: " << std::to_wstring(Human::getInstance() -> getMetalAmount()) << "\nCrystal: " << std::to_wstring(Human::getInstance() -> getCrystalAmount()) << "\nCitizens: " << std::to_wstring(Human::getInstance() -> getCitizens()) << "\nHappiness: " << std::to_wstring(Human::getInstance() -> getHappiness());
+        resourceText -> setText(os.str().c_str());
+        std::wstringstream iaos;
+        iaos << L"IA resources:\n" << "Metal: " << std::to_wstring(IA::getInstance() -> getMetalAmount()) << "\nCrystal: " << std::to_wstring(IA::getInstance() -> getCrystalAmount()) << "\nCitizens: " << std::to_wstring(IA::getInstance() -> getCitizens()) << "\nHappiness: " << std::to_wstring(IA::getInstance() -> getHappiness());
+        iaResourceText -> setText(iaos.str().c_str());
+        updateTimer = 0.5;
+    } else {
+        updateTimer -= Window::Instance() ->getDeltaTime();
+    }
+}
+
+/*hospitalMenu = tabs->addTab(L"Hospital", Enumeration::BuildingType::Hospital);
+hospitalMenu->addChild(buttonCloseTab3);
+homeMenu = tabs->addTab(L"Home", Enumeration::BuildingType::House);
+homeMenu->addChild(buttonCloseTab4);
+marketMenu = tabs->addTab(L"Market", Enumeration::BuildingType::Market);
+marketMenu->addChild(buttonCloseTab5);
+quarryMenu = tabs->addTab(L"Quarry", Enumeration::BuildingType::Quarry);
+quarryMenu->addChild(buttonCloseTab6);
+siderurgyMenu = tabs->addTab(L"Siderurgy", Enumeration::BuildingType::Siderurgy);
+siderurgyMenu->addChild(buttonCloseTab7);
+schoolMenu = tabs->addTab(L"School", Enumeration::BuildingType::School);
+schoolMenu->addChild(buttonCloseTab8);
+towerMenu = tabs->addTab(L"Tower", Enumeration::BuildingType::Tower);
+towerMenu->addChild(buttonCloseTab9);
+wallMenu = tabs->addTab(L"Wall", Enumeration::BuildingType::Wall); 
+wallMenu->addChild(buttonCloseTab10);
+buttonCloseTab3 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+buttonCloseTab4 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+buttonCloseTab5 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+buttonCloseTab6 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+buttonCloseTab7 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+buttonCloseTab8 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+buttonCloseTab9 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+buttonCloseTab10 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+buttonCloseTab11 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+*/
