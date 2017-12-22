@@ -19,6 +19,7 @@ class Model {
         void setPosition(Vector3<float> pos);
         Vector3<float> getPosition();
 
+        int getID();
 		scene::IMeshSceneNode *getModel();
     private:
         scene::IMeshSceneNode *cubeNode;

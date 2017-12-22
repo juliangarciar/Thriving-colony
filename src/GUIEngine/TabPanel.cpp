@@ -37,9 +37,13 @@ void TabPanel::disable(){
    ctrl->setVisible(false);
 }
 
-void TabPanel::changeActiveTab(int id){
+bool TabPanel::changeActiveTab(int id){
     std::map<int,Tab*>::iterator it = tabs->find(id);
-    if (it != tabs->end()) ctrl->setActiveTab((gui::IGUITab*)it->second->getGUIElement());
+    if (it != tabs->end()) {
+        ctrl->setActiveTab((gui::IGUITab*)it->second->getGUIElement());
+        return true;
+    }
+    return false;
 }
 
 gui::IGUIElement *TabPanel::getGUIElement(){

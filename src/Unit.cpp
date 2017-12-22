@@ -1,7 +1,7 @@
 #include "Unit.h"
 #include "Game.h"
 
-Unit::Unit(int id, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(id) {
+Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(layer, id) {
     //Actions of the units
     this->moving = false;
     this->attacking = false;

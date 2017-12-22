@@ -71,16 +71,20 @@ void GameState::Input(){
         Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
         if (Game::Instance()->getIO()->leftMousePressed()){
             Human::getInstance() -> getBuildingManager()->testRaycastCollisions();
-            int id = Human::getInstance() -> getBuildingManager() -> getCollisionID();
-            if (id != -1){
-                hud->showPopup(id);
-                /*std::map<int,Building*> *b = Human::getInstance() -> getBuildingManager() -> getBuildings();
-                std::map<int,Building*>::iterator it;
-                it = b->find(id);
-                if (it->second != NULL){
-                    //int t = (int)it->second->getType();
-                }*/
+            int idBuilding = Human::getInstance() -> getBuildingManager() -> getCollisionID();
+            if (idBuilding != -1){
+                hud->showPopup(idBuilding);
             }
+            Human::getInstance() -> getUnitManager()->testRaycastCollisions();
+            int idTroop = Human::getInstance() -> getUnitManager() -> getCollisionID();
+            if (idTroop != -1){
+                Human::getInstance() -> getUnitManager() -> selectTroop(idTroop);
+            } else {
+                Human::getInstance() -> getUnitManager() -> unSelectTroop();
+            }
+        }
+        if (Game::Instance()->getIO()->rightMousePressed()){
+            Human::getInstance()->getUnitManager()->newOrder(map);
         }
     //}
 }

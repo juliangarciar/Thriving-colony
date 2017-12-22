@@ -19,7 +19,7 @@ class TabPanel : public GUIElement {
 
         void enable();
         void disable();
-        void changeActiveTab(int id);
+        bool changeActiveTab(int id);
 
         gui::IGUIElement *getGUIElement();
     private:
