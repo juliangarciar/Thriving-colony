@@ -3,6 +3,7 @@
 Entity::Entity() {
     //ToDo: hacer aumento de felicidad, tropas nivel y tal
     hitbox = new Box3D<float>();
+    position = new Vector3<float>();
 }
 
 Entity::~Entity() {
