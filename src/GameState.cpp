@@ -48,18 +48,17 @@ void GameState::Init(){
 
     // Build the main building of Human
 
-    /*
-    float startingX = 4000;
-    float startingZ = 4000;
-    Vector3<float> *v2 = new Vector3<float>(startingX, 0, startingZ);
-    v2 -> y = Game::Instance() -> getGameState() ->getMap() -> getY(v2 -> x, v2 -> z);*/
+
+    v -> x = 8000;
+    v -> z = 8000;
+    v -> y = Game::Instance() -> getGameState() ->getMap() -> getY(v -> x, v -> z);
     Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::Human);
 
     //Build the first siderurgy of Human
-    /*
-    v = new Vector3<float>(startingX + 100, 0, startingZ);
-    v -> y = Game::Instance() -> getGameState() ->getMap() -> getY(v -> x, v -> z);*/
-    //Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::Human);
+    v -> z = 8100;
+    v -> y = Game::Instance() -> getGameState() ->getMap() -> getY(v -> x, v -> z);
+    std::cout << "hola" << std::endl;
+    Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::Human);
 }
 
 void GameState::Input(){

@@ -117,6 +117,7 @@ void BuildingManager::buildBuilding(Vector3<float>* pos, Enumeration::BuildingTy
 		Game::Instance()->getGameState()->getHud()->addTab(id, tempBuilding->getType());
 
 		id++;
+		tempBuilding = NULL;
 	}
 }
 
