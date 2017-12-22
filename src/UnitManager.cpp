@@ -90,8 +90,8 @@ void UnitManager::deployTroop(Terrain *terrain){
         this->inHallTroops->erase(inHallTroops->begin() + currentDeployingTroop);
         this->inMapTroops->push_back(temp);
 
-        temp->setPosition(Vector3<float>(HUMAN_CITY_HALL_X, terrain->getY(HUMAN_CITY_HALL_X, HUMAN_CITY_HALL_Z), HUMAN_CITY_HALL_Z)); //ToDo
-        temp->setDestination(terrain -> getPointCollision(g -> getCursor()));
+        temp->setTroopPosition(Vector3<float>(HUMAN_CITY_HALL_X, terrain->getY(HUMAN_CITY_HALL_X, HUMAN_CITY_HALL_Z), HUMAN_CITY_HALL_Z)); //ToDo
+        temp->setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
         temp->getModel()->setActive(true);
         
         g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NORMAL); //ToDo: fachada

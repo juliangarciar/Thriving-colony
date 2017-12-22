@@ -22,7 +22,7 @@ class Unit : public Entity {
         void setMoving(bool);
         void setAttacking(bool);
         void setTroopPosition(Vector3<float> vectorData);
-        void setDestination(Vector3<float> vectorData);
+        void setTroopDestination(Vector3<float> vectorData);
 
         /////////////////////////
         void attack();
