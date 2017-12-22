@@ -78,7 +78,7 @@ int Player::getCitizens() {
 }
 
 int Player::getArmySize() {
-    return units -> getTotalTroops() -> size();
+    return units -> getTotalTroops();
 }
 
 int Player::getMeleeAmount() {
@@ -280,13 +280,13 @@ void Player::retractTroops() {
 }
 
 //ToDo: las tropas no deberian ir en unit manager?
-std::vector<Unit*>* Player::getTroops() {
+/*std::vector<Unit*>* Player::getTroops() {
     //ToDo: Devolver tropas
     //TODO al cuadrado: Decidir como va a ser lo de las tropas   
     // las tropas van en el unit manager oogili boogili
     //return troops;
     return units -> getTotalTroops();
-}
+}*/
 
 int Player::getMetalAmount() {
     return metalAmount;

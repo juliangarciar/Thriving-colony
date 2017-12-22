@@ -75,7 +75,7 @@ float BehaviourTree::calculateCitizensRate() {
 * Calculates the ratio between citizens and army
 */
 float BehaviourTree::calculateArmyCitizensRate() {
-    float armySize = IA::getInstance() -> getUnitManager() -> getTotalTroops() -> size();
+    float armySize = IA::getInstance() -> getUnitManager() -> getTotalTroops();
     // Numbers of soldiers / Number of total cicitzens (citizens + soldiers)
     float totalCitizens = IA::getInstance() -> getCitizens() + armySize;
     return (armySize / totalCitizens);

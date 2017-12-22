@@ -56,8 +56,8 @@ void Battle::fetchUnits() {
     iaTroops -> clear();
 
     //Fetch the units vector from each player
-    std::vector<Unit*> *humanArmy = Human::getInstance() -> getTroops();
-    std::vector<Unit*> *iaArmy = IA::getInstance() -> getTroops();
+    std::vector<Unit*> *humanArmy = new std::vector<Unit*>();/*Human::getInstance() -> getTroops();*/
+    std::vector<Unit*> *iaArmy = new std::vector<Unit*>();/*IA::getInstance() -> getTroops();*/
 
     // Check every unit in the human army, if any is in range of the battle, add it to the vector
     for (int i = 0; i < humanArmy -> size(); i++) {

@@ -38,13 +38,8 @@ UnitManager::~UnitManager(){
     delete unitLayer;
 }
 //Returns all troops the player has
-std::vector<Unit*> *UnitManager::getTotalTroops(){
-    totalTroops->clear();
-    totalTroops->reserve( inHallTroops->size() + inMapTroops->size() ); // preallocate memory
-    //ToDo: fusionar Map y vector
-    /*totalTroops->insert( totalTroops->end(), inHallTroops->begin(), inHallTroops->end() );
-    totalTroops->insert( totalTroops->end(), inMapTroops->begin(), inMapTroops->end() );*/
-    return totalTroops;
+int UnitManager::getTotalTroops(){
+    return inHallTroops->size() + inMapTroops->size();
 } 
 //Update all troops
 void UnitManager::updateUnitManager(){
@@ -224,4 +219,9 @@ bool UnitManager::checkCanPay(Enumeration::UnitType::SubClass type) {
     break;
     }
     return canPay;
+}
+
+bool UnitManager::isTroopSelected(){
+    if (selectedTroop != NULL) return true;
+    else return false;
 }

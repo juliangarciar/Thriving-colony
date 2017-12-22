@@ -54,7 +54,9 @@ class UnitManager{
         bool isSolvent(int, int, Enumeration::Team);
         bool checkCanPay(Enumeration::UnitType::SubClass);
 
-        std::vector<Unit*> *getTotalTroops(); //Returns all troops player has
+        int getTotalTroops(); //Returns troop size
+
+        bool isTroopSelected();
 };
 
 #endif
