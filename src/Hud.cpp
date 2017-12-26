@@ -26,6 +26,7 @@ Hud::Hud() {
     buttonWorkshop = new Button(Rect2D<int>(0, 480, 200, 60), Enumeration::idGUI::GUI_ID_BUILD_WORKSHOP_BUTTON, L"Workshop", L"Build a workshop that will allow you to create siege weapons.\n Metal cost: 1100.\nCrystal cost: 230");
     buttonWall = new Button(Rect2D<int>(0, 540, 200, 60), Enumeration::idGUI::GUI_ID_BUILD_WALL_BUTTON, L"Wall", L"Build a wall that will protect your city from outsiders.\n Metal cost: 75.");
     buttonTower = new Button(Rect2D<int>(0, 600, 200, 60), Enumeration::idGUI::GUI_ID_BUILD_TOWER_BUTTON, L"Tower", L"Build a wall that will protect your city from outsiders by attacking them.\n Metal cost: 300.");
+    buttonExpandTerrain = new Button(Rect2D<int>(0, 660, 200, 60), Enumeration::idGUI::GUI_ID_EXPAND_TERRAIN_BUTTON, L"Expand terrain", L"Purchase a terrain expansion that will allow you to build a bigger city.\n Metal cost: 500.");
 
     menus = new std::vector<Tab*>();
     buttons = new std::vector<Button*>();
@@ -63,6 +64,7 @@ Hud::~Hud() {
     delete buttonWorkshop;
     delete buttonWall;
     delete buttonTower;
+    delete buttonExpandTerrain;
 
     delete tabs;
 
@@ -262,6 +264,9 @@ void Hud::getHUDEvents(){
                     Human::getInstance()->getUnitManager()->startDeployingTroop(index);
                 }
             }
+        break;
+        case Enumeration::idGUI::GUI_ID_EXPAND_TERRAIN_BUTTON:
+			//ToDo: hacer que se expanda el terreno edificable y que el susodicho exista
         break;
     }
 }

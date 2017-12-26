@@ -46,7 +46,8 @@ class Hud {
         Button *buttonTower;
         Button *buttonWall;
         Button *buttonWorkshop;
-        
+        Button *buttonExpandTerrain;
+
         TabPanel *tabs;
 
         Text *hallTroopText;
