@@ -17,9 +17,7 @@ void CreatureNode::question() {
         //std::cout << "Genero una criatura" << std::endl;
         if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::CreatureMetalCost, Enumeration::UnitCost::CreatureCrystalCost, Enumeration::Team::IA)) {
             // Unit type
-            Enumeration::UnitType unitData; 
-            unitData.unitClass = Enumeration::UnitType::Class::Melee; 
-            unitData.unitSubClass = Enumeration::UnitType::SubClass::Idol; //????????
+            Enumeration::UnitType unitData = Enumeration::UnitType::Idol;
             // WTF?
             //Vector3<float>* vectorData = new Vector3<float>();
 

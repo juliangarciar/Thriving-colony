@@ -19,9 +19,7 @@ void MeleeFootmenNode::question() {
         //Esto va en el constructor
         if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost, Enumeration::Team::IA)) {
             // Unit type
-            Enumeration::UnitType unitData; 
-            unitData.unitClass = Enumeration::UnitType::Class::Melee; 
-            unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardM;
+            Enumeration::UnitType unitData = Enumeration::UnitType::StandardM; 
             // WTF?
             //Vector3<float>* vectorData = new Vector3<float>();
 

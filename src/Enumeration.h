@@ -25,7 +25,7 @@ class Enumeration {
             Workshop
         };
 
-        enum Race {
+        enum RaceType {
             Drorania,
             Kaonov
         };
@@ -141,29 +141,31 @@ class Enumeration {
             RamMetalCost = 295,
             RamCrystalCost = 160,
         };
-
+        //Unit types
+        enum UnitType{
+            StandardR,
+            AdvancedR,
+            Launcher,
+            Desintegrator,
+            StandardM,
+            AdvancedM,
+            Idol
+        };
+        
         //Special type, used to pass info to the UnitManager
         //in order to control which unit is created
-        struct UnitType{
-            enum Class{
-                Ranged,
-                Melee
-            };
-
-            enum SubClass
-            {
-                StandardR,
-                AdvancedR,
-                Launcher,
-                Desintegrator,
-                StandardM,
-                AdvancedM,
-                Idol
-            };
-
-            Class unitClass;
-            SubClass unitSubClass;
-        };
+        //struct UnitType{
+        //    enum Class{
+        //        Ranged,
+        //        Melee
+        //    };
+        //    enum SubClass
+        //    {
+        //        
+        //    };
+        //    Class unitClass;
+        //    SubClass unitSubClass;
+        //};
 
     private:
         

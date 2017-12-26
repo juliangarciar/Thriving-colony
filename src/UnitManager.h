@@ -5,8 +5,7 @@
 #include <vector>
 #include <map>
 #include <GraphicEngine/Terrain.h>
-#include "Ranged.h"
-#include "Melee.h"
+#include "Unit.h"
 class UnitManager{
     // POR QUE ESTA CLASE ESTA DEL REVES WTF?
     private:
@@ -23,13 +22,14 @@ class UnitManager{
         Unit *selectedTroop;
 
         Enumeration::Team teamManager;
+        Enumeration::RaceType raceType;
 
         bool isDeployingTroop;
         int currentDeployingTroop;
 
         int gridAlignment;
     public:
-        UnitManager(Enumeration::Team teamData);             //Constructor
+        UnitManager(Enumeration::Team teamData, Enumeration::RaceType raceData);             //Constructor
         virtual ~UnitManager();                 //Destroyer
 
         void testRaycastCollisions();
@@ -52,7 +52,7 @@ class UnitManager{
         void newOrder(Terrain *terrain);                        //Order for selected troop
 
         bool isSolvent(int, int, Enumeration::Team);
-        bool checkCanPay(Enumeration::UnitType::SubClass);
+        bool checkCanPay(Enumeration::UnitType);
 
         int getTotalTroops(); //Returns troop size
 

@@ -1,10 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Melee.h"
-#include "Ranged.h"
 #include "BuildingManager.h"
 #include "UnitManager.h"
+#include "Unit.h"
 #include <vector>
 
 class Player {

@@ -204,54 +204,55 @@ void Hud::getHUDEvents(){
         break;
         case Enumeration::idGUI::GUI_ID_CREATE_MELEE_TROOP_BUTTON:
             {
-                Enumeration::UnitType unitData;
-                unitData.unitClass = Enumeration::UnitType::Class::Melee;
-                unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardM;
+                Enumeration::UnitType unitData = Enumeration::UnitType::StandardM;
+                
+                //unitData.unitClass = Enumeration::UnitType::Class::Melee;
+                //unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardM;
                 if (Human::getInstance() -> getUnitManager() -> createTroop(unitData))
                     hallTroopList->addItem(L"Tropa melee a pie");
             }
         break;
         case Enumeration::idGUI::GUI_ID_CREATE_RANGED_TROOP_BUTTON:
             {
-                Enumeration::UnitType unitData;
-                unitData.unitClass = Enumeration::UnitType::Class::Ranged;
-                unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardR;
+                Enumeration::UnitType unitData = Enumeration::UnitType::StandardR;
+                //unitData.unitClass = Enumeration::UnitType::Class::Ranged;
+                //unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardR;
                 if (Human::getInstance() -> getUnitManager() -> createTroop(unitData))
                     hallTroopList->addItem(L"Tropa rango a pie");
             }
         break;
         case Enumeration::idGUI::GUI_ID_CREATE_MOUNTED_MELEE_TROOP_BUTTON:
             {
-                Enumeration::UnitType unitData;
-                unitData.unitClass = Enumeration::UnitType::Class::Ranged;
-                unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedM;
+                Enumeration::UnitType unitData = Enumeration::UnitType::AdvancedM;
+                //unitData.unitClass = Enumeration::UnitType::Class::Ranged;
+                //unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedM;
                 if (Human::getInstance() -> getUnitManager() -> createTroop(unitData))
                     hallTroopList->addItem(L"Tropa melee en montura");
             }
         break;
         case Enumeration::idGUI::GUI_ID_CREATE_MOUNTED_RANGED_TROOP_BUTTON:
             {
-                Enumeration::UnitType unitData;
-                unitData.unitClass = Enumeration::UnitType::Class::Ranged;
-                unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedR;
+                Enumeration::UnitType unitData = Enumeration::UnitType::AdvancedR;
+                //unitData.unitClass = Enumeration::UnitType::Class::Ranged;
+                //unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedR;
                 if (Human::getInstance() -> getUnitManager() -> createTroop(unitData))
                     hallTroopList->addItem(L"Tropa rango en montura");
             }
         break;
         case Enumeration::idGUI::GUI_ID_CREATE_MONSTER_BUTTON:
             {
-                Enumeration::UnitType unitData;
-                unitData.unitClass = Enumeration::UnitType::Class::Ranged;
-                unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedM;
+                Enumeration::UnitType unitData = Enumeration::UnitType::Idol;
+                //unitData.unitClass = Enumeration::UnitType::Class::Ranged;
+                //unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedM;
                 if (Human::getInstance() -> getUnitManager() -> createTroop(unitData))
                     hallTroopList->addItem(L"Ente");
             }
         break;
         case Enumeration::idGUI::GUI_ID_CREATE_MACHINE_BUTTON:
             {
-                Enumeration::UnitType unitData;
-                unitData.unitClass = Enumeration::UnitType::Class::Ranged;
-                unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedR;
+                Enumeration::UnitType unitData = Enumeration::UnitType::Launcher;
+                //unitData.unitClass = Enumeration::UnitType::Class::Ranged;
+                //unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedR;
                 if (Human::getInstance() -> getUnitManager() -> createTroop(unitData))
                     hallTroopList->addItem(L"Maquina de guerra 1");
             }

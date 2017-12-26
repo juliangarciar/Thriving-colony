@@ -5,7 +5,7 @@ IA::IA() : Player() {
     tree = new BehaviourTree();
     nodeRootIA = new RootNode();
 
-    units = new UnitManager(Enumeration::Team::IA);
+    units = new UnitManager(Enumeration::Team::IA, Enumeration::RaceType::Kaonov);
 }
 
 IA::~IA() {

@@ -17,9 +17,7 @@ void MountedMeleeNode::question() {
     //std::cout << "Genero un soldado montado melee" << std::endl;
     if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MountedMeleeMetalCost, Enumeration::UnitCost::MountedMeleeCrystalCost, Enumeration::Team::IA)) {
         // Unit type
-        Enumeration::UnitType unitData; 
-        unitData.unitClass = Enumeration::UnitType::Class::Melee; 
-        unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedM;
+        Enumeration::UnitType unitData = Enumeration::UnitType::AdvancedM; 
         // WTF?
         //Vector3<float>* vectorData = new Vector3<float>();
 

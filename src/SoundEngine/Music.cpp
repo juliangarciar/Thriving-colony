@@ -206,5 +206,5 @@ void Music::stopAll(){
     this->musicPlaying = false;
 }
 bool Music::getMusicPlaying(){
-
+    return this->musicPlaying;
 }

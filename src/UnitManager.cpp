@@ -4,7 +4,7 @@
 #include "Game.h"
 
 //Constructor
-UnitManager::UnitManager(Enumeration::Team teamData){
+UnitManager::UnitManager(Enumeration::Team teamData, Enumeration::RaceType raceData){
     gridAlignment = 20;
     selectedTroop = 0; 
 
@@ -21,6 +21,9 @@ UnitManager::UnitManager(Enumeration::Team teamData){
     unitLayer = new SceneNode();
 
     selectedTroop = NULL;
+
+    //Addes by Julian
+    this->raceType = raceData;
 }
 //Destroyer
 UnitManager::~UnitManager(){
@@ -54,20 +57,11 @@ void UnitManager::updateUnitManager(){
 //unitData.unitClass = Enumeration::UnitType::Class::Ranged; 
 //unitData.unitSubClass = Enumeration::UnitType::SubClass::Idol;
 bool UnitManager::createTroop(Enumeration::UnitType unitData){
-    if (checkCanPay(unitData.unitSubClass)) {
-        if(unitData.unitClass == Enumeration::UnitType::Ranged){
-            Ranged *rangedUnit = new Ranged(std::rand(), unitLayer, unitData.unitSubClass, Vector3<float>(), this->teamManager);
-            rangedUnit->getModel()->setActive(false);
-            this->inHallTroops -> push_back(rangedUnit);
-            return true;
-        }
-        else if (unitData.unitClass == Enumeration::UnitType::Melee)
-        {
-            Melee *meleeUnit = new Melee(std::rand(), unitLayer, unitData.unitSubClass, Vector3<float>(), this->teamManager);
-            meleeUnit->getModel()->setActive(false);
-            this->inHallTroops -> push_back(meleeUnit);
-            return true;
-        }
+    if (checkCanPay(unitData)) {
+        Unit *newUnit = new Unit(std::rand(), unitLayer, Vector3<float>(), this->teamManager, unitData, this->raceType);
+        newUnit->getModel()->setActive(false);
+        this->inHallTroops -> push_back(newUnit);
+        return true;
     }
     return false;
 }
@@ -195,31 +189,31 @@ bool UnitManager::isSolvent(int metalCost, int crystalCost, Enumeration::Team te
  * to avoid cluttering the setBuildingMode() method, as it used to be there in the first place.
  */
  
-bool UnitManager::checkCanPay(Enumeration::UnitType::SubClass type) {
+bool UnitManager::checkCanPay(Enumeration::UnitType type) {
     //ESto esta aqui para no hacer clutter arriba
     bool canPay = false;
     //CHECK IF YOU CAN PAY THE BUILDING
     
     switch(type){
-    case Enumeration::UnitType::SubClass::StandardM:
+    case Enumeration::UnitType::StandardM:
         canPay = isSolvent(Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost, Enumeration::Team::Human);
     break;
-    case Enumeration::UnitType::SubClass::AdvancedM:
+    case Enumeration::UnitType::AdvancedM:
         canPay = isSolvent(Enumeration::UnitCost::MountedMeleeMetalCost, Enumeration::UnitCost::MountedMeleeCrystalCost, Enumeration::Team::Human);
     break;
-    case Enumeration::UnitType::SubClass::Idol:
+    case Enumeration::UnitType::Idol:
         canPay = isSolvent(Enumeration::UnitCost::CreatureMetalCost, Enumeration::UnitCost::CreatureCrystalCost, Enumeration::Team::Human);
     break;
-    case Enumeration::UnitType::SubClass::Launcher:
+    case Enumeration::UnitType::Launcher:
         canPay = isSolvent(Enumeration::UnitCost::CatapultMetalCost, Enumeration::UnitCost::CatapultCrystalCost, Enumeration::Team::Human);
     break;
-    case Enumeration::UnitType::SubClass::Desintegrator:
+    case Enumeration::UnitType::Desintegrator:
         canPay = isSolvent(Enumeration::UnitCost::RamMetalCost, Enumeration::UnitCost::RamCrystalCost, Enumeration::Team::Human);
     break;
-    case Enumeration::UnitType::SubClass::StandardR:
+    case Enumeration::UnitType::StandardR:
         canPay = isSolvent(Enumeration::UnitCost::RangedFootmenMetalCost, Enumeration::UnitCost::RangedFootmenCrystalCost, Enumeration::Team::Human);
     break;
-    case Enumeration::UnitType::SubClass::AdvancedR:
+    case Enumeration::UnitType::AdvancedR:
         canPay = isSolvent(Enumeration::UnitCost::MountedRangedMetalCost, Enumeration::UnitCost::MountedRangedCrystalCost, Enumeration::Team::Human);
     break;
     }

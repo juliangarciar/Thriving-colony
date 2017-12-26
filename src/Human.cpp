@@ -23,7 +23,7 @@ Human::Human() : Player() {
     workshopBuilt = false;
 
     
-    units = new UnitManager(Enumeration::Team::Human);
+    units = new UnitManager(Enumeration::Team::Human, Enumeration::RaceType::Drorania);
 }
 
 Human::~Human() {
