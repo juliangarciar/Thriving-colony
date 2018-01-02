@@ -26,6 +26,7 @@ class Entity {
         Box3D<float> *getHitbox();
         Model *getModel();
 
+        virtual void taxPlayer(Enumeration::Team) = 0;
     protected:
         //SceneNode *modelLayer;
         Model* model;
@@ -36,14 +37,13 @@ class Entity {
 
         int hpMax;
         int hp;
-        int happiness;
 
-        /*
-        * Indicates the propetary of the entity
-        * False -> IA
-        * True -> Human
-        */
-        bool team;
+        // Values, costs, etc
+        int happiness;
+        int cityLevel;
+        int metalCost;
+        int crystalCost;
+        
 
       private:
 };
