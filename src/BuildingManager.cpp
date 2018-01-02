@@ -70,8 +70,9 @@ void BuildingManager::drawBuilding(Terrain *terrain){
 		//Pressing the right mouse button cancels the building
 		if (g->getIO() -> rightMouseDown()){
 				buildingMode = false;
-				//ToDo: Dejar de dibujar el edificio
-				
+
+				//ToDo: Dejar de dibujar el edificio solo lo voy a poner en el 0,0,0
+				tempBuilding->setPosition(Vector3<float>(0, 0, 0));				
 
 				tempBuilding = NULL;
 				return;
