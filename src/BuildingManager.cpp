@@ -71,7 +71,15 @@ void BuildingManager::drawBuilding(Terrain *terrain){
 		if (g->getIO() -> rightMouseDown()){
 				buildingMode = false;
 
-				//ToDo: Dejar de dibujar el edificio solo lo voy a poner en el 0,0,0
+				//ToDo: Dejar de dibujar el edificio por ahora solo lo voy a poner en el 0,0,0
+				//TODO
+				//TODO
+				//TODO
+				//TODO
+				//TODO
+				//TODO
+				//TODO
+
 				tempBuilding->setPosition(Vector3<float>(0, 0, 0));				
 
 				tempBuilding = NULL;
