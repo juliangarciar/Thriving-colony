@@ -11,7 +11,12 @@ Battle::Battle(float _x, float _y) {
     iaTroops = new std::vector<Unit*>;
     humanBuildings = new std::vector<Building*>;
     iaBuildings = new std::vector<Building*>;
+
+    unitFetchTimer = 1;
+    buildingFetchTimer = 1;
+
     fetchUnits();
+    fetchBuildings();
 }
 
 Battle::~Battle() {
@@ -31,12 +36,18 @@ std::vector<Unit*>* Battle::getIaTroops() {
 }
 
 void Battle::update() {
-    //if Timer
+    if (unitFetchTimer <= 0) {
         fetchUnits();
-    // }
-    //if Timer2
+        unitFetchTimer = 1;
+    } else {
+        unitFetchTimer -= Game::Instance() ->getWindow() -> getDeltaTime()
+    }
+    if (buildingFetchTimer <= 0) {
         fetchBuildings();
-    // }
+        buildingFetchTimer = 1;
+    } else {
+        buildingFetchTimer -= Game::Instance() ->getWindow() -> getDeltaTime()
+    }
     //Determine if there is only a team involved
     bool noIAPresence = (iaTroops -> size() == 0) && (iaBuildings -> size() == 0);
     bool noHumanPresence = (humanTroops -> size() == 0) && (humanBuildings -> size() == 0);
@@ -215,7 +226,7 @@ Entity* Battle::getClosestTarget(Vector3<float>* pos, Enumeration::Team team) {
         }
     }
 
-    // If there are still no targets, no battle is probably over and this should have destroyed itself?
+    // If there are still no targets, this battle is probably over and this should have destroyed itself?
 
     if (target == NULL) {
 

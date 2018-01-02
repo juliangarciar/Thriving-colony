@@ -41,11 +41,11 @@ Human* Human::getInstance() {
 
 void Human::update() {
     if (updateTimer <= 0) {
-        //std::cout << "PRobando" << std::endl;
+        //std::cout << "Probando" << std::endl;
         gainResources();
         updateTimer = 1;
     } else {
-        updateTimer -= Window::Instance() -> getDeltaTime();
+        updateTimer -= Game::Instance() ->getWindow() -> getDeltaTime();
     }
 }
 

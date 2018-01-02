@@ -37,6 +37,9 @@ class Battle {
 
         //VECTOR2
         Vector2<float> *position;
+
+        float unitFetchTimer;
+        float buildingFetchTimer;
 };
 
 #endif
