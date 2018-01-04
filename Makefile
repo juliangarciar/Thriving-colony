@@ -14,7 +14,6 @@ SOURCE_DIRS = . GraphicEngine GUIEngine IOEngine SoundEngine IAEngine
 #C++ compiler
 CXX = clang++
 
-
 ####
 # FLAGS
 ####
@@ -26,8 +25,8 @@ CXXFLAGS = -O3 -ffast-math -g -Wall -std=c++11 -m64 -pthread
 LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L/usr/local/lib
 # Libs
 LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lIrrlicht -lfmod -lfmodstudio
-
 ###-lfmodex_vc.lib -lfmod -lfmodasdL
+
 ######## DON'T EDIT ANYTHING BELOW THIS LINE
 EXECUTABLE = $(BINPATH)/$(TARGET)
 SRC := $(foreach DIR,$(SOURCE_DIRS),$(wildcard $(SOURCEPATH)/$(DIR)/*.cpp))
