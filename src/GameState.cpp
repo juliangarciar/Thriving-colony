@@ -82,9 +82,10 @@ void GameState::Input(){
         if (idBuilding != -1){
             if (!Human::getInstance() -> getUnitManager()->isTroopSelected())
                 Game::Instance()->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_HAND); //ToDo: fachada
-            if (Game::Instance()->getIO()->leftMousePressed()){
+            
+            if (Game::Instance()->getIO()->leftMousePressed())
                 hud->showPopup(idBuilding);
-            }
+            
             onMap = false;
         }
 
@@ -92,9 +93,10 @@ void GameState::Input(){
         if (idTroop != -1){
             if (!Human::getInstance() -> getUnitManager()->isTroopSelected())
                 Game::Instance()->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_HAND); //ToDo: fachada
-            if (Game::Instance()->getIO()->leftMousePressed()){
+            
+            if (Game::Instance()->getIO()->leftMousePressed())
                 Human::getInstance() -> getUnitManager() -> selectTroop(idTroop);
-            }
+            
             onMap = false;
         } 
         
@@ -102,13 +104,12 @@ void GameState::Input(){
             if (!Human::getInstance() -> getUnitManager()->isTroopSelected())
                 Game::Instance()->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NORMAL); //ToDo: fachada
             
-            if (Game::Instance()->getIO()->leftMousePressed()){
+            if (Game::Instance()->getIO()->leftMousePressed())
                 Human::getInstance() -> getUnitManager() -> unSelectTroop();
-            }
         }
 
         if (Game::Instance()->getIO()->rightMousePressed()){
-            Human::getInstance()->getUnitManager()->newOrder(map);
+            Human::getInstance()->getUnitManager()->moveOrder(map);
         }
         
 }
