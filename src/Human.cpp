@@ -43,6 +43,7 @@ void Human::update() {
     if (updateTimer <= 0) {
         //std::cout << "Probando" << std::endl;
         gainResources();
+        buildings -> update();
         updateTimer = 1;
     } else {
         updateTimer -= Game::Instance() ->getWindow() -> getDeltaTime();

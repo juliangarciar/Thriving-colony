@@ -350,3 +350,7 @@ string Unit::getMoveEvent(){
 string Unit::getSelectEvent(){
     return selectEvent;
 }
+
+void Unit::taxPlayer(Enumeration::Team teamData) {
+    //ToDo: si se necesita
+}

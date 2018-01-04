@@ -13,12 +13,18 @@ class Building : public Entity {
         virtual ~Building();
 
         virtual void taxPlayer(Enumeration::Team);
+        void specialTax(Enumeration::Team);
         irr::video::SColor getColor();
         int getType();
+        void update();
     private:
         int type;
 
-        irr::video::SColor color;
+        int stepsToBuild;
+        int currentStep;
+
+        irr::video::SColor baseColor;
+        irr::video::SColor currentColor;
 };
 
 #endif

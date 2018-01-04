@@ -11,6 +11,9 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
     this->metalCost = 0;
     this->crystalCost = 0;
 
+    this->stepsToBuild = 10;
+    this->currentStep = 0;
+
     float r = 0;
     float g = 0;
     float b = 0;
@@ -200,10 +203,10 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
     }
 
     //ToDo: Graphic engine, this should be in the switch (when models done)
-    this->color = video::SColor(255, r, g, b); //ToDo: esto es fachada 
-    
+    this->baseColor = video::SColor(255, r, g, b); //ToDo: esto es fachada 
+    this->currentColor = video::SColor(255, 0, 0, 0);
     Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
-        this->model->getModel()->getMesh(), color
+        this->model->getModel()->getMesh(), baseColor
     ); //ToDo: esto es fachada 
 
     this->setPosition(vectorData);
@@ -218,12 +221,30 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
     //std::cout << this->type << std::endl;
 }
 
+
+
 Building::~Building() {
     delete model;
 }
 
+void Building::update() {
+    currentStep ++;
+    float r = baseColor.getRed();
+    float g = baseColor.getBlue();
+    float b = baseColor.getGreen();
+    float percentatgeBuilt = currentStep / stepsToBuild;
+    r *= percentatgeBuilt;
+    g *= percentatgeBuilt;
+    b *= percentatgeBuilt;
+    std::cout << r << g << b << std::endl;
+    currentColor = video::SColor(255, r, g, b);
+    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
+        this->model->getModel()->getMesh(), currentColor
+    );
+}
+
 irr::video::SColor Building::getColor() {
-    return color;
+    return baseColor;
 }
 
 int Building::getType(){ 
@@ -242,6 +263,27 @@ void Building::taxPlayer(Enumeration::Team teamData) {
         Human::getInstance() -> increaseHappiness(happiness);
         Human::getInstance() -> increaseCityLevel(cityLevel);
         Human::getInstance() -> spendResources(metalCost, crystalCost);
+        
+
+    // Tax the AI
+    } else {
+        // Tax costs
+        IA::getInstance() -> increaseHappiness(happiness);
+        IA::getInstance() -> increaseCityLevel(cityLevel);
+        IA::getInstance() -> spendResources(metalCost, crystalCost);
+        
+    }
+    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
+        this->model->getModel()->getMesh(), currentColor
+    );
+    // ToDo: llamar cuando se termine de construir
+    specialTax(teamData);
+}
+
+void Building::specialTax(Enumeration::Team teamData) {
+        // Tax the human
+    if (teamData == Enumeration::Team::Human) {
+        
         // Special taxes
         switch ((Enumeration::BuildingType)type) {
             case Enumeration::BuildingType::Barn:
@@ -266,10 +308,7 @@ void Building::taxPlayer(Enumeration::Team teamData) {
 
     // Tax the AI
     } else {
-        // Tax costs
-        IA::getInstance() -> increaseHappiness(happiness);
-        IA::getInstance() -> increaseCityLevel(cityLevel);
-        IA::getInstance() -> spendResources(metalCost, crystalCost);
+        
         // Special taxes
         switch ((Enumeration::BuildingType)type) {
             case Enumeration::BuildingType::Barn:

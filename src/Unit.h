@@ -40,6 +40,7 @@ class Unit : public Entity {
         void moveTroop();
         void updateTroop();
         //void assignBattle(Battle*);
+        virtual void taxPlayer(Enumeration::Team);
         
     private:
     //Unit stats

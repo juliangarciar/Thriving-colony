@@ -273,7 +273,7 @@ void Hud::getHUDEvents(){
 }
 
 void Hud::update() {
-    float dt = Game::Instance() ->getWindow() -> getDeltaTime()
+    float dt = Game::Instance() ->getWindow() -> getDeltaTime();
     if (updateTimer <= 0) {
         //ToDo: añadir los metodos de getmetalamount y getcrystalamount
         std::wstringstream os;

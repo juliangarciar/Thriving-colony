@@ -36,17 +36,18 @@ std::vector<Unit*>* Battle::getIaTroops() {
 }
 
 void Battle::update() {
+    float dt = Game::Instance() ->getWindow() -> getDeltaTime();
     if (unitFetchTimer <= 0) {
         fetchUnits();
         unitFetchTimer = 1;
     } else {
-        unitFetchTimer -= Game::Instance() ->getWindow() -> getDeltaTime()
+        unitFetchTimer -= dt;
     }
     if (buildingFetchTimer <= 0) {
         fetchBuildings();
         buildingFetchTimer = 1;
     } else {
-        buildingFetchTimer -= Game::Instance() ->getWindow() -> getDeltaTime()
+        buildingFetchTimer -= dt;
     }
     //Determine if there is only a team involved
     bool noIAPresence = (iaTroops -> size() == 0) && (iaBuildings -> size() == 0);

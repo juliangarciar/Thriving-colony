@@ -215,3 +215,9 @@ bool BuildingManager::checkCanPay(Enumeration::BuildingType type) {
 	}
 	return canPay;
 }
+
+void BuildingManager::update() {
+	for (std::map<int,Building*>::iterator it = buildings->begin(); it != buildings->end(); ++it){
+			it -> second -> update();
+		}
+}

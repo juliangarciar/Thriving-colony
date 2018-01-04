@@ -29,6 +29,8 @@ class BuildingManager {
 
 		bool isSolvent(int, int, Enumeration::Team);
 		bool checkCanPay(Enumeration::BuildingType);
+
+		void update();
 	private:
 		SceneNode *buildingLayer;
 		SceneNode *currentCollision;

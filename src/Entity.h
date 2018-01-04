@@ -7,6 +7,7 @@
 #include <GraphicEngine/SceneNode.h>
 #include <GraphicEngine/Window.h>
 #include "Enumeration.h"
+//#include "Battle.h"
 
 
 class Entity {
@@ -43,7 +44,8 @@ class Entity {
         int cityLevel;
         int metalCost;
         int crystalCost;
-        
+
+        Enumeration::Team team;
 
       private:
 };
