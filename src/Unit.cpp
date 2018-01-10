@@ -332,6 +332,7 @@ void Unit::updateTroop() {
             if (dist <= attackRange) {
                 if (attackCountdown <= 0) {
                     attack();
+                    attackCountdown = attackSpeed;
                 } else {
                     attackCountdown -= dt;
                 }
