@@ -155,11 +155,13 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
                 if (Human::getInstance() -> getSiderurgyAmount() == 0) {
                     this->stepsToBuild = 0;
                     initialBuilding = true;
+                    Human::getInstance() -> increaseSiderurgyAmount();  
                 }
             }else{
                 if (IA::getInstance() -> getSiderurgyAmount() == 0) {
                     this->stepsToBuild = 0;
                     initialBuilding = true;
+                    IA::getInstance() -> increaseSiderurgyAmount();  
                 }
             }
             
