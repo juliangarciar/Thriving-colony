@@ -224,3 +224,8 @@ bool UnitManager::isTroopSelected(){
     if (selectedTroop != NULL) return true;
     else return false;
 }
+
+std::map<int, Unit*> * UnitManager::getInMapTroops() {
+    return inMapTroops;
+}
+

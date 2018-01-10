@@ -67,6 +67,25 @@ void BuildingManager::drawBuilding(Terrain *terrain){
 
 		//tempBuilding -> getHitbox() -> set(tempBuilding -> getModel() ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es irrlicht
 
+		//Pressing the right mouse button cancels the building
+		if (g->getIO() -> rightMouseDown()){
+				buildingMode = false;
+
+				//ToDo: Dejar de dibujar el edificio por ahora solo lo voy a poner en el 0,0,0
+				//TODO
+				//TODO
+				//TODO
+				//TODO
+				//TODO
+				//TODO
+				//TODO
+
+				tempBuilding->setPosition(Vector3<float>(0, 0, 0));				
+
+				tempBuilding = NULL;
+				return;
+			}
+
 		/* 
 		* Look if there is any other building built there
 		*/
@@ -116,10 +135,10 @@ void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingTyp
 			buildings->insert(std::pair<int,Building*>(id, tempBuilding));
 
 		Game::Instance()->getGameState()->getHud()->addTab(id, tempBuilding->getType());
-
+		// Tax the player when placing the building
+		tempBuilding -> taxPlayer(Enumeration::Team::Human);
 		id++;
 		tempBuilding = NULL;
-		Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);
 	}
 	
 }
@@ -194,4 +213,10 @@ bool BuildingManager::checkCanPay(Enumeration::BuildingType type) {
         break;
 	}
 	return canPay;
+}
+
+void BuildingManager::updateBuildingManager() {
+	for (std::map<int,Building*>::iterator it = buildings->begin(); it != buildings->end(); ++it){
+		it -> second -> update();
+	}
 }

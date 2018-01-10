@@ -56,6 +56,10 @@ class UnitManager{
         int getTotalTroops(); //Returns troop size
 
         bool isTroopSelected();
+
+        std::map<int, Unit*> * getInMapTroops();
+
+        
 };
 
 #endif

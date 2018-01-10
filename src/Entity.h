@@ -7,6 +7,7 @@
 #include <GraphicEngine/SceneNode.h>
 #include <GraphicEngine/Window.h>
 #include "Enumeration.h"
+//#include "Battle.h"
 
 
 class Entity {
@@ -22,11 +23,17 @@ class Entity {
 
         void setPosition(Vector3<float> vectorData);
 
+        Enumeration::Team getTeam();
         Vector3<float> *getPosition();
         Box3D<float> *getHitbox();
         Model *getModel();
+        void updateTarget(Entity*);
 
+        int getAttackRange();
+
+        virtual void taxPlayer(Enumeration::Team) = 0;
     protected:
+        Entity* target;
         //SceneNode *modelLayer;
         Model* model;
         Vector3<float> *position;
@@ -36,14 +43,16 @@ class Entity {
 
         int hpMax;
         int hp;
-        int happiness;
 
-        /*
-        * Indicates the propetary of the entity
-        * False -> IA
-        * True -> Human
-        */
-        bool team;
+        // Values, costs, etc
+        int happiness;
+        int cityLevel;
+        int metalCost;
+        int crystalCost;
+
+        int attackRange;
+        
+        Enumeration::Team team;
 
       private:
 };

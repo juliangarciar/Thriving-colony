@@ -28,10 +28,12 @@ BehaviourTree* IA::getTree() {
 void IA::update() {
     if (updateTimer <= 0) {
         gainResources();
+        buildings -> updateBuildingManager();
+        units -> updateUnitManager();
         nodeRootIA -> question();
         updateTimer = 1;
     } else {
-        updateTimer -= Window::Instance() -> getDeltaTime();
+        updateTimer -= Game::Instance() ->getWindow() -> getDeltaTime();
     }
 }
 

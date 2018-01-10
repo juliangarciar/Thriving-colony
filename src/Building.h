@@ -12,12 +12,22 @@ class Building : public Entity {
         Building(int id, SceneNode *parent, Enumeration::BuildingType buildingData, Vector3<float> vectorData, Enumeration::Team teamData);
         virtual ~Building();
 
+        virtual void taxPlayer(Enumeration::Team);
+        void specialTax(Enumeration::Team);
         irr::video::SColor getColor();
         int getType();
+        void update();
+        bool getFinished();
+        
     private:
         int type;
 
-        irr::video::SColor color;
+        bool finished;
+        int stepsToBuild;
+        int currentStep;
+
+        irr::video::SColor baseColor;
+        irr::video::SColor currentColor;
 };
 
 #endif
