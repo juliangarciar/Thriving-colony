@@ -23,7 +23,7 @@ CPPFLAGS = -I/usr/include -I/usr/include/irrlicht -I/usr/local/include -I/usr/lo
 # Compiler params
 CXXFLAGS = -O3 -ffast-math -g -Wall -std=c++11 -m64 -pthread
 # Lib paths
-LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L/usr/local/lib
+LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L/usr/local/lib -L/usr/local/lib/x86_64
 # Libs
 LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lIrrlicht -lfmod -lfmodstudio
 

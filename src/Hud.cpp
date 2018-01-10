@@ -13,20 +13,20 @@ Text *Hud::warningText = 0;//new Text(Rect2D<int>(200, 60, 50, 20), L"Edificio c
 
 Hud::Hud() {
     //Le botone iniciale
-    buttonQuit = new Button(Rect2D<int>(1100, 50, 100, 30), Enumeration::idGUI::GUI_ID_QUIT_BUTTON, L"Quit", L"Quit Game");
+    buttonQuit = new Button(Rect2D<int>(1150, 20, 100, 30), Enumeration::idGUI::GUI_ID_QUIT_BUTTON, L"Quit", L"Quit Game");
 
-    buttonSchool = new Button(Rect2D<int>(18, 610, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_SCHOOL_BUTTON, L"School", L"Build a school that will improve your citizens happiness.\nMetal cost: 500.\nHappiness +5");
-    buttonMarket = new Button(Rect2D<int>(122, 610, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_MARKET_BUTTON, L"Market", L"Build a market that will improve your citizens happiness.\n Metal cost: 800.\nHappiness +10");
-    buttonHospital = new Button(Rect2D<int>(226, 610, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_HOSPITAL_BUTTON, L"Hospital", L"Build a hospital that will improve your citizens happiness.\n Metal cost: 800.\nHappiness +15");
-    buttonSiderurgy = new Button(Rect2D<int>(330, 610, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_SIDERURGY_BUTTON, L"Siderurgy", L"Build a siderurgy that will produce metal over time.\n Metal cost: 500.\nMetal/second +10");
-    buttonQuarry = new Button(Rect2D<int>(434, 610, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_QUARRY_BUTTON, L"Quarry", L"Build a quarry that will produce crystal over time.\n Metal cost: 2000.\nCrystal/second +10");
-    buttonHome = new Button(Rect2D<int>(538, 610, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_HOME_BUTTON, L"Home", L"Build a home that will increase your total citizens.\n Metal cost: 100.\nCitizens +10");
-    buttonBarrack = new Button(Rect2D<int>(642, 610, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_BARRACK_BUTTON, L"Barrack", L"Build a barrack that will allow you to train basic military units.\n Metal cost: 720.");
-    buttonBarn = new Button(Rect2D<int>(746, 610, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_BARN_BUTTON, L"Barn", L"Build a barn that will allow you to train mounted military units.\n Metal cost: 800.");
-    buttonWorkshop = new Button(Rect2D<int>(850, 610, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_WORKSHOP_BUTTON, L"Workshop", L"Build a workshop that will allow you to create siege weapons.\n Metal cost: 1100.\nCrystal cost: 230");
-    buttonWall = new Button(Rect2D<int>(954, 610, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_WALL_BUTTON, L"Wall", L"Build a wall that will protect your city from outsiders.\n Metal cost: 75.");
-    buttonTower = new Button(Rect2D<int>(1058, 610, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_TOWER_BUTTON, L"Tower", L"Build a wall that will protect your city from outsiders by attacking them.\n Metal cost: 300.");
-    buttonExpandTerrain = new Button(Rect2D<int>(1162, 610, 100, 30), Enumeration::idGUI::GUI_ID_EXPAND_TERRAIN_BUTTON, L"Expand terrain", L"Purchase a terrain expansion that will allow you to build a bigger city.\n Metal cost: 500.");
+    buttonSchool = new Button(Rect2D<int>(18, 680, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_SCHOOL_BUTTON, L"School", L"Build a school that will improve your citizens happiness.\nMetal cost: 500.\nHappiness +5");
+    buttonMarket = new Button(Rect2D<int>(122, 680, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_MARKET_BUTTON, L"Market", L"Build a market that will improve your citizens happiness.\n Metal cost: 800.\nHappiness +10");
+    buttonHospital = new Button(Rect2D<int>(226, 680, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_HOSPITAL_BUTTON, L"Hospital", L"Build a hospital that will improve your citizens happiness.\n Metal cost: 800.\nHappiness +15");
+    buttonSiderurgy = new Button(Rect2D<int>(330, 680, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_SIDERURGY_BUTTON, L"Siderurgy", L"Build a siderurgy that will produce metal over time.\n Metal cost: 500.\nMetal/second +10");
+    buttonQuarry = new Button(Rect2D<int>(434, 680, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_QUARRY_BUTTON, L"Quarry", L"Build a quarry that will produce crystal over time.\n Metal cost: 2000.\nCrystal/second +10");
+    buttonHome = new Button(Rect2D<int>(538, 680, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_HOME_BUTTON, L"Home", L"Build a home that will increase your total citizens.\n Metal cost: 100.\nCitizens +10");
+    buttonBarrack = new Button(Rect2D<int>(642, 680, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_BARRACK_BUTTON, L"Barrack", L"Build a barrack that will allow you to train basic military units.\n Metal cost: 720.");
+    buttonBarn = new Button(Rect2D<int>(746, 680, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_BARN_BUTTON, L"Barn", L"Build a barn that will allow you to train mounted military units.\n Metal cost: 800.");
+    buttonWorkshop = new Button(Rect2D<int>(850, 680, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_WORKSHOP_BUTTON, L"Workshop", L"Build a workshop that will allow you to create siege weapons.\n Metal cost: 1100.\nCrystal cost: 230");
+    buttonWall = new Button(Rect2D<int>(954, 680, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_WALL_BUTTON, L"Wall", L"Build a wall that will protect your city from outsiders.\n Metal cost: 75.");
+    buttonTower = new Button(Rect2D<int>(1058, 680, 100, 30), Enumeration::idGUI::GUI_ID_BUILD_TOWER_BUTTON, L"Tower", L"Build a wall that will protect your city from outsiders by attacking them.\n Metal cost: 300.");
+    buttonExpandTerrain = new Button(Rect2D<int>(1162, 680, 100, 30), Enumeration::idGUI::GUI_ID_EXPAND_TERRAIN_BUTTON, L"Expand terrain", L"Purchase a terrain expansion that will allow you to build a bigger city.\n Metal cost: 500.");
 
     menus = new std::vector<Tab*>();
     buttons = new std::vector<Button*>();
@@ -37,9 +37,9 @@ Hud::Hud() {
     //this->addTab(0, Enumeration::BuildingType::MainBuilding);
     
     updateTimer = 0.5;
-    resourceText = new Text(Rect2D<int>(200, 0, 100, 91), L"Hola mundo", true);
+    resourceText = new Text(Rect2D<int>(0, 0, 100, 91), L"Hola mundo", true);
     // Solo de debug
-    iaResourceText = new Text(Rect2D<int>(300, 0, 100, 91), L"Hola mundo", true);
+    iaResourceText = new Text(Rect2D<int>(100, 0, 100, 91), L"Hola mundo", true);
 
     warningText = new Text(Rect2D<int>(200, 100, 100, 10), L"Edificio construido", true);
     //warningText -> disable();

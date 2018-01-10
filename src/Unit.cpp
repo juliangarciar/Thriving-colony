@@ -302,7 +302,9 @@ void Unit::moveTroop() {
         if (std::abs(vectorDes->x - position->x) < 5.0 && std::abs(vectorDes->z - position->z) < 5.0) {
             moving = false;
         } else {
-            this->setTroopPosition(*vectorPos + *vectorMov);
+            Vector3<float> newPos = *vectorPos + *vectorMov;
+            newPos.y = Game::Instance()->getGameState()->getMap()->getY(newPos.x, newPos.z);
+            this->setTroopPosition(newPos);
         }
     }
 }
