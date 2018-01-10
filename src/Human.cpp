@@ -5,7 +5,7 @@ Human::Human() : Player() {
     happiness = 0;
     cityLevel = 1;
     
-    siderurgyAmount = 1;
+    siderurgyAmount = 0;
     quarryAmount= 0;
     
     citizens = 500; //ToDo: bajar a 10 o asi
@@ -43,7 +43,8 @@ void Human::update() {
     if (updateTimer <= 0) {
         //std::cout << "Probando" << std::endl;
         gainResources();
-        buildings -> update();
+        buildings -> updateBuildingManager();
+        units -> updateUnitManager();
         updateTimer = 1;
     } else {
         updateTimer -= Game::Instance() ->getWindow() -> getDeltaTime();

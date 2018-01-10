@@ -25,6 +25,7 @@ class Unit : public Entity {
         string getMoveEvent();
         string getSelectEvent();
         //Cost data -> maybe not needed (because there is an enumeration with this data)
+        
         int getMetalCost();
         int getCrystalCost();
         int getHappinesCost();
@@ -36,18 +37,20 @@ class Unit : public Entity {
 
         /////////////////////////
         void attack();
-        void updateTarget();
+        //void updateTarget(Entity*);
         void moveTroop();
         void updateTroop();
         //void assignBattle(Battle*);
         virtual void taxPlayer(Enumeration::Team);
+
+        //int getAttackRange();
         
     private:
     //Unit stats
         int moveSpeed;
         int attackSpeed;
         int attackDamage;
-        int attackRange;
+        //int attackRange;
         int viewRange;
         //Maybe this isn't needed
         int metalCost;
@@ -56,6 +59,10 @@ class Unit : public Entity {
     //Action bools
         bool moving;
         bool attacking;
+        // Timers
+        float lookForTargetTimer;
+        float lookForTargetCountdown;
+        float attackCountdown;
 
     //Space vectors used for unit movement
         //Vector position is in the father
@@ -63,7 +70,7 @@ class Unit : public Entity {
         Vector3 <float> *vectorDes;
         Vector3 <float> *vectorMov;
         
-        Entity* target;
+        //Entity* target;
     //Unit type
         Enumeration::UnitType unitType;
         Enumeration::RaceType unitRace;

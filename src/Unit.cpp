@@ -23,6 +23,10 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
     //Race type and unit type
     this->unitRace = raceData;
     this->unitType = typeData;
+    // Target-scanning timers
+    this -> lookForTargetTimer = 5;
+    this -> lookForTargetCountdown = lookForTargetTimer;
+    this -> attackCountdown = 0;
     switch (unitType)
     {
     //Basic stats of each unit are here
@@ -277,7 +281,7 @@ Unit::~Unit() {
 }
 
 void Unit::attack() {
-    if (target != 0) {
+    if (target != NULL) {
         target -> takeDamage(attackDamage);
     }
 }
@@ -303,8 +307,42 @@ void Unit::moveTroop() {
     }
 }
 
+
 void Unit::updateTroop() {
     moveTroop();
+    float dt = Game::Instance() ->getWindow() -> getDeltaTime();
+    
+    if (target == NULL) {
+        // Look for a new target every 5 seconds (subject to change)
+        if (lookForTargetCountdown <= 0) {
+            Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
+            lookForTargetCountdown = lookForTargetTimer;
+        } else {
+            lookForTargetCountdown -= dt;
+        }
+    } else {
+        // If the target is alive, this should probably be changed later on, but it is needed for now
+        if (target -> getHP() > 0) {
+            //Recalculate distance
+            float xaux = target -> getPosition() -> x - position -> x;
+            float yaux = target -> getPosition() -> y - position -> y;
+            float dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
+
+            //The target is withing reach
+            if (dist <= attackRange) {
+                if (attackCountdown <= 0) {
+                    attack();
+                } else {
+                    attackCountdown -= dt;
+                }
+            } else {
+                // Start moving towards them
+                setTroopDestination(Vector3<float>(target -> getPosition() -> x, target -> getPosition() -> y, target -> getPosition() -> z));
+            }
+        } else {
+            target = NULL;
+        }
+    }
 }
 
 void Unit::setTroopPosition(Vector3<float> vectorData) {
@@ -328,19 +366,12 @@ void Unit::setTroopDestination(Vector3<float> vectorData) {
 Model* Unit::getModel() {
     return this->model;
 }
-
 /*
-void Unit::assignBattle(Battle* _battle) {
-    battleInvolved = _battle;
-}
-
-void Unit::updateTarget() {
-    if (battleInvolved != NULL) {
-        //ToDo: definir como va a ser lo del equipo porque cada uno dice una cosa y ayer se iba a decidir y no se decidio
-        //      por ahora esta que siempre es humano 
-        target = battleInvolved -> getClosestTarget(*position, Enumeration::Team::Human);
-    }
+void Unit::updateTarget(Entity *newTarget) {
+    // target can be null, meaning that he cant attack anything
+    target = newTarget;
 }*/
+
 string Unit::getAttackEvent(){
     return attackEvent;
 }
@@ -351,6 +382,9 @@ string Unit::getSelectEvent(){
     return selectEvent;
 }
 
+
+
 void Unit::taxPlayer(Enumeration::Team teamData) {
     //ToDo: si se necesita
 }
+

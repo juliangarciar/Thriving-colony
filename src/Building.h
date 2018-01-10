@@ -17,9 +17,11 @@ class Building : public Entity {
         irr::video::SColor getColor();
         int getType();
         void update();
+        bool getFinished();
     private:
         int type;
 
+        bool finished;
         int stepsToBuild;
         int currentStep;
 

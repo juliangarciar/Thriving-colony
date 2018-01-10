@@ -139,7 +139,6 @@ void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingTyp
 		tempBuilding -> taxPlayer(Enumeration::Team::Human);
 		id++;
 		tempBuilding = NULL;
-		Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);
 	}
 	
 }
@@ -216,8 +215,8 @@ bool BuildingManager::checkCanPay(Enumeration::BuildingType type) {
 	return canPay;
 }
 
-void BuildingManager::update() {
+void BuildingManager::updateBuildingManager() {
 	for (std::map<int,Building*>::iterator it = buildings->begin(); it != buildings->end(); ++it){
-			it -> second -> update();
-		}
+		it -> second -> update();
+	}
 }

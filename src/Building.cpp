@@ -11,8 +11,10 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
     this->metalCost = 0;
     this->crystalCost = 0;
 
-    this->stepsToBuild = 10;
+    this->stepsToBuild = 0;
     this->currentStep = 0;
+
+    bool initialBuilding = false;
 
     float r = 0;
     float g = 0;
@@ -29,7 +31,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->happiness = 0;
             this->cityLevel = 15;
 
-            
+            this->stepsToBuild = 140;
 
             this->metalCost = Enumeration::BuildingCost::BarnMetalCost;
             this->crystalCost = Enumeration::BuildingCost::BarnCrystalCost;
@@ -46,7 +48,8 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->happiness = 0;
             this->cityLevel = 10;
             
-            
+            this->stepsToBuild = 120;
+
             this->metalCost = Enumeration::BuildingCost::BarrackMetalCost;
             this->crystalCost = Enumeration::BuildingCost::BarrackCrystalCost;
 
@@ -62,6 +65,8 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->happiness = 40;
             this->cityLevel = 5;
 
+            this->stepsToBuild = 60;
+
             this->metalCost = Enumeration::BuildingCost::HospitalMetalCost;
             this->crystalCost = Enumeration::BuildingCost::HospitalCrystalCost;
 
@@ -76,6 +81,8 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->hp = 150;
             this->happiness = 1;
             this->cityLevel = 5;
+
+            this->stepsToBuild = 25;
             
             
             this->metalCost = Enumeration::BuildingCost::HomeMetalCost;
@@ -87,6 +94,12 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             r = 255;
             g = 255;
             b = 255;
+ 
+            this->hpMax = 3000;
+            this->hp = 3000;
+
+            this->stepsToBuild = 0;
+            initialBuilding = true;
 
             this->hpMax = 3000;
             this->hp = 3000;
@@ -101,6 +114,8 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->hp = 600;
             this->happiness = 30;
             this->cityLevel = 5;
+
+            this->stepsToBuild = 40;
 
             this->metalCost = Enumeration::BuildingCost::MarketMetalCost;
             this->crystalCost = Enumeration::BuildingCost::MarketCrystalCost;
@@ -117,7 +132,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->happiness = 0;
             this->cityLevel = 15;
 
-            
+            this->stepsToBuild = 70;
             
             this->metalCost = Enumeration::BuildingCost::QuarryMetalCost;
             this->crystalCost = Enumeration::BuildingCost::QuarryCrystalCost;
@@ -134,6 +149,19 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->happiness = 0;
             this->cityLevel = 5;
 
+            this->stepsToBuild = 70;
+            // If this is the first siderurgy, build it instantly
+            if (teamData == Enumeration::Team::Human) {
+                if (Human::getInstance() -> getSiderurgyAmount() == 0) {
+                    this->stepsToBuild = 0;
+                    initialBuilding = true;
+                }
+            }else{
+                if (IA::getInstance() -> getSiderurgyAmount() == 0) {
+                    this->stepsToBuild = 0;
+                    initialBuilding = true;
+                }
+            }
             
             this->metalCost = Enumeration::BuildingCost::SiderurgyMetalCost;
             this->crystalCost = Enumeration::BuildingCost::SiderurgyCrystalCost;
@@ -150,6 +178,8 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->happiness = 20;
             this->cityLevel = 5;
 
+            this->stepsToBuild = 40;
+
             this->metalCost = Enumeration::BuildingCost::SchoolMetalCost;
             this->crystalCost = Enumeration::BuildingCost::SchoolCrystalCost;
 
@@ -164,6 +194,8 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->hp = 500;
             this->happiness = 1;
             this->cityLevel = 5;
+
+            this->stepsToBuild = 65;
 
             this->metalCost = Enumeration::BuildingCost::TowerMetalCost;
             this->crystalCost = Enumeration::BuildingCost::TowerCrystalCost;
@@ -180,6 +212,8 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->happiness = 1;
             this->cityLevel = 1;
 
+            this->stepsToBuild = 15;
+
             this->metalCost = Enumeration::BuildingCost::WallMetalCost;
             this->crystalCost = Enumeration::BuildingCost::WallCrystalCost;
 
@@ -195,16 +229,24 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->happiness = 0;
             this->cityLevel = 15;
             
+            this->stepsToBuild = 110;
             
             this->metalCost = Enumeration::BuildingCost::WorkshopMetalCost;
             this->crystalCost = Enumeration::BuildingCost::WorkshopCrystalCost;
 
         break;
     }
+    
 
     //ToDo: Graphic engine, this should be in the switch (when models done)
     this->baseColor = video::SColor(255, r, g, b); //ToDo: esto es fachada 
-    this->currentColor = video::SColor(255, 0, 0, 0);
+    if (initialBuilding) {
+        this->currentColor = video::SColor(255, r, g, b);
+        this -> finished = true;
+    } else {
+        this->currentColor = video::SColor(255, 0, 0, 0);
+        this -> finished = false;
+    }
     Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
         this->model->getModel()->getMesh(), baseColor
     ); //ToDo: esto es fachada 
@@ -219,6 +261,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
         taxPlayer(teamData);
     }
     //std::cout << this->type << std::endl;
+    
 }
 
 
@@ -227,20 +270,24 @@ Building::~Building() {
     delete model;
 }
 
+// This update is called once every second
 void Building::update() {
-    currentStep ++;
-    float r = baseColor.getRed();
-    float g = baseColor.getBlue();
-    float b = baseColor.getGreen();
-    float percentatgeBuilt = currentStep / stepsToBuild;
-    r *= percentatgeBuilt;
-    g *= percentatgeBuilt;
-    b *= percentatgeBuilt;
-    std::cout << r << g << b << std::endl;
-    currentColor = video::SColor(255, r, g, b);
-    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
-        this->model->getModel()->getMesh(), currentColor
-    );
+    if (!finished) {
+        currentStep ++;
+        if (currentStep >= stepsToBuild) {
+            Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
+                this->model->getModel()->getMesh(), baseColor
+            );
+            // Increase stuff when the human ends the building, but do so for the AI
+            // when it places the building. is it fair? i dunno
+            if (team == Enumeration::Team::Human) {
+                specialTax(team);
+		        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);
+            }            
+            this -> finished = true;
+            std::cout << "Finished" << std::endl;
+        }
+    }
 }
 
 irr::video::SColor Building::getColor() {
@@ -271,13 +318,13 @@ void Building::taxPlayer(Enumeration::Team teamData) {
         IA::getInstance() -> increaseHappiness(happiness);
         IA::getInstance() -> increaseCityLevel(cityLevel);
         IA::getInstance() -> spendResources(metalCost, crystalCost);
-        
+        // Increae levels and stuff when built by the ai, instead of waiting for the building to finish building
+        specialTax(teamData);
     }
     Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
         this->model->getModel()->getMesh(), currentColor
-    );
-    // ToDo: llamar cuando se termine de construir
-    specialTax(teamData);
+    );   
+    
 }
 
 void Building::specialTax(Enumeration::Team teamData) {
@@ -331,4 +378,8 @@ void Building::specialTax(Enumeration::Team teamData) {
             break;
         }
     }
+}
+
+bool Building::getFinished() {
+    return finished;
 }

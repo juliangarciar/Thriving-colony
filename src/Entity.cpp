@@ -23,6 +23,7 @@ int Entity::getHP() {
 * dmg = quantity of hp to drecrease
 */
 void Entity::takeDamage(int dmg) {
+    std::cout << "I take " << dmg << " damage. I still have " << hp << " health." << std::endl;
     hp = hp-dmg;
     if (hp <= 0) {
         hp = 0;
@@ -31,7 +32,15 @@ void Entity::takeDamage(int dmg) {
 }
 
 void Entity::die() {
-    delete this; 
+    std::cout << "I die" << std::endl;
+    //ToDo: DEJAR DE DIBUJAR CUBOS
+    // SOLO SE MANDAN AL 0,0,0
+    //
+    //
+    //
+    
+    this -> setPosition(Vector3<float>(0, 0, 0));
+    //delete this; 
 }
 
 void Entity::setPosition(Vector3<float> vectorData){
@@ -50,4 +59,17 @@ Box3D<float>* Entity::getHitbox() {
 
 Model* Entity::getModel() {
     return model;
+}
+
+Enumeration::Team Entity::getTeam() {
+    return team;
+}
+
+void Entity::updateTarget(Entity *newTarget) {
+    // target can be null, meaning that he cant attack anything
+    target = newTarget;
+}
+
+int Entity::getAttackRange() {
+    return attackRange;
 }

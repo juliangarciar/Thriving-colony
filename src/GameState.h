@@ -10,6 +10,7 @@
 #include "Hud.h"
 #include "IAEngine/RootNode.h"
 #include "SoundEngine/Music.h"
+#include "BattleManager.h"
 
 class GameState : public State {
     
@@ -25,6 +26,7 @@ class GameState : public State {
 
         Terrain* getMap();
         Hud* getHud();
+        BattleManager* getBattleManager();
         
     private:
     //Music try
@@ -36,6 +38,8 @@ class GameState : public State {
         // This is for pausing, in a future it will be a gamestate different?
         bool gamePaused;
         Music *MusicSystem;
+
+        BattleManager *battleManager;
 };
 
 #endif
