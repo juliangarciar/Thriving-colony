@@ -97,8 +97,15 @@ void GameState::Input(){
             if (Game::Instance()->getIO()->leftMousePressed())
                 Human::getInstance() -> getUnitManager() -> selectTroop(idTroop);
             
+            
             onMap = false;
-        } 
+        }
+
+        int idTroopIA = IA::getInstance() -> getUnitManager() -> getCollisionID();
+        if (idTroopIA != -1){
+            if (Game::Instance()->getIO()->rightMousePressed() && Human::getInstance() -> getUnitManager()->isTroopSelected())
+                Human::getInstance() -> getUnitManager() -> startBattle(idTroopIA);
+        }
         
         if (onMap){
             if (!Human::getInstance() -> getUnitManager()->isTroopSelected())

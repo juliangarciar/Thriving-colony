@@ -154,6 +154,10 @@ void UnitManager::moveOrder(Terrain *terrain){
     }
 }
 
+void UnitManager::startBattle(int enemyID){
+    //ToDo: crear batalla
+}
+
 //////PARTE DE LA ECONOMIA PARA RAFA
 
 /**
