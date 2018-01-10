@@ -19,7 +19,7 @@ CXX = clang++
 # FLAGS
 ####
 # Include paths
-CPPFLAGS = -I/usr/include -I/usr/local/include -I/usr/include/irrlicht -I/usr/include/fmod -I./$(SOURCEPATH)
+CPPFLAGS = -I/usr/include -I/usr/include/irrlicht -I/usr/local/include -I/usr/local/include/fmod -I./$(SOURCEPATH)
 # Compiler params
 CXXFLAGS = -O3 -ffast-math -g -Wall -std=c++11 -m64 -pthread
 # Lib paths

@@ -146,7 +146,7 @@ void UnitManager::unSelectTroop(){
 
 
 //Pass the order to the selected unit
-void UnitManager::newOrder(Terrain *terrain){
+void UnitManager::moveOrder(Terrain *terrain){
     Game *g = Game::Instance();
     if (this->selectedTroop != NULL){
         this->selectedTroop->setTroopDestination(terrain -> getPointCollision(g -> getCursor()));

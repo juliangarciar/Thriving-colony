@@ -14,7 +14,6 @@ class UnitManager{
 		SceneNode *currentCollision;
 
         std::vector<Unit*> *inHallTroops;
-        //std::vector<Unit*> *inMapTroops;
         std::map<int, Unit*> *inMapTroops;
 
         std::vector<Unit*> *totalTroops;
@@ -49,7 +48,7 @@ class UnitManager{
 
         void selectTroop(int troopID);      //Call for selecting a troop
         void unSelectTroop();
-        void newOrder(Terrain *terrain);                        //Order for selected troop
+        void moveOrder(Terrain *terrain);                        //Order for selected troop
 
         bool isSolvent(int, int, Enumeration::Team);
         bool checkCanPay(Enumeration::UnitType);
