@@ -13,6 +13,7 @@ GameState::GameState() : State() {
     this->MusicSystem = new Music();
     this->MusicSystem->setPause(false);
     gamePaused = false;
+    battleManager = new BattleManager();
 }
 
 GameState::~GameState() {
@@ -20,6 +21,7 @@ GameState::~GameState() {
     delete hud;
     delete map;
     delete music;
+    delete battleManager;
 }
 
 void GameState::Init(){
@@ -159,4 +161,8 @@ Terrain* GameState::getMap() {
 
 Hud* GameState::getHud() {
     return hud;
+}
+
+BattleManager* GameState::getBattleManager() {
+    return battleManager;
 }

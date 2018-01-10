@@ -14,7 +14,7 @@ Player::Player() {
     happiness = 0;
     cityLevel = 10;
     
-    siderurgyAmount = 1;
+    siderurgyAmount = 0;
     quarryAmount= 0;
 
     //ToDo: creo que se dijo que el player empezaba con 500 o con 700 

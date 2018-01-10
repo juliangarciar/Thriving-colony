@@ -166,6 +166,14 @@ void CameraController::Move(InputManager *receiver, Mouse *cursor) {
 	movementMode = false;
 
 	Vector2<int> cursorPosCurrent = cursor->getPosition();
+
+	if (cursorPosCurrent.x <= 0) cursorPosCurrent.x = 0;
+	else if (cursorPosCurrent.x >= sc->getScreenWidth()) cursorPosCurrent.x = sc->getScreenWidth();
+
+	if (cursorPosCurrent.y <= 0) cursorPosCurrent.y = 0;
+	else if (cursorPosCurrent.y >= sc->getScreenHeight()) cursorPosCurrent.y = sc->getScreenHeight();
+
+	cursor->setPosition(cursorPosCurrent);
 	
 	if (cursorPosCurrent.y < screenMarginV){
 		direction |= 1 << 0;
