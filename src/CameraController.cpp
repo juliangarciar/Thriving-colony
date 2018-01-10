@@ -218,13 +218,13 @@ void CameraController::RotateAndInclinate(InputManager *receiver, Mouse *cursor)
         rotationOrInclinationMode = true;
         cursorPosSaved = cursor->getPosition();
         cursor->setPosition(screenCenter);
-		Game::Instance()->getCursor()->getCursor()->disable(); //ToDo: fachada
+		Game::Instance()->getCursor()->getCursor()->setVisible(false); //ToDo: fachada
     }
     if (receiver->middleMouseReleased()) {
         rotationOrInclinationMode = false;
         cursor->setPosition(cursorPosSaved);
 		
-		Game::Instance()->getCursor()->getCursor()->enable(); //ToDo: fachada
+		Game::Instance()->getCursor()->getCursor()->setVisible(true); //ToDo: fachada
     }
 	if (rotationOrInclinationMode){
 		Vector2<int> cursorPosCurrent = cursor->getPosition();

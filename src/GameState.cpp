@@ -104,9 +104,9 @@ void GameState::Input(){
         }
 
         int idTroopIA = IA::getInstance() -> getUnitManager() -> getCollisionID();
-        if (idTroopIA != -1){
-            if (Game::Instance()->getIO()->rightMousePressed() && Human::getInstance() -> getUnitManager()->isTroopSelected())
-                Human::getInstance() -> getUnitManager() -> startBattle(idTroopIA);
+        if (idTroopIA != -1 && Human::getInstance() -> getUnitManager()->isTroopSelected()){
+            Game::Instance()->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_CROSS); //ToDo: fachada
+            if (Game::Instance()->getIO()->rightMousePressed()) std::cout << "Tropa enemiga" << std::endl;
         }
         
         if (onMap){
