@@ -31,11 +31,17 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
     {
     //Basic stats of each unit are here
     //Basic melee soldier
+    /**
+     * 
+     * MELEE A PIE
+     * 
+     * 
+     */
     case Enumeration::UnitType::StandardM:
         if(unitRace == Enumeration::RaceType::Drorania){
             this->moveSpeed = 420;
             this->attackDamage = 15;
-            this->attackRange = 150;
+            this->attackRange = 140;
             this->attackSpeed = 1;
             this->viewRange = 600;
             this->hpMax = 80;
@@ -49,7 +55,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         else if(unitRace == Enumeration::RaceType::Kaonov){
             this->moveSpeed = 420;
             this->attackDamage = 15;
-            this->attackRange = 150;
+            this->attackRange = 140;
             this->attackSpeed = 1;
             this->viewRange = 600;
             this->hpMax = 80;
@@ -66,7 +72,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         if(unitRace == Enumeration::RaceType::Drorania){
             this->moveSpeed = 530;
             this->attackDamage = 21;
-            this->attackRange = 180;
+            this->attackRange = 140;
             this->attackSpeed = 1;
             this->viewRange = 600;
             this->hpMax = 140;
@@ -81,7 +87,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         else if(unitRace == Enumeration::RaceType::Kaonov){
             this->moveSpeed = 530;
             this->attackDamage = 21;
-            this->attackRange = 180;
+            this->attackRange = 140;
             this->attackSpeed = 1;
             this->viewRange = 600;
             this->hpMax = 140;
@@ -98,7 +104,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         if(unitRace == Enumeration::RaceType::Drorania){
             this->moveSpeed = 250;
             this->attackDamage = 27;
-            this->attackRange = 850;
+            this->attackRange = 140;
             this->attackSpeed = 1;
             this->viewRange = 600;
             this->hpMax = 180;
@@ -113,7 +119,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         else if(unitRace == Enumeration::RaceType::Kaonov){
             this->moveSpeed = 250;
             this->attackDamage = 27;
-            this->attackRange = 850;
+            this->attackRange = 140;
             this->attackSpeed = 1;
             this->viewRange = 600;
             this->hpMax = 180;
@@ -127,11 +133,17 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         }
     break;
     //Standard ranged unit
+    /**
+     * 
+     * RANGO A PIE
+     * 
+     * 
+     */
     case Enumeration::UnitType::StandardR:
         if(unitRace == Enumeration::RaceType::Drorania){
             this->moveSpeed = 350;
             this->attackDamage = 13;
-            this->attackRange = 500;
+            this->attackRange = 600;
             this->attackSpeed = 1;
             this->viewRange = 600;
             this->hpMax = 60;
@@ -145,7 +157,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         else if(unitRace == Enumeration::RaceType::Kaonov){
             this->moveSpeed = 350;
             this->attackDamage = 13;
-            this->attackRange = 500;
+            this->attackRange = 600;
             this->attackSpeed = 1;
             this->viewRange = 600;
             this->hpMax = 60;
@@ -162,7 +174,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         if(unitRace == Enumeration::RaceType::Drorania){
             this->moveSpeed = 530;
             this->attackDamage = 18;
-            this->attackRange = 550;
+            this->attackRange = 700;
             this->attackSpeed = 1;
             this->viewRange = 600;
             this->hpMax = 110;
@@ -176,7 +188,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         else if(unitRace == Enumeration::RaceType::Kaonov){
             this->moveSpeed = 530;
             this->attackDamage = 18;
-            this->attackRange = 550;
+            this->attackRange = 700;
             this->attackSpeed = 1;
             this->viewRange = 600;
             this->hpMax = 110;
@@ -193,7 +205,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         if(unitRace == Enumeration::RaceType::Drorania){
             this->moveSpeed = 250;
             this->attackDamage = 27;
-            this->attackRange = 850;
+            this->attackRange = 900;
             this->attackSpeed = 1;
             this->viewRange = 600;
             this->hpMax = 180;
@@ -208,7 +220,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         else if(unitRace == Enumeration::RaceType::Kaonov){
             this->moveSpeed = 250;
             this->attackDamage = 27;
-            this->attackRange = 850;
+            this->attackRange = 900;
             this->attackSpeed = 1;
             this->viewRange = 600;
             this->hpMax = 180;
@@ -226,7 +238,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         if(unitRace == Enumeration::RaceType::Drorania){
             this->moveSpeed = 250;
             this->attackDamage = 41;
-            this->attackRange = 180;
+            this->attackRange = 120;
             this->attackSpeed = 1;
             this->viewRange = 600;
             this->hpMax = 220;
@@ -241,7 +253,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         else if(unitRace == Enumeration::RaceType::Kaonov){
             this->moveSpeed = 250;
             this->attackDamage = 41;
-            this->attackRange = 180;
+            this->attackRange = 120;
             this->attackSpeed = 1;
             this->viewRange = 600;
             this->hpMax = 220;
@@ -282,6 +294,7 @@ Unit::~Unit() {
 
 void Unit::attack() {
     if (target != NULL) {
+        setAttacking(true);
         target -> takeDamage(attackDamage);
     }
 }
@@ -299,6 +312,7 @@ void Unit::setAttacking(bool attackingPnt) {
 }
 void Unit::moveTroop() {
     if (moving) {
+        
         if (std::abs(vectorDes->x - position->x) < 5.0 && std::abs(vectorDes->z - position->z) < 5.0) {
             moving = false;
         } else {
@@ -311,9 +325,11 @@ void Unit::moveTroop() {
 
 
 void Unit::updateTroop() {
+    
     moveTroop();
     float dt = Game::Instance() ->getWindow() -> getDeltaTime();
     
+    // NO tengo objetivo, busco uno
     if (target == NULL) {
         // Look for a new target every 5 seconds (subject to change)
         if (lookForTargetCountdown <= 0) {
@@ -322,16 +338,12 @@ void Unit::updateTroop() {
         } else {
             lookForTargetCountdown -= dt;
         }
+        // tengo objetivo
     } else {
         // If the target is alive, this should probably be changed later on, but it is needed for now
         if (target -> getHP() > 0) {
-            //Recalculate distance
-            float xaux = target -> getPosition() -> x - position -> x;
-            float yaux = target -> getPosition() -> y - position -> y;
-            float dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
-
             //The target is withing reach
-            if (dist <= attackRange) {
+            if (inRangeOfAttack()) {
                 if (attackCountdown <= 0) {
                     attack();
                     attackCountdown = attackSpeed;
@@ -340,10 +352,12 @@ void Unit::updateTroop() {
                 }
             } else {
                 // Start moving towards them
+                //chaseTarget();
                 setTroopDestination(Vector3<float>(target -> getPosition() -> x, target -> getPosition() -> y, target -> getPosition() -> z));
             }
         } else {
             target = NULL;
+            setAttacking(false);
         }
     }
 }
@@ -354,6 +368,10 @@ void Unit::setTroopPosition(Vector3<float> vectorData) {
 }
 
 void Unit::setTroopDestination(Vector3<float> vectorData) {
+    
+    setAttacking(false);
+    target = NULL;
+
     vectorDes->set(vectorData);
 
     Vector3<float> desp = *vectorDes - *vectorPos;
@@ -365,6 +383,7 @@ void Unit::setTroopDestination(Vector3<float> vectorData) {
 
     moving = true;
 }
+
 
 Model* Unit::getModel() {
     return this->model;
@@ -391,3 +410,13 @@ void Unit::taxPlayer(Enumeration::Team teamData) {
     //ToDo: si se necesita
 }
 
+bool Unit::inRangeOfAttack() {
+    bool inRange = false;
+    float xaux = target -> getPosition() -> x - position -> x;
+    float yaux = target -> getPosition() -> y - position -> y;
+    float dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
+    if (dist <= attackRange) {
+        inRange = true;
+    }
+    return inRange;
+}

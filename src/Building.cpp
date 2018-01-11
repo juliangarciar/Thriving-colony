@@ -281,7 +281,6 @@ Building::~Building() {
 
 // This update is called once every second
 void Building::update() {
-    std::cout << currentStep << "/" << stepsToBuild << "=" << finished << std::endl;
     if (!finished) {
         currentStep ++;
         if (currentStep >= stepsToBuild) {
