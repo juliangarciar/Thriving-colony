@@ -93,8 +93,12 @@ void GameState::Input(){
             if (!Human::getInstance() -> getUnitManager()->isTroopSelected())
                 Game::Instance()->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_HAND); //ToDo: fachada
             
-            if (Game::Instance()->getIO()->leftMousePressed())
-                hud->showPopup(idBuilding);
+            if (Game::Instance()->getIO()->leftMousePressed()) {
+                // Comprobar que este terminado para enseñar el popup pero no va
+                //if (Human::getInstance() -> getBuildingManager() -> checkFinished(idBuilding)) {
+                    hud->showPopup(idBuilding);
+                //}
+            }
             
             onMap = false;
         }
@@ -115,7 +119,7 @@ void GameState::Input(){
         if (idBuildingIA != -1 && Human::getInstance() -> getUnitManager()->isTroopSelected()){
             Game::Instance()->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NO); //ToDo: fachada
 
-            if (Game::Instance()->getIO()->rightMousePressed()) std::cout << "Edificio enemigo" << std::endl;
+            if (Game::Instance()->getIO()->rightMousePressed()) //std::cout << "Edificio enemigo" << std::endl;
             
             onMap = false;
         }
@@ -124,7 +128,7 @@ void GameState::Input(){
         if (idTroopIA != -1 && Human::getInstance() -> getUnitManager()->isTroopSelected()){
             Game::Instance()->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NO); //ToDo: fachada
 
-            if (Game::Instance()->getIO()->rightMousePressed()) std::cout << "Tropa enemiga" << std::endl;
+            if (Game::Instance()->getIO()->rightMousePressed()) //std::cout << "Tropa enemiga" << std::endl;
             
             onMap = false;
         }

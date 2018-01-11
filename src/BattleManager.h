@@ -13,9 +13,7 @@ class BattleManager {
     public:
         BattleManager();
         virtual ~BattleManager();
-
         
-
         void askForTarget(Entity*);
 
     private:

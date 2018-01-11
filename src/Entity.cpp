@@ -35,7 +35,7 @@ int Entity::getHP() {
 * dmg = quantity of hp to drecrease
 */
 void Entity::takeDamage(int dmg) {
-    std::cout << "I take " << dmg << " damage. I still have " << hp << " health." << std::endl;
+    //std::cout << "I take " << dmg << " damage. I still have " << hp << " health." << std::endl;
     hp = hp-dmg;
     if (hp <= 0) {
         hp = 0;
@@ -44,7 +44,7 @@ void Entity::takeDamage(int dmg) {
 }
 
 void Entity::die() {
-    std::cout << "I die" << std::endl;
+    //std::cout << "I die" << std::endl;
     //ToDo: DEJAR DE DIBUJAR CUBOS
     // SOLO SE MANDAN AL 0,0,0
     //

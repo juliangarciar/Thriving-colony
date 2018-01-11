@@ -20,12 +20,12 @@ DefendNode::~DefendNode(){
 }
 
 void DefendNode::question() {
-    //std::cout << "Me atacan" << std::endl;
+    std::cout << "Me atacan" << std::endl;
     //To Do:defend
-    if (IA::getInstance() -> getClosedDoors()) {
+    if (IA::getInstance() -> getClosedDoors() == false) {
         children[0] -> question();
     } else {
-        if (IA::getInstance() -> getDeployedTroops()) {
+        if (IA::getInstance() -> getDeployedTroops() == false) {
             children[1] -> question();
         } else {
             if (IA::getInstance() -> getBarrackBuilt()) {

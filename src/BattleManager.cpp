@@ -3,8 +3,6 @@
 #include "Human.h"
 #include "Game.h"
 
-
-
 BattleManager::BattleManager() {
     
 }
@@ -13,10 +11,7 @@ BattleManager::~BattleManager() {
 
 }
 
-
-
 void BattleManager::askForTarget(Entity* requester) {
-
     Vector3<float> *requesterPos = requester -> getPosition();
     int requesterRange = requester -> getAttackRange();
     Entity* target = NULL;
@@ -27,7 +22,6 @@ void BattleManager::askForTarget(Entity* requester) {
     float dist = 0;
 
     if (requester ->getTeam() == Enumeration::Team::Human) { // Requester is human
-        
         // Get units in the map of the opposing team
         std::map<int, Unit*> *inMapTroops = IA::getInstance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map

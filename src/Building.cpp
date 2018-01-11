@@ -84,7 +84,7 @@ void Building::Init(){
             this->happiness = 0;
             this->cityLevel = 15;
 
-            this->stepsToBuild = 140;
+            this->stepsToBuild = 50;
 
             this->metalCost = Enumeration::BuildingCost::BarnMetalCost;
             this->crystalCost = Enumeration::BuildingCost::BarnCrystalCost;
@@ -101,7 +101,7 @@ void Building::Init(){
             this->happiness = 0;
             this->cityLevel = 10;
             
-            this->stepsToBuild = 120;
+            this->stepsToBuild = 40;
 
             this->metalCost = Enumeration::BuildingCost::BarrackMetalCost;
             this->crystalCost = Enumeration::BuildingCost::BarrackCrystalCost;
@@ -168,7 +168,7 @@ void Building::Init(){
             this->happiness = 30;
             this->cityLevel = 5;
 
-            this->stepsToBuild = 40;
+            this->stepsToBuild = 60;
 
             this->metalCost = Enumeration::BuildingCost::MarketMetalCost;
             this->crystalCost = Enumeration::BuildingCost::MarketCrystalCost;
@@ -185,7 +185,7 @@ void Building::Init(){
             this->happiness = 0;
             this->cityLevel = 15;
 
-            this->stepsToBuild = 70;
+            this->stepsToBuild = 35;
             
             this->metalCost = Enumeration::BuildingCost::QuarryMetalCost;
             this->crystalCost = Enumeration::BuildingCost::QuarryCrystalCost;
@@ -202,7 +202,7 @@ void Building::Init(){
             this->happiness = 0;
             this->cityLevel = 5;
 
-            this->stepsToBuild = 70;
+            this->stepsToBuild = 35;
             // If this is the first siderurgy, build it instantly
             if (this->team == Enumeration::Team::Human) {
                 if (Human::getInstance() -> getSiderurgyAmount() == 0) {
@@ -233,7 +233,7 @@ void Building::Init(){
             this->happiness = 20;
             this->cityLevel = 5;
 
-            this->stepsToBuild = 40;
+            this->stepsToBuild = 35;
 
             this->metalCost = Enumeration::BuildingCost::SchoolMetalCost;
             this->crystalCost = Enumeration::BuildingCost::SchoolCrystalCost;
@@ -250,7 +250,7 @@ void Building::Init(){
             this->happiness = 1;
             this->cityLevel = 5;
 
-            this->stepsToBuild = 65;
+            this->stepsToBuild = 50;
 
             this->metalCost = Enumeration::BuildingCost::TowerMetalCost;
             this->crystalCost = Enumeration::BuildingCost::TowerCrystalCost;
@@ -267,7 +267,7 @@ void Building::Init(){
             this->happiness = 1;
             this->cityLevel = 1;
 
-            this->stepsToBuild = 15;
+            this->stepsToBuild = 10;
 
             this->metalCost = Enumeration::BuildingCost::WallMetalCost;
             this->crystalCost = Enumeration::BuildingCost::WallCrystalCost;
@@ -284,7 +284,7 @@ void Building::Init(){
             this->happiness = 0;
             this->cityLevel = 15;
             
-            this->stepsToBuild = 110;
+            this->stepsToBuild = 50;
             
             this->metalCost = Enumeration::BuildingCost::WorkshopMetalCost;
             this->crystalCost = Enumeration::BuildingCost::WorkshopCrystalCost;
@@ -298,6 +298,13 @@ void Building::Init(){
         this->currentColor = video::SColor(255, r, g, b);
         this -> finished = true;
     } else {
+        // DEBUG SOLO PARA LA PRESENTACION
+        //
+        //
+        this -> stepsToBuild = 3;
+        //
+        //
+        // DEBUG SOLO PARA LA PRESENTACION
         this->currentColor = video::SColor(255, 0, 0, 0);
         this -> finished = false;
     }
@@ -318,7 +325,6 @@ void Building::update() {
 		        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);
             }            
             this -> finished = true;
-            std::cout << "Finished" << std::endl;
         }
     }
 }
@@ -415,4 +421,8 @@ void Building::specialTax(Enumeration::Team teamData) {
 
 bool Building::getFinished() {
     return finished;
+}
+
+int Building::getID() {
+    return ID;
 }
