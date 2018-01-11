@@ -10,9 +10,21 @@ class Human : public Player {
         virtual ~Human();
         static Human* getInstance();
 
+        static void deployTroops();
+        static void retractTroops();
+        static void closeDoors();
+        static void openDoors();
+
         virtual void update();
+
+        bool getUnderAttack();
+        bool getDeployedTroops();
+        bool getClosedDoors();
+        
     private:
         static Human* instance;
+        static bool deployedTroops;
+        static bool closedDoors;
 };
 
 #endif

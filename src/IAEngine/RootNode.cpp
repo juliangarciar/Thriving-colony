@@ -25,7 +25,7 @@ void RootNode::question() {
         children[0] -> question();
     } else  {
         //Second branch: Being attacked
-        if (IA::getInstance() -> getTree() -> getUnderAttack()){
+        if (IA::getInstance() -> getUnderAttack()){
             children[1] -> question();
         } else {
             //Third branch: Peaceful, develop the city

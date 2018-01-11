@@ -287,7 +287,7 @@ void Building::update() {
 		        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);
             }            
             this -> finished = true;
-            std::cout << "Finished" << std::endl;
+            //std::cout << "Finished" << std::endl;
         }
     }
 }

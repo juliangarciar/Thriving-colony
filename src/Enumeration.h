@@ -80,6 +80,7 @@ class Enumeration {
             GUI_ID_CREATE_MACHINE_BUTTON,
 
             GUI_ID_DEPLOY_TROOPS_BUTTON,
+            GUI_ID_DEPLOY_ALL_TROOPS_BUTTON,
 
             GUI_ID_EXPAND_TERRAIN_BUTTON
         };

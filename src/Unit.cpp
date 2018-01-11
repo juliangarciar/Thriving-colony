@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "Human.h"
 #include "IA.h"
+
 Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Team teamData, Enumeration::UnitType typeData, Enumeration::RaceType raceData) : Entity(layer, id) {
     //Actions of the units
     this->moving = false;
@@ -308,7 +309,6 @@ void Unit::moveTroop() {
         }
     }
 }
-
 
 void Unit::updateTroop() {
     moveTroop();

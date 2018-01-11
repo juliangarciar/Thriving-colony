@@ -31,6 +31,7 @@ class BuildingManager {
 		bool checkCanPay(Enumeration::BuildingType);
 
 		void updateBuildingManager();
+		
 	private:
 		SceneNode *buildingLayer;
 		SceneNode *currentCollision;

@@ -27,6 +27,7 @@ class UnitManager{
         int currentDeployingTroop;
 
         int gridAlignment;
+        
     public:
         UnitManager(Enumeration::Team teamData, Enumeration::RaceType raceData);             //Constructor
         virtual ~UnitManager();                 //Destroyer
@@ -42,9 +43,9 @@ class UnitManager{
         bool createTroop(Enumeration::UnitType unitData);
 
         void deployTroopAtPosition(int index, Vector3<float> vectorData);
-        
         void startDeployingTroop(int index);
         void deployTroop(Terrain *terrain);
+        void deployAllTroops(Vector3<float> vectorData);
 
         void selectTroop(int troopID);      //Call for selecting a troop
         void unSelectTroop();

@@ -32,7 +32,7 @@ Hud::Hud() {
     buttons = new std::vector<Button*>();
 
     tabs = new TabPanel(Rect2D<int>(300, 300, 400, 200), 0);
-    tabs->disable();
+    tabs -> disable();
 
     //this->addTab(0, Enumeration::BuildingType::MainBuilding);
     
@@ -82,7 +82,7 @@ void Hud::addTab(int id, int type){
         case Enumeration::BuildingType::MainBuilding:
         {
             Tab *t = tabs->addTab(L"Main Building", id);
-            menus->push_back(t);
+            menus -> push_back(t);
 
             Button *b = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
             t->addChild(b);
@@ -90,6 +90,9 @@ void Hud::addTab(int id, int type){
             b = new Button(Rect2D<int>(120, 10, 100, 20), Enumeration::idGUI::GUI_ID_DEPLOY_TROOPS_BUTTON, L"Deploy selected troop", L"Deploy a troop");
             t->addChild(b);
             buttons->push_back(b);
+            b = new Button(Rect2D<int>(220, 10, 100, 20), Enumeration::idGUI::GUI_ID_DEPLOY_ALL_TROOPS_BUTTON, L"Deploy all troops", L"Deploy all troops");
+            t -> addChild(b);
+            buttons -> push_back(b);
 
             hallTroopText = new Text(Rect2D<int>(20, 10, 100, 15), L"Tropas en el ayuntamiento");
             t->addChild(hallTroopText);
@@ -266,6 +269,12 @@ void Hud::getHUDEvents(){
                 }
             }
         break;
+        case Enumeration::idGUI::GUI_ID_DEPLOY_ALL_TROOPS_BUTTON:
+            {
+                Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsHuman);
+                hallTroopList -> removeAllItems();
+            }
+        break;
         case Enumeration::idGUI::GUI_ID_EXPAND_TERRAIN_BUTTON:
 			//ToDo: hacer que se expanda el terreno edificable y que el susodicho exista
         break;
@@ -293,7 +302,7 @@ void Hud::update() {
 }
 
 void Hud::drawWarning() {
-    std::cout <<  "¡Se ha construido un edificio!" << std::endl;
+    // <<  "¡Se ha construido un edificio!" << std::endl;
     warningText -> enable();
 }
 

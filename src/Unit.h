@@ -17,7 +17,7 @@ class Unit : public Entity {
         Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Team teamData, Enumeration::UnitType typeData, Enumeration::RaceType raceData);
         virtual ~Unit();
 
-    //Getters
+        //Getters
         Entity* getTarget();
         Model* getModel();
         //MusicStrings
@@ -29,7 +29,8 @@ class Unit : public Entity {
         int getMetalCost();
         int getCrystalCost();
         int getHappinesCost();
-    //Setters
+        
+        //Setters
         void setMoving(bool);
         void setAttacking(bool);
         void setTroopPosition(Vector3<float> vectorData);
