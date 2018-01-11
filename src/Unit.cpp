@@ -2,7 +2,9 @@
 #include "Game.h"
 #include "Human.h"
 #include "IA.h"
-Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Team teamData, Enumeration::UnitType typeData, Enumeration::RaceType raceData) : Entity(layer, id) {
+
+//ToDo: cambiar llamada a entity
+Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Team teamData, Enumeration::UnitType typeData, Enumeration::RaceType raceData) : Entity(layer, id, 100) {
     //Actions of the units
     this->moving = false;
     this->attacking = false;

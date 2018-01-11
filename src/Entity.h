@@ -14,7 +14,8 @@ class Entity {
 
     public:
         //The consctructor is empty because the object it's constructed in the child
-        Entity(SceneNode *layer, int id);
+        Entity(SceneNode *layer, int id, int size);
+        Entity(SceneNode *layer, int id, const wchar_t *path);
         virtual ~Entity();
 
         int getHP();
