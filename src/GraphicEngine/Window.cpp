@@ -20,7 +20,6 @@ Window::Window(int width, int height) {
     irr::SIrrlichtCreationParameters params;
 	params.DriverType=video::EDT_OPENGL;
 	params.WindowSize=core::dimension2d<u32>(width, height);
-    //params.EventReceiver=Game::Instance()->get;
     device = createDeviceEx(params);
     
     if (device == 0) exit(0); 
@@ -95,12 +94,20 @@ gui::IGUIEnvironment* Window::getGUIEnvironment(){
     return gui;
 }
 
-int Window::getScreenWidth(){
+int Window::getInitialWindowWidth(){
     return screenWidth;
 }
 
-int Window::getScreenHeight(){
+int Window::getInitialWindowHeight(){
     return screenHeight;
+}
+
+int Window::getRealWindowWidth(){
+    return driver->getViewPort().getWidth(); 
+}
+
+int Window::getRealWindowHeight(){
+    return driver->getViewPort().getHeight(); 
 }
 
 float Window::getDeltaTime(){

@@ -26,6 +26,8 @@ class Vector2 {
         Vector2<T>& normalize();
         Vector2<T> getFromPolarCoordinates(float r, float phi);
 
+        Vector2<T> getFixed();
+
         core::vector2di getVectorI();
         core::vector2df getVectorF();
         

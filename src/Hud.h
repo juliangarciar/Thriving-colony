@@ -29,6 +29,7 @@ class Hud {
         void getHUDEvents();
 
         void update();
+        void updatePositions();
 
         static void drawWarning();
         static void deleteWarning();

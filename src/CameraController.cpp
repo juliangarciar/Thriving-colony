@@ -168,17 +168,17 @@ void CameraController::Move(InputManager *receiver, Mouse *cursor) {
 	Vector2<int> cursorPosCurrent = cursor->getPosition();
 
 	if (cursorPosCurrent.x <= 0) cursorPosCurrent.x = 0;
-	else if (cursorPosCurrent.x >= sc->getScreenWidth()) cursorPosCurrent.x = sc->getScreenWidth();
+	else if (cursorPosCurrent.x >= sc->getRealWindowWidth()) cursorPosCurrent.x = sc->getRealWindowWidth();
 
 	if (cursorPosCurrent.y <= 0) cursorPosCurrent.y = 0;
-	else if (cursorPosCurrent.y >= sc->getScreenHeight()) cursorPosCurrent.y = sc->getScreenHeight();
+	else if (cursorPosCurrent.y >= sc->getRealWindowHeight()) cursorPosCurrent.y = sc->getRealWindowHeight();
 
 	cursor->setPosition(cursorPosCurrent);
 	
 	if (cursorPosCurrent.y < screenMarginV){
 		direction |= 1 << 0;
         movementMode = true;
-	} else if (cursorPosCurrent.y > (sc->getScreenHeight() - screenMarginV)) {
+	} else if (cursorPosCurrent.y > (sc->getRealWindowHeight() - screenMarginV)) {
 		direction |= 1 << 2;
         movementMode = true;
 	}
@@ -186,7 +186,7 @@ void CameraController::Move(InputManager *receiver, Mouse *cursor) {
 	if (cursorPosCurrent.x < screenMarginH){
 		direction |= 1 << 1;
         movementMode = true;
-	} else if (cursorPosCurrent.x > (sc->getScreenWidth() - screenMarginH)) {
+	} else if (cursorPosCurrent.x > (sc->getRealWindowWidth() - screenMarginH)) {
 		direction |= 1 << 3;
         movementMode = true;
 	}

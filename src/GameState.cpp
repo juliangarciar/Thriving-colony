@@ -14,6 +14,9 @@ GameState::GameState() : State() {
     this->MusicSystem->setPause(false);
     gamePaused = false;
     battleManager = new BattleManager();
+
+    prevWindowWidth = 1280;
+    prevWindowHeight = 720;
 }
 
 GameState::~GameState() {
@@ -90,8 +93,12 @@ void GameState::Input(){
             if (!Human::getInstance() -> getUnitManager()->isTroopSelected())
                 Game::Instance()->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_HAND); //ToDo: fachada
             
-            if (Game::Instance()->getIO()->leftMousePressed())
-                hud->showPopup(idBuilding);
+            if (Game::Instance()->getIO()->leftMousePressed()) {
+                // Comprobar que este terminado para enseñar el popup pero no va
+                //if (Human::getInstance() -> getBuildingManager() -> checkFinished(idBuilding)) {
+                    hud->showPopup(idBuilding);
+                //}
+            }
             
             onMap = false;
         }
@@ -144,12 +151,13 @@ void GameState::Input(){
 }
 
 void GameState::Update(){
+    Game *g = Game::Instance();
     //if (Game::Instance() -> getIO()->keyDown((char)27)) {
         //Escape is pressed
         //gamePaused = !gamePaused;
     //}
     //if (gamePaused) {
-        camera->Update(Game::Instance()->getWindow()->getDeltaTime());
+        camera->Update(g->getWindow()->getDeltaTime());
 
         Vector3<float> cam = camera->getCamera()->getCameraPosition();
         Vector3<float> tar = camera->getCamera()->getTargetPosition();
@@ -164,6 +172,10 @@ void GameState::Update(){
 
         MusicSystem->playMusic("DroraniaMusic");
         MusicSystem->updateSound();
+
+        if (g->getWindow()->getRealWindowWidth() != prevWindowWidth || g->getWindow()->getRealWindowHeight() != prevWindowHeight) {
+            hud->updatePositions();
+        }
     //}
 }
 

@@ -31,7 +31,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->happiness = 0;
             this->cityLevel = 15;
 
-            this->stepsToBuild = 140;
+            this->stepsToBuild = 50;
 
             this->metalCost = Enumeration::BuildingCost::BarnMetalCost;
             this->crystalCost = Enumeration::BuildingCost::BarnCrystalCost;
@@ -48,7 +48,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->happiness = 0;
             this->cityLevel = 10;
             
-            this->stepsToBuild = 120;
+            this->stepsToBuild = 40;
 
             this->metalCost = Enumeration::BuildingCost::BarrackMetalCost;
             this->crystalCost = Enumeration::BuildingCost::BarrackCrystalCost;
@@ -115,7 +115,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->happiness = 30;
             this->cityLevel = 5;
 
-            this->stepsToBuild = 40;
+            this->stepsToBuild = 60;
 
             this->metalCost = Enumeration::BuildingCost::MarketMetalCost;
             this->crystalCost = Enumeration::BuildingCost::MarketCrystalCost;
@@ -132,7 +132,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->happiness = 0;
             this->cityLevel = 15;
 
-            this->stepsToBuild = 70;
+            this->stepsToBuild = 35;
             
             this->metalCost = Enumeration::BuildingCost::QuarryMetalCost;
             this->crystalCost = Enumeration::BuildingCost::QuarryCrystalCost;
@@ -149,7 +149,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->happiness = 0;
             this->cityLevel = 5;
 
-            this->stepsToBuild = 70;
+            this->stepsToBuild = 35;
             // If this is the first siderurgy, build it instantly
             if (teamData == Enumeration::Team::Human) {
                 if (Human::getInstance() -> getSiderurgyAmount() == 0) {
@@ -180,7 +180,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->happiness = 20;
             this->cityLevel = 5;
 
-            this->stepsToBuild = 40;
+            this->stepsToBuild = 35;
 
             this->metalCost = Enumeration::BuildingCost::SchoolMetalCost;
             this->crystalCost = Enumeration::BuildingCost::SchoolCrystalCost;
@@ -197,7 +197,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->happiness = 1;
             this->cityLevel = 5;
 
-            this->stepsToBuild = 65;
+            this->stepsToBuild = 50;
 
             this->metalCost = Enumeration::BuildingCost::TowerMetalCost;
             this->crystalCost = Enumeration::BuildingCost::TowerCrystalCost;
@@ -214,7 +214,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->happiness = 1;
             this->cityLevel = 1;
 
-            this->stepsToBuild = 15;
+            this->stepsToBuild = 10;
 
             this->metalCost = Enumeration::BuildingCost::WallMetalCost;
             this->crystalCost = Enumeration::BuildingCost::WallCrystalCost;
@@ -231,7 +231,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
             this->happiness = 0;
             this->cityLevel = 15;
             
-            this->stepsToBuild = 110;
+            this->stepsToBuild = 50;
             
             this->metalCost = Enumeration::BuildingCost::WorkshopMetalCost;
             this->crystalCost = Enumeration::BuildingCost::WorkshopCrystalCost;
@@ -246,6 +246,13 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
         this->currentColor = video::SColor(255, r, g, b);
         this -> finished = true;
     } else {
+        // DEBUG SOLO PARA LA PRESENTACION
+        //
+        //
+        this -> stepsToBuild = 3;
+        //
+        //
+        // DEBUG SOLO PARA LA PRESENTACION
         this->currentColor = video::SColor(255, 0, 0, 0);
         this -> finished = false;
     }
@@ -274,6 +281,7 @@ Building::~Building() {
 
 // This update is called once every second
 void Building::update() {
+    std::cout << currentStep << "/" << stepsToBuild << "=" << finished << std::endl;
     if (!finished) {
         currentStep ++;
         if (currentStep >= stepsToBuild) {
@@ -287,7 +295,6 @@ void Building::update() {
 		        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);
             }            
             this -> finished = true;
-            //std::cout << "Finished" << std::endl;
         }
     }
 }
@@ -384,4 +391,8 @@ void Building::specialTax(Enumeration::Team teamData) {
 
 bool Building::getFinished() {
     return finished;
+}
+
+int Building::getID() {
+    return ID;
 }

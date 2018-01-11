@@ -28,6 +28,10 @@ void Button::setText(const wchar_t* text){
     button->setText(text);
 }
 
+void Button::setPosition(Vector2<int> dimPos){
+    button->setRelativePosition(dimPos.getVectorI());
+}
+
 gui::IGUIElement *Button::getGUIElement(){
     return button;
 }

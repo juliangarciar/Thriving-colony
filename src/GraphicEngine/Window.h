@@ -24,8 +24,12 @@ class Window {
         scene::ISceneManager* getSceneManager();
         gui::IGUIEnvironment* getGUIEnvironment();
 
-        int getScreenWidth();
-        int getScreenHeight();
+        int getInitialWindowWidth();
+        int getInitialWindowHeight();
+
+        int getRealWindowWidth();
+        int getRealWindowHeight();
+
 
         float getDeltaTime();
         
