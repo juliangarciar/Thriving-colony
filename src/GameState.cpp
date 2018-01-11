@@ -83,6 +83,8 @@ void GameState::Input(){
         IA::getInstance() -> getUnitManager()->testRaycastCollisions();
 
         int onMap = true;
+
+        //Interactions with our entities
         int idBuilding = Human::getInstance() -> getBuildingManager() -> getCollisionID();
         if (idBuilding != -1){
             if (!Human::getInstance() -> getUnitManager()->isTroopSelected())
@@ -105,18 +107,18 @@ void GameState::Input(){
             onMap = false;
         }
 
-        //Interactions with IA
-        int idTroopIA = IA::getInstance() -> getUnitManager() -> getCollisionID();
-        if (idTroopIA != -1 && Human::getInstance() -> getUnitManager()->isTroopSelected()){
+        //Interactions with IA's entities
+        int idBuildingIA =  IA::getInstance() -> getBuildingManager() -> getCollisionID();
+        if (idBuildingIA != -1 && Human::getInstance() -> getUnitManager()->isTroopSelected()){
             Game::Instance()->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NO); //ToDo: fachada
 
-            if (Game::Instance()->getIO()->rightMousePressed()) std::cout << "Tropa enemiga" << std::endl;
+            if (Game::Instance()->getIO()->rightMousePressed()) std::cout << "Edificio enemigo" << std::endl;
             
             onMap = false;
         }
 
-        int idBuildingIA =  IA::getInstance() -> getBuildingManager() -> getCollisionID();
-        if (idBuildingIA != -1 && Human::getInstance() -> getUnitManager()->isTroopSelected()){
+        int idTroopIA = IA::getInstance() -> getUnitManager() -> getCollisionID();
+        if (idTroopIA != -1 && Human::getInstance() -> getUnitManager()->isTroopSelected()){
             Game::Instance()->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NO); //ToDo: fachada
 
             if (Game::Instance()->getIO()->rightMousePressed()) std::cout << "Tropa enemiga" << std::endl;
