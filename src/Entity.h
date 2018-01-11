@@ -34,7 +34,7 @@ class Entity {
         virtual void taxPlayer(Enumeration::Team) = 0;
     protected:
         Entity* target;
-        //SceneNode *modelLayer;
+        
         Model* model;
         Vector3<float> *position;
         Box3D<float>* hitbox;

@@ -9,6 +9,7 @@ Entity::Entity(SceneNode *layer, int id) {
 } 
 
 Entity::~Entity() {
+    delete target;
     delete position;
     delete hitbox;
     delete model;

@@ -32,6 +32,8 @@ Model::Model(SceneNode *parent, int id) {
 }
 
 Model::~Model() {
+    cubeNode->remove();
+
     delete selector;
     delete cubeNode;
 }

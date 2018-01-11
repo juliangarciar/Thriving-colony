@@ -274,7 +274,6 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
 }
 
 Unit::~Unit() {
-    delete target;
     delete vectorPos;
     delete vectorDes;
     delete vectorMov;

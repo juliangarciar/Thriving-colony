@@ -266,10 +266,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
     
 }
 
-
-
 Building::~Building() {
-    delete model;
 }
 
 // This update is called once every second
