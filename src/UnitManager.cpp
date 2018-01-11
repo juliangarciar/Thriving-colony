@@ -99,7 +99,6 @@ void UnitManager::startDeployingTroop(int index){
         isDeployingTroop = true;
         currentDeployingTroop = index;
         selectedTroop = inHallTroops->at(currentDeployingTroop);
-        g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_CROSS); //ToDo: fachada
     }
 } 
 

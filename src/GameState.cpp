@@ -79,6 +79,9 @@ void GameState::Input(){
         Human::getInstance() -> getBuildingManager()->testRaycastCollisions();
         Human::getInstance() -> getUnitManager()->testRaycastCollisions();
 
+        IA::getInstance() -> getBuildingManager()->testRaycastCollisions();
+        IA::getInstance() -> getUnitManager()->testRaycastCollisions();
+
         int onMap = true;
         int idBuilding = Human::getInstance() -> getBuildingManager() -> getCollisionID();
         if (idBuilding != -1){
@@ -99,18 +102,33 @@ void GameState::Input(){
             if (Game::Instance()->getIO()->leftMousePressed())
                 Human::getInstance() -> getUnitManager() -> selectTroop(idTroop);
             
+            onMap = false;
+        }
+
+        //Interactions with IA
+        int idTroopIA = IA::getInstance() -> getUnitManager() -> getCollisionID();
+        if (idTroopIA != -1 && Human::getInstance() -> getUnitManager()->isTroopSelected()){
+            Game::Instance()->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NO); //ToDo: fachada
+
+            if (Game::Instance()->getIO()->rightMousePressed()) std::cout << "Tropa enemiga" << std::endl;
             
             onMap = false;
         }
 
-        int idTroopIA = IA::getInstance() -> getUnitManager() -> getCollisionID();
-        if (idTroopIA != -1 && Human::getInstance() -> getUnitManager()->isTroopSelected()){
-            Game::Instance()->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_CROSS); //ToDo: fachada
+        int idBuildingIA =  IA::getInstance() -> getBuildingManager() -> getCollisionID();
+        if (idBuildingIA != -1 && Human::getInstance() -> getUnitManager()->isTroopSelected()){
+            Game::Instance()->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NO); //ToDo: fachada
+
             if (Game::Instance()->getIO()->rightMousePressed()) std::cout << "Tropa enemiga" << std::endl;
+            
+            onMap = false;
         }
         
+        //If nothing happens
         if (onMap){
-            if (!Human::getInstance() -> getUnitManager()->isTroopSelected())
+            if (Human::getInstance() -> getUnitManager()->isTroopSelected())
+                Game::Instance()->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_CROSS); //ToDo: fachada
+            else 
                 Game::Instance()->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NORMAL); //ToDo: fachada
             
             if (Game::Instance()->getIO()->leftMousePressed())

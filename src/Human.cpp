@@ -22,7 +22,7 @@ Human::Human() : Player() {
     barnBuilt = false;
     workshopBuilt = false;
 
-    
+    buildings = new BuildingManager();
     units = new UnitManager(Enumeration::Team::Human, Enumeration::RaceType::Drorania);
 }
 

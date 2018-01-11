@@ -39,7 +39,7 @@ Player::Player() {
 
     //ToDo: Dejar asi o solo un ejercito???
     //      Depende de como vaya a quedarse la IA de combate
-    buildings = new BuildingManager;
+    //buildings = new BuildingManager;
     //Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DeployTroops, deployTroops);
     //Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::RetractTroops, retractTroops);
 }

@@ -13,6 +13,7 @@ BuildingManager::BuildingManager(){
 	buildings = new std::map<int, Building*>();
 	tempBuilding = NULL;
 	id = 0;
+	currentCollision = NULL;
 }
 
 BuildingManager::~BuildingManager(){
@@ -37,14 +38,14 @@ void BuildingManager::testRaycastCollisions(){
 }
 
 int BuildingManager::getCollisionID(){
-	if (currentCollision != NULL){
+	if (currentCollision != NULL && currentCollision->getSceneNode() != NULL){
 		return currentCollision->getSceneNode()->getID();
 	}
 	return -1;
 }
 
 std::string BuildingManager::getCollisionName(){
-	if (currentCollision != NULL){
+	if (currentCollision != NULL && currentCollision->getSceneNode() != NULL){
 		return currentCollision->getSceneNode()->getName();
 	}
 	return NULL;
