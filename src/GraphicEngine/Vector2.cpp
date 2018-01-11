@@ -1,4 +1,5 @@
 #include "Vector2.h"
+#include "Window.h"
 
 template <class T>
 Vector2<T>::Vector2() {
@@ -77,6 +78,19 @@ Vector2<T> Vector2<T>::getFromPolarCoordinates(float r, float phi){
     point.x = x + (r * cosf(phi));  // Assign to the point member x
     point.y = y + (r * sinf(phi));  // Assign to the point member y.
     return point;
+}
+
+template <class T>
+Vector2<T> Vector2<T>::getFixed(){
+    int initialWidth = Window::Instance()->getInitialWindowWidth();
+    int initialHeight = Window::Instance()->getInitialWindowHeight();
+    int actualWidth = Window::Instance()->getRealWindowWidth();
+    int actualHeight = Window::Instance()->getRealWindowHeight();
+
+    int newX = x*actualWidth/initialWidth; 
+    int newY = y*actualHeight/initialHeight; 
+
+    return Vector2<T>(newX, newY);
 }
 
 template class Vector2<int>;

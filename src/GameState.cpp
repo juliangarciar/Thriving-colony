@@ -14,6 +14,9 @@ GameState::GameState() : State() {
     this->MusicSystem->setPause(false);
     gamePaused = false;
     battleManager = new BattleManager();
+
+    prevWindowWidth = 1280;
+    prevWindowHeight = 720;
 }
 
 GameState::~GameState() {
@@ -144,12 +147,13 @@ void GameState::Input(){
 }
 
 void GameState::Update(){
+    Game *g = Game::Instance();
     //if (Game::Instance() -> getIO()->keyDown((char)27)) {
         //Escape is pressed
         //gamePaused = !gamePaused;
     //}
     //if (gamePaused) {
-        camera->Update(Game::Instance()->getWindow()->getDeltaTime());
+        camera->Update(g->getWindow()->getDeltaTime());
 
         Vector3<float> cam = camera->getCamera()->getCameraPosition();
         Vector3<float> tar = camera->getCamera()->getTargetPosition();
@@ -164,6 +168,10 @@ void GameState::Update(){
 
         MusicSystem->playMusic("DroraniaMusic");
         MusicSystem->updateSound();
+
+        if (g->getWindow()->getRealWindowWidth() != prevWindowWidth || g->getWindow()->getRealWindowHeight() != prevWindowHeight) {
+            hud->updatePositions();
+        }
     //}
 }
 

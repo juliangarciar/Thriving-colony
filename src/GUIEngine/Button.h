@@ -20,6 +20,7 @@ class Button : public GUIElement{
         void setButtonPressed(bool pressed); 
 
         void setText(const wchar_t* text);
+        void setPosition(Vector2<int> pos);
 
         gui::IGUIElement *getGUIElement();
     private:

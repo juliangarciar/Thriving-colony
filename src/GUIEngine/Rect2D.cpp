@@ -1,4 +1,5 @@
 #include "Rect2D.h"
+#include <GraphicEngine/Window.h>
 
 template <class T>
 Rect2D<T>::Rect2D(T rX, T rY, T rW, T rH) {
@@ -43,6 +44,21 @@ void Rect2D<T>::setRect2D(core::rect<T> rect){
     y = rect.UpperLeftCorner.Y;
     w = rect.getWidth();
     h = rect.getHeight();
+}
+
+template <class T>
+Rect2D<T> Rect2D<T>::getFixed(){
+    int initialWidth = Window::Instance()->getInitialWindowWidth();
+    int initialHeight = Window::Instance()->getInitialWindowHeight();
+    int actualWidth = Window::Instance()->getRealWindowWidth();
+    int actualHeight = Window::Instance()->getRealWindowHeight();
+
+    int newX = x*actualWidth/initialWidth; 
+    int newY = y*actualHeight/initialHeight; 
+    int newW = w*actualWidth/initialWidth; 
+    int newH = h*actualHeight/initialHeight; 
+
+    return Rect2D<T>(newX, newY, newW, newH);
 }
 
 template <class T>

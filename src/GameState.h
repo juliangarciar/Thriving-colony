@@ -40,6 +40,8 @@ class GameState : public State {
         Music *MusicSystem;
 
         BattleManager *battleManager;
+
+        int prevWindowWidth, prevWindowHeight;
 };
 
 #endif

@@ -51,6 +51,9 @@ class Rect2D {
          * @param rect: Zona de core
          */
         void setRect2D(core::rect<T> rect);
+
+        //Get Fixed Rect 2D
+        Rect2D<T> getFixed();
         
         //Return
         core::rect<T> getRect2D();
