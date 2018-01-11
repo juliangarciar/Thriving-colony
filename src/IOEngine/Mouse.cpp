@@ -12,6 +12,18 @@ Mouse::~Mouse(){
     cursor = NULL;
 }
 
+void Mouse::show(){
+    cursor->setVisible(true);
+}
+
+void Mouse::hide(){
+    cursor->setVisible(false);
+}
+
+void Mouse::changeIcon(gui::ECURSOR_ICON icon){
+    if (isVisible()) cursor->setActiveIcon(icon);
+}
+
 void Mouse::setPosition(Vector2<int> position){
     cursor->setPosition(position.getVectorI());
 }
@@ -22,4 +34,8 @@ Vector2<int> Mouse::getPosition() {
 
 gui::ICursorControl *Mouse::getCursor(){
     return cursor;
+}
+
+bool Mouse::isVisible(){
+    return cursor->isVisible();
 }

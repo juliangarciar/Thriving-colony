@@ -1,6 +1,6 @@
-# Blender v2.78 (sub 0) OBJ File: 'house.blend'
+# Blender v2.78 (sub 0) OBJ File: 'vivienda.blend'
 # www.blender.org
-mtllib house.mtl
+mtllib vivienda.mtl
 o Cube
 v 2.008547 -1.405493 2.046712
 v -2.008547 -1.405493 2.046712

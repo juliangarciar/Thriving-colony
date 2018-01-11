@@ -49,8 +49,20 @@ void BuildingManager::setBuildingMode(Enumeration::BuildingType type){
 			if(type == Enumeration::BuildingType::Tower){
 				tempBuilding = new Tower(0, buildingLayer, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
 			} else if (type == Enumeration::BuildingType::House){
-				tempBuilding = new Building(0, buildingLayer, L"media/house.3ds", type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
-				tempBuilding->getModel()->getModel()->setScale(core::vector3df(50,50,50)); //ToDo: fachada
+				tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/vivienda.obj", type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+				tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
+			} else if (type == Enumeration::BuildingType::Barrack){
+				tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/barraca.obj", type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+				tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
+			} else if (type == Enumeration::BuildingType::Siderurgy){
+				tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/siderurgia.obj", type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+				tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
+			} else if (type == Enumeration::BuildingType::School){
+				tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/escuela.obj", type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+				tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
+			} else if (type == Enumeration::BuildingType::Market){
+				tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/mercado.obj", type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+				tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
 			} else
 				tempBuilding = new Building(0, buildingLayer, type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
 		}
