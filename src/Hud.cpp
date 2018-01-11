@@ -31,13 +31,8 @@ Hud::Hud() {
     menus = new std::vector<Tab*>();
     buttons = new std::vector<Button*>();
 
-<<<<<<< HEAD
-    tabs = new TabPanel(Rect2D<int>(300, 300, 400, 200), 0);
-    tabs -> disable();
-=======
     tabs = new TabPanel(Rect2D<int>(300, 300, 400, 200).getFixed(), 0);
     tabs->disable();
->>>>>>> 2d84cb704ba000f315a7d693b6e3a07418622c6b
 
     //this->addTab(0, Enumeration::BuildingType::MainBuilding);
     
