@@ -93,8 +93,12 @@ void GameState::Input(){
             if (!Human::getInstance() -> getUnitManager()->isTroopSelected())
                 Game::Instance()->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_HAND); //ToDo: fachada
             
-            if (Game::Instance()->getIO()->leftMousePressed())
-                hud->showPopup(idBuilding);
+            if (Game::Instance()->getIO()->leftMousePressed()) {
+                // Comprobar que este terminado para enseñar el popup pero no va
+                //if (Human::getInstance() -> getBuildingManager() -> checkFinished(idBuilding)) {
+                    hud->showPopup(idBuilding);
+                //}
+            }
             
             onMap = false;
         }

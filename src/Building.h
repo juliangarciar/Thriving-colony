@@ -19,6 +19,7 @@ class Building : public Entity {
         void update();
         bool getFinished();
         
+        int getID();
     private:
         int type;
 
