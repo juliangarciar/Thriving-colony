@@ -32,6 +32,7 @@ class BuildingManager {
 
 		void updateBuildingManager();
 		bool checkFinished(int);
+		
 	private:
 		SceneNode *buildingLayer;
 		SceneNode *currentCollision;

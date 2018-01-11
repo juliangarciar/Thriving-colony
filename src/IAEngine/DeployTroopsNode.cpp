@@ -11,6 +11,6 @@ DeployTroopsNode::~DeployTroopsNode(){
 }
 
 void DeployTroopsNode::question() {
-    //std::cout << "Despliego mis tropas para defender" << std::endl;
-    Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::DeployTroopsIA);
+    std::cout<<"Despliego tropas"<<std::endl;
+    Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsIA);
 }

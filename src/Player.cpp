@@ -2,9 +2,7 @@
 //#include "Game.h"
 #include "GraphicEngine/Window.h"
 #include "Tower.h"
-
-bool Player::deployedTroops = false;
-bool Player::closedDoors = false;
+#include "Game.h"
 
 #define RESOURCEPRODUCTION 10
 
@@ -37,11 +35,7 @@ Player::Player() {
     barnBuilt = false;
     workshopBuilt = false;
 
-    //ToDo: Dejar asi o solo un ejercito???
-    //      Depende de como vaya a quedarse la IA de combate
-    //buildings = new BuildingManager;
-    //Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::DeployTroops, deployTroops);
-    //Game::Instance() -> getEvents() -> addEvent(Enumeration::EventType::RetractTroops, retractTroops);
+    underAttack = false;
 }
 
 Player::~Player() {
@@ -131,15 +125,6 @@ int Player::getWallAmount() {
 
 int Player::getTowerAmount() {
     return towerAmount;
-}
-
-bool Player::getClosedDoors() {
-    return closedDoors;
-}
-
-// Return wether or not our troops are deployed
-bool Player::getDeployedTroops() {
-    return deployedTroops;
 }
 
 BuildingManager* Player::getBuildingManager() {
@@ -254,29 +239,6 @@ void Player::increaseTowerAmount() {
 bool Player::losingBattle() {
     //ToDo: calcular si estas perdiendo tu la  batalla
     return false;
-}
-
-void Player::closeDoors() {
-    // ToDo: hacer de verdad
-    closedDoors = true;
-}
-
-void Player::openDoors() {
-    // ToDo: hacer de verdad
-    closedDoors = false;
-}
-
-void Player::deployTroops() {
-    // ToDo: hacer de verdad
-    deployedTroops = true;
-}
-
-/*
-* Troops come back to their building (barn, barrack or workshop)
-*/
-void Player::retractTroops() {
-    // ToDo: hacer de verdad
-    deployedTroops = false;
 }
 
 //ToDo: las tropas no deberian ir en unit manager?

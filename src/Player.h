@@ -42,8 +42,7 @@ class Player {
         int getWallAmount();
         int getTowerAmount();
 
-        bool getClosedDoors();
-        bool getDeployedTroops();
+        bool getUnderAttack();
 
         //std::vector<Unit*> * getTroops(); //ToDo: lo del cpp
 
@@ -78,10 +77,10 @@ class Player {
         void increaseWallAmount();
         void increaseTowerAmount();
 
-        static void deployTroops();
-        static void retractTroops();
-        static void closeDoors();
-        static void openDoors();
+        void deployTroops();
+        void retractTroops();
+        void closeDoors();
+        void openDoors();
 
         void increaseRamAmount();
         void increaseCatapultAmount();
@@ -120,9 +119,8 @@ class Player {
         bool wallBuilt;
         int wallAmount;
         int towerAmount;
-
-        static bool deployedTroops;
-        static bool closedDoors;
+        
+        bool underAttack;
         
         BuildingManager *buildings;
         UnitManager *units;

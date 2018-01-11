@@ -46,8 +46,8 @@ int UnitManager::getTotalTroops(){
 } 
 //Update all troops
 void UnitManager::updateUnitManager(){
-    for (std::map<int,Unit*>::iterator it = inMapTroops->begin(); it != inMapTroops->end(); ++it){
-        it -> second-> updateTroop();
+    for (std::map<int,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it){
+        it -> second -> updateTroop();
     }
 }
 //Create a new troops
@@ -59,8 +59,8 @@ void UnitManager::updateUnitManager(){
 bool UnitManager::createTroop(Enumeration::UnitType unitData){
     if (checkCanPay(unitData)) {
         Unit *newUnit = new Unit(std::rand(), unitLayer, Vector3<float>(), this->teamManager, unitData, this->raceType);
-        newUnit->getModel()->setActive(false);
-        this->inHallTroops -> push_back(newUnit);
+        newUnit -> getModel() -> setActive(false);
+        this -> inHallTroops -> push_back(newUnit);
         return true;
     }
     return false;
@@ -87,10 +87,10 @@ std::string UnitManager::getCollisionName(){
 }
 
 void UnitManager::deployTroopAtPosition(int index, Vector3<float> vectorData){
-    Unit *u = this->inHallTroops->at(index);
-    u->setPosition(vectorData);
-    this->inMapTroops->insert(std::pair<int, Unit*>(u->getModel()->getID(), u));
-    this->inHallTroops->erase(inHallTroops->begin() + index);
+    Unit *u = this -> inHallTroops -> at(index);
+    u -> setPosition(vectorData);
+    this -> inMapTroops -> insert(std::pair<int, Unit*>(u -> getModel() -> getID(), u));
+    this -> inHallTroops -> erase(inHallTroops -> begin() + index);
 }
 
 void UnitManager::startDeployingTroop(int index){ 
@@ -108,7 +108,7 @@ void UnitManager::deployTroop(Terrain *terrain){
         Unit *temp = inHallTroops->at(currentDeployingTroop);
 
         this->inHallTroops->erase(inHallTroops->begin() + currentDeployingTroop);
-         this->inMapTroops->insert(std::pair<int, Unit*>(temp->getModel()->getID(), temp));
+        this->inMapTroops->insert(std::pair<int, Unit*>(temp->getModel()->getID(), temp));
 
         //g -> getSoundSystem() -> playVoice(temp->getMoveEvent());
         temp->setTroopPosition(Vector3<float>(HUMAN_CITY_HALL_X, terrain->getY(HUMAN_CITY_HALL_X, HUMAN_CITY_HALL_Z), HUMAN_CITY_HALL_Z)); //ToDo
@@ -120,6 +120,17 @@ void UnitManager::deployTroop(Terrain *terrain){
         currentDeployingTroop = -1;
         selectedTroop = NULL;
         isDeployingTroop = false;
+    }
+}
+
+void UnitManager::deployAllTroops(Vector3<float> vectorData) {
+    for (int i = inHallTroops -> size() - 1; i >= 0; i--) {
+        Unit *u = inHallTroops -> at(i);
+        this -> inHallTroops -> erase(inHallTroops -> begin() + i);
+        this -> inMapTroops -> insert(std::pair<int, Unit*>(u -> getModel() -> getID(), u));
+        u -> setTroopPosition(vectorData);
+        u -> setTroopDestination(vectorData);
+        u -> getModel() -> setActive(true);
     }
 }
 
