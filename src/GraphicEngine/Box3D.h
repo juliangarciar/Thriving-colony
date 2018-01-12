@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <irrlicht.h>
+#include "Vector3.h"
 
 using namespace irr;
 
@@ -17,6 +18,8 @@ class Box3D {
 		void set(core::aabbox3d<T> box);
 
 		bool intersects(Box3D<T> other);
+		
+		Vector3<T> getSize();
 
 		core::aabbox3d<T> getAABBox3D();
 	private:

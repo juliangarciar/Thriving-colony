@@ -45,6 +45,7 @@ class Unit : public Entity {
         virtual void taxPlayer(Enumeration::Team);
 
         //int getAttackRange();
+        bool inRangeOfAttack();
         
     private:
     //Unit stats

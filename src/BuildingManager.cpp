@@ -22,15 +22,6 @@ BuildingManager::~BuildingManager(){
 	delete buildings;
 }
 
-void BuildingManager::setBuildingMode(Enumeration::BuildingType type){
-	if (checkCanPay(type)) {
-		if (!buildingMode){
-			buildingMode = true;
-			tempBuilding = new Building(0, buildingLayer, type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
-		}
-	}
-}
-
 void BuildingManager::testRaycastCollisions(){
 	if (!buildingMode) {
 		currentCollision = buildingLayer -> getNodeCollision(Game::Instance() -> getCursor());
@@ -51,6 +42,33 @@ std::string BuildingManager::getCollisionName(){
 	return NULL;
 }
 
+void BuildingManager::setBuildingMode(Enumeration::BuildingType type){
+	if (checkCanPay(type)) {
+		if (!buildingMode){
+			buildingMode = true;
+			if(type == Enumeration::BuildingType::Tower){
+				tempBuilding = new Tower(0, buildingLayer, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+			} else if (type == Enumeration::BuildingType::House){
+				tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/vivienda.obj", type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+				tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
+			} else if (type == Enumeration::BuildingType::Barrack){
+				tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/barraca.obj", type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+				tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
+			} else if (type == Enumeration::BuildingType::Siderurgy){
+				tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/siderurgia.obj", type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+				tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
+			} else if (type == Enumeration::BuildingType::School){
+				tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/escuela.obj", type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+				tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
+			} else if (type == Enumeration::BuildingType::Market){
+				tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/mercado.obj", type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+				tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
+			} else
+				tempBuilding = new Building(0, buildingLayer, type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+		}
+	}
+}
+
 void BuildingManager::drawBuilding(Terrain *terrain){
     Game *g = Game::Instance();
     if (buildingMode && tempBuilding != NULL){
@@ -60,32 +78,26 @@ void BuildingManager::drawBuilding(Terrain *terrain){
 		* Get position where the cursor is pointing to the terrain
 		*/
         Vector3<float> xyzPointCollision = terrain -> getPointCollision(g -> getCursor());
+
+		Vector3<float> f = Box3D<float>(tempBuilding->getModel()->getModel()->getTransformedBoundingBox()).getSize();
+
         float x = roundf(xyzPointCollision.x / gridAlignment) * gridAlignment;
-        float y = roundf(xyzPointCollision.y / gridAlignment) * gridAlignment;
+        float y = (roundf(xyzPointCollision.y / gridAlignment) * gridAlignment) + (f.y/2);
         float z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
 
 		tempBuilding -> setPosition (Vector3<float>(x, y, z));
 
-		//tempBuilding -> getHitbox() -> set(tempBuilding -> getModel() ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es irrlicht
-
+			
 		//Pressing the right mouse button cancels the building
 		if (g->getIO() -> rightMouseDown()){
-				buildingMode = false;
+			buildingMode = false;
 
-				//ToDo: Dejar de dibujar el edificio por ahora solo lo voy a poner en el 0,0,0
-				//TODO
-				//TODO
-				//TODO
-				//TODO
-				//TODO
-				//TODO
-				//TODO
+			delete tempBuilding;		
 
-				tempBuilding->setPosition(Vector3<float>(0, 0, 0));				
+			tempBuilding = NULL;
 
-				tempBuilding = NULL;
-				return;
-			}
+			return;
+		}
 
 		/* 
 		* Look if there is any other building built there
@@ -102,7 +114,7 @@ void BuildingManager::drawBuilding(Terrain *terrain){
 			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
 				tempBuilding -> getModel() -> getModel() -> getMesh(), tempBuilding -> getColor()
 			); //ToDo: esto es fachada
-			
+
 			/*
 			* If there is no collision and the player press left button of the mouse,
 			* build the building
@@ -110,7 +122,6 @@ void BuildingManager::drawBuilding(Terrain *terrain){
 			if (g->getIO() -> leftMouseDown()){
 				buildingMode = false;
 				buildBuilding(Vector3<float>(x, y, z), (Enumeration::BuildingType)tempBuilding->getType(), Enumeration::Team::Human);
-				tempBuilding = NULL;
 			}
 		}
     }
@@ -130,10 +141,7 @@ void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingTyp
 		}
 		tempBuilding->getModel()->setID(id);
 
-		if(_type == Enumeration::BuildingType::Tower)
-			buildings->insert(std::pair<int,Building*>(id, new Tower(id, buildingLayer, pos, _team)));
-		else
-			buildings->insert(std::pair<int,Building*>(id, tempBuilding));
+		buildings->insert(std::pair<int,Building*>(id, tempBuilding));
 
 		Game::Instance()->getGameState()->getHud()->addTab(id, tempBuilding->getType());
 		// Tax the player when placing the building
@@ -174,7 +182,7 @@ bool BuildingManager::isSolvent(int metalCost, int crystalCost, Enumeration::Tea
  * to avoid cluttering the setBuildingMode() method, as it used to be there in the first place.
  */
 bool BuildingManager::checkCanPay(Enumeration::BuildingType type) {
-	//ESto esta aqui para no hacer clutter arriba
+	//Esto esta aqui para no hacer clutter arriba
 	bool canPay = false;
 
 	//CHECK IF YOU CAN PAY THE BUILDING

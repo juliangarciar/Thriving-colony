@@ -3,7 +3,7 @@
 #include "Human.h"
 #include "Game.h"
 
-Building::Building(int id, SceneNode *parent, Enumeration::BuildingType buildingData, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(parent, id)
+Building::Building(int id, SceneNode *parent, Enumeration::BuildingType buildingType, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(parent, id, 100)
 {
     this->happiness = 0;
     this->cityLevel = 0;
@@ -14,12 +14,65 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
     this->stepsToBuild = 0;
     this->currentStep = 0;
 
+    this->type = (int)buildingType;
+    this->team = teamData;
+
+    Init();
+
+    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
+        this->model->getModel()->getMesh(), baseColor
+    ); //ToDo: esto es fachada 
+
+    this->setPosition(vectorData);
+    this->hitbox->set(this -> model ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
+
+    // Tax the IA the moment it builds the building
+    // The player should be taxed when actually building the building
+    if (teamData == Enumeration::Team::IA) {
+        taxPlayer(teamData);
+    }
+}
+
+Building::Building(int id, SceneNode *parent, const wchar_t *path, Enumeration::BuildingType buildingType, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(parent, id, path)
+{
+    this->happiness = 0;
+    this->cityLevel = 0;
+
+    this->metalCost = 0;
+    this->crystalCost = 0;
+
+    this->stepsToBuild = 0;
+    this->currentStep = 0;
+
+    this->type = (int)buildingType;
+    this->team = teamData;
+
+    Init();
+
+    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
+        this->model->getModel()->getMesh(), baseColor
+    ); //ToDo: esto es fachada 
+
+    this->setPosition(vectorData);
+    this->hitbox->set(this -> model ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
+
+    // Tax the IA the moment it builds the building
+    // The player should be taxed when actually building the building
+    if (teamData == Enumeration::Team::IA) {
+        taxPlayer(teamData);
+    }
+}
+
+Building::~Building() {
+}
+
+void Building::Init(){
     bool initialBuilding = false;
 
     float r = 0;
     float g = 0;
     float b = 0;
-    switch (buildingData) {
+    switch (this->type) {
         case Enumeration::BuildingType::Barn:
             // Different color for diferent buildings
             r = 255;
@@ -151,7 +204,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
 
             this->stepsToBuild = 35;
             // If this is the first siderurgy, build it instantly
-            if (teamData == Enumeration::Team::Human) {
+            if (this->team == Enumeration::Team::Human) {
                 if (Human::getInstance() -> getSiderurgyAmount() == 0) {
                     this->stepsToBuild = 0;
                     initialBuilding = true;
@@ -239,7 +292,6 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
         break;
     }
     
-
     //ToDo: Graphic engine, this should be in the switch (when models done)
     this->baseColor = video::SColor(255, r, g, b); //ToDo: esto es fachada 
     if (initialBuilding) {
@@ -256,32 +308,10 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
         this->currentColor = video::SColor(255, 0, 0, 0);
         this -> finished = false;
     }
-    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
-        this->model->getModel()->getMesh(), baseColor
-    ); //ToDo: esto es fachada 
-
-    this->setPosition(vectorData);
-    this->hitbox->set(this -> model ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
-
-    this->type = (int)buildingData;
-    // Tax the IA the moment it builds the building
-    // The player should be taxed when actually building the building
-    if (teamData == Enumeration::Team::IA) {
-        taxPlayer(teamData);
-    }
-    //std::cout << this->type << std::endl;
-    
-}
-
-
-
-Building::~Building() {
-    delete model;
 }
 
 // This update is called once every second
 void Building::update() {
-    std::cout << currentStep << "/" << stepsToBuild << "=" << finished << std::endl;
     if (!finished) {
         currentStep ++;
         if (currentStep >= stepsToBuild) {

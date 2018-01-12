@@ -14,7 +14,8 @@ class Entity {
 
     public:
         //The consctructor is empty because the object it's constructed in the child
-        Entity(SceneNode *layer, int id);
+        Entity(SceneNode *layer, int id, int size);
+        Entity(SceneNode *layer, int id, const wchar_t *path);
         virtual ~Entity();
 
         int getHP();
@@ -34,7 +35,7 @@ class Entity {
         virtual void taxPlayer(Enumeration::Team) = 0;
     protected:
         Entity* target;
-        //SceneNode *modelLayer;
+        
         Model* model;
         Vector3<float> *position;
         Box3D<float>* hitbox;

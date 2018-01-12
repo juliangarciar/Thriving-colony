@@ -12,6 +12,7 @@ IA::IA() : Player() {
 
 IA::~IA() {
     delete tree;
+    delete nodeRootIA;
 }
 
 IA* IA::instance = 0;

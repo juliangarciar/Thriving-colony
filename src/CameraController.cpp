@@ -218,13 +218,16 @@ void CameraController::RotateAndInclinate(InputManager *receiver, Mouse *cursor)
         rotationOrInclinationMode = true;
         cursorPosSaved = cursor->getPosition();
         cursor->setPosition(screenCenter);
-		Game::Instance()->getCursor()->getCursor()->setVisible(false); //ToDo: fachada
+		
+		std::cout << "SI" << std::endl;
+
+		Game::Instance()->getCursor()->hide();
     }
     if (receiver->middleMouseReleased()) {
         rotationOrInclinationMode = false;
         cursor->setPosition(cursorPosSaved);
 		
-		Game::Instance()->getCursor()->getCursor()->setVisible(true); //ToDo: fachada
+		Game::Instance()->getCursor()->show();
     }
 	if (rotationOrInclinationMode){
 		Vector2<int> cursorPosCurrent = cursor->getPosition();

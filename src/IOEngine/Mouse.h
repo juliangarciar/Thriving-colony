@@ -14,9 +14,16 @@ class Mouse {
         ~Mouse();
 
         void setPosition(Vector2<int> position);
+
+        void show();
+        void hide();
+
+        void changeIcon(gui::ECURSOR_ICON icon); //ToDo: arreglar
         
         gui::ICursorControl *getCursor();
         Vector2<int> getPosition();
+
+        bool isVisible();
 
     private:
         gui::ICursorControl *cursor;

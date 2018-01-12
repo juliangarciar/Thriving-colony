@@ -24,7 +24,7 @@ Window::Window(int width, int height) {
     
     if (device == 0) exit(0); 
 
-	// disable mouse cursor
+	// enable mouse cursor
 	device->getCursorControl()->setVisible(true);
 
 	driver = device->getVideoDriver();

@@ -9,7 +9,8 @@ class Building : public Entity {
     public:
         //Enum: Barn,Barrack,Hospital,House,MainBuilding,Market,Quarry,Siderurgy,School,Tower,Wall,Workshop
         //teamData sepecifies the building team and vectorData the position
-        Building(int id, SceneNode *parent, Enumeration::BuildingType buildingData, Vector3<float> vectorData, Enumeration::Team teamData);
+        Building(int id, SceneNode *parent, Enumeration::BuildingType buildingType, Vector3<float> vectorData, Enumeration::Team teamData); //ToDo: temp
+        Building(int id, SceneNode *parent, const wchar_t *path, Enumeration::BuildingType buildingType, Vector3<float> vectorData, Enumeration::Team teamData);
         virtual ~Building();
 
         virtual void taxPlayer(Enumeration::Team);
@@ -21,6 +22,8 @@ class Building : public Entity {
         
         int getID();
     private:
+        void Init();
+
         int type;
 
         bool finished;

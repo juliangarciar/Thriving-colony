@@ -8,8 +8,12 @@ using namespace irr;
 
 class Model {
     public:
-        Model(int id);
-        Model(SceneNode *parent, int id);
+        Model(int id, int size);
+        Model(SceneNode *parent, int id, int size);
+
+        Model(int id, const wchar_t *path);
+        Model(SceneNode *parent, int id, const wchar_t *path);
+
         ~Model();
 
         void setID(int id);
@@ -22,7 +26,7 @@ class Model {
         int getID();
 		scene::IMeshSceneNode *getModel();
     private:
-        scene::IMeshSceneNode *cubeNode;
+        scene::IMeshSceneNode *meshNode;
         scene::ITriangleSelector *selector = 0;
 };
 
