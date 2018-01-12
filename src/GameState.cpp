@@ -147,7 +147,18 @@ void GameState::Input(){
         if (Game::Instance()->getIO()->rightMousePressed()){
             Human::getInstance()->getUnitManager()->moveOrder(map);
         }
-        
+
+        if (Game::Instance()->getIO()->keyPressed(KEY_KEY_1)){
+            Human::getInstance()->receiveMetal();
+        }
+
+        if (Game::Instance()->getIO()->keyPressed(KEY_KEY_2)){
+            Human::getInstance()->receiveCrystal();
+        }
+
+        if (Game::Instance()->getIO()->keyPressed(KEY_KEY_3)){
+            Human::getInstance()->receiveCitizens();
+        }     
 }
 
 void GameState::Update(){
