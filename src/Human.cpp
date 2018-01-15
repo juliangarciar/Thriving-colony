@@ -49,6 +49,12 @@ void Human::update() {
         gainResources();
         buildings -> updateBuildingManager();
         units -> updateUnitManager();
+        if (units -> getInMapTroops() -> empty()) {
+            deployedTroops = false;
+        }
+        if (units -> getInHallTroops() -> empty()) {
+            deployedTroops = true;
+        }
         updateTimer = 1;
     } else {
         updateTimer -= Game::Instance() ->getWindow() -> getDeltaTime();
@@ -77,8 +83,8 @@ void Human::openDoors() {
 * Troops come back to their building (barn, barrack or workshop)
 */
 void Human::retractTroops() {
-    // ToDo: hacer de verdad
-    deployedTroops = false;
+    Vector3<float> v = *(Human::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
+    Human::getInstance() -> getUnitManager() -> retractAllTroops(v);
 }
 
 bool Human::getUnderAttack() {

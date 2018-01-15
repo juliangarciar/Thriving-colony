@@ -8,6 +8,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
     //Actions of the units
     this->moving = false;
     this->attacking = false;
+    this->retracted = true;
     //Default target
     this->target = 0;
     //Position defined by the constructor parameter
@@ -311,10 +312,10 @@ void Unit::setMoving(bool movingPnt) {
 void Unit::setAttacking(bool attackingPnt) {
     attacking = attackingPnt;
 }
+
 void Unit::moveTroop() {
     if (moving) {
-        
-        if (std::abs(vectorDes->x - position->x) < 5.0 && std::abs(vectorDes->z - position->z) < 5.0) {
+        if (std::abs(vectorDes -> x - position -> x) < 5.0 && std::abs(vectorDes -> z - position->z) < 5.0) {
             moving = false;
         } else {
             Vector3<float> newPos = *vectorPos + *vectorMov;
@@ -325,54 +326,54 @@ void Unit::moveTroop() {
 }
 
 void Unit::updateTroop() {
-    
     moveTroop();
-    float dt = Game::Instance() ->getWindow() -> getDeltaTime();
+    float dt = Game::Instance() -> getWindow() -> getDeltaTime();
     
-    // NO tengo objetivo, busco uno
-    if (target == NULL) {
-        // Look for a new target every 5 seconds (subject to change)
-        if (lookForTargetCountdown <= 0) {
-            Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
-            lookForTargetCountdown = lookForTargetTimer;
+    if (retracted == false) {
+        // NO tengo objetivo, busco uno
+        if (target == NULL) {
+            // Look for a new target every 5 seconds (subject to change)
+            if (lookForTargetCountdown <= 0) {
+                Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
+                lookForTargetCountdown = lookForTargetTimer;
+            } else {
+                lookForTargetCountdown -= dt;
+            }
+            // tengo objetivo
         } else {
-            lookForTargetCountdown -= dt;
-        }
-        // tengo objetivo
-    } else {
-        // If the target is alive, this should probably be changed later on, but it is needed for now
-        if (target -> getHP() > 0) {
-            //The target is withing reach
-            if (inRangeOfAttack()) {
-                if (attackCountdown <= 0) {
-                    attack();
-                    attackCountdown = attackSpeed;
+            // If the target is alive, this should probably be changed later on, but it is needed for now
+            if (target -> getHP() > 0) {
+                //The target is withing reach
+                if (inRangeOfAttack()) {
+                    if (attackCountdown <= 0) {
+                        attack();
+                        attackCountdown = attackSpeed;
+                    } else {
+                        attackCountdown -= dt;
+                    }
                 } else {
-                    attackCountdown -= dt;
+                    // Start moving towards them
+                    //chaseTarget();
+                    setTroopDestination(Vector3<float>(target -> getPosition() -> x, target -> getPosition() -> y, target -> getPosition() -> z));
                 }
             } else {
-                // Start moving towards them
-                //chaseTarget();
-                setTroopDestination(Vector3<float>(target -> getPosition() -> x, target -> getPosition() -> y, target -> getPosition() -> z));
+                target = NULL;
+                setAttacking(false);
             }
-        } else {
-            target = NULL;
-            setAttacking(false);
         }
     }
 }
 
 void Unit::setTroopPosition(Vector3<float> vectorData) {
-    this->vectorPos->set(vectorData);
-    this->setPosition(vectorData);
+    this -> vectorPos -> set(vectorData);
+    this -> setPosition(vectorData);
 }
 
 void Unit::setTroopDestination(Vector3<float> vectorData) {
-    
     setAttacking(false);
     target = NULL;
 
-    vectorDes->set(vectorData);
+    vectorDes -> set(vectorData);
 
     Vector3<float> desp = *vectorDes - *vectorPos;
 
@@ -404,8 +405,6 @@ string Unit::getSelectEvent(){
     return selectEvent;
 }
 
-
-
 void Unit::taxPlayer(Enumeration::Team teamData) {
     //ToDo: si se necesita
 }
@@ -419,4 +418,20 @@ bool Unit::inRangeOfAttack() {
         inRange = true;
     }
     return inRange;
+}
+
+bool Unit::getRetracted() {
+    return retracted;
+}
+
+bool Unit::getMoving() {
+    return moving;
+}
+
+Vector3<float>* Unit::getDestination() {
+    return vectorDes;
+}
+
+void Unit::setRetracted(bool data) {
+    retracted = data;
 }

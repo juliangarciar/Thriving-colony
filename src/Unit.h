@@ -29,10 +29,16 @@ class Unit : public Entity {
         int getMetalCost();
         int getCrystalCost();
         int getHappinesCost();
+
+        bool getRetracted();
+        bool getMoving();
+
+        Vector3<float>* getDestination();
         
         //Setters
         void setMoving(bool);
         void setAttacking(bool);
+        void setRetracted(bool);
         void setTroopPosition(Vector3<float> vectorData);
         void setTroopDestination(Vector3<float> vectorData);
 
@@ -61,6 +67,7 @@ class Unit : public Entity {
     //Action bools
         bool moving;
         bool attacking;
+        bool retracted;
         // Timers
         float lookForTargetTimer;
         float lookForTargetCountdown;

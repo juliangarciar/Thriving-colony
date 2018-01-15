@@ -48,8 +48,14 @@ int UnitManager::getTotalTroops(){
 void UnitManager::updateUnitManager(){
     for (std::map<int,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it){
         it -> second -> updateTroop();
+        if (it -> second -> getMoving() == false && it -> second -> getRetracted() == true) {
+            it -> second -> getModel() -> setActive(false);
+            inHallTroops -> push_back(it -> second);
+            inMapTroops -> erase(it);
+        }
     }
 }
+
 //Create a new troops
 //In order to add a new unit, you must specify which one
 // ie: 
@@ -86,12 +92,14 @@ std::string UnitManager::getCollisionName(){
 	return NULL;
 }
 
+/*
 void UnitManager::deployTroopAtPosition(int index, Vector3<float> vectorData){
     Unit *u = this -> inHallTroops -> at(index);
     u -> setPosition(vectorData);
     this -> inMapTroops -> insert(std::pair<int, Unit*>(u -> getModel() -> getID(), u));
     this -> inHallTroops -> erase(inHallTroops -> begin() + index);
 }
+*/
 
 void UnitManager::startDeployingTroop(int index){ 
     Game *g = Game::Instance();
@@ -114,6 +122,7 @@ void UnitManager::deployTroop(Terrain *terrain){
         temp->setTroopPosition(Vector3<float>(HUMAN_CITY_HALL_X, terrain->getY(HUMAN_CITY_HALL_X, HUMAN_CITY_HALL_Z), HUMAN_CITY_HALL_Z)); //ToDo
         temp->setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
         temp->getModel()->setActive(true);
+        temp->setRetracted(false);
         
         g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NORMAL); //ToDo: fachada
 
@@ -131,6 +140,15 @@ void UnitManager::deployAllTroops(Vector3<float> vectorData) {
         u -> setTroopPosition(vectorData);
         u -> setTroopDestination(vectorData);
         u -> getModel() -> setActive(true);
+        u -> setRetracted(false);
+    }
+}
+
+void UnitManager::retractAllTroops(Vector3<float> vectorData) {
+    for (std::map<int,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
+        Unit *u = it -> second;
+        u -> setTroopDestination(vectorData);
+        u -> setRetracted(true);
     }
 }
 
@@ -243,3 +261,6 @@ std::map<int, Unit*> * UnitManager::getInMapTroops() {
     return inMapTroops;
 }
 
+std::vector<Unit*> * UnitManager::getInHallTroops() {
+    return inHallTroops;
+}

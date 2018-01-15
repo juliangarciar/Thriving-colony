@@ -37,6 +37,12 @@ void IA::update() {
         buildings -> updateBuildingManager();
         units -> updateUnitManager();
         nodeRootIA -> question();
+        if (units -> getInMapTroops() -> empty()) {
+            deployedTroops = false;
+        }
+        if (units -> getInHallTroops() -> empty()) {
+            deployedTroops = true;
+        }
         updateTimer = 1;
     } else {
         updateTimer -= Game::Instance() ->getWindow() -> getDeltaTime();
@@ -146,8 +152,8 @@ void IA::openDoors() {
 * Troops come back to their building (barn, barrack or workshop)
 */
 void IA::retractTroops() {
-    // ToDo: hacer de verdad
-    deployedTroops = false;
+    Vector3<float> v = *(IA::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
+    IA::getInstance() -> getUnitManager() -> retractAllTroops(v);
 }
 
 bool IA::getUnderAttack() {

@@ -84,13 +84,16 @@ void Hud::addTab(int id, int type){
             Tab *t = tabs->addTab(L"Main Building", id);
             menus -> push_back(t);
 
-            Button *b = new Button(Rect2D<int>(340, 10, 50, 20).getFixed(), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+            Button *b = new Button(Rect2D<int>(350, 10, 50, 20).getFixed(), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
             t->addChild(b);
             buttons->push_back(b);
-            b = new Button(Rect2D<int>(120, 10, 100, 20).getFixed(), Enumeration::idGUI::GUI_ID_DEPLOY_TROOPS_BUTTON, L"Deploy selected troop", L"Deploy a troop");
+            b = new Button(Rect2D<int>(100, 10, 100, 20).getFixed(), Enumeration::idGUI::GUI_ID_DEPLOY_TROOPS_BUTTON, L"Deploy selected troop", L"Deploy a troop");
             t->addChild(b);
             buttons->push_back(b);
-            b = new Button(Rect2D<int>(220, 10, 100, 20), Enumeration::idGUI::GUI_ID_DEPLOY_ALL_TROOPS_BUTTON, L"Deploy all troops", L"Deploy all troops");
+            b = new Button(Rect2D<int>(200, 10, 75, 20), Enumeration::idGUI::GUI_ID_DEPLOY_ALL_TROOPS_BUTTON, L"Deploy all troops", L"Deploy all troops");
+            t -> addChild(b);
+            buttons -> push_back(b);
+            b = new Button(Rect2D<int>(275, 10, 75, 20), Enumeration::idGUI::GUI_ID_RETRACT_ALL_TROOPS_BUTTON, L"Retract troops", L"Retract troops");
             t -> addChild(b);
             buttons -> push_back(b);
 
@@ -162,8 +165,6 @@ void Hud::hidePopup(){
 void Hud::getHUDEvents(){
     Game *g = Game::Instance();
     int id = g->getIO()->getGUIClickedID();
-
-
 
     switch(id){
         //Le botone iniciale
@@ -276,6 +277,11 @@ void Hud::getHUDEvents(){
             {
                 Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsHuman);
                 hallTroopList -> removeAllItems();
+            }
+        break;
+        case Enumeration::idGUI::GUI_ID_RETRACT_ALL_TROOPS_BUTTON:
+            {
+                Game::Instance() -> getEvents() -> triggerEvent(Enumeration::RetractTroopsHuman);
             }
         break;
         case Enumeration::idGUI::GUI_ID_EXPAND_TERRAIN_BUTTON:

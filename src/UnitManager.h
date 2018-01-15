@@ -47,6 +47,8 @@ class UnitManager{
         void deployTroop(Terrain *terrain);
         void deployAllTroops(Vector3<float> vectorData);
 
+        void retractAllTroops(Vector3<float>);
+
         void selectTroop(int troopID);      //Call for selecting a troop
         void unSelectTroop();
         void moveOrder(Terrain *terrain);                        //Order for selected troop
@@ -60,8 +62,7 @@ class UnitManager{
         bool isTroopSelected();
 
         std::map<int, Unit*> * getInMapTroops();
-
-        
+        std::vector<Unit*> * getInHallTroops();        
 };
 
 #endif
