@@ -226,6 +226,7 @@ bool BuildingManager::checkCanPay(Enumeration::BuildingType type) {
 
 void BuildingManager::updateBuildingManager() {
 	for (std::map<int,Building*>::iterator it = buildings->begin(); it != buildings->end(); ++it){
+		
 		it -> second -> update();
 	}
 }
@@ -249,3 +250,8 @@ bool BuildingManager::checkFinished(int _id) {
 	}
 
 }
+
+SceneNode* BuildingManager::getBuildingLayer() {
+	return buildingLayer;
+}
+

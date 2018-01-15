@@ -46,12 +46,15 @@ class Unit : public Entity {
         void attack();
         //void updateTarget(Entity*);
         void moveTroop();
+        void attackMoveTroop();
         void updateTroop();
         //void assignBattle(Battle*);
         virtual void taxPlayer(Enumeration::Team);
 
         //int getAttackRange();
         bool inRangeOfAttack();
+
+        
         
     private:
     //Unit stats

@@ -44,10 +44,10 @@ Human* Human::getInstance() {
 }
 
 void Human::update() {
+    buildings -> updateBuildingManager();
     if (updateTimer <= 0) {
         //std::cout << "Probando" << std::endl;
         gainResources();
-        buildings -> updateBuildingManager();
         units -> updateUnitManager();
         if (units -> getInMapTroops() -> empty()) {
             deployedTroops = false;

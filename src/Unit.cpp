@@ -5,6 +5,8 @@
 
 //ToDo: cambiar llamada a entity
 Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Team teamData, Enumeration::UnitType typeData, Enumeration::RaceType raceData) : Entity(layer, id, 100) {
+    
+    this -> viewRadius = 1000;
     //Actions of the units
     this->moving = false;
     this->attacking = false;
@@ -325,7 +327,20 @@ void Unit::moveTroop() {
     }
 }
 
+void Unit::attackMoveTroop() {
+    if (moving) {
+        if (std::abs(vectorDes -> x - position -> x) < 5.0 && std::abs(vectorDes -> z - position->z) < 5.0) {
+            moving = false;
+        } else {
+            Vector3<float> newPos = *vectorPos + *vectorMov;
+            newPos.y = Game::Instance()->getGameState()->getMap()->getY(newPos.x, newPos.z);
+            this->setTroopPosition(newPos);
+        }
+    }
+}
+
 void Unit::updateTroop() {
+    changeRedTint();
     moveTroop();
     float dt = Game::Instance() -> getWindow() -> getDeltaTime();
     
@@ -435,3 +450,4 @@ Vector3<float>* Unit::getDestination() {
 void Unit::setRetracted(bool data) {
     retracted = data;
 }
+

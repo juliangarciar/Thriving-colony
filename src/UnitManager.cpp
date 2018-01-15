@@ -177,7 +177,14 @@ void UnitManager::unSelectTroop(){
 void UnitManager::moveOrder(Terrain *terrain){
     Game *g = Game::Instance();
     if (this->selectedTroop != NULL){
-        this->selectedTroop->setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
+        if (Game::Instance() -> getIO() -> keyDown('A')) {
+            std::cout << "attack move" << std::endl;
+            this->selectedTroop->setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
+        } else {
+            std::cout << "move" << std::endl;
+            this->selectedTroop->setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
+        }
+        //this->selectedTroop->setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
         //Game::Instance()->getSoundSystem()->playVoice(this->selectedTroop->getMoveEvent());
     }
 }

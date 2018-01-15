@@ -13,7 +13,7 @@ BattleManager::~BattleManager() {
 
 void BattleManager::askForTarget(Entity* requester) {
     Vector3<float> *requesterPos = requester -> getPosition();
-    int requesterRange = requester -> getAttackRange();
+    int requesterRange = requester -> getViewRadius();
     Entity* target = NULL;
     float minDistance = FLT_MAX; // Maximum value of float
     
