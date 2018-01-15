@@ -9,7 +9,7 @@
 #include <IOEngine/InputManager.h>
 #include <GraphicEngine/Window.h>
 
-#include "SoundEngine/Music.h"
+#include "SoundEngine/SoundSystem.h"
 class Game {
     public:
         static Game* Instance();
@@ -26,7 +26,6 @@ class Game {
         EventSystem *getEvents();
 		MenuState *getMenuState();
 		GameState *getGameState();
-        Music* getSoundSystem();
     protected:
         Game();
         virtual ~Game();
@@ -46,7 +45,7 @@ class Game {
         EventSystem *events;
         
         Mouse *cursor;
-        Music *soundSystem;
+        SoundSystem *soundSystem;
 };
 
 #endif

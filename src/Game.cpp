@@ -23,9 +23,7 @@ Game::Game() {
     events = new EventSystem();
 
     window -> setEventReceiver(io);
-    soundSystem = new Music();
-    soundSystem->setPause(false);
-    soundSystem->setMusicVolume(1);
+    soundSystem = new SoundSystem();
 }
 
 Game::~Game() {
@@ -34,11 +32,13 @@ Game::~Game() {
      delete cursor;
      delete io;
      delete events;
+     delete soundSystem;
     // delete state;
 }
 
 void Game::Init(){
     state ->Init();
+    
 }
 void Game::Input(){
     io -> endEventProcess();
@@ -80,7 +80,4 @@ MenuState *Game::getMenuState(){
 
 GameState *Game::getGameState(){
 	return game;
-}
-Music* Game::getSoundSystem(){
-    return soundSystem;
 }
