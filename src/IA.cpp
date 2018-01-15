@@ -45,7 +45,7 @@ void IA::update() {
         }
         updateTimer = 1;
     } else {
-        updateTimer -= Game::Instance() ->getWindow() -> getDeltaTime();
+        updateTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
     }
 }
 

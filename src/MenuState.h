@@ -2,6 +2,7 @@
 #define MENUSTATE_H
 
 #include "State.h"
+#include "Hud.h"
 
 class MenuState : public State {
     
@@ -16,7 +17,10 @@ class MenuState : public State {
         void CleanUp();
 
     private:
-    
+        Hud * hud;
+
+        int prevWindowWidth;
+        int prevWindowHeight;
 };
 
 #endif
