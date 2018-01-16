@@ -15,7 +15,7 @@ class SceneNode {
 
 		virtual ~SceneNode();
 
-		void addChild(scene::ISceneNode);
+		//void addChild(scene::ISceneNode);
 		SceneNode *getNodeCollision(Mouse *cursor);
 		
 		scene::ISceneNode *getSceneNode();

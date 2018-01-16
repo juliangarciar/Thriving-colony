@@ -12,20 +12,20 @@ SOURCEPATH = src
 #Directories
 SOURCE_DIRS = . GraphicEngine GUIEngine IOEngine SoundEngine IAEngine
 #C++ compiler
-CXX = clang++
+CXX = g++
 
 ####
 # FLAGS
 ####
 # Include paths
-CPPFLAGS = -I/usr/include -I/usr/include/irrlicht -I/usr/local/include -I/usr/local/include/fmod -I./$(SOURCEPATH)
+CPPFLAGS = -I/mingw64/include -I/mingw64/include/irrlicht -I./$(SOURCEPATH) -D_IRR_STATIC_LIB_
 # Compiler params
-CPPFLAGS += -O3 -ffast-math -g -Wall -std=c++11 -m64 -pthread
+CPPFLAGS += -O3 -ffast-math -g -Wall -std=c++11
 # Lib paths
-LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L/usr/local/lib -L/usr/local/lib/x86_64
+LDFLAGS = -L/mingw64/lib -L/mingw64/lib/X11
 # Libs
-LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lIrrlicht -lfmod -lfmodstudio
-###-lfmodex_vc.lib -lfmod -lfmodasdL
+LIBS = -lopengl32 -lm -lgdi32 -lwinspool -lcomdlg32 -lole32 -loleaut32 -luuid -lodbc32 -lodbccp32 -lopengl32 -lIrrlicht -lfmod64 -lfmodstudio64
+###-lfmodex_vc.lib -lfmodasdL
 
 ######## DON'T EDIT ANYTHING BELOW THIS LINE
 EXECUTABLE := $(BINPATH)/$(TARGET)

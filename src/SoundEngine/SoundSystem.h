@@ -7,10 +7,10 @@
 #include <iostream>
 #include <map>
 #include <string>
-#include "fmod.hpp"
-#include "fmod/fmod_studio.h"
-#include "fmod/fmod_errors.h"
-#include "../GraphicEngine/Vector3.h"
+#include <fmod/fmod.hpp>
+#include <fmod/fmod_studio.h>
+#include <fmod/fmod_errors.h>
+#include <GraphicEngine/Vector3.h>
 
 using namespace std;
 using namespace FMOD;
