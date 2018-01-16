@@ -155,6 +155,14 @@ class Enumeration {
             Idol
         };
         
+        enum UnitState {
+            Idle,
+            Move,
+            AttackMove,
+            Attack,
+            Chase
+        };
+
         //Special type, used to pass info to the UnitManager
         //in order to control which unit is created
         //struct UnitType{

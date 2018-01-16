@@ -17,6 +17,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
     this->type = (int)buildingType;
     this->team = teamData;
 
+    this -> tookDamageTimer = 0.1;
     Init();
 
     Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(

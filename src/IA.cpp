@@ -33,9 +33,9 @@ BehaviourTree* IA::getTree() {
 
 void IA::update() {
     buildings -> updateBuildingManager();
+    units -> updateUnitManager();
     if (updateTimer <= 0) {
         gainResources();
-        units -> updateUnitManager();
         nodeRootIA -> question();
         if (units -> getInMapTroops() -> empty()) {
             deployedTroops = false;

@@ -43,7 +43,7 @@ void Entity::takeDamage(int dmg) {
     hp = hp-dmg;
     // Tint the model red
     tookDamageCountdown = tookDamageTimer;
-    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(255, 255, 0, 0));
+    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(255, 125, 125, 0));
     if (hp <= 0) {
         hp = 0;
         die();

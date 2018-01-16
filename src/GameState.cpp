@@ -176,7 +176,7 @@ void GameState::Update(){
         Human::getInstance() -> getBuildingManager() -> drawBuilding(map);
         Human::getInstance() -> getUnitManager() -> deployTroop(map);
 
-        Human::getInstance() -> getUnitManager() -> updateUnitManager();
+        //Human::getInstance() -> getUnitManager() -> updateUnitManager();
 
         Human::getInstance() -> update();
         IA::getInstance() -> update();
