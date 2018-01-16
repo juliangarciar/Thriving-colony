@@ -38,8 +38,7 @@ OBJ := $(patsubst $(SOURCEPATH)/%.cpp, $(BUILDPATH)/%.o, $(SRC))
 
 all: prepare $(OBJ)
 	$(warning Creando el ejecutable $(Target)...)
-	
-	$(CXX) $(CPPFLAGS) $(LDFLAGS) $(LIBS) $(OBJ) -o $(EXECUTABLE)
+	$(CXX) $(CPPFLAGS) $(OBJ) -o $(EXECUTABLE) $(LDFLAGS) $(LIBS)
     
 $(BUILDPATH)/%.o: $(SOURCEPATH)/%.cpp
 	$(warning Creando el binario $@...)

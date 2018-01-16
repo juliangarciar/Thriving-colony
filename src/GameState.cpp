@@ -2,16 +2,13 @@
 #include "Game.h"
 #include "Human.h"
 #include "IA.h"
-#include "SoundEngine/Music.h"
+#include "SoundEngine/SoundSystem.h"
 
 GameState::GameState() : State() {
     map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
     camera = new CameraController(map);
     hud = new Hud();
 
-    music = new Music();
-    this->MusicSystem = new Music();
-    this->MusicSystem->setPause(false);
     gamePaused = false;
     battleManager = new BattleManager();
 
@@ -23,7 +20,6 @@ GameState::~GameState() {
     delete camera;
     delete hud;
     delete map;
-    delete music;
     delete battleManager;
 }
 
@@ -66,6 +62,8 @@ void GameState::Init(){
     v.z = HUMAN_CITY_HALL_Z+100;
     v.y = map -> getY(v.x, v.z);
     Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::Human);
+    //SoundSystem init
+    SoundSystem::Instance()->initSystem();
 }
 
 void GameState::Input(){
@@ -181,8 +179,9 @@ void GameState::Update(){
         Human::getInstance() -> update();
         IA::getInstance() -> update();
 
-        MusicSystem->playMusic("DroraniaMusic");
-        MusicSystem->updateSound();
+        //NEW SOUND SYSTEM
+        SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");
+        SoundSystem::Instance() -> update();
 
         if (g->getWindow()->getRealWindowWidth() != prevWindowWidth || g->getWindow()->getRealWindowHeight() != prevWindowHeight) {
             hud->updatePositions();

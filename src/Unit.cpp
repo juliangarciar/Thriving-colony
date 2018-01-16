@@ -49,9 +49,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->viewRange = 600;
             this->hpMax = 80;
             this->hp = 80;
-            attackEvent = "UnitAttackDroraniaMeleeS";
-            moveEvent = "UnitMovementDroraniaMeleeS";
-            selectEvent = "UnitSelectDroraniaMeleeS";
+            attackEvent = "event:/UnitAttack/Drorania_melee_S";
+            moveEvent = "event:/UnitMovement/Drorania_melee_S";
+            selectEvent = "event:/UnitSelect/Drorania_melee_S";
             metalCost = Enumeration::UnitCost::MeleeFootmenMetalCost;
             crystalCost = Enumeration::UnitCost::MeleeFootmenCrystalCost;
         }
@@ -63,9 +63,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->viewRange = 600;
             this->hpMax = 80;
             this->hp = 80;
-            attackEvent = "UnitAttackKaonovMeleeS";
-            moveEvent = "UnitMovementKaonovMeleeS";
-            selectEvent = "UnitSelectKaonovMeleeS";
+            attackEvent = "event:/UnitAttack/Kaonov_melee_S";
+            moveEvent = "event:/UnitMovement/Kaonov_melee_S";
+            selectEvent = "event:/UnitSelect/Kaonov_melee_S";
             metalCost = Enumeration::UnitCost::MeleeFootmenMetalCost;
             crystalCost = Enumeration::UnitCost::MeleeFootmenCrystalCost;
         }
@@ -80,9 +80,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->viewRange = 600;
             this->hpMax = 140;
             this->hp = 140;
-            attackEvent = "UnitAttackDroraniaMeleeA";
-            moveEvent = "UnitMovementDroraniaMeleeA";
-            selectEvent = "UnitSelectDroraniaMeleeA";
+            attackEvent = "event:/UnitAttack/Drorania_melee_A";
+            moveEvent = "event:/UnitMovement/Drorania_melee_A";
+            selectEvent = "event:/UnitSelect/Drorania_melee_A";
             metalCost = Enumeration::UnitCost::MountedMeleeMetalCost;
             crystalCost = Enumeration::UnitCost::MountedMeleeCrystalCost;
         }
@@ -95,9 +95,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->viewRange = 600;
             this->hpMax = 140;
             this->hp = 140;
-            attackEvent = "UnitAttackKaonovMeleeA";
-            moveEvent = "UnitMovementKaonovMeleeA";
-            selectEvent = "UnitSelectKaonovMeleeA";
+            attackEvent = "event:/UnitAttack/Kaonov_melee_A";
+            moveEvent = "event:/UnitMovement/Kaonov_melee_A";
+            selectEvent = "event:/UnitSelect/Kaonov_melee_A";
             metalCost = Enumeration::UnitCost::MountedMeleeMetalCost;
             crystalCost = Enumeration::UnitCost::MountedMeleeCrystalCost;
         }
@@ -113,9 +113,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->hpMax = 180;
             this->hp = 180;
             //TO CHANGE
-            attackEvent = "UnitAttackDroraniaMeleeA";
-            moveEvent = "UnitMovementDroraniaMeleeA";
-            selectEvent = "UnitSelectDroraniaMeleeA";
+            attackEvent = "event:/UnitAttack/Drorania_melee_A";
+            moveEvent = "event:/UnitMovement/Drorania_melee_A";
+            selectEvent = "event:/UnitSelect/Drorania_melee_A";
             metalCost = Enumeration::UnitCost::CreatureMetalCost;
             crystalCost = Enumeration::UnitCost::CreatureCrystalCost;
         }
@@ -128,9 +128,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->hpMax = 180;
             this->hp = 180;
             //TO CHANGE
-            attackEvent = "UnitAttackKaonovMeleeA";
-            moveEvent = "UnitMovementKaonovMeleeA";
-            selectEvent = "UnitSelectKaonovMeleeA";
+            attackEvent = "event:/UnitAttack/Kaonov_melee_A";
+            moveEvent = "event:/UnitMovement/Kaonov_melee_A";
+            selectEvent = "event:/UnitSelect/Kaonov_melee_A";
             metalCost = Enumeration::UnitCost::CreatureMetalCost;
             crystalCost = Enumeration::UnitCost::CreatureCrystalCost;
         }
@@ -151,9 +151,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->viewRange = 600;
             this->hpMax = 60;
             this->hp = 60;
-            attackEvent = "UnitAttackDroraniaRangedS";
-            moveEvent = "UnitMovementDroraniaRangedS";
-            selectEvent = "UnitSelectDroraniaRangedS";
+            attackEvent = "event:/UnitAttack/Drorania_ranged_S";
+            moveEvent = "event:/UnitMovement/Drorania_ranged_S";
+            selectEvent = "event:/UnitSelect/Drorania_ranged_S";
             metalCost = Enumeration::UnitCost::RangedFootmenMetalCost;
             crystalCost = Enumeration::UnitCost::RangedFootmenCrystalCost;
         }
@@ -165,9 +165,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->viewRange = 600;
             this->hpMax = 60;
             this->hp = 60;
-            attackEvent = "UnitAttackKaonovRangedS";
-            moveEvent = "UnitMovementKaonovRangedS";
-            selectEvent = "UnitSelectKaonovRangedS";
+            attackEvent = "event:/UnitAttack/Kaonov_ranged_S";
+            moveEvent = "event:/UnitMovement/Kaonov_ranged_S";
+            selectEvent = "event:/UnitSelect/Kaonov_ranged_S";
             metalCost = Enumeration::UnitCost::RangedFootmenMetalCost;
             crystalCost = Enumeration::UnitCost::RangedFootmenCrystalCost;
         }   
@@ -182,9 +182,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->viewRange = 600;
             this->hpMax = 110;
             this->hp = 110;
-            attackEvent = "UnitAttackDroraniaRangedA";
-            moveEvent = "UnitMovementDroraniaRangedA";
-            selectEvent = "UnitSelectDroraniaRangedA";
+            attackEvent = "event:/UnitAttack/Drorania_ranged_A";
+            moveEvent = "event:/UnitMovement/Drorania_ranged_A";
+            selectEvent = "event:/UnitSelect/Drorania_ranged_A";
             metalCost = Enumeration::UnitCost::MountedRangedMetalCost;
             crystalCost = Enumeration::UnitCost::MountedRangedCrystalCost;
         }
@@ -196,9 +196,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->viewRange = 600;
             this->hpMax = 110;
             this->hp = 110;
-            attackEvent = "UnitAttackKaonovRangedA";
-            moveEvent = "UnitMovementKaonovRangedA";
-            selectEvent = "UnitSelectKaonovRangedA";
+            attackEvent = "event:/UnitAttack/Kaonov_ranged_A";
+            moveEvent = "event:/UnitMovement/Kaonov_ranged_A";
+            selectEvent = "event:/UnitSelect/Kaonov_ranged_A";
             metalCost = Enumeration::UnitCost::MountedRangedMetalCost;
             crystalCost = Enumeration::UnitCost::MountedRangedCrystalCost;
         }
@@ -214,9 +214,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->hpMax = 180;
             this->hp = 180;
             //CHANGE
-            attackEvent = "UnitAttackDroraniaRangedS";
-            moveEvent = "UnitMovementDroraniaRangedS";
-            selectEvent = "UnitSelectDroraniaRangedS";
+            attackEvent = "event:/UnitAttack/Drorania_ranged_S";
+            moveEvent = "event:/UnitMovement/Drorania_ranged_S";
+            selectEvent = "event:/UnitSelect/Drorania_ranged_S";
             metalCost = Enumeration::UnitCost::CatapultMetalCost;
             crystalCost = Enumeration::UnitCost::CatapultCrystalCost;
         }
@@ -229,9 +229,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->hpMax = 180;
             this->hp = 180;
             //CHANGE
-            attackEvent = "UnitAttackKaonovRangedS";
-            moveEvent = "UnitMovementKaonovRangedS";
-            selectEvent = "UnitSelectKaonovRangedS";
+            attackEvent = "event:/UnitAttack/Kaonov_ranged_S";
+            moveEvent = "event:/UnitMovement/Kaonov_ranged_S";
+            selectEvent = "event:/UnitSelect/Kaonov_ranged_S";
             metalCost = Enumeration::UnitCost::CatapultMetalCost;
             crystalCost = Enumeration::UnitCost::CatapultCrystalCost;
         }
@@ -247,9 +247,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->hpMax = 220;
             this->hp = 220;
             //CHANGE
-            attackEvent = "UnitAttackDroraniaRangedA";
-            moveEvent = "UnitMovementDroraniaRangedA";
-            selectEvent = "UnitSelectDroraniaRangedA";
+            attackEvent = "event:/UnitAttack/Drorania_ranged_A";
+            moveEvent = "event:/UnitMovement/Drorania_ranged_A";
+            selectEvent = "event:/UnitSelect/Drorania_ranged_A";
             metalCost = Enumeration::UnitCost::RamMetalCost;
             crystalCost = Enumeration::UnitCost::RamCrystalCost;
         }
@@ -262,9 +262,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->hpMax = 220;
             this->hp = 220;
             //CHANGE
-            attackEvent = "UnitAttackKaonovRangedA";
-            moveEvent = "UnitMovementKaonovRangedA";
-            selectEvent = "UnitSelectKaonovRangedA";
+            attackEvent = "event:/UnitAttack/Kaonov_ranged_A";
+            moveEvent = "event:/UnitMovement/Kaonov_ranged_A";
+            selectEvent = "event:/UnitSelect/Kaonov_ranged_A";
             metalCost = Enumeration::UnitCost::RamMetalCost;
             crystalCost = Enumeration::UnitCost::RamCrystalCost;
         }
