@@ -14,11 +14,12 @@ class Game {
     public:
         static Game* Instance();
 
-        void Init();
-        void Input();
-        void Update();
-        void Render();
-        void CleanUp();
+        void init();
+        void input();
+        void update();
+        void render();
+        void cleanUp();
+        void changeState(Enumeration::State);
 
         Window *getWindow();
         InputManager *getIO();
@@ -26,6 +27,7 @@ class Game {
         EventSystem *getEvents();
 		MenuState *getMenuState();
 		GameState *getGameState();
+        
     protected:
         Game();
         virtual ~Game();

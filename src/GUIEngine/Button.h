@@ -3,7 +3,7 @@
 
 #include <irrlicht.h>
 #include <GUIEngine/Rect2D.h>
-#include <IOEngine/InputManager.h>
+//#include <IOEngine/InputManager.h>
 #include <IOEngine/Mouse.h>
 #include "GUIElement.h"
 
@@ -23,6 +23,7 @@ class Button : public GUIElement{
         void setPosition(Vector2<int> pos);
 
         gui::IGUIElement *getGUIElement();
+
     private:
         gui::IGUIButton *button;
 };

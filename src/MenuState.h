@@ -2,7 +2,7 @@
 #define MENUSTATE_H
 
 #include "State.h"
-#include "Hud.h"
+#include "HudMenu.h"
 
 class MenuState : public State {
     
@@ -10,14 +10,14 @@ class MenuState : public State {
         MenuState();
         virtual ~MenuState();
 
-        void Init();
-        void Input();
-        void Update();
-        void Render();
-        void CleanUp();
+        void init();
+        void input();
+        void update();
+        void render();
+        void cleanUp();
 
     private:
-        Hud * hud;
+        HudMenu * hud;
 
         int prevWindowWidth;
         int prevWindowHeight;

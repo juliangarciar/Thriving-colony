@@ -17,11 +17,11 @@ class GameState : public State {
         GameState();
         virtual ~GameState();
 
-        void Init();
-        void Input();
-        void Update();
-        void Render();
-        void CleanUp();
+        void init();
+        void input();
+        void update();
+        void render();
+        void cleanUp();
 
         Terrain* getMap();
         Hud* getHud();

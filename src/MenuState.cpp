@@ -1,4 +1,5 @@
 #include "MenuState.h"
+#include "Game.h"
 
 MenuState::MenuState() : State() {
     hud = new HudMenu();
@@ -11,26 +12,26 @@ MenuState::~MenuState() {
     delete hud;
 }
 
-void MenuState::Init(){
+void MenuState::init() {
 
 }
 
-void MenuState::Input(){
+void MenuState::input() {
     hud -> getHUDEvents();
     hud -> update();
 }
 
-void MenuState::Update(){
+void MenuState::update() {
     Game *g = Game::Instance();
     if (g -> getWindow() -> getRealWindowWidth() != prevWindowWidth || g -> getWindow() -> getRealWindowHeight() != prevWindowHeight) {
-        hud->updatePositions();
+        hud -> updatePositions();
     }
 }
 
-void MenuState::Render(){
+void MenuState::render() {
 
 }
 
-void MenuState::CleanUp(){
+void MenuState::cleanUp() {
 
 }

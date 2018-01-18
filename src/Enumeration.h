@@ -71,6 +71,7 @@ class Enumeration {
 
             GUI_ID_QUIT_BUTTON,
             GUI_ID_CLOSE_PANEL_BUTTON,
+            GUI_ID_PLAY_BUTTON,
             
             GUI_ID_CREATE_MELEE_TROOP_BUTTON,
             GUI_ID_CREATE_RANGED_TROOP_BUTTON,
@@ -144,6 +145,7 @@ class Enumeration {
             RamMetalCost = 295,
             RamCrystalCost = 160,
         };
+
         //Unit types
         enum UnitType{
             StandardR,
@@ -154,21 +156,13 @@ class Enumeration {
             AdvancedM,
             Idol
         };
-        
-        //Special type, used to pass info to the UnitManager
-        //in order to control which unit is created
-        //struct UnitType{
-        //    enum Class{
-        //        Ranged,
-        //        Melee
-        //    };
-        //    enum SubClass
-        //    {
-        //        
-        //    };
-        //    Class unitClass;
-        //    SubClass unitSubClass;
-        //};
+
+        //Game states
+        enum State {
+            MenuState,
+            GameState,
+            PauseState
+        };
 
     private:
         
