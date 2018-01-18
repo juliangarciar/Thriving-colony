@@ -11,12 +11,13 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
     this->metalCost = 0;
     this->crystalCost = 0;
 
-    this->stepsToBuild = 0;
-    this->currentStep = 0;
+    buildTimer = 0;
+    buildCountdown = 0;
 
     this->type = (int)buildingType;
     this->team = teamData;
 
+    this -> tookDamageTimer = 0.1;
     Init();
 
     Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
@@ -41,8 +42,8 @@ Building::Building(int id, SceneNode *parent, const wchar_t *path, Enumeration::
     this->metalCost = 0;
     this->crystalCost = 0;
 
-    this->stepsToBuild = 0;
-    this->currentStep = 0;
+    this->buildTimer = 0;
+    this->buildCountdown = 0;
 
     this->type = (int)buildingType;
     this->team = teamData;
@@ -84,7 +85,7 @@ void Building::Init(){
             this->happiness = 0;
             this->cityLevel = 15;
 
-            this->stepsToBuild = 50;
+            this->buildTimer = 50;
 
             this->metalCost = Enumeration::BuildingCost::BarnMetalCost;
             this->crystalCost = Enumeration::BuildingCost::BarnCrystalCost;
@@ -101,7 +102,7 @@ void Building::Init(){
             this->happiness = 0;
             this->cityLevel = 10;
             
-            this->stepsToBuild = 40;
+            this->buildTimer = 40;
 
             this->metalCost = Enumeration::BuildingCost::BarrackMetalCost;
             this->crystalCost = Enumeration::BuildingCost::BarrackCrystalCost;
@@ -118,7 +119,7 @@ void Building::Init(){
             this->happiness = 40;
             this->cityLevel = 5;
 
-            this->stepsToBuild = 60;
+            this->buildTimer = 60;
 
             this->metalCost = Enumeration::BuildingCost::HospitalMetalCost;
             this->crystalCost = Enumeration::BuildingCost::HospitalCrystalCost;
@@ -135,7 +136,7 @@ void Building::Init(){
             this->happiness = 1;
             this->cityLevel = 5;
 
-            this->stepsToBuild = 25;
+            this->buildTimer = 25;
             
             
             this->metalCost = Enumeration::BuildingCost::HomeMetalCost;
@@ -151,8 +152,10 @@ void Building::Init(){
             this->hpMax = 3000;
             this->hp = 3000;
 
-            this->stepsToBuild = 0;
+            this->buildTimer = 0;
             initialBuilding = true;
+
+            
 
             this->hpMax = 3000;
             this->hp = 3000;
@@ -168,7 +171,7 @@ void Building::Init(){
             this->happiness = 30;
             this->cityLevel = 5;
 
-            this->stepsToBuild = 60;
+            this->buildTimer = 60;
 
             this->metalCost = Enumeration::BuildingCost::MarketMetalCost;
             this->crystalCost = Enumeration::BuildingCost::MarketCrystalCost;
@@ -185,7 +188,7 @@ void Building::Init(){
             this->happiness = 0;
             this->cityLevel = 15;
 
-            this->stepsToBuild = 35;
+            this->buildTimer = 35;
             
             this->metalCost = Enumeration::BuildingCost::QuarryMetalCost;
             this->crystalCost = Enumeration::BuildingCost::QuarryCrystalCost;
@@ -202,17 +205,17 @@ void Building::Init(){
             this->happiness = 0;
             this->cityLevel = 5;
 
-            this->stepsToBuild = 35;
+            this->buildTimer = 35;
             // If this is the first siderurgy, build it instantly
             if (this->team == Enumeration::Team::Human) {
                 if (Human::getInstance() -> getSiderurgyAmount() == 0) {
-                    this->stepsToBuild = 0;
+                    this->buildTimer = 0;
                     initialBuilding = true;
                     Human::getInstance() -> increaseSiderurgyAmount();  
                 }
             }else{
                 if (IA::getInstance() -> getSiderurgyAmount() == 0) {
-                    this->stepsToBuild = 0;
+                    this->buildTimer = 0;
                     initialBuilding = true;
                     IA::getInstance() -> increaseSiderurgyAmount();  
                 }
@@ -233,7 +236,7 @@ void Building::Init(){
             this->happiness = 20;
             this->cityLevel = 5;
 
-            this->stepsToBuild = 35;
+            this->buildTimer = 35;
 
             this->metalCost = Enumeration::BuildingCost::SchoolMetalCost;
             this->crystalCost = Enumeration::BuildingCost::SchoolCrystalCost;
@@ -250,7 +253,7 @@ void Building::Init(){
             this->happiness = 1;
             this->cityLevel = 5;
 
-            this->stepsToBuild = 50;
+            this->buildTimer = 50;
 
             this->metalCost = Enumeration::BuildingCost::TowerMetalCost;
             this->crystalCost = Enumeration::BuildingCost::TowerCrystalCost;
@@ -267,7 +270,7 @@ void Building::Init(){
             this->happiness = 1;
             this->cityLevel = 1;
 
-            this->stepsToBuild = 10;
+            this->buildTimer = 10;
 
             this->metalCost = Enumeration::BuildingCost::WallMetalCost;
             this->crystalCost = Enumeration::BuildingCost::WallCrystalCost;
@@ -284,7 +287,7 @@ void Building::Init(){
             this->happiness = 0;
             this->cityLevel = 15;
             
-            this->stepsToBuild = 50;
+            this->buildTimer = 50;
             
             this->metalCost = Enumeration::BuildingCost::WorkshopMetalCost;
             this->crystalCost = Enumeration::BuildingCost::WorkshopCrystalCost;
@@ -298,13 +301,7 @@ void Building::Init(){
         this->currentColor = video::SColor(255, r, g, b);
         this -> finished = true;
     } else {
-        // DEBUG SOLO PARA LA PRESENTACION
-        //
-        //
-        this -> stepsToBuild = 3;
-        //
-        //
-        // DEBUG SOLO PARA LA PRESENTACION
+        buildCountdown = buildTimer;
         this->currentColor = video::SColor(255, 0, 0, 0);
         this -> finished = false;
     }
@@ -312,9 +309,10 @@ void Building::Init(){
 
 // This update is called once every second
 void Building::update() {
+    changeRedTint();
     if (!finished) {
-        currentStep ++;
-        if (currentStep >= stepsToBuild) {
+        buildCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();;
+        if (buildCountdown <= 0) {
             Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
                 this->model->getModel()->getMesh(), baseColor
             );

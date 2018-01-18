@@ -26,11 +26,11 @@ class Building : public Entity {
 
         int type;
 
-        bool finished;
-        int stepsToBuild;
-        int currentStep;
+        //bool finished;
+        int buildTimer;
+        int buildCountdown;
 
-        irr::video::SColor baseColor;
+        //irr::video::SColor baseColor;
         irr::video::SColor currentColor;
 };
 

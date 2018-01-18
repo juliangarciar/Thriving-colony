@@ -13,7 +13,7 @@ BattleManager::~BattleManager() {
 
 void BattleManager::askForTarget(Entity* requester) {
     Vector3<float> *requesterPos = requester -> getPosition();
-    int requesterRange = requester -> getAttackRange();
+    int requesterRange = requester -> getViewRadius();
     Entity* target = NULL;
     float minDistance = FLT_MAX; // Maximum value of float
     
@@ -38,15 +38,13 @@ void BattleManager::askForTarget(Entity* requester) {
                 }
             }
         }
-        
         if (target == NULL) { // No target unit found, search buildings
-            
             std::map<int, Building*> *buildings = IA::getInstance() -> getBuildingManager() -> getBuildings();
             for (std::map<int,Building*>::iterator it = buildings->begin(); it != buildings->end(); ++it){
                 if (it ->second != NULL) {
                 // Calculate distance between troop requesting target and posible targets
-                    xaux = it -> second -> getPosition() -> x - requesterPos -> x;
-                    yaux = it -> second -> getPosition() -> y - requesterPos -> y;
+                    xaux = it -> second -> getPosition() -> x - (requesterPos -> x);
+                    yaux = it -> second -> getPosition() -> y - (requesterPos -> y);
                     dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
 
                     if (dist <= requesterRange && dist < minDistance) {
