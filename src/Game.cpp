@@ -27,6 +27,7 @@ Game::Game() {
 Game::~Game() {
      delete menu;
      delete game;
+     delete pause;
      delete cursor;
      delete io;
      delete events;
@@ -61,6 +62,7 @@ void Game::cleanUp() {
 void Game::changeState(Enumeration::State data) {
     switch (data) {
         case Enumeration::State::MenuState :
+            delete pause;
             delete game;
             menu = new MenuState();
             state = menu;
@@ -68,9 +70,21 @@ void Game::changeState(Enumeration::State data) {
         break;
 
         case Enumeration::State::GameState :
-            delete menu;
-            game = new GameState();
-            state = game;
+            if (menu != 0){
+                delete menu;
+                menu = 0;
+                game = new GameState();
+                state = game;
+                state -> init();
+            } else {
+                delete pause;
+                state = game;
+            }
+        break;
+
+        case Enumeration::State::PauseState :
+            pause = new PauseState();
+            state = pause;
             state -> init();
         break;
     }

@@ -13,7 +13,7 @@ Text *Hud::warningText = 0;//new Text(Rect2D<int>(200, 60, 50, 20), L"Edificio c
 
 Hud::Hud() {
     //Le botone iniciale
-    buttonQuit = new Button(Rect2D<int>(1150, 20, 100, 30).getFixed(), Enumeration::idGUI::GUI_ID_QUIT_BUTTON, L"Quit", L"Quit Game");
+    //buttonQuit = new Button(Rect2D<int>(1150, 20, 100, 30).getFixed(), Enumeration::idGUI::GUI_ID_QUIT_BUTTON, L"Quit", L"Quit Game");
 
     buttonBarn = new Button(Rect2D<int>(746, 680, 100, 30).getFixed(), Enumeration::idGUI::GUI_ID_BUILD_BARN_BUTTON, L"Barn", L"Build a barn that will allow you to train mounted military units.\n Metal cost: 800.");
     buttonBarrack = new Button(Rect2D<int>(642, 680, 100, 30).getFixed(), Enumeration::idGUI::GUI_ID_BUILD_BARRACK_BUTTON, L"Barrack", L"Build a barrack that will allow you to train basic military units.\n Metal cost: 720.");
@@ -50,7 +50,7 @@ Hud::Hud() {
 
 Hud::~Hud() {
     //Los dos botones iniciales
-    delete buttonQuit;
+    //delete buttonQuit;
 
     //Los botones edificios
     delete buttonSchool;
@@ -311,20 +311,20 @@ void Hud::update() {
 }
 
 void Hud::updatePositions(){
-    buttonQuit->setPosition(Vector2<int>(1150, 20).getFixed());
+    //buttonQuit -> setPosition(Vector2<int>(1150, 20).getFixed());
 
-    buttonBarn->setPosition(Vector2<int>(746, 680).getFixed());
-    buttonBarrack->setPosition(Vector2<int>(642, 680).getFixed());
-    buttonHospital->setPosition(Vector2<int>(538, 680).getFixed());
-    buttonHome->setPosition(Vector2<int>(226,680).getFixed());
-    buttonMarket->setPosition(Vector2<int>(122,680).getFixed());
-    buttonQuarry->setPosition(Vector2<int>(434,680).getFixed());
-    buttonSiderurgy->setPosition(Vector2<int>(18,680).getFixed());
-    buttonSchool->setPosition(Vector2<int>(330,680).getFixed()); 
-    buttonTower->setPosition(Vector2<int>(1058,680).getFixed());
-    buttonWall->setPosition(Vector2<int>(954,680).getFixed());
-    buttonWorkshop->setPosition(Vector2<int>(850,680).getFixed());
-    buttonExpandTerrain->setPosition(Vector2<int>(1162,680).getFixed());
+    buttonBarn -> setPosition(Vector2<int>(746, 680).getFixed());
+    buttonBarrack -> setPosition(Vector2<int>(642, 680).getFixed());
+    buttonHospital -> setPosition(Vector2<int>(538, 680).getFixed());
+    buttonHome -> setPosition(Vector2<int>(226,680).getFixed());
+    buttonMarket -> setPosition(Vector2<int>(122,680).getFixed());
+    buttonQuarry -> setPosition(Vector2<int>(434,680).getFixed());
+    buttonSiderurgy -> setPosition(Vector2<int>(18,680).getFixed());
+    buttonSchool -> setPosition(Vector2<int>(330,680).getFixed()); 
+    buttonTower -> setPosition(Vector2<int>(1058,680).getFixed());
+    buttonWall -> setPosition(Vector2<int>(954,680).getFixed());
+    buttonWorkshop -> setPosition(Vector2<int>(850,680).getFixed());
+    buttonExpandTerrain -> setPosition(Vector2<int>(1162,680).getFixed());
 }
 
 void Hud::drawWarning() {

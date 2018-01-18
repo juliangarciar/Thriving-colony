@@ -153,7 +153,11 @@ void GameState::input(){
 
         if (Game::Instance() -> getIO() -> keyPressed(KEY_KEY_3)) {
             Human::getInstance() -> receiveCitizens();
-        }     
+        }
+
+        if (Game::Instance() -> getIO() -> keyPressed(KEY_ESCAPE)) {
+            Game::Instance() -> changeState(Enumeration::State::PauseState);
+        }
 }
 
 void GameState::update(){

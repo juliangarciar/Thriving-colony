@@ -72,6 +72,8 @@ class Enumeration {
             GUI_ID_QUIT_BUTTON,
             GUI_ID_CLOSE_PANEL_BUTTON,
             GUI_ID_PLAY_BUTTON,
+            GUI_ID_RESUME_BUTTON,
+            GUI_ID_MENU_BUTTON,
             
             GUI_ID_CREATE_MELEE_TROOP_BUTTON,
             GUI_ID_CREATE_RANGED_TROOP_BUTTON,

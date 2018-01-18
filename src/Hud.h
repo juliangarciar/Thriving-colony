@@ -34,7 +34,7 @@ class Hud {
         static void drawWarning();
         static void deleteWarning();
     private:
-        Button *buttonQuit;
+        //Button *buttonQuit;
 
         Button *buttonBarn;
         Button *buttonBarrack;

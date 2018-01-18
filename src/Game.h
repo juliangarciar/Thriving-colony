@@ -4,6 +4,7 @@
 #include "State.h"
 #include "MenuState.h"
 #include "GameState.h"
+#include "PauseState.h"
 #include "IOEngine/EventSystem.h"
 
 #include <IOEngine/InputManager.h>
@@ -41,6 +42,7 @@ class Game {
 
         MenuState *menu;
         GameState *game;
+        PauseState *pause;
 
         InputManager *io;
 

@@ -9,7 +9,7 @@ Button::Button(Rect2D<int> dimPos, int id, const wchar_t *buttonText, const wcha
 }
 
 Button::~Button() {
-    
+    button -> remove();
 }
 
 bool Button::isButtonPressed() {
