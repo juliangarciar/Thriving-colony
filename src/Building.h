@@ -19,7 +19,7 @@ class Building : public Entity {
         int getType();
         void update();
         bool getFinished();
-        
+        void setHitbox();
         int getID();
     private:
         void Init();
@@ -27,8 +27,8 @@ class Building : public Entity {
         int type;
 
         //bool finished;
-        int buildTimer;
-        int buildCountdown;
+        float buildTimer;
+        float buildCountdown;
 
         //irr::video::SColor baseColor;
         irr::video::SColor currentColor;

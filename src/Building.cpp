@@ -309,10 +309,10 @@ void Building::Init(){
 
 // This update is called once every second
 void Building::update() {
-    changeRedTint();
+    //changeRedTint();
     if (!finished) {
-        buildCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();;
-        if (buildCountdown <= 0) {
+        buildTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
+        if (buildTimer <= 0) {
             Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
                 this->model->getModel()->getMesh(), baseColor
             );
@@ -423,4 +423,8 @@ bool Building::getFinished() {
 
 int Building::getID() {
     return ID;
+}
+
+void Building::setHitbox() {
+    this->hitbox->set(this -> model ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
 }

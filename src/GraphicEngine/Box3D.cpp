@@ -41,10 +41,10 @@ Vector3<T> Box3D<T>::getSize() {
    	T height = edges[1].Y - edges[0].Y;
    	T depth = edges[2].Z - edges[0].Z;
 
-   std::cout<<"height: "<<height<<std::endl;
+   /*std::cout<<"height: "<<height<<std::endl;
    std::cout<<"width: "<<width<<std::endl;
    std::cout<<"depth: "<<depth<<std::endl;
-
+*/
 	return Vector3<T>(width, height, depth);
 }
 

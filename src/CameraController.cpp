@@ -219,7 +219,7 @@ void CameraController::RotateAndInclinate(InputManager *receiver, Mouse *cursor)
         cursorPosSaved = cursor->getPosition();
         cursor->setPosition(screenCenter);
 		
-		std::cout << "SI" << std::endl;
+		//std::cout << "SI" << std::endl;
 
 		Game::Instance()->getCursor()->hide();
     }

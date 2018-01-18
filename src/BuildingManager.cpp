@@ -119,22 +119,14 @@ void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingTyp
 		id++;
 	} else {
 		if (tempBuilding == NULL){
-			tempBuilding = new Building(id, buildingLayer, _type, pos, _team);
+			//tempBuilding = new Building(id, buildingLayer, _type, pos, _team);
 			//Poner modelo
-			setTempBuildingModel(pos,_type,_team);
-			//Poner en el grid
-			Vector3<float> f = Box3D<float>(tempBuilding->getModel()->getModel()->getTransformedBoundingBox()).getSize();
 			
-			std::cout << f.x << "-" << f.y << "-" << f.z << std::endl;
-			float x = roundf(pos.x / gridAlignment) * gridAlignment;
-			float y = (roundf(pos.y / gridAlignment) * gridAlignment) + (f.y/2);
-			float z = roundf(pos.z / gridAlignment) * gridAlignment;
-
-			tempBuilding -> setPosition (Vector3<float>(x, y, z));
-			//
+			setTempBuildingModel(pos,_type,_team);
+			
+		
 		}
 		tempBuilding->getModel()->setID(id);
-
 		buildings->insert(std::pair<int,Building*>(id, tempBuilding));
 
 		Game::Instance()->getGameState()->getHud()->addTab(id, tempBuilding->getType());
