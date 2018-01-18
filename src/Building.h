@@ -20,11 +20,17 @@ class Building : public Entity {
         void update();
         bool getFinished();
         void setHitbox();
+
+        void updateHitbox();
+
         int getID();
     private:
         void Init();
 
         int type;
+
+        float updateHitboxTimer = 3;
+        bool updated;
 
         //bool finished;
         float buildTimer;

@@ -323,6 +323,7 @@ void Building::update() {
 		        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);
             }            
             this -> finished = true;
+            setHitbox();
         }
     }
 }
@@ -427,4 +428,16 @@ int Building::getID() {
 
 void Building::setHitbox() {
     this->hitbox->set(this -> model ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
+}
+
+//Esto tendria que haber funcionado bien, pero no, como mi vida
+void Building::updateHitbox() {
+    if (!updated) {
+        if (updateHitboxTimer <= 0) {
+            updated = true;
+        } else {
+            setHitbox();
+            updateHitboxTimer -= Game::Instance() ->getWindow() -> getDeltaTime();
+        }
+    }
 }
