@@ -19,18 +19,24 @@ class Building : public Entity {
         int getType();
         void update();
         bool getFinished();
-        
+        void setHitbox();
+
+        void updateHitbox();
+
         int getID();
     private:
         void Init();
 
         int type;
 
-        bool finished;
-        int stepsToBuild;
-        int currentStep;
+        float updateHitboxTimer = 3;
+        bool updated;
 
-        irr::video::SColor baseColor;
+        //bool finished;
+        float buildTimer;
+        float buildCountdown;
+
+        //irr::video::SColor baseColor;
         irr::video::SColor currentColor;
 };
 

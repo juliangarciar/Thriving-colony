@@ -31,8 +31,11 @@ class Entity {
         void updateTarget(Entity*);
 
         int getAttackRange();
+        void changeRedTint();
 
         virtual void taxPlayer(Enumeration::Team) = 0;
+
+        int getViewRadius();
     protected:
         Entity* target;
         
@@ -44,6 +47,9 @@ class Entity {
 
         int hpMax;
         int hp;
+        int viewRadius;
+
+        irr::video::SColor baseColor;
 
         // Values, costs, etc
         int happiness;
@@ -54,6 +60,11 @@ class Entity {
         int attackRange;
         
         Enumeration::Team team;
+
+        float tookDamageTimer;
+        float tookDamageCountdown;
+
+        bool finished;
 
       private:
 };

@@ -46,14 +46,26 @@ class Unit : public Entity {
         void attack();
         //void updateTarget(Entity*);
         void moveTroop();
+        void attackMoveTroop();
+        void chaseTarget();
         void updateTroop();
         //void assignBattle(Battle*);
         virtual void taxPlayer(Enumeration::Team);
 
         //int getAttackRange();
         bool inRangeOfAttack();
+
+        // State machine
+        void switchState(Enumeration::UnitState);
+        void idleState();
+        void moveState();
+        void attackMoveState();
+        void attackState();
+        void chaseState();
         
+        bool refreshTarget();
     private:
+        Enumeration::UnitState state;
     //Unit stats
         int moveSpeed;
         int attackSpeed;

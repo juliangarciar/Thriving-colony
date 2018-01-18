@@ -5,6 +5,8 @@
 
 //ToDo: cambiar llamada a entity
 Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Team teamData, Enumeration::UnitType typeData, Enumeration::RaceType raceData) : Entity(layer, id, 100) {
+    
+    this -> viewRadius = 700;
     //Actions of the units
     this->moving = false;
     this->attacking = false;
@@ -27,7 +29,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
     this->unitRace = raceData;
     this->unitType = typeData;
     // Target-scanning timers
-    this -> lookForTargetTimer = 5;
+    this -> lookForTargetTimer = 0.5;
     this -> lookForTargetCountdown = lookForTargetTimer;
     this -> attackCountdown = 0;
     switch (unitType)
@@ -44,9 +46,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         if(unitRace == Enumeration::RaceType::Drorania){
             this->moveSpeed = 420;
             this->attackDamage = 15;
-            this->attackRange = 140;
+            this->attackRange = 100;
             this->attackSpeed = 1;
-            this->viewRange = 600;
+            this->viewRange = 450;
             this->hpMax = 80;
             this->hp = 80;
             attackEvent = "event:/UnitAttack/Drorania_melee_S";
@@ -58,9 +60,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         else if(unitRace == Enumeration::RaceType::Kaonov){
             this->moveSpeed = 420;
             this->attackDamage = 15;
-            this->attackRange = 140;
+            this->attackRange = 100;
             this->attackSpeed = 1;
-            this->viewRange = 600;
+            this->viewRange = 450;
             this->hpMax = 80;
             this->hp = 80;
             attackEvent = "event:/UnitAttack/Kaonov_melee_S";
@@ -77,7 +79,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->attackDamage = 21;
             this->attackRange = 140;
             this->attackSpeed = 1;
-            this->viewRange = 600;
+            this->viewRange = 450;
             this->hpMax = 140;
             this->hp = 140;
             attackEvent = "event:/UnitAttack/Drorania_melee_A";
@@ -92,7 +94,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->attackDamage = 21;
             this->attackRange = 140;
             this->attackSpeed = 1;
-            this->viewRange = 600;
+            this->viewRange = 450;
             this->hpMax = 140;
             this->hp = 140;
             attackEvent = "event:/UnitAttack/Kaonov_melee_A";
@@ -109,7 +111,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->attackDamage = 27;
             this->attackRange = 140;
             this->attackSpeed = 1;
-            this->viewRange = 600;
+            this->viewRange = 450;
             this->hpMax = 180;
             this->hp = 180;
             //TO CHANGE
@@ -124,7 +126,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->attackDamage = 27;
             this->attackRange = 140;
             this->attackSpeed = 1;
-            this->viewRange = 600;
+            this->viewRange = 450;
             this->hpMax = 180;
             this->hp = 180;
             //TO CHANGE
@@ -146,9 +148,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         if(unitRace == Enumeration::RaceType::Drorania){
             this->moveSpeed = 350;
             this->attackDamage = 13;
-            this->attackRange = 600;
+            this->attackRange = 350;
             this->attackSpeed = 1;
-            this->viewRange = 600;
+            this->viewRange = 450;
             this->hpMax = 60;
             this->hp = 60;
             attackEvent = "event:/UnitAttack/Drorania_ranged_S";
@@ -160,9 +162,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         else if(unitRace == Enumeration::RaceType::Kaonov){
             this->moveSpeed = 350;
             this->attackDamage = 13;
-            this->attackRange = 600;
+            this->attackRange = 350;
             this->attackSpeed = 1;
-            this->viewRange = 600;
+            this->viewRange = 450;
             this->hpMax = 60;
             this->hp = 60;
             attackEvent = "event:/UnitAttack/Kaonov_ranged_S";
@@ -179,7 +181,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->attackDamage = 18;
             this->attackRange = 700;
             this->attackSpeed = 1;
-            this->viewRange = 600;
+            this->viewRange = 450;
             this->hpMax = 110;
             this->hp = 110;
             attackEvent = "event:/UnitAttack/Drorania_ranged_A";
@@ -193,7 +195,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->attackDamage = 18;
             this->attackRange = 700;
             this->attackSpeed = 1;
-            this->viewRange = 600;
+            this->viewRange = 450;
             this->hpMax = 110;
             this->hp = 110;
             attackEvent = "event:/UnitAttack/Kaonov_ranged_A";
@@ -210,7 +212,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->attackDamage = 27;
             this->attackRange = 900;
             this->attackSpeed = 1;
-            this->viewRange = 600;
+            this->viewRange = 450;
             this->hpMax = 180;
             this->hp = 180;
             //CHANGE
@@ -225,7 +227,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->attackDamage = 27;
             this->attackRange = 900;
             this->attackSpeed = 1;
-            this->viewRange = 600;
+            this->viewRange = 450;
             this->hpMax = 180;
             this->hp = 180;
             //CHANGE
@@ -243,7 +245,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->attackDamage = 41;
             this->attackRange = 120;
             this->attackSpeed = 1;
-            this->viewRange = 600;
+            this->viewRange = 450;
             this->hpMax = 220;
             this->hp = 220;
             //CHANGE
@@ -258,7 +260,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             this->attackDamage = 41;
             this->attackRange = 120;
             this->attackSpeed = 1;
-            this->viewRange = 600;
+            this->viewRange = 450;
             this->hpMax = 220;
             this->hp = 220;
             //CHANGE
@@ -270,6 +272,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         }
         break;
     }
+
     //Graphic engine, this should be in the switch (when models done)
     //this->modelLayer = new SceneNode();
     Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(125, 125, 0, 125));
@@ -294,12 +297,7 @@ Unit::~Unit() {
     delete vectorMov;
 }
 
-void Unit::attack() {
-    if (target != NULL) {
-        setAttacking(true);
-        target -> takeDamage(attackDamage);
-    }
-}
+
 
 Entity* Unit::getTarget() {
     return target;
@@ -315,9 +313,12 @@ void Unit::setAttacking(bool attackingPnt) {
 
 void Unit::moveTroop() {
     if (moving) {
+        // close to destination, stop
         if (std::abs(vectorDes -> x - position -> x) < 5.0 && std::abs(vectorDes -> z - position->z) < 5.0) {
             moving = false;
+            switchState(Enumeration::Idle);
         } else {
+            // far from destination, move
             Vector3<float> newPos = *vectorPos + *vectorMov;
             newPos.y = Game::Instance()->getGameState()->getMap()->getY(newPos.x, newPos.z);
             this->setTroopPosition(newPos);
@@ -325,41 +326,33 @@ void Unit::moveTroop() {
     }
 }
 
+
 void Unit::updateTroop() {
-    moveTroop();
-    float dt = Game::Instance() -> getWindow() -> getDeltaTime();
-    
+    changeRedTint();
+    attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
     if (retracted == false) {
-        // NO tengo objetivo, busco uno
-        if (target == NULL) {
-            // Look for a new target every 5 seconds (subject to change)
-            if (lookForTargetCountdown <= 0) {
-                Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
-                lookForTargetCountdown = lookForTargetTimer;
-            } else {
-                lookForTargetCountdown -= dt;
-            }
-            // tengo objetivo
-        } else {
-            // If the target is alive, this should probably be changed later on, but it is needed for now
-            if (target -> getHP() > 0) {
-                //The target is withing reach
-                if (inRangeOfAttack()) {
-                    if (attackCountdown <= 0) {
-                        attack();
-                        attackCountdown = attackSpeed;
-                    } else {
-                        attackCountdown -= dt;
-                    }
-                } else {
-                    // Start moving towards them
-                    //chaseTarget();
-                    setTroopDestination(Vector3<float>(target -> getPosition() -> x, target -> getPosition() -> y, target -> getPosition() -> z));
-                }
-            } else {
-                target = NULL;
-                setAttacking(false);
-            }
+        //State machine, color changes according to state
+        switch (state) {
+            case Enumeration::UnitState::Idle:
+                Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(255, 0, 255, 255));
+                idleState();
+                break;
+            case Enumeration::UnitState::Move:
+            Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(255, 255, 0, 255));
+                moveState();
+                break;
+            case Enumeration::UnitState::AttackMove:
+            Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(255, 255, 255, 0));
+                attackMoveState();
+                break;
+            case Enumeration::UnitState::Attack:
+            Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(255, 0, 0, 0));
+                attackState();
+                break;    
+            case Enumeration::UnitState::Chase:
+            Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(255, 255, 255, 255));
+                chaseState();
+                break;
         }
     }
 }
@@ -370,8 +363,9 @@ void Unit::setTroopPosition(Vector3<float> vectorData) {
 }
 
 void Unit::setTroopDestination(Vector3<float> vectorData) {
-    setAttacking(false);
-    target = NULL;
+    if (state == Enumeration::UnitState::Move) {
+        target = NULL;
+    }
 
     vectorDes -> set(vectorData);
 
@@ -383,17 +377,13 @@ void Unit::setTroopDestination(Vector3<float> vectorData) {
     vectorMov->z = (desp.z / distance) * moveSpeed * Game::Instance()->getWindow()->getDeltaTime();
 
     moving = true;
+    
 }
 
 
 Model* Unit::getModel() {
     return this->model;
 }
-/*
-void Unit::updateTarget(Entity *newTarget) {
-    // target can be null, meaning that he cant attack anything
-    target = newTarget;
-}*/
 
 string Unit::getAttackEvent(){
     return attackEvent;
@@ -411,11 +401,13 @@ void Unit::taxPlayer(Enumeration::Team teamData) {
 
 bool Unit::inRangeOfAttack() {
     bool inRange = false;
+    if (target != NULL) {
     float xaux = target -> getPosition() -> x - position -> x;
     float yaux = target -> getPosition() -> y - position -> y;
     float dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
-    if (dist <= attackRange) {
-        inRange = true;
+        if (dist <= attackRange) {
+            inRange = true;
+        }
     }
     return inRange;
 }
@@ -434,4 +426,95 @@ Vector3<float>* Unit::getDestination() {
 
 void Unit::setRetracted(bool data) {
     retracted = data;
+}
+
+bool Unit::refreshTarget() {
+    bool targetUpdated = false;
+
+    // Ask for a new target
+    if (lookForTargetCountdown <= 0) {
+        Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
+        lookForTargetCountdown = lookForTargetTimer;
+    } else {
+        lookForTargetCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
+    }
+    
+    // return wether or not it got updated
+    if (target != NULL) {
+        targetUpdated = true;
+    } else {
+        targetUpdated = false;
+    }   
+    return targetUpdated;
+}
+void Unit::switchState(Enumeration::UnitState newState) {
+    lookForTargetCountdown = lookForTargetTimer;
+    state = newState;
+}
+
+void Unit::idleState() {
+    if (refreshTarget()) { // i got one
+        switchState(Enumeration::UnitState::Chase);
+    }
+}
+
+void Unit::moveState() {
+    moveTroop();
+}
+
+void Unit::attackMoveState() {
+    // Scan for targets
+    if (refreshTarget()) { // i got one
+        switchState(Enumeration::UnitState::Chase);
+    } else {
+        switchState(Enumeration::UnitState::AttackMove);
+        moveTroop();  
+    }
+}
+
+void Unit::attackState() {
+    if(inRangeOfAttack()) {
+        attack();
+    } else {
+        switchState(Enumeration::UnitState::Chase);
+    }
+}
+
+void Unit::attack() {
+    if (target != NULL) {
+        setAttacking(true);
+        if (attackCountdown <= 0) {
+            target -> takeDamage(attackDamage);
+            attackCountdown = attackSpeed;
+        }
+    }
+}
+
+
+/// Chasing the target
+
+void Unit::chaseState() {
+    //If I have a target, then chase it
+    if (target != NULL) {
+        Vector3<float> tpos = Vector3<float>(0,0,0);
+        tpos.x = target ->getPosition() -> x;
+        tpos.y = target ->getPosition() -> y;
+        tpos.z = target ->getPosition() -> z;
+        this ->setTroopDestination(tpos);
+        chaseTarget();    
+    }
+}
+
+void Unit::chaseTarget() {
+    if (moving) {
+        // If i can attack, then do so
+        if (inRangeOfAttack()) {
+            moving = false;
+            switchState(Enumeration::UnitState::Attack);
+        } else { //If i am too far away to attack, then move closer.
+            Vector3<float> newPos = *vectorPos + *vectorMov;
+            newPos.y = Game::Instance()->getGameState()->getMap()->getY(newPos.x, newPos.z);
+            this->setTroopPosition(newPos);
+        }
+    }
 }

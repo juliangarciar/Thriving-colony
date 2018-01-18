@@ -120,9 +120,13 @@ void UnitManager::deployTroop(Terrain *terrain){
         this->inMapTroops->insert(std::pair<int, Unit*>(temp->getModel()->getID(), temp));
 
         temp->setTroopPosition(Vector3<float>(HUMAN_CITY_HALL_X, terrain->getY(HUMAN_CITY_HALL_X, HUMAN_CITY_HALL_Z), HUMAN_CITY_HALL_Z)); //ToDo
+        
+        temp -> switchState(Enumeration::UnitState::AttackMove);
+
         temp->setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
         temp->getModel()->setActive(true);
         temp->setRetracted(false);
+        
         
         g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NORMAL); //ToDo: fachada
 
@@ -137,7 +141,12 @@ void UnitManager::deployAllTroops(Vector3<float> vectorData) {
         Unit *u = inHallTroops -> at(i);
         this -> inHallTroops -> erase(inHallTroops -> begin() + i);
         this -> inMapTroops -> insert(std::pair<int, Unit*>(u -> getModel() -> getID(), u));
+
+
         u -> setTroopPosition(vectorData);
+
+        u -> switchState(Enumeration::UnitState::AttackMove);
+
         u -> setTroopDestination(vectorData);
         u -> getModel() -> setActive(true);
         u -> setRetracted(false);
@@ -178,9 +187,20 @@ void UnitManager::unSelectTroop(){
 void UnitManager::moveOrder(Terrain *terrain){
     Game *g = Game::Instance();
     if (this->selectedTroop != NULL){
-        this->selectedTroop->setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
+        //this->selectedTroop->setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
+        if (Game::Instance() -> getIO() -> keyDown('A')) {
+            this->selectedTroop->switchState(Enumeration::UnitState::AttackMove);
+
+            this->selectedTroop->setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
+        } else {
+            this->selectedTroop->switchState(Enumeration::UnitState::Move);
+
+            this->selectedTroop->setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
+        }
         //MOVEMENT VOICE
         SoundSystem::Instance()->playVoiceEvent(selectedTroop->getMoveEvent());
+        //this->selectedTroop->setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
+        //Game::Instance()->getSoundSystem()->playVoice(this->selectedTroop->getMoveEvent());
     }
 }
 

@@ -166,6 +166,14 @@ class Enumeration {
             PauseState
         };
 
+        enum UnitState {
+            Idle,
+            Move,
+            AttackMove,
+            Attack,
+            Chase
+        };
+
     private:
         
 };

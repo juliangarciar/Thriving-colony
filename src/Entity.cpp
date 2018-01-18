@@ -1,5 +1,7 @@
 #include "Entity.h"
 
+#include "Game.h"
+
 //ToDo: temp
 Entity::Entity(SceneNode *layer, int id, int size) {
     this->ID = id;
@@ -8,6 +10,8 @@ Entity::Entity(SceneNode *layer, int id, int size) {
     model = new Model(layer, id, size);
     hitbox = new Box3D<float>();
     position = new Vector3<float>();
+
+    this -> tookDamageTimer = 0.1;
 }
 
 Entity::Entity(SceneNode *layer, int id, const wchar_t *path) {
@@ -37,6 +41,9 @@ int Entity::getHP() {
 void Entity::takeDamage(int dmg) {
     //std::cout << "I take " << dmg << " damage. I still have " << hp << " health." << std::endl;
     hp = hp-dmg;
+    // Tint the model red
+    tookDamageCountdown = tookDamageTimer;
+    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(255, 125, 125, 0));
     if (hp <= 0) {
         hp = 0;
         die();
@@ -53,6 +60,14 @@ void Entity::die() {
     
     this -> setPosition(Vector3<float>(0, 0, 0));
     //delete this; 
+}
+
+void Entity::changeRedTint() {
+    if (!finished && tookDamageCountdown <= 0) {
+        Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), baseColor);
+    } else {
+        tookDamageCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
+    }
 }
 
 void Entity::setPosition(Vector3<float> vectorData){
@@ -84,4 +99,8 @@ void Entity::updateTarget(Entity *newTarget) {
 
 int Entity::getAttackRange() {
     return attackRange;
+}
+
+int Entity::getViewRadius() {
+    return viewRadius;
 }

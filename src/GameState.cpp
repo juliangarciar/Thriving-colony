@@ -57,9 +57,9 @@ void GameState::init(){
     v.z = HUMAN_CITY_HALL_Z; 
     v.y = map -> getY(v.x, v.z);
     Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::Human);
-
+    
     //Build the first siderurgy of Human
-    v.z = HUMAN_CITY_HALL_Z+100;
+    v.z = HUMAN_CITY_HALL_Z + 200;
     v.y = map -> getY(v.x, v.z);
     Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::Human);
     //SoundSystem init
@@ -175,7 +175,7 @@ void GameState::update(){
         Human::getInstance() -> getBuildingManager() -> drawBuilding(map);
         Human::getInstance() -> getUnitManager() -> deployTroop(map);
 
-        Human::getInstance() -> getUnitManager() -> updateUnitManager();
+        //Human::getInstance() -> getUnitManager() -> updateUnitManager();
 
         Human::getInstance() -> update();
         IA::getInstance() -> update();
