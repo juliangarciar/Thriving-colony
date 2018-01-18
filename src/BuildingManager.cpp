@@ -46,25 +46,7 @@ void BuildingManager::setBuildingMode(Enumeration::BuildingType type){
 	if (checkCanPay(type)) {
 		if (!buildingMode){
 			buildingMode = true;
-			if(type == Enumeration::BuildingType::Tower){
-				tempBuilding = new Tower(0, buildingLayer, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
-			} else if (type == Enumeration::BuildingType::House){
-				tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/vivienda.obj", type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
-				tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
-			} else if (type == Enumeration::BuildingType::Barrack){
-				tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/barraca.obj", type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
-				tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
-			} else if (type == Enumeration::BuildingType::Siderurgy){
-				tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/siderurgia.obj", type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
-				tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
-			} else if (type == Enumeration::BuildingType::School){
-				tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/escuela.obj", type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
-				tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
-			} else if (type == Enumeration::BuildingType::Market){
-				tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/mercado.obj", type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
-				tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
-			} else
-				tempBuilding = new Building(0, buildingLayer, type, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+			setTempBuildingModel(Vector3<float>(0, 0, 0),type, Enumeration::Team::Human);
 		}
 	}
 }
@@ -138,6 +120,18 @@ void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingTyp
 	} else {
 		if (tempBuilding == NULL){
 			tempBuilding = new Building(id, buildingLayer, _type, pos, _team);
+			//Poner modelo
+			setTempBuildingModel(pos,_type,_team);
+			//Poner en el grid
+			Vector3<float> f = Box3D<float>(tempBuilding->getModel()->getModel()->getTransformedBoundingBox()).getSize();
+			
+			std::cout << f.x << "-" << f.y << "-" << f.z << std::endl;
+			float x = roundf(pos.x / gridAlignment) * gridAlignment;
+			float y = (roundf(pos.y / gridAlignment) * gridAlignment) + (f.y/2);
+			float z = roundf(pos.z / gridAlignment) * gridAlignment;
+
+			tempBuilding -> setPosition (Vector3<float>(x, y, z));
+			//
 		}
 		tempBuilding->getModel()->setID(id);
 
@@ -150,6 +144,28 @@ void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingTyp
 		tempBuilding = NULL;
 	}
 	
+}
+
+void BuildingManager::setTempBuildingModel(Vector3<float> pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
+	if(_type == Enumeration::BuildingType::Tower){
+		tempBuilding = new Tower(0, buildingLayer, Vector3<float>(0, 0, 0), Enumeration::Team::Human);
+	} else if (_type == Enumeration::BuildingType::House){
+		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/vivienda.obj", _type, pos, _team);
+		tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
+	} else if (_type == Enumeration::BuildingType::Barrack){
+		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/barraca.obj", _type, pos, _team);
+		tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
+	} else if (_type == Enumeration::BuildingType::Siderurgy){
+		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/siderurgia.obj", _type, pos, _team);
+		tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
+	} else if (_type == Enumeration::BuildingType::School){
+		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/escuela.obj", _type, pos, _team);
+		tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
+	} else if (_type == Enumeration::BuildingType::Market){
+		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/mercado.obj", _type, pos, _team);
+		tempBuilding->getModel()->getModel()->setScale(core::vector3df(25,25,25)); //ToDo: fachada
+	} else
+		tempBuilding = new Building(0, buildingLayer, _type, pos, _team);
 }
 
 std::map<int, Building*>* BuildingManager::getBuildings() {

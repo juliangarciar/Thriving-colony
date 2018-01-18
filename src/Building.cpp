@@ -11,8 +11,8 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
     this->metalCost = 0;
     this->crystalCost = 0;
 
-    this->buildTimer = 0;
-    this->buildCountdown = 0;
+    buildTimer = 0;
+    buildCountdown = 0;
 
     this->type = (int)buildingType;
     this->team = teamData;
@@ -301,8 +301,7 @@ void Building::Init(){
         this->currentColor = video::SColor(255, r, g, b);
         this -> finished = true;
     } else {
-        
-        this -> buildCountdown = this -> buildTimer;
+        buildCountdown = buildTimer;
         this->currentColor = video::SColor(255, 0, 0, 0);
         this -> finished = false;
     }

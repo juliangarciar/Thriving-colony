@@ -33,7 +33,8 @@ class BuildingManager {
 		void updateBuildingManager();
 		bool checkFinished(int);
 
-		
+		void setTempBuildingModel(Vector3<float>, Enumeration::BuildingType, Enumeration::Team);
+		void buildInitialBuilding();
 		
 		SceneNode* getBuildingLayer();
 	private:
