@@ -50,7 +50,6 @@ void GameState::init(){
 
 void GameState::input(){
     hud -> getHUDEvents();
-
     hud -> update();
 
     camera -> Move(Game::Instance() -> getIO(), Game::Instance() -> getCursor());

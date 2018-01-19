@@ -1,5 +1,4 @@
 #include "Window.h"
-
 using namespace irr;
 
 Window* Window::pinstance = 0;
@@ -60,10 +59,9 @@ void Window::beginScene(){
 }
 
 void Window::endScene(){
-    scene->drawAll();
-    gui->drawAll();
-
-    driver->endScene();
+    scene -> drawAll();
+    gui -> drawAll();
+    driver -> endScene();
 }
 
 bool Window::isOpen(){
