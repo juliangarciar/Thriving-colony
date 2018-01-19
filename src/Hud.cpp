@@ -41,6 +41,8 @@ Hud::Hud() {
     // Solo de debug
     iaResourceText = new Text(Rect2D<int>(100, 0, 100, 91).getFixed(), L"Hola mundo", true);
 
+    hallTroopList = new ListBox(Rect2D<int>(10, 40, 350, 150).getFixed());
+
     warningText = new Text(Rect2D<int>(200, 100, 100, 10).getFixed(), L"Edificio construido", true);
     //warningText -> disable();
     deleteWarning();
@@ -99,7 +101,6 @@ void Hud::addTab(int id, int type){
 
             hallTroopText = new Text(Rect2D<int>(20, 10, 100, 15).getFixed(), L"Tropas en el ayuntamiento");
             t->addChild(hallTroopText);
-            hallTroopList = new ListBox(Rect2D<int>(10, 40, 350, 150).getFixed());
             t->addChild(hallTroopList);
         }
         break;

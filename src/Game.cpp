@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "Human.h"
+#include "IA.h"
 
 Game* Game::pinstance = 0;
 
@@ -12,6 +14,7 @@ Game* Game::Instance() {
 Game::Game() {
     menu = new MenuState();
     state = menu;
+    stateData = Enumeration::State::MenuState;
 
     window = Window::Instance();
 
@@ -35,6 +38,23 @@ Game::~Game() {
 }
 
 void Game::init() {
+    //Initialize the event system
+    //IA Events
+    events -> addEvent(Enumeration::EventType::DeployTroopsIA, IA::deployTroops);
+    events -> addEvent(Enumeration::EventType::RetractTroopsIA, IA::retractTroops);
+    events -> addEvent(Enumeration::EventType::OpenDoorsIA, IA::openDoors);
+    events -> addEvent(Enumeration::EventType::CloseDoorsIA, IA::closeDoors);
+
+    //Human events
+    events -> addEvent(Enumeration::EventType::DeployTroopsHuman, Human::deployTroops);
+    events -> addEvent(Enumeration::EventType::RetractTroopsHuman, Human::retractTroops);
+    events -> addEvent(Enumeration::EventType::OpenDoorsHuman, Human::openDoors);
+    events -> addEvent(Enumeration::EventType::CloseDoorsHuman, Human::closeDoors);
+
+    //Hud events
+    events -> addEvent(Enumeration::EventType::EnableText, Hud::drawWarning);
+    events -> addEvent(Enumeration::EventType::DisableText, Hud::deleteWarning);
+
     state -> init();
 }
 
@@ -70,9 +90,8 @@ void Game::changeState(Enumeration::State data) {
         break;
 
         case Enumeration::State::GameState :
-            if (menu != 0){
+            if (stateData == Enumeration::State::MenuState) {
                 delete menu;
-                menu = 0;
                 game = new GameState();
                 state = game;
                 state -> init();
@@ -88,6 +107,7 @@ void Game::changeState(Enumeration::State data) {
             state -> init();
         break;
     }
+    stateData = data;
 }
 
 Window *Game::getWindow(){

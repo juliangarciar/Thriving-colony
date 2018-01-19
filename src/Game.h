@@ -39,6 +39,7 @@ class Game {
         static Game* pinstance;
         State *state;
         Window *window;
+        Enumeration::State stateData;
 
         MenuState *menu;
         GameState *game;
