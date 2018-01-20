@@ -11,6 +11,8 @@ TowerNode::~TowerNode(){
 }
 
 void TowerNode::question() {
+
+    IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::BuildTower);
     //std::cout << "Construyo un torre" << std::endl;
     if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::TowerMetalCost, Enumeration::BuildingCost::TowerCrystalCost, Enumeration::Team::IA)) {
         Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();

@@ -163,6 +163,32 @@ class Enumeration {
             Chase
         };
 
+        enum IAChoices {
+            ClosingDoors,
+            DeployingTroops,
+            TrainMeleeFootman,
+            BuildBarrack,
+            Attacking,
+            RetractingTroops,
+            BuildSchool,
+            BuildMarket,
+            BuildHospital,
+            BuildSiderurgy,
+            BuildQuarry,
+            BuildHome,
+            TrainMountedMelee,
+            TrainCreature,
+            TrainRangedFootman,
+            TrainMountedRanged,
+            TrainCatapult,
+            TrainRam,
+            BuildBarn,
+            BuildWorkshop,
+            BuildTower,
+            BuildWall
+
+        };
+
         //Special type, used to pass info to the UnitManager
         //in order to control which unit is created
         //struct UnitType{

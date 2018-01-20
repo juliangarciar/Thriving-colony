@@ -14,6 +14,8 @@ MeleeFootmenNode::~MeleeFootmenNode(){
 }
 
 void MeleeFootmenNode::question() {
+
+    IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::TrainMeleeFootman);
     if (IA::getInstance() -> getBarrackBuilt()) {
         //std::cout << "Genero un soldado a pie melee" << std::endl;
         //Esto va en el constructor

@@ -13,6 +13,8 @@ CreatureNode::~CreatureNode(){
 }
 
 void CreatureNode::question() {
+
+    IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::TrainCreature);
     if (IA::getInstance() -> getBarnBuilt()) {
         //std::cout << "Genero una criatura" << std::endl;
         if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::CreatureMetalCost, Enumeration::UnitCost::CreatureCrystalCost, Enumeration::Team::IA)) {

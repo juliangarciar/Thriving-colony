@@ -14,6 +14,8 @@ RangeFootmenNode::~RangeFootmenNode(){
 }
 
 void RangeFootmenNode::question() {
+
+    IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::TrainRangedFootman);
     if (IA::getInstance() -> getBarrackBuilt()) {
         //std::cout << "Genero un soldado a pie de rango" << std::endl;
         if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::RangedFootmenMetalCost, Enumeration::UnitCost::RangedFootmenCrystalCost, Enumeration::Team::IA)) {

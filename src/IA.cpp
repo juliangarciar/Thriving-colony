@@ -8,6 +8,10 @@ IA::IA() : Player() {
 
     buildings = new BuildingManager();
     units = new UnitManager(Enumeration::Team::IA, Enumeration::RaceType::Kaonov);
+
+    choiceIndex = 0;
+    initializeChoices();
+    
 }
 
 IA::~IA() {
@@ -191,4 +195,42 @@ bool IA::getDeployedTroops() {
 
 bool IA::getClosedDoors() {
     return closedDoors;
+}
+
+const char * IA::getNextChoice() {
+    return choices[choiceIndex];
+}
+
+void IA::setChoiceIndex(int newIndex) {
+    choiceIndex = newIndex;
+}
+
+// Down here so it doesn't clutter the constructor
+void IA::initializeChoices() {
+    // Commented choices are repeated through
+    choices[Enumeration::IAChoices::ClosingDoors] = "Closing doors";
+    choices[Enumeration::IAChoices::DeployingTroops] = "Deploying troops";
+    choices[Enumeration::IAChoices::TrainMeleeFootman] = "Train melee footman";
+    choices[Enumeration::IAChoices::BuildBarrack] = "Build barrack";
+    choices[Enumeration::IAChoices::Attacking] = "Attacking";
+    choices[Enumeration::IAChoices::RetractingTroops] = "Retracting troops";
+    choices[Enumeration::IAChoices::BuildSchool] = "Build school";
+    choices[Enumeration::IAChoices::BuildMarket] = "Build market";
+    choices[Enumeration::IAChoices::BuildHospital] = "Build hospital";
+    choices[Enumeration::IAChoices::BuildSiderurgy] = "Build siderurgy";
+    choices[Enumeration::IAChoices::BuildQuarry] = "Build quarry";
+    choices[Enumeration::IAChoices::BuildHome] = "Build home";
+    //choices[0] = "Melee footman";
+    choices[Enumeration::IAChoices::TrainMountedMelee] = "Train mounted melee";
+    choices[Enumeration::IAChoices::TrainCreature] = "Train creature";
+    choices[Enumeration::IAChoices::TrainRangedFootman] = "Train ranged footman";
+    choices[Enumeration::IAChoices::TrainMountedRanged] = "Train mounted ranged";
+    choices[Enumeration::IAChoices::TrainCatapult] = "Train catapult";
+    choices[Enumeration::IAChoices::TrainRam] = "Train ram";
+    //choices[0] = "Barrack";
+    choices[Enumeration::IAChoices::BuildBarn] = "Build barn";
+    choices[Enumeration::IAChoices::BuildWorkshop] = "Build workshop";
+    choices[Enumeration::IAChoices::BuildTower] = "Build tower";
+    choices[Enumeration::IAChoices::BuildWall] = "Build wall";
+    //choices[0] = "Home"
 }

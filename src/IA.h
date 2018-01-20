@@ -26,12 +26,21 @@ class IA : public Player {
         bool getDeployedTroops();
         bool getClosedDoors();
 
+        void setChoiceIndex(int);
+        const char * getNextChoice();
+        void initializeChoices();
+
     private:
         static IA* instance;
         static bool deployedTroops;
         static bool closedDoors;
         BehaviourTree* tree;
         RootNode *nodeRootIA;
+
+
+        int choiceIndex;
+
+        const char * choices[];
 
 };
 
