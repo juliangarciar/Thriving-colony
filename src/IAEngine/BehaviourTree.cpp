@@ -40,7 +40,7 @@ BehaviourTree::~BehaviourTree() {
 bool BehaviourTree::needResourcesInvestment() {
     ///TODO: Se queda en el cristal siempre
     shortOnMetal = calculateMetalProductionRate() < metalThreshold;
-    shortOnCrystal = (IA::getInstance() -> getCityLevel() >= quarryMilestone) && (calculateCrystalProductionRate() < crystalThreshold);
+    shortOnCrystal = requireCrystal || ((IA::getInstance() -> getCityLevel() >= quarryMilestone) && (calculateCrystalProductionRate() < crystalThreshold));
     return (shortOnMetal || shortOnCrystal);
 }
 
@@ -255,7 +255,13 @@ void BehaviourTree::setRequireWorkshop(bool requirementStatus) {
     requireWorkshop = requirementStatus;
 }
 
+void BehaviourTree::setRequireCrystal(bool requirementStatus) {
+    requireCrystal = requirementStatus;
+}
 
+bool BehaviourTree::getRequireCrystal() {
+    return requireCrystal;
+}
 /**
  * DEBUG
  */

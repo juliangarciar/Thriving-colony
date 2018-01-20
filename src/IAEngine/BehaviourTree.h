@@ -67,6 +67,8 @@ class BehaviourTree {
         void setRequireBarn(bool);
         void setRequireWorkshop(bool);
 
+        void setRequireCrystal(bool);
+        bool getRequireCrystal();
 
     protected:
 
@@ -106,6 +108,8 @@ class BehaviourTree {
         bool requireBarrack;
         bool requireBarn;
         bool requireWorkshop;
+
+        bool requireCrystal;
 
     private:
 };
