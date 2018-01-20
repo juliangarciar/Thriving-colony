@@ -27,7 +27,7 @@ class IA : public Player {
         bool getClosedDoors();
 
         void setChoiceIndex(int);
-        const char * getNextChoice();
+        int getNextChoice();
         void initializeChoices();
 
     private:

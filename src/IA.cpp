@@ -10,7 +10,7 @@ IA::IA() : Player() {
     units = new UnitManager(Enumeration::Team::IA, Enumeration::RaceType::Kaonov);
 
     choiceIndex = 0;
-    initializeChoices();
+    //initializeChoices();
     
 }
 
@@ -197,8 +197,10 @@ bool IA::getClosedDoors() {
     return closedDoors;
 }
 
-const char * IA::getNextChoice() {
-    return choices[choiceIndex];
+int IA::getNextChoice() {
+    return choiceIndex;
+
+    //return choices[choiceIndex];
 }
 
 void IA::setChoiceIndex(int newIndex) {
