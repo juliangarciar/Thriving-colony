@@ -17,6 +17,8 @@ IA::IA() : Player() {
 IA::~IA() {
     delete tree;
     delete nodeRootIA;
+    choices -> clear();
+    delete choices;
 }
 
 IA* IA::instance = 0;
@@ -197,10 +199,8 @@ bool IA::getClosedDoors() {
     return closedDoors;
 }
 
-int IA::getNextChoice() {
-    return choiceIndex;
-
-    //return choices[choiceIndex];
+string IA::getNextChoice() {
+    return choices -> at(choiceIndex);
 }
 
 void IA::setChoiceIndex(int newIndex) {
@@ -209,6 +209,42 @@ void IA::setChoiceIndex(int newIndex) {
 
 // Down here so it doesn't clutter the constructor
 void IA::initializeChoices() {
+    //IMPORTANTE::::::::
+    // TIENE QUE ESTAR EN EL ORDEN DE LA ENUMERACION
+    // IAChoices QUE HAY EN enumeration.h, SI NO NO IRA BIEN
+    // Y NOS LIAREMOS. SI SE PUEDE PASAR ALGUN DIA A ARRAY
+    // ENTONCES SE PUEDE QUEDAR CONTROLAR QUE INDICE TIENE QUE STRING
+    // Y TODO ES MAS MANEJABLE. PERO POR AHORA NO HACE MAS QUE DAR ERRORES
+    // ASI QUE LO HE DEJADO COMO VECTOR Y AU
+    choices = new std::vector<string>();
+    choices -> push_back("Closing Doors");
+    choices -> push_back("Deploying troops");
+    choices -> push_back("Train melee footman");
+    choices -> push_back("Build barrack");
+    choices -> push_back("Attacking");
+    choices -> push_back("Retracting troops");
+    choices -> push_back("Build school");
+    choices -> push_back("Build market");
+    choices -> push_back("Build hospital");
+    choices -> push_back("Build siderurgy");
+    choices -> push_back("Build quarry");
+    choices -> push_back("Build home");
+    //choices -> push_back("Melee footman");
+    choices -> push_back("Train mounted melee");
+    choices -> push_back("Train creature");
+    choices -> push_back("Train ranged footman");
+    choices -> push_back("Train mounted ranged");
+    choices -> push_back("Train catapult");
+    choices -> push_back("Train ram");
+    //choices -> push_back("Barrack");
+    choices -> push_back("Build barn");
+    choices -> push_back("Build workshop");
+    choices -> push_back("Build tower");
+    choices -> push_back("Build wall");
+    
+    //ARRAY FORM
+    // SI ALGUN DIA SE PONE ASI SERIA FANTISTOCOSO
+    /*
     // Commented choices are repeated through
     choices[Enumeration::IAChoices::ClosingDoors] = "Closing doors";
     choices[Enumeration::IAChoices::DeployingTroops] = "Deploying troops";
@@ -235,4 +271,5 @@ void IA::initializeChoices() {
     choices[Enumeration::IAChoices::BuildTower] = "Build tower";
     choices[Enumeration::IAChoices::BuildWall] = "Build wall";
     //choices[0] = "Home"
+    */
 }

@@ -37,9 +37,9 @@ Hud::Hud() {
     //this->addTab(0, Enumeration::BuildingType::MainBuilding);
     
     updateTimer = 0.5;
-    resourceText = new Text(Rect2D<int>(0, 0, 100, 91).getFixed(), L"Hola mundo", true);
+    resourceText = new Text(Rect2D<int>(0, 0, 100, 101).getFixed(), L"Hola mundo", true);
     // Solo de debug
-    iaResourceText = new Text(Rect2D<int>(100, 0, 100, 101).getFixed(), L"Hola mundo", true);
+    iaResourceText = new Text(Rect2D<int>(100, 0, 100, 111).getFixed(), L"Hola mundo", true);
 
     warningText = new Text(Rect2D<int>(200, 100, 100, 10).getFixed(), L"Edificio construido", true);
     //warningText -> disable();
@@ -295,10 +295,15 @@ void Hud::update() {
     if (updateTimer <= 0) {
         //ToDo: añadir los metodos de getmetalamount y getcrystalamount
         std::wstringstream os;
-        os << L"Player resources:\n" << "Metal: " << std::to_wstring(Human::getInstance() -> getMetalAmount()) << "\nCrystal: " << std::to_wstring(Human::getInstance() -> getCrystalAmount()) << "\nCitizens: " << std::to_wstring(Human::getInstance() -> getCitizens()) << "\nHappiness: " << std::to_wstring(Human::getInstance() -> getHappiness()) << "\nArmy size: " << std::to_wstring(Human::getInstance() -> getArmySize()) << "\n - Melees: " << std::to_wstring(Human::getInstance() -> getMeleeAmount()) << "\n - Ranged: " << std::to_wstring(Human::getInstance() -> getRangeAmount()) << "\n - Siege: " << std::to_wstring(Human::getInstance() -> getSiegeAmount());
+        os << L"Player resources:\n" << "Metal: " << std::to_wstring(Human::getInstance() -> getMetalAmount()) << "\nCrystal: " << std::to_wstring(Human::getInstance() -> getCrystalAmount()) << "\nCitizens: " << std::to_wstring(Human::getInstance() -> getCitizens()) << "\nHappiness: " << std::to_wstring(Human::getInstance() -> getHappiness()) << "\nCity level: "<< std::to_wstring(Human::getInstance() -> getCityLevel()) <<"\nArmy size: " << std::to_wstring(Human::getInstance() -> getArmySize()) << "\n - Melees: " << std::to_wstring(Human::getInstance() -> getMeleeAmount()) << "\n - Ranged: " << std::to_wstring(Human::getInstance() -> getRangeAmount()) << "\n - Siege: " << std::to_wstring(Human::getInstance() -> getSiegeAmount());
         resourceText -> setText(os.str().c_str());
         std::wstringstream iaos;
-        iaos << L"IA resources:\n" << "Metal: " << std::to_wstring(IA::getInstance() -> getMetalAmount()) << "\nCrystal: " << std::to_wstring(IA::getInstance() -> getCrystalAmount()) << "\nCitizens: " << std::to_wstring(IA::getInstance() -> getCitizens()) << "\nHappiness: " << std::to_wstring(IA::getInstance() -> getHappiness()) << "\nArmy size: " << std::to_wstring(IA::getInstance() -> getArmySize()) << "\n - Melees: " << std::to_wstring(IA::getInstance() -> getMeleeAmount()) << "\n - Ranged: " << std::to_wstring(IA::getInstance() -> getRangeAmount()) << "\n - Siege: " << std::to_wstring(IA::getInstance() -> getSiegeAmount()) << "\n Next choice: " << IA::getInstance() -> getNextChoice();
+
+        //std::string choiceStr = IA::getInstance() -> getNextChoice();
+        //std::wstring choiceWstr(choiceStr.length() + 1, L' ');
+        //std::copy(choiceStr.begin(), choiceStr.end(), choiceWstr.begin());
+
+        iaos << L"IA resources:\n" << "Metal: " << std::to_wstring(IA::getInstance() -> getMetalAmount()) << "\nCrystal: " << std::to_wstring(IA::getInstance() -> getCrystalAmount()) << "\nCitizens: " << std::to_wstring(IA::getInstance() -> getCitizens()) << "\nHappiness: " << std::to_wstring(IA::getInstance() -> getHappiness()) << "\nCity level: "<< std::to_wstring(IA::getInstance() -> getCityLevel()) << "\nArmy size: " << std::to_wstring(IA::getInstance() -> getArmySize()) << "\n - Melees: " << std::to_wstring(IA::getInstance() -> getMeleeAmount()) << "\n - Ranged: " << std::to_wstring(IA::getInstance() -> getRangeAmount()) << "\n - Siege: " << std::to_wstring(IA::getInstance() -> getSiegeAmount()) << "\n Next choice: " <<"" /*choiceWstr std::to_wstring(IA::getInstance() -> getNextChoice())*/;
         iaResourceText -> setText(iaos.str().c_str());
         updateTimer = 0.5;
 

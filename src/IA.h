@@ -27,7 +27,7 @@ class IA : public Player {
         bool getClosedDoors();
 
         void setChoiceIndex(int);
-        int getNextChoice();
+        string getNextChoice();
         void initializeChoices();
 
     private:
@@ -40,7 +40,7 @@ class IA : public Player {
 
         int choiceIndex;
 
-        const char * choices[];
+        std::vector<string> * choices;
 
 };
 
