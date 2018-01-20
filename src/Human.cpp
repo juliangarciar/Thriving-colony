@@ -122,7 +122,7 @@ bool Human::getDeployedTroops() {
 bool Human::getClosedDoors() {
     return closedDoors;
 }
-
+/*
 void Human::receiveMetal() {
     metalAmount = metalAmount + 200;
 }
@@ -134,3 +134,4 @@ void Human::receiveCrystal() {
 void Human::receiveCitizens() {
     citizens = citizens + 100;
 }
+*/

@@ -146,6 +146,7 @@ void GameState::Input(){
             Human::getInstance()->getUnitManager()->moveOrder(map);
         }
 
+        //Trucos humano
         if (Game::Instance()->getIO()->keyPressed(KEY_KEY_1)){
             Human::getInstance()->receiveMetal();
         }
@@ -157,6 +158,19 @@ void GameState::Input(){
         if (Game::Instance()->getIO()->keyPressed(KEY_KEY_3)){
             Human::getInstance()->receiveCitizens();
         }     
+        
+        // Trucos IA
+        if (Game::Instance()->getIO()->keyPressed(KEY_KEY_4)){
+            IA::getInstance()->receiveMetal();
+        }
+
+        if (Game::Instance()->getIO()->keyPressed(KEY_KEY_5)){
+            IA::getInstance()->receiveCrystal();
+        }
+
+        if (Game::Instance()->getIO()->keyPressed(KEY_KEY_6)){
+            IA::getInstance()->receiveCitizens();
+        }  
 }
 
 void GameState::Update(){

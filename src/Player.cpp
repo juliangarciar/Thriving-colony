@@ -257,3 +257,15 @@ int Player::getMetalAmount() {
 int Player::getCrystalAmount() {
     return crystalAmount;
 }
+
+void Player::receiveMetal() {
+    metalAmount = metalAmount + 200;
+}
+
+void Player::receiveCrystal() {
+    crystalAmount = crystalAmount + 200;
+}
+
+void Player::receiveCitizens() {
+    citizens = citizens + 100;
+}

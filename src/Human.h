@@ -20,11 +20,11 @@ class Human : public Player {
         bool getUnderAttack();
         bool getDeployedTroops();
         bool getClosedDoors();
-        
+        /*
         void receiveMetal();
         void receiveCrystal();
         void receiveCitizens();
-
+        */
     private:
         static Human* instance;
         static bool deployedTroops;

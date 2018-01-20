@@ -111,10 +111,11 @@ void BuildingManager::drawBuilding(Terrain *terrain){
 
 void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
 	if (_team == Enumeration::Team::IA){
+		setTempBuildingModel(pos, _type, _team);
 		if(_type == Enumeration::BuildingType::Tower)
-			buildings->insert(std::pair<int,Building*>(id, new Tower(id, buildingLayer, pos, _team)));
+			buildings->insert(std::pair<int,Building*>(id, tempBuilding));
 		else
-			buildings->insert(std::pair<int,Building*>(id, new Building(id, buildingLayer, _type, pos, _team)));
+			buildings->insert(std::pair<int,Building*>(id, tempBuilding));
 
 		id++;
 	} else {
