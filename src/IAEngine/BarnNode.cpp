@@ -14,6 +14,7 @@ void BarnNode::question() {
     IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::BuildBarn);
     //std::cout << "Construyo un establo" << std::endl;
     if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost, Enumeration::Team::IA)) {
+        IA::getInstance() -> getTree() -> setRequireBarn(false);
         Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();
         IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barn, Enumeration::Team::IA);
     }

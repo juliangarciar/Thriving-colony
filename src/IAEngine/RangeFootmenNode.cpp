@@ -4,13 +4,16 @@
 
 RangeFootmenNode::RangeFootmenNode(Node *fatherPnt) : Node() {
     father = fatherPnt;
+    children = 0;
+    /*
     children = new Node*[1];
     children[0] = new BarrackNode(this);
+    */
 }
 
 RangeFootmenNode::~RangeFootmenNode(){
     delete father;
-    delete[] children;
+    //delete[] children;
 }
 
 void RangeFootmenNode::question() {
@@ -27,6 +30,7 @@ void RangeFootmenNode::question() {
             IA::getInstance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {
-        children[0] -> question();
+        IA::getInstance() -> getTree() -> setRequireBarrack(true);
+        //children[0] -> question();
     }
 }

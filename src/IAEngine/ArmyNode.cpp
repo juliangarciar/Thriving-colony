@@ -17,6 +17,12 @@ ArmyNode::~ArmyNode(){
 
 void ArmyNode::question() {
     //First subbranch: Units
+    // Goal oriented behaviour
+    //requirement have higher priority
+    if (IA::getInstance() -> getTree() -> getRequireBarrack() || IA::getInstance() -> getTree() -> getRequireBarn() || IA::getInstance() -> getTree() -> getRequireWorkshop()) {
+        children[1] -> question();
+        return;
+    }
     if (IA::getInstance() -> getTree() -> getNeedSoldiers()){
         children[0] -> question();
     } else {

@@ -4,13 +4,16 @@
 
 RamNode::RamNode(Node *fatherPnt) : Node() {
     father = fatherPnt;
+    children = 0;
+    /*
     children = new Node*[1];
     children[0] = new WorkshopNode(this);
+    */
 }
 
 RamNode::~RamNode(){
     delete father;
-    delete[] children;
+    //delete[] children;
 }
 
 void RamNode::question() {
@@ -27,6 +30,7 @@ void RamNode::question() {
             IA::getInstance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {
-        children[0] -> question();
+        IA::getInstance() -> getTree() -> setRequireWorkshop(true);
+        //children[0] -> question();
     }
 }

@@ -92,7 +92,7 @@ bool BehaviourTree::needArmyInvestment() {
      * A player doesn't have it yet
      * A player requires it to create a unit OR a player's city level is high enough for it to be considered a need
      */
-    needBarracks = !(IA::getInstance()->getBarrackBuilt()) && requireBarracks;
+    needBarracks = !(IA::getInstance()->getBarrackBuilt()) && requireBarrack;
     needBarn = !(IA::getInstance()->getBarnBuilt()) && (requireBarn || IA::getInstance()->getCityLevel() >= barnMilestone);
     needWorkshop = !(IA::getInstance()->getWorkshopBuilt()) && (requireWorkshop || IA::getInstance()->getCityLevel() >= workshopMilestone);
     
@@ -229,6 +229,32 @@ bool BehaviourTree::getShortOnCrystal() {
 bool BehaviourTree::getShortOnMetal() {
     return shortOnMetal;
 }
+
+//Goal oriented
+bool BehaviourTree::getRequireBarrack() {
+    return requireBarrack;
+}
+
+bool BehaviourTree::getRequireBarn() {
+    return requireBarn;
+}
+
+bool BehaviourTree::getRequireWorkshop() {
+    return requireWorkshop;
+}
+
+void BehaviourTree::setRequireBarrack(bool requirementStatus) {
+    requireBarrack = requirementStatus;
+}
+
+void BehaviourTree::setRequireBarn(bool requirementStatus) {
+    requireBarn = requirementStatus;
+}
+
+void BehaviourTree::setRequireWorkshop(bool requirementStatus) {
+    requireWorkshop = requirementStatus;
+}
+
 
 /**
  * DEBUG

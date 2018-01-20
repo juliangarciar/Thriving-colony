@@ -4,13 +4,14 @@
 
 MeleeFootmenNode::MeleeFootmenNode(Node *fatherPnt) : Node() {
     father = fatherPnt;
+    children = 0;/*
     children = new Node*[1];
-    children[0] = new BarrackNode(this);
+    children[0] = new BarrackNode(this);*/
 }
 
 MeleeFootmenNode::~MeleeFootmenNode(){
     delete father;
-    delete[] children;
+    //delete[] children;
 }
 
 void MeleeFootmenNode::question() {
@@ -25,6 +26,7 @@ void MeleeFootmenNode::question() {
             IA::getInstance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {
-        children[0] -> question();
+        IA::getInstance() -> getTree() -> setRequireBarrack(true);
+        //children[0] -> question();
     }
 }

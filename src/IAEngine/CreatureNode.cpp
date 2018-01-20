@@ -4,12 +4,16 @@
 
 CreatureNode::CreatureNode(Node *fatherPnt) : Node() {
     father = fatherPnt;
+    children = 0;
+    /*
     children = new Node*[1];
     children[0] = new BarnNode(this);
+    */
 }
 
 CreatureNode::~CreatureNode(){
     delete father;
+    //delete children;
 }
 
 void CreatureNode::question() {
@@ -26,6 +30,7 @@ void CreatureNode::question() {
             IA::getInstance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {
-        children[0] -> question();
+        IA::getInstance() -> getTree() -> setRequireBarn(true);
+        //children[0] -> question();
     }
 }

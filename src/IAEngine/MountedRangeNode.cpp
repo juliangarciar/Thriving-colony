@@ -4,13 +4,16 @@
 
 MountedRangeNode::MountedRangeNode(Node *fatherPnt) : Node() {
     father = fatherPnt;
+    children = 0;
+    /*
     children = new Node*[1];
     children[0] = new BarnNode(this);
+    */
 }
 
 MountedRangeNode::~MountedRangeNode(){
     delete father;
-    delete[] children;
+    //delete[] children;
 }
 
 void MountedRangeNode::question() {
@@ -27,6 +30,7 @@ void MountedRangeNode::question() {
             IA::getInstance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {
-        children[0] -> question();
+        IA::getInstance() -> getTree() -> setRequireBarn(true);
+        //children[0] -> question();
     }
 }
