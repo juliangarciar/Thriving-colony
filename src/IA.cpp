@@ -3,14 +3,20 @@
 #include "Human.h"
 
 IA::IA() : Player() {
+    // Choose a behaviour
+    chooseBehaviour();
+    // Create a behaviour and a root node and set them up according to the behaviour
     tree = new BehaviourTree();
+    tree -> init(behaviour);
     nodeRootIA = new RootNode();
+    nodeRootIA -> init(behaviour);
 
     buildings = new BuildingManager();
     units = new UnitManager(Enumeration::Team::IA, Enumeration::RaceType::Kaonov);
 
+    // CHoices for the debugging system
     choiceIndex = 0;
-    //initializeChoices();
+    initializeChoices();
     
 }
 
@@ -190,6 +196,30 @@ bool IA::getUnderAttack() {
     return underAttack;
 }
 
+void IA::chooseBehaviour() {
+    // RAndomize the seed
+    srand(time(NULL));
+    // Determine a number between 0 and 4, the number of possible behaviours for the AI to choose
+    behaviour = (Enumeration::IABehaviour)(rand()%(4-0 + 1) + 0);
+    switch (behaviour) {
+        case Enumeration::IABehaviour::VeryHappy: 
+            chosenBehaviour = L"Very happy";
+        break;
+        case Enumeration::IABehaviour::Happy: 
+            chosenBehaviour = L"Happy";    
+        break;
+        case Enumeration::IABehaviour::Neutral:
+            chosenBehaviour = L"Neutral"; 
+        break;
+        case Enumeration::IABehaviour::Unhappy: 
+            chosenBehaviour = L"Unhappy";
+        break;
+        case Enumeration::IABehaviour::VeryUnhappy: 
+            chosenBehaviour = L"Very unhappy";
+        break;
+    }
+}
+
 // Return wether or not our troops are deployed
 bool IA::getDeployedTroops() {
     return deployedTroops;
@@ -199,12 +229,16 @@ bool IA::getClosedDoors() {
     return closedDoors;
 }
 
-string IA::getNextChoice() {
+std::wstring IA::getNextChoice() {
     return choices -> at(choiceIndex);
 }
 
 void IA::setChoiceIndex(int newIndex) {
     choiceIndex = newIndex;
+}
+
+std::wstring IA::getChosenBehaviour() {
+    return chosenBehaviour;
 }
 
 // Down here so it doesn't clutter the constructor
@@ -216,31 +250,31 @@ void IA::initializeChoices() {
     // ENTONCES SE PUEDE QUEDAR CONTROLAR QUE INDICE TIENE QUE STRING
     // Y TODO ES MAS MANEJABLE. PERO POR AHORA NO HACE MAS QUE DAR ERRORES
     // ASI QUE LO HE DEJADO COMO VECTOR Y AU
-    choices = new std::vector<string>();
-    choices -> push_back("Closing Doors");
-    choices -> push_back("Deploying troops");
-    choices -> push_back("Train melee footman");
-    choices -> push_back("Build barrack");
-    choices -> push_back("Attacking");
-    choices -> push_back("Retracting troops");
-    choices -> push_back("Build school");
-    choices -> push_back("Build market");
-    choices -> push_back("Build hospital");
-    choices -> push_back("Build siderurgy");
-    choices -> push_back("Build quarry");
-    choices -> push_back("Build home");
-    //choices -> push_back("Melee footman");
-    choices -> push_back("Train mounted melee");
-    choices -> push_back("Train creature");
-    choices -> push_back("Train ranged footman");
-    choices -> push_back("Train mounted ranged");
-    choices -> push_back("Train catapult");
-    choices -> push_back("Train ram");
-    //choices -> push_back("Barrack");
-    choices -> push_back("Build barn");
-    choices -> push_back("Build workshop");
-    choices -> push_back("Build tower");
-    choices -> push_back("Build wall");
+    choices = new std::vector<std::wstring>();
+    choices -> push_back(L"Closing Doors");
+    choices -> push_back(L"Deploying troops");
+    choices -> push_back(L"Train melee footman");
+    choices -> push_back(L"Build barrack");
+    choices -> push_back(L"Attacking");
+    choices -> push_back(L"Retracting troops");
+    choices -> push_back(L"Build school");
+    choices -> push_back(L"Build market");
+    choices -> push_back(L"Build hospital");
+    choices -> push_back(L"Build siderurgy");
+    choices -> push_back(L"Build quarry");
+    choices -> push_back(L"Build home");
+    //choices -> push_back(L"Melee footman");
+    choices -> push_back(L"Train mounted melee");
+    choices -> push_back(L"Train creature");
+    choices -> push_back(L"Train ranged footman");
+    choices -> push_back(L"Train mounted ranged");
+    choices -> push_back(L"Train catapult");
+    choices -> push_back(L"Train ram");
+    //choices -> push_back(L"Barrack");
+    choices -> push_back(L"Build barn");
+    choices -> push_back(L"Build workshop");
+    choices -> push_back(L"Build tower");
+    choices -> push_back(L"Build wall");
     
     //ARRAY FORM
     // SI ALGUN DIA SE PONE ASI SERIA FANTISTOCOSO

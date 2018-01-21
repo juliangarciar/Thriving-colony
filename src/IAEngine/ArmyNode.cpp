@@ -22,9 +22,13 @@ void ArmyNode::question() {
     if (IA::getInstance() -> getTree() -> getRequireBarrack() || IA::getInstance() -> getTree() -> getRequireBarn() || IA::getInstance() -> getTree() -> getRequireWorkshop()) {
         children[1] -> question();
         return;
-    }
+    } 
     if (IA::getInstance() -> getTree() -> getNeedSoldiers()){
-        children[0] -> question();
+        if (IA::getInstance() -> getCitizens() < 10) {
+            IA::getInstance() -> getTree() -> setRequireCitizens(true);
+        } else {
+            children[0] -> question();
+        }
     } else {
         //Second subbranch: Buildings
         if (IA::getInstance() -> getTree() -> getNeedBuildings()) {

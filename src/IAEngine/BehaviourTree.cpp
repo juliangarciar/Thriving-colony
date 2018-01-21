@@ -2,29 +2,17 @@
 #include "../IA.h"
 
 BehaviourTree::BehaviourTree() {
-    happinessThreshold = 50;
+    requireBarrack = false;
+    requireBarn = false;
+    requireWorkshop = false;
 
-    marketMilestone = 150;
-    hospitalMilestone = 450;
-
-    quarryMilestone = 300;
-    mountedCreatureMilestone = 80;
-    wallMilestone = 70;
-    towerMilestone = 90;
-    barnMilestone = 60;
-    workshopMilestone = 65;
-    creatureMilestone = 100;
-
-    metalThreshold = 0.2;
-    crystalThreshold = 0.2;
-    citizensThreshold = 0.3;
-    armyThreshold = 0.2;
-    meleeThreshold = 0.5;
-    rangeThreshold = 0.45;
-    siegeThreshold = 0.05;
+    requireCitizens = false;
 
     underAttack = false;
+    requireCrystal = false;
 }
+
+
 
 BehaviourTree::~BehaviourTree() {
 
@@ -38,7 +26,6 @@ BehaviourTree::~BehaviourTree() {
   * Dictates wether or not one must invest in resource production
   */
 bool BehaviourTree::needResourcesInvestment() {
-    ///TODO: Se queda en el cristal siempre
     shortOnMetal = calculateMetalProductionRate() < metalThreshold;
     shortOnCrystal = requireCrystal || ((IA::getInstance() -> getCityLevel() >= quarryMilestone) && (calculateCrystalProductionRate() < crystalThreshold));
     return (shortOnMetal || shortOnCrystal);
@@ -262,6 +249,14 @@ void BehaviourTree::setRequireCrystal(bool requirementStatus) {
 bool BehaviourTree::getRequireCrystal() {
     return requireCrystal;
 }
+
+void BehaviourTree::setRequireCitizens(bool requirementStatus) {
+    requireCitizens = requirementStatus;
+}
+
+bool BehaviourTree::getRequireCitizens() {
+    return requireCitizens;
+}
 /**
  * DEBUG
  */
@@ -284,4 +279,141 @@ void BehaviourTree::debugMessage() {
     std::cout << IA::getInstance() -> getMeleeAmount() << " murallas" << std::endl;
     std::cout << IA::getInstance() -> getRangeAmount() << " torres" << std::endl;
     std::cout << "////////////////////////////////////////////////////////" << std::endl;
+}
+
+// Down here so it doesnt clutter the top
+void BehaviourTree::init(int behaviour) {
+    // Set the variables' values according to the behaviour choosen by the AI
+    switch (behaviour) {
+        case Enumeration::IABehaviour::VeryHappy:
+            // Happiness thresholds
+            happinessThreshold = 50;
+            // Service milestones
+            marketMilestone = 150;
+            hospitalMilestone = 450;
+            // Resource milestones
+            quarryMilestone = 300;
+            // Unit milestones
+            mountedCreatureMilestone = 80;
+            creatureMilestone = 100;
+            // Military buildings milestones
+            wallMilestone = 70;
+            towerMilestone = 90;
+            barnMilestone = 60;
+            workshopMilestone = 65;
+            // Resource generation thresholds
+            metalThreshold = 0.2;
+            crystalThreshold = 0.2;
+            citizensThreshold = 0.3;
+            // Army thresholds
+            armyThreshold = 0.2;
+            meleeThreshold = 0.5;
+            rangeThreshold = 0.45;
+            siegeThreshold = 0.05;
+        break;
+        case Enumeration::IABehaviour::Happy: 
+            // Happiness thresholds
+            happinessThreshold = 25;
+            // Service milestones
+            marketMilestone = 150;
+            hospitalMilestone = 450;
+            // Resource milestones
+            quarryMilestone = 300;
+            // Unit milestones
+            mountedCreatureMilestone = 80;
+            creatureMilestone = 100;
+            // Military buildings milestones
+            wallMilestone = 70;
+            towerMilestone = 90;
+            barnMilestone = 60;
+            workshopMilestone = 65;
+            // Resource generation thresholds
+            metalThreshold = 0.2;
+            crystalThreshold = 0.2;
+            citizensThreshold = 0.3;
+            // Army thresholds
+            armyThreshold = 0.2;
+            meleeThreshold = 0.5;
+            rangeThreshold = 0.45;
+            siegeThreshold = 0.05;
+        break;
+        case Enumeration::IABehaviour::Neutral:
+            // Happiness thresholds
+            happinessThreshold = 0;
+            // Service milestones
+            marketMilestone = 150;
+            hospitalMilestone = 450;
+            // Resource milestones
+            quarryMilestone = 300;
+            // Unit milestones
+            mountedCreatureMilestone = 80;
+            creatureMilestone = 100;
+            // Military buildings milestones
+            wallMilestone = 70;
+            towerMilestone = 90;
+            barnMilestone = 60;
+            workshopMilestone = 65;
+            // Resource generation thresholds
+            metalThreshold = 0.25;
+            crystalThreshold = 0.2;
+            citizensThreshold = 0.3;
+            // Army thresholds
+            armyThreshold = 0.25;
+            meleeThreshold = 0.5;
+            rangeThreshold = 0.45;
+            siegeThreshold = 0.05;
+        break;
+        case Enumeration::IABehaviour::Unhappy: 
+            // Happiness thresholds
+            happinessThreshold = -25;
+            // Service milestones
+            marketMilestone = 150;
+            hospitalMilestone = 450;
+            // Resource milestones
+            quarryMilestone = 300;
+            // Unit milestones
+            mountedCreatureMilestone = 90;
+            creatureMilestone = 130;
+            // Military buildings milestones
+            wallMilestone = 70;
+            towerMilestone = 90;
+            barnMilestone = 60;
+            workshopMilestone = 65;
+            // Resource generation thresholds
+            metalThreshold = 0.2;
+            crystalThreshold = 0.2;
+            citizensThreshold = 0.3;
+            // Army thresholds
+            armyThreshold = 0.3;
+            meleeThreshold = 0.5;
+            rangeThreshold = 0.45;
+            siegeThreshold = 0.05;
+        break;
+        case Enumeration::IABehaviour::VeryUnhappy: 
+            // Happiness thresholds
+            happinessThreshold = -50;
+            // Service milestones
+            marketMilestone = 150;
+            hospitalMilestone = 450;
+            // Resource milestones
+            quarryMilestone = 350;
+            // Unit milestones
+            mountedCreatureMilestone = 100;
+            creatureMilestone = 150;
+            // Military buildings milestones
+            wallMilestone = 70;
+            towerMilestone = 90;
+            barnMilestone = 80;
+            workshopMilestone = 110;
+            // Resource generation thresholds
+            metalThreshold = 0.2;
+            crystalThreshold = 0.2;
+            citizensThreshold = 0.3;
+            // Army thresholds
+            armyThreshold = 0.4;
+            meleeThreshold = 0.6;
+            rangeThreshold = 0.4;
+            siegeThreshold = 0.05;
+        break;
+    }
 }

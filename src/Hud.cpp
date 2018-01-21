@@ -27,19 +27,20 @@ Hud::Hud() {
     buttonWall = new Button(Rect2D<int>(954, 680, 100, 30).getFixed(), Enumeration::idGUI::GUI_ID_BUILD_WALL_BUTTON, L"Wall", L"Build a wall that will protect your city from outsiders.\n Metal cost: 75.");
     buttonWorkshop = new Button(Rect2D<int>(850, 680, 100, 30).getFixed(), Enumeration::idGUI::GUI_ID_BUILD_WORKSHOP_BUTTON, L"Workshop", L"Build a workshop that will allow you to create siege weapons.\n Metal cost: 1100.\nCrystal cost: 230");
     buttonExpandTerrain = new Button(Rect2D<int>(1162, 680, 100, 30).getFixed(), Enumeration::idGUI::GUI_ID_EXPAND_TERRAIN_BUTTON, L"Expand terrain", L"Purchase a terrain expansion that will allow you to build a bigger city.\n Metal cost: 500.");
+    buttonOpenPanel = new Button(Rect2D<int>(1266, 680, 100, 30).getFixed(), Enumeration::idGUI::GUI_ID_OPEN_PANEL_BUTTON, L"Open panel", L"Open your panel to manage your city.");
 
     menus = new std::vector<Tab*>();
     buttons = new std::vector<Button*>();
 
-    tabs = new TabPanel(Rect2D<int>(300, 300, 400, 200).getFixed(), 0);
+    tabs = new TabPanel(Rect2D<int>(150, 450, 400, 200).getFixed(), 0);
     tabs->disable();
 
     //this->addTab(0, Enumeration::BuildingType::MainBuilding);
     
     updateTimer = 0.5;
-    resourceText = new Text(Rect2D<int>(0, 0, 100, 101).getFixed(), L"Hola mundo", true);
+    resourceText = new Text(Rect2D<int>(0, 0, 140, 125).getFixed(), L"Hola mundo", true);
     // Solo de debug
-    iaResourceText = new Text(Rect2D<int>(100, 0, 100, 111).getFixed(), L"Hola mundo", true);
+    iaResourceText = new Text(Rect2D<int>(140, 0, 140, 125).getFixed(), L"Hola mundo", true);
 
     warningText = new Text(Rect2D<int>(200, 100, 100, 10).getFixed(), L"Edificio construido", true);
     //warningText -> disable();
@@ -65,6 +66,7 @@ Hud::~Hud() {
     delete buttonWall;
     delete buttonTower;
     delete buttonExpandTerrain;
+    delete buttonOpenPanel;
 
     delete tabs;
 
@@ -287,6 +289,10 @@ void Hud::getHUDEvents(){
         case Enumeration::idGUI::GUI_ID_EXPAND_TERRAIN_BUTTON:
 			//ToDo: hacer que se expanda el terreno edificable y que el susodicho exista
         break;
+        case Enumeration::idGUI::GUI_ID_OPEN_PANEL_BUTTON:
+            showPopup(0);
+			//ToDo: hacer que se expanda el terreno edificable y que el susodicho exista
+        break;
     }
 }
 
@@ -299,11 +305,7 @@ void Hud::update() {
         resourceText -> setText(os.str().c_str());
         std::wstringstream iaos;
 
-        //std::string choiceStr = IA::getInstance() -> getNextChoice();
-        //std::wstring choiceWstr(choiceStr.length() + 1, L' ');
-        //std::copy(choiceStr.begin(), choiceStr.end(), choiceWstr.begin());
-
-        iaos << L"IA resources:\n" << "Metal: " << std::to_wstring(IA::getInstance() -> getMetalAmount()) << "\nCrystal: " << std::to_wstring(IA::getInstance() -> getCrystalAmount()) << "\nCitizens: " << std::to_wstring(IA::getInstance() -> getCitizens()) << "\nHappiness: " << std::to_wstring(IA::getInstance() -> getHappiness()) << "\nCity level: "<< std::to_wstring(IA::getInstance() -> getCityLevel()) << "\nArmy size: " << std::to_wstring(IA::getInstance() -> getArmySize()) << "\n - Melees: " << std::to_wstring(IA::getInstance() -> getMeleeAmount()) << "\n - Ranged: " << std::to_wstring(IA::getInstance() -> getRangeAmount()) << "\n - Siege: " << std::to_wstring(IA::getInstance() -> getSiegeAmount()) << "\n Next choice: " <<"" /*choiceWstr std::to_wstring(IA::getInstance() -> getNextChoice())*/;
+        iaos << L"IA resources:\n" << "Metal: " << std::to_wstring(IA::getInstance() -> getMetalAmount()) << "\nCrystal: " << std::to_wstring(IA::getInstance() -> getCrystalAmount()) << "\nCitizens: " << std::to_wstring(IA::getInstance() -> getCitizens()) << "\nHappiness: " << std::to_wstring(IA::getInstance() -> getHappiness()) << "\nCity level: "<< std::to_wstring(IA::getInstance() -> getCityLevel()) << "\nArmy size: " << std::to_wstring(IA::getInstance() -> getArmySize()) << "\n - Melees: " << std::to_wstring(IA::getInstance() -> getMeleeAmount()) << "\n - Ranged: " << std::to_wstring(IA::getInstance() -> getRangeAmount()) << "\n - Siege: " << std::to_wstring(IA::getInstance() -> getSiegeAmount()) << "\nNext choice: " << IA::getInstance() -> getNextChoice() << "\nBehaviour: " << IA::getInstance() -> getChosenBehaviour();
         iaResourceText -> setText(iaos.str().c_str());
         updateTimer = 0.5;
 
@@ -316,20 +318,25 @@ void Hud::update() {
 }
 
 void Hud::updatePositions(){
-    buttonQuit->setPosition(Vector2<int>(1150, 20).getFixed());
+    buttonQuit->setPosition(Vector2<int>(1110, 50).getFixed());
+    
+    buttonExpandTerrain->setPosition(Vector2<int>(690,585).getFixed());
+    buttonOpenPanel->setPosition(Vector2<int>(690,620).getFixed());
 
-    buttonBarn->setPosition(Vector2<int>(746, 680).getFixed());
-    buttonBarrack->setPosition(Vector2<int>(642, 680).getFixed());
-    buttonHospital->setPosition(Vector2<int>(538, 680).getFixed());
-    buttonHome->setPosition(Vector2<int>(226,680).getFixed());
-    buttonMarket->setPosition(Vector2<int>(122,680).getFixed());
-    buttonQuarry->setPosition(Vector2<int>(434,680).getFixed());
-    buttonSiderurgy->setPosition(Vector2<int>(18,680).getFixed());
-    buttonSchool->setPosition(Vector2<int>(330,680).getFixed()); 
-    buttonTower->setPosition(Vector2<int>(1058,680).getFixed());
-    buttonWall->setPosition(Vector2<int>(954,680).getFixed());
-    buttonWorkshop->setPosition(Vector2<int>(850,680).getFixed());
-    buttonExpandTerrain->setPosition(Vector2<int>(1162,680).getFixed());
+    buttonSchool->setPosition(Vector2<int>(795,565).getFixed()); 
+    buttonMarket->setPosition(Vector2<int>(795,600).getFixed());
+    buttonHospital->setPosition(Vector2<int>(795, 635).getFixed());
+
+    buttonHome->setPosition(Vector2<int>(900,565).getFixed());
+    buttonSiderurgy->setPosition(Vector2<int>(900,600).getFixed());
+    buttonQuarry->setPosition(Vector2<int>(900,635).getFixed());
+    
+    buttonBarrack->setPosition(Vector2<int>(1005, 565).getFixed());
+    buttonBarn->setPosition(Vector2<int>(1005, 600).getFixed());
+    buttonWorkshop->setPosition(Vector2<int>(1005,635).getFixed());
+    
+    buttonWall->setPosition(Vector2<int>(1110,585).getFixed());
+    buttonTower->setPosition(Vector2<int>(1110,620).getFixed());
 }
 
 void Hud::drawWarning() {

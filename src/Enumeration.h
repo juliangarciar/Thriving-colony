@@ -84,7 +84,8 @@ class Enumeration {
 
             GUI_ID_RETRACT_ALL_TROOPS_BUTTON,
 
-            GUI_ID_EXPAND_TERRAIN_BUTTON
+            GUI_ID_EXPAND_TERRAIN_BUTTON,
+            GUI_ID_OPEN_PANEL_BUTTON
         };
 
         enum BuildingCost {
@@ -187,6 +188,14 @@ class Enumeration {
             BuildTower,
             BuildWall
 
+        };
+
+        enum IABehaviour {
+            VeryHappy,
+            Happy,
+            Neutral,
+            Unhappy,
+            VeryUnhappy
         };
 
         //Special type, used to pass info to the UnitManager

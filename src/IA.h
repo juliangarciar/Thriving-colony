@@ -27,9 +27,11 @@ class IA : public Player {
         bool getClosedDoors();
 
         void setChoiceIndex(int);
-        string getNextChoice();
+        std::wstring getNextChoice();
+        std::wstring getChosenBehaviour();
         void initializeChoices();
 
+        void chooseBehaviour();
     private:
         static IA* instance;
         static bool deployedTroops;
@@ -37,10 +39,11 @@ class IA : public Player {
         BehaviourTree* tree;
         RootNode *nodeRootIA;
 
-
+        Enumeration::IABehaviour behaviour;
+        std::wstring chosenBehaviour;
         int choiceIndex;
 
-        std::vector<string> * choices;
+        std::vector<std::wstring> * choices;
 
 };
 

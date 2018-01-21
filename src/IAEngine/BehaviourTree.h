@@ -70,6 +70,11 @@ class BehaviourTree {
         void setRequireCrystal(bool);
         bool getRequireCrystal();
 
+        void setRequireCitizens(bool);
+        bool getRequireCitizens();
+
+        void init(int);
+
     protected:
 
         int happinessThreshold;
@@ -110,6 +115,8 @@ class BehaviourTree {
         bool requireWorkshop;
 
         bool requireCrystal;
+
+        bool requireCitizens;
 
     private:
 };
