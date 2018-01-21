@@ -2,30 +2,30 @@
 
 template <class T>
 Vector3<T>::Vector3() {
-    this->x = 0;
-    this->y = 0;
-    this->z = 0;
+    this -> x = 0;
+    this -> y = 0;
+    this -> z = 0;
 }
 
 template <class T>
 Vector3<T>::Vector3(T x, T y, T z) {
-    this->x = x;
-    this->y = y;
-    this->z = z;
+    this -> x = x;
+    this -> y = y;
+    this -> z = z;
 }
 
 template <class T>
-Vector3<T>::Vector3(core::vector3di v){
-    this->x = v.X;
-    this->y = v.Y;
-    this->z = v.Z;
+Vector3<T>::Vector3(core::vector3di v) {
+    this -> x = v.X;
+    this -> y = v.Y;
+    this -> z = v.Z;
 }
 
 template <class T>
-Vector3<T>::Vector3(core::vector3df v){
-    this->x = v.X;
-    this->y = v.Y;
-    this->z = v.Z;
+Vector3<T>::Vector3(core::vector3df v) {
+    this -> x = v.X;
+    this -> y = v.Y;
+    this -> z = v.Z;
 }
 
 template <class T>
@@ -34,31 +34,31 @@ Vector3<T>::~Vector3() {
 }
 
 template <class T>
-void Vector3<T>::set(T x, T y, T z){
-    this->x = x;
-    this->y = y;
-    this->z = z;
+void Vector3<T>::set(T x, T y, T z) {
+    this -> x = x;
+    this -> y = y;
+    this -> z = z;
 }
 
 template <class T>
-void Vector3<T>::set(core::vector3di v){
-    this->x = v.X;
-    this->y = v.Y;
-    this->z = v.Z;
+void Vector3<T>::set(core::vector3di v) {
+    this -> x = v.X;
+    this -> y = v.Y;
+    this -> z = v.Z;
 }
 
 template <class T>
-void Vector3<T>::set(core::vector3df v){
-    this->x = v.X;
-    this->y = v.Y;
-    this->z = v.Z;
+void Vector3<T>::set(core::vector3df v) {
+    this -> x = v.X;
+    this -> y = v.Y;
+    this -> z = v.Z;
 }
 
 template <class T>
-void Vector3<T>::set(Vector3<T> v){
-    this->x = v.x;
-    this->y = v.y;
-    this->z = v.z;
+void Vector3<T>::set(Vector3<T> v) {
+    this -> x = v.x;
+    this -> y = v.y;
+    this -> z = v.z;
 }
 
 template <class T>
@@ -92,32 +92,32 @@ T Vector3<T>::getLength() {
 
 template <class T>
 bool Vector3<T>::operator == (const Vector3<T> &p) const {
-    return this->x == p.x && this->y == p.y && this->z == p.z;
+    return this -> x == p.x && this -> y == p.y && this -> z == p.z;
 }
 
 template <class T>
 bool Vector3<T>::operator != (const Vector3<T> &p) const {
-    return this->x != p.x || this->y != p.y || this->z != p.z;
+    return this -> x != p.x || this -> y != p.y || this -> z != p.z;
 }
 
 template <class T>
 Vector3<T> Vector3<T>::operator + (const Vector3<T> &p) const {
-    return Vector3<T>(this->x+p.x, this->y+p.y, this->z+p.z);
+    return Vector3<T>(this -> x+p.x, this -> y+p.y, this -> z+p.z);
 }
 
 template <class T>
 Vector3<T> Vector3<T>::operator + (const float &p) const {
-    return Vector3<T>(this->x+p, this->y+p, this->z+p);
+    return Vector3<T>(this -> x+p, this -> y+p, this -> z+p);
 }
 
 template <class T>
 Vector3<T> Vector3<T>::operator - (const Vector3<T> &p) const {
-    return Vector3<T>(this->x-p.x, this->y-p.y, this->z-p.z);
+    return Vector3<T>(this -> x-p.x, this -> y-p.y, this -> z-p.z);
 }
 
 template <class T>
 Vector3<T> Vector3<T>::operator - (const float &p) const {
-    return Vector3<T>(this->x-p, this->y-p, this->z-p);
+    return Vector3<T>(this -> x-p, this -> y-p, this -> z-p);
 }
 
 template class Vector3<int>;

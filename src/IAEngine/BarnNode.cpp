@@ -6,7 +6,7 @@ BarnNode::BarnNode(Node *fatherPnt) : Node() {
     children = 0;
 }
 
-BarnNode::~BarnNode(){
+BarnNode::~BarnNode() {
     delete father;
 }
 

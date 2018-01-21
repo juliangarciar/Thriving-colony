@@ -2,8 +2,8 @@
 
 Game* Game::pinstance = 0;
 
-Game* Game::Instance(){
-    if(pinstance == 0){
+Game* Game::Instance() {
+    if(pinstance == 0) {
         pinstance = new Game();
     }
     
@@ -33,40 +33,39 @@ Game::~Game() {
      delete io;
      delete events;
      delete soundSystem;
-    // delete state;
 }
 
-void Game::Init(){
+void Game::Init() {
     state ->Init();
     
 }
-void Game::Input(){
+void Game::Input() {
     io -> endEventProcess();
     state -> Input();
     io -> startEventProcess();
 }
-void Game::Update(){
+void Game::Update() {
     state -> Update();
 }
-void Game::Render(){
+void Game::Render() {
     window -> beginScene();
     state -> Render();
     window -> endScene();
 }
-void Game::CleanUp(){
+void Game::CleanUp() {
     state -> CleanUp();
     window -> close();
 }
 
-Window *Game::getWindow(){
+Window *Game::getWindow() {
     return window;
 }
 
-InputManager *Game::getIO(){
+InputManager *Game::getIO() {
     return io;
 }
 
-Mouse *Game::getCursor(){
+Mouse *Game::getCursor() {
     return cursor;
 }
 
@@ -74,10 +73,10 @@ EventSystem *Game::getEvents() {
     return events;
 }
 
-MenuState *Game::getMenuState(){
+MenuState *Game::getMenuState() {
 	return menu;
 }
 
-GameState *Game::getGameState(){
+GameState *Game::getGameState() {
 	return game;
 }

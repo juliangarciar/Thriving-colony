@@ -1,7 +1,7 @@
 #include "CameraController.h"
 #include "Game.h"
   
-CameraController::CameraController(Terrain *t){
+CameraController::CameraController(Terrain *t) {
 	terrain = t;
 
 	//Camera 
@@ -42,23 +42,23 @@ CameraController::CameraController(Terrain *t){
 
 	int posX = HUMAN_CITY_HALL_X;
 	int posZ = HUMAN_CITY_HALL_Z;
-	int posY = terrain->getY(posX, posZ) + camHeight;
+	int posY = terrain -> getY(posX, posZ) + camHeight;
 
 	//Posiciones iniciales de la camara
 	Vector2<float> camPos2D = Vector2<float>(posX, posZ).getFromPolarCoordinates(delta.y, 0);
-	camera->setCameraPosition(Vector3<float>(camPos2D.x, posY, camPos2D.y));
-    camera->setTargetPosition(Vector3<float>(posX, terrain->getY(posX, posZ), posZ));
+	camera -> setCameraPosition(Vector3<float>(camPos2D.x, posY, camPos2D.y));
+    camera -> setTargetPosition(Vector3<float>(posX, terrain -> getY(posX, posZ), posZ));
 }
 
-CameraController::~CameraController(){
+CameraController::~CameraController() {
 	delete camera;
 }
 
-void CameraController::Update(float deltaTime){
-	camPos.set(camera->getCameraPosition());
-	tarPos.set(camera->getTargetPosition());
+void CameraController::Update(float deltaTime) {
+	camPos.set(camera -> getCameraPosition());
+	tarPos.set(camera -> getTargetPosition());
 
-    if (rotationOrInclinationMode){
+    if (rotationOrInclinationMode) {
 		Vector2<float> camPos2D = Vector2<float>(tarPos.x, tarPos.z).getFromPolarCoordinates(delta.y, delta.x);
 		camPos.set(camPos2D.x, camPos.y, camPos2D.y);
     }
@@ -120,7 +120,7 @@ void CameraController::Update(float deltaTime){
 				camPos.x += camIncr.x;
 				tarPos.x += camIncr.x;
 			}
-		} else if (camPos.x > mapMarginRight){
+		} else if (camPos.x > mapMarginRight) {
 			if (camIncr.x < 0) {
 				camPos.x += camIncr.x;
 				tarPos.x += camIncr.x;
@@ -146,12 +146,12 @@ void CameraController::Update(float deltaTime){
 		}
 	}
 
-    if (movementMode || zoomMode || rotationOrInclinationMode){
-        currentHeight = terrain->getTerrain()->getHeight(camPos.x, camPos.z);
+    if (movementMode || zoomMode || rotationOrInclinationMode) {
+        currentHeight = terrain -> getTerrain() -> getHeight(camPos.x, camPos.z);
         camPos.y = currentHeight + camHeight;
 
-		camera->setCameraPosition(camPos.getVectorF());
-		camera->setTargetPosition(tarPos.getVectorF());
+		camera -> setCameraPosition(camPos.getVectorF());
+		camera -> setTargetPosition(tarPos.getVectorF());
     }
 }
 
@@ -159,44 +159,44 @@ void CameraController::Update(float deltaTime){
 void CameraController::Move(InputManager *receiver, Mouse *cursor) {
 	Window *sc = Window::Instance();
 
-    /*direction = (receiver->keyDown(KEY_KEY_W) << 0) | (receiver->keyDown(KEY_KEY_A) << 1)
-		| receiver->keyDown(KEY_KEY_S) << 2 | receiver->keyDown(KEY_KEY_D) << 3;*/
+    /*direction = (receiver -> keyDown(KEY_KEY_W) << 0) | (receiver -> keyDown(KEY_KEY_A) << 1)
+		| receiver -> keyDown(KEY_KEY_S) << 2 | receiver -> keyDown(KEY_KEY_D) << 3;*/
 
 	direction = 0;
 	movementMode = false;
 
-	Vector2<int> cursorPosCurrent = cursor->getPosition();
+	Vector2<int> cursorPosCurrent = cursor -> getPosition();
 
 	if (cursorPosCurrent.x <= 0) cursorPosCurrent.x = 0;
-	else if (cursorPosCurrent.x >= sc->getRealWindowWidth()) cursorPosCurrent.x = sc->getRealWindowWidth();
+	else if (cursorPosCurrent.x >= sc -> getRealWindowWidth()) cursorPosCurrent.x = sc -> getRealWindowWidth();
 
 	if (cursorPosCurrent.y <= 0) cursorPosCurrent.y = 0;
-	else if (cursorPosCurrent.y >= sc->getRealWindowHeight()) cursorPosCurrent.y = sc->getRealWindowHeight();
+	else if (cursorPosCurrent.y >= sc -> getRealWindowHeight()) cursorPosCurrent.y = sc -> getRealWindowHeight();
 
-	cursor->setPosition(cursorPosCurrent);
+	cursor -> setPosition(cursorPosCurrent);
 	
-	if (cursorPosCurrent.y < screenMarginV){
+	if (cursorPosCurrent.y < screenMarginV) {
 		direction |= 1 << 0;
         movementMode = true;
-	} else if (cursorPosCurrent.y > (sc->getRealWindowHeight() - screenMarginV)) {
+	} else if (cursorPosCurrent.y > (sc -> getRealWindowHeight() - screenMarginV)) {
 		direction |= 1 << 2;
         movementMode = true;
 	}
 
-	if (cursorPosCurrent.x < screenMarginH){
+	if (cursorPosCurrent.x < screenMarginH) {
 		direction |= 1 << 1;
         movementMode = true;
-	} else if (cursorPosCurrent.x > (sc->getRealWindowWidth() - screenMarginH)) {
+	} else if (cursorPosCurrent.x > (sc -> getRealWindowWidth() - screenMarginH)) {
 		direction |= 1 << 3;
         movementMode = true;
 	}
 }
 
-void CameraController::Zoom(InputManager *receiver){
+void CameraController::Zoom(InputManager *receiver) {
 	zoomMode = false;
-	if (receiver->getWheelState()) {
-		receiver->setWheelState(false);
-		if (receiver->isWheelUp()) {
+	if (receiver -> getWheelState()) {
+		receiver -> setWheelState(false);
+		if (receiver -> isWheelUp()) {
 			if (camHeight > minZoom) {
 				camHeight -= 20.0f;
 				camSpeed -= 0.02f;
@@ -212,35 +212,35 @@ void CameraController::Zoom(InputManager *receiver){
 	}
 }
 
-void CameraController::RotateAndInclinate(InputManager *receiver, Mouse *cursor){
+void CameraController::RotateAndInclinate(InputManager *receiver, Mouse *cursor) {
     // get cursor data
-    if (receiver->middleMousePressed()) {
+    if (receiver -> middleMousePressed()) {
         rotationOrInclinationMode = true;
-        cursorPosSaved = cursor->getPosition();
-        cursor->setPosition(screenCenter);
+        cursorPosSaved = cursor -> getPosition();
+        cursor -> setPosition(screenCenter);
 		
 		//std::cout << "SI" << std::endl;
 
-		Game::Instance()->getCursor()->hide();
+		Game::Instance() -> getCursor() -> hide();
     }
-    if (receiver->middleMouseReleased()) {
+    if (receiver -> middleMouseReleased()) {
         rotationOrInclinationMode = false;
-        cursor->setPosition(cursorPosSaved);
+        cursor -> setPosition(cursorPosSaved);
 		
-		Game::Instance()->getCursor()->show();
+		Game::Instance() -> getCursor() -> show();
     }
-	if (rotationOrInclinationMode){
-		Vector2<int> cursorPosCurrent = cursor->getPosition();
+	if (rotationOrInclinationMode) {
+		Vector2<int> cursorPosCurrent = cursor -> getPosition();
 
 		//Increase or decease rotation angle
-		if (cursorPosCurrent.x < screenCenter.x - centerMargin){
+		if (cursorPosCurrent.x < screenCenter.x - centerMargin) {
 			delta.x += rotSpeed;
 		} else if (cursorPosCurrent.x > screenCenter.x + centerMargin) {
 			delta.x -= rotSpeed;
 		}
 
 		//Increase or decease inclination angle
-		if (cursorPosCurrent.y < screenCenter.y - centerMargin){
+		if (cursorPosCurrent.y < screenCenter.y - centerMargin) {
 			delta.y += inclSpeed;
 		} else if (cursorPosCurrent.y > screenCenter.y + centerMargin) {
 			delta.y -= inclSpeed;
@@ -255,10 +255,10 @@ void CameraController::RotateAndInclinate(InputManager *receiver, Mouse *cursor)
         delta.y = (delta.y > maxInclination) ? maxInclination : delta.y;
 
         // reset cursor position to center
-        cursor->setPosition(screenCenter.getVectorF());
+        cursor -> setPosition(screenCenter.getVectorF());
 	}
 }
 
-Camera *CameraController::getCamera(){
+Camera *CameraController::getCamera() {
 	return camera;
 }

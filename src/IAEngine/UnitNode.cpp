@@ -14,7 +14,7 @@ UnitNode::UnitNode(Node *fatherPnt) : Node() {
     children[2] = new SiegeNode(this);
 }
 
-UnitNode::~UnitNode(){
+UnitNode::~UnitNode() {
     delete father;
     delete[] children;
 }

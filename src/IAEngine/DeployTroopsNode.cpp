@@ -7,7 +7,7 @@ DeployTroopsNode::DeployTroopsNode(Node *fatherPnt) : Node() {
     children = 0;
 }
 
-DeployTroopsNode::~DeployTroopsNode(){
+DeployTroopsNode::~DeployTroopsNode() {
     delete father;
 }
 

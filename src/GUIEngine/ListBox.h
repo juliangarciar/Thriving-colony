@@ -20,6 +20,7 @@ class ListBox : public GUIElement {
         int getSelected();
         
         gui::IGUIElement *getGUIElement();
+        
     private:
         gui::IGUIListBox* listbox;
         //std::vector<float> *options;

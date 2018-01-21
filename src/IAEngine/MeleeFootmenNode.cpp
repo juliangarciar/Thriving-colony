@@ -9,7 +9,7 @@ MeleeFootmenNode::MeleeFootmenNode(Node *fatherPnt) : Node() {
     children[0] = new BarrackNode(this);*/
 }
 
-MeleeFootmenNode::~MeleeFootmenNode(){
+MeleeFootmenNode::~MeleeFootmenNode() {
     delete father;
     //delete[] children;
 }

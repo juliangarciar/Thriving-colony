@@ -35,8 +35,8 @@ bool BehaviourTree::needResourcesInvestment() {
 * Calculates the ratio between metal production and city level
 */
 float BehaviourTree::calculateMetalProductionRate() {
-    float cityLvl = IA::getInstance()->getCityLevel();
-    float metalPr = IA::getInstance()->getMetalProduction();
+    float cityLvl = IA::getInstance() -> getCityLevel();
+    float metalPr = IA::getInstance() -> getMetalProduction();
     return (metalPr / cityLvl);
 }
 
@@ -44,8 +44,8 @@ float BehaviourTree::calculateMetalProductionRate() {
 * Calculates the ratio between crystal production and city level
 */
 float BehaviourTree::calculateCrystalProductionRate() {
-    float cityLvl = IA::getInstance()->getCityLevel();
-    float crystalPr = IA::getInstance()->getCrystalProduction();
+    float cityLvl = IA::getInstance() -> getCityLevel();
+    float crystalPr = IA::getInstance() -> getCrystalProduction();
     return (crystalPr / cityLvl);
 }
 
@@ -79,12 +79,12 @@ bool BehaviourTree::needArmyInvestment() {
      * A player doesn't have it yet
      * A player requires it to create a unit OR a player's city level is high enough for it to be considered a need
      */
-    needBarracks = !(IA::getInstance()->getBarrackBuilt()) && requireBarrack;
-    needBarn = !(IA::getInstance()->getBarnBuilt()) && (requireBarn || IA::getInstance()->getCityLevel() >= barnMilestone);
-    needWorkshop = !(IA::getInstance()->getWorkshopBuilt()) && (requireWorkshop || IA::getInstance()->getCityLevel() >= workshopMilestone);
+    needBarracks = !(IA::getInstance() -> getBarrackBuilt()) && requireBarrack;
+    needBarn = !(IA::getInstance() -> getBarnBuilt()) && (requireBarn || IA::getInstance() -> getCityLevel() >= barnMilestone);
+    needWorkshop = !(IA::getInstance() -> getWorkshopBuilt()) && (requireWorkshop || IA::getInstance() -> getCityLevel() >= workshopMilestone);
     
     needWall = evaluateWallNeed();
-    needTower = IA::getInstance()->getWallBuilt() && IA::getInstance()->getCityLevel() >= towerMilestone;
+    needTower = IA::getInstance() -> getWallBuilt() && IA::getInstance() -> getCityLevel() >= towerMilestone;
 
     return (needSoldiers || needBarracks || needBarn || needWorkshop || needWall || needTower);
 }
@@ -93,9 +93,9 @@ bool BehaviourTree::needArmyInvestment() {
 * Calculates the ratio between army and melee soldiers
 */
 float BehaviourTree::calculateMeleeRate() {
-    float meleeAmt = IA::getInstance()->getMeleeAmount();
+    float meleeAmt = IA::getInstance() -> getMeleeAmount();
 
-    float armySize = IA::getInstance()->getArmySize();
+    float armySize = IA::getInstance() -> getArmySize();
 
     if (armySize == 0) {
         return 0;
@@ -107,8 +107,8 @@ float BehaviourTree::calculateMeleeRate() {
 * Calculates the ratio between army and range soldiers
 */
 float BehaviourTree::calculateRangeRate() {
-    float rangeAmt = IA::getInstance()->getRangeAmount();
-    float armySize = IA::getInstance()->getArmySize();
+    float rangeAmt = IA::getInstance() -> getRangeAmount();
+    float armySize = IA::getInstance() -> getArmySize();
     if (armySize == 0) {
         return 0;
     }
@@ -119,8 +119,8 @@ float BehaviourTree::calculateRangeRate() {
 * Calculates the ratio between army and siege soldiers
 */
 float BehaviourTree::calculateSiegeRate() {
-    float siegeAmt = IA::getInstance()->getSiegeAmount();
-    float armySize = IA::getInstance()->getArmySize();
+    float siegeAmt = IA::getInstance() -> getSiegeAmount();
+    float armySize = IA::getInstance() -> getArmySize();
     if (armySize == 0) {
         return 0;
     }
@@ -130,7 +130,7 @@ float BehaviourTree::calculateSiegeRate() {
 bool BehaviourTree::evaluateWallNeed() {
     //ToDo: Analizar cuando la expansion de terreno edificable llega a donde hay que construir la muralla
 
-    return IA::getInstance()->getCityLevel() >= wallMilestone && IA::getInstance()->getWallBuilt() != true;
+    return IA::getInstance() -> getCityLevel() >= wallMilestone && IA::getInstance() -> getWallBuilt() != true;
 }
 
 bool BehaviourTree::readyToAttack() {
@@ -263,15 +263,15 @@ bool BehaviourTree::getRequireCitizens() {
 void BehaviourTree::debugMessage() {
     std::cout << std::endl;
     std::cout << "////////////////////////////////////////////////////////" << std::endl;
-    std::cout << "La FELICIDAD de mi ciudad es de " << IA::getInstance()->getHappiness() << std::endl;
-    std::cout << "El NIVEL de mi ciudad es de " << IA::getInstance()->getCityLevel() << std::endl;
-    std::cout << "La cantidad de CIUDADANOS de mi ciudad es de " << IA::getInstance()->getCitizens() << std::endl;
+    std::cout << "La FELICIDAD de mi ciudad es de " << IA::getInstance() -> getHappiness() << std::endl;
+    std::cout << "El NIVEL de mi ciudad es de " << IA::getInstance() -> getCityLevel() << std::endl;
+    std::cout << "La cantidad de CIUDADANOS de mi ciudad es de " << IA::getInstance() -> getCitizens() << std::endl;
 
     std::cout << "La generacion de RECURSOS de mi ciudad es: " << std::endl;
     std::cout << IA::getInstance() -> getSiderurgyAmount() << " siderurgias que generan " << IA::getInstance() -> getMetalProduction() << "metal."<< std::endl;
     std::cout << IA::getInstance() -> getQuarryAmount() << " canteras que generan " << IA::getInstance() -> getCrystalProduction() << "cristal." << std::endl;
 
-    std::cout << "Mi EJERCITO es de " << IA::getInstance()->getArmySize() << " unidades, de las cuales tengo: " << std::endl;
+    std::cout << "Mi EJERCITO es de " << IA::getInstance() -> getArmySize() << " unidades, de las cuales tengo: " << std::endl;
     std::cout << IA::getInstance() -> getMeleeAmount() << " melees" << std::endl;
     std::cout << IA::getInstance() -> getRangeAmount() << " rangos" << std::endl;
     std::cout << IA::getInstance() -> getSiegeAmount() << " asedios" << std::endl;

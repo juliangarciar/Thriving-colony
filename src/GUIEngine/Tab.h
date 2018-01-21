@@ -17,6 +17,7 @@ class Tab : public GUIElement{
         int getID();
 
         gui::IGUIElement *getGUIElement();
+        
     private:
         gui::IGUITab *tab;
 };

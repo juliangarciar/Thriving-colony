@@ -4,20 +4,20 @@
 
 using namespace std;
 
-int main(){
+int main() {
     Game *game = Game::Instance();
 
-    game->Init();
+    game -> Init();
 
-    while (game->getWindow()->isOpen()){
-        if (game->getWindow()->isReady()){
-            game->Input();
-            game->Update();
-            game->Render();
+    while (game -> getWindow() -> isOpen()) {
+        if (game -> getWindow() -> isReady()) {
+            game -> Input();
+            game -> Update();
+            game -> Render();
         }
     }
 
-    game->CleanUp();
+    game -> CleanUp();
     
     return 0;
 }

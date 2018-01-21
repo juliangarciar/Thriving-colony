@@ -10,7 +10,7 @@ ArmyNode::ArmyNode(Node *fatherPnt) : Node() {
     children[1] = new BuildingNode(this);
 }
 
-ArmyNode::~ArmyNode(){
+ArmyNode::~ArmyNode() {
     delete father;
     delete[] children;
 }
@@ -23,7 +23,7 @@ void ArmyNode::question() {
         children[1] -> question();
         return;
     } 
-    if (IA::getInstance() -> getTree() -> getNeedSoldiers()){
+    if (IA::getInstance() -> getTree() -> getNeedSoldiers()) {
         if (IA::getInstance() -> getCitizens() < 10) {
             IA::getInstance() -> getTree() -> setRequireCitizens(true);
         } else {

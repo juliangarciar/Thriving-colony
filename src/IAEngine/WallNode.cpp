@@ -6,7 +6,7 @@ WallNode::WallNode(Node *fatherPnt) : Node() {
     children = 0;
 }
 
-WallNode::~WallNode(){
+WallNode::~WallNode() {
     delete father;
 }
 

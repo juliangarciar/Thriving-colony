@@ -17,6 +17,7 @@ class Text : public GUIElement {
 
         void disable();
         void enable();
+        
     private:
         gui::IGUIStaticText *text;
 };

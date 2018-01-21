@@ -11,7 +11,7 @@ MountedMeleeNode::MountedMeleeNode(Node *fatherPnt) : Node() {
     */
 }
 
-MountedMeleeNode::~MountedMeleeNode(){
+MountedMeleeNode::~MountedMeleeNode() {
     delete father;
     //delete[] children;
 }
@@ -24,9 +24,6 @@ void MountedMeleeNode::question() {
         if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MountedMeleeMetalCost, Enumeration::UnitCost::MountedMeleeCrystalCost, Enumeration::Team::IA)) {
             // Unit type
             Enumeration::UnitType unitData = Enumeration::UnitType::AdvancedM; 
-            // WTF?
-            //Vector3<float>* vectorData = new Vector3<float>();
-
             IA::getInstance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {

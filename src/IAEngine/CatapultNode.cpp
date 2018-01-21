@@ -11,7 +11,7 @@ CatapultNode::CatapultNode(Node *fatherPnt) : Node() {
     */
 }
 
-CatapultNode::~CatapultNode(){
+CatapultNode::~CatapultNode() {
     delete father;
     //delete[] children;
 }
@@ -24,9 +24,6 @@ void CatapultNode::question() {
         if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::CatapultMetalCost, Enumeration::UnitCost::CatapultCrystalCost, Enumeration::Team::IA)) {
             // Unit type
             Enumeration::UnitType unitData = Enumeration::UnitType::Launcher; 
-            // WTF?
-            //Vector3<float>* vectorData = new Vector3<float>();
-
             IA::getInstance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {

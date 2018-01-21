@@ -64,6 +64,7 @@ class Unit : public Entity {
         void chaseState();
         
         bool refreshTarget();
+        
     private:
         Enumeration::UnitState state;
     //Unit stats

@@ -11,7 +11,7 @@ ResourceNode::ResourceNode(Node *fatherPnt) : Node() {
     
 }
 
-ResourceNode::~ResourceNode(){
+ResourceNode::~ResourceNode() {
     delete father;
     delete[] children;
 }

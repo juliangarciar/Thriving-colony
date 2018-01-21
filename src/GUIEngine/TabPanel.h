@@ -22,6 +22,7 @@ class TabPanel : public GUIElement {
         bool changeActiveTab(int id);
 
         gui::IGUIElement *getGUIElement();
+        
     private:
         gui::IGUITabControl *ctrl;
         std::map<int, Tab*> *tabs;

@@ -6,12 +6,11 @@ WorkshopNode::WorkshopNode(Node *fatherPnt) : Node() {
     children = 0;
 }
 
-WorkshopNode::~WorkshopNode(){
+WorkshopNode::~WorkshopNode() {
     delete father;
 }
 
 void WorkshopNode::question() {
-
     IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::BuildWorkshop);
     //std::cout << Construyo un taller << std::endl;
     if (IA::getInstance() -> getQuarryAmount() == 0) {

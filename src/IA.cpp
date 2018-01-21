@@ -14,7 +14,7 @@ IA::IA() : Player() {
     buildings = new BuildingManager();
     units = new UnitManager(Enumeration::Team::IA, Enumeration::RaceType::Kaonov);
 
-    // CHoices for the debugging system
+    // Choices for the debugging system
     choiceIndex = 0;
     initializeChoices();
     
@@ -23,6 +23,8 @@ IA::IA() : Player() {
 IA::~IA() {
     delete tree;
     delete nodeRootIA;
+    delete buildings;
+    delete units;
     choices -> clear();
     delete choices;
 }

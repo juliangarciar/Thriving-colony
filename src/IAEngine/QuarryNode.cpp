@@ -6,7 +6,7 @@ QuarryNode::QuarryNode(Node *fatherPnt) : Node() {
     children = 0;
 }
 
-QuarryNode::~QuarryNode(){
+QuarryNode::~QuarryNode() {
     delete father;
 }
 

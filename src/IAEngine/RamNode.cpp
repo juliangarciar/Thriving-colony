@@ -11,7 +11,7 @@ RamNode::RamNode(Node *fatherPnt) : Node() {
     */
 }
 
-RamNode::~RamNode(){
+RamNode::~RamNode() {
     delete father;
     //delete[] children;
 }
@@ -24,9 +24,6 @@ void RamNode::question() {
         if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::RamMetalCost, Enumeration::UnitCost::RamCrystalCost, Enumeration::Team::IA)) {
             // Unit type
             Enumeration::UnitType unitData = Enumeration::UnitType::Desintegrator;
-            // WTF?
-            //Vector3<float>* vectorData = new Vector3<float>();
-
             IA::getInstance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {

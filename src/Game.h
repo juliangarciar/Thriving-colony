@@ -26,6 +26,7 @@ class Game {
         EventSystem *getEvents();
 		MenuState *getMenuState();
 		GameState *getGameState();
+        
     protected:
         Game();
         virtual ~Game();

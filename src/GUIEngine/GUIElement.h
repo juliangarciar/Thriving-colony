@@ -8,6 +8,7 @@ using namespace irr;
 class GUIElement {
     public:
         virtual gui::IGUIElement *getGUIElement() = 0;
+        
     private:
 };
 

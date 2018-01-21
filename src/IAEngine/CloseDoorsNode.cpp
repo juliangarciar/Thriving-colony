@@ -7,7 +7,7 @@ CloseDoorsNode::CloseDoorsNode(Node *fatherPnt) : Node() {
     children = 0;
 }
 
-CloseDoorsNode::~CloseDoorsNode(){
+CloseDoorsNode::~CloseDoorsNode() {
     delete father;
 }
 

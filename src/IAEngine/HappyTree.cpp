@@ -5,7 +5,7 @@
 #include "ArmyNode.h"
 #include "../IA.h"
 
-HappyTree::HappyTree(Node *fatherPnt) : BehaviourTree(){
+HappyTree::HappyTree(Node *fatherPnt) : BehaviourTree() {
     happinessThreshold = 80;
     quarryMilestone = 50;
     mountedCreatureMilestone = 80;

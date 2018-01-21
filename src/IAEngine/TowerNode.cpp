@@ -6,7 +6,7 @@ TowerNode::TowerNode(Node *fatherPnt) : Node() {
     children = 0;
 }
 
-TowerNode::~TowerNode(){
+TowerNode::~TowerNode() {
     delete father;
 }
 

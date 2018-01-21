@@ -6,7 +6,7 @@ SiderurgyNode::SiderurgyNode(Node *fatherPnt) : Node() {
     children = 0;
 }
 
-SiderurgyNode::~SiderurgyNode(){
+SiderurgyNode::~SiderurgyNode() {
     delete father;
 }
 

@@ -6,7 +6,7 @@ HomeNode::HomeNode(Node *fatherPnt) : Node() {
     children = 0;
 }
 
-HomeNode::~HomeNode(){
+HomeNode::~HomeNode() {
     delete father;
 }
 

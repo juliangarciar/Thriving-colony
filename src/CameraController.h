@@ -22,6 +22,7 @@ class CameraController {
         void Zoom(InputManager *receiver);
 
         Camera *getCamera();
+        
     private:
         //Helpers
         Terrain *terrain;

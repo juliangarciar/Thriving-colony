@@ -6,7 +6,7 @@ MarketNode::MarketNode(Node *fatherPnt) : Node() {
     children = 0;
 }
 
-MarketNode::~MarketNode(){
+MarketNode::~MarketNode() {
     delete father;
 }
 

@@ -14,7 +14,7 @@ DefendNode::DefendNode(Node *fatherPnt) : Node() {
     children[3] = new BarrackNode(this);
 }
 
-DefendNode::~DefendNode(){
+DefendNode::~DefendNode() {
     delete father;
     delete[] children;
 }

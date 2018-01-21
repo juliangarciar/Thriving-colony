@@ -6,7 +6,7 @@ SchoolNode::SchoolNode(Node *fatherPnt) : Node() {
     children = 0;
 }
 
-SchoolNode::~SchoolNode(){
+SchoolNode::~SchoolNode() {
     delete father;
 }
 

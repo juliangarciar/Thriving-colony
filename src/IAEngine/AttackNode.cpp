@@ -13,13 +13,12 @@ AttackNode::AttackNode(Node *fatherPnt) : Node() {
 
 }
 
-AttackNode::~AttackNode(){
+AttackNode::~AttackNode() {
     delete father;
     delete[] children;
 }
 
 void AttackNode::question() {
-    
     //std::cout << "Voy a atacar" << std::endl;
     //To Do: Attack the enemy
     if (IA::getInstance() -> getDeployedTroops()) {

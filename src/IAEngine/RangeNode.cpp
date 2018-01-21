@@ -10,7 +10,7 @@ RangeNode::RangeNode(Node *fatherPnt) : Node() {
     children[1] = new RangeFootmenNode(this);
 }
 
-RangeNode::~RangeNode(){
+RangeNode::~RangeNode() {
     delete father;
     delete[] children;
 }

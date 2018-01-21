@@ -11,7 +11,7 @@ CreatureNode::CreatureNode(Node *fatherPnt) : Node() {
     */
 }
 
-CreatureNode::~CreatureNode(){
+CreatureNode::~CreatureNode() {
     delete father;
     //delete children;
 }
@@ -24,9 +24,6 @@ void CreatureNode::question() {
         if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::CreatureMetalCost, Enumeration::UnitCost::CreatureCrystalCost, Enumeration::Team::IA)) {
             // Unit type
             Enumeration::UnitType unitData = Enumeration::UnitType::Idol;
-            // WTF?
-            //Vector3<float>* vectorData = new Vector3<float>();
-
             IA::getInstance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {

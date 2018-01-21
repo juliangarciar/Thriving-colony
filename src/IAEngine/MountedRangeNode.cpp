@@ -11,7 +11,7 @@ MountedRangeNode::MountedRangeNode(Node *fatherPnt) : Node() {
     */
 }
 
-MountedRangeNode::~MountedRangeNode(){
+MountedRangeNode::~MountedRangeNode() {
     delete father;
     //delete[] children;
 }
@@ -24,9 +24,6 @@ void MountedRangeNode::question() {
         if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MountedRangedMetalCost, Enumeration::UnitCost::MountedRangedCrystalCost, Enumeration::Team::IA)) {
             // Unit type
             Enumeration::UnitType unitData = Enumeration::UnitType::StandardR; 
-            // WTF?
-            //Vector3<float>* vectorData = new Vector3<float>();
-
             IA::getInstance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {

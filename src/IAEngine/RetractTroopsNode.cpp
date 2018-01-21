@@ -7,7 +7,7 @@ RetractTroopsNode::RetractTroopsNode(Node *fatherPnt) : Node() {
     children = 0;
 }
 
-RetractTroopsNode::~RetractTroopsNode(){
+RetractTroopsNode::~RetractTroopsNode() {
     delete father;
 }
 

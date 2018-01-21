@@ -31,8 +31,8 @@ nodeGrid::nodeGrid(int x, int y, int z, irr::scene::ISceneManager *smgrData)
 
 nodeGrid::~nodeGrid()
 {
-    delete cube;
-    delete smgr;
+    //ToDo: borrar cube
+    //delete cube;
 }
 
 void nodeGrid::swapColor(irr::video::SColor colorData)

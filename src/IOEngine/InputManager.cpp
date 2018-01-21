@@ -28,7 +28,7 @@ InputManager::~InputManager() {
 /// ==============================
 /// Input event handler
 /// ==============================
-bool InputManager::OnEvent(const SEvent& event){
+bool InputManager::OnEvent(const SEvent& event) {
     bool eventprocessed = false;
 
     //////////////////////////////
@@ -38,12 +38,12 @@ bool InputManager::OnEvent(const SEvent& event){
     // id = 1;
     // id = 1;
     // id = 1;
-    // id = event.GUIEvent.Caller->getID();
+    // id = event.GUIEvent.Caller -> getID();
     // std::cout<<"Existe EET_GUI_EVENT"<<std::endl;
 
     if (event.EventType == EET_GUI_EVENT) {
-        if (event.GUIEvent.EventType == gui::EGET_BUTTON_CLICKED){ //gui::EGET_BUTTON_CLICKED
-            id = event.GUIEvent.Caller->getID();
+        if (event.GUIEvent.EventType == gui::EGET_BUTTON_CLICKED) { //gui::EGET_BUTTON_CLICKED
+            id = event.GUIEvent.Caller -> getID();
         }
     }
 
@@ -281,7 +281,7 @@ bool InputManager::keyReleased(char keycode) {
     }
 }
 
-int InputManager::getGUIClickedID(){
+int InputManager::getGUIClickedID() {
     return id;
 }
 

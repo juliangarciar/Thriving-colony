@@ -7,7 +7,7 @@ BarrackNode::BarrackNode(Node *fatherPnt) : Node() {
     children = 0;
 }
 
-BarrackNode::~BarrackNode(){
+BarrackNode::~BarrackNode() {
     delete father;
 }
 

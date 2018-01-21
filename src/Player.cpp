@@ -130,7 +130,7 @@ int Player::getTowerAmount() {
 BuildingManager* Player::getBuildingManager() {
     return buildings;
 }
-UnitManager* Player::getUnitManager(){
+UnitManager* Player::getUnitManager() {
     return units;
 }
 /*
@@ -240,15 +240,6 @@ bool Player::losingBattle() {
     //ToDo: calcular si estas perdiendo tu la  batalla
     return false;
 }
-
-//ToDo: las tropas no deberian ir en unit manager?
-/*std::vector<Unit*>* Player::getTroops() {
-    //ToDo: Devolver tropas
-    //TODO al cuadrado: Decidir como va a ser lo de las tropas   
-    // las tropas van en el unit manager oogili boogili
-    //return troops;
-    return units -> getTotalTroops();
-}*/
 
 int Player::getMetalAmount() {
     return metalAmount;
