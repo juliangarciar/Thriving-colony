@@ -17,34 +17,34 @@ int main(){
         return 1;
     }
 
-    IVideoDriver* driver = device->getVideoDriver();
-    ISceneManager* smgr = device->getSceneManager();
-    IGUIEnvironment* guienv = device->getGUIEnvironment();
+    IVideoDriver* driver = device -> getVideoDriver();
+    ISceneManager* smgr = device -> getSceneManager();
+    IGUIEnvironment* guienv = device -> getGUIEnvironment();
 
     // Creamos un cubo simple
-    IMeshSceneNode *cubeNode = smgr->addCubeSceneNode(10);
+    IMeshSceneNode *cubeNode = smgr -> addCubeSceneNode(10);
     if(cubeNode) {
-        cubeNode->setMaterialFlag(EMF_LIGHTING, true);
-        cubeNode->setPosition(vector3df(0,10,0));
+        cubeNode -> setMaterialFlag(EMF_LIGHTING, true);
+        cubeNode -> setPosition(vector3df(0,10,0));
     } 
 
     // Creamos una camara
-    ICameraSceneNode* camera = smgr->addCameraSceneNode(); //0, vector3df(0,30,-40), vector3df(0,5,0) 
+    ICameraSceneNode* camera = smgr -> addCameraSceneNode(); //0, vector3df(0,30,-40), vector3df(0,5,0) 
     // LLamamos a la funcion de la camara
     BirdsEyeCAM birdseyecam1;
     //birdseyecam1.Update(camera, device, driver);
 
-    while(device->run()){
-        driver->beginScene(true, true, SColor(255,100,101,140));
+    while(device -> run()){
+        driver -> beginScene(true, true, SColor(255,100,101,140));
         
         birdseyecam1.Update(camera, device, driver); 
         
-        smgr->drawAll();
-        guienv->drawAll();
+        smgr -> drawAll();
+        guienv -> drawAll();
 
-        driver->endScene();
+        driver -> endScene();
     }
-    device->drop();
+    device -> drop();
 
     return 0;
 }

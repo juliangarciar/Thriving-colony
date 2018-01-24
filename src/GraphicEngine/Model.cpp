@@ -11,7 +11,7 @@ Model::Model(int id, int size) {
 
     meshNode -> setMaterialFlag(video::EMF_LIGHTING, false);
     
-    selector = smgr->createTriangleSelectorFromBoundingBox(meshNode);
+    selector = smgr -> createTriangleSelectorFromBoundingBox(meshNode);
     if (selector) {
         meshNode -> setTriangleSelector(selector);
         selector -> drop(); // We're done with this selector, so drop it now.
@@ -50,8 +50,8 @@ Model::Model(int id, const wchar_t *path) {
 }
 
 Model::Model(SceneNode *parent, int id, const wchar_t *path) {
-    scene::ISceneManager *smgr = Window::Instance()->getSceneManager();
-    meshNode = smgr -> addMeshSceneNode(smgr->getMesh(path));
+    scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
+    meshNode = smgr -> addMeshSceneNode(smgr -> getMesh(path));
     meshNode -> setID(id);
 
     meshNode -> setMaterialFlag(video::EMF_LIGHTING, false);
@@ -66,8 +66,8 @@ Model::Model(SceneNode *parent, int id, const wchar_t *path) {
 }
 
 Model::~Model() {
-    meshNode->remove();
-    //selector->drop();
+    meshNode -> remove();
+    //selector -> drop();
 }
 
 void Model::setID(int id) {

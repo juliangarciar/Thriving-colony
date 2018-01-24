@@ -41,38 +41,38 @@ int main(){
     if (device == 0)
         return 1; // could not create selected driver.
 
-    video::IVideoDriver *driver = device->getVideoDriver();
-    scene::ISceneManager *smgr = device->getSceneManager();
-    driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
+    video::IVideoDriver *driver = device -> getVideoDriver();
+    scene::ISceneManager *smgr = device -> getSceneManager();
+    driver -> setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
     //INIT MAP DATA
     grid* mapita = new grid(gridX, gridY, smgr);
     
     
-    nodeGrid *start = mapita->getGrid()[pStartX][pStartY];
-    nodeGrid *end = mapita->getGrid()[pEndX][pEndY];
-    start->setCameFrom(NULL);
-    start->setCounted(true);
-    start->setWeight(0);
+    nodeGrid *start = mapita -> getGrid()[pStartX][pStartY];
+    nodeGrid *end = mapita -> getGrid()[pEndX][pEndY];
+    start -> setCameFrom(NULL);
+    start -> setCounted(true);
+    start -> setWeight(0);
 
-        start->swapColor(irr::video::SColor(0, 0, 0, 255));
-        end->swapColor(irr::video::SColor(0, 255, 0, 0));
+        start -> swapColor(irr::video::SColor(0, 0, 0, 255));
+        end -> swapColor(irr::video::SColor(0, 255, 0, 0));
 
         
         //DRAW OBSTACLES
         for (int x = 13, y = 15; x < 20; x++, y--)
         {
-            if(start->getX() != x && end->getX() != x && start->getY() != y && end->getY() != y){
-                mapita->getGrid()[x][y]->swapColor(irr::video::SColor(0, 0, 0, 0));
-                mapita->getGrid()[x][y]->setBlock(true);
+            if(start -> getX() != x && end -> getX() != x && start -> getY() != y && end -> getY() != y){
+                mapita -> getGrid()[x][y] -> swapColor(irr::video::SColor(0, 0, 0, 0));
+                mapita -> getGrid()[x][y] -> setBlock(true);
             }
             
         }
         for (int x = 12, y = 15; x < 20; x++, y--)
         {
-            if (start->getX() != x && end->getX() != x && start->getY() != y && end->getY() != y)
+            if (start -> getX() != x && end -> getX() != x && start -> getY() != y && end -> getY() != y)
             {
-                mapita->getGrid()[x][y]->swapColor(irr::video::SColor(0, 0, 0, 0));
-                mapita->getGrid()[x][y]->setBlock(true);
+                mapita -> getGrid()[x][y] -> swapColor(irr::video::SColor(0, 0, 0, 0));
+                mapita -> getGrid()[x][y] -> setBlock(true);
             }
             
         }
@@ -81,11 +81,11 @@ int main(){
 
         //ADD IRRLICHT CAMERA
         scene::ICameraSceneNode *camera =
-            smgr->addCameraSceneNodeFPS();
+            smgr -> addCameraSceneNodeFPS();
 
-        camera->setPosition(core::vector3df(0, 500, 20));
-        camera->setTarget(core::vector3df(0, 0, 0));
-        camera->setFarValue(2000.0f);
+        camera -> setPosition(core::vector3df(0, 500, 20));
+        camera -> setTarget(core::vector3df(0, 0, 0));
+        camera -> setFarValue(2000.0f);
         //MORE THINGS
         //bool done = false;
         std::vector<nodeGrid *> pathFind;
@@ -95,18 +95,18 @@ int main(){
         troop *character = NULL;
         character = new troop(0, 0, 1, smgr);
         MyEventReceiver event;
-        device->setEventReceiver(&event);
+        device -> setEventReceiver(&event);
         //NUEVO VERSION
         irr::scene::ISceneManager *sceneManager;
-        sceneManager = device->getSceneManager();
+        sceneManager = device -> getSceneManager();
         irr::scene::ISceneCollisionManager *collisionManager;
-        collisionManager = sceneManager->getSceneCollisionManager();
+        collisionManager = sceneManager -> getSceneCollisionManager();
         irr::core::triangle3df triangle;
         //irr::scene::ISceneNode *node = 0;
         //clock_t gameTime;
         //NUEVO TERRENO
         scene::ITerrainSceneNode *currentTerrain =
-            sceneManager->addTerrainSceneNode(
+            sceneManager -> addTerrainSceneNode(
 
                 "media/heightmap.bmp",            // height map
                 0,                                // parent node
@@ -121,48 +121,48 @@ int main(){
                 5,              // maxLOD
                 scene::ETPS_17, // patchSize
                 4);
-        irr::scene::ITriangleSelector *selector = sceneManager->createTerrainTriangleSelector(currentTerrain);
+        irr::scene::ITriangleSelector *selector = sceneManager -> createTerrainTriangleSelector(currentTerrain);
 
-        currentTerrain->setTriangleSelector(selector);
+        currentTerrain -> setTriangleSelector(selector);
 
         //MAIN BUCLE
-        while (device->run())
+        while (device -> run())
         {
-            if (device->isWindowActive())
+            if (device -> isWindowActive())
             {
 
-                driver->beginScene(true, true, 0);
+                driver -> beginScene(true, true, 0);
 
                 if (event.GetMouseState().RightButtonDown)
                 {
 
-                    //irr::gui::ICursorControl *myCursor = device->getCursorControl();
-                    //irr::core::vector2di pos = myCursor->getPosition();
+                    //irr::gui::ICursorControl *myCursor = device -> getCursorControl();
+                    //irr::core::vector2di pos = myCursor -> getPosition();
                     //
-                    //irr::core::line3df ray = collisionManager->getRayFromScreenCoordinates(pos);
+                    //irr::core::line3df ray = collisionManager -> getRayFromScreenCoordinates(pos);
                     ////std::cout << "X :" << pos.X << "Y :" << pos.Y << endl;
                     //
-                    //if (collisionManager->getCollisionPoint(ray, selector, movData, triangle, node))
+                    //if (collisionManager -> getCollisionPoint(ray, selector, movData, triangle, node))
                     //{
                     //    if(!done){
                     //        cout << "OMG" << endl;
                     //        cout << "X: " << movData.X << " Y: " << movData.Z << endl;
                     //
-                    //        character->setDes(movData);
+                    //        character -> setDes(movData);
                     //        done = true;
                     //    }
                     //    else{
                     //        done = false;
                     //    }
                     //}
-                    estrella->startAlgoritm();
+                    estrella -> startAlgoritm();
                 }
 
                 //Character update
-                //character->updateTroop();
+                //character -> updateTroop();
                 //Draw scene
-                smgr->drawAll();
-                driver->endScene();
+                smgr -> drawAll();
+                driver -> endScene();
             }
     }
     delete start;

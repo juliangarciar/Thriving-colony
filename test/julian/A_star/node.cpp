@@ -10,9 +10,9 @@ node::node(int x, int y){
     //weight = 0;
     cameFrom = NULL;
     rectangle = new sf::RectangleShape(sf::Vector2f(20.f, 20.f));
-    rectangle->setFillColor(sf::Color::Green);
-    rectangle->setOrigin(sf::Vector2f(0, 0));
-    rectangle->setPosition(sf::Vector2f(x * 24.f, y * 24.f));
+    rectangle -> setFillColor(sf::Color::Green);
+    rectangle -> setOrigin(sf::Vector2f(0, 0));
+    rectangle -> setPosition(sf::Vector2f(x * 24.f, y * 24.f));
 
 }
 node::node(const node& orig){
@@ -23,7 +23,7 @@ node::~node(){
 }
 void node::swapColor(sf::Color color)
 {
-    rectangle->setFillColor(color);
+    rectangle -> setFillColor(color);
 }
 sf::RectangleShape *node::getRectangle(){
     return rectangle;
@@ -38,42 +38,42 @@ bool node::itsBlock(){
     return block;
 }
 void node::setBlock(bool blockData){
-    this->block = blockData;
+    this -> block = blockData;
 }
 bool node::itsVisited(){
     return visited;
 }
 void node::setVisited(bool visitedData){
-    this->visited = visitedData;
+    this -> visited = visitedData;
 }
 bool node::itsFrontier(){
-    return this->frontier;
+    return this -> frontier;
 }
 void node::setFrontier(bool frontierData){
-    this->frontier = frontierData;
+    this -> frontier = frontierData;
 }
 int node::getWeight()
 {
-    return this->weight;
+    return this -> weight;
 }
 void node::setWeight(int weightData){
-    this->weight = weightData;
+    this -> weight = weightData;
 }
 node* node::getCameFrom(){
-    return this->cameFrom;
+    return this -> cameFrom;
 }
 void node::setCameFrom(node* last){
-    this->cameFrom = last;
+    this -> cameFrom = last;
 }
 bool node::itsCounted(){
-    return this->counted;
+    return this -> counted;
 }
 void node::setCounted(bool countedData){
-    this->counted = countedData;
+    this -> counted = countedData;
 }
 int node::getPriority(){
-    return this->priority;
+    return this -> priority;
 }
 void node::setPriority(int priorityData){
-    this->priority = priorityData;
+    this -> priority = priorityData;
 }

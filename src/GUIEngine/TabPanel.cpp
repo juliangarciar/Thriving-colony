@@ -2,7 +2,7 @@
 #include <GraphicEngine/Window.h>
 
 TabPanel::TabPanel(){
-    ctrl = Window::Instance()->getGUIEnvironment()->add<nanogui::TabWidget>();
+    ctrl = Window::Instance() -> getGUIEnvironment() -> add<nanogui::TabWidget>();
     //addTabControl(dimPos.getRect2D(), 0, true, true, id);
 
     tabs = new std::map<int, Tab*>();
@@ -12,34 +12,34 @@ TabPanel::~TabPanel(){
     /*delete ctrl;
     ctrl = NULL;*/
 
-    tabs->clear();
+    tabs -> clear();
 }
 
 Tab *TabPanel::createTab(std::string text, int id){ 
-    Tab *t = new Tab(ctrl->createTab(id, text));
-    tabs->insert(std::pair<int, Tab*>(id, t));
+    Tab *t = new Tab(ctrl -> createTab(id, text));
+    tabs -> insert(std::pair<int, Tab*>(id, t));
     return t;
 } 
 
 Tab *TabPanel::getTab(int id){
     std::map<int,Tab*>::iterator it;
-    it = tabs->find(id);
-    if (it != tabs->end()) return tabs->find(id)->second;
+    it = tabs -> find(id);
+    if (it != tabs -> end()) return tabs -> find(id) -> second;
     return NULL; 
 }
 
 void TabPanel::show(){
-    ctrl->setVisible(true);
+    ctrl -> setVisible(true);
 }
  
 void TabPanel::hide(){
-    ctrl->setVisible(false);
+    ctrl -> setVisible(false);
 }
 
 bool TabPanel::changeActiveTab(int id){
-    std::map<int,Tab*>::iterator it = tabs->find(id);
-    if (it != tabs->end()) {
-        ctrl->setActiveTab(id);
+    std::map<int,Tab*>::iterator it = tabs -> find(id);
+    if (it != tabs -> end()) {
+        ctrl -> setActiveTab(id);
         return true;
     }
     return false;

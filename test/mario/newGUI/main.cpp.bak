@@ -38,90 +38,90 @@ int main(int argc, char **argv) {
     IrrlichtDevice* device = createDeviceEx(param);
     if (!device) return 1;
 
-    video::IVideoDriver* driver = device->getVideoDriver();
-    driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
+    video::IVideoDriver* driver = device -> getVideoDriver();
+    driver -> setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
 
-    scene::ISceneManager* smgr = device->getSceneManager();
+    scene::ISceneManager* smgr = device -> getSceneManager();
 
     // Create a nanogui screen and pass the glfw pointer to initialize
     screen = new Screen();
-    screen->initialize(window, true);
+    screen -> initialize(window, true);
 
     glfwSetCursorPosCallback(window,
             [](GLFWwindow *, double x, double y) {
-            screen->cursorPosCallbackEvent(x, y);
+            screen -> cursorPosCallbackEvent(x, y);
         }
     );
 
     glfwSetMouseButtonCallback(window,
         [](GLFWwindow *, int button, int action, int modifiers) {
-            screen->mouseButtonCallbackEvent(button, action, modifiers);
+            screen -> mouseButtonCallbackEvent(button, action, modifiers);
         }
     );
 
     glfwSetKeyCallback(window,
         [](GLFWwindow *, int key, int scancode, int action, int mods) {
-            screen->keyCallbackEvent(key, scancode, action, mods);
+            screen -> keyCallbackEvent(key, scancode, action, mods);
         }
     );
 
     glfwSetCharCallback(window,
         [](GLFWwindow *, unsigned int codepoint) {
-            screen->charCallbackEvent(codepoint);
+            screen -> charCallbackEvent(codepoint);
         }
     );
 
     glfwSetDropCallback(window,
         [](GLFWwindow *, int count, const char **filenames) {
-            screen->dropCallbackEvent(count, filenames);
+            screen -> dropCallbackEvent(count, filenames);
         }
     );
 
     glfwSetScrollCallback(window,
         [](GLFWwindow *, double x, double y) {
-            screen->scrollCallbackEvent(x, y);
+            screen -> scrollCallbackEvent(x, y);
        }
     );
 
     glfwSetFramebufferSizeCallback(window,
         [](GLFWwindow *, int width, int height) {
-            screen->resizeCallbackEvent(width, height);
+            screen -> resizeCallbackEvent(width, height);
         }
     );
 
-    smgr->addCameraSceneNode(0, core::vector3df(0,30,-40), core::vector3df(0,5,0));
+    smgr -> addCameraSceneNode(0, core::vector3df(0,30,-40), core::vector3df(0,5,0));
 
     scene::IMeshSceneNode *cube;
-    cube = smgr->addCubeSceneNode(10);
-    cube->setMaterialFlag(video::EMF_LIGHTING, false);
-    cube->setPosition(core::vector3df(0, 0, 0));
+    cube = smgr -> addCubeSceneNode(10);
+    cube -> setMaterialFlag(video::EMF_LIGHTING, false);
+    cube -> setPosition(core::vector3df(0, 0, 0));
 
     // Create nanogui gui
-    screen->add<Button>("Hola");
+    screen -> add<Button>("Hola");
 
-    cube = smgr->addCubeSceneNode(10);
-    cube->setMaterialFlag(video::EMF_LIGHTING, false);
-    cube->setPosition(core::vector3df(10, 10, 10));
+    cube = smgr -> addCubeSceneNode(10);
+    cube -> setMaterialFlag(video::EMF_LIGHTING, false);
+    cube -> setPosition(core::vector3df(10, 10, 10));
    
-    screen->setVisible(true);
-    screen->performLayout();
+    screen -> setVisible(true);
+    screen -> performLayout();
 
-    cube = smgr->addCubeSceneNode(10);
-    cube->setMaterialFlag(video::EMF_LIGHTING, false);
-    cube->setPosition(core::vector3df(20, 20, 20));
+    cube = smgr -> addCubeSceneNode(10);
+    cube -> setMaterialFlag(video::EMF_LIGHTING, false);
+    cube -> setPosition(core::vector3df(20, 20, 20));
 
     // Game loop
     while (!glfwWindowShouldClose(window)) {
         // Check if any events have been activated (key pressed, mouse moved etc.) and call corresponding response functions
         glfwPollEvents();
 
-        driver->beginScene(true, true, video::SColor(255,100,101,140));
+        driver -> beginScene(true, true, video::SColor(255,100,101,140));
 
         // Draw nanogui
-        smgr->drawAll();
-        screen->drawWidgets();
+        smgr -> drawAll();
+        screen -> drawWidgets();
 
-        driver->endScene();
+        driver -> endScene();
     }
 
     // Terminate GLFW, clearing any resources allocated by GLFW.

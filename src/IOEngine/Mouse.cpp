@@ -12,7 +12,7 @@ Mouse::Mouse(){
         mouseButtonState[i] = Enumeration::UP;
     }
 
-    GLFWwindow *window = Window::Instance()->getWindow();
+    GLFWwindow *window = Window::Instance() -> getWindow();
 
     cursor = glfwCreateStandardCursor(CURSOR_NORMAL);
     glfwSetCursor(window, cursor);
@@ -20,27 +20,27 @@ Mouse::Mouse(){
     //Handle events on queue
     glfwSetCursorPosCallback(window,
             [](GLFWwindow *w, double x, double y) {
-            Window::Instance()->getGUIEnvironment()->cursorPosCallbackEvent(x, y);
+            Window::Instance() -> getGUIEnvironment() -> cursorPosCallbackEvent(x, y);
         }
     );
 
     glfwSetScrollCallback(window,
         [](GLFWwindow *w, double x, double y) {
-            Window::Instance()->getGUIEnvironment()->scrollCallbackEvent(x, y);
-            Mouse *s = Game::Instance()->getCursor();
-            s->wheel.x = x;
-            s->wheel.y = y;
+            Window::Instance() -> getGUIEnvironment() -> scrollCallbackEvent(x, y);
+            Mouse *s = Game::Instance() -> getCursor();
+            s -> wheel.x = x;
+            s -> wheel.y = y;
        }
     );
 
     glfwSetMouseButtonCallback(window,
         [](GLFWwindow *w, int button, int action, int modifiers) {
-            Window::Instance()->getGUIEnvironment()->mouseButtonCallbackEvent(button, action, modifiers);
-            Mouse *s = Game::Instance()->getCursor();
+            Window::Instance() -> getGUIEnvironment() -> mouseButtonCallbackEvent(button, action, modifiers);
+            Mouse *s = Game::Instance() -> getCursor();
             if (action == GLFW_PRESS) {
-                s->mouseButtonState[button] = Enumeration::PRESSED;
+                s -> mouseButtonState[button] = Enumeration::PRESSED;
             } else if (action == GLFW_RELEASE) {
-                s->mouseButtonState[button] = Enumeration::RELEASED;
+                s -> mouseButtonState[button] = Enumeration::RELEASED;
             }
         }
     );
@@ -171,7 +171,7 @@ float Mouse::getWheelY(){
 // Set position
 void Mouse::setPosition(Vector2<int> p){
     if (position.x != p.x || position.y != p.y){
-        glfwSetCursorPos(Window::Instance()->getWindow(), p.x, p.y);
+        glfwSetCursorPos(Window::Instance() -> getWindow(), p.x, p.y);
         position.set(p.x, p.y);
     }
 }
@@ -181,25 +181,25 @@ void Mouse::changeIcon(int shape){
     if (isVisible() && shape != currentCursor) {
         glfwDestroyCursor(cursor);
         cursor = glfwCreateStandardCursor(shape);
-        glfwSetCursor(Window::Instance()->getWindow(), cursor);
+        glfwSetCursor(Window::Instance() -> getWindow(), cursor);
         currentCursor = shape;
     }
 }
 
 // Mouse visible
 void Mouse::show(){
-    glfwSetInputMode(Window::Instance()->getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glfwSetInputMode(Window::Instance() -> getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     visible = true;
 }
 
 void Mouse::hide(){
-    glfwSetInputMode(Window::Instance()->getWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+    glfwSetInputMode(Window::Instance() -> getWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
     visible = false;
 }
 
 Vector2<int> Mouse::getPosition() {
     double x, y;
-    glfwGetCursorPos(Window::Instance()->getWindow(), &x, &y);
+    glfwGetCursorPos(Window::Instance() -> getWindow(), &x, &y);
     position.set(x, y);
     return position;
 }

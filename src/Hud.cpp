@@ -30,7 +30,7 @@ Hud::Hud() {
     buttonWorkshop = new Button(buildingsPanel, "Workshop");
     buttonExpandTerrain = new Button(buildingsPanel, "Expand terrain");*/
 
-//    buildingsPanel->addChild(buttonBarn);
+//    buildingsPanel -> addChild(buttonBarn);
 
 
     /*buttonBarn = new Button(Rect2D<int>(746, 680, 100, 30).getFixed(), Enumeration::idGUI::GUI_ID_BUILD_BARN_BUTTON, L"Barn", L"Build a barn that will allow you to train mounted military units.\n Metal cost: 800.");
@@ -177,17 +177,17 @@ void Hud::addTab(int id, int type){
 }
 
 void Hud::showPopup(int tabId){
-    /*if (tabs->changeActiveTab(tabId))
-        tabs->enable();*/
+    /*if (tabs -> changeActiveTab(tabId))
+        tabs -> enable();*/
 }
 
 void Hud::hidePopup(){
-    /*tabs->disable();*/
+    /*tabs -> disable();*/
 }
 
 void Hud::getHUDEvents(){
     /*Game *g = Game::Instance();
-    int id = g->getIO()->getGUIClickedID();
+    int id = g -> getIO() -> getGUIClickedID();
 
     switch(id) {
         //Le botone iniciale
@@ -318,7 +318,7 @@ void Hud::getHUDEvents(){
 }
 
 void Hud::update() {
-    /*float dt = Game::Instance() ->getWindow() -> getDeltaTime();
+    /*float dt = Game::Instance()  -> getWindow() -> getDeltaTime();
     if (updateTimer <= 0) {
         //ToDo: añadir los metodos de getmetalamount y getcrystalamount
         std::wstringstream os;

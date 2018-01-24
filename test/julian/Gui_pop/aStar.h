@@ -7,7 +7,7 @@ class aStar{
 private:
     struct comparePriority{
         bool operator()(nodeGrid* const & p1, nodeGrid* const & p2 ){
-            return p1->getPriority() > p2->getPriority();
+            return p1 -> getPriority() > p2 -> getPriority();
         }
     };
     bool finish;

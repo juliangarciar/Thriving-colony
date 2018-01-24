@@ -44,33 +44,33 @@ Window::Window(int width, int height) {
     if (!device) exit(0); 
 
     // create video driver
-	driver = device->getVideoDriver();
-    driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
+	driver = device -> getVideoDriver();
+    driver -> setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
 
     // create scene manager
-	scene = device->getSceneManager();
+	scene = device -> getSceneManager();
 
     // create gui manager    
     gui = new nanogui::Screen();
-    gui->initialize(window, true);
+    gui -> initialize(window, true);
 
     glfwSetWindowUserPointer(window, gui);
 
     glfwSetCharCallback(window,
         [](GLFWwindow *w, unsigned int codepoint) {
-            Window::Instance()->getGUIEnvironment()->charCallbackEvent(codepoint);
+            Window::Instance() -> getGUIEnvironment() -> charCallbackEvent(codepoint);
         }
     );
 
     glfwSetDropCallback(window,
         [](GLFWwindow *w, int count, const char **filenames) {
-            Window::Instance()->getGUIEnvironment()->dropCallbackEvent(count, filenames);
+            Window::Instance() -> getGUIEnvironment() -> dropCallbackEvent(count, filenames);
         }
     );
 
     glfwSetFramebufferSizeCallback(window,
         [](GLFWwindow *w, int width, int height) {
-            Window::Instance()->getGUIEnvironment()->resizeCallbackEvent(width, height);
+            Window::Instance() -> getGUIEnvironment() -> resizeCallbackEvent(width, height);
         }
     );
 
@@ -83,8 +83,8 @@ Window::~Window() {
 }
 
 void Window::setGUI(){ 
-    gui->setVisible(true);
-    gui->performLayout();
+    gui -> setVisible(true);
+    gui -> performLayout();
 }
  
 void Window::beginScene(){
@@ -92,12 +92,12 @@ void Window::beginScene(){
     deltaTime = (double)(now - dtThen); // Time in seconds
     dtThen = now;
 
-    driver->beginScene(true, true, video::SColor(0,0,0,0));
+    driver -> beginScene(true, true, video::SColor(0,0,0,0));
 }
 
 void Window::endScene(){
-    scene->drawAll();
-    gui->drawWidgets();
+    scene -> drawAll();
+    gui -> drawWidgets();
     glEnable(GL_DEPTH_TEST);
 
     driver -> endScene();
@@ -113,7 +113,7 @@ bool Window::isReady(){
 }
 
 void Window::close(){
-    device->drop();
+    device -> drop();
     glfwTerminate();
 }
 
@@ -143,12 +143,12 @@ int Window::getInitialWindowHeight(){
 
 int Window::getRealWindowWidth(){
     return windowWidth;
-    //return driver->getViewPort().getWidth(); 
+    //return driver -> getViewPort().getWidth(); 
 }
 
 int Window::getRealWindowHeight(){
     return windowHeight;
-    //return driver->getViewPort().getHeight(); 
+    //return driver -> getViewPort().getHeight(); 
 }
 
 float Window::getDeltaTime() {

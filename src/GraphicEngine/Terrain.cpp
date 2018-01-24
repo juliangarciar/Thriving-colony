@@ -24,7 +24,7 @@ Terrain::Terrain(const char* heightMap) {
 }
 
 Vector3<float> Terrain::getPointCollision(Mouse *cursor){
-	Vector2<int> p = cursor->getPosition();
+	Vector2<int> p = cursor -> getPosition();
 	core::position2d<s32> pos = core::position2d<s32>(p.x, p.y);
 	core::vector3df point;
 	core::triangle3df triangle;

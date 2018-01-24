@@ -18,7 +18,7 @@ RangeNode::~RangeNode() {
 void RangeNode::question() {
     //std::cout << "Voy a hacer rangos" << std::endl;
     //First subsubsubbranch: With creature
-    if (IA::getInstance()->getCityLevel() >= IA::getInstance() -> getTree() ->getMountedCreatureMilestone()) {
+    if (IA::getInstance() -> getCityLevel() >= IA::getInstance() -> getTree()  -> getMountedCreatureMilestone()) {
         children[0] -> question();
     } else {
         //Second subsubsubbranch: Without creature

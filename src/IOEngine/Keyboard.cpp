@@ -9,19 +9,19 @@ using namespace irr;
 /// Keyboard
 /// ==============================
 Keyboard::Keyboard() {
-    GLFWwindow *window = Window::Instance()->getWindow();
+    GLFWwindow *window = Window::Instance() -> getWindow();
 
     glfwSetKeyCallback(window,
         [](GLFWwindow *w, int key, int scancode, int action, int mods) {
-            Window::Instance()->getGUIEnvironment()->keyCallbackEvent(key, scancode, action, mods);
-            Keyboard *s = Game::Instance()->getKeyboard();
+            Window::Instance() -> getGUIEnvironment() -> keyCallbackEvent(key, scancode, action, mods);
+            Keyboard *s = Game::Instance() -> getKeyboard();
             // Key actions
             if (action == GLFW_PRESS) {
-                s->keyState[key] = Enumeration::PRESSED;
+                s -> keyState[key] = Enumeration::PRESSED;
             } else if (action == GLFW_RELEASE) {
-                s->keyState[key] = Enumeration::RELEASED;
+                s -> keyState[key] = Enumeration::RELEASED;
             } else if (action == GLFW_REPEAT) {
-                s->keyState[key] = Enumeration::DOWN;
+                s -> keyState[key] = Enumeration::DOWN;
             }
         }
     );

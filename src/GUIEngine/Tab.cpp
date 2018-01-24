@@ -2,15 +2,15 @@
 #include <GraphicEngine/Window.h>
 
 /*Tab::Tab(TabPanel *parent, std::string title, int id){ 
-    this->tab = parent->createTab(title, id)->getGUIElement();
+    this -> tab = parent -> createTab(title, id) -> getGUIElement();
 }*/
 
 Tab::Tab(nanogui::Widget *t){
-    this->tab = t;
+    this -> tab = t;
 }
 
 Tab::~Tab(){
-    this->tab->decRef();
+    this -> tab -> decRef();
 }
 
 void Tab::addChild(GUIElement *elem) {
@@ -18,11 +18,11 @@ void Tab::addChild(GUIElement *elem) {
 }
 
 void Tab::show(){
-    tab->setVisible(true);
+    tab -> setVisible(true);
 }
  
 void Tab::hide(){
-    tab->setVisible(false);
+    tab -> setVisible(false);
 }
 
 std::string Tab::getTitle(){
