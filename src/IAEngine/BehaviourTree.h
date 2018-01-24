@@ -58,6 +58,23 @@ class BehaviourTree {
         
         void debugMessage();
 
+        //Goal oriented
+        bool getRequireBarrack();
+        bool getRequireBarn();
+        bool getRequireWorkshop();
+
+        void setRequireBarrack(bool);
+        void setRequireBarn(bool);
+        void setRequireWorkshop(bool);
+
+        void setRequireCrystal(bool);
+        bool getRequireCrystal();
+
+        void setRequireCitizens(bool);
+        bool getRequireCitizens();
+
+        void init(int);
+
     protected:
 
         int happinessThreshold;
@@ -93,9 +110,13 @@ class BehaviourTree {
         bool needWall;
         bool needTower;
         // Dictate the requirement of a certain building
-        bool requireBarracks;
+        bool requireBarrack;
         bool requireBarn;
         bool requireWorkshop;
+
+        bool requireCrystal;
+
+        bool requireCitizens;
 
     private:
 };

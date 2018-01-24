@@ -12,7 +12,7 @@ MeleeNode::MeleeNode(Node *fatherPnt) : Node() {
     children[2] = new MeleeFootmenNode(this);
 }
 
-MeleeNode::~MeleeNode(){
+MeleeNode::~MeleeNode() {
     delete father;
     delete[] children;
 }

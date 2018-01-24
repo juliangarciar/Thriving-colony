@@ -25,6 +25,7 @@ class Model {
 
         int getID();
 		scene::IMeshSceneNode *getModel();
+        
     private:
         scene::IMeshSceneNode *meshNode;
         scene::ITriangleSelector *selector = 0;

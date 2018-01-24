@@ -4,10 +4,10 @@
 
 using namespace std;
 
-int main(){
+int main() {
     Game *game = Game::Instance();
 
-    game->Init();
+    game -> Init();
 
     while (game->getWindow()->isOpen()){
         game->Input();
@@ -15,7 +15,7 @@ int main(){
         game->Render();
     }
 
-    game->CleanUp();
+    game -> CleanUp();
     
     return 0;
 }

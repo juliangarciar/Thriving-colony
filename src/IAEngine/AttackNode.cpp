@@ -13,7 +13,7 @@ AttackNode::AttackNode(Node *fatherPnt) : Node() {
 
 }
 
-AttackNode::~AttackNode(){
+AttackNode::~AttackNode() {
     delete father;
     delete[] children;
 }

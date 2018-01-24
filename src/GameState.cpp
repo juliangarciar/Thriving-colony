@@ -23,8 +23,8 @@ GameState::~GameState() {
     delete battleManager;
 }
 
-void GameState::Init(){
-    map->setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
+void GameState::Init() {
+    map -> setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
 
     //Initialize the event system
     //IA Events
@@ -57,16 +57,16 @@ void GameState::Init(){
     v.z = HUMAN_CITY_HALL_Z; 
     v.y = map -> getY(v.x, v.z);
     Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::Human);
-
+    
     //Build the first siderurgy of Human
-    v.z = HUMAN_CITY_HALL_Z+100;
+    v.z = HUMAN_CITY_HALL_Z + 200;
     v.y = map -> getY(v.x, v.z);
     Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::Human);
     //SoundSystem init
-    SoundSystem::Instance()->initSystem();
+    SoundSystem::Instance() -> initSystem();
 }
 
-void GameState::Input(){
+void GameState::Input() {
     //if (gamePaused) {
 
         hud->getHUDEvents();
@@ -79,12 +79,12 @@ void GameState::Input(){
         camera->RotateAndInclinate(Game::Instance()->getCursor());
         camera->Zoom(Game::Instance()->getCursor());
 
-        //Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
-        Human::getInstance() -> getBuildingManager()->testRaycastCollisions();
-        Human::getInstance() -> getUnitManager()->testRaycastCollisions();
+        //Vector3<float> v = map -> getPointCollision(Game::Instance() -> getCursor());
+        Human::getInstance() -> getBuildingManager() -> testRaycastCollisions();
+        Human::getInstance() -> getUnitManager() -> testRaycastCollisions();
 
-        IA::getInstance() -> getBuildingManager()->testRaycastCollisions();
-        IA::getInstance() -> getUnitManager()->testRaycastCollisions();
+        IA::getInstance() -> getBuildingManager() -> testRaycastCollisions();
+        IA::getInstance() -> getUnitManager() -> testRaycastCollisions();
 
         int onMap = true;
 
@@ -97,7 +97,7 @@ void GameState::Input(){
             if (Game::Instance()->getCursor()->leftMousePressed()) {
                 // Comprobar que este terminado para enseñar el popup pero no va
                 //if (Human::getInstance() -> getBuildingManager() -> checkFinished(idBuilding)) {
-                    hud->showPopup(idBuilding);
+                    hud -> showPopup(idBuilding);
                 //}
             }
             
@@ -137,9 +137,9 @@ void GameState::Input(){
         //If nothing happens
         if (onMap){
             if (Human::getInstance() -> getUnitManager()->isTroopSelected())
-                Game::Instance()->getCursor()->changeIcon(CURSOR_CROSSHAIR); //ToDo: fachada
+                Game::Instance()->getCursor()->changeIcon(CURSOR_CROSSHAIR);
             else 
-                Game::Instance()->getCursor()->changeIcon(CURSOR_NORMAL); //ToDo: fachada
+                Game::Instance()->getCursor()->changeIcon(CURSOR_NORMAL);
             
             if (Game::Instance()->getCursor()->leftMousePressed())
                 Human::getInstance() -> getUnitManager() -> unSelectTroop();
@@ -149,35 +149,35 @@ void GameState::Input(){
             Human::getInstance()->getUnitManager()->moveOrder(map);
         }
 
-        if (Game::Instance()->getKeyboard()->keyPressed(GLFW_KEY_1)){
+        if (Game::Instance()->getKeyboard()->keyPressed(GLFW_KEY_1)){ //ToDo: fachada
             Human::getInstance()->receiveMetal();
         }
 
-        if (Game::Instance()->getKeyboard()->keyPressed(GLFW_KEY_2)){
+        if (Game::Instance()->getKeyboard()->keyPressed(GLFW_KEY_2)){ //ToDo: fachada
             Human::getInstance()->receiveCrystal();
         }
 
-        if (Game::Instance()->getKeyboard()->keyPressed(GLFW_KEY_3)){
+        if (Game::Instance()->getKeyboard()->keyPressed(GLFW_KEY_3)){ //ToDo: fachada
             Human::getInstance()->receiveCitizens();
         }
 }
 
-void GameState::Update(){
+void GameState::Update() {
     Game *g = Game::Instance();
     //if (Game::Instance() -> getCursor()->keyDown((char)27)) {
         //Escape is pressed
         //gamePaused = !gamePaused;
     //}
     //if (gamePaused) {
-        camera->Update(g->getWindow()->getDeltaTime());
+        camera -> Update(g -> getWindow() -> getDeltaTime());
 
-        Vector3<float> cam = camera->getCamera()->getCameraPosition();
-        Vector3<float> tar = camera->getCamera()->getTargetPosition();
+        Vector3<float> cam = camera -> getCamera() -> getCameraPosition();
+        Vector3<float> tar = camera -> getCamera() -> getTargetPosition();
 
         Human::getInstance() -> getBuildingManager() -> drawBuilding(map);
         Human::getInstance() -> getUnitManager() -> deployTroop(map);
 
-        Human::getInstance() -> getUnitManager() -> updateUnitManager();
+        //Human::getInstance() -> getUnitManager() -> updateUnitManager();
 
         Human::getInstance() -> update();
         IA::getInstance() -> update();
@@ -186,17 +186,17 @@ void GameState::Update(){
         SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");
         SoundSystem::Instance() -> update();
 
-        if (g->getWindow()->getRealWindowWidth() != prevWindowWidth || g->getWindow()->getRealWindowHeight() != prevWindowHeight) {
-            hud->updatePositions();
+        if (g -> getWindow() -> getRealWindowWidth() != prevWindowWidth || g -> getWindow() -> getRealWindowHeight() != prevWindowHeight) {
+            hud -> updatePositions();
         }
     //}
 }
 
-void GameState::Render(){
+void GameState::Render() {
 
 }
 
-void GameState::CleanUp(){
+void GameState::CleanUp() {
 
 }
 

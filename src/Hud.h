@@ -50,6 +50,7 @@ class Hud {
         Button *buttonWall;
         Button *buttonWorkshop;
         Button *buttonExpandTerrain;
+        Button *buttonOpenPanel;
 
         TabPanel *tabs;
 

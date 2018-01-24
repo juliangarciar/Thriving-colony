@@ -2,6 +2,7 @@
 #define ROOT_NODE_H
 
 #include "Node.h"
+#include "../Enumeration.h"
 
 class RootNode : public Node {
 
@@ -11,6 +12,7 @@ class RootNode : public Node {
 
         virtual void question();
 
+        void init(Enumeration::IABehaviour);
     private:
 };
 

@@ -6,7 +6,7 @@ Text::Text(std::string t) {
 }
 
 Text::~Text() {
-    
+    //ToDo: borrar text
 }
 
 void Text::show(){

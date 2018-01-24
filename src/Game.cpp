@@ -2,8 +2,8 @@
 
 Game* Game::pinstance = 0;
 
-Game* Game::Instance(){
-    if(pinstance == 0){
+Game* Game::Instance() {
+    if(pinstance == 0) {
         pinstance = new Game();
     }
     
@@ -61,7 +61,7 @@ void Game::CleanUp(){
     window->close();
 }
 
-Window *Game::getWindow(){
+Window *Game::getWindow() {
     return window;
 }
 
@@ -69,7 +69,7 @@ Keyboard *Game::getKeyboard(){
     return keyboard;
 }
 
-Mouse *Game::getCursor(){
+Mouse *Game::getCursor() {
     return cursor;
 }
 
@@ -77,10 +77,10 @@ EventSystem *Game::getEvents() {
     return events;
 }
 
-MenuState *Game::getMenuState(){
+MenuState *Game::getMenuState() {
 	return menu;
 }
 
-GameState *Game::getGameState(){
+GameState *Game::getGameState() {
 	return game;
 }

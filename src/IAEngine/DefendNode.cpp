@@ -14,13 +14,12 @@ DefendNode::DefendNode(Node *fatherPnt) : Node() {
     children[3] = new BarrackNode(this);
 }
 
-DefendNode::~DefendNode(){
+DefendNode::~DefendNode() {
     delete father;
     delete[] children;
 }
 
 void DefendNode::question() {
-    std::cout << "Me atacan" << std::endl;
     //To Do:defend
     if (IA::getInstance() -> getClosedDoors() == false) {
         children[0] -> question();

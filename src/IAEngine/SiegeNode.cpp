@@ -10,7 +10,7 @@ SiegeNode::SiegeNode(Node *fatherPnt) : Node() {
     children[1] = new CatapultNode(this);
 }
 
-SiegeNode::~SiegeNode(){
+SiegeNode::~SiegeNode() {
     delete father;
     delete[] children;
 }

@@ -22,6 +22,7 @@ class CameraController {
         void Zoom(Mouse *cursor);
 
         Camera *getCamera();
+        
     private:
         //Helpers
         Terrain *terrain;

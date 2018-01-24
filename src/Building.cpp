@@ -5,26 +5,27 @@
 
 Building::Building(int id, SceneNode *parent, Enumeration::BuildingType buildingType, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(parent, id, 100)
 {
-    this->happiness = 0;
-    this->cityLevel = 0;
+    this -> happiness = 0;
+    this -> cityLevel = 0;
 
-    this->metalCost = 0;
-    this->crystalCost = 0;
+    this -> metalCost = 0;
+    this -> crystalCost = 0;
 
-    this->stepsToBuild = 0;
-    this->currentStep = 0;
+    buildTimer = 0;
+    buildCountdown = 0;
 
-    this->type = (int)buildingType;
-    this->team = teamData;
+    this -> type = (int)buildingType;
+    this -> team = teamData;
 
+    this -> tookDamageTimer = 0.1;
     Init();
 
-    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
-        this->model->getModel()->getMesh(), baseColor
+    Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
+        this -> model -> getModel() -> getMesh(), baseColor
     ); //ToDo: esto es fachada 
 
-    this->setPosition(vectorData);
-    this->hitbox->set(this -> model ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
+    this -> setPosition(vectorData);
+    this -> hitbox -> set(this -> model -> getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
 
     // Tax the IA the moment it builds the building
     // The player should be taxed when actually building the building
@@ -35,26 +36,26 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
 
 Building::Building(int id, SceneNode *parent, const wchar_t *path, Enumeration::BuildingType buildingType, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(parent, id, path)
 {
-    this->happiness = 0;
-    this->cityLevel = 0;
+    this -> happiness = 0;
+    this -> cityLevel = 0;
 
-    this->metalCost = 0;
-    this->crystalCost = 0;
+    this -> metalCost = 0;
+    this -> crystalCost = 0;
 
-    this->stepsToBuild = 0;
-    this->currentStep = 0;
+    this -> buildTimer = 0;
+    this -> buildCountdown = 0;
 
-    this->type = (int)buildingType;
-    this->team = teamData;
+    this -> type = (int)buildingType;
+    this -> team = teamData;
 
     Init();
 
-    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
-        this->model->getModel()->getMesh(), baseColor
+    Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
+        this -> model -> getModel() -> getMesh(), baseColor
     ); //ToDo: esto es fachada 
 
-    this->setPosition(vectorData);
-    this->hitbox->set(this -> model ->getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
+    this -> setPosition(vectorData);
+    this -> hitbox -> set(this -> model -> getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
 
     // Tax the IA the moment it builds the building
     // The player should be taxed when actually building the building
@@ -64,30 +65,31 @@ Building::Building(int id, SceneNode *parent, const wchar_t *path, Enumeration::
 }
 
 Building::~Building() {
+
 }
 
-void Building::Init(){
+void Building::Init() {
     bool initialBuilding = false;
 
     float r = 0;
     float g = 0;
     float b = 0;
-    switch (this->type) {
+    switch (this -> type) {
         case Enumeration::BuildingType::Barn:
             // Different color for diferent buildings
             r = 255;
             g = 0;
             b = 0;
 
-            this->hpMax = 1100;
-            this->hp = 1100;
-            this->happiness = 0;
-            this->cityLevel = 15;
+            this -> hpMax = 1100;
+            this -> hp = 1100;
+            this -> happiness = 0;
+            this -> cityLevel = 15;
 
-            this->stepsToBuild = 50;
+            this -> buildTimer = 50;
 
-            this->metalCost = Enumeration::BuildingCost::BarnMetalCost;
-            this->crystalCost = Enumeration::BuildingCost::BarnCrystalCost;
+            this -> metalCost = Enumeration::BuildingCost::BarnMetalCost;
+            this -> crystalCost = Enumeration::BuildingCost::BarnCrystalCost;
 
         break;
         case Enumeration::BuildingType::Barrack:
@@ -96,15 +98,15 @@ void Building::Init(){
             g = 0;
             b = 0;
 
-            this->hpMax = 720;
-            this->hp = 720;
-            this->happiness = 0;
-            this->cityLevel = 10;
+            this -> hpMax = 720;
+            this -> hp = 720;
+            this -> happiness = 0;
+            this -> cityLevel = 10;
             
-            this->stepsToBuild = 40;
+            this -> buildTimer = 40;
 
-            this->metalCost = Enumeration::BuildingCost::BarrackMetalCost;
-            this->crystalCost = Enumeration::BuildingCost::BarrackCrystalCost;
+            this -> metalCost = Enumeration::BuildingCost::BarrackMetalCost;
+            this -> crystalCost = Enumeration::BuildingCost::BarrackCrystalCost;
 
         break;
         case Enumeration::BuildingType::Hospital:
@@ -113,15 +115,15 @@ void Building::Init(){
             g = 255;
             b = 0;
 
-            this->hpMax = 750;
-            this->hp = 750;
-            this->happiness = 40;
-            this->cityLevel = 5;
+            this -> hpMax = 750;
+            this -> hp = 750;
+            this -> happiness = 40;
+            this -> cityLevel = 5;
 
-            this->stepsToBuild = 60;
+            this -> buildTimer = 60;
 
-            this->metalCost = Enumeration::BuildingCost::HospitalMetalCost;
-            this->crystalCost = Enumeration::BuildingCost::HospitalCrystalCost;
+            this -> metalCost = Enumeration::BuildingCost::HospitalMetalCost;
+            this -> crystalCost = Enumeration::BuildingCost::HospitalCrystalCost;
 
         break;
         case Enumeration::BuildingType::House:
@@ -130,16 +132,16 @@ void Building::Init(){
             g = 255;
             b = 255;
 
-            this->hpMax = 150;
-            this->hp = 150;
-            this->happiness = 1;
-            this->cityLevel = 5;
+            this -> hpMax = 150;
+            this -> hp = 150;
+            this -> happiness = 1;
+            this -> cityLevel = 5;
 
-            this->stepsToBuild = 25;
+            this -> buildTimer = 25;
             
             
-            this->metalCost = Enumeration::BuildingCost::HomeMetalCost;
-            this->crystalCost = Enumeration::BuildingCost::HomeCrystalCost;
+            this -> metalCost = Enumeration::BuildingCost::HomeMetalCost;
+            this -> crystalCost = Enumeration::BuildingCost::HomeCrystalCost;
 
         break;
         case Enumeration::BuildingType::MainBuilding:
@@ -148,14 +150,16 @@ void Building::Init(){
             g = 255;
             b = 255;
  
-            this->hpMax = 3000;
-            this->hp = 3000;
+            this -> hpMax = 3000;
+            this -> hp = 3000;
 
-            this->stepsToBuild = 0;
+            this -> buildTimer = 0;
             initialBuilding = true;
 
-            this->hpMax = 3000;
-            this->hp = 3000;
+            
+
+            this -> hpMax = 3000;
+            this -> hp = 3000;
         break;
         case Enumeration::BuildingType::Market:
             // Different color for diferent buildings
@@ -163,15 +167,15 @@ void Building::Init(){
             g = 255;
             b = 0;
 
-            this->hpMax = 600;
-            this->hp = 600;
-            this->happiness = 30;
-            this->cityLevel = 5;
+            this -> hpMax = 600;
+            this -> hp = 600;
+            this -> happiness = 30;
+            this -> cityLevel = 5;
 
-            this->stepsToBuild = 60;
+            this -> buildTimer = 60;
 
-            this->metalCost = Enumeration::BuildingCost::MarketMetalCost;
-            this->crystalCost = Enumeration::BuildingCost::MarketCrystalCost;
+            this -> metalCost = Enumeration::BuildingCost::MarketMetalCost;
+            this -> crystalCost = Enumeration::BuildingCost::MarketCrystalCost;
 
         break;
         case Enumeration::BuildingType::Quarry:
@@ -180,15 +184,15 @@ void Building::Init(){
             g = 0;
             b = 255;
 
-            this->hpMax = 1000;
-            this->hp = 1000;
-            this->happiness = 0;
-            this->cityLevel = 15;
+            this -> hpMax = 1000;
+            this -> hp = 1000;
+            this -> happiness = 0;
+            this -> cityLevel = 15;
 
-            this->stepsToBuild = 35;
+            this -> buildTimer = 35;
             
-            this->metalCost = Enumeration::BuildingCost::QuarryMetalCost;
-            this->crystalCost = Enumeration::BuildingCost::QuarryCrystalCost;
+            this -> metalCost = Enumeration::BuildingCost::QuarryMetalCost;
+            this -> crystalCost = Enumeration::BuildingCost::QuarryCrystalCost;
 
         break;
         case Enumeration::BuildingType::Siderurgy:
@@ -197,29 +201,29 @@ void Building::Init(){
             g = 0;
             b = 255;
 
-            this->hpMax = 1000;
-            this->hp = 1000;
-            this->happiness = 0;
-            this->cityLevel = 5;
+            this -> hpMax = 1000;
+            this -> hp = 1000;
+            this -> happiness = 0;
+            this -> cityLevel = 5;
 
-            this->stepsToBuild = 35;
+            this -> buildTimer = 35;
             // If this is the first siderurgy, build it instantly
-            if (this->team == Enumeration::Team::Human) {
+            if (this -> team == Enumeration::Team::Human) {
                 if (Human::getInstance() -> getSiderurgyAmount() == 0) {
-                    this->stepsToBuild = 0;
+                    this -> buildTimer = 0;
                     initialBuilding = true;
                     Human::getInstance() -> increaseSiderurgyAmount();  
                 }
             }else{
                 if (IA::getInstance() -> getSiderurgyAmount() == 0) {
-                    this->stepsToBuild = 0;
+                    this -> buildTimer = 0;
                     initialBuilding = true;
                     IA::getInstance() -> increaseSiderurgyAmount();  
                 }
             }
             
-            this->metalCost = Enumeration::BuildingCost::SiderurgyMetalCost;
-            this->crystalCost = Enumeration::BuildingCost::SiderurgyCrystalCost;
+            this -> metalCost = Enumeration::BuildingCost::SiderurgyMetalCost;
+            this -> crystalCost = Enumeration::BuildingCost::SiderurgyCrystalCost;
 
         break;
         case Enumeration::BuildingType::School:
@@ -228,15 +232,15 @@ void Building::Init(){
             g = 255;
             b = 0;
             
-            this->hpMax = 550;
-            this->hp = 550;
-            this->happiness = 20;
-            this->cityLevel = 5;
+            this -> hpMax = 550;
+            this -> hp = 550;
+            this -> happiness = 20;
+            this -> cityLevel = 5;
 
-            this->stepsToBuild = 35;
+            this -> buildTimer = 35;
 
-            this->metalCost = Enumeration::BuildingCost::SchoolMetalCost;
-            this->crystalCost = Enumeration::BuildingCost::SchoolCrystalCost;
+            this -> metalCost = Enumeration::BuildingCost::SchoolMetalCost;
+            this -> crystalCost = Enumeration::BuildingCost::SchoolCrystalCost;
 
         break;
         case Enumeration::BuildingType::Tower:
@@ -245,15 +249,15 @@ void Building::Init(){
             g = 0;
             b = 0;
 
-            this->hpMax = 500;
-            this->hp = 500;
-            this->happiness = 1;
-            this->cityLevel = 5;
+            this -> hpMax = 500;
+            this -> hp = 500;
+            this -> happiness = 1;
+            this -> cityLevel = 5;
 
-            this->stepsToBuild = 50;
+            this -> buildTimer = 50;
 
-            this->metalCost = Enumeration::BuildingCost::TowerMetalCost;
-            this->crystalCost = Enumeration::BuildingCost::TowerCrystalCost;
+            this -> metalCost = Enumeration::BuildingCost::TowerMetalCost;
+            this -> crystalCost = Enumeration::BuildingCost::TowerCrystalCost;
 
         break;
         case Enumeration::BuildingType::Wall:
@@ -262,15 +266,15 @@ void Building::Init(){
             g = 0;
             b = 0;
 
-            this->hpMax = 200;
-            this->hp = 200;
-            this->happiness = 1;
-            this->cityLevel = 1;
+            this -> hpMax = 200;
+            this -> hp = 200;
+            this -> happiness = 1;
+            this -> cityLevel = 1;
 
-            this->stepsToBuild = 10;
+            this -> buildTimer = 10;
 
-            this->metalCost = Enumeration::BuildingCost::WallMetalCost;
-            this->crystalCost = Enumeration::BuildingCost::WallCrystalCost;
+            this -> metalCost = Enumeration::BuildingCost::WallMetalCost;
+            this -> crystalCost = Enumeration::BuildingCost::WallCrystalCost;
 
         break;
         case Enumeration::BuildingType::Workshop:
@@ -279,44 +283,39 @@ void Building::Init(){
             g = 0;
             b = 0;
 
-            this->hpMax = 800;
-            this->hp = 800;
-            this->happiness = 0;
-            this->cityLevel = 15;
+            this -> hpMax = 800;
+            this -> hp = 800;
+            this -> happiness = 0;
+            this -> cityLevel = 15;
             
-            this->stepsToBuild = 50;
+            this -> buildTimer = 50;
             
-            this->metalCost = Enumeration::BuildingCost::WorkshopMetalCost;
-            this->crystalCost = Enumeration::BuildingCost::WorkshopCrystalCost;
+            this -> metalCost = Enumeration::BuildingCost::WorkshopMetalCost;
+            this -> crystalCost = Enumeration::BuildingCost::WorkshopCrystalCost;
 
         break;
     }
     
     //ToDo: Graphic engine, this should be in the switch (when models done)
-    this->baseColor = video::SColor(255, r, g, b); //ToDo: esto es fachada 
+    this -> baseColor = video::SColor(255, r, g, b); //ToDo: esto es fachada 
     if (initialBuilding) {
-        this->currentColor = video::SColor(255, r, g, b);
+        this -> currentColor = video::SColor(255, r, g, b);
         this -> finished = true;
     } else {
-        // DEBUG SOLO PARA LA PRESENTACION
-        //
-        //
-        this -> stepsToBuild = 3;
-        //
-        //
-        // DEBUG SOLO PARA LA PRESENTACION
-        this->currentColor = video::SColor(255, 0, 0, 0);
+        buildCountdown = buildTimer;
+        this -> currentColor = video::SColor(255, 0, 0, 0);
         this -> finished = false;
     }
 }
 
 // This update is called once every second
 void Building::update() {
+    //changeRedTint();
     if (!finished) {
-        currentStep ++;
-        if (currentStep >= stepsToBuild) {
-            Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
-                this->model->getModel()->getMesh(), baseColor
+        buildTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
+        if (buildTimer <= 0) {
+            Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
+                this -> model -> getModel() -> getMesh(), baseColor
             );
             // Increase stuff when the human ends the building, but do so for the AI
             // when it places the building. is it fair? i dunno
@@ -325,6 +324,7 @@ void Building::update() {
 		        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);
             }            
             this -> finished = true;
+            setHitbox();
         }
     }
 }
@@ -333,8 +333,8 @@ irr::video::SColor Building::getColor() {
     return baseColor;
 }
 
-int Building::getType(){ 
-    return this->type;
+int Building::getType() { 
+    return this -> type;
 } 
 
 /**
@@ -360,8 +360,8 @@ void Building::taxPlayer(Enumeration::Team teamData) {
         // Increae levels and stuff when built by the ai, instead of waiting for the building to finish building
         specialTax(teamData);
     }
-    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(
-        this->model->getModel()->getMesh(), currentColor
+    Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
+        this -> model -> getModel() -> getMesh(), currentColor
     );   
     
 }
@@ -425,4 +425,20 @@ bool Building::getFinished() {
 
 int Building::getID() {
     return ID;
+}
+
+void Building::setHitbox() {
+    this -> hitbox -> set(this -> model -> getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
+}
+
+//Esto tendria que haber funcionado bien, pero no, como mi vida
+void Building::updateHitbox() {
+    if (!updated) {
+        if (updateHitboxTimer <= 0) {
+            updated = true;
+        } else {
+            setHitbox();
+            updateHitboxTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
+        }
+    }
 }

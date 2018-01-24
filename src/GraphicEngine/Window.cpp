@@ -4,9 +4,9 @@ using namespace irr;
 
 Window* Window::pinstance = 0;
 
-Window* Window::Instance(){
+Window* Window::Instance() {
     
-    if(pinstance == 0){
+    if(pinstance == 0) {
         pinstance = new Window(1280, 720);
     }
     
@@ -78,8 +78,8 @@ Window::Window(int width, int height) {
 }
 
 Window::~Window() {
-    delete device;
-    device = NULL; 
+    //ToDo: borrar device
+    //device = NULL; 
 }
 
 void Window::setGUI(){ 
@@ -100,7 +100,7 @@ void Window::endScene(){
     gui->drawWidgets();
     glEnable(GL_DEPTH_TEST);
 
-    driver->endScene();
+    driver -> endScene();
 }
 
 bool Window::isOpen(){
@@ -121,11 +121,11 @@ IrrlichtDevice* Window::getDevice() {
     return device;
 }
 
-video::IVideoDriver* Window::getVideoDriver(){
+video::IVideoDriver* Window::getVideoDriver() {
     return driver;
 }
 
-scene::ISceneManager* Window::getSceneManager(){
+scene::ISceneManager* Window::getSceneManager() {
     return scene;
 }
 
@@ -151,6 +151,6 @@ int Window::getRealWindowHeight(){
     //return driver->getViewPort().getHeight(); 
 }
 
-float Window::getDeltaTime(){
+float Window::getDeltaTime() {
     return deltaTime;
 }

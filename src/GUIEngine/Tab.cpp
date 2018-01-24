@@ -13,8 +13,8 @@ Tab::~Tab(){
     this->tab->decRef();
 }
 
-void Tab::addChild(GUIElement *elem){
-    tab->addChild(elem->getGUIElement());
+void Tab::addChild(GUIElement *elem) {
+    tab -> addChild(elem -> getGUIElement());
 }
 
 void Tab::show(){

@@ -26,12 +26,24 @@ class IA : public Player {
         bool getDeployedTroops();
         bool getClosedDoors();
 
+        void setChoiceIndex(int);
+        std::wstring getNextChoice();
+        std::wstring getChosenBehaviour();
+        void initializeChoices();
+
+        void chooseBehaviour();
     private:
         static IA* instance;
         static bool deployedTroops;
         static bool closedDoors;
         BehaviourTree* tree;
         RootNode *nodeRootIA;
+
+        Enumeration::IABehaviour behaviour;
+        std::wstring chosenBehaviour;
+        int choiceIndex;
+
+        std::vector<std::wstring> * choices;
 
 };
 

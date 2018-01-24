@@ -10,7 +10,7 @@ Rect2D<T>::Rect2D(T rX, T rY, T rW, T rH) {
 }
 
 template <class T>
-Rect2D<T>::Rect2D(core::rect<T> rect){
+Rect2D<T>::Rect2D(core::rect<T> rect) {
     x = rect.UpperLeftCorner.X;
     y = rect.UpperLeftCorner.Y;
     w = rect.getWidth();
@@ -31,7 +31,7 @@ Rect2D<T>::~Rect2D() {
 }
 
 template <class T>
-void Rect2D<T>::setRect2D(T rX, T rY, T rW, T rH){
+void Rect2D<T>::setRect2D(T rX, T rY, T rW, T rH) {
     x = rX;
     y = rY;
     w = rW;
@@ -39,7 +39,7 @@ void Rect2D<T>::setRect2D(T rX, T rY, T rW, T rH){
 }
 
 template <class T>
-void Rect2D<T>::setRect2D(core::rect<T> rect){
+void Rect2D<T>::setRect2D(core::rect<T> rect) {
     x = rect.UpperLeftCorner.X;
     y = rect.UpperLeftCorner.Y;
     w = rect.getWidth();
@@ -47,11 +47,11 @@ void Rect2D<T>::setRect2D(core::rect<T> rect){
 }
 
 template <class T>
-Rect2D<T> Rect2D<T>::getFixed(){
-    int initialWidth = Window::Instance()->getInitialWindowWidth();
-    int initialHeight = Window::Instance()->getInitialWindowHeight();
-    int actualWidth = Window::Instance()->getRealWindowWidth();
-    int actualHeight = Window::Instance()->getRealWindowHeight();
+Rect2D<T> Rect2D<T>::getFixed() {
+    int initialWidth = Window::Instance() -> getInitialWindowWidth();
+    int initialHeight = Window::Instance() -> getInitialWindowHeight();
+    int actualWidth = Window::Instance() -> getRealWindowWidth();
+    int actualHeight = Window::Instance() -> getRealWindowHeight();
 
     int newX = x*actualWidth/initialWidth; 
     int newY = y*actualHeight/initialHeight; 

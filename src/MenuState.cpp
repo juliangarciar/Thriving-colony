@@ -8,22 +8,22 @@ MenuState::~MenuState() {
     
 }
 
-void MenuState::Init(){
+void MenuState::Init() {
 
 }
 
-void MenuState::Input(){
+void MenuState::Input() {
 
 }
 
-void MenuState::Update(){
+void MenuState::Update() {
 
 }
 
-void MenuState::Render(){
+void MenuState::Render() {
 
 }
 
-void MenuState::CleanUp(){
+void MenuState::CleanUp() {
 
 }

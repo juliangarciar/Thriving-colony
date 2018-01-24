@@ -3,26 +3,26 @@
 
 template <class T>
 Vector2<T>::Vector2() {
-    this->x = 0;
-    this->y = 0;
+    this -> x = 0;
+    this -> y = 0;
 }
 
 template <class T>
 Vector2<T>::Vector2(T x, T y) {
-    this->x = x;
-    this->y = y;
+    this -> x = x;
+    this -> y = y;
 }
 
 template <class T>
-Vector2<T>::Vector2(core::vector2di v){
-    this->x = v.X;
-    this->y = v.Y;
+Vector2<T>::Vector2(core::vector2di v) {
+    this -> x = v.X;
+    this -> y = v.Y;
 }
 
 template <class T>
-Vector2<T>::Vector2(core::vector2df v){
-    this->x = v.X;
-    this->y = v.Y;
+Vector2<T>::Vector2(core::vector2df v) {
+    this -> x = v.X;
+    this -> y = v.Y;
 }
 
 template <class T>
@@ -31,21 +31,21 @@ Vector2<T>::~Vector2() {
 }
 
 template <class T>
-void Vector2<T>::set(T x, T y){
-    this->x = x;
-    this->y = y;
+void Vector2<T>::set(T x, T y) {
+    this -> x = x;
+    this -> y = y;
 }
 
 template <class T>
-void Vector2<T>::set(core::vector2di v){
-    this->x = v.X;
-    this->y = v.Y;
+void Vector2<T>::set(core::vector2di v) {
+    this -> x = v.X;
+    this -> y = v.Y;
 }
 
 template <class T>
-void Vector2<T>::set(core::vector2df v){
-    this->x = v.X;
-    this->y = v.Y;
+void Vector2<T>::set(core::vector2df v) {
+    this -> x = v.X;
+    this -> y = v.Y;
 }
 
 template <class T>
@@ -72,7 +72,7 @@ core::vector2df Vector2<T>::getVectorF() {
 }
 
 template <class T>
-Vector2<T> Vector2<T>::getFromPolarCoordinates(float r, float phi){
+Vector2<T> Vector2<T>::getFromPolarCoordinates(float r, float phi) {
     phi = phi * (PI/180);
     Vector2<T> point;
     point.x = x + (r * cosf(phi));  // Assign to the point member x
@@ -81,11 +81,11 @@ Vector2<T> Vector2<T>::getFromPolarCoordinates(float r, float phi){
 }
 
 template <class T>
-Vector2<T> Vector2<T>::getFixed(){
-    int initialWidth = Window::Instance()->getInitialWindowWidth();
-    int initialHeight = Window::Instance()->getInitialWindowHeight();
-    int actualWidth = Window::Instance()->getRealWindowWidth();
-    int actualHeight = Window::Instance()->getRealWindowHeight();
+Vector2<T> Vector2<T>::getFixed() {
+    int initialWidth = Window::Instance() -> getInitialWindowWidth();
+    int initialHeight = Window::Instance() -> getInitialWindowHeight();
+    int actualWidth = Window::Instance() -> getRealWindowWidth();
+    int actualHeight = Window::Instance() -> getRealWindowHeight();
 
     int newX = x*actualWidth/initialWidth; 
     int newY = y*actualHeight/initialHeight; 
