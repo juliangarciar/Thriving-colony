@@ -1,37 +1,51 @@
 #include "Button.h"
 #include <GraphicEngine/Window.h>
 
-using namespace irr;
+Button::Button(std::string buttonText) {
+    button = Window::Instance()->getGUIEnvironment()->add<nanogui::Button>(buttonText);
+}
 
-Button::Button(Rect2D<int> dimPos, int id, const wchar_t *buttonText, const wchar_t *tooltipText) {
-    Window *sc = Window::Instance();
-    button = sc->getGUIEnvironment()->addButton(dimPos.getRect2D(), 0, id, buttonText, tooltipText);
+Button::Button(GUIElement *parent, std::string buttonText) {
+    button = parent->getGUIElement()->add<nanogui::Button>(buttonText);
 }
 
 Button::~Button() {
-    
+    delete button;
+    button = NULL;
 }
 
 bool Button::isButtonPressed(){
-    return button->isPressed();
-}
-
-void Button::setIsPushButton(bool pushPresed){
-    button->setIsPushButton(pushPresed);
+    return button->pushed();
 }
 
 void Button::setButtonPressed(bool pressed){
-    button->setPressed(pressed);   
+    button->setPushed(pressed);
 }
 
-void Button::setText(const wchar_t* text){
-    button->setText(text);
+void Button::show(){
+    button->setVisible(true);
+}
+ 
+void Button::hide(){
+    button->setVisible(false);
 }
 
-void Button::setPosition(Vector2<int> dimPos){
-    button->setRelativePosition(dimPos.getVectorI());
+void Button::setButtonCallback(std::function<void()> callback){
+    button->setCallback(callback);
 }
 
-gui::IGUIElement *Button::getGUIElement(){
-    return button;
+void Button::setText(std::string text){ 
+    button->setCaption(text);
+}
+
+void Button::setSize(Vector2<int> size){
+    button->setSize(Eigen::Vector2i(size.x, size.y));
+}
+
+void Button::setPosition(Vector2<int> position){
+    button->setPosition(Eigen::Vector2i(position.x, position.y));
+}
+
+nanogui::Widget *Button::getGUIElement(){
+    return button; 
 }

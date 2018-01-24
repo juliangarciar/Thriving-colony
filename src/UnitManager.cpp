@@ -113,7 +113,7 @@ void UnitManager::startDeployingTroop(int index){
 
 void UnitManager::deployTroop(Terrain *terrain){ 
     Game *g = Game::Instance();
-    if (isDeployingTroop && currentDeployingTroop >= 0 && g->getIO() -> leftMouseDown()){ 
+    if (isDeployingTroop && currentDeployingTroop >= 0 && g->getCursor()->leftMousePressed()){ 
         Unit *temp = inHallTroops->at(currentDeployingTroop);
 
         this->inHallTroops->erase(inHallTroops->begin() + currentDeployingTroop);
@@ -124,7 +124,7 @@ void UnitManager::deployTroop(Terrain *terrain){
         temp->getModel()->setActive(true);
         temp->setRetracted(false);
         
-        g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NORMAL); //ToDo: fachada
+        g->getCursor()->changeIcon(CURSOR_NORMAL);
 
         currentDeployingTroop = -1;
         selectedTroop = NULL;
@@ -160,7 +160,7 @@ void UnitManager::selectTroop(int troopID){
         this->selectedTroop = it->second;
         //SELECT VOICE
         SoundSystem::Instance()->playVoiceEvent(selectedTroop->getSelectEvent());
-        g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_CROSS); //ToDo: fachada
+        g->getCursor()->changeIcon(CURSOR_CROSSHAIR); //ToDo: fachada
     }
 }
 
@@ -169,7 +169,7 @@ void UnitManager::unSelectTroop(){
     Game *g = Game::Instance();
     if (this->selectedTroop != NULL){
         this->selectedTroop = NULL;
-        g->getCursor()->getCursor()->setActiveIcon(gui::ECURSOR_ICON::ECI_NORMAL); //ToDo: fachada
+        g->getCursor()->changeIcon(CURSOR_NORMAL); //ToDo: fachada
     }
 }
 

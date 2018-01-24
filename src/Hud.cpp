@@ -13,9 +13,27 @@ Text *Hud::warningText = 0;//new Text(Rect2D<int>(200, 60, 50, 20), L"Edificio c
 
 Hud::Hud() {
     //Le botone iniciale
-    buttonQuit = new Button(Rect2D<int>(1150, 20, 100, 30).getFixed(), Enumeration::idGUI::GUI_ID_QUIT_BUTTON, L"Quit", L"Quit Game");
+    //buttonQuit = new Button("Quit");
+    
+    buildingsPanel = new Panel("Title", Vector2<float> (110, 120));
 
-    buttonBarn = new Button(Rect2D<int>(746, 680, 100, 30).getFixed(), Enumeration::idGUI::GUI_ID_BUILD_BARN_BUTTON, L"Barn", L"Build a barn that will allow you to train mounted military units.\n Metal cost: 800.");
+    /*buttonBarn = new Button(buildingsPanel, "Barn");
+    buttonBarrack = new Button(buildingsPanel, "Barrack");
+    buttonHome = new Button(buildingsPanel, "Home");
+    buttonHospital = new Button(buildingsPanel, "Hospital");
+    buttonMarket = new Button(buildingsPanel, "Market");
+    buttonQuarry = new Button(buildingsPanel, "Quarry");
+    buttonSchool = new Button(buildingsPanel, "School");
+    buttonSiderurgy = new Button(buildingsPanel, "Siderurgy");
+    buttonTower = new Button(buildingsPanel, "Tower");
+    buttonWall = new Button(buildingsPanel, "Wall");
+    buttonWorkshop = new Button(buildingsPanel, "Workshop");
+    buttonExpandTerrain = new Button(buildingsPanel, "Expand terrain");*/
+
+//    buildingsPanel->addChild(buttonBarn);
+
+
+    /*buttonBarn = new Button(Rect2D<int>(746, 680, 100, 30).getFixed(), Enumeration::idGUI::GUI_ID_BUILD_BARN_BUTTON, L"Barn", L"Build a barn that will allow you to train mounted military units.\n Metal cost: 800.");
     buttonBarrack = new Button(Rect2D<int>(642, 680, 100, 30).getFixed(), Enumeration::idGUI::GUI_ID_BUILD_BARRACK_BUTTON, L"Barrack", L"Build a barrack that will allow you to train basic military units.\n Metal cost: 720.");
     buttonHome = new Button(Rect2D<int>(538, 680, 100, 30).getFixed(), Enumeration::idGUI::GUI_ID_BUILD_HOME_BUTTON, L"Home", L"Build a home that will increase your total citizens.\n Metal cost: 100.\nCitizens +10");
     buttonHospital = new Button(Rect2D<int>(226, 680, 100, 30).getFixed(), Enumeration::idGUI::GUI_ID_BUILD_HOSPITAL_BUTTON, L"Hospital", L"Build a hospital that will improve your citizens happiness.\n Metal cost: 800.\nHappiness +15");
@@ -45,12 +63,12 @@ Hud::Hud() {
     //warningText -> disable();
     deleteWarning();
 
-    deleteTextTimer = 0;
+    deleteTextTimer = 0;*/
 }
 
 Hud::~Hud() {
     //Los dos botones iniciales
-    delete buttonQuit;
+  /* delete buttonQuit;
 
     //Los botones edificios
     delete buttonSchool;
@@ -74,11 +92,11 @@ Hud::~Hud() {
     delete resourceText;
     delete iaResourceText;
 
-    delete warningText;
+    delete warningText;*/
 }
 
 void Hud::addTab(int id, int type){
-    switch (type) {
+    /*switch (type) {
         case Enumeration::BuildingType::MainBuilding:
         {
             Tab *t = tabs->addTab(L"Main Building", id);
@@ -150,20 +168,20 @@ void Hud::addTab(int id, int type){
         }
         break;
         default: break;
-    }
+    }*/
 }
 
 void Hud::showPopup(int tabId){
-    if (tabs->changeActiveTab(tabId))
-        tabs->enable();
+    /*if (tabs->changeActiveTab(tabId))
+        tabs->enable();*/
 }
 
 void Hud::hidePopup(){
-    tabs->disable();
+    /*tabs->disable();*/
 }
 
 void Hud::getHUDEvents(){
-    Game *g = Game::Instance();
+    /*Game *g = Game::Instance();
     int id = g->getIO()->getGUIClickedID();
 
     switch(id){
@@ -287,11 +305,11 @@ void Hud::getHUDEvents(){
         case Enumeration::idGUI::GUI_ID_EXPAND_TERRAIN_BUTTON:
 			//ToDo: hacer que se expanda el terreno edificable y que el susodicho exista
         break;
-    }
+    }*/
 }
 
 void Hud::update() {
-    float dt = Game::Instance() ->getWindow() -> getDeltaTime();
+    /*float dt = Game::Instance() ->getWindow() -> getDeltaTime();
     if (updateTimer <= 0) {
         //ToDo: añadir los metodos de getmetalamount y getcrystalamount
         std::wstringstream os;
@@ -307,11 +325,11 @@ void Hud::update() {
     } else {
         updateTimer -= dt;
     }
-    
+    */
 }
 
 void Hud::updatePositions(){
-    buttonQuit->setPosition(Vector2<int>(1150, 20).getFixed());
+   /* buttonQuit->setPosition(Vector2<int>(1150, 20).getFixed());
 
     buttonBarn->setPosition(Vector2<int>(746, 680).getFixed());
     buttonBarrack->setPosition(Vector2<int>(642, 680).getFixed());
@@ -324,18 +342,20 @@ void Hud::updatePositions(){
     buttonTower->setPosition(Vector2<int>(1058,680).getFixed());
     buttonWall->setPosition(Vector2<int>(954,680).getFixed());
     buttonWorkshop->setPosition(Vector2<int>(850,680).getFixed());
-    buttonExpandTerrain->setPosition(Vector2<int>(1162,680).getFixed());
+    buttonExpandTerrain->setPosition(Vector2<int>(1162,680).getFixed());*/
 }
 
 void Hud::drawWarning() {
     // <<  "¡Se ha construido un edificio!" << std::endl;
-    warningText -> enable();
+    //warningText -> enable();
 }
 
 void Hud::deleteWarning() {
     //std::cout << "¡Se ha borrado un texto que dice que se ha dibujado un texto!" << std::endl;
-    warningText -> disable();
+    //warningText -> disable();
 }
+
+
 
 /*hospitalMenu = tabs->addTab(L"Hospital", Enumeration::BuildingType::Hospital);
 hospitalMenu->addChild(buttonCloseTab3);

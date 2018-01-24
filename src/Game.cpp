@@ -11,59 +11,62 @@ Game* Game::Instance(){
 }
 
 Game::Game() {
+    window = Window::Instance();
+
     menu = new MenuState();
     game = new GameState();
     state = game; //ToDo: cambiar por menu
 
-    window = Window::Instance();
-
     cursor = new Mouse();
-    io = new InputManager();
+    keyboard = new Keyboard();
 
     events = new EventSystem();
 
-    window -> setEventReceiver(io);
     soundSystem = new SoundSystem();
 }
 
 Game::~Game() {
-     delete menu;
-     delete game;
-     delete cursor;
-     delete io;
-     delete events;
-     delete soundSystem;
-    // delete state;
+    delete menu;
+    delete game;
+
+    delete cursor;
+    delete keyboard;
+
+    delete events;
+
+    delete soundSystem;
 }
 
 void Game::Init(){
-    state ->Init();
-    
+    state->Init();
 }
+
 void Game::Input(){
-    io -> endEventProcess();
-    state -> Input();
-    io -> startEventProcess();
+    state->Input();
+    cursor->refreshStates();
 }
+
 void Game::Update(){
-    state -> Update();
+    state->Update();
 }
+
 void Game::Render(){
-    window -> beginScene();
-    state -> Render();
-    window -> endScene();
+    window->beginScene();
+    state->Render();
+    window->endScene();
 }
+
 void Game::CleanUp(){
-    state -> CleanUp();
-    window -> close();
+    state->CleanUp();
+    window->close();
 }
 
 Window *Game::getWindow(){
     return window;
 }
 
-InputManager *Game::getIO(){
-    return io;
+Keyboard *Game::getKeyboard(){
+    return keyboard;
 }
 
 Mouse *Game::getCursor(){

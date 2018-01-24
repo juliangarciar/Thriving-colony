@@ -2,14 +2,19 @@
 #define GAMESTATE_H
 
 #include <sstream>
+#include "IA.h"
+#include "Hud.h"
+#include "Human.h"
 #include "State.h"
-#include <GraphicEngine/Terrain.h>
-#include <IOEngine/InputManager.h>
 #include "CameraController.h"
 #include "BuildingManager.h"
-#include "Hud.h"
-#include "IAEngine/RootNode.h"
 #include "BattleManager.h"
+
+#include <IAEngine/RootNode.h>
+
+#include <GraphicEngine/Terrain.h>
+
+#include <SoundEngine/SoundSystem.h>
 
 class GameState : public State {
     
@@ -31,10 +36,10 @@ class GameState : public State {
         CameraController *camera;
         Terrain *map;
         Hud * hud;
+        BattleManager *battleManager;
+
         // This is for pausing, in a future it will be a gamestate different?
         bool gamePaused;
-
-        BattleManager *battleManager;
 
         int prevWindowWidth, prevWindowHeight;
 };

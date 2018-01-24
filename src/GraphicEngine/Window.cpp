@@ -14,32 +14,67 @@ Window* Window::Instance(){
 }
 
 Window::Window(int width, int height) {
-    screenWidth = width;
-    screenHeight = height;
+    closeWindow = false;
+
+    windowWidth = width;
+    windowHeight = height;
+
+    glfwInit();
+    glfwSetTime(0);
+
+    nanogui::init();
+
+    // Create an application window with the following settings:
+    window = glfwCreateWindow(windowWidth, windowHeight, "Thriving Colony", nullptr, nullptr);
+    if (window == nullptr) {
+        std::cout << "Failed to create GLFW window" << std::endl;
+        glfwTerminate();
+        exit(0);
+    }
+
+    glfwMakeContextCurrent(window);
 
     irr::SIrrlichtCreationParameters params;
-	params.DriverType=video::EDT_OPENGL;
-	params.WindowSize=core::dimension2d<u32>(width, height);
+    params.DeviceType = E_DEVICE_TYPE::EIDT_GLFW3;
+    params.DriverType = video::E_DRIVER_TYPE::EDT_OPENGL;
+    params.WindowId = window;
+    params.IgnoreInput = true;
+    params.WindowSize = core::dimension2du(windowWidth, windowHeight);
     device = createDeviceEx(params);
-    
-    if (device == 0) exit(0); 
+    if (!device) exit(0); 
 
-	// enable mouse cursor
-	device->getCursorControl()->setVisible(true);
-
+    // create video driver
 	driver = device->getVideoDriver();
     driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
 
+    // create scene manager
 	scene = device->getSceneManager();
-	gui = device->getGUIEnvironment();
 
-    for (s32 i=0; i<irr::gui::EGDC_COUNT; ++i) {
-        video::SColor col = gui->getSkin()->getColor((gui::EGUI_DEFAULT_COLOR)i);
-        col.setAlpha(225);
-        gui->getSkin()->setColor((gui::EGUI_DEFAULT_COLOR)i, col);
-    }
+    // create gui manager    
+    gui = new nanogui::Screen();
+    gui->initialize(window, true);
 
-    dtThen = device->getTimer()->getTime();
+    glfwSetWindowUserPointer(window, gui);
+
+    glfwSetCharCallback(window,
+        [](GLFWwindow *w, unsigned int codepoint) {
+            Window::Instance()->getGUIEnvironment()->charCallbackEvent(codepoint);
+        }
+    );
+
+    glfwSetDropCallback(window,
+        [](GLFWwindow *w, int count, const char **filenames) {
+            Window::Instance()->getGUIEnvironment()->dropCallbackEvent(count, filenames);
+        }
+    );
+
+    glfwSetFramebufferSizeCallback(window,
+        [](GLFWwindow *w, int width, int height) {
+            Window::Instance()->getGUIEnvironment()->resizeCallbackEvent(width, height);
+        }
+    );
+
+    dtThen = glfwGetTime();
 }
 
 Window::~Window() {
@@ -47,35 +82,39 @@ Window::~Window() {
     device = NULL; 
 }
 
-void Window::setEventReceiver(IEventReceiver *receiver){
-    device->setEventReceiver(receiver);
+void Window::setGUI(){ 
+    gui->setVisible(true);
+    gui->performLayout();
 }
  
 void Window::beginScene(){
-    float now = device->getTimer()->getTime();
-    deltaTime = (float)(now - dtThen) / 1000.f; // Time in seconds
+    double now = glfwGetTime();
+    deltaTime = (double)(now - dtThen); // Time in seconds
     dtThen = now;
 
-    driver->beginScene(true, true, 0 );
+    driver->beginScene(true, true, video::SColor(0,0,0,0));
 }
 
 void Window::endScene(){
     scene->drawAll();
-    gui->drawAll();
+    gui->drawWidgets();
+    glEnable(GL_DEPTH_TEST);
 
     driver->endScene();
 }
 
 bool Window::isOpen(){
-    return device->run();
+    glfwPollEvents();
+    return !glfwWindowShouldClose(window);
 }
 
 bool Window::isReady(){
-    return device->isWindowActive();
+    return !closeWindow;
 }
 
 void Window::close(){
     device->drop();
+    glfwTerminate();
 }
 
 IrrlichtDevice* Window::getDevice() {
@@ -90,24 +129,26 @@ scene::ISceneManager* Window::getSceneManager(){
     return scene;
 }
 
-gui::IGUIEnvironment* Window::getGUIEnvironment(){
+nanogui::Screen* Window::getGUIEnvironment(){
     return gui;
 }
 
 int Window::getInitialWindowWidth(){
-    return screenWidth;
+    return windowWidth;
 }
 
 int Window::getInitialWindowHeight(){
-    return screenHeight;
+    return windowHeight;
 }
 
 int Window::getRealWindowWidth(){
-    return driver->getViewPort().getWidth(); 
+    return windowWidth;
+    //return driver->getViewPort().getWidth(); 
 }
 
 int Window::getRealWindowHeight(){
-    return driver->getViewPort().getHeight(); 
+    return windowHeight;
+    //return driver->getViewPort().getHeight(); 
 }
 
 float Window::getDeltaTime(){

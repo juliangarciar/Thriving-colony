@@ -89,7 +89,7 @@ void BuildingManager::drawBuilding(Terrain *terrain){
 
 			
 		//Pressing the right mouse button cancels the building
-		if (g->getIO() -> rightMouseDown()){
+		if (g->getCursor()->rightMouseReleased()){
 			buildingMode = false;
 
 			delete tempBuilding;		
@@ -119,7 +119,7 @@ void BuildingManager::drawBuilding(Terrain *terrain){
 			* If there is no collision and the player press left button of the mouse,
 			* build the building
 			*/
-			if (g->getIO() -> leftMouseDown()){
+			if (g->getCursor()->leftMouseReleased()){
 				buildingMode = false;
 				buildBuilding(Vector3<float>(x, y, z), (Enumeration::BuildingType)tempBuilding->getType(), Enumeration::Team::Human);
 			}

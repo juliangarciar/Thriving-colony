@@ -1,24 +1,24 @@
 #ifndef TEXT_H
 #define TEXT_H
 
-#include <irrlicht.h>
+#include <nanogui/nanogui.h>
 #include "Rect2D.h"
 #include "GUIElement.h"
 
 class Text : public GUIElement {
 
     public:
-        Text(Rect2D<int> dimPos, const wchar_t *text);
-        Text(Rect2D<int> dimPos, const wchar_t *text, bool bg);
+        Text(std::string t);
         virtual ~Text();
-        
-        gui::IGUIElement *getGUIElement();
-        void setText(const wchar_t *text);
 
-        void disable();
-        void enable();
+        void setText(std::string t);
+        
+        void show();
+        void hide();
+        
+        nanogui::Widget *getGUIElement();
     private:
-        gui::IGUIStaticText *text;
+        nanogui::Label *text;
 };
 
 #endif

@@ -1,16 +1,16 @@
 #include "GameState.h"
 #include "Game.h"
-#include "Human.h"
-#include "IA.h"
-#include "SoundEngine/SoundSystem.h"
 
 GameState::GameState() : State() {
     map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
     camera = new CameraController(map);
-    hud = new Hud();
 
     gamePaused = false;
     battleManager = new BattleManager();
+    
+    hud = new Hud();
+
+    Window::Instance()->setGUI();
 
     prevWindowWidth = 1280;
     prevWindowHeight = 720;
@@ -68,13 +68,16 @@ void GameState::Init(){
 
 void GameState::Input(){
     //if (gamePaused) {
+
         hud->getHUDEvents();
 
-        hud ->update();
+        hud->update();
 
-        camera->Move(Game::Instance()->getIO(), Game::Instance()->getCursor());
-        camera->RotateAndInclinate(Game::Instance()->getIO(), Game::Instance()->getCursor());
-        camera->Zoom(Game::Instance()->getIO());
+        Game::Instance()->getCursor();
+
+        camera->Move(Game::Instance()->getCursor());
+        camera->RotateAndInclinate(Game::Instance()->getCursor());
+        camera->Zoom(Game::Instance()->getCursor());
 
         //Vector3<float> v = map->getPointCollision(Game::Instance()->getCursor());
         Human::getInstance() -> getBuildingManager()->testRaycastCollisions();
@@ -89,9 +92,9 @@ void GameState::Input(){
         int idBuilding = Human::getInstance() -> getBuildingManager() -> getCollisionID();
         if (idBuilding != -1){
             if (!Human::getInstance() -> getUnitManager()->isTroopSelected())
-                Game::Instance()->getCursor()->changeIcon(gui::ECURSOR_ICON::ECI_HAND); //ToDo: fachada
+                Game::Instance()->getCursor()->changeIcon(CURSOR_HAND); //ToDo: fachada
             
-            if (Game::Instance()->getIO()->leftMousePressed()) {
+            if (Game::Instance()->getCursor()->leftMousePressed()) {
                 // Comprobar que este terminado para enseñar el popup pero no va
                 //if (Human::getInstance() -> getBuildingManager() -> checkFinished(idBuilding)) {
                     hud->showPopup(idBuilding);
@@ -104,9 +107,9 @@ void GameState::Input(){
         int idTroop = Human::getInstance() -> getUnitManager() -> getCollisionID();
         if (idTroop != -1){
             if (!Human::getInstance() -> getUnitManager()->isTroopSelected())
-                Game::Instance()->getCursor()->changeIcon(gui::ECURSOR_ICON::ECI_HAND); //ToDo: fachada
+                Game::Instance()->getCursor()->changeIcon(CURSOR_HAND); //ToDo: fachada
             
-            if (Game::Instance()->getIO()->leftMousePressed())
+            if (Game::Instance()->getCursor()->leftMousePressed())
                 Human::getInstance() -> getUnitManager() -> selectTroop(idTroop);
             
             onMap = false;
@@ -115,18 +118,18 @@ void GameState::Input(){
         //Interactions with IA's entities
         int idBuildingIA =  IA::getInstance() -> getBuildingManager() -> getCollisionID();
         if (idBuildingIA != -1 && Human::getInstance() -> getUnitManager()->isTroopSelected()){
-            Game::Instance()->getCursor()->changeIcon(gui::ECURSOR_ICON::ECI_NO); //ToDo: fachada
+            Game::Instance()->getCursor()->changeIcon(CURSOR_IBEAM); //ToDo: fachada
 
-            if (Game::Instance()->getIO()->rightMousePressed()) //std::cout << "Edificio enemigo" << std::endl;
+            if (Game::Instance()->getCursor()->rightMousePressed()) //std::cout << "Edificio enemigo" << std::endl;
             
             onMap = false;
         }
 
         int idTroopIA = IA::getInstance() -> getUnitManager() -> getCollisionID();
         if (idTroopIA != -1 && Human::getInstance() -> getUnitManager()->isTroopSelected()){
-            Game::Instance()->getCursor()->changeIcon(gui::ECURSOR_ICON::ECI_NO); //ToDo: fachada
+            Game::Instance()->getCursor()->changeIcon(CURSOR_IBEAM); //ToDo: fachada
 
-            if (Game::Instance()->getIO()->rightMousePressed()) //std::cout << "Tropa enemiga" << std::endl;
+            if (Game::Instance()->getCursor()->rightMousePressed()) //std::cout << "Tropa enemiga" << std::endl;
             
             onMap = false;
         }
@@ -134,34 +137,34 @@ void GameState::Input(){
         //If nothing happens
         if (onMap){
             if (Human::getInstance() -> getUnitManager()->isTroopSelected())
-                Game::Instance()->getCursor()->changeIcon(gui::ECURSOR_ICON::ECI_CROSS); //ToDo: fachada
+                Game::Instance()->getCursor()->changeIcon(CURSOR_CROSSHAIR); //ToDo: fachada
             else 
-                Game::Instance()->getCursor()->changeIcon(gui::ECURSOR_ICON::ECI_NORMAL); //ToDo: fachada
+                Game::Instance()->getCursor()->changeIcon(CURSOR_NORMAL); //ToDo: fachada
             
-            if (Game::Instance()->getIO()->leftMousePressed())
+            if (Game::Instance()->getCursor()->leftMousePressed())
                 Human::getInstance() -> getUnitManager() -> unSelectTroop();
         }
 
-        if (Game::Instance()->getIO()->rightMousePressed()){
+        if (Game::Instance()->getCursor()->rightMousePressed()){
             Human::getInstance()->getUnitManager()->moveOrder(map);
         }
 
-        if (Game::Instance()->getIO()->keyPressed(KEY_KEY_1)){
+        if (Game::Instance()->getKeyboard()->keyPressed(GLFW_KEY_1)){
             Human::getInstance()->receiveMetal();
         }
 
-        if (Game::Instance()->getIO()->keyPressed(KEY_KEY_2)){
+        if (Game::Instance()->getKeyboard()->keyPressed(GLFW_KEY_2)){
             Human::getInstance()->receiveCrystal();
         }
 
-        if (Game::Instance()->getIO()->keyPressed(KEY_KEY_3)){
+        if (Game::Instance()->getKeyboard()->keyPressed(GLFW_KEY_3)){
             Human::getInstance()->receiveCitizens();
-        }     
+        }
 }
 
 void GameState::Update(){
     Game *g = Game::Instance();
-    //if (Game::Instance() -> getIO()->keyDown((char)27)) {
+    //if (Game::Instance() -> getCursor()->keyDown((char)27)) {
         //Escape is pressed
         //gamePaused = !gamePaused;
     //}

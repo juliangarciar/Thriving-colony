@@ -1,24 +1,27 @@
 #ifndef TAB_H
 #define TAB_H
 
-#include <irrlicht.h>
+#include <nanogui/nanogui.h>
 #include "GUIElement.h"
-
-using namespace irr;
+//#include "TabPanel.h"
 
 class Tab : public GUIElement{
     public:
-        Tab(gui::IGUITab *tab);
+        //Tab(TabPanel *parent, std::string title, int id);
+        Tab(nanogui::Widget *t);
         virtual ~Tab();
 
         void addChild(GUIElement *elem);
 
-        const wchar_t *getText();
+        void show();
+        void hide();
+
+        std::string getTitle();
         int getID();
 
-        gui::IGUIElement *getGUIElement();
+        nanogui::Widget *getGUIElement();
     private:
-        gui::IGUITab *tab;
+        nanogui::Widget *tab;
 };
 
 #endif

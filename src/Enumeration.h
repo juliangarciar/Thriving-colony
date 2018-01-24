@@ -154,6 +154,14 @@ class Enumeration {
             AdvancedM,
             Idol
         };
+
+        // Enumeration for UP, DOWN, PRESSED and RELEASED key states. Also used for mouse button states.
+        enum ioStatesENUM {
+            PRESSED, 
+            RELEASED, 
+            UP, 
+            DOWN
+        };
         
         //Special type, used to pass info to the UnitManager
         //in order to control which unit is created

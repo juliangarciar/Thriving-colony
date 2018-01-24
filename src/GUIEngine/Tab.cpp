@@ -1,29 +1,38 @@
 #include "Tab.h"
 #include <GraphicEngine/Window.h>
 
-using namespace irr;
+/*Tab::Tab(TabPanel *parent, std::string title, int id){ 
+    this->tab = parent->createTab(title, id)->getGUIElement();
+}*/
 
-Tab::Tab(gui::IGUITab *tab){ 
-    this->tab = tab;
+Tab::Tab(nanogui::Widget *t){
+    this->tab = t;
 }
 
 Tab::~Tab(){
-    delete tab;
-    tab = NULL;
+    this->tab->decRef();
 }
 
 void Tab::addChild(GUIElement *elem){
     tab->addChild(elem->getGUIElement());
 }
 
-const wchar_t *Tab::getText(){
-    return tab->getText();
+void Tab::show(){
+    tab->setVisible(true);
+}
+ 
+void Tab::hide(){
+    tab->setVisible(false);
+}
+
+std::string Tab::getTitle(){
+    return ""; //ToDo
 }
 
 int Tab::getID(){
-    return tab->getID();
+    return 0; //ToDo
 }
 
-gui::IGUIElement *Tab::getGUIElement(){
+nanogui::Widget *Tab::getGUIElement(){
     return tab;
 }

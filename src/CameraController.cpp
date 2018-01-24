@@ -147,7 +147,7 @@ void CameraController::Update(float deltaTime){
 	}
 
     if (movementMode || zoomMode || rotationOrInclinationMode){
-        currentHeight = terrain->getTerrain()->getHeight(camPos.x, camPos.z);
+        currentHeight = terrain->getY(camPos.x, camPos.z);
         camPos.y = currentHeight + camHeight;
 
 		camera->setCameraPosition(camPos.getVectorF());
@@ -156,7 +156,7 @@ void CameraController::Update(float deltaTime){
 }
 
 //ToDo: Crear camera controller (fuera de fachada) y moverlo ahi
-void CameraController::Move(InputManager *receiver, Mouse *cursor) {
+void CameraController::Move(Mouse *cursor) {
 	Window *sc = Window::Instance();
 
     /*direction = (receiver->keyDown(KEY_KEY_W) << 0) | (receiver->keyDown(KEY_KEY_A) << 1)
@@ -192,38 +192,33 @@ void CameraController::Move(InputManager *receiver, Mouse *cursor) {
 	}
 }
 
-void CameraController::Zoom(InputManager *receiver){
+void CameraController::Zoom(Mouse *cursor){
 	zoomMode = false;
-	if (receiver->getWheelState()) {
-		receiver->setWheelState(false);
-		if (receiver->isWheelUp()) {
-			if (camHeight > minZoom) {
-				camHeight -= 20.0f;
-				camSpeed -= 0.02f;
-		        zoomMode = true;
-			}
-		} else {
-			if (camHeight < maxZoom) {
-				camHeight += 20.0f;
-				camSpeed += 0.02f;
-		        zoomMode = true;
-			}
+	if (cursor->getWheelY() > 0.0f) {
+		if (camHeight > minZoom) {
+			camHeight -= 20.0f;
+			camSpeed -= 0.02f;
+			zoomMode = true;
+		}
+	} else {
+		if (camHeight < maxZoom) {
+			camHeight += 20.0f;
+			camSpeed += 0.02f;
+			zoomMode = true;
 		}
 	}
 }
 
-void CameraController::RotateAndInclinate(InputManager *receiver, Mouse *cursor){
+void CameraController::RotateAndInclinate(Mouse *cursor){
     // get cursor data
-    if (receiver->middleMousePressed()) {
+    if (cursor->middleMousePressed()) {
         rotationOrInclinationMode = true;
         cursorPosSaved = cursor->getPosition();
         cursor->setPosition(screenCenter);
-		
-		std::cout << "SI" << std::endl;
 
 		Game::Instance()->getCursor()->hide();
     }
-    if (receiver->middleMouseReleased()) {
+    if (cursor->middleMouseReleased()) {
         rotationOrInclinationMode = false;
         cursor->setPosition(cursorPosSaved);
 		

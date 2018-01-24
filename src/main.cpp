@@ -10,11 +10,9 @@ int main(){
     game->Init();
 
     while (game->getWindow()->isOpen()){
-        if (game->getWindow()->isReady()){
-            game->Input();
-            game->Update();
-            game->Render();
-        }
+        game->Input();
+        game->Update();
+        game->Render();
     }
 
     game->CleanUp();

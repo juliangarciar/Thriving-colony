@@ -5,7 +5,7 @@
 #include <GraphicEngine/Vector2.h>
 #include <GraphicEngine/Vector3.h>
 #include <GraphicEngine/Terrain.h>
-#include <IOEngine/InputManager.h>
+#include <IOEngine/Keyboard.h>
 #include <IOEngine/Mouse.h>
 #include "Enumeration.h"
 
@@ -17,9 +17,9 @@ class CameraController {
 
         void Update(float deltaTime);
 
-        void Move(InputManager *receiver, Mouse *cursor);
-        void RotateAndInclinate(InputManager *receiver, Mouse *cursor);
-        void Zoom(InputManager *receiver);
+        void Move(Mouse *cursor);
+        void RotateAndInclinate(Mouse *cursor);
+        void Zoom(Mouse *cursor);
 
         Camera *getCamera();
     private:
