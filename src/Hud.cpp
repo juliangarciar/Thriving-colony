@@ -117,6 +117,7 @@ Hud::Hud() {
     addTab(1, Enumeration::BuildingType::Barn);
     addTab(2, Enumeration::BuildingType::Barrack);
     addTab(3, Enumeration::BuildingType::Workshop);
+    tabs->changeActiveTab(0);
     tabContainer->hide();
 }
 
@@ -175,14 +176,16 @@ void Hud::addTab(int id, int type){
             });
             buttons -> push_back(b);
 
+            hallTroopList = new ComboBox(t, {"Uno", "Dos", "Tres"});
+
             b = new Button(t, "Deploy selected troop");
             b -> setTooltip("Deploy your selected unit onto the map");
             b -> setCallback([&]{
-                /*int index = hallTroopList -> getSelected();
+                int index = hallTroopList -> getSelectedOption();
                 if (index >= 0) {
-                    hallTroopList -> removeItem(index);
+                    hallTroopList -> removeOption(index);
                     Human::getInstance() -> getUnitManager() -> startDeployingTroop(index);
-                }*/
+                }
             });
             buttons -> push_back(b);
 
