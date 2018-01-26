@@ -166,6 +166,27 @@ void BuildingManager::setTempBuildingModel(Vector3<float> pos, Enumeration::Buil
 	} else if (_type == Enumeration::BuildingType::Market) {
 		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/mercado.obj", _type, pos, _team);
 		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+	} else if (_type == Enumeration::BuildingType::Quarry) {
+		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/cantera.obj", _type, pos, _team);
+		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+	} else if (_type == Enumeration::BuildingType::MainBuilding) {
+		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/centro_de_mando.obj", _type, pos, _team);
+		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+	} else if (_type == Enumeration::BuildingType::Barn) {
+		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/escuela.obj", _type, pos, _team);
+		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+	} else if (_type == Enumeration::BuildingType::Hospital) {
+		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/hospital.obj", _type, pos, _team);
+		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+	} else if (_type == Enumeration::BuildingType::Wall) {
+		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/muralla.obj", _type, pos, _team);
+		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+	} else if (_type == Enumeration::BuildingType::Workshop) {
+		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/taller_maquinas_de_asedio.obj", _type, pos, _team);
+		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+	} else if (_type == Enumeration::BuildingType::Tower) {
+		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/torre_vigilancia.obj", _type, pos, _team);
+		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
 	} else
 		tempBuilding = new Building(0, buildingLayer, _type, pos, _team);
 }
