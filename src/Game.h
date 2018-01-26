@@ -7,10 +7,13 @@
 #include "PauseState.h"
 #include "IOEngine/EventSystem.h"
 
-#include <IOEngine/InputManager.h>
+#include <IOEngine/Mouse.h>
+#include <IOEngine/Keyboard.h>
+#include <IOEngine/EventSystem.h>
 #include <GraphicEngine/Window.h>
 
-#include "SoundEngine/SoundSystem.h"
+#include <SoundEngine/SoundSystem.h>
+
 class Game {
     public:
         static Game* Instance();
@@ -23,7 +26,7 @@ class Game {
         void changeState(Enumeration::State);
 
         Window *getWindow();
-        InputManager *getIO();
+        Keyboard *getKeyboard();
         Mouse *getCursor();
         EventSystem *getEvents();
 		MenuState *getMenuState();
@@ -37,6 +40,7 @@ class Game {
 
     private:
         static Game* pinstance;
+
         State *state;
         Window *window;
         Enumeration::State stateData;
@@ -45,11 +49,11 @@ class Game {
         GameState *game;
         PauseState *pause;
 
-        InputManager *io;
+        Mouse *cursor;
+        Keyboard *keyboard;
 
         EventSystem *events;
         
-        Mouse *cursor;
         SoundSystem *soundSystem;
 };
 

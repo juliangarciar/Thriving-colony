@@ -39,33 +39,33 @@ std::vector<nodeGrid *> aStar::startAlgoritm()
         current = frontier.top();
         frontier.pop();
 
-        neighbors = map->getNeighbours(current);
+        neighbors = map -> getNeighbours(current);
         for (int i = 0; i < neighbors.size(); i++)
         {
-            if (neighbors[i]->itsDiag())
+            if (neighbors[i] -> itsDiag())
             {
-                newCost = current->getWeight() + sqrt(2.00);
+                newCost = current -> getWeight() + sqrt(2.00);
             }
             else
             {
-                newCost = current->getWeight() + 1;
+                newCost = current -> getWeight() + 1;
             }
-            if ((neighbors[i]->itsCounted() == false) || (newCost < neighbors[i]->getWeight()))
+            if ((neighbors[i] -> itsCounted() == false) || (newCost < neighbors[i] -> getWeight()))
             {
                 //Realle needed ?
-                //int dx1 = neighbors[i]->getX() - end->getX();
-                //int dy1 = neighbors[i]->getY() - end->getY();
-                //int dx2 = start->getX() - end->getX();
-                //int dy2 = start->getY() - end->getY();
+                //int dx1 = neighbors[i] -> getX() - end -> getX();
+                //int dy1 = neighbors[i] -> getY() - end -> getY();
+                //int dx2 = start -> getX() - end -> getX();
+                //int dy2 = start -> getY() - end -> getY();
                 //int cross = abs(dx1 * dy2 - dx2 * dy1);
 
-                neighbors[i]->swapColor(irr::video::SColor(0, 127, 0, 127));
-                neighbors[i]->setWeight(newCost);
-                neighbors[i]->setCounted(true);
-                priority = map->checkDistance(end, neighbors[i], start) + newCost;
+                neighbors[i] -> swapColor(irr::video::SColor(0, 127, 0, 127));
+                neighbors[i] -> setWeight(newCost);
+                neighbors[i] -> setCounted(true);
+                priority = map -> checkDistance(end, neighbors[i], start) + newCost;
                 //priority += newCost;
-                neighbors[i]->setPriority(priority);
-                neighbors[i]->setCameFrom(current);
+                neighbors[i] -> setPriority(priority);
+                neighbors[i] -> setCameFrom(current);
                 frontier.push(neighbors[i]);
             }
         }
@@ -80,11 +80,11 @@ std::vector<nodeGrid *> aStar::startAlgoritm()
     while (current != start)
     {
         path.push_back(current);
-        current = current->getCameFrom();
-        current->swapColor(irr::video::SColor(0, 255, 0, 0));
+        current = current -> getCameFrom();
+        current -> swapColor(irr::video::SColor(0, 255, 0, 0));
     }
-    end->swapColor(irr::video::SColor(0, 0, 255, 0));
-    start->swapColor(irr::video::SColor(0, 0, 0, 255));
+    end -> swapColor(irr::video::SColor(0, 0, 255, 0));
+    start -> swapColor(irr::video::SColor(0, 0, 0, 255));
 
     path.swap(path);
     return path;

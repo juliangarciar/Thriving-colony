@@ -11,7 +11,7 @@ ResourceNode::ResourceNode(Node *fatherPnt) : Node() {
     
 }
 
-ResourceNode::~ResourceNode(){
+ResourceNode::~ResourceNode() {
     delete father;
     delete[] children;
 }
@@ -19,7 +19,8 @@ ResourceNode::~ResourceNode(){
 void ResourceNode::question() {
     //std::cout << "Voy a invertir en recursos" << std::endl;
     //First subbranch: Quarry
-    if (IA::getInstance() -> getTree() -> getShortOnCrystal() && IA::getInstance() -> getCityLevel() >= IA::getInstance() -> getTree() -> getQuarryMilestone()) {
+    //Requirement has a higher priority
+    if (IA::getInstance() -> getTree() -> getRequireCrystal() || (IA::getInstance() -> getTree() -> getShortOnCrystal() && IA::getInstance() -> getCityLevel() >= IA::getInstance() -> getTree() -> getQuarryMilestone())) {
         children[0] -> question();
     } else {
         //Second subbranch: Siderurgy

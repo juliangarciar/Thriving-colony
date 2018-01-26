@@ -9,8 +9,8 @@
 #include <GUIEngine/Button.h>
 #include <GUIEngine/TabPanel.h>
 #include <GUIEngine/Tab.h>
-#include <GUIEngine/ListBox.h>
-#include <IOEngine/InputManager.h>
+#include <GUIEngine/Panel.h>
+#include <IOEngine/Keyboard.h>
 #include <IOEngine/Mouse.h>
 
 using namespace irr;
@@ -36,6 +36,8 @@ class Hud {
     private:
         //Button *buttonQuit;
 
+        Panel *buildingsPanel;
+
         Button *buttonBarn;
         Button *buttonBarrack;
         Button *buttonHospital;
@@ -48,11 +50,12 @@ class Hud {
         Button *buttonWall;
         Button *buttonWorkshop;
         Button *buttonExpandTerrain;
+        Button *buttonOpenPanel;
 
         TabPanel *tabs;
 
         Text *hallTroopText;
-        ListBox *hallTroopList;
+        //ListBox *hallTroopList;
 
         //ToDo: mejorar
         std::vector<Tab*> *menus;

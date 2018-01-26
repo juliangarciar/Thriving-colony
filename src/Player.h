@@ -89,6 +89,10 @@ class Player {
 
         void spendResources(int, int);
 
+        void receiveMetal();
+        void receiveCrystal();
+        void receiveCitizens();
+
     protected:
         float updateTimer;
         // Resources

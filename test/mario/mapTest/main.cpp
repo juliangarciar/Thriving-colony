@@ -14,22 +14,22 @@ int main() {
 
 	if (device == 0) return 1; // could not create selected driver.
 
-	video::IVideoDriver* driver = device->getVideoDriver();
-	scene::ISceneManager* smgr = device->getSceneManager();
-	gui::IGUIEnvironment* env = device->getGUIEnvironment();
+	video::IVideoDriver* driver = device -> getVideoDriver();
+	scene::ISceneManager* smgr = device -> getSceneManager();
+	gui::IGUIEnvironment* env = device -> getGUIEnvironment();
 
-	driver->setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
+	driver -> setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
 
 	// add camera
 	scene::ICameraSceneNode* camera =
-		smgr->addCameraSceneNodeFPS(0,100.0f,1.2f);
+		smgr -> addCameraSceneNodeFPS(0,100.0f,1.2f);
 
-	camera->setPosition(core::vector3df(2700*2,255*2,2600*2));
-	camera->setTarget(core::vector3df(2397*2,343*2,2700*2));
-	camera->setFarValue(42000.0f);
+	camera -> setPosition(core::vector3df(2700*2,255*2,2600*2));
+	camera -> setTarget(core::vector3df(2397*2,343*2,2700*2));
+	camera -> setFarValue(42000.0f);
 
     //Draw terrain
-	scene::ITerrainSceneNode* terrain = smgr->addTerrainSceneNode(
+	scene::ITerrainSceneNode* terrain = smgr -> addTerrainSceneNode(
 		"terrain-heightmap.bmp",
 		0,					// parent node
 		-1,					// node id
@@ -42,53 +42,53 @@ int main() {
 		4					// smoothFactor
     );
 
-	terrain->setMaterialFlag(video::EMF_LIGHTING, false);
+	terrain -> setMaterialFlag(video::EMF_LIGHTING, false);
 
-	terrain->setMaterialTexture(0, driver->getTexture("terrain-texture.jpg"));
-	terrain->setMaterialTexture(1, driver->getTexture("detailmap3.jpg"));
-	terrain->setMaterialType(video::EMT_DETAIL_MAP);
-    terrain->scaleTexture(1.0f, 20.0f);
+	terrain -> setMaterialTexture(0, driver -> getTexture("terrain-texture.jpg"));
+	terrain -> setMaterialTexture(1, driver -> getTexture("detailmap3.jpg"));
+	terrain -> setMaterialType(video::EMT_DETAIL_MAP);
+    terrain -> scaleTexture(1.0f, 20.0f);
     
 <<<<<<< HEAD
     // Cursor terrain
 =======
 >>>>>>> 8ae8946305316d07413c2c95c8154e53de84c29a
-    scene::ITriangleSelector* selector = smgr->createTerrainTriangleSelector(terrain);
-    terrain->setTriangleSelector(selector);
-    gui::ICursorControl *cursor = device->getCursorControl();
-    scene::ISceneCollisionManager* collisionManager = smgr->getSceneCollisionManager();
-    scene::ISceneNode* sphere = smgr->addSphereSceneNode();
+    scene::ITriangleSelector* selector = smgr -> createTerrainTriangleSelector(terrain);
+    terrain -> setTriangleSelector(selector);
+    gui::ICursorControl *cursor = device -> getCursorControl();
+    scene::ISceneCollisionManager* collisionManager = smgr -> getSceneCollisionManager();
+    scene::ISceneNode* sphere = smgr -> addSphereSceneNode();
 
-    scene::IMesh* cube = smgr->getGeometryCreator()->createCubeMesh();
-    scene::IMeshSceneNode *cubeNode = smgr->addCubeSceneNode(100);
+    scene::IMesh* cube = smgr -> getGeometryCreator() -> createCubeMesh();
+    scene::IMeshSceneNode *cubeNode = smgr -> addCubeSceneNode(100);
 
     if(cubeNode) {
-        cubeNode->setMaterialFlag(video::EMF_LIGHTING, false);
-        cubeNode->setPosition(core::vector3df(0,1000,0));
+        cubeNode -> setMaterialFlag(video::EMF_LIGHTING, false);
+        cubeNode -> setPosition(core::vector3df(0,1000,0));
     }
 
 	int lastFPS = -1;
 
-	while(device->run()) {
-        if (device->isWindowActive()) {
-            driver->beginScene(true, true, 0 );
+	while(device -> run()) {
+        if (device -> isWindowActive()) {
+            driver -> beginScene(true, true, 0 );
 
 <<<<<<< HEAD
-            //core::position2d<s32> pos = cursor->getPosition();
+            //core::position2d<s32> pos = cursor -> getPosition();
 //
             //core::vector3df point;
             //core::triangle3df triangle;
 //
             //scene::ISceneNode *node = 0;
-            //const core::line3d<f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
-            //if (collisionManager->getCollisionPoint (ray, selector, point, triangle, node)) {
-            //    sphere->setPosition(point);
+            //const core::line3d<f32> ray = collisionManager -> getRayFromScreenCoordinates(pos);
+            //if (collisionManager -> getCollisionPoint (ray, selector, point, triangle, node)) {
+            //    sphere -> setPosition(point);
             //    std::cout << triangle.pointA.X << " " << triangle.pointA.Y << " " << triangle.pointA.Z << std::endl;
             //}
 //
-            //scene::ITerrainSceneNode* terrain = smgr->addTerrainSceneNode("gray.bmp", 0, 777);
+            //scene::ITerrainSceneNode* terrain = smgr -> addTerrainSceneNode("gray.bmp", 0, 777);
 =======
-            core::position2d<s32> pos = cursor->getPosition();
+            core::position2d<s32> pos = cursor -> getPosition();
 
             cout<<"x: "<<pos.X<<endl;
             cout<<"y: "<<pos.Y<<endl;
@@ -97,38 +97,38 @@ int main() {
             core::triangle3df triangle;
 
             scene::ISceneNode *node = 0;
-            const core::line3d<f32> ray = collisionManager->getRayFromScreenCoordinates(pos);
-            if (collisionManager->getCollisionPoint (ray, selector, point, triangle, node)) {
-                sphere->setPosition(point);
+            const core::line3d<f32> ray = collisionManager -> getRayFromScreenCoordinates(pos);
+            if (collisionManager -> getCollisionPoint (ray, selector, point, triangle, node)) {
+                sphere -> setPosition(point);
                 std::cout << triangle.pointA.X << " " << triangle.pointA.Y << " " << triangle.pointA.Z << std::endl;
             }
 >>>>>>> GraphicEngine
 
-            smgr->drawAll();
-            env->drawAll();
+            smgr -> drawAll();
+            env -> drawAll();
 
-            driver->endScene();
+            driver -> endScene();
             
             // display frames per second in window title
-            int fps = driver->getFPS();
+            int fps = driver -> getFPS();
             if (lastFPS != fps) {
                 core::stringw str = L"Terrain Renderer - Irrlicht Engine [";
-                str += driver->getName();
+                str += driver -> getName();
                 str += "] FPS:";
                 str += fps;
                 // Also print terrain height of current camera position
                 // We can use camera position because terrain is located at coordinate origin
                 str += " Height: ";
-                str += terrain->getHeight(camera->getAbsolutePosition().X,
-                    camera->getAbsolutePosition().Z);
+                str += terrain -> getHeight(camera -> getAbsolutePosition().X,
+                    camera -> getAbsolutePosition().Z);
 
-                device->setWindowCaption(str.c_str());
+                device -> setWindowCaption(str.c_str());
                 lastFPS = fps;
             }
         }
     }
 
-	device->drop();
+	device -> drop();
 	
 	return 0;
 }

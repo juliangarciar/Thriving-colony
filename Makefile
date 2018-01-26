@@ -18,13 +18,13 @@ CXX = clang++
 # FLAGS
 ####
 # Include paths
-CPPFLAGS = -I/usr/include -I/usr/include/irrlicht -I/usr/local/include -I/usr/local/include/fmod -I./$(SOURCEPATH)
+CPPFLAGS = -I/usr/include -I/usr/local/include  -I/usr/include/eigen3 -I/usr/local/include/irrlicht -I/usr/local/include/fmod -I/usr/local/include/nanovg -I./$(SOURCEPATH)
 # Compiler params
-CPPFLAGS += -O3 -ffast-math -g -Wall -std=c++11 -m64 -pthread
+CPPFLAGS += -O3 -ffast-math -g -Wall -std=c++11 -m64 -pthread -DGL_GLEXT_PROTOTYPES
 # Lib paths
-LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L/usr/local/lib -L/usr/local/lib/x86_64
+LDFLAGS = -L/usr/lib -L/usr/local/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11
 # Libs
-LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lIrrlicht -lfmod -lfmodstudio
+LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lXrandr -lXinerama -lXi -lpthread -ldl -lrt -lglfw -lIrrlicht -lnanogui -lfmod -lfmodstudio
 ###-lfmodex_vc.lib -lfmod -lfmodasdL
 
 ######## DON'T EDIT ANYTHING BELOW THIS LINE

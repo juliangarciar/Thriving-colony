@@ -4,13 +4,13 @@
 using namespace irr;
 
 Texture::Texture(const char* path) {
-    texture = Window::Instance()->getVideoDriver()->getTexture(path);
+    texture = Window::Instance() -> getVideoDriver() -> getTexture(path);
 }
 
 Texture::~Texture() {
     
 }
 
-video::ITexture *Texture::getTexture(){
+video::ITexture *Texture::getTexture() {
     return texture;
 }

@@ -36,6 +36,7 @@ class Entity {
         virtual void taxPlayer(Enumeration::Team) = 0;
 
         int getViewRadius();
+        
     protected:
         Entity* target;
         

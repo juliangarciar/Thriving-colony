@@ -4,8 +4,8 @@
 
 //ToDo: temp
 Entity::Entity(SceneNode *layer, int id, int size) {
-    this->ID = id;
-    this->target = NULL;
+    this -> ID = id;
+    this -> target = NULL;
     //ToDo: hacer aumento de felicidad, tropas nivel y tal
     model = new Model(layer, id, size);
     hitbox = new Box3D<float>();
@@ -15,7 +15,7 @@ Entity::Entity(SceneNode *layer, int id, int size) {
 }
 
 Entity::Entity(SceneNode *layer, int id, const wchar_t *path) {
-    this->ID = id;
+    this -> ID = id;
     //ToDo: hacer aumento de felicidad, tropas nivel y tal
     model = new Model(layer, id, path);
     hitbox = new Box3D<float>();
@@ -26,8 +26,6 @@ Entity::~Entity() {
     delete position;
     delete hitbox;
     delete model;
-    
-    if (target != NULL) delete target;
 }
 
 int Entity::getHP() {
@@ -43,7 +41,7 @@ void Entity::takeDamage(int dmg) {
     hp = hp-dmg;
     // Tint the model red
     tookDamageCountdown = tookDamageTimer;
-    Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), video::SColor(255, 125, 125, 0));
+    Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 125, 125, 0));
     if (hp <= 0) {
         hp = 0;
         die();
@@ -64,16 +62,16 @@ void Entity::die() {
 
 void Entity::changeRedTint() {
     if (!finished && tookDamageCountdown <= 0) {
-        Window::Instance()->getSceneManager()->getMeshManipulator()->setVertexColors(model->getModel()->getMesh(), baseColor);
+        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), baseColor);
     } else {
         tookDamageCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
     }
 }
 
-void Entity::setPosition(Vector3<float> vectorData){
-    this->position->set(vectorData);
-    this->model->setPosition(vectorData);
-    this->hitbox->set(model -> getModel() -> getTransformedBoundingBox());
+void Entity::setPosition(Vector3<float> vectorData) {
+    this -> position -> set(vectorData);
+    this -> model -> setPosition(vectorData);
+    this -> hitbox -> set(model -> getModel() -> getTransformedBoundingBox());
 }
 
 Vector3<float>* Entity::getPosition() {

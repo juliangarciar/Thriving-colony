@@ -87,7 +87,8 @@ class Enumeration {
 
             GUI_ID_RETRACT_ALL_TROOPS_BUTTON,
 
-            GUI_ID_EXPAND_TERRAIN_BUTTON
+            GUI_ID_EXPAND_TERRAIN_BUTTON,
+            GUI_ID_OPEN_PANEL_BUTTON
         };
 
         enum BuildingCost {
@@ -166,12 +167,54 @@ class Enumeration {
             PauseState
         };
 
+        // Enumeration for UP, DOWN, PRESSED and RELEASED key states. Also used for mouse button states.
+        enum ioStatesENUM {
+            PRESSED, 
+            RELEASED, 
+            UP, 
+            DOWN
+        };
+        
         enum UnitState {
             Idle,
             Move,
             AttackMove,
             Attack,
             Chase
+        };
+
+        enum IAChoices {
+            ClosingDoors,
+            DeployingTroops,
+            TrainMeleeFootman,
+            BuildBarrack,
+            Attacking,
+            RetractingTroops,
+            BuildSchool,
+            BuildMarket,
+            BuildHospital,
+            BuildSiderurgy,
+            BuildQuarry,
+            BuildHome,
+            TrainMountedMelee,
+            TrainCreature,
+            TrainRangedFootman,
+            TrainMountedRanged,
+            TrainCatapult,
+            TrainRam,
+            BuildBarn,
+            BuildWorkshop,
+            BuildTower,
+            BuildWall
+
+        };
+
+        enum IABehaviour {
+            VeryHappy,
+            Happy,
+            Neutral,
+            Unhappy,
+            VeryUnhappy
         };
 
     private:

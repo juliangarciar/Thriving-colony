@@ -12,7 +12,7 @@ int main(){
     VeryHappyTree* t = new VeryHappyTree(pl);
 
     while(true) {
-            t ->makeChoice();
+            t  -> makeChoice();
 
 
     }

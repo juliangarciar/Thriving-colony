@@ -24,6 +24,7 @@ class Building : public Entity {
         void updateHitbox();
 
         int getID();
+        
     private:
         void Init();
 

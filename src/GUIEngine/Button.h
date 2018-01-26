@@ -1,31 +1,31 @@
 #ifndef BUTTON_H
 #define BUTTON_H
 
-#include <irrlicht.h>
-#include <GUIEngine/Rect2D.h>
-//#include <IOEngine/InputManager.h>
-#include <IOEngine/Mouse.h>
+#include <nanogui/nanogui.h>
+#include <GraphicEngine/Vector2.h>
 #include "GUIElement.h"
-
-using namespace irr;
 
 class Button : public GUIElement{
     
     public:
-        Button(Rect2D<int> dimPos, int id, const wchar_t *buttonText, const wchar_t *tooltipText);
+        Button(std::string buttonText);
+        Button(GUIElement *parent, std::string buttonText);
         virtual ~Button();
 
         bool isButtonPressed();
-        void setIsPushButton(bool pushPresed);
-        void setButtonPressed(bool pressed); 
+        void setButtonPressed(bool pressed);
 
-        void setText(const wchar_t* text);
-        void setPosition(Vector2<int> pos);
+        void show();
+        void hide();
 
-        gui::IGUIElement *getGUIElement();
+        void setText(std::string text);
+        void setSize(Vector2<int> size);
+        void setPosition(Vector2<int> position);
+        void setButtonCallback(std::function<void()> callback);
 
+        nanogui::Widget *getGUIElement();
     private:
-        gui::IGUIButton *button;
+        nanogui::Button *button;
 };
 
 #endif

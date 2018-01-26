@@ -11,7 +11,9 @@ MoveTroopsNode::~MoveTroopsNode(){
 }
 
 void MoveTroopsNode::question() {
+
+    IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::Attacking);
     //std::cout << "Ataco al enemigo" << std::endl;
     //ToDo: Fijar cento de mando como objetivo
-    IA::getInstance()-> deployTroops();
+    IA::getInstance() ->  deployTroops();
 }

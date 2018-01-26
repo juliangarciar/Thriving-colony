@@ -57,7 +57,7 @@ void Human::update() {
         }
         updateTimer = 1;
     } else {
-        updateTimer -= Game::Instance() ->getWindow() -> getDeltaTime();
+        updateTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
     }
 }
 
@@ -98,8 +98,8 @@ bool Human::getUnderAttack() {
         // Get units in the map of the opposing team
         std::map<int, Unit*> *inMapTroops = IA::getInstance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map
-        for (std::map<int,Unit*>::iterator it = inMapTroops->begin(); it != inMapTroops->end() && underAttack == false; ++it){
-            if (it ->second != NULL) {
+        for (std::map<int,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
+            if (it  -> second != NULL) {
             // Calculate distance between troop requesting target and posible targets
                 xaux = it -> second -> getPosition() -> x - pos -> x;
                 yaux = it -> second -> getPosition() -> y - pos -> y;
@@ -122,7 +122,7 @@ bool Human::getDeployedTroops() {
 bool Human::getClosedDoors() {
     return closedDoors;
 }
-
+/*
 void Human::receiveMetal() {
     metalAmount = metalAmount + 200;
 }
@@ -134,3 +134,4 @@ void Human::receiveCrystal() {
 void Human::receiveCitizens() {
     citizens = citizens + 100;
 }
+*/

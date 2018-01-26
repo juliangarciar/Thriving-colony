@@ -1,7 +1,7 @@
 #ifndef STATE_H
 #define STATE_H
 
-class State{
+class State {
     public:
         virtual void init() = 0;
         virtual void input() = 0;

@@ -12,29 +12,28 @@ Game* Game::Instance() {
 }
 
 Game::Game() {
+    window = Window::Instance();
+
     menu = new MenuState();
     state = menu;
     stateData = Enumeration::State::MenuState;
 
-    window = Window::Instance();
-
     cursor = new Mouse();
-    io = new InputManager();
+    keyboard = new Keyboard();
 
     events = new EventSystem();
 
-    window -> setEventReceiver(io);
     soundSystem = new SoundSystem();
 }
 
 Game::~Game() {
-     delete menu;
-     delete game;
-     delete pause;
-     delete cursor;
-     delete io;
-     delete events;
-     delete soundSystem;
+    delete menu;
+    delete game;
+    delete pause;
+    delete cursor;
+    delete events;
+    delete soundSystem;
+    delete keyboard;
 }
 
 void Game::init() {
@@ -59,9 +58,7 @@ void Game::init() {
 }
 
 void Game::input() {
-    io -> endEventProcess();
     state -> input();
-    io -> startEventProcess();
 }
 
 void Game::update() {
@@ -114,11 +111,11 @@ Window *Game::getWindow(){
     return window;
 }
 
-InputManager *Game::getIO(){
-    return io;
+Keyboard *Game::getKeyboard(){
+    return keyboard;
 }
 
-Mouse *Game::getCursor(){
+Mouse *Game::getCursor() {
     return cursor;
 }
 
@@ -126,10 +123,10 @@ EventSystem *Game::getEvents() {
     return events;
 }
 
-MenuState *Game::getMenuState(){
+MenuState *Game::getMenuState() {
 	return menu;
 }
 
-GameState *Game::getGameState(){
+GameState *Game::getGameState() {
 	return game;
 }

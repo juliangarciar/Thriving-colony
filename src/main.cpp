@@ -9,12 +9,10 @@ int main() {
 
     game -> init();
 
-    while (game -> getWindow() -> isOpen()) {
-        if (game -> getWindow() -> isReady()) {
-            game -> input();
-            game -> update();
-            game -> render();
-        }
+    while (game -> getWindow() -> isOpen()){
+        game -> input();
+        game -> update();
+        game -> render();
     }
 
     game -> cleanUp();

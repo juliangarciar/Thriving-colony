@@ -16,7 +16,7 @@ BuildingNode::BuildingNode(Node *fatherPnt) : Node() {
     children[4] = new TowerNode(this);
 }
 
-BuildingNode::~BuildingNode(){
+BuildingNode::~BuildingNode() {
     delete father;
     delete[] children;
 }

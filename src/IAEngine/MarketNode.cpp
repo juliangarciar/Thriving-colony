@@ -6,11 +6,13 @@ MarketNode::MarketNode(Node *fatherPnt) : Node() {
     children = 0;
 }
 
-MarketNode::~MarketNode(){
+MarketNode::~MarketNode() {
     delete father;
 }
 
 void MarketNode::question() {
+
+    IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::BuildMarket);
     //std::cout << "Contruyo un mercado" << std::endl;
     if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::MarketMetalCost, Enumeration::BuildingCost::MarketCrystalCost, Enumeration::Team::IA)) {
         Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();

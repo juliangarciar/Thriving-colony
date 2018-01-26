@@ -14,7 +14,7 @@ UnitNode::UnitNode(Node *fatherPnt) : Node() {
     children[2] = new SiegeNode(this);
 }
 
-UnitNode::~UnitNode(){
+UnitNode::~UnitNode() {
     delete father;
     delete[] children;
 }
@@ -26,7 +26,7 @@ void UnitNode::question() {
         children[0] -> question();
     } else {
         //Second subsubbranch: Range
-        if (IA::getInstance() -> getTree() -> calculateRangeRate() < IA::getInstance() -> getTree() ->getRangeThreshold()) {
+        if (IA::getInstance() -> getTree() -> calculateRangeRate() < IA::getInstance() -> getTree()  -> getRangeThreshold()) {
             //std::cout << "Voy a hacer rangos" << std::endl;
             children[1] -> question();
         } else {

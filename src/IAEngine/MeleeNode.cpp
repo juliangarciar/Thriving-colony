@@ -12,18 +12,18 @@ MeleeNode::MeleeNode(Node *fatherPnt) : Node() {
     children[2] = new MeleeFootmenNode(this);
 }
 
-MeleeNode::~MeleeNode(){
+MeleeNode::~MeleeNode() {
     delete father;
     delete[] children;
 }
 
 void MeleeNode::question() {
     //std::cout << Voy a hacer melees
-    if (IA::getInstance()->getCityLevel() >= IA::getInstance() -> getTree() -> getCreatureMilestone()) {
+    if (IA::getInstance() -> getCityLevel() >= IA::getInstance() -> getTree() -> getCreatureMilestone()) {
             children[0] -> question();
         } else {
             //First subsubsubbranch: With creature
-            if (IA::getInstance()->getCityLevel() >= IA::getInstance() -> getTree() -> getMountedCreatureMilestone()) {
+            if (IA::getInstance() -> getCityLevel() >= IA::getInstance() -> getTree() -> getMountedCreatureMilestone()) {
                 children[1] -> question();
             } else {
                 //Second subsubsubbranch: Without creature

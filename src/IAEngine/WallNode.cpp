@@ -6,11 +6,13 @@ WallNode::WallNode(Node *fatherPnt) : Node() {
     children = 0;
 }
 
-WallNode::~WallNode(){
+WallNode::~WallNode() {
     delete father;
 }
 
 void WallNode::question() {
+
+    IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::BuildWall);
     //std::cout << Construyo una muralla << std::endl;
     if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::WallMetalCost, Enumeration::BuildingCost::WallCrystalCost, Enumeration::Team::IA)) {
         Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();

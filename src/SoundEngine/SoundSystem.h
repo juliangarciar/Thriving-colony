@@ -65,6 +65,7 @@ public:
     void checkAndStopEvent(SoundEvent* event);
     
     void setStat(bool data);
+
 private:
     static SoundSystem* pinstance;
     bool paused;
@@ -90,6 +91,7 @@ private:
     FMOD_STUDIO_EVENTINSTANCE* voiceInstance = 0;
     //FMOD_STUDIO_EVENTINSTANCE * sfxInstance;
 };
+
 //THIS IS GOING TO DISSAPEAR
 class SoundEvent {
 public:

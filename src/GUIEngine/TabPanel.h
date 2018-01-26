@@ -1,29 +1,27 @@
 #ifndef TABPANEL_H
 #define TABPANEL_H
 
-#include <irrlicht.h>
 #include <map>
-#include <GUIEngine/Rect2D.h>
-#include <GUIEngine/Tab.h>
+#include <nanogui/nanogui.h>
+#include <nanogui/tabwidget.h>
+#include "Tab.h"
 #include "GUIElement.h"
-
-using namespace irr;
 
 class TabPanel : public GUIElement {
     public:
-        TabPanel(Rect2D<int> dimPos,  int id);
+        TabPanel();
         virtual ~TabPanel();
 
-        Tab *addTab(const wchar_t *text, int id);
+        Tab *createTab(std::string text, int id);
         Tab *getTab(int id);
-
-        void enable();
-        void disable();
         bool changeActiveTab(int id);
 
-        gui::IGUIElement *getGUIElement();
+        void show();
+        void hide();
+
+        nanogui::Widget *getGUIElement();
     private:
-        gui::IGUITabControl *ctrl;
+        nanogui::TabWidget *ctrl;
         std::map<int, Tab*> *tabs;
 };
 

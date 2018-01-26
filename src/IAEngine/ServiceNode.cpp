@@ -12,7 +12,7 @@ ServiceNode::ServiceNode(Node *fatherPnt) : Node() {
     children[2] = new HospitalNode(this);
 }
 
-ServiceNode::~ServiceNode(){
+ServiceNode::~ServiceNode() {
     delete father;
     delete[] children;
 }
