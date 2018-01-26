@@ -14,8 +14,8 @@ void Human::init() {
     quarryAmount= 0;
     
     metalAmount = 12000;
-    crystalAmount = 0;
-    citizens = 100; //ToDo: bajar a 10 o asi
+    crystalAmount = 12000;
+    citizens = 1000; //ToDo: bajar a 10 o asi
 
     armySize = 0;
     meleeAmount = 0;
