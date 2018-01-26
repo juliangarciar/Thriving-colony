@@ -18,6 +18,7 @@ Hud::Hud() {
 
     menuIDs = new std::vector<int>();
     buttons = new std::vector<Button*> ();
+
     // Building buttons panel
     buildingsPanel = new Panel("Buildings");
     buildingsPanel->setPosition(Vector2<int>(575, 546).getFixed());
@@ -107,13 +108,16 @@ Hud::Hud() {
 
     deleteWarning();
     
-    tabContainer = new Panel("Tabs");
+    tabContainer = new Panel("Building viewer");
+    //tabContainer -> setSize(Vector2<int>(500, 200));
     tabContainer -> setGroupLayout();
-    tabContainer -> setSize(Vector2<int>(500, 200));
+    tabContainer -> center();
     tabs = new TabPanel(tabContainer);
-    tabContainer->center();
+    addTab(0, Enumeration::BuildingType::MainBuilding);
+    addTab(1, Enumeration::BuildingType::Barn);
+    addTab(2, Enumeration::BuildingType::Barrack);
+    addTab(3, Enumeration::BuildingType::Workshop);
     tabContainer->hide();
-
 }
 
 Hud::~Hud() {
@@ -171,21 +175,27 @@ void Hud::addTab(int id, int type){
             });
             buttons -> push_back(b);
 
-
-            
             b = new Button(t, "Deploy selected troop");
             b -> setTooltip("Deploy your selected unit onto the map");
+            b -> setCallback([&]{
+                /*int index = hallTroopList -> getSelected();
+                if (index >= 0) {
+                    hallTroopList -> removeItem(index);
+                    Human::getInstance() -> getUnitManager() -> startDeployingTroop(index);
+                }*/
+            });
             buttons -> push_back(b);
+
             b = new Button(t, "Deploy all troops");
             b -> setTooltip("Deploy all your units onto the map");
             buttons -> push_back(b);
+
             b = new Button(t, "Retract all troops");
             b -> setTooltip("Retract your units back into your town hall");
-
             buttons -> push_back(b);
 
-            tabs->refreshLayout();
-            tabs->changeActiveTab(0);
+            //tabs->refreshLayout();
+            //tabs->changeActiveTab(0);
         }
         break;
         case Enumeration::BuildingType::Barn:
@@ -200,8 +210,6 @@ void Hud::addTab(int id, int type){
             });
             buttons -> push_back(b);
 
-
-            
             b = new Button(t, "Create mounted melee unit");
             b -> setTooltip("Create a melee unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
@@ -223,8 +231,8 @@ void Hud::addTab(int id, int type){
             });
             buttons -> push_back(b);
             
-            tabs->refreshLayout();
-            tabs->changeActiveTab(0);
+            //tabs->refreshLayout();
+            //tabs->changeActiveTab(0);
         }
         break;
         case Enumeration::BuildingType::Barrack:
@@ -239,8 +247,6 @@ void Hud::addTab(int id, int type){
             });
             buttons -> push_back(b);
 
-
-            
             b = new Button(t, "Create melee footman");
             b -> setTooltip("Create a melee unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
@@ -255,8 +261,8 @@ void Hud::addTab(int id, int type){
             });
             buttons -> push_back(b);
             
-            tabs->refreshLayout();
-            tabs->changeActiveTab(0);
+            //tabs->refreshLayout();
+            //tabs->changeActiveTab(0);
         }
         break;
         case Enumeration::BuildingType::Workshop:
@@ -271,8 +277,6 @@ void Hud::addTab(int id, int type){
             });
             buttons -> push_back(b);
 
-
-            
             b = new Button(t, "Create ram");
             b -> setTooltip("Create a ram that specializes in destroying buildings\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
@@ -287,8 +291,8 @@ void Hud::addTab(int id, int type){
             });
             buttons -> push_back(b);
             
-            tabs->refreshLayout();
-            tabs->changeActiveTab(0);
+            //tabs->refreshLayout();
+            //tabs->changeActiveTab(0);
         }
         break;
         default: break;
@@ -430,11 +434,6 @@ void Hud::setHUDEvents(){
         break;
         case Enumeration::idGUI::GUI_ID_DEPLOY_TROOPS_BUTTON:
             {
-                int index = hallTroopList -> getSelected();
-                if (index >= 0) {
-                    hallTroopList -> removeItem(index);
-                    Human::getInstance() -> getUnitManager() -> startDeployingTroop(index);
-                }
             }
         break;
         case Enumeration::idGUI::GUI_ID_DEPLOY_ALL_TROOPS_BUTTON:

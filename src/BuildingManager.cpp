@@ -135,7 +135,7 @@ void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingTyp
 		tempBuilding -> getModel() -> setID(id);
 		buildings -> insert(std::pair<int,Building*>(id, tempBuilding));
 
-		Game::Instance() -> getGameState() -> getHud() -> addTab(id, tempBuilding -> getType());
+		//Game::Instance() -> getGameState() -> getHud() -> addTab(id, tempBuilding -> getType());
 		// Tax the player when placing the building
 		tempBuilding -> taxPlayer(Enumeration::Team::Human);
 		id++;

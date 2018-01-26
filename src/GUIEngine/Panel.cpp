@@ -58,7 +58,7 @@ void Panel::setVerticalAlignment() {
 }
 
 void Panel::setSize(Vector2<int> size) {
-    panel -> setSize(Eigen::Vector2i(size.x, size.y));
+    panel -> setFixedSize(Eigen::Vector2i(size.x, size.y));
 }
 
 void Panel::setGroupLayout() {
