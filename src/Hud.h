@@ -11,6 +11,7 @@
 #include <GUIEngine/Tab.h>
 #include <GUIEngine/Panel.h>
 #include <GUIEngine/Label.h>
+#include <GUIEngine/ComboBox.h>
 #include <IOEngine/Keyboard.h>
 #include <IOEngine/Mouse.h>
 
@@ -69,7 +70,7 @@ class Hud {
         Label *resourceText;
         Label *iaResourceText;
 
-        
+        ComboBox *hallTroopList;
 
         Panel *tabContainer;
         TabPanel *tabs;

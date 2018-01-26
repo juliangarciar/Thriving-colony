@@ -176,14 +176,17 @@ void Hud::addTab(int id, int type){
             });
             buttons -> push_back(b);
 
+            hallTroopList = new ComboBox(t, {});
+
             b = new Button(t, "Deploy selected troop");
             b -> setTooltip("Deploy your selected unit onto the map");
             b -> setCallback([&]{
-                /*int index = hallTroopList -> getSelected();
+                int index = hallTroopList -> getSelectedOption();
                 if (index >= 0) {
-                    hallTroopList -> removeItem(index);
+                    hallTroopList -> removeOption(index);
                     Human::getInstance() -> getUnitManager() -> startDeployingTroop(index);
-                }*/
+                    Window::Instance()->getGUIEnvironment()->performLayout();
+                }
             });
             buttons -> push_back(b);
 
@@ -221,6 +224,8 @@ void Hud::addTab(int id, int type){
             b -> setTooltip("Create a melee unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedM);
+                hallTroopList -> addOption("Mounted melee unit");
+                Window::Instance()->getGUIEnvironment()->performLayout();
             });
             buttons -> push_back(b);
             
@@ -228,6 +233,8 @@ void Hud::addTab(int id, int type){
             b -> setTooltip("Create a ranged unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedR);
+                hallTroopList -> addOption("Mounted ranged unit");
+                Window::Instance()->getGUIEnvironment()->performLayout();
             });
             buttons -> push_back(b);
 
@@ -235,6 +242,8 @@ void Hud::addTab(int id, int type){
             b -> setTooltip("Create a overwhelmingly powerful creature to destroy your enemies\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Idol);
+                hallTroopList -> addOption("Create monster");
+                Window::Instance()->getGUIEnvironment()->performLayout();
             });
             buttons -> push_back(b);
             
@@ -258,6 +267,8 @@ void Hud::addTab(int id, int type){
             b -> setTooltip("Create a melee unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardM);
+                hallTroopList -> addOption("Melee footman");
+                Window::Instance()->getGUIEnvironment()->performLayout();
             });
             buttons -> push_back(b);
             
@@ -265,6 +276,8 @@ void Hud::addTab(int id, int type){
             b -> setTooltip("Create a ranged unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardR);
+                hallTroopList -> addOption("Ranged footman");
+                Window::Instance()->getGUIEnvironment()->performLayout();
             });
             buttons -> push_back(b);
             
@@ -288,6 +301,8 @@ void Hud::addTab(int id, int type){
             b -> setTooltip("Create a ram that specializes in destroying buildings\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Desintegrator);
+                hallTroopList -> addOption("Ram");
+                Window::Instance()->getGUIEnvironment()->performLayout();
             });
             buttons -> push_back(b);
             
@@ -295,6 +310,8 @@ void Hud::addTab(int id, int type){
             b -> setTooltip("Create a catapult that heavy area of damage\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Launcher);
+                hallTroopList -> addOption("Catapult");
+                Window::Instance()->getGUIEnvironment()->performLayout();
             });
             buttons -> push_back(b);
             
