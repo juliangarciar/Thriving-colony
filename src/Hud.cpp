@@ -109,13 +109,13 @@ Hud::Hud() {
     deleteWarning();
     
     tabContainer = new Panel("Building viewer");
-    //tabContainer -> setSize(Vector2<int>(500, 200));
+    tabContainer -> setSize(Vector2<int>(350, 250));
     tabContainer -> setGroupLayout();
     tabContainer -> center();
     tabs = new TabPanel(tabContainer);
     addTab(0, Enumeration::BuildingType::MainBuilding);
-    addTab(1, Enumeration::BuildingType::Barn);
-    addTab(2, Enumeration::BuildingType::Barrack);
+    addTab(1, Enumeration::BuildingType::Barrack);
+    addTab(2, Enumeration::BuildingType::Barn);
     addTab(3, Enumeration::BuildingType::Workshop);
     tabs->changeActiveTab(0);
     tabContainer->hide();
@@ -191,10 +191,16 @@ void Hud::addTab(int id, int type){
 
             b = new Button(t, "Deploy all troops");
             b -> setTooltip("Deploy all your units onto the map");
+            b -> setCallback([&]{
+                Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsHuman);
+            });
             buttons -> push_back(b);
 
             b = new Button(t, "Retract all troops");
             b -> setTooltip("Retract your units back into your town hall");
+            b -> setCallback([&]{
+                Game::Instance() -> getEvents() -> triggerEvent(Enumeration::RetractTroopsHuman);
+            });
             buttons -> push_back(b);
 
             //tabs->refreshLayout();
@@ -240,7 +246,7 @@ void Hud::addTab(int id, int type){
         break;
         case Enumeration::BuildingType::Barrack:
         {
-            Tab *t = tabs->createTab("Barn", id);
+            Tab *t = tabs->createTab("Barrack", id);
             menuIDs -> push_back(id);
 
             Button *b = new Button(t, "Close");
@@ -270,7 +276,7 @@ void Hud::addTab(int id, int type){
         break;
         case Enumeration::BuildingType::Workshop:
         {
-            Tab *t = tabs->createTab("Barn", id);
+            Tab *t = tabs->createTab("Workshop", id);
             menuIDs -> push_back(id);
 
             Button *b = new Button(t, "Close");
