@@ -119,6 +119,8 @@ Hud::Hud() {
     addTab(3, Enumeration::BuildingType::Workshop);
     tabs->changeActiveTab(0);
     tabContainer->hide();
+
+    setHUDEvents();
 }
 
 Hud::~Hud() {

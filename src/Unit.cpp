@@ -354,6 +354,8 @@ void Unit::updateTroop() {
                 chaseState();
                 break;
         }
+    } else {
+        // REtract
     }
 }
 
