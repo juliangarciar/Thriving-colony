@@ -96,7 +96,7 @@ Hud::Hud() {
 
     backgroundText = new TextBox("");
     backgroundText -> setPosition(Vector2<int>(0,0));
-    backgroundText -> setSize(Vector2<int>(900,35));
+    backgroundText -> setSize(Vector2<int>(950,35));
 
     resourceText->setPosition(Vector2<int>(0,0).getFixed());
     iaResourceText->setPosition(Vector2<int>(0,20).getFixed());
