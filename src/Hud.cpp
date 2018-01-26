@@ -113,6 +113,7 @@ Hud::Hud() {
     tabs = new TabPanel(tabContainer);
     tabContainer->center();
     tabContainer->hide();
+
 }
 
 Hud::~Hud() {
@@ -170,84 +171,124 @@ void Hud::addTab(int id, int type){
             });
             buttons -> push_back(b);
 
+
+            
+            b = new Button(t, "Deploy selected troop");
+            b -> setTooltip("Deploy your selected unit onto the map");
+            buttons -> push_back(b);
+            b = new Button(t, "Deploy all troops");
+            b -> setTooltip("Deploy all your units onto the map");
+            buttons -> push_back(b);
+            b = new Button(t, "Retract all troops");
+            b -> setTooltip("Retract your units back into your town hall");
+
+            buttons -> push_back(b);
+
             tabs->refreshLayout();
             tabs->changeActiveTab(0);
-
-            /*
-            b = new Button(Rect2D<int>(100, 10, 100, 20).getFixed(), Enumeration::idGUI::GUI_ID_DEPLOY_TROOPS_BUTTON, L"Deploy selected troop", L"Deploy a troop");
-            t -> addChild(b);
-            buttons -> push_back(b);
-            b = new Button(Rect2D<int>(200, 10, 75, 20), Enumeration::idGUI::GUI_ID_DEPLOY_ALL_TROOPS_BUTTON, L"Deploy all troops", L"Deploy all troops");
-            t -> addChild(b);
-            buttons -> push_back(b);
-            b = new Button(Rect2D<int>(275, 10, 75, 20), Enumeration::idGUI::GUI_ID_RETRACT_ALL_TROOPS_BUTTON, L"Retract troops", L"Retract troops");
-            t -> addChild(b);
-            buttons -> push_back(b);
-
-            hallTroopText = new Text(Rect2D<int>(20, 10, 100, 15).getFixed(), L"Tropas en el ayuntamiento");
-            t -> addChild(hallTroopText);
-            hallTroopList = new ListBox(Rect2D<int>(10, 40, 350, 150).getFixed());
-            t -> addChild(hallTroopList);*/
         }
         break;
         case Enumeration::BuildingType::Barn:
         {
-            Tab *t = tabs -> createTab("Barn", id);
+            Tab *t = tabs->createTab("Barn", id);
             menuIDs -> push_back(id);
 
+            Button *b = new Button(t, "Close");
+            b->setTooltip("Cerrar popup");
+            b->setCallback([&] {
+                tabContainer -> hide();
+            });
+            buttons -> push_back(b);
+
+
+            
+            b = new Button(t, "Create mounted melee unit");
+            b -> setTooltip("Create a melee unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedM);
+            });
+            buttons -> push_back(b);
+            
+            b = new Button(t, "Create mounted ranged unit");
+            b -> setTooltip("Create a ranged unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedR);
+            });
+            buttons -> push_back(b);
+
+            b = new Button(t, "Create monster");
+            b -> setTooltip("Create a overwhelmingly powerful creature to destroy your enemies\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Idol);
+            });
+            buttons -> push_back(b);
+            
             tabs->refreshLayout();
             tabs->changeActiveTab(0);
-
-            /*Button *b = new Button(Rect2D<int>(340, 10, 50, 20).getFixed(), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-            t -> addChild(b);
-            tabs -> disable();
-            buttons -> push_back(b);
-            b = new Button(Rect2D<int>(10, 10, 200, 30).getFixed(), Enumeration::idGUI::GUI_ID_CREATE_MOUNTED_MELEE_TROOP_BUTTON, L"Crear tropa montada. Ataque cuerpo a cuerpo.", L"Probando");
-            t -> addChild(b);
-            buttons -> push_back(b);
-            b = new Button(Rect2D<int>(10, 50, 200, 30).getFixed(), Enumeration::idGUI::GUI_ID_CREATE_MOUNTED_RANGED_TROOP_BUTTON, L"Crear tropa montada. Ataque a distancia.", L"Probando");
-            t -> addChild(b);
-            buttons -> push_back(b);
-            b = new Button(Rect2D<int>(10, 90, 200, 30).getFixed(), Enumeration::idGUI::GUI_ID_CREATE_MONSTER_BUTTON, L"Crear ente.", L"Probando");
-            t -> addChild(b);
-            buttons -> push_back(b);*/
         }
         break;
         case Enumeration::BuildingType::Barrack:
         {
-            Tab *t = tabs -> createTab("Barrack", id);
+            Tab *t = tabs->createTab("Barn", id);
             menuIDs -> push_back(id);
 
+            Button *b = new Button(t, "Close");
+            b->setTooltip("Cerrar popup");
+            b->setCallback([&] {
+                tabContainer -> hide();
+            });
+            buttons -> push_back(b);
+
+
+            
+            b = new Button(t, "Create melee footman");
+            b -> setTooltip("Create a melee unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardM);
+            });
+            buttons -> push_back(b);
+            
+            b = new Button(t, "Create ranged footman");
+            b -> setTooltip("Create a ranged unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardR);
+            });
+            buttons -> push_back(b);
+            
             tabs->refreshLayout();
             tabs->changeActiveTab(0);
-
-            /*Button *b = new Button(Rect2D<int>(340, 10, 50, 20).getFixed(), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-            t -> addChild(b);
-            tabs -> disable();
-            buttons -> push_back(b);
-            b = new Button(Rect2D<int>(10, 10, 200, 30).getFixed(), Enumeration::idGUI::GUI_ID_CREATE_MELEE_TROOP_BUTTON, L"Crear tropa a pie. Ataque cuerpo a cuerpo.", L"Probando");
-            t -> addChild(b);
-            buttons -> push_back(b);
-            b = new Button(Rect2D<int>(10, 50, 200, 30).getFixed(), Enumeration::idGUI::GUI_ID_CREATE_RANGED_TROOP_BUTTON, L"Crear tropa a pie. Ataque a distancia.", L"Probando");
-            t -> addChild(b);
-            buttons -> push_back(b);*/
         }
         break;
         case Enumeration::BuildingType::Workshop:
         {
-            Tab *t = tabs -> createTab("Workshop", id);
+            Tab *t = tabs->createTab("Barn", id);
             menuIDs -> push_back(id);
 
+            Button *b = new Button(t, "Close");
+            b->setTooltip("Cerrar popup");
+            b->setCallback([&] {
+                tabContainer -> hide();
+            });
+            buttons -> push_back(b);
+
+
+            
+            b = new Button(t, "Create ram");
+            b -> setTooltip("Create a ram that specializes in destroying buildings\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Desintegrator);
+            });
+            buttons -> push_back(b);
+            
+            b = new Button(t, "Create catapult");
+            b -> setTooltip("Create a catapult that heavy area of damage\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Launcher);
+            });
+            buttons -> push_back(b);
+            
             tabs->refreshLayout();
             tabs->changeActiveTab(0);
-
-            /*Button *b = new Button(Rect2D<int>(340, 10, 50, 20).getFixed(), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-            t -> addChild(b);
-            tabs -> disable();
-            buttons -> push_back(b);
-            b = new Button(Rect2D<int>(10, 10, 200, 30).getFixed(), Enumeration::idGUI::GUI_ID_CREATE_MACHINE_BUTTON, L"Crear maquina de asedio.", L"Probando");
-            t -> addChild(b);
-            buttons -> push_back(b);*/
         }
         break;
         default: break;
