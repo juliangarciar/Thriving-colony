@@ -93,7 +93,7 @@ void GameState::Input() {
         int idBuilding = Human::getInstance() -> getBuildingManager() -> getCollisionID();
         if (idBuilding != -1){
             if (!Human::getInstance() -> getUnitManager() -> isTroopSelected())
-                Game::Instance() -> getCursor() -> changeIcon(CURSOR_HAND); //ToDo: fachada
+                Game::Instance() -> getCursor() -> changeIcon(CURSOR_HAND);
             
             if (Game::Instance() -> getCursor() -> leftMousePressed()) {
                 // Comprobar que este terminado para enseñar el popup pero no va
@@ -108,7 +108,7 @@ void GameState::Input() {
         int idTroop = Human::getInstance() -> getUnitManager() -> getCollisionID();
         if (idTroop != -1){
             if (!Human::getInstance() -> getUnitManager() -> isTroopSelected())
-                Game::Instance() -> getCursor() -> changeIcon(CURSOR_HAND); //ToDo: fachada
+                Game::Instance() -> getCursor() -> changeIcon(CURSOR_HAND);
             
             if (Game::Instance() -> getCursor() -> leftMousePressed())
                 Human::getInstance() -> getUnitManager() -> selectTroop(idTroop);
@@ -119,7 +119,7 @@ void GameState::Input() {
         //Interactions with IA's entities
         int idBuildingIA =  IA::getInstance() -> getBuildingManager() -> getCollisionID();
         if (idBuildingIA != -1 && Human::getInstance() -> getUnitManager() -> isTroopSelected()){
-            Game::Instance() -> getCursor() -> changeIcon(CURSOR_IBEAM); //ToDo: fachada
+            Game::Instance() -> getCursor() -> changeIcon(CURSOR_IBEAM);
 
             if (Game::Instance() -> getCursor() -> rightMousePressed()) //std::cout << "Edificio enemigo" << std::endl;
             
@@ -128,7 +128,7 @@ void GameState::Input() {
 
         int idTroopIA = IA::getInstance() -> getUnitManager() -> getCollisionID();
         if (idTroopIA != -1 && Human::getInstance() -> getUnitManager() -> isTroopSelected()){
-            Game::Instance() -> getCursor() -> changeIcon(CURSOR_IBEAM); //ToDo: fachada
+            Game::Instance() -> getCursor() -> changeIcon(CURSOR_IBEAM);
 
             if (Game::Instance() -> getCursor() -> rightMousePressed()) //std::cout << "Tropa enemiga" << std::endl;
             

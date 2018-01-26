@@ -16,6 +16,7 @@ Hud::Hud() {
     deleteTextTimer = 0;
 
     menuIDs = new std::vector<int>();
+    buttons = new std::vector<Button*>();
      
     //Le botone iniciale
     buttonQuit = new Button("Quit");

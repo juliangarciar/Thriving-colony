@@ -155,7 +155,6 @@ void CameraController::Update(float deltaTime) {
     }
 }
 
-//ToDo: Crear camera controller (fuera de fachada) y moverlo ahi
 void CameraController::Move(Mouse *cursor) {
 	Window *sc = Window::Instance();
 
