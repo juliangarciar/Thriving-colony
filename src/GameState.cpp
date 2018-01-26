@@ -77,7 +77,7 @@ void GameState::input() {
     int idBuilding = Human::getInstance() -> getBuildingManager() -> getCollisionID();
     if (idBuilding != -1){
         if (!Human::getInstance() -> getUnitManager() -> isTroopSelected())
-            Game::Instance() -> getCursor() -> changeIcon(CURSOR_HAND); //ToDo: fachada
+            Game::Instance() -> getCursor() -> changeIcon(CURSOR_HAND);
         
         if (Game::Instance() -> getCursor() -> leftMousePressed()) {
             // Comprobar que este terminado para enseñar el popup pero no va
@@ -92,7 +92,7 @@ void GameState::input() {
     int idTroop = Human::getInstance() -> getUnitManager() -> getCollisionID();
     if (idTroop != -1){
         if (!Human::getInstance() -> getUnitManager() -> isTroopSelected())
-            Game::Instance() -> getCursor() -> changeIcon(CURSOR_HAND); //ToDo: fachada
+            Game::Instance() -> getCursor() -> changeIcon(CURSOR_HAND);
         
         if (Game::Instance() -> getCursor() -> leftMousePressed())
             Human::getInstance() -> getUnitManager() -> selectTroop(idTroop);

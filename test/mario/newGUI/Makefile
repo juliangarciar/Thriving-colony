@@ -18,7 +18,7 @@ CXX = clang++
 # FLAGS
 ####
 # Include paths
-CPPFLAGS = -I/usr/include -I/usr/local/include -I/usr/include/eigen3 -I/usr/local/include/irrlicht -I/usr/local/include/nanovg -I./$(SOURCEPATH)
+CPPFLAGS = -I/usr/include -I/usr/local/include -I/usr/include/eigen3 -I/usr/local/include/irrlicht -I/usr/local/include/nanovg -I../../../src
 # Compiler params
 CPPFLAGS += -O3 -ffast-math -g -Wall -std=c++11 -DGL_GLEXT_PROTOTYPES
 # Lib paths

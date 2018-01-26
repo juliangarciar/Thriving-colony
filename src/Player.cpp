@@ -153,8 +153,8 @@ void Player::setWorkshopBuilt(bool _workshop) {
  * CONTROL METHODS
  */
 void Player::gainResources() {
-    metalAmount += getMetalProduction();
-    crystalAmount += getCrystalProduction();
+    this -> metalAmount += getMetalProduction();
+    this -> crystalAmount += getCrystalProduction();
 }
 
 void Player::spendResources(int metalCost, int crystalCost) {

@@ -34,6 +34,10 @@ void TextBox::hide(){
     textbox -> setVisible(false);
 }
 
+void TextBox::setSize(Vector2<int> size) {
+    textbox -> setFixedSize(Eigen::Vector2i(size.x, size.y));
+}
+
 nanogui::Widget *TextBox::getGUIElement(){
     return textbox;
 }

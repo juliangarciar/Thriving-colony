@@ -19,6 +19,12 @@ Panel::~Panel() {
     this -> hide();
 }
 
+Panel::Panel(GUIElement *parent, std::string title) {
+    panel = new nanogui::Window(parent -> getGUIElement(), title);
+    panel -> setLayout(new nanogui::BoxLayout(nanogui::Orientation::Horizontal, nanogui::Alignment::Middle, 0, 6));
+    
+}
+
 void Panel::addChild(GUIElement *child){
     panel -> addChild(child -> getGUIElement());
 }
@@ -45,6 +51,18 @@ void Panel::hide(){
 
 void Panel::center(){
     panel -> center();
+}
+
+void Panel::setVerticalAlignment() {
+   panel -> setLayout(new nanogui::BoxLayout(nanogui::Orientation::Vertical, nanogui::Alignment::Middle, 0, 6));
+}
+
+void Panel::setSize(Vector2<int> size) {
+    panel -> setFixedSize(Eigen::Vector2i(size.x, size.y));
+}
+
+void Panel::setGroupLayout() {
+    panel -> setLayout(new nanogui::GroupLayout());
 }
 
 nanogui::Widget *Panel::getGUIElement(){

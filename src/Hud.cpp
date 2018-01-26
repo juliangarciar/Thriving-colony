@@ -6,6 +6,7 @@
 #include "GraphicEngine/Window.h"
 
 #include <string>
+#include <sstream>
 
 using namespace irr;
 
@@ -18,28 +19,61 @@ Hud::Hud() {
     menuIDs = new std::vector<int>();
     buttons = new std::vector<Button*> ();
 
+    // Building buttons panel
+    buildingsPanel = new Panel("Buildings");
+    buildingsPanel->setPosition(Vector2<int>(575, 546).getFixed());
     //Le botone iniciale
     //buttonQuit = new Button("Quit");
-    buttonOpenPanel = new Button("Open Panel");
 
-    //buttonQuit->setPosition(Vector2<int>(20, 20));
+    // General
+    generalPanel = new Panel(buildingsPanel, "General functions");
+    generalPanel->setPosition(Vector2<int>(20, 640).getFixed());
+
+    buttonExpandTerrain = new Button(generalPanel, "Expand terrain");
+    buttonOpenPanel = new Button(generalPanel, "Open Panel");
+
+    //buttonQuit->setPosition(Vector2<int>(30, 40));
     buttonOpenPanel->setPosition(Vector2<int>(100, 20));
-    
-    buildingsPanel = new Panel("Buildings");
-    buildingsPanel->setPosition(Vector2<int>(20, 640).getFixed());
 
-    buttonBarn = new Button(buildingsPanel, "Barn");
-    buttonBarrack = new Button(buildingsPanel, "Barrack");
-    buttonHome = new Button(buildingsPanel, "Home");
-    buttonHospital = new Button(buildingsPanel, "Hospital");
-    buttonMarket = new Button(buildingsPanel, "Market");
-    buttonQuarry = new Button(buildingsPanel, "Quarry");
-    buttonSchool = new Button(buildingsPanel, "School");
-    buttonSiderurgy = new Button(buildingsPanel, "Siderurgy");
-    buttonTower = new Button(buildingsPanel, "Tower");
-    buttonWall = new Button(buildingsPanel, "Wall");
-    buttonWorkshop = new Button(buildingsPanel, "Workshop");
-    buttonExpandTerrain = new Button(buildingsPanel, "Expand terrain");
+    generalPanel -> setVerticalAlignment();
+
+    // Resources
+    resourcePanel = new Panel(buildingsPanel, "Resource buildings");
+    resourcePanel->setPosition(Vector2<int>(20, 640).getFixed());
+
+    buttonHome = new Button(resourcePanel, "Home");
+    buttonSiderurgy = new Button(resourcePanel, "Siderurgy");
+    buttonQuarry = new Button(resourcePanel, "Quarry");
+
+    resourcePanel ->setVerticalAlignment();
+    // Services
+    servicePanel = new Panel(buildingsPanel, "Service buildings");
+    servicePanel->setPosition(Vector2<int>(20, 640).getFixed());
+
+    buttonSchool = new Button(servicePanel, "School");
+    buttonMarket = new Button(servicePanel, "Market");
+    buttonHospital = new Button(servicePanel, "Hospital");
+
+    servicePanel -> setVerticalAlignment();
+    // Military
+    militaryPanel = new Panel(buildingsPanel, "Military buildings");
+    militaryPanel->setPosition(Vector2<int>(20, 640).getFixed());
+
+    buttonBarrack = new Button(militaryPanel, "Barrack");
+    buttonBarn = new Button(militaryPanel, "Barn");
+    buttonWorkshop = new Button(militaryPanel, "Workshop");
+
+    militaryPanel -> setVerticalAlignment();
+    // Defense
+    defensePanel = new Panel(buildingsPanel, "Defensive buildings");
+    defensePanel->setPosition(Vector2<int>(20, 640).getFixed());
+
+    buttonTower = new Button(defensePanel, "Tower");
+    buttonWall = new Button(defensePanel, "Wall");
+
+    defensePanel -> setVerticalAlignment();
+
+    //buildingsPanel -> center();
 
     buttonBarn->setTooltip("Build a barn that will allow you to train mounted military units.\n Metal cost: 800.");
     buttonBarrack->setTooltip("Build a barrack that will allow you to train basic military units.\n Metal cost: 720.");
@@ -56,26 +90,48 @@ Hud::Hud() {
     buttonOpenPanel->setTooltip("Open your panel to manage your city.");
 
     // Solo de debug
-    resourceText = new TextBox("Player");
-    iaResourceText = new TextBox("IA");
+    resourceText = new Label("");
+    iaResourceText = new Label("");
+
     warningText = new TextBox("Edificio construido");
 
-    resourceText->setPosition(Vector2<int>(1000,0).getFixed());
-    iaResourceText->setPosition(Vector2<int>(1150,0).getFixed());
+    backgroundText = new TextBox("");
+    backgroundText -> setPosition(Vector2<int>(0,0));
+    backgroundText -> setSize(Vector2<int>(950,35));
+
+    resourceText->setPosition(Vector2<int>(0,0).getFixed());
+    iaResourceText->setPosition(Vector2<int>(0,20).getFixed());
     warningText->setPosition(Vector2<int>(1000,650).getFixed());
 
+    resourceText -> setSize(Vector2<int>(1000,100));
+    iaResourceText -> setSize(Vector2<int>(1000,100));
+
     deleteWarning();
-
-    tabContainer = new Panel("Tabs");
-
+    
+    tabContainer = new Panel("Building viewer");
+    tabContainer -> setSize(Vector2<int>(350, 250));
+    tabContainer -> setGroupLayout();
+    tabContainer -> center();
     tabs = new TabPanel(tabContainer);
-    tabContainer->center();
+    addTab(0, Enumeration::BuildingType::MainBuilding);
+    addTab(1, Enumeration::BuildingType::Barrack);
+    addTab(2, Enumeration::BuildingType::Barn);
+    addTab(3, Enumeration::BuildingType::Workshop);
+    tabs->changeActiveTab(0);
     tabContainer->hide();
 }
 
 Hud::~Hud() {
     delete menuIDs;
 
+    delete buildingsPanel;
+    delete generalPanel;
+    delete resourcePanel;
+    delete servicePanel;
+    delete militaryPanel;
+    delete defensePanel;
+
+    //Los dos botones iniciales
     delete buttonOpenPanel;
 
     //Los botones edificios
@@ -92,6 +148,7 @@ Hud::~Hud() {
     delete buttonTower;
     delete buttonExpandTerrain;
 
+    delete backgroundText;
     delete resourceText;
     delete iaResourceText;
 
@@ -113,78 +170,134 @@ void Hud::addTab(int id, int type){
             Button *b = new Button(t, "Close");
             b->setTooltip("Cerrar popup");
             b->setCallback([&] {
-                tabs -> hide();
+                tabContainer -> hide();
             });
             buttons -> push_back(b);
 
-            tabs->changeActiveTab(0);
-
-            /*
-            b = new Button(Rect2D<int>(100, 10, 100, 20).getFixed(), Enumeration::idGUI::GUI_ID_DEPLOY_TROOPS_BUTTON, L"Deploy selected troop", L"Deploy a troop");
-            t -> addChild(b);
-            buttons -> push_back(b);
-            b = new Button(Rect2D<int>(200, 10, 75, 20), Enumeration::idGUI::GUI_ID_DEPLOY_ALL_TROOPS_BUTTON, L"Deploy all troops", L"Deploy all troops");
-            t -> addChild(b);
-            buttons -> push_back(b);
-            b = new Button(Rect2D<int>(275, 10, 75, 20), Enumeration::idGUI::GUI_ID_RETRACT_ALL_TROOPS_BUTTON, L"Retract troops", L"Retract troops");
-            t -> addChild(b);
+            b = new Button(t, "Deploy selected troop");
+            b -> setTooltip("Deploy your selected unit onto the map");
+            b -> setCallback([&]{
+                /*int index = hallTroopList -> getSelected();
+                if (index >= 0) {
+                    hallTroopList -> removeItem(index);
+                    Human::getInstance() -> getUnitManager() -> startDeployingTroop(index);
+                }*/
+            });
             buttons -> push_back(b);
 
-            hallTroopText = new Text(Rect2D<int>(20, 10, 100, 15).getFixed(), L"Tropas en el ayuntamiento");
-            t -> addChild(hallTroopText);
-            hallTroopList = new ListBox(Rect2D<int>(10, 40, 350, 150).getFixed());
-            t -> addChild(hallTroopList);*/
+            b = new Button(t, "Deploy all troops");
+            b -> setTooltip("Deploy all your units onto the map");
+            b -> setCallback([&]{
+                Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsHuman);
+            });
+            buttons -> push_back(b);
+
+            b = new Button(t, "Retract all troops");
+            b -> setTooltip("Retract your units back into your town hall");
+            b -> setCallback([&]{
+                Game::Instance() -> getEvents() -> triggerEvent(Enumeration::RetractTroopsHuman);
+            });
+            buttons -> push_back(b);
+
+            //tabs->refreshLayout();
+            //tabs->changeActiveTab(0);
         }
         break;
         case Enumeration::BuildingType::Barn:
         {
-            Tab *t = tabs -> createTab("Barn", id);
+            Tab *t = tabs->createTab("Barn", id);
             menuIDs -> push_back(id);
 
-            /*Button *b = new Button(Rect2D<int>(340, 10, 50, 20).getFixed(), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-            t -> addChild(b);
-            tabs -> disable();
+            Button *b = new Button(t, "Close");
+            b->setTooltip("Cerrar popup");
+            b->setCallback([&] {
+                tabContainer -> hide();
+            });
             buttons -> push_back(b);
-            b = new Button(Rect2D<int>(10, 10, 200, 30).getFixed(), Enumeration::idGUI::GUI_ID_CREATE_MOUNTED_MELEE_TROOP_BUTTON, L"Crear tropa montada. Ataque cuerpo a cuerpo.", L"Probando");
-            t -> addChild(b);
+
+            b = new Button(t, "Create mounted melee unit");
+            b -> setTooltip("Create a melee unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedM);
+            });
             buttons -> push_back(b);
-            b = new Button(Rect2D<int>(10, 50, 200, 30).getFixed(), Enumeration::idGUI::GUI_ID_CREATE_MOUNTED_RANGED_TROOP_BUTTON, L"Crear tropa montada. Ataque a distancia.", L"Probando");
-            t -> addChild(b);
+            
+            b = new Button(t, "Create mounted ranged unit");
+            b -> setTooltip("Create a ranged unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedR);
+            });
             buttons -> push_back(b);
-            b = new Button(Rect2D<int>(10, 90, 200, 30).getFixed(), Enumeration::idGUI::GUI_ID_CREATE_MONSTER_BUTTON, L"Crear ente.", L"Probando");
-            t -> addChild(b);
-            buttons -> push_back(b);*/
+
+            b = new Button(t, "Create monster");
+            b -> setTooltip("Create a overwhelmingly powerful creature to destroy your enemies\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Idol);
+            });
+            buttons -> push_back(b);
+            
+            //tabs->refreshLayout();
+            //tabs->changeActiveTab(0);
         }
         break;
         case Enumeration::BuildingType::Barrack:
         {
-            Tab *t = tabs -> createTab("Barrack", id);
+            Tab *t = tabs->createTab("Barrack", id);
             menuIDs -> push_back(id);
 
-            /*Button *b = new Button(Rect2D<int>(340, 10, 50, 20).getFixed(), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-            t -> addChild(b);
-            tabs -> disable();
+            Button *b = new Button(t, "Close");
+            b->setTooltip("Cerrar popup");
+            b->setCallback([&] {
+                tabContainer -> hide();
+            });
             buttons -> push_back(b);
-            b = new Button(Rect2D<int>(10, 10, 200, 30).getFixed(), Enumeration::idGUI::GUI_ID_CREATE_MELEE_TROOP_BUTTON, L"Crear tropa a pie. Ataque cuerpo a cuerpo.", L"Probando");
-            t -> addChild(b);
+
+            b = new Button(t, "Create melee footman");
+            b -> setTooltip("Create a melee unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardM);
+            });
             buttons -> push_back(b);
-            b = new Button(Rect2D<int>(10, 50, 200, 30).getFixed(), Enumeration::idGUI::GUI_ID_CREATE_RANGED_TROOP_BUTTON, L"Crear tropa a pie. Ataque a distancia.", L"Probando");
-            t -> addChild(b);
-            buttons -> push_back(b);*/
+            
+            b = new Button(t, "Create ranged footman");
+            b -> setTooltip("Create a ranged unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardR);
+            });
+            buttons -> push_back(b);
+            
+            //tabs->refreshLayout();
+            //tabs->changeActiveTab(0);
         }
         break;
         case Enumeration::BuildingType::Workshop:
         {
-            Tab *t = tabs -> createTab("Workshop", id);
+            Tab *t = tabs->createTab("Workshop", id);
             menuIDs -> push_back(id);
 
-            /*Button *b = new Button(Rect2D<int>(340, 10, 50, 20).getFixed(), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-            t -> addChild(b);
-            tabs -> disable();
+            Button *b = new Button(t, "Close");
+            b->setTooltip("Cerrar popup");
+            b->setCallback([&] {
+                tabContainer -> hide();
+            });
             buttons -> push_back(b);
-            b = new Button(Rect2D<int>(10, 10, 200, 30).getFixed(), Enumeration::idGUI::GUI_ID_CREATE_MACHINE_BUTTON, L"Crear maquina de asedio.", L"Probando");
-            t -> addChild(b);
-            buttons -> push_back(b);*/
+
+            b = new Button(t, "Create ram");
+            b -> setTooltip("Create a ram that specializes in destroying buildings\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Desintegrator);
+            });
+            buttons -> push_back(b);
+            
+            b = new Button(t, "Create catapult");
+            b -> setTooltip("Create a catapult that heavy area of damage\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Launcher);
+            });
+            buttons -> push_back(b);
+            
+            //tabs->refreshLayout();
+            //tabs->changeActiveTab(0);
         }
         break;
         default: break;
@@ -321,11 +434,6 @@ void Hud::setHUDEvents(){
         break;
         case Enumeration::idGUI::GUI_ID_DEPLOY_TROOPS_BUTTON:
             {
-                int index = hallTroopList -> getSelected();
-                if (index >= 0) {
-                    hallTroopList -> removeItem(index);
-                    Human::getInstance() -> getUnitManager() -> startDeployingTroop(index);
-                }
             }
         break;
         case Enumeration::idGUI::GUI_ID_DEPLOY_ALL_TROOPS_BUTTON:
@@ -345,35 +453,35 @@ void Hud::setHUDEvents(){
 void Hud::update() {
     float dt = Game::Instance()  -> getWindow() -> getDeltaTime();
     if (updateTimer <= 0) {
-        //ToDo: añadir los metodos de getmetalamount y getcrystalamount
+
         std::stringstream os;
-        os << "Player resources:\n" << 
-        "Metal: " << std::to_string(Human::getInstance() -> getMetalAmount()) << 
-        "\nCrystal: " << std::to_string(Human::getInstance() -> getCrystalAmount()) << 
-        "\nCitizens: " << std::to_string(Human::getInstance() -> getCitizens()) << 
-        "\nHappiness: " << std::to_string(Human::getInstance() -> getHappiness()) << 
-        "\nCity level: "<< std::to_string(Human::getInstance() -> getCityLevel()) << 
-        "\nArmy size: " << std::to_string(Human::getInstance() -> getArmySize()) << 
-        "\n - Melees: " << std::to_string(Human::getInstance() -> getMeleeAmount()) << 
-        "\n - Ranged: " << std::to_string(Human::getInstance() -> getRangeAmount()) << 
-        "\n - Siege: " << std::to_string(Human::getInstance() -> getSiegeAmount());
-        resourceText -> setText(os.str());
+        os << "Player resources: " << 
+        "Metal: " << std::to_string(Human::getInstance() -> getMetalAmount()) << " " <<
+        "Crystal: " << std::to_string(Human::getInstance() -> getCrystalAmount()) << " " <<
+        "Citizens: " << std::to_string(Human::getInstance() -> getCitizens()) << " " <<
+        "Happiness: " << std::to_string(Human::getInstance() -> getHappiness()) <<  " " <<
+        "City level: "<< std::to_string(Human::getInstance() -> getCityLevel()) <<  " " <<
+        "Army size: " << std::to_string(Human::getInstance() -> getArmySize()) << " " <<
+        "- Melees: " << std::to_string(Human::getInstance() -> getMeleeAmount()) <<  " " <<
+        "- Ranged: " << std::to_string(Human::getInstance() -> getRangeAmount()) << " " <<
+        "- Siege: " << std::to_string(Human::getInstance() -> getSiegeAmount());
+        resourceText -> setLabel(os.str());
 
         std::stringstream iaos;
-        iaos << "IA resources:\n" << 
-        "Metal: " << std::to_string(IA::getInstance() -> getMetalAmount()) << 
-        "\nCrystal: " << std::to_string(IA::getInstance() -> getCrystalAmount()) << 
-        "\nCitizens: " << std::to_string(IA::getInstance() -> getCitizens()) << 
-        "\nHappiness: " << std::to_string(IA::getInstance() -> getHappiness()) << 
-        "\nCity level: "<< std::to_string(IA::getInstance() -> getCityLevel()) << 
-        "\nArmy size: " << std::to_string(IA::getInstance() -> getArmySize()) << 
-        "\n - Melees: " << std::to_string(IA::getInstance() -> getMeleeAmount()) << 
-        "\n - Ranged: " << std::to_string(IA::getInstance() -> getRangeAmount()) << 
-        "\n - Siege: " << std::to_string(IA::getInstance() -> getSiegeAmount());
-        /* << //ToDo: change type
-        "\nNext choice: " << IA::getInstance() -> getNextChoice() << 
-        "\nBehaviour: " << IA::getInstance() -> getChosenBehaviour();*/
-        iaResourceText -> setText(iaos.str());
+        iaos << "IA resources:" << 
+        "Metal: " << std::to_string(IA::getInstance() -> getMetalAmount()) <<  " " <<
+        "Crystal: " << std::to_string(IA::getInstance() -> getCrystalAmount()) <<  " " <<
+        "Citizens: " << std::to_string(IA::getInstance() -> getCitizens()) <<  " " <<
+        "Happiness: " << std::to_string(IA::getInstance() -> getHappiness()) <<  " " <<
+        "City level: "<< std::to_string(IA::getInstance() -> getCityLevel()) <<  " " <<
+        "Army size: " << std::to_string(IA::getInstance() -> getArmySize()) <<  " " <<
+        " - Melees: " << std::to_string(IA::getInstance() -> getMeleeAmount()) <<  " " <<
+        " - Ranged: " << std::to_string(IA::getInstance() -> getRangeAmount()) <<  " " <<
+        " - Siege: " << std::to_string(IA::getInstance() -> getSiegeAmount()) <<  " " <<
+        "Next choice: " << IA::getInstance() -> getNextChoice() <<  " " <<
+        "Behaviour: " << IA::getInstance() -> getChosenBehaviour();
+
+        iaResourceText -> setLabel(iaos.str());
 
         updateTimer = 0.5;
 
@@ -383,8 +491,9 @@ void Hud::update() {
     }
 }
 
+
 void Hud::updatePositions() {
-    buttonQuit -> setPosition(Vector2<int>(20, 20).getFixed());
+    //buttonQuit -> setPosition(Vector2<int>(20, 20).getFixed());
     buttonOpenPanel -> setPosition(Vector2<int>(100,20).getFixed());
 
     buildingsPanel->setPosition(Vector2<int>(20, 640).getFixed());

@@ -105,7 +105,7 @@ void BuildingManager::drawBuilding(Terrain *terrain) {
 			* If there is no collision and the player press left button of the mouse,
 			* build the building
 			*/
-			if (g -> getCursor() -> leftMousePressed()){
+			if (g -> getCursor() -> leftMousePressed()) {
 				buildingMode = false;
 				buildBuilding(Vector3<float>(x, y, z), (Enumeration::BuildingType)tempBuilding -> getType(), Enumeration::Team::Human);
 			}
@@ -139,7 +139,7 @@ void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingTyp
 		tempBuilding -> getModel() -> setID(id);
 		buildings -> insert(std::pair<int,Building*>(id, tempBuilding));
 
-		Game::Instance() -> getGameState() -> getHud() -> addTab(id, tempBuilding -> getType());
+		//Game::Instance() -> getGameState() -> getHud() -> addTab(id, tempBuilding -> getType());
 		// Tax the player when placing the building
 		tempBuilding -> taxPlayer(Enumeration::Team::Human);
 		id++;

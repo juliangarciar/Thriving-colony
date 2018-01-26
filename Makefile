@@ -34,7 +34,7 @@ OBJ_DIRS := $(foreach DIR,$(SOURCE_DIRS),$(patsubst %, $(BUILDPATH)/%, $(DIR)))
 OBJ := $(patsubst $(SOURCEPATH)/%.cpp, $(BUILDPATH)/%.o, $(SRC))
 
 #MAKE OPTIONS
-.PHONY: all clean
+.PHONY: all clean cleanfolder
 
 all: prepare $(OBJ)
 	$(warning Creando el ejecutable $(Target)...)
@@ -54,3 +54,8 @@ clean:
 	$(warning Cleaning...)
 	@$(RM) $(EXECUTABLE)
 	@$(RM) $(OBJ)
+
+cleanfolder:
+	$(warning Cleaning $(FOLDER)...)
+	@$(RM) $(EXECUTABLE)
+	@$(RM) $(BUILDPATH)/$(FOLDER)/*.o

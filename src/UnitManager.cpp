@@ -163,6 +163,7 @@ void UnitManager::deployAllTroops(Vector3<float> vectorData) {
 void UnitManager::retractAllTroops(Vector3<float> vectorData) {
     for (std::map<int,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
         Unit *u = it -> second;
+        u -> switchState(Enumeration::UnitState::Move);
         u -> setTroopDestination(vectorData);
         u -> setRetracted(true);
     }
@@ -176,7 +177,7 @@ void UnitManager::selectTroop(int troopID) {
         this -> selectedTroop = it -> second;
         //SELECT VOICE
         SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getSelectEvent());
-        g -> getCursor() -> changeIcon(CURSOR_CROSSHAIR); //ToDo: fachada
+        g -> getCursor() -> changeIcon(CURSOR_CROSSHAIR);
     }
 }
 
@@ -185,7 +186,7 @@ void UnitManager::unSelectTroop() {
     Game *g = Game::Instance();
     if (this -> selectedTroop != NULL){
         this -> selectedTroop = NULL;
-        g -> getCursor() -> changeIcon(CURSOR_NORMAL); //ToDo: fachada
+        g -> getCursor() -> changeIcon(CURSOR_NORMAL);
     }
 }
 
