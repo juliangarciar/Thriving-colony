@@ -9,7 +9,9 @@ Human::Human() : Player() {
     siderurgyAmount = 0;
     quarryAmount= 0;
     
-    citizens = 500; //ToDo: bajar a 10 o asi
+    metalAmount = 1200;
+    crystalAmount = 0;
+    citizens = 10; //ToDo: bajar a 10 o asi
 
     armySize = 0;
     meleeAmount = 0;

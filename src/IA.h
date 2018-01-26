@@ -27,8 +27,8 @@ class IA : public Player {
         bool getClosedDoors();
 
         void setChoiceIndex(int);
-        std::wstring getNextChoice();
-        std::wstring getChosenBehaviour();
+        std::string getNextChoice();
+        std::string getChosenBehaviour();
         void initializeChoices();
 
         void chooseBehaviour();
@@ -40,10 +40,10 @@ class IA : public Player {
         RootNode *nodeRootIA;
 
         Enumeration::IABehaviour behaviour;
-        std::wstring chosenBehaviour;
+        std::string chosenBehaviour;
         int choiceIndex;
 
-        std::vector<std::wstring> * choices;
+        std::vector<std::string> * choices;
 
 };
 

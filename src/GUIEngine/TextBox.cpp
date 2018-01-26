@@ -18,7 +18,6 @@ void TextBox::setTooltip(std::string t){
 }
 
 void TextBox::setText(std::string t) {
-    std::cout << t <<std::endl;
     textbox -> setDefaultValue(t);
 }
 

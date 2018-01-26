@@ -151,15 +151,15 @@ void GameState::Input() {
         }
 
         if (Game::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_1)){ //ToDo: fachada
-            Human::getInstance() -> receiveMetal();
+           // Human::getInstance() -> receiveMetal();
         }
 
         if (Game::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_2)){ //ToDo: fachada
-            Human::getInstance() -> receiveCrystal();
+            //Human::getInstance() -> receiveCrystal();
         }
 
         if (Game::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_3)){ //ToDo: fachada
-            Human::getInstance() -> receiveCitizens();
+            //Human::getInstance() -> receiveCitizens();
         }
 }
 

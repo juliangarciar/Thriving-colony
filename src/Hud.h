@@ -65,8 +65,9 @@ class Hud {
         Button *buttonExpandTerrain;
         Button *buttonOpenPanel;
         
+        TextBox *backgroundText;
         Label *resourceText;
-        TextBox *iaResourceText;
+        Label *iaResourceText;
 
         
 
