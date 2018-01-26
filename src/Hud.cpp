@@ -109,6 +109,7 @@ Hud::Hud() {
     
     tabContainer = new Panel("Tabs");
     tabContainer -> setGroupLayout();
+    tabContainer -> setSize(Vector2<int>(500, 200));
     tabs = new TabPanel(tabContainer);
     tabContainer->center();
     tabContainer->hide();
