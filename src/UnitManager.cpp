@@ -170,7 +170,7 @@ void UnitManager::selectTroop(int troopID) {
         this -> selectedTroop = it -> second;
         //SELECT VOICE
         SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getSelectEvent());
-        g -> getCursor() -> changeIcon(CURSOR_CROSSHAIR); //ToDo: fachada
+        g -> getCursor() -> changeIcon(CURSOR_CROSSHAIR);
     }
 }
 
@@ -179,7 +179,7 @@ void UnitManager::unSelectTroop() {
     Game *g = Game::Instance();
     if (this -> selectedTroop != NULL){
         this -> selectedTroop = NULL;
-        g -> getCursor() -> changeIcon(CURSOR_NORMAL); //ToDo: fachada
+        g -> getCursor() -> changeIcon(CURSOR_NORMAL);
     }
 }
 

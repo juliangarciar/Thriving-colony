@@ -18,11 +18,9 @@ Window::Window(int width, int height) {
 
     windowWidth = width;
     windowHeight = height;
-
+    
     glfwInit();
     glfwSetTime(0);
-
-    nanogui::init();
 
     // Create an application window with the following settings:
     window = glfwCreateWindow(windowWidth, windowHeight, "Thriving Colony", nullptr, nullptr);
@@ -86,7 +84,7 @@ void Window::setGUI(){
     gui -> setVisible(true);
     gui -> performLayout();
 }
- 
+
 void Window::beginScene(){
     double now = glfwGetTime();
     deltaTime = (double)(now - dtThen); // Time in seconds
