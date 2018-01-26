@@ -62,7 +62,8 @@ class UnitManager{
         bool isTroopSelected();
 
         std::map<int, Unit*> * getInMapTroops();
-        std::vector<Unit*> * getInHallTroops();        
+        std::vector<Unit*> * getInHallTroops();
+        Unit* getSelectedTroop();
 };
 
 #endif

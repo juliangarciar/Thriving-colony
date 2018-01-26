@@ -31,9 +31,15 @@ UnitManager::UnitManager(Enumeration::Team teamData, Enumeration::RaceType raceD
 UnitManager::~UnitManager() {
     delete selectedTroop;
 
+    for (int i = 0; i < inHallTroops -> size(); i++) {
+        inHallTroops -> erase(inHallTroops -> begin() + i);
+    }
     inHallTroops -> clear();
     delete inHallTroops;
 
+    for (std::map<int,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
+		delete it -> second;
+    }
     inMapTroops -> clear();
     delete inMapTroops;
 
@@ -188,8 +194,8 @@ void UnitManager::unSelectTroop() {
 void UnitManager::moveOrder(Terrain *terrain) {
     Game *g = Game::Instance();
     if (this -> selectedTroop != NULL) {
-        //this -> selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
-        /*if (Game::Instance() -> getKeyboard() -> keyDown('A')) { //ToDo: arreglar
+        this -> selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
+        if (Game::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: arreglar
             this -> selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
 
             this -> selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
@@ -197,7 +203,7 @@ void UnitManager::moveOrder(Terrain *terrain) {
             this -> selectedTroop -> switchState(Enumeration::UnitState::Move);
 
             this -> selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
-        }*/
+        }
         //MOVEMENT VOICE
         SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
         //this -> selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getCursor()));
@@ -286,4 +292,8 @@ std::map<int, Unit*> * UnitManager::getInMapTroops() {
 
 std::vector<Unit*> * UnitManager::getInHallTroops() {
     return inHallTroops;
+}
+
+Unit* UnitManager::getSelectedTroop() {
+    return selectedTroop;
 }

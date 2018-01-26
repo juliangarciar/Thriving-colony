@@ -45,6 +45,10 @@ void GameState::init() {
     v.y = map -> getY(v.x, v.z);
     Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::Human);
 
+    Enumeration::UnitType unitData = Enumeration::UnitType::StandardM;
+    Human::getInstance() -> getUnitManager() -> createTroop(unitData);
+    Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsHuman);
+
     //SoundSystem init
     SoundSystem::Instance() -> initSystem();
 
@@ -131,10 +135,10 @@ void GameState::input() {
         Game::Instance() -> changeState(Enumeration::State::PauseState);
     }
 
-    /*if (Game::Instance()->getIO()->rightMousePressed()) {
+    if (Game::Instance()-> getCursor() -> rightMousePressed()) {
         Human::getInstance() -> getUnitManager() -> moveOrder(map);
     }
-
+/*
     if (Game::Instance() -> getIO() -> keyPressed(KEY_KEY_1)) {
         Human::getInstance() -> receiveMetal();
     }

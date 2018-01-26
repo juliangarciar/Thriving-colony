@@ -153,6 +153,22 @@ void CameraController::Update(float deltaTime) {
 		camera -> setCameraPosition(camPos.getVectorF());
 		camera -> setTargetPosition(tarPos.getVectorF());
     }
+	
+	if (Game::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_SPACE)) {
+		if(Human::getInstance() -> getUnitManager() -> getSelectedTroop() != NULL) {
+			camPos.x = Human::getInstance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> x;
+			camPos.z = Human::getInstance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> z;
+			camPos.y = terrain -> getY(camPos.x, camPos.z) + camHeight;
+		} else {
+			camPos.x = HUMAN_CITY_HALL_X;
+			camPos.z = HUMAN_CITY_HALL_Z;
+			camPos.y = terrain -> getY(camPos.x, camPos.z) + camHeight;
+			
+		}
+		Vector2<float> camPos2D = Vector2<float>(camPos.x, camPos.z).getFromPolarCoordinates(delta.y, 0);
+		camera -> setCameraPosition(Vector3<float>(camPos2D.x, camPos.y, camPos2D.y));
+		camera -> setTargetPosition(Vector3<float>(camPos.x, terrain -> getY(camPos.x, camPos.z), camPos.z));
+	}
 }
 
 //ToDo: Crear camera controller (fuera de fachada) y moverlo ahi
