@@ -10,6 +10,7 @@
 #include <GUIEngine/TabPanel.h>
 #include <GUIEngine/Tab.h>
 #include <GUIEngine/Panel.h>
+#include <GUIEngine/Label.h>
 #include <IOEngine/Keyboard.h>
 #include <IOEngine/Mouse.h>
 
@@ -44,6 +45,12 @@ class Hud {
 
         Panel *buildingsPanel;
 
+        Panel *generalPanel;
+        Panel *servicePanel;
+        Panel *militaryPanel;
+        Panel *resourcePanel;
+        Panel *defensePanel;
+
         Button *buttonBarn;
         Button *buttonBarrack;
         Button *buttonHospital;
@@ -58,8 +65,10 @@ class Hud {
         Button *buttonExpandTerrain;
         Button *buttonOpenPanel;
         
-        TextBox *resourceText;
+        Label *resourceText;
         TextBox *iaResourceText;
+
+        
 
         Panel *tabContainer;
         TabPanel *tabs;

@@ -18,6 +18,7 @@ void TextBox::setTooltip(std::string t){
 }
 
 void TextBox::setText(std::string t) {
+    std::cout << t <<std::endl;
     textbox -> setDefaultValue(t);
 }
 
@@ -31,6 +32,10 @@ void TextBox::show(){
  
 void TextBox::hide(){
     textbox -> setVisible(false);
+}
+
+void TextBox::setSize(Vector2<int> size) {
+    textbox -> setFixedSize(Eigen::Vector2i(size.x, size.y));
 }
 
 nanogui::Widget *TextBox::getGUIElement(){

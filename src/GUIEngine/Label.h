@@ -15,6 +15,9 @@ class Label : public GUIElement {
 
         void setTooltip(std::string t);
         void setLabel(std::string t);
+
+        void setSize(Vector2<int> size);
+
         
         void show();
         void hide();

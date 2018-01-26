@@ -16,29 +16,62 @@ Hud::Hud() {
     deleteTextTimer = 0;
 
     menuIDs = new std::vector<int>();
-     
+    buttons = new std::vector<Button*> ();
+    // Building buttons panel
+    buildingsPanel = new Panel("Buildings");
+    buildingsPanel->setPosition(Vector2<int>(575, 546).getFixed());
     //Le botone iniciale
     buttonQuit = new Button("Quit");
-    buttonOpenPanel = new Button("Open Panel");
 
-    buttonQuit->setPosition(Vector2<int>(20, 20));
+    // General
+    generalPanel = new Panel(buildingsPanel, "General functions");
+    generalPanel->setPosition(Vector2<int>(20, 640).getFixed());
+
+    buttonExpandTerrain = new Button(generalPanel, "Expand terrain");
+    buttonOpenPanel = new Button(generalPanel, "Open Panel");
+
+    buttonQuit->setPosition(Vector2<int>(30, 30));
     buttonOpenPanel->setPosition(Vector2<int>(100, 20));
-    
-    buildingsPanel = new Panel("Buildings");
-    buildingsPanel->setPosition(Vector2<int>(20, 640).getFixed());
 
-    buttonBarn = new Button(buildingsPanel, "Barn");
-    buttonBarrack = new Button(buildingsPanel, "Barrack");
-    buttonHome = new Button(buildingsPanel, "Home");
-    buttonHospital = new Button(buildingsPanel, "Hospital");
-    buttonMarket = new Button(buildingsPanel, "Market");
-    buttonQuarry = new Button(buildingsPanel, "Quarry");
-    buttonSchool = new Button(buildingsPanel, "School");
-    buttonSiderurgy = new Button(buildingsPanel, "Siderurgy");
-    buttonTower = new Button(buildingsPanel, "Tower");
-    buttonWall = new Button(buildingsPanel, "Wall");
-    buttonWorkshop = new Button(buildingsPanel, "Workshop");
-    buttonExpandTerrain = new Button(buildingsPanel, "Expand terrain");
+    generalPanel -> setVerticalAlignment();
+
+    // Resources
+    resourcePanel = new Panel(buildingsPanel, "Resource buildings");
+    resourcePanel->setPosition(Vector2<int>(20, 640).getFixed());
+
+    buttonHome = new Button(resourcePanel, "Home");
+    buttonSiderurgy = new Button(resourcePanel, "Siderurgy");
+    buttonQuarry = new Button(resourcePanel, "Quarry");
+
+    resourcePanel ->setVerticalAlignment();
+    // Services
+    servicePanel = new Panel(buildingsPanel, "Service buildings");
+    servicePanel->setPosition(Vector2<int>(20, 640).getFixed());
+
+    buttonSchool = new Button(servicePanel, "School");
+    buttonMarket = new Button(servicePanel, "Market");
+    buttonHospital = new Button(servicePanel, "Hospital");
+
+    servicePanel -> setVerticalAlignment();
+    // Military
+    militaryPanel = new Panel(buildingsPanel, "Military buildings");
+    militaryPanel->setPosition(Vector2<int>(20, 640).getFixed());
+
+    buttonBarrack = new Button(militaryPanel, "Barrack");
+    buttonBarn = new Button(militaryPanel, "Barn");
+    buttonWorkshop = new Button(militaryPanel, "Workshop");
+
+    militaryPanel -> setVerticalAlignment();
+    // Defense
+    defensePanel = new Panel(buildingsPanel, "Defensive buildings");
+    defensePanel->setPosition(Vector2<int>(20, 640).getFixed());
+
+    buttonTower = new Button(defensePanel, "Tower");
+    buttonWall = new Button(defensePanel, "Wall");
+
+    defensePanel -> setVerticalAlignment();
+
+    //buildingsPanel -> center();
 
     buttonBarn->setTooltip("Build a barn that will allow you to train mounted military units.\n Metal cost: 800.");
     buttonBarrack->setTooltip("Build a barrack that will allow you to train basic military units.\n Metal cost: 720.");
@@ -55,18 +88,20 @@ Hud::Hud() {
     buttonOpenPanel->setTooltip("Open your panel to manage your city.");
 
     // Solo de debug
-    resourceText = new TextBox("Player");
+    resourceText = new Label("Player");
     iaResourceText = new TextBox("IA");
     warningText = new TextBox("Edificio construido");
 
-    resourceText->setPosition(Vector2<int>(1000,0).getFixed());
+    resourceText->setPosition(Vector2<int>(0,0).getFixed());
     iaResourceText->setPosition(Vector2<int>(1150,0).getFixed());
     warningText->setPosition(Vector2<int>(1000,650).getFixed());
 
+    resourceText -> setSize(Vector2<int>(100,100));
+
     deleteWarning();
-
+    
     tabContainer = new Panel("Tabs");
-
+    tabContainer -> setGroupLayout();
     tabs = new TabPanel(tabContainer);
     tabContainer->center();
     tabContainer->hide();
@@ -74,6 +109,12 @@ Hud::Hud() {
 
 Hud::~Hud() {
     delete menuIDs;
+
+    delete buildingsPanel;
+    delete resourcePanel;
+    delete servicePanel;
+    delete militaryPanel;
+    delete defensePanel;
 
     //Los dos botones iniciales
     delete buttonQuit;
@@ -352,34 +393,35 @@ void Hud::setHUDEvents(){
 void Hud::update() {
     float dt = Game::Instance()  -> getWindow() -> getDeltaTime();
     if (updateTimer <= 0) {
-        //ToDo: añadir los metodos de getmetalamount y getcrystalamount
+        
         std::stringstream os;
-        os << "Player resources:\n" << 
+        os << "Player resources:" << 
         "Metal: " << std::to_string(Human::getInstance() -> getMetalAmount()) << 
-        "\nCrystal: " << std::to_string(Human::getInstance() -> getCrystalAmount()) << 
-        "\nCitizens: " << std::to_string(Human::getInstance() -> getCitizens()) << 
-        "\nHappiness: " << std::to_string(Human::getInstance() -> getHappiness()) << 
-        "\nCity level: "<< std::to_string(Human::getInstance() -> getCityLevel()) << 
-        "\nArmy size: " << std::to_string(Human::getInstance() -> getArmySize()) << 
-        "\n - Melees: " << std::to_string(Human::getInstance() -> getMeleeAmount()) << 
-        "\n - Ranged: " << std::to_string(Human::getInstance() -> getRangeAmount()) << 
-        "\n - Siege: " << std::to_string(Human::getInstance() -> getSiegeAmount());
-        resourceText -> setText(os.str());
+        "Crystal: " << std::to_string(Human::getInstance() -> getCrystalAmount()) << 
+        "Citizens: " << std::to_string(Human::getInstance() -> getCitizens()) << 
+        "Happiness: " << std::to_string(Human::getInstance() -> getHappiness()) << 
+        "City level: "<< std::to_string(Human::getInstance() -> getCityLevel()) << 
+        "Army size: " << std::to_string(Human::getInstance() -> getArmySize()) << 
+        " - Melees: " << std::to_string(Human::getInstance() -> getMeleeAmount()) << 
+        " - Ranged: " << std::to_string(Human::getInstance() -> getRangeAmount()) << 
+        " - Siege: " << std::to_string(Human::getInstance() -> getSiegeAmount());
+        resourceText -> setLabel(os.str());
 
         std::stringstream iaos;
-        iaos << "IA resources:\n" << 
+        iaos << "IA resources:" << 
         "Metal: " << std::to_string(IA::getInstance() -> getMetalAmount()) << 
-        "\nCrystal: " << std::to_string(IA::getInstance() -> getCrystalAmount()) << 
-        "\nCitizens: " << std::to_string(IA::getInstance() -> getCitizens()) << 
-        "\nHappiness: " << std::to_string(IA::getInstance() -> getHappiness()) << 
-        "\nCity level: "<< std::to_string(IA::getInstance() -> getCityLevel()) << 
-        "\nArmy size: " << std::to_string(IA::getInstance() -> getArmySize()) << 
-        "\n - Melees: " << std::to_string(IA::getInstance() -> getMeleeAmount()) << 
-        "\n - Ranged: " << std::to_string(IA::getInstance() -> getRangeAmount()) << 
-        "\n - Siege: " << std::to_string(IA::getInstance() -> getSiegeAmount());
+        "Crystal: " << std::to_string(IA::getInstance() -> getCrystalAmount()) << 
+        "Citizens: " << std::to_string(IA::getInstance() -> getCitizens()) << 
+        "Happiness: " << std::to_string(IA::getInstance() -> getHappiness()) << 
+        "City level: "<< std::to_string(IA::getInstance() -> getCityLevel()) << 
+        "Army size: " << std::to_string(IA::getInstance() -> getArmySize()) << 
+        " - Melees: " << std::to_string(IA::getInstance() -> getMeleeAmount()) << 
+        " - Ranged: " << std::to_string(IA::getInstance() -> getRangeAmount()) << 
+        " - Siege: " << std::to_string(IA::getInstance() -> getSiegeAmount());
         /* << //ToDo: change type
-        "\nNext choice: " << IA::getInstance() -> getNextChoice() << 
-        "\nBehaviour: " << IA::getInstance() -> getChosenBehaviour();*/
+        "Next choice: " << IA::getInstance() -> getNextChoice() << 
+        "Behaviour: " << IA::getInstance() -> getChosenBehaviour();*/
+
         iaResourceText -> setText(iaos.str());
 
         updateTimer = 0.5;
@@ -389,6 +431,7 @@ void Hud::update() {
         updateTimer -= dt;
     }
 }
+
 
 void Hud::updatePositions() {
     buttonQuit -> setPosition(Vector2<int>(20, 20).getFixed());

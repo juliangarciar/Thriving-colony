@@ -21,6 +21,10 @@ void Label::setLabel(std::string t) {
     label -> setCaption(t);
 }
 
+void Label::setSize(Vector2<int> size) {
+    label -> setFixedSize(Eigen::Vector2i(size.x, size.y));
+}
+
 void Label::show(){
     label -> setVisible(true);
 }
