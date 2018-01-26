@@ -102,16 +102,16 @@ void Window::endScene(){
     driver -> endScene();
 }
 
+void Window::close(){
+    closeWindow = true;
+}
+
 bool Window::isOpen(){
     glfwPollEvents();
-    return !glfwWindowShouldClose(window);
+    return (!glfwWindowShouldClose(window) && !closeWindow);
 }
 
-bool Window::isReady(){
-    return !closeWindow;
-}
-
-void Window::close(){
+void Window::onClose(){
     device -> drop();
     glfwTerminate();
 }

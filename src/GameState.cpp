@@ -9,7 +9,6 @@ GameState::GameState() : State() {
     battleManager = new BattleManager();
     
     hud = new Hud();
-
     Window::Instance() -> setGUI();
 
     prevWindowWidth = 1280;
@@ -23,7 +22,8 @@ GameState::~GameState() {
     delete battleManager;
 }
 
-void GameState::init(){
+void GameState::init() {
+    //Set map texture
     map -> setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
 
     // Build the main building of IA
@@ -44,16 +44,17 @@ void GameState::init(){
     v.z = HUMAN_CITY_HALL_Z + 200;
     v.y = map -> getY(v.x, v.z);
     Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::Human);
+
     //SoundSystem init
     SoundSystem::Instance() -> initSystem();
+
+    hud -> setHUDEvents();
 }
 
 void GameState::input() {
-    hud -> getHUDEvents();
+    //hud -> getHUDEvents();
 
     hud -> update();
-
-    Game::Instance() -> getCursor();
 
     camera -> Move(Game::Instance() -> getCursor());
     camera -> RotateAndInclinate(Game::Instance() -> getCursor());
@@ -126,6 +127,10 @@ void GameState::input() {
     }
     onMap = false;
 
+    if (Game::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_ESCAPE)) {
+        Game::Instance() -> changeState(Enumeration::State::PauseState);
+    }
+
     /*if (Game::Instance()->getIO()->rightMousePressed()) {
         Human::getInstance() -> getUnitManager() -> moveOrder(map);
     }
@@ -140,10 +145,6 @@ void GameState::input() {
 
     if (Game::Instance() -> getIO() -> keyPressed(KEY_KEY_3)) {
         Human::getInstance() -> receiveCitizens();
-    }
-
-    if (Game::Instance() -> getIO() -> keyPressed(KEY_ESCAPE)) {
-        Game::Instance() -> changeState(Enumeration::State::PauseState);
     }*/   
 }
 

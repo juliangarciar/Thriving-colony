@@ -12,6 +12,9 @@ class IA : public Player {
         virtual ~IA();
         static IA* getInstance();
 
+        void init();
+        void cleanUp();
+
         static void deployTroops();
         static void retractTroops();
         static void closeDoors();

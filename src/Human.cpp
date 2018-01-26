@@ -3,6 +3,10 @@
 #include "IA.h"
 
 Human::Human() : Player() {
+    
+}
+
+void Human::init() {
     happiness = 0;
     cityLevel = 1;
     
@@ -27,8 +31,14 @@ Human::Human() : Player() {
     units = new UnitManager(Enumeration::Team::Human, Enumeration::RaceType::Drorania);
 }
 
+void Human::cleanUp() {
+    delete buildings;
+    delete units;
+}
+
 Human::~Human() {
-    
+    delete buildings;
+    delete units;
 }
 
 Human* Human::instance = 0;

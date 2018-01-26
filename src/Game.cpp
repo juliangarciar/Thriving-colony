@@ -24,6 +24,8 @@ Game::Game() {
     events = new EventSystem();
 
     soundSystem = new SoundSystem();
+
+    Window::Instance() -> setGUI();
 }
 
 Game::~Game() {
@@ -80,6 +82,8 @@ void Game::changeState(Enumeration::State data) {
     switch (data) {
         case Enumeration::State::MenuState :
             delete pause;
+            IA::getInstance() -> cleanUp();
+            Human::getInstance() -> cleanUp();
             delete game;
             menu = new MenuState();
             state = menu;
@@ -89,6 +93,8 @@ void Game::changeState(Enumeration::State data) {
         case Enumeration::State::GameState :
             if (stateData == Enumeration::State::MenuState) {
                 delete menu;
+                IA::getInstance() -> init();
+                Human::getInstance() -> init();
                 game = new GameState();
                 state = game;
                 state -> init();

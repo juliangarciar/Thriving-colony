@@ -3,6 +3,10 @@
 #include "Human.h"
 
 IA::IA() : Player() {
+    
+}
+
+void IA::init() {
     // Choose a behaviour
     chooseBehaviour();
     // Create a behaviour and a root node and set them up according to the behaviour
@@ -17,7 +21,15 @@ IA::IA() : Player() {
     // Choices for the debugging system
     choiceIndex = 0;
     initializeChoices();
-    
+}
+
+void IA::cleanUp() {
+    delete tree;
+    delete nodeRootIA;
+    delete buildings;
+    delete units;
+    choices -> clear();
+    delete choices;
 }
 
 IA::~IA() {

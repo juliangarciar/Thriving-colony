@@ -14,8 +14,8 @@ CameraController::CameraController(Terrain *t) {
 	// Cam movement initializations
 	direction = 0;
 	camSpeed = 700.0f; // Esto estaba a 500
-	screenMarginV = 50;
-	screenMarginH = 60;
+	screenMarginV = 20;
+	screenMarginH = 20;
     movementMode = false;
 
 	// Cam zoom initializations

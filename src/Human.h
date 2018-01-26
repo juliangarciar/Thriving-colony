@@ -10,6 +10,9 @@ class Human : public Player {
         virtual ~Human();
         static Human* getInstance();
 
+        void init();
+        void cleanUp();
+
         static void deployTroops();
         static void retractTroops();
         static void closeDoors();

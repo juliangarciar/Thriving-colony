@@ -15,6 +15,11 @@ class CheckBox : public GUIElement {
 
         void show();
         void hide();
+        
+        void setPosition(Vector2<int> position);
+        
+        void setTooltip(std::string text);
+        void setCallback(std::function<void(bool)> callback);
 
         int isChecked();
         

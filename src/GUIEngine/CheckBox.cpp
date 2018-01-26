@@ -22,10 +22,22 @@ void CheckBox::hide(){
     checkbox -> setVisible(false);
 }
 
+void CheckBox::setPosition(Vector2<int> position){
+    checkbox -> setPosition(Eigen::Vector2i(position.x, position.y));
+}
+
+void CheckBox::setTooltip(std::string text){
+    checkbox -> setTooltip(text);
+}
+
+void CheckBox::setCallback(std::function<void(bool)> callback){
+    checkbox -> setCallback(callback);
+}
+
 int CheckBox::isChecked(){
     return checkbox -> checked();
 }
- 
+
 nanogui::Widget *CheckBox::getGUIElement(){
     return checkbox; 
 }

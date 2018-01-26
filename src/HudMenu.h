@@ -9,10 +9,9 @@ class HudMenu {
         HudMenu();
         ~HudMenu();
 
-        void getHUDEvents();
+        void setHUDEvents();
 
         void update();
-        void updatePositions();
 
     private:
         Button *buttonQuit;

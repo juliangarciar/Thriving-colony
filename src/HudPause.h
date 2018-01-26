@@ -9,10 +9,9 @@ class HudPause {
         HudPause();
         ~HudPause();
 
-        void getHUDEvents();
+        void setHUDEvents();
 
         void update();
-        void updatePositions();
 
     private:
         Button *buttonQuit;

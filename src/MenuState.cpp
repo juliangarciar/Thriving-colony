@@ -3,6 +3,7 @@
 
 MenuState::MenuState() : State() {
     hud = new HudMenu();
+    Window::Instance() -> setGUI();
     
     prevWindowWidth = 1280;
     prevWindowHeight = 720;
@@ -13,19 +14,18 @@ MenuState::~MenuState() {
 }
 
 void MenuState::init() {
-
+    hud -> setHUDEvents();
 }
 
 void MenuState::input() {
-    hud -> getHUDEvents();
     hud -> update();
 }
 
 void MenuState::update() {
-    Game *g = Game::Instance();
+    /*Game *g = Game::Instance();
     if (g -> getWindow() -> getRealWindowWidth() != prevWindowWidth || g -> getWindow() -> getRealWindowHeight() != prevWindowHeight) {
         hud -> updatePositions();
-    }
+    }*/
 }
 
 void MenuState::render() {

@@ -9,9 +9,9 @@ class Keyboard {
         Keyboard();
         ~Keyboard();
 
-        bool keyPressed(char keycode);
-        bool keyReleased(char keycode);
-        bool keyRepeat(char keycode);
+        bool keyPressed(int keycode);
+        bool keyReleased(int keycode);
+        bool keyRepeat(int keycode);
 
 		// Keyboard key states.
 		Enumeration::ioStatesENUM keyState[GLFW_KEY_LAST];

@@ -3,6 +3,7 @@
 
 PauseState::PauseState() : State() {
     hud = new HudPause();
+    Window::Instance() -> setGUI();
     
     prevWindowWidth = 1280;
     prevWindowHeight = 720;
@@ -13,19 +14,18 @@ PauseState::~PauseState() {
 }
 
 void PauseState::init() {
-
+    hud -> setHUDEvents();
 }
 
 void PauseState::input() {
-    hud -> getHUDEvents();
     hud -> update();
 }
 
 void PauseState::update() {
-    Game *g = Game::Instance();
+    /*Game *g = Game::Instance();
     if (g -> getWindow() -> getRealWindowWidth() != prevWindowWidth || g -> getWindow() -> getRealWindowHeight() != prevWindowHeight) {
         hud -> updatePositions();
-    }
+    }*/
 }
 
 void PauseState::render() {

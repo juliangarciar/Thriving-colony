@@ -51,7 +51,8 @@ float Terrain::getY(float x, float z) {
 
 Terrain::~Terrain() {
     //ToDo: borrar terreno y selector
-    //terrain = NULL;
+    terrain -> removeAll();
+	terrain -> remove();
 }
 
 scene::ITerrainSceneNode* Terrain::getTerrain() {

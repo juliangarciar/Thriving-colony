@@ -3,7 +3,12 @@
 
 TabPanel::TabPanel(){
     ctrl = Window::Instance() -> getGUIEnvironment() -> add<nanogui::TabWidget>();
-    //addTabControl(dimPos.getRect2D(), 0, true, true, id);
+
+    tabs = new std::map<int, Tab*>();
+}
+
+TabPanel::TabPanel(GUIElement *parent){
+    ctrl = parent -> getGUIElement() -> add<nanogui::TabWidget>();
 
     tabs = new std::map<int, Tab*>();
 }
@@ -15,8 +20,10 @@ TabPanel::~TabPanel(){
     tabs -> clear();
 }
 
-Tab *TabPanel::createTab(std::string text, int id){ 
-    Tab *t = new Tab(ctrl -> createTab(id, text));
+Tab *TabPanel::createTab(std::string title, int id){ 
+    nanogui::Widget *layer = ctrl -> createTab(title);
+    layer->setLayout(new nanogui::GroupLayout());
+    Tab *t = new Tab(layer);
     tabs -> insert(std::pair<int, Tab*>(id, t));
     return t;
 } 
@@ -26,6 +33,14 @@ Tab *TabPanel::getTab(int id){
     it = tabs -> find(id);
     if (it != tabs -> end()) return tabs -> find(id) -> second;
     return NULL; 
+}
+
+void TabPanel::setPosition(Vector2<int> position){
+    ctrl -> setPosition(Eigen::Vector2i(position.x, position.y));
+}
+
+void TabPanel::setTooltip(std::string text){
+    ctrl->setTooltip(text);
 }
 
 void TabPanel::show(){

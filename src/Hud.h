@@ -5,7 +5,7 @@
 #include <GraphicEngine/Vector2.h>
 #include <GraphicEngine/Vector3.h>
 #include <GUIEngine/Rect2D.h>
-#include <GUIEngine/Text.h>
+#include <GUIEngine/TextBox.h>
 #include <GUIEngine/Button.h>
 #include <GUIEngine/TabPanel.h>
 #include <GUIEngine/Tab.h>
@@ -14,6 +14,8 @@
 #include <IOEngine/Mouse.h>
 
 using namespace irr;
+       
+static TextBox *warningText = 0;
 
 class Hud {
     
@@ -23,10 +25,11 @@ class Hud {
 
         void addTab(int id, int type);
 
+        void showPopup();
         void showPopup(int tabId);
         void hidePopup();
 
-        void getHUDEvents();
+        void setHUDEvents();
 
         void update();
         void updatePositions();
@@ -34,7 +37,10 @@ class Hud {
         static void drawWarning();
         static void deleteWarning();
     private:
-        //Button *buttonQuit;
+        std::vector<int> *menuIDs;
+        std::vector<Button*> *buttons;
+
+        Button *buttonQuit;
 
         Panel *buildingsPanel;
 
@@ -51,22 +57,21 @@ class Hud {
         Button *buttonWorkshop;
         Button *buttonExpandTerrain;
         Button *buttonOpenPanel;
-
-        TabPanel *tabs;
-
-        Text *hallTroopText;
-        //ListBox *hallTroopList;
-
-        //ToDo: mejorar
-        std::vector<Tab*> *menus;
-        std::vector<Button*> *buttons;
         
-        Text *resourceText;
-        Text *iaResourceText;
-        static Text *warningText;
+        TextBox *resourceText;
+        TextBox *iaResourceText;
+
+        Panel *tabContainer;
+        TabPanel *tabs;
 
         float updateTimer;
         float deleteTextTimer;
+
+/*
+        Text *hallTroopText;
+        //ListBox *hallTroopList;
+
+        //ToDo: mejorar*/
 };
 
 #endif

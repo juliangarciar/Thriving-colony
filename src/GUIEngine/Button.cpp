@@ -10,8 +10,8 @@ Button::Button(GUIElement *parent, std::string buttonText) {
 }
 
 Button::~Button() {
-    delete button;
-    button = NULL;
+    //delete button;
+    this -> hide();
 }
 
 bool Button::isButtonPressed(){
@@ -30,8 +30,12 @@ void Button::hide(){
     button -> setVisible(false);
 }
 
-void Button::setButtonCallback(std::function<void()> callback){
+void Button::setCallback(std::function<void()> callback){
     button -> setCallback(callback);
+}
+
+void Button::setTooltip(std::string text){
+    button->setTooltip(text);
 }
 
 void Button::setText(std::string text){ 

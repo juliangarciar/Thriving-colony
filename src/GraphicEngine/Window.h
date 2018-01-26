@@ -23,10 +23,11 @@ class Window {
         void beginScene();
         void endScene();
 
-        bool isOpen();
-        bool isReady();
-        
         void close();
+
+        bool isOpen();
+        
+        void onClose();
 
         IrrlichtDevice* getDevice();
         video::IVideoDriver* getVideoDriver();
