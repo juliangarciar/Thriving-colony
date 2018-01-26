@@ -27,6 +27,7 @@ class Panel : public GUIElement {
         void center();
         void setVerticalAlignment();
         void setGroupLayout();
+        void setDragable(bool dragable);
 
         void setSize(Vector2<int> size);
         

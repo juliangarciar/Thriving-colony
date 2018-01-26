@@ -6,6 +6,7 @@
 #include "GraphicEngine/Window.h"
 
 #include <string>
+#include <sstream>
 
 using namespace irr;
 
@@ -30,7 +31,7 @@ Hud::Hud() {
     buttonExpandTerrain = new Button(generalPanel, "Expand terrain");
     buttonOpenPanel = new Button(generalPanel, "Open Panel");
 
-    buttonQuit->setPosition(Vector2<int>(30, 30));
+    buttonQuit->setPosition(Vector2<int>(30, 40));
     buttonOpenPanel->setPosition(Vector2<int>(100, 20));
 
     generalPanel -> setVerticalAlignment();
@@ -88,15 +89,21 @@ Hud::Hud() {
     buttonOpenPanel->setTooltip("Open your panel to manage your city.");
 
     // Solo de debug
-    resourceText = new Label("Player");
-    iaResourceText = new TextBox("IA");
+    resourceText = new Label("");
+    iaResourceText = new Label("");
+
     warningText = new TextBox("Edificio construido");
 
+    backgroundText = new TextBox("");
+    backgroundText -> setPosition(Vector2<int>(0,0));
+    backgroundText -> setSize(Vector2<int>(950,35));
+
     resourceText->setPosition(Vector2<int>(0,0).getFixed());
-    iaResourceText->setPosition(Vector2<int>(1150,0).getFixed());
+    iaResourceText->setPosition(Vector2<int>(0,20).getFixed());
     warningText->setPosition(Vector2<int>(1000,650).getFixed());
 
-    resourceText -> setSize(Vector2<int>(100,100));
+    resourceText -> setSize(Vector2<int>(1000,100));
+    iaResourceText -> setSize(Vector2<int>(1000,100));
 
     deleteWarning();
     
@@ -111,6 +118,7 @@ Hud::~Hud() {
     delete menuIDs;
 
     delete buildingsPanel;
+    delete generalPanel;
     delete resourcePanel;
     delete servicePanel;
     delete militaryPanel;
@@ -134,6 +142,7 @@ Hud::~Hud() {
     delete buttonTower;
     delete buttonExpandTerrain;
 
+    delete backgroundText;
     delete resourceText;
     delete iaResourceText;
 
@@ -403,36 +412,35 @@ void Hud::setHUDEvents(){
 void Hud::update() {
     float dt = Game::Instance()  -> getWindow() -> getDeltaTime();
     if (updateTimer <= 0) {
-        
+
         std::stringstream os;
-        os << "Player resources:" << 
-        "Metal: " << std::to_string(Human::getInstance() -> getMetalAmount()) << 
-        "Crystal: " << std::to_string(Human::getInstance() -> getCrystalAmount()) << 
-        "Citizens: " << std::to_string(Human::getInstance() -> getCitizens()) << 
-        "Happiness: " << std::to_string(Human::getInstance() -> getHappiness()) << 
-        "City level: "<< std::to_string(Human::getInstance() -> getCityLevel()) << 
-        "Army size: " << std::to_string(Human::getInstance() -> getArmySize()) << 
-        " - Melees: " << std::to_string(Human::getInstance() -> getMeleeAmount()) << 
-        " - Ranged: " << std::to_string(Human::getInstance() -> getRangeAmount()) << 
-        " - Siege: " << std::to_string(Human::getInstance() -> getSiegeAmount());
+        os << "Player resources: " << 
+        "Metal: " << std::to_string(Human::getInstance() -> getMetalAmount()) << " " <<
+        "Crystal: " << std::to_string(Human::getInstance() -> getCrystalAmount()) << " " <<
+        "Citizens: " << std::to_string(Human::getInstance() -> getCitizens()) << " " <<
+        "Happiness: " << std::to_string(Human::getInstance() -> getHappiness()) <<  " " <<
+        "City level: "<< std::to_string(Human::getInstance() -> getCityLevel()) <<  " " <<
+        "Army size: " << std::to_string(Human::getInstance() -> getArmySize()) << " " <<
+        "- Melees: " << std::to_string(Human::getInstance() -> getMeleeAmount()) <<  " " <<
+        "- Ranged: " << std::to_string(Human::getInstance() -> getRangeAmount()) << " " <<
+        "- Siege: " << std::to_string(Human::getInstance() -> getSiegeAmount());
         resourceText -> setLabel(os.str());
 
         std::stringstream iaos;
         iaos << "IA resources:" << 
-        "Metal: " << std::to_string(IA::getInstance() -> getMetalAmount()) << 
-        "Crystal: " << std::to_string(IA::getInstance() -> getCrystalAmount()) << 
-        "Citizens: " << std::to_string(IA::getInstance() -> getCitizens()) << 
-        "Happiness: " << std::to_string(IA::getInstance() -> getHappiness()) << 
-        "City level: "<< std::to_string(IA::getInstance() -> getCityLevel()) << 
-        "Army size: " << std::to_string(IA::getInstance() -> getArmySize()) << 
-        " - Melees: " << std::to_string(IA::getInstance() -> getMeleeAmount()) << 
-        " - Ranged: " << std::to_string(IA::getInstance() -> getRangeAmount()) << 
-        " - Siege: " << std::to_string(IA::getInstance() -> getSiegeAmount());
-        /* << //ToDo: change type
-        "Next choice: " << IA::getInstance() -> getNextChoice() << 
-        "Behaviour: " << IA::getInstance() -> getChosenBehaviour();*/
+        "Metal: " << std::to_string(IA::getInstance() -> getMetalAmount()) <<  " " <<
+        "Crystal: " << std::to_string(IA::getInstance() -> getCrystalAmount()) <<  " " <<
+        "Citizens: " << std::to_string(IA::getInstance() -> getCitizens()) <<  " " <<
+        "Happiness: " << std::to_string(IA::getInstance() -> getHappiness()) <<  " " <<
+        "City level: "<< std::to_string(IA::getInstance() -> getCityLevel()) <<  " " <<
+        "Army size: " << std::to_string(IA::getInstance() -> getArmySize()) <<  " " <<
+        " - Melees: " << std::to_string(IA::getInstance() -> getMeleeAmount()) <<  " " <<
+        " - Ranged: " << std::to_string(IA::getInstance() -> getRangeAmount()) <<  " " <<
+        " - Siege: " << std::to_string(IA::getInstance() -> getSiegeAmount()) <<  " " <<
+        "Next choice: " << IA::getInstance() -> getNextChoice() <<  " " <<
+        "Behaviour: " << IA::getInstance() -> getChosenBehaviour();
 
-        iaResourceText -> setText(iaos.str());
+        iaResourceText -> setLabel(iaos.str());
 
         updateTimer = 0.5;
 

@@ -62,7 +62,7 @@ Window::Window(int width, int height) {
 
     glfwSetDropCallback(window,
         [](GLFWwindow *w, int count, const char **filenames) {
-            Window::Instance() -> getGUIEnvironment() -> dropCallbackEvent(count, filenames);
+            //Window::Instance() -> getGUIEnvironment() -> dropCallbackEvent(count, filenames);
         }
     );
 
