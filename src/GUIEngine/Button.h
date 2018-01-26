@@ -17,11 +17,14 @@ class Button : public GUIElement{
 
         void show();
         void hide();
-
-        void setText(std::string text);
-        void setSize(Vector2<int> size);
+        
         void setPosition(Vector2<int> position);
-        void setButtonCallback(std::function<void()> callback);
+        void setSize(Vector2<int> size);
+
+        void setTooltip(std::string text);
+        void setText(std::string text);
+
+        void setCallback(std::function<void()> callback);
 
         nanogui::Widget *getGUIElement();
     private:

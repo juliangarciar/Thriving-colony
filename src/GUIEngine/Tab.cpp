@@ -14,7 +14,16 @@ Tab::~Tab(){
 }
 
 void Tab::addChild(GUIElement *elem) {
+    elem -> getGUIElement() -> setParent(tab);
     tab -> addChild(elem -> getGUIElement());
+}
+
+void Tab::setPosition(Vector2<int> position){
+    tab -> setPosition(Eigen::Vector2i(position.x, position.y));
+}
+
+void Tab::setTooltip(std::string text){
+    tab -> setTooltip(text);
 }
 
 void Tab::show(){

@@ -15,6 +15,10 @@ class Tab : public GUIElement{
 
         void show();
         void hide();
+        
+        void setPosition(Vector2<int> position);
+        
+        void setTooltip(std::string text);
 
         std::string getTitle();
         int getID();

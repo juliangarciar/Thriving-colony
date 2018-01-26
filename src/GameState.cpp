@@ -24,6 +24,7 @@ GameState::~GameState() {
 }
 
 void GameState::Init() {
+    //Set map texture
     map -> setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
 
     //Initialize the event system
@@ -52,7 +53,6 @@ void GameState::Init() {
     IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::IA);
 
     // Build the main building of Human
-
     v.x = HUMAN_CITY_HALL_X;
     v.z = HUMAN_CITY_HALL_Z; 
     v.y = map -> getY(v.x, v.z);
@@ -62,14 +62,15 @@ void GameState::Init() {
     v.z = HUMAN_CITY_HALL_Z + 200;
     v.y = map -> getY(v.x, v.z);
     Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::Human);
+
     //SoundSystem init
     SoundSystem::Instance() -> initSystem();
+
+    hud -> setHUDEvents();
 }
 
 void GameState::Input() {
     //if (gamePaused) {
-
-        hud -> getHUDEvents();
 
         hud -> update();
 

@@ -58,7 +58,7 @@ void Game::Render(){
 
 void Game::CleanUp(){
     state -> CleanUp();
-    window -> close();
+    window -> onClose();
 }
 
 Window *Game::getWindow() {

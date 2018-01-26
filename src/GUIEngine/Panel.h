@@ -13,11 +13,17 @@ class Panel : public GUIElement {
         virtual ~Panel();
 
         void addChild(GUIElement *child);
+        
+        void setPosition(Vector2<int> position);
 
         void setTitle(std::string t);
         
+        void setTooltip(std::string text);
+        
         void show();
         void hide();
+
+        void center();
         
         nanogui::Widget *getGUIElement();
     private:

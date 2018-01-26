@@ -30,8 +30,12 @@ void Button::hide(){
     button -> setVisible(false);
 }
 
-void Button::setButtonCallback(std::function<void()> callback){
+void Button::setCallback(std::function<void()> callback){
     button -> setCallback(callback);
+}
+
+void Button::setTooltip(std::string text){
+    button->setTooltip(text);
 }
 
 void Button::setText(std::string text){ 
