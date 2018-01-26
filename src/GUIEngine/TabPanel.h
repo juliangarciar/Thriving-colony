@@ -23,6 +23,8 @@ class TabPanel : public GUIElement {
         void show();
         void hide();
 
+        void refreshLayout();
+
         nanogui::Widget *getGUIElement();
     private:
         nanogui::TabWidget *ctrl;

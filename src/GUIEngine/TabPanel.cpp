@@ -23,6 +23,7 @@ TabPanel::~TabPanel(){
 Tab *TabPanel::createTab(std::string title, int id){ 
     nanogui::Widget *layer = ctrl -> createTab(title);
     layer->setLayout(new nanogui::GroupLayout());
+
     Tab *t = new Tab(layer);
     tabs -> insert(std::pair<int, Tab*>(id, t));
     return t;
@@ -58,6 +59,11 @@ bool TabPanel::changeActiveTab(int id){
         return true;
     }
     return false;
+}
+
+void TabPanel::refreshLayout(){
+    Window::Instance()->getGUIEnvironment()->performLayout();
+    ctrl->ensureTabVisible(ctrl->tabCount());
 }
 
 nanogui::Widget *TabPanel::getGUIElement(){

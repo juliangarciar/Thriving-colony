@@ -156,10 +156,11 @@ void Hud::addTab(int id, int type){
             Button *b = new Button(t, "Close");
             b->setTooltip("Cerrar popup");
             b->setCallback([&] {
-                tabs -> hide();
+                tabContainer -> hide();
             });
             buttons -> push_back(b);
 
+            tabs->refreshLayout();
             tabs->changeActiveTab(0);
 
             /*
@@ -184,6 +185,9 @@ void Hud::addTab(int id, int type){
             Tab *t = tabs -> createTab("Barn", id);
             menuIDs -> push_back(id);
 
+            tabs->refreshLayout();
+            tabs->changeActiveTab(0);
+
             /*Button *b = new Button(Rect2D<int>(340, 10, 50, 20).getFixed(), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
             t -> addChild(b);
             tabs -> disable();
@@ -204,6 +208,9 @@ void Hud::addTab(int id, int type){
             Tab *t = tabs -> createTab("Barrack", id);
             menuIDs -> push_back(id);
 
+            tabs->refreshLayout();
+            tabs->changeActiveTab(0);
+
             /*Button *b = new Button(Rect2D<int>(340, 10, 50, 20).getFixed(), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
             t -> addChild(b);
             tabs -> disable();
@@ -220,6 +227,9 @@ void Hud::addTab(int id, int type){
         {
             Tab *t = tabs -> createTab("Workshop", id);
             menuIDs -> push_back(id);
+
+            tabs->refreshLayout();
+            tabs->changeActiveTab(0);
 
             /*Button *b = new Button(Rect2D<int>(340, 10, 50, 20).getFixed(), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
             t -> addChild(b);
