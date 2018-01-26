@@ -16,6 +16,8 @@ class TextBox : public GUIElement {
         void setTooltip(std::string t);
         void setText(std::string t);
         void setEditable(bool b);
+
+        void setSize(Vector2<int> size);
         
         void show();
         void hide();

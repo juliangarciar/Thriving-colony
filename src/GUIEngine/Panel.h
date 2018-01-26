@@ -10,6 +10,7 @@ class Panel : public GUIElement {
     public:
         Panel(std::string title);
         Panel(std::string title, Vector2<float> position);
+        Panel(GUIElement *parent, std::string title);
         virtual ~Panel();
 
         void addChild(GUIElement *child);
@@ -24,6 +25,10 @@ class Panel : public GUIElement {
         void hide();
 
         void center();
+        void setVerticalAlignment();
+        void setGroupLayout();
+
+        void setSize(Vector2<int> size);
         
         nanogui::Widget *getGUIElement();
     private:

@@ -3,13 +3,13 @@
 
 TabPanel::TabPanel(){
     ctrl = Window::Instance() -> getGUIEnvironment() -> add<nanogui::TabWidget>();
-
+    ctrl ->setLayout(new nanogui::GroupLayout());
     tabs = new std::map<int, Tab*>();
 }
 
 TabPanel::TabPanel(GUIElement *parent){
     ctrl = parent -> getGUIElement() -> add<nanogui::TabWidget>();
-
+    ctrl ->setLayout(new nanogui::GroupLayout());
     tabs = new std::map<int, Tab*>();
 }
 
