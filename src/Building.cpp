@@ -65,7 +65,7 @@ Building::Building(int id, SceneNode *parent, const wchar_t *path, Enumeration::
 }
 
 Building::~Building() {
-
+    
 }
 
 void Building::Init() {

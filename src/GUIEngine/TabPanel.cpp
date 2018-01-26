@@ -18,6 +18,7 @@ TabPanel::~TabPanel(){
     ctrl = NULL;*/
 
     tabs -> clear();
+    delete tabs;
 }
 
 Tab *TabPanel::createTab(std::string title, int id){ 

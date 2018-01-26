@@ -16,7 +16,7 @@ Panel::Panel(std::string t, Vector2<float> position) {
 }
 
 Panel::~Panel() {
-    
+    this -> hide();
 }
 
 void Panel::addChild(GUIElement *child){

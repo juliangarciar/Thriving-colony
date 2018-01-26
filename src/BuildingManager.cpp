@@ -19,6 +19,9 @@ BuildingManager::BuildingManager() {
 BuildingManager::~BuildingManager() {
 	delete tempBuilding;
 	delete buildingLayer;
+	for (std::map<int,Building*>::iterator it = buildings -> begin(); it != buildings -> end(); ++it) {
+		delete it -> second;
+    }
 	buildings -> clear();
 	delete buildings;
 }
