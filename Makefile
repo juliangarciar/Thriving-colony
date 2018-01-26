@@ -58,4 +58,4 @@ clean:
 cleanfolder:
 	$(warning Cleaning $(FOLDER)...)
 	@$(RM) $(EXECUTABLE)
-	@$(RM) -r $(BUILDPATH)/$(FOLDER)
+	@$(RM) $(BUILDPATH)/$(FOLDER)/*.o
