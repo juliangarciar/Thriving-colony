@@ -61,6 +61,7 @@ void Game::init() {
 
 void Game::input() {
     state -> input();
+    cursor->refreshStates();
 }
 
 void Game::update() {

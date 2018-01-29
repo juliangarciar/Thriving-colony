@@ -182,13 +182,24 @@ void CameraController::Move(Mouse *cursor) {
 
 	Vector2<int> cursorPosCurrent = cursor -> getPosition();
 
-	if (cursorPosCurrent.x <= 0) cursorPosCurrent.x = 0;
-	else if (cursorPosCurrent.x >= sc -> getRealWindowWidth()) cursorPosCurrent.x = sc -> getRealWindowWidth();
+	bool cursorOffLimits = false;
+	if (cursorPosCurrent.x <= 0) {
+		cursorPosCurrent.x = 0;
+		cursorOffLimits = true;
+	} else if (cursorPosCurrent.x >= sc -> getRealWindowWidth()) {
+		cursorPosCurrent.x = sc -> getRealWindowWidth();
+		cursorOffLimits = true;
+	}
 
-	if (cursorPosCurrent.y <= 0) cursorPosCurrent.y = 0;
-	else if (cursorPosCurrent.y >= sc -> getRealWindowHeight()) cursorPosCurrent.y = sc -> getRealWindowHeight();
+	if (cursorPosCurrent.y <= 0) {
+		cursorPosCurrent.y = 0;
+		cursorOffLimits = true;
+	} else if (cursorPosCurrent.y >= sc -> getRealWindowHeight()) {
+		cursorPosCurrent.y = sc -> getRealWindowHeight();
+		cursorOffLimits = true;
+	}
 
-	cursor -> setPosition(cursorPosCurrent);
+	if (cursorOffLimits) cursor -> setPosition(cursorPosCurrent);
 	
 	if (cursorPosCurrent.y < screenMarginV) {
 		direction |= 1 << 0;
