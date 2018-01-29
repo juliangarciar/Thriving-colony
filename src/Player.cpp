@@ -15,9 +15,6 @@ Player::Player() {
     siderurgyAmount = 0;
     quarryAmount= 0;
 
-    //ToDo: creo que se dijo que el player empezaba con 500 o con 700 
-    //Hay que empezar con 500 mas de metal porque si no al construir la siderurgia inicial 
-    //se queda a 0 porque se le cobra
     metalAmount = 1200;
     crystalAmount = 0;
 
