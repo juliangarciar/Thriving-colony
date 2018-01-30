@@ -7,15 +7,16 @@ Human::Human() : Player() {
 }
 
 void Human::init() {
+    /*
     happiness = 0;
     cityLevel = 1;
     
     siderurgyAmount = 0;
     quarryAmount= 0;
     
-    metalAmount = 12000;
-    crystalAmount = 12000;
-    citizens = 1000; //ToDo: bajar a 10 o asi
+    metalAmount = 1200;
+    crystalAmount = 1200;
+    citizens = 10; //ToDo: bajar a 10 o asi
 
     armySize = 0;
     meleeAmount = 0;
@@ -28,7 +29,7 @@ void Human::init() {
     barrackBuilt = false;
     barnBuilt = false;
     workshopBuilt = false;
-
+    */
     buildings = new BuildingManager();
     units = new UnitManager(Enumeration::Team::Human, Enumeration::RaceType::Drorania);
 }
