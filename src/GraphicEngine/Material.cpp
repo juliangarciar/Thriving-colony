@@ -8,3 +8,11 @@ Material::Material(Texture *tex) {
     material->Lighting = true;
     material->NormalizeNormals = true;
 }
+
+Material::~Material() {
+    delete material;
+}
+
+video::SMaterial * Material::getMaterial() {
+    return material;
+}

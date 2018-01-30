@@ -72,7 +72,7 @@ void UnitManager::updateUnitManager() {
 //unitData.unitSubClass = Enumeration::UnitType::SubClass::Idol;
 bool UnitManager::createTroop(Enumeration::UnitType unitData) {
     if (checkCanPay(unitData)) {
-        Unit *newUnit = new Unit(std::rand(), unitLayer, Vector3<float>(), this -> teamManager, unitData, this -> raceType);
+        Unit *newUnit = new Unit(std::rand(), unitLayer, L"media/buildingModels/escuela.obj", Vector3<float>(), this -> teamManager, unitData, this -> raceType);
         newUnit -> getModel() -> setActive(false);
         this -> inHallTroops -> push_back(newUnit);
         return true;

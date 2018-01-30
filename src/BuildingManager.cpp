@@ -185,8 +185,8 @@ void BuildingManager::setTempBuildingModel(Vector3<float> pos, Enumeration::Buil
 	} else if (_type == Enumeration::BuildingType::Tower) {
 		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/torre_vigilancia.obj", _type, pos, _team);
 		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
-	} else
-		tempBuilding = new Building(0, buildingLayer, _type, pos, _team);
+	} //else
+		//tempBuilding = new Building(0, buildingLayer, _type, pos, _team);
 }
 
 std::map<int, Building*>* BuildingManager::getBuildings() {
