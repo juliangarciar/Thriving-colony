@@ -9,18 +9,49 @@
 #include <IOEngine/Mouse.h>
 #include "Enumeration.h"
 
+/**
+ * @class CameraController
+ * @brief Crea un objeto tipo CameraController
+ */
 class CameraController {
     
     public:
-        CameraController(Terrain *t);
+        /**
+		 * @brief Constructor
+         * @param terrain para calcular la altura del terreno
+		 */
+        CameraController(Terrain *);
+        /**
+		 * @brief Destructor
+		 */
         ~CameraController();
 
-        void Update(float deltaTime);
+        /**
+		 * @brief Actualiza CameraController
+         * @param deltaTime para la interpolacion
+		 */
+        void Update(float);
 
-        void Move(Mouse *cursor);
-        void RotateAndInclinate(Mouse *cursor);
-        void Zoom(Mouse *cursor);
+        /**
+		 * @brief Mueve la camara
+         * @param cursor de tipo mouse, para moverla segun la posicion de este
+		 */
+        void Move(Mouse *);
+        /**
+		 * @brief Rota e inclina la camara
+         * @param cursor de tipo mouse, para rotarla e inclinarla segun la posicion de este
+		 */
+        void RotateAndInclinate(Mouse *);
+        /**
+		 * @brief Hace zoom a la camara
+         * @param cursor de tipo mouse, para hacerle zoom a la camara segun la posicion de este
+		 */
+        void Zoom(Mouse *);
 
+        /**
+		 * @brief devuelve la camara activa
+         * @return camara de tipo Camera
+		 */
         Camera *getCamera();
         
     private:
