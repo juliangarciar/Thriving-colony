@@ -122,7 +122,7 @@ Keyboard *Game::getKeyboard(){
     return keyboard;
 }
 
-Mouse *Game::getCursor() {
+Mouse *Game::getMouse() {
     return cursor;
 }
 

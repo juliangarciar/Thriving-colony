@@ -4,6 +4,7 @@
 #include <irrlicht.h>
 #include "SceneNode.h"
 #include "Material.h"
+#include "Box3D.h"
 
 using namespace irr;
 
@@ -19,9 +20,11 @@ class Model {
         void setActive(bool a);
         void setMaterial(Material *m);
         void setPosition(Vector3<float> pos);
+        void setScale(Vector3<float> s);
 
-        Vector3<float> getPosition();
         int getID();
+        Vector3<float> getPosition();
+        Box3D<float> getBoundingBox();
 		scene::IMeshSceneNode *getModel();
         
     private:

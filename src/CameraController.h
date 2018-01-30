@@ -12,20 +12,18 @@
 class CameraController {
     
     public:
-        CameraController(Terrain *t);
+        CameraController();
         ~CameraController();
 
         void Update(float deltaTime);
 
-        void Move(Mouse *cursor);
-        void RotateAndInclinate(Mouse *cursor);
-        void Zoom(Mouse *cursor);
+        void Move();
+        void RotateAndInclinate();
+        void Zoom();
 
         Camera *getCamera();
         
     private:
-        //Helpers
-        Terrain *terrain;
         //Camera
         Camera *camera;
         //Camera modes

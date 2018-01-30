@@ -58,7 +58,10 @@ class Game {
 		 * @brief Metodo que hace algo
 		 */
         Keyboard *getKeyboard();
-        Mouse *getCursor();
+        /**
+		 * @brief Metodo que hace algo
+		 */
+        Mouse *getMouse();
         /**
 		 * @brief Metodo que hace algo
 		 */

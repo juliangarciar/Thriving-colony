@@ -27,7 +27,7 @@ Mouse::Mouse(){
     glfwSetScrollCallback(window,
         [](GLFWwindow *w, double x, double y) {
             Window::Instance() -> getGUIEnvironment() -> scrollCallbackEvent(x, y);
-            Mouse *s = Game::Instance() -> getCursor();
+            Mouse *s = Game::Instance() -> getMouse();
             s -> wheel.x = x;
             s -> wheel.y = y;
        }
@@ -36,7 +36,7 @@ Mouse::Mouse(){
     glfwSetMouseButtonCallback(window,
         [](GLFWwindow *w, int button, int action, int modifiers) {
             Window::Instance() -> getGUIEnvironment() -> mouseButtonCallbackEvent(button, action, modifiers);
-            Mouse *s = Game::Instance() -> getCursor();
+            Mouse *s = Game::Instance() -> getMouse();
             if (action == GLFW_PRESS) {
                 s -> mouseButtonState[button] = Enumeration::PRESSED;
             } else if (action == GLFW_RELEASE) {
@@ -52,6 +52,7 @@ Mouse::~Mouse(){
 }
 
 void Mouse::refreshStates(){
+    // Reset pressed
     for (int i = 0; i < GLFW_MOUSE_BUTTON_LAST;i++){
         if (mouseButtonState[i] == Enumeration::PRESSED) {
             mouseButtonState[i] = Enumeration::DOWN; // Set to Pressed
@@ -59,6 +60,10 @@ void Mouse::refreshStates(){
             mouseButtonState[i] = Enumeration::UP; // Set to Pressed
         }
     }
+
+    //Reset scroll
+    wheel.x = 0;
+    wheel.y = 0;
 }
 
 // Left button
@@ -204,7 +209,7 @@ Vector2<int> Mouse::getPosition() {
     return position;
 }
 
-GLFWcursor *Mouse::getCursor(){
+GLFWcursor *Mouse::getMouse(){
     return cursor;
 }
 

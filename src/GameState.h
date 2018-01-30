@@ -29,7 +29,7 @@ class GameState : public State {
         void render();
         void cleanUp();
 
-        Terrain* getMap();
+        Terrain* getTerrain();
         Hud* getHud();
         BattleManager* getBattleManager();
         
