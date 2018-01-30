@@ -105,7 +105,7 @@ void BuildingManager::drawBuilding(Terrain *terrain) {
 			* If there is no collision and the player press left button of the mouse,
 			* build the building
 			*/
-			if (g -> getCursor() -> leftMousePressed()) {
+			if (g -> getCursor() -> leftMouseDown()) {
 				buildingMode = false;
 				buildBuilding(Vector3<float>(x, y, z), (Enumeration::BuildingType)tempBuilding -> getType(), Enumeration::Team::Human);
 			}
