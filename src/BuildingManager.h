@@ -37,6 +37,9 @@ class BuildingManager {
 		void buildInitialBuilding();
 		
 		SceneNode* getBuildingLayer();
+
+		void deleteBuilding(int);
+
 	private:
 		SceneNode *buildingLayer;
 		SceneNode *currentCollision;

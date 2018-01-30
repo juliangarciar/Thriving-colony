@@ -19,12 +19,14 @@ class Entity {
         virtual ~Entity();
 
         int getHP();
+        int getID();
         void takeDamage(int);
         void die();
 
         void setPosition(Vector3<float> vectorData);
 
         Enumeration::Team getTeam();
+        Enumeration::EntityType getEntityType();
         Vector3<float> *getPosition();
         Box3D<float> *getHitbox();
         Model *getModel();
@@ -61,6 +63,7 @@ class Entity {
         int attackRange;
         
         Enumeration::Team team;
+        Enumeration::EntityType entityType;
 
         float tookDamageTimer;
         float tookDamageCountdown;

@@ -149,11 +149,8 @@ void UnitManager::deployAllTroops(Vector3<float> vectorData) {
         this -> inHallTroops -> erase(inHallTroops -> begin() + i);
         this -> inMapTroops -> insert(std::pair<int, Unit*>(u -> getModel() -> getID(), u));
 
-
         u -> setTroopPosition(vectorData);
-
         u -> switchState(Enumeration::UnitState::AttackMove);
-
         u -> setTroopDestination(vectorData);
         u -> getModel() -> setActive(true);
         u -> setRetracted(false);
@@ -297,4 +294,8 @@ std::vector<Unit*> * UnitManager::getInHallTroops() {
 
 Unit* UnitManager::getSelectedTroop() {
     return selectedTroop;
+}
+
+void UnitManager::deleteUnit (int id) {
+    inMapTroops -> erase(id);
 }

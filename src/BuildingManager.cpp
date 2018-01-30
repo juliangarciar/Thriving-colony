@@ -296,3 +296,6 @@ SceneNode* BuildingManager::getBuildingLayer() {
 	return buildingLayer;
 }
 
+void BuildingManager::deleteBuilding(int id) {
+	buildings -> erase(id);
+} 

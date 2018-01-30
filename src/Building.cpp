@@ -11,6 +11,8 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
     this -> metalCost = 0;
     this -> crystalCost = 0;
 
+    this -> entityType = Enumeration::EntityType::Building;
+
     buildTimer = 0;
     buildCountdown = 0;
 

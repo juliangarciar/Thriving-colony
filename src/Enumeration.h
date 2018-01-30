@@ -217,6 +217,11 @@ class Enumeration {
             VeryUnhappy
         };
 
+        enum EntityType {
+            Building,
+            Unit
+        };
+
     private:
         
 };

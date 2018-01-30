@@ -19,6 +19,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
     this -> vectorMov = new Vector3<float>();
     //Team defined by the constructor parameter
     this -> team = teamData;
+    this -> entityType = Enumeration::EntityType::Unit;
     //Defining model position
     this -> model -> getModel() -> setPosition(vectorData.getVectorF());
     //This should be put in the switch
@@ -297,8 +298,6 @@ Unit::~Unit() {
     delete vectorMov;
 }
 
-
-
 Entity* Unit::getTarget() {
     return target;
 }
@@ -325,7 +324,6 @@ void Unit::moveTroop() {
         }
     }
 }
-
 
 void Unit::updateTroop() {
     changeRedTint();
@@ -488,6 +486,22 @@ void Unit::attack() {
         if (attackCountdown <= 0) {
             target -> takeDamage(attackDamage);
             attackCountdown = attackSpeed;
+            if (target -> getHP() <= 0) {
+                if (team == Enumeration::Team::Human) {
+                    if (target -> getEntityType() == Enumeration::EntityType::Unit) {
+                        IA::getInstance() -> getUnitManager() -> deleteUnit(target -> getID());
+                    } else {
+                        IA::getInstance() -> getBuildingManager() -> deleteBuilding(target -> getID());
+                    }
+                } else {
+                    if (target -> getEntityType() == Enumeration::EntityType::Unit) {
+                        Human::getInstance() -> getUnitManager() -> deleteUnit(target -> getID());
+                    } else {
+                        Human::getInstance() -> getBuildingManager() -> deleteBuilding(target -> getID());
+                    }
+                }
+                target = NULL;
+            }
         }
     }
 }

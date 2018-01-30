@@ -54,6 +54,8 @@ class UnitManager{
         void moveOrder(Terrain *terrain);                        //Order for selected troop
         void startBattle(int enemyID);
 
+        void deleteUnit(int);
+
         bool isSolvent(int, int, Enumeration::Team);
         bool checkCanPay(Enumeration::UnitType);
 
