@@ -180,7 +180,8 @@ class Enumeration {
             Move,
             AttackMove,
             Attack,
-            Chase
+            Chase,
+            Retract
         };
 
         enum IAChoices {

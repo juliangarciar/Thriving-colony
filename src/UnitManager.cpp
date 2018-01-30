@@ -56,7 +56,7 @@ int UnitManager::getTotalTroops() {
 void UnitManager::updateUnitManager() {
     for (std::map<int,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
         it -> second -> updateTroop();
-        if (it -> second -> getMoving() == false && it -> second -> getRetracted() == true) {
+        if (it -> second -> getReadyToEnter()) {
             it -> second -> getModel() -> setActive(false);
             inHallTroops -> push_back(it -> second);
             inMapTroops -> erase(it);
@@ -163,7 +163,7 @@ void UnitManager::deployAllTroops(Vector3<float> vectorData) {
 void UnitManager::retractAllTroops(Vector3<float> vectorData) {
     for (std::map<int,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
         Unit *u = it -> second;
-        u -> switchState(Enumeration::UnitState::Move);
+        u -> switchState(Enumeration::UnitState::Retract);
         u -> setTroopDestination(vectorData);
         u -> setRetracted(true);
     }

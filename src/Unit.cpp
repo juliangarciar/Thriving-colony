@@ -32,6 +32,8 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
     this -> lookForTargetTimer = 0.5;
     this -> lookForTargetCountdown = lookForTargetTimer;
     this -> attackCountdown = 0;
+
+    this -> readyToEnter = false;
     switch (unitType)
     {
     //Basic stats of each unit are here
@@ -316,6 +318,10 @@ void Unit::moveTroop() {
         // close to destination, stop
         if (std::abs(vectorDes -> x - position -> x) < 5.0 && std::abs(vectorDes -> z - position -> z) < 5.0) {
             moving = false;
+            if (state == Enumeration::UnitState::Retract) {
+                readyToEnter = true;
+                return;
+            }
             switchState(Enumeration::Idle);
         } else {
             // far from destination, move
@@ -352,6 +358,10 @@ void Unit::updateTroop() {
             case Enumeration::UnitState::Chase:
             Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 255, 255, 255));
                 chaseState();
+                break;
+            case Enumeration::UnitState::Retract:
+            Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 127, 127, 127));
+                retractState();
                 break;
         }
     } else {
@@ -519,4 +529,12 @@ void Unit::chaseTarget() {
             this -> setTroopPosition(newPos);
         }
     }
+}
+
+void Unit::retractState() {
+    moveTroop();
+}
+
+bool Unit::getReadyToEnter() {
+    return readyToEnter;
 }

@@ -62,8 +62,11 @@ class Unit : public Entity {
         void attackMoveState();
         void attackState();
         void chaseState();
+        void retractState();
         
         bool refreshTarget();
+
+        bool getReadyToEnter();
         
     private:
         Enumeration::UnitState state;
@@ -103,6 +106,7 @@ class Unit : public Entity {
         string moveEvent;
         string selectEvent;
         
+        bool readyToEnter;
 };
 
 #endif
