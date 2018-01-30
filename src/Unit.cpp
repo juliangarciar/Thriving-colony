@@ -272,8 +272,9 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             crystalCost = Enumeration::UnitCost::RamCrystalCost;
         }
         break;
-    }
-
+    }/*
+    attackSpeed = 0;
+    moveSpeed *= 2;*/
     //Graphic engine, this should be in the switch (when models done)
     //this -> modelLayer = new SceneNode();
     Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(125, 125, 0, 125));
@@ -501,6 +502,7 @@ void Unit::attack() {
                     }
                 }
                 target = NULL;
+                Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
             }
         }
     }
