@@ -66,35 +66,42 @@ class BuildingManager {
 		void buildBuilding(Vector3<float>, Enumeration::BuildingType, Enumeration::Team);
 
 		/**
-		 * @brief Solicita los edificios del mapa
-		 * @return 
+		 * @brief Comprueba si el jugador tiene recursos necesarios para comprar el edificio
+		 * @param metal es el coste de metal del edificio
+		 * @param cristal es el coste de cristal del edificio
+		 * @param team es el equipo al que pertenecera el edificio
+		 * @return true si es solvente y false, en caso contrario
 		 */
 		bool isSolvent(int, int, Enumeration::Team);
 		/**
-		 * @brief Solicita los edificios del mapa
+		 * @brief Registra el tipo de edifio que se quiere construir y 
+		 * maneja las llamadas al metodo isSolvent(), enviandole su precio.
+		 * @param buildingType especificando el tipo de edicio a construir
+		 * @return true si isSolvent()==true y false si !isSolvent()
 		 */
 		bool checkCanPay(Enumeration::BuildingType);
 
 		/**
-		 * @brief Solicita los edificios del mapa
+		 * @brief Actualiza el manejador de edificios
 		 */
 		void updateBuildingManager();
 		/**
-		 * @brief Solicita los edificios del mapa
+		 * @brief Comprueba si un edificio ha termiando de construirse o no
+		 * @return true en caso de que este terminado y false, en caso contrario
 		 */
 		bool checkFinished(int);
 
 		/**
-		 * @brief Solicita los edificios del mapa
+		 * @brief Asigna, al edificio que se esta construyendo, el modelo 3D asociado
+		 * @param coordenadas donde colocar el modelo 3D
+		 * @param buildingType es el tipo de edificio que se construye
+		 * @param team es el equipo al que pertece el edificio
 		 */
 		void setTempBuildingModel(Vector3<float>, Enumeration::BuildingType, Enumeration::Team);
-		/**
-		 * @brief Solicita los edificios del mapa
-		 */
-		void buildInitialBuilding();
 		
 		/**
-		 * @brief Solicita los edificios del mapa
+		 * @brief Solicita la capa en la que esta edificio
+		 * @return layer de tipo SceneNode
 		 */
 		SceneNode* getBuildingLayer();
 	private:
