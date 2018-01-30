@@ -65,7 +65,7 @@ class Game {
 		 * @brief Devuelve las coordenadas del raton
          * @return Devuelve un objeto tipo getCursor
 		 */
-        Mouse *getCursor();
+        Mouse *getMouse();
          /**
 		 * @brief Devuelve el evento actual
          * @return Devuelve un objeto tipo EventSystem

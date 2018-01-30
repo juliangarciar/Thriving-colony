@@ -13,6 +13,7 @@
 #include <IAEngine/RootNode.h>
 
 #include <GraphicEngine/Terrain.h>
+#include <GraphicEngine/Light.h>
 
 #include <SoundEngine/SoundSystem.h>
 
@@ -56,7 +57,7 @@ class GameState : public State {
         * @brief Devuelve el mapa
         * @return objeto de tipo Terrain
         */
-        Terrain* getMap();
+        Terrain* getTerrain();
          /**
         * @brief Devuelve la interfaz
         * @return objeto de tipo Hud
@@ -69,6 +70,7 @@ class GameState : public State {
         BattleManager* getBattleManager();
         
     private:
+        Light *light;
         CameraController *camera;
         Terrain *map;
         Hud * hud;

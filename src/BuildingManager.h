@@ -105,17 +105,15 @@ class BuildingManager {
 		 */
 		SceneNode* getBuildingLayer();
 	private:
+		int id;
+        int gridAlignment;
+        bool buildingMode;
+		
 		SceneNode *buildingLayer;
 		SceneNode *currentCollision;
-		//std::vector< Box3D<float> > *buildings;
-		//std::vector<Building*> *buildings;
 		std::map<int, Building*> *buildings;
-        bool buildingMode;
-        int gridAlignment;
 
-		//ToDo: no se yo esto...
 		Building *tempBuilding;
-		int id;
 };
 
 #endif

@@ -17,46 +17,43 @@ class CameraController {
     
     public:
         /**
-		 * @brief Constructor
-         * @param terrain para calcular la altura del terreno
-		 */
-        CameraController(Terrain *);
+	* @brief Constructor
+	*/
+        CameraController();
         /**
-		 * @brief Destructor
-		 */
+	* @brief Destructor
+	*/
         ~CameraController();
 
         /**
-		 * @brief Actualiza CameraController
-         * @param deltaTime para la interpolacion
-		 */
+	* @brief Actualiza CameraController
+        * @param deltaTime para la interpolacion
+	*/
         void Update(float);
 
         /**
-		 * @brief Mueve la camara
+	 * @brief Mueve la camara
          * @param cursor de tipo mouse, para moverla segun la posicion de este
-		 */
-        void Move(Mouse *);
+	 */
+        void Move();
         /**
-		 * @brief Rota e inclina la camara
+	 * @brief Rota e inclina la camara
          * @param cursor de tipo mouse, para rotarla e inclinarla segun la posicion de este
-		 */
-        void RotateAndInclinate(Mouse *);
+	 */
+        void RotateAndInclinate();
         /**
-		 * @brief Hace zoom a la camara
+	 * @brief Hace zoom a la camara
          * @param cursor de tipo mouse, para hacerle zoom a la camara segun la posicion de este
-		 */
-        void Zoom(Mouse *);
+	 */
+        void Zoom();
 
         /**
-		 * @brief devuelve la camara activa
+	 * @brief devuelve la camara activa
          * @return camara de tipo Camera
-		 */
+	 */
         Camera *getCamera();
         
     private:
-        //Helpers
-        Terrain *terrain;
         //Camera
         Camera *camera;
         //Camera modes
@@ -89,7 +86,6 @@ class CameraController {
         float camHeight, currentHeight;
 
         //ToDo: Esto no va aqui
-        int mapMarginLeft, mapMarginRight, mapMarginTop, mapMarginBottom; //
-        Vector2<int> screenCenter; //
+        Vector2<int> screenCenter;
 };
 #endif
