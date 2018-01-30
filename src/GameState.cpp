@@ -2,14 +2,8 @@
 #include "Game.h"
 
 GameState::GameState() : State() {
-    map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
-    camera = new CameraController(map);
 
     gamePaused = false;
-    battleManager = new BattleManager();
-    
-    hud = new Hud();
-    Window::Instance() -> setGUI();
 
     prevWindowWidth = 1280;
     prevWindowHeight = 720;
@@ -23,6 +17,16 @@ GameState::~GameState() {
 }
 
 void GameState::init() {
+    light = new Light(Vector3<float>(8000, 4000, 8000)), 1000);
+
+    map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
+
+    camera = new CameraController(map);
+    battleManager = new BattleManager();
+    
+    hud = new Hud();
+    Window::Instance() -> setGUI();
+
     //Set map texture
     map -> setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
 

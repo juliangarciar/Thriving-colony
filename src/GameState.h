@@ -13,6 +13,7 @@
 #include <IAEngine/RootNode.h>
 
 #include <GraphicEngine/Terrain.h>
+#include <GraphicEngine/Light.h>
 
 #include <SoundEngine/SoundSystem.h>
 
@@ -33,6 +34,7 @@ class GameState : public State {
         BattleManager* getBattleManager();
         
     private:
+        Light *light;
         CameraController *camera;
         Terrain *map;
         Hud * hud;
