@@ -52,7 +52,6 @@ void Model::setActive(bool a) {
 
 void Model::setMaterial(Material *m){
     meshNode->getMaterial(0) = *m->getMaterial();
-    //meshNode -> setMaterialFlag(video::EMF_LIGHTING, false);
 }
 
 Vector3<float> Model::getPosition() {

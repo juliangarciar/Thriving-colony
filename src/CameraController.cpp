@@ -20,7 +20,7 @@ CameraController::CameraController(Terrain *t) {
 
 	// Cam zoom initializations
 	camHeight = 750.0f;
-	minZoom = 500;
+	minZoom = 200;
 	maxZoom = 1000;
     zoomMode = false;
 
@@ -36,8 +36,8 @@ CameraController::CameraController(Terrain *t) {
 	//ToDo: esto no va aqui
 	mapMarginTop = 1500;
 	mapMarginLeft = 1500;
-	mapMarginBottom = 8000;
-	mapMarginRight = 8000;
+	mapMarginBottom = 8500;
+	mapMarginRight = 8500;
     screenCenter = Vector2<int>(1280/2, 720/2);
 
 	int posX = HUMAN_CITY_HALL_X;

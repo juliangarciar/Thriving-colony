@@ -19,9 +19,10 @@ Building::Building(int id, SceneNode *parent, const wchar_t *path, Enumeration::
 
     Init();
 
-    Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
+
+    /*Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
         this -> model -> getModel() -> getMesh(), baseColor
-    ); //ToDo: esto es fachada 
+    ); //ToDo: esto es fachada */
 
     this -> setPosition(vectorData);
     this -> hitbox -> set(this -> model -> getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
@@ -275,6 +276,9 @@ void Building::Init() {
         this -> currentColor = video::SColor(255, 0, 0, 0);
         this -> finished = false;
     }
+    //Texture *tex = new Texture("./media/blanco.bmp");
+    //Material *m = new Material(tex);
+    //this->model->setMaterial(m);
 }
 
 // This update is called once every second

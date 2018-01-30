@@ -17,18 +17,23 @@ GameState::~GameState() {
 }
 
 void GameState::init() {
-    light = new Light(Vector3<float>(8000, 4000, 8000), 1000);
+    //ToDo: Quizas la luz, la camara, etc... deberian ir en una cpase Map
+    light = new Light(Vector3<float>(8000, 4000, 8000), 10000);
 
-    map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
-
-    camera = new CameraController(map);
-    battleManager = new BattleManager();
-    
-    hud = new Hud();
-    Window::Instance() -> setGUI();
-
+    //Create map
+    map = new Terrain("media/mapa3-256x256.bmp");
     //Set map texture
-    map -> setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg")); //ToDo: mover a map
+    map -> setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg"));
+
+    //Init camera controller
+    camera = new CameraController(map);
+
+    //Init battle manager
+    battleManager = new BattleManager();
+
+    //Init SoundSystem
+    hud = new Hud();
+    SoundSystem::Instance() -> initSystem();
 
     // Build the main building of IA
     Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();
@@ -53,9 +58,8 @@ void GameState::init() {
     Human::getInstance() -> getUnitManager() -> createTroop(unitData);
     Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsHuman);
 
-    //SoundSystem init
-    SoundSystem::Instance() -> initSystem();
-
+    //Init HUD
+    Window::Instance() -> setGUI();
     hud -> setHUDEvents();
 }
 
