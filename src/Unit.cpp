@@ -336,36 +336,32 @@ void Unit::moveTroop() {
 void Unit::updateTroop() {
     changeRedTint();
     attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
-    if (retracted == false) {
-        //State machine, color changes according to state
-        switch (state) {
-            case Enumeration::UnitState::Idle:
-                Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 0, 255, 255));
-                idleState();
-                break;
-            case Enumeration::UnitState::Move:
-            Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 255, 0, 255));
-                moveState();
-                break;
-            case Enumeration::UnitState::AttackMove:
-            Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 255, 255, 0));
-                attackMoveState();
-                break;
-            case Enumeration::UnitState::Attack:
-            Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 0, 0, 0));
-                attackState();
-                break;    
-            case Enumeration::UnitState::Chase:
-            Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 255, 255, 255));
-                chaseState();
-                break;
-            case Enumeration::UnitState::Retract:
-            Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 127, 127, 127));
-                retractState();
-                break;
-        }
-    } else {
-        // REtract
+    //State machine, color changes according to state
+    switch (state) {
+        case Enumeration::UnitState::Idle:
+            Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 0, 255, 255));
+            idleState();
+            break;
+        case Enumeration::UnitState::Move:
+        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 255, 0, 255));
+            moveState();
+            break;
+        case Enumeration::UnitState::AttackMove:
+        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 255, 255, 0));
+            attackMoveState();
+            break;
+        case Enumeration::UnitState::Attack:
+        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 0, 0, 0));
+            attackState();
+            break;    
+        case Enumeration::UnitState::Chase:
+        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 255, 255, 255));
+            chaseState();
+            break;
+        case Enumeration::UnitState::Retract:
+        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 127, 127, 127));
+            retractState();
+            break;
     }
 }
 
