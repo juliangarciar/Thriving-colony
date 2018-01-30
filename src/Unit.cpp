@@ -402,9 +402,9 @@ void Unit::taxPlayer(Enumeration::Team teamData) {
 bool Unit::inRangeOfAttack() {
     bool inRange = false;
     if (target != NULL) {
-    float xaux = target -> getPosition() -> x - position -> x;
-    float yaux = target -> getPosition() -> y - position -> y;
-    float dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
+        float xaux = target -> getPosition() -> x - position -> x;
+        float yaux = target -> getPosition() -> y - position -> y;
+        float dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
         if (dist <= attackRange) {
             inRange = true;
         }

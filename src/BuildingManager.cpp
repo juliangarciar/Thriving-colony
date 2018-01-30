@@ -122,9 +122,11 @@ void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingTyp
 		} else {
 			buildings -> insert(std::pair<int,Building*>(id, new Building(0, buildingLayer, _type, pos, _team)));
 		}*/
+		tempBuilding -> setID(id);
 		buildings -> insert(std::pair<int,Building*>(id, tempBuilding));
 		tempBuilding = NULL;
 		id++;
+		std::cout<<id<<std::endl;
 	} else {
 		if (tempBuilding == NULL) {
 			//tempBuilding = new Building(id, buildingLayer, _type, pos, _team);
@@ -136,6 +138,7 @@ void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingTyp
 
 		
 		}
+		tempBuilding -> setID(id);
 		tempBuilding -> getModel() -> setID(id);
 		buildings -> insert(std::pair<int,Building*>(id, tempBuilding));
 
@@ -295,5 +298,6 @@ SceneNode* BuildingManager::getBuildingLayer() {
 }
 
 void BuildingManager::deleteBuilding(int id) {
+	delete buildings -> find(id) -> second;
 	buildings -> erase(id);
 } 

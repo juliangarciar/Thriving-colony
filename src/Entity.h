@@ -20,6 +20,7 @@ class Entity {
 
         int getHP();
         int getID();
+        void setID(int);
         void takeDamage(int);
         void die();
 

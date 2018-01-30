@@ -32,6 +32,10 @@ int Entity::getHP() {
     return hp;
 }
 
+void Entity::setID(int newId) {
+    ID = newId;
+}
+
 /*
 * Decreases Hp
 * dmg = quantity of hp to drecrease
