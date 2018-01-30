@@ -18,7 +18,7 @@ Player::Player() {
     metalAmount = 1200;
     crystalAmount = 0;
 
-    citizens = 0;
+    citizens = 20;
 
     armySize = 0;
     meleeAmount = 0;
