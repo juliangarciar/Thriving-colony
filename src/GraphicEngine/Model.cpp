@@ -3,44 +3,10 @@
 
 using namespace irr;
 
-//ToDo: temp
-Model::Model(int id, int size) {
-    scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
-    meshNode = smgr -> addCubeSceneNode(size);
-    meshNode -> setID(id);
-
-    meshNode -> setMaterialFlag(video::EMF_LIGHTING, false);
-    
-    selector = smgr -> createTriangleSelectorFromBoundingBox(meshNode);
-    if (selector) {
-        meshNode -> setTriangleSelector(selector);
-        selector -> drop(); // We're done with this selector, so drop it now.
-    }
-}
-
-//ToDo: temp
-Model::Model(SceneNode *parent, int id, int size) {
-    scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
-    meshNode = smgr -> addCubeSceneNode(size);
-    meshNode -> setID(id);
-
-    meshNode -> setMaterialFlag(video::EMF_LIGHTING, false);
-
-    selector = smgr -> createTriangleSelectorFromBoundingBox(meshNode);
-    if (selector) {
-        meshNode -> setTriangleSelector(selector);
-        selector -> drop(); // We're done with this selector, so drop it now.
-    }
-
-    parent -> getSceneNode() -> addChild(meshNode);
-}
-
 Model::Model(int id, const wchar_t *path) {
     scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
     meshNode = smgr -> addMeshSceneNode(smgr -> getMesh(path));
     meshNode -> setID(id);
-
-    meshNode -> setMaterialFlag(video::EMF_LIGHTING, false);
     
     selector = smgr -> createTriangleSelectorFromBoundingBox(meshNode);
     if (selector) {
@@ -53,8 +19,6 @@ Model::Model(SceneNode *parent, int id, const wchar_t *path) {
     scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
     meshNode = smgr -> addMeshSceneNode(smgr -> getMesh(path));
     meshNode -> setID(id);
-
-    meshNode -> setMaterialFlag(video::EMF_LIGHTING, false);
 
     selector = smgr -> createTriangleSelectorFromBoundingBox(meshNode);
     if (selector) {
@@ -84,6 +48,11 @@ void Model::setPosition(Vector3<float> pos) {
 
 void Model::setActive(bool a) {
     meshNode -> setVisible(a);
+}
+
+void Model::setMaterial(Material *m){
+    meshNode->getMaterial(0) = *m->getMaterial();
+    //meshNode -> setMaterialFlag(video::EMF_LIGHTING, false);
 }
 
 Vector3<float> Model::getPosition() {

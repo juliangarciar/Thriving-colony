@@ -17,7 +17,7 @@ GameState::~GameState() {
 }
 
 void GameState::init() {
-    light = new Light(Vector3<float>(8000, 4000, 8000)), 1000);
+    light = new Light(Vector3<float>(8000, 4000, 8000), 1000);
 
     map = new Terrain("media/mapa3-256x256.bmp"); //ToDo: mover a map
 

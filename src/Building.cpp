@@ -3,37 +3,6 @@
 #include "Human.h"
 #include "Game.h"
 
-Building::Building(int id, SceneNode *parent, Enumeration::BuildingType buildingType, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(parent, id, 100)
-{
-    this -> happiness = 0;
-    this -> cityLevel = 0;
-
-    this -> metalCost = 0;
-    this -> crystalCost = 0;
-
-    buildTimer = 0;
-    buildCountdown = 0;
-
-    this -> type = (int)buildingType;
-    this -> team = teamData;
-
-    this -> tookDamageTimer = 0.1;
-    Init();
-
-    Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
-        this -> model -> getModel() -> getMesh(), baseColor
-    ); //ToDo: esto es fachada 
-
-    this -> setPosition(vectorData);
-    this -> hitbox -> set(this -> model -> getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
-
-    // Tax the IA the moment it builds the building
-    // The player should be taxed when actually building the building
-    if (teamData == Enumeration::Team::IA) {
-        taxPlayer(teamData);
-    }
-}
-
 Building::Building(int id, SceneNode *parent, const wchar_t *path, Enumeration::BuildingType buildingType, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(parent, id, path)
 {
     this -> happiness = 0;
