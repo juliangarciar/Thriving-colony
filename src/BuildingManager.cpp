@@ -126,7 +126,6 @@ void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingTyp
 		buildings -> insert(std::pair<int,Building*>(id, tempBuilding));
 		tempBuilding = NULL;
 		id++;
-		std::cout<<id<<std::endl;
 	} else {
 		if (tempBuilding == NULL) {
 			//tempBuilding = new Building(id, buildingLayer, _type, pos, _team);

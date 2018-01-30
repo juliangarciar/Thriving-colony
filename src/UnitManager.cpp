@@ -71,12 +71,12 @@ void UnitManager::updateUnitManager() {
 //unitData.unitClass = Enumeration::UnitType::Class::Ranged; 
 //unitData.unitSubClass = Enumeration::UnitType::SubClass::Idol;
 bool UnitManager::createTroop(Enumeration::UnitType unitData) {
-    //if (checkCanPay(unitData)) {
+    if (checkCanPay(unitData)) {
         Unit *newUnit = new Unit(std::rand(), unitLayer, Vector3<float>(), this -> teamManager, unitData, this -> raceType);
         newUnit -> getModel() -> setActive(false);
         this -> inHallTroops -> push_back(newUnit);
         return true;
-    //}
+    }
     return false;
 }
 

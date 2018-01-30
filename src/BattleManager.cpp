@@ -93,6 +93,4 @@ void BattleManager::askForTarget(Entity* requester) {
         }
     }
     requester -> updateTarget(target);
-    if(target!=NULL)
-    std::cout<<target->getID()<<std::endl;
 }
