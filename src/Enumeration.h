@@ -1,6 +1,10 @@
 #ifndef ENUMERATION_H
 #define ENUMERATION_H
 
+/**
+ * @class Enumeration
+ * @brief Declara las enumeraciones que van a ser necesarias
+ */
 class Enumeration {
     public:
         enum BuildingType {

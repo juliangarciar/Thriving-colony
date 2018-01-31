@@ -4,16 +4,41 @@
 #include "State.h"
 #include "HudPause.h"
 
+/**
+ * @class PauseState
+ * @brief Tiene herencia publica de State y crea un objeto tipo PauseState
+ */
 class PauseState : public State {
     
     public:
+        /**
+		 * @brief Constructor
+		 */
         PauseState();
+        /**
+		 * @brief Destructor
+		 */
         virtual ~PauseState();
 
+        /**
+		 * @brief Inicializa
+		 */
         void init();
+        /**
+		 * @brief Recoge las entradas de teclado y raton
+		 */
         void input();
+        /**
+		 * @brief Actualiza
+		 */
         void update();
+        /**
+		 * @brief Renderiza
+		 */
         void render();
+        /**
+		 * @brief Constructor
+		 */
         void cleanUp();
 
     private:

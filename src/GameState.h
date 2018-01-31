@@ -19,7 +19,7 @@
 
 /**
  * @class GameState
- * @brief Crea un objeto tipo GameState
+ * @brief Tiene herencia publica de State y crea un objeto tipo GameState
  */
 class GameState : public State {
     
