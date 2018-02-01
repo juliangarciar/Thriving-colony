@@ -75,7 +75,7 @@ void BuildingManager::drawBuilding(Terrain *terrain) {
 
 			
 		//Pressing the right mouse button cancels the building
-		if (g -> getCursor() -> rightMouseReleased()){
+		if (g -> getCursor() -> rightMouseDown()){
 			buildingMode = false;
 
 			delete tempBuilding;		
