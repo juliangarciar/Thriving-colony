@@ -46,6 +46,10 @@ void Model::setPosition(Vector3<float> pos) {
     meshNode -> setPosition(pos.getVectorF());
 }
 
+void Model::setScale(Vector3<float> s) {
+    meshNode -> setScale(s.getVectorF()); 
+}
+
 void Model::setActive(bool a) {
     meshNode -> setVisible(a);
 }
@@ -56,6 +60,9 @@ void Model::setMaterial(Material *m){
 
 Vector3<float> Model::getPosition() {
     return Vector3<float>(meshNode -> getPosition());
+}
+Box3D<float> Model::getBoundingBox() {
+    return Box3D<float>(meshNode -> getTransformedBoundingBox());
 }
 
 int Model::getID() {

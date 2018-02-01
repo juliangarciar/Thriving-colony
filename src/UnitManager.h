@@ -21,7 +21,7 @@ class UnitManager{
         Unit *selectedTroop;
 
         Enumeration::Team teamManager;
-        Enumeration::RaceType raceType;
+        Enumeration::BreedType breedType;
 
         bool isDeployingTroop;
         int currentDeployingTroop;
@@ -29,7 +29,7 @@ class UnitManager{
         int gridAlignment;
         
     public:
-        UnitManager(Enumeration::Team teamData, Enumeration::RaceType raceData);             //Constructor
+        UnitManager(Enumeration::Team teamData, Enumeration::BreedType raceData);             //Constructor
         virtual ~UnitManager();                 //Destroyer
 
         void testRaycastCollisions();

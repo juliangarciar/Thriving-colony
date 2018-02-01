@@ -31,7 +31,7 @@ void Human::init() {
     workshopBuilt = false;
     */
     buildings = new BuildingManager();
-    units = new UnitManager(Enumeration::Team::Human, Enumeration::RaceType::Drorania);
+    units = new UnitManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
 }
 
 void Human::cleanUp() {
@@ -77,7 +77,7 @@ void Human::update() {
 void Human::deployTroops() {
     Vector3<float> v = *(Human::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
     v.x = v.x + 100;
-    v.y = Game::Instance() -> getGameState() -> getMap() -> getY(v.x, v.z);
+    v.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(v.x, v.z);
     Human::getInstance() -> getUnitManager() -> deployAllTroops(v);
     deployedTroops = true;
 }

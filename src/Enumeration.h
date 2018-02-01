@@ -1,14 +1,7 @@
 #ifndef ENUMERATION_H
 #define ENUMERATION_H
 
-#define IA_CITY_HALL_X 2000
-#define IA_CITY_HALL_Z 2000
-
-#define HUMAN_CITY_HALL_X 8000
-#define HUMAN_CITY_HALL_Z 8000
-
 class Enumeration {
-    
     public:
         enum BuildingType {
             MainBuilding,
@@ -25,7 +18,7 @@ class Enumeration {
             Workshop
         };
 
-        enum RaceType {
+        enum BreedType {
             Drorania,
             Kaonov
         };
@@ -53,8 +46,8 @@ class Enumeration {
             EnableText
         }; 
 
+        //Old buttons
         enum idGUI {
-            //Old buttons
             ID0,
 
             GUI_ID_BUILD_BARN_BUTTON,
@@ -215,6 +208,23 @@ class Enumeration {
             Neutral,
             Unhappy,
             VeryUnhappy
+        };
+
+        enum IACityHall {
+            ia_x = 2000,
+            ia_z = 2000
+        };
+
+        enum HumanCityHall {
+            human_x = 8000,
+            human_z = 8000
+        };
+
+        enum MapMargins {
+            mapMarginTop = 1500,
+            mapMarginLeft = 1500,
+            mapMarginBottom = 8500,
+            mapMarginRight = 8500
         };
 
     private:

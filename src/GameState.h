@@ -17,20 +17,56 @@
 
 #include <SoundEngine/SoundSystem.h>
 
+/**
+ * @class GameState
+ * @brief Crea un objeto tipo GameState
+ */
 class GameState : public State {
     
     public:
+        /**
+		 * @brief Constructor de GameState
+		 */
         GameState();
+        /**
+		 * @brief Destructor
+		 */
         virtual ~GameState();
 
+         /**
+		 * @brief Inicializa GameState
+		 */
         void init();
+        /**
+		 * @brief Recoge las entradas de teclado y raton
+		 */
         void input();
+        /**
+		 * @brief Actualiza
+		 */
         void update();
+        /**
+		 * @brief Renderiza
+		 */
         void render();
+        /**
+		 * @brief Constructor
+		 */
         void cleanUp();
-
-        Terrain* getMap();
+        /**
+        * @brief Devuelve el mapa
+        * @return objeto de tipo Terrain
+        */
+        Terrain* getTerrain();
+         /**
+        * @brief Devuelve la interfaz
+        * @return objeto de tipo Hud
+        */
         Hud* getHud();
+         /**
+        * @brief Devuelve el manejador de batalla
+        * @return objeto de tipo BattleManager
+        */
         BattleManager* getBattleManager();
         
     private:
