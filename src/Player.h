@@ -73,6 +73,10 @@ class Player {
         void increaseMeleeAmount();
         void increaseRangeAmount();
         void increaseSiegeAmount();
+
+        void increaseBarrackAmount();
+        void increaseBarnAmount();
+        void increaseWorkshopAmount();
         
         void increaseWallAmount();
         void increaseTowerAmount();
@@ -92,6 +96,8 @@ class Player {
         void receiveMetal();
         void receiveCrystal();
         void receiveCitizens();
+
+        void decreaseBuildings(Enumeration::BuildingType);
 
     protected:
         float updateTimer;
@@ -119,6 +125,9 @@ class Player {
         bool barrackBuilt;
         bool barnBuilt;
         bool workshopBuilt;
+        int barrackAmount;
+        int barnAmount;
+        int workshopAmount;
 
         bool wallBuilt;
         int wallAmount;

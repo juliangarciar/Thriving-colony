@@ -16,7 +16,7 @@ Building::Building(int id, SceneNode *parent, Enumeration::BuildingType building
     buildTimer = 0;
     buildCountdown = 0;
 
-    this -> type = (int)buildingType;
+    this -> type = buildingType;
     this -> team = teamData;
 
     this -> tookDamageTimer = 0.1;
@@ -47,7 +47,7 @@ Building::Building(int id, SceneNode *parent, const wchar_t *path, Enumeration::
     this -> buildTimer = 0;
     this -> buildCountdown = 0;
 
-    this -> type = (int)buildingType;
+    this -> type = buildingType;
     this -> team = teamData;
 
     Init();
@@ -85,7 +85,7 @@ void Building::Init() {
 
             this -> hpMax = 1100;
             this -> hp = 1100;
-            this -> happiness = 0;
+            this -> happiness = Enumeration::HappinessProvided::AmountHappinessBarn;
             this -> cityLevel = 15;
 
             this -> buildTimer = 50;
@@ -102,7 +102,7 @@ void Building::Init() {
 
             this -> hpMax = 720;
             this -> hp = 720;
-            this -> happiness = 0;
+            this -> happiness = Enumeration::HappinessProvided::AmountHappinessBarrack;
             this -> cityLevel = 10;
             
             this -> buildTimer = 40;
@@ -119,7 +119,7 @@ void Building::Init() {
 
             this -> hpMax = 750;
             this -> hp = 750;
-            this -> happiness = 40;
+            this -> happiness = Enumeration::HappinessProvided::AmountHapppinesHospital;
             this -> cityLevel = 5;
 
             this -> buildTimer = 60;
@@ -136,7 +136,7 @@ void Building::Init() {
 
             this -> hpMax = 150;
             this -> hp = 150;
-            this -> happiness = 1;
+            this -> happiness = Enumeration::HappinessProvided::AmountHappinessHouse;
             this -> cityLevel = 5;
 
             this -> buildTimer = 25;
@@ -171,7 +171,7 @@ void Building::Init() {
 
             this -> hpMax = 600;
             this -> hp = 600;
-            this -> happiness = 30;
+            this -> happiness = Enumeration::HappinessProvided::AmountHappinessMarket;
             this -> cityLevel = 5;
 
             this -> buildTimer = 60;
@@ -188,7 +188,7 @@ void Building::Init() {
 
             this -> hpMax = 1000;
             this -> hp = 1000;
-            this -> happiness = 0;
+            this -> happiness = Enumeration::HappinessProvided::AmountHappinessQuarry;
             this -> cityLevel = 15;
 
             this -> buildTimer = 35;
@@ -205,7 +205,7 @@ void Building::Init() {
 
             this -> hpMax = 1000;
             this -> hp = 1000;
-            this -> happiness = 0;
+            this -> happiness = Enumeration::HappinessProvided::AmountHappinessSiderurgy;
             this -> cityLevel = 5;
 
             this -> buildTimer = 35;
@@ -236,7 +236,7 @@ void Building::Init() {
             
             this -> hpMax = 550;
             this -> hp = 550;
-            this -> happiness = 20;
+            this -> happiness = Enumeration::HappinessProvided::AmountHappinessSchool;
             this -> cityLevel = 5;
 
             this -> buildTimer = 35;
@@ -253,7 +253,7 @@ void Building::Init() {
 
             this -> hpMax = 500;
             this -> hp = 500;
-            this -> happiness = 1;
+            this -> happiness = Enumeration::HappinessProvided::AmountHappinessTower;
             this -> cityLevel = 5;
 
             this -> buildTimer = 50;
@@ -270,7 +270,7 @@ void Building::Init() {
 
             this -> hpMax = 200;
             this -> hp = 200;
-            this -> happiness = 1;
+            this -> happiness = Enumeration::HappinessProvided::AmountHappinessWall;
             this -> cityLevel = 1;
 
             this -> buildTimer = 10;
@@ -287,7 +287,7 @@ void Building::Init() {
 
             this -> hpMax = 800;
             this -> hp = 800;
-            this -> happiness = 0;
+            this -> happiness = Enumeration::HappinessProvided::AmountHappinessWorkshop;
             this -> cityLevel = 15;
             
             this -> buildTimer = 50;
@@ -335,7 +335,7 @@ irr::video::SColor Building::getColor() {
     return baseColor;
 }
 
-int Building::getType() { 
+Enumeration::BuildingType Building::getType() { 
     return this -> type;
 } 
 

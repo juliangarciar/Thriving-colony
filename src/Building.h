@@ -16,7 +16,7 @@ class Building : public Entity {
         virtual void taxPlayer(Enumeration::Team);
         void specialTax(Enumeration::Team);
         irr::video::SColor getColor();
-        int getType();
+        Enumeration::BuildingType getType();
         void update();
         bool getFinished();
         void setHitbox();
@@ -28,7 +28,7 @@ class Building : public Entity {
     private:
         void Init();
 
-        int type;
+        Enumeration::BuildingType type;
 
         float updateHitboxTimer = 3;
         bool updated;

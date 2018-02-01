@@ -27,6 +27,10 @@ Player::Player() {
     catapultAmount = 0;
     ramAmount = 0;
 
+    barrackAmount = 0;
+    barnAmount = 0;
+    workshopAmount = 0;
+
     wallBuilt = false;
     barrackBuilt = false;
     barnBuilt = false;
@@ -223,6 +227,18 @@ void Player::increaseBuildableRange() {
     buildableRange *= 1.5;
 }
 
+void Player::increaseBarrackAmount() {
+    barrackAmount ++;
+}
+        
+void Player::increaseBarnAmount() {
+    barnAmount ++;
+}
+
+void Player::increaseWorkshopAmount() {
+    workshopAmount ++;
+}
+
 void Player::increaseWallAmount() {
     wallAmount ++;
 }
@@ -256,4 +272,58 @@ void Player::receiveCrystal() {
 
 void Player::receiveCitizens() {
     citizens = citizens + 100;
+}
+
+void Player::decreaseBuildings(Enumeration::BuildingType buildingType) {
+    switch (buildingType) {
+        case Enumeration::BuildingType::Barn :
+            barnAmount --;
+            if (barnAmount == 0) {
+                barnBuilt = false;
+            }
+            happiness = happiness - Enumeration::HappinessProvided::AmountHappinessBarn;
+        break;
+        case Enumeration::BuildingType::Barrack :
+            barrackAmount --;
+            if (barrackAmount == 0) {
+                barrackBuilt = false;
+            }
+            happiness = happiness - Enumeration::HappinessProvided::AmountHappinessBarrack;
+        break;
+        case Enumeration::BuildingType::Hospital :
+            happiness = happiness - Enumeration::HappinessProvided::AmountHapppinesHospital;
+        break;
+        case Enumeration::BuildingType::House :
+            happiness = happiness - Enumeration::HappinessProvided::AmountHappinessHouse;
+        break;
+        case Enumeration::BuildingType::Market :
+            happiness = happiness - Enumeration::HappinessProvided::AmountHappinessMarket;
+        break;
+        case Enumeration::BuildingType::Quarry :
+            quarryAmount --;
+            happiness = happiness - Enumeration::HappinessProvided::AmountHappinessQuarry;
+        break;
+        case Enumeration::BuildingType::School :
+            happiness = happiness - Enumeration::HappinessProvided::AmountHappinessSchool;
+        break;
+        case Enumeration::BuildingType::Siderurgy :
+            siderurgyAmount --;
+            happiness = happiness - Enumeration::HappinessProvided::AmountHappinessSiderurgy;
+        break;
+        case Enumeration::BuildingType::Tower :
+            towerAmount --;
+            happiness = happiness - Enumeration::HappinessProvided::AmountHappinessTower;
+        break;
+        case Enumeration::BuildingType::Wall :
+            wallAmount --;
+            happiness = happiness - Enumeration::HappinessProvided::AmountHappinessWall;
+        break;
+        case Enumeration::BuildingType::Workshop :
+            workshopAmount --;
+            if (workshopAmount == 0) {
+                workshopBuilt = false;
+            }
+            happiness = happiness - Enumeration::HappinessProvided::AmountHappinessWorkshop;
+        break;
+    }
 }

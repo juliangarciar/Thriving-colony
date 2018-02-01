@@ -16,7 +16,7 @@ class UnitManager{
         std::vector<Unit*> *inHallTroops;
         std::map<int, Unit*> *inMapTroops;
 
-        std::vector<Unit*> *totalTroops;
+        //std::vector<Unit*> *totalTroops;
 
         Unit *selectedTroop;
 

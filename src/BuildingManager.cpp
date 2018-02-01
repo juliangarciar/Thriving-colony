@@ -289,7 +289,6 @@ bool BuildingManager::checkFinished(int _id) {
 			}
 		}
 	}
-
 }
 
 SceneNode* BuildingManager::getBuildingLayer() {
@@ -297,6 +296,11 @@ SceneNode* BuildingManager::getBuildingLayer() {
 }
 
 void BuildingManager::deleteBuilding(int id) {
+	if (buildings -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
+		Human::getInstance() -> decreaseBuildings(buildings -> find(id) -> second -> getType());
+	} else {
+		IA::getInstance() -> decreaseBuildings(buildings -> find(id) -> second -> getType());
+	}
 	delete buildings -> find(id) -> second;
 	buildings -> erase(id);
 } 

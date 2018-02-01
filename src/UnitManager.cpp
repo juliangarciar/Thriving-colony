@@ -14,7 +14,7 @@ UnitManager::UnitManager(Enumeration::Team teamData, Enumeration::RaceType raceD
     inHallTroops = new std::vector<Unit*>();
     //inMapTroops = new std::vector<Unit*>();
     inMapTroops = new std::map<int, Unit*>();
-    totalTroops = new std::vector<Unit*>();
+    //totalTroops = new std::vector<Unit*>();
 
     isDeployingTroop = false;
     currentDeployingTroop = -1;
@@ -43,8 +43,8 @@ UnitManager::~UnitManager() {
     inMapTroops -> clear();
     delete inMapTroops;
 
-    totalTroops -> clear();
-    delete totalTroops;
+    //totalTroops -> clear();
+    //delete totalTroops;
 
     delete unitLayer;
 }
@@ -124,7 +124,7 @@ void UnitManager::deployTroop(Terrain *terrain) {
         Unit *temp = inHallTroops -> at(currentDeployingTroop);
 
         this -> inHallTroops -> erase(inHallTroops -> begin() + currentDeployingTroop);
-        this -> inMapTroops -> insert(std::pair<int, Unit*>(temp -> getModel() -> getID(), temp));
+        this -> inMapTroops -> insert(std::pair<int, Unit*>(temp -> getID(), temp));
 
         temp -> setTroopPosition(Vector3<float>(HUMAN_CITY_HALL_X, terrain -> getY(HUMAN_CITY_HALL_X, HUMAN_CITY_HALL_Z), HUMAN_CITY_HALL_Z)); //ToDo
         
@@ -147,7 +147,7 @@ void UnitManager::deployAllTroops(Vector3<float> vectorData) {
     for (int i = inHallTroops -> size() - 1; i >= 0; i--) {
         Unit *u = inHallTroops -> at(i);
         this -> inHallTroops -> erase(inHallTroops -> begin() + i);
-        this -> inMapTroops -> insert(std::pair<int, Unit*>(u -> getModel() -> getID(), u));
+        this -> inMapTroops -> insert(std::pair<int, Unit*>(u -> getID(), u));
 
         u -> setTroopPosition(vectorData);
         u -> switchState(Enumeration::UnitState::AttackMove);
@@ -252,7 +252,6 @@ bool UnitManager::checkCanPay(Enumeration::UnitType type) {
     //ESto esta aqui para no hacer clutter arriba
     bool canPay = false;
     //CHECK IF YOU CAN PAY THE BUILDING
-    
     switch (type) {
     case Enumeration::UnitType::StandardM:
         canPay = isSolvent(Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost, Enumeration::Team::Human);
@@ -296,7 +295,7 @@ Unit* UnitManager::getSelectedTroop() {
     return selectedTroop;
 }
 
-void UnitManager::deleteUnit (int id) {
+void UnitManager::deleteUnit(int id) {
     delete inMapTroops -> find(id) -> second;
     inMapTroops -> erase(id);
 }

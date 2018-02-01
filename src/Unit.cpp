@@ -491,12 +491,14 @@ void Unit::attack() {
                 if (team == Enumeration::Team::Human) {
                     if (target -> getEntityType() == Enumeration::EntityType::Unit) {
                         IA::getInstance() -> getUnitManager() -> deleteUnit(target -> getID());
+                        std::cout<<"IA: "<<IA::getInstance() -> getUnitManager() -> getInHallTroops() ->size()<<std::endl;
                     } else {
                         IA::getInstance() -> getBuildingManager() -> deleteBuilding(target -> getID());
                     }
                 } else {
                     if (target -> getEntityType() == Enumeration::EntityType::Unit) {
                         Human::getInstance() -> getUnitManager() -> deleteUnit(target -> getID());
+                        std::cout<<"Human: "<<Human::getInstance() -> getUnitManager() -> getInHallTroops() ->size()<<std::endl;
                     } else {
                         Human::getInstance() -> getBuildingManager() -> deleteBuilding(target -> getID());
                     }
@@ -508,16 +510,15 @@ void Unit::attack() {
     }
 }
 
-
 /// Chasing the target
 
 void Unit::chaseState() {
     //If I have a target, then chase it
     if (target != NULL) {
         Vector3<float> tpos = Vector3<float>(0,0,0);
-        tpos.x = target  -> getPosition() -> x;
-        tpos.y = target  -> getPosition() -> y;
-        tpos.z = target  -> getPosition() -> z;
+        tpos.x = target -> getPosition() -> x;
+        tpos.y = target -> getPosition() -> y;
+        tpos.z = target -> getPosition() -> z;
         this  -> setTroopDestination(tpos);
         chaseTarget();    
     }
