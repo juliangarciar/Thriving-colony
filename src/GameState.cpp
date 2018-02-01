@@ -84,7 +84,7 @@ void GameState::input() {
         if (!Human::getInstance() -> getUnitManager() -> isTroopSelected())
             Game::Instance() -> getMouse() -> changeIcon(CURSOR_HAND);
         
-        if (Game::Instance() -> getCursor() -> leftMouseDown()) {
+        if (Game::Instance() -> getMouse() -> leftMouseDown()) {
             // Comprobar que este terminado para enseñar el popup pero no va
             //if (Human::getInstance() -> getBuildingManager() -> checkFinished(idBuilding)) {
                 std::cout << idBuilding << std::endl;
