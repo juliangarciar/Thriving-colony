@@ -6,6 +6,10 @@
 #include "Grid.h"
 #include "NodeGrid.h"
 
+/**
+ * @class aStar
+ * @brief Crea un objeto tipo aStar
+ */
 class aStar
 {
   private:
@@ -26,9 +30,19 @@ class aStar
     std::vector<nodeGrid *> neighbors;
     std::priority_queue<nodeGrid *, std::vector<nodeGrid *>, comparePriority> frontier;
 
-  public:
+public:
+    /**
+    * @brief Constructor de aStar
+    * @param grid del mapa
+    * @param nodo inicial
+    * @param nodo final
+    */
     aStar(grid *mapData, nodeGrid *startData, nodeGrid *endData);
+    /**
+	* @brief Destructor
+	*/
     virtual ~aStar();
+    
     std::vector<nodeGrid *> startAlgoritm();
 };
 #endif /* ASTAR_H */

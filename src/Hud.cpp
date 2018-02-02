@@ -328,8 +328,9 @@ void Hud::showPopup(){
 }
 
 void Hud::showPopup(int tabId){
-    /*if (tabs -> changeActiveTab(tabId))
-        tabs -> enable();*/
+    //if (tabs -> changeActiveTab(1))
+       /* tabs -> changeActiveTab(0);
+        tabs -> show();*/
 }
 
 void Hud::hidePopup(){

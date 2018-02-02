@@ -61,6 +61,7 @@ void Game::init() {
 
 void Game::input() {
     state -> input();
+    cursor->refreshStates();
 }
 
 void Game::update() {
@@ -121,7 +122,7 @@ Keyboard *Game::getKeyboard(){
     return keyboard;
 }
 
-Mouse *Game::getCursor() {
+Mouse *Game::getMouse() {
     return cursor;
 }
 

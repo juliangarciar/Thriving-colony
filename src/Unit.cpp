@@ -4,7 +4,7 @@
 #include "IA.h"
 
 //ToDo: cambiar llamada a entity
-Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Team teamData, Enumeration::UnitType typeData, Enumeration::RaceType raceData) : Entity(layer, id, 100) {
+Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorData, Enumeration::Team teamData, Enumeration::UnitType typeData, Enumeration::BreedType raceData) : Entity(layer, id, path) {
     
     this -> viewRadius = 700;
     //Actions of the units
@@ -45,7 +45,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
      * 
      */
     case Enumeration::UnitType::StandardM:
-        if(unitRace == Enumeration::RaceType::Drorania) {
+        if(unitRace == Enumeration::BreedType::Drorania) {
             this -> moveSpeed = 420;
             this -> attackDamage = 15;
             this -> attackRange = 100;
@@ -59,7 +59,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             metalCost = Enumeration::UnitCost::MeleeFootmenMetalCost;
             crystalCost = Enumeration::UnitCost::MeleeFootmenCrystalCost;
         }
-        else if(unitRace == Enumeration::RaceType::Kaonov) {
+        else if(unitRace == Enumeration::BreedType::Kaonov) {
             this -> moveSpeed = 420;
             this -> attackDamage = 15;
             this -> attackRange = 100;
@@ -76,7 +76,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
     break;
     //Advanced melee soldier (mounted)
     case Enumeration::UnitType::AdvancedM:
-        if(unitRace == Enumeration::RaceType::Drorania) {
+        if(unitRace == Enumeration::BreedType::Drorania) {
             this -> moveSpeed = 530;
             this -> attackDamage = 21;
             this -> attackRange = 140;
@@ -91,7 +91,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             crystalCost = Enumeration::UnitCost::MountedMeleeCrystalCost;
         }
         //This should be changed
-        else if(unitRace == Enumeration::RaceType::Kaonov) {
+        else if(unitRace == Enumeration::BreedType::Kaonov) {
             this -> moveSpeed = 530;
             this -> attackDamage = 21;
             this -> attackRange = 140;
@@ -108,7 +108,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
     break;
     //Idol (to be defined)
     case Enumeration::UnitType::Idol:
-        if(unitRace == Enumeration::RaceType::Drorania) {
+        if(unitRace == Enumeration::BreedType::Drorania) {
             this -> moveSpeed = 250;
             this -> attackDamage = 27;
             this -> attackRange = 140;
@@ -123,7 +123,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             metalCost = Enumeration::UnitCost::CreatureMetalCost;
             crystalCost = Enumeration::UnitCost::CreatureCrystalCost;
         }
-        else if(unitRace == Enumeration::RaceType::Kaonov) {
+        else if(unitRace == Enumeration::BreedType::Kaonov) {
             this -> moveSpeed = 250;
             this -> attackDamage = 27;
             this -> attackRange = 140;
@@ -147,7 +147,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
      * 
      */
     case Enumeration::UnitType::StandardR:
-        if(unitRace == Enumeration::RaceType::Drorania) {
+        if(unitRace == Enumeration::BreedType::Drorania) {
             this -> moveSpeed = 350;
             this -> attackDamage = 13;
             this -> attackRange = 350;
@@ -161,7 +161,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             metalCost = Enumeration::UnitCost::RangedFootmenMetalCost;
             crystalCost = Enumeration::UnitCost::RangedFootmenCrystalCost;
         }
-        else if(unitRace == Enumeration::RaceType::Kaonov) {
+        else if(unitRace == Enumeration::BreedType::Kaonov) {
             this -> moveSpeed = 350;
             this -> attackDamage = 13;
             this -> attackRange = 350;
@@ -178,7 +178,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
     break;
     //Advanced ranged soldier (mounted)
     case Enumeration::UnitType::AdvancedR:
-        if(unitRace == Enumeration::RaceType::Drorania) {
+        if(unitRace == Enumeration::BreedType::Drorania) {
             this -> moveSpeed = 530;
             this -> attackDamage = 18;
             this -> attackRange = 700;
@@ -192,7 +192,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             metalCost = Enumeration::UnitCost::MountedRangedMetalCost;
             crystalCost = Enumeration::UnitCost::MountedRangedCrystalCost;
         }
-        else if(unitRace == Enumeration::RaceType::Kaonov) {
+        else if(unitRace == Enumeration::BreedType::Kaonov) {
             this -> moveSpeed = 530;
             this -> attackDamage = 18;
             this -> attackRange = 700;
@@ -209,7 +209,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         break;
         //Rock launcher
         case Enumeration::UnitType::Launcher:
-        if(unitRace == Enumeration::RaceType::Drorania) {
+        if(unitRace == Enumeration::BreedType::Drorania) {
             this -> moveSpeed = 250;
             this -> attackDamage = 27;
             this -> attackRange = 900;
@@ -224,7 +224,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             metalCost = Enumeration::UnitCost::CatapultMetalCost;
             crystalCost = Enumeration::UnitCost::CatapultCrystalCost;
         }
-        else if(unitRace == Enumeration::RaceType::Kaonov) {
+        else if(unitRace == Enumeration::BreedType::Kaonov) {
             this -> moveSpeed = 250;
             this -> attackDamage = 27;
             this -> attackRange = 900;
@@ -242,7 +242,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
         break;
         //Wall desintegrator
         case Enumeration::UnitType::Desintegrator:
-        if(unitRace == Enumeration::RaceType::Drorania) {
+        if(unitRace == Enumeration::BreedType::Drorania) {
             this -> moveSpeed = 250;
             this -> attackDamage = 41;
             this -> attackRange = 120;
@@ -257,7 +257,7 @@ Unit::Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Tea
             metalCost = Enumeration::UnitCost::RamMetalCost;
             crystalCost = Enumeration::UnitCost::RamCrystalCost;
         }
-        else if(unitRace == Enumeration::RaceType::Kaonov) {
+        else if(unitRace == Enumeration::BreedType::Kaonov) {
             this -> moveSpeed = 250;
             this -> attackDamage = 41;
             this -> attackRange = 120;
@@ -326,7 +326,7 @@ void Unit::moveTroop() {
         } else {
             // far from destination, move
             Vector3<float> newPos = *vectorPos + *vectorMov;
-            newPos.y = Game::Instance() -> getGameState() -> getMap() -> getY(newPos.x, newPos.z);
+            newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
             this -> setTroopPosition(newPos);
         }
     }
@@ -521,7 +521,7 @@ void Unit::chaseTarget() {
             switchState(Enumeration::UnitState::Attack);
         } else { //If i am too far away to attack, then move closer.
             Vector3<float> newPos = *vectorPos + *vectorMov;
-            newPos.y = Game::Instance() -> getGameState() -> getMap() -> getY(newPos.x, newPos.z);
+            newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
             this -> setTroopPosition(newPos);
         }
     }

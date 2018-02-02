@@ -14,7 +14,7 @@ class Unit : public Entity {
     
     public:
         //The consctructor is empty because the object it's constructed in the child
-        Unit(int id, SceneNode *layer, Vector3<float> vectorData, Enumeration::Team teamData, Enumeration::UnitType typeData, Enumeration::RaceType raceData);
+        Unit(int id, SceneNode *layer, const wchar_t *path, Vector3<float> vectorData, Enumeration::Team teamData, Enumeration::UnitType typeData, Enumeration::BreedType raceData);
         virtual ~Unit();
 
         //Getters
@@ -98,7 +98,7 @@ class Unit : public Entity {
         //Entity* target;
     //Unit type
         Enumeration::UnitType unitType;
-        Enumeration::RaceType unitRace;
+        Enumeration::BreedType unitRace;
         //Battle* battleInvolved;
 
     //Music events to be played

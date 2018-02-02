@@ -14,28 +14,92 @@
 
 #include <SoundEngine/SoundSystem.h>
 
+/**
+ * @class Game
+ * @brief Crea un objeto singleton tipo Game
+ */
 class Game {
     public:
+        /**
+		 * @brief Crea una Instancia de Game
+		 */
         static Game* Instance();
 
+        /**
+		 * @brief Inicializa Game
+		 */
         void init();
+        /**
+		 * @brief Recoge las entradas de teclado y raton
+		 */
         void input();
+        /**
+		 * @brief Actualiza Game
+		 */
         void update();
+        /**
+		 * @brief Renderiza Game
+		 */
         void render();
+        /**
+		 * @brief Constructor
+		 */
         void cleanUp();
+        /**
+        * @brief Cambia el estado de Game
+        * @param State es el nuevo estado 
+        */
         void changeState(Enumeration::State);
 
+        /**
+		 * @brief Devuelve la ventana actual
+         * @return Devuelve un objeto tipo Window
+		 */
         Window *getWindow();
+         /**
+		 * @brief Devuelve la tecla actual
+         * @return Devuelve un objeto tipo Keyboard
+		 */
         Keyboard *getKeyboard();
-        Mouse *getCursor();
+         /**
+		 * @brief Devuelve las coordenadas del raton
+         * @return Devuelve un objeto tipo getCursor
+		 */
+        Mouse *getMouse();
+         /**
+		 * @brief Devuelve el evento actual
+         * @return Devuelve un objeto tipo EventSystem
+		 */
         EventSystem *getEvents();
-		MenuState *getMenuState();
+        /**
+		 * @brief Devuelve el menu actual
+         * @return Devuelve un objeto tipo MenuState
+		 */
+        MenuState *getMenuState();
+         /**
+		 * @brief Devuelve el estado de juego actual
+         * @return Devuelve un objeto tipo GameState
+		 */
 		GameState *getGameState();
         
     protected:
+        /**
+		 * @brief Constructor de Game.
+		 */
         Game();
+        /**
+		 * @brief Destructor.
+		 */
         virtual ~Game();
+        /**
+		 * @brief Contructor. Copia una instancia nueva en Game
+         * @param Game es la nueva instancia
+         * @return devuelve la nueva instancia de tipo Game
+		 */
         Game(const Game & );
+        /**
+		 * @brief Redefine el operador igual
+		 */
         Game &operator = (const Game & );
 
     private:
