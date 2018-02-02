@@ -1,4 +1,9 @@
 #include "Graph.h"
+Graph::Graph(){
+    this->nextNode = 0;
+    this->m_Nodes = nodeVector();
+    this->m_Edges = edgeListVector();
+}
 Graph::~Graph(){
     
 }
@@ -34,6 +39,8 @@ int Graph::addNode(LWayPoint node){
     int actual = nextNode;
     if(node.getIndex() != INVALID_WP)
         node.setIndex(nextNode);
+
+    positionMap.insert(std::pair<int, Vector2<float> >(nextNode, node.getPosition()));
 
     m_Edges.resize(nextNode + 1);
     m_Edges.at(nextNode) = std::list<Edge>();
@@ -107,10 +114,38 @@ Graph::nodeVector Graph::getNodeVector(){
 Graph::edgeListVector Graph::getEdgeListVector(){
     return m_Edges;
 }
-
+Vector2<float> Graph::getPositionFrom(int index){
+    return this->positionMap.find(index)->second;
+}
 // Not implemented
 //bool Graph::Load( char* fileName){
 //}
 // Not implemented
 //bool Graph::Load(std::ifstream& stream){
+//}
+//std::list< Edge* >::iterator Graph::getEdgeIterator(int node){
+//    edgeIterator = std::list< Edge >::iterator(m_Edges.at(node).begin());
+//    return &edgeIterator;
+//}
+//std::vector< LWayPoint* >::iterator Graph::getNodeIterator(){
+//    nodeIterator(m_Nodes.begin());
+//    return &nodeIterator;
+//}
+//void Graph::incNodeIterator(){
+//    nodeIterator++;
+//}
+//void Graph::incEdgeIterator(){
+//    edgeIterator++;
+//}
+//bool Graph::nodeIteratorEnd(){
+//    if(nodeIterator == m_Nodes.end())
+//        return true;
+//    else
+//        return false;
+//}
+//bool Graph::edgeIteratorEnd(){
+//    if(edgeIterator == m_Nodes.end())
+//        return true;
+//    else
+//        return false;
 //}

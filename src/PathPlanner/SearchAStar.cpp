@@ -69,6 +69,6 @@ std::list<int> SearchAStar::getPathToTarget(){
 
         path.push_front(nd);
     }
-
+    path.push_front(m_iSource);
     return path;
 }

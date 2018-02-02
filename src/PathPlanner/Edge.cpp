@@ -2,6 +2,7 @@
 Edge::~Edge(){
     
 }
+
 int Edge::getFrom(){
     return this->m_iFrom;
 }

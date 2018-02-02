@@ -5,6 +5,7 @@
 #include "Edge.h"
 #include <list>
 #include <vector>
+#include <map>
 class Graph{
     public:
     // Vector containing all the nodes from the graph
@@ -22,18 +23,19 @@ class Graph{
     // The edge list 
     // Indicates the next free position 
         int nextNode;
+    // A map with the wayponts
+        std::map< int, Vector2<float> > positionMap;
+    // Iteratos
+        std::list< Edge* >::iterator edgeIterator;
+        std::vector< LWayPoint* >::iterator nodeIterator;
     public:
     // ructor
-        Graph():nextNode(0){}
+        Graph();
         ~Graph();
     // Returns the node at the given index
         LWayPoint& getNode(int idx);
-    // Non  version
-        //LWayPoint& getNode(int idx);
     // Returns an edge
         Edge& getEdge(int from ,int to);
-    // Non  version
-        //Edge& getEdge(int from, int to);
     // Retrieves the next free index
         int getNextIndex();
     // Adds a node to the graph and returns its index
@@ -45,7 +47,7 @@ class Graph{
         void removeEdge(int from, int to);
     // Returns the number of nodes in the graph
         int getNumNodes();
-    // Returns the number of edges in the graph
+    // Returns the number of nodes in the graph
         int getNumEdges();
     // Returns if the graph is empty
         bool isEmpty();
@@ -58,13 +60,18 @@ class Graph{
     // Getters
         nodeVector getNodeVector();
         edgeListVector getEdgeListVector();
+        Vector2<float> getPositionFrom(int index);
     // Extra functions to load data 
         // To do
         //bool Load( char* fileName);
         //bool Load(std::ifstream& stream);
     // Iterators to acces nodes and edges
-        // Not implemented
-        class EdgeIterator;
-        class NodeIterator;
+        //std::list< Edge* >::iterator getEdgeIterator(int node);
+        //std::vector< LWayPoint* >::iterator getNodeIterator();
+        //void incNodeIterator();
+        //void incEdgeIterator();
+        //bool nodeIteratorEnd();
+        //bool edgeIteratorEnd();
+
 };
 #endif /*GRAPH_H*/

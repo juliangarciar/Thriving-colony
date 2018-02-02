@@ -9,6 +9,7 @@
 #include <iostream>
 #include <cmath>
 #include <string>
+#include <list>
 using namespace std;
 class Unit : public Entity {
     
@@ -20,6 +21,7 @@ class Unit : public Entity {
         //Getters
         Entity* getTarget();
         Model* getModel();
+        std::list<int>& getPath();
         //MusicStrings
         string getAttackEvent();
         string getMoveEvent();
@@ -90,6 +92,7 @@ class Unit : public Entity {
         float attackCountdown;
 
     //Space vectors used for unit movement
+        std::list<int> pathFollow;
         //Vector position is in the father
         Vector3 <float> *vectorPos;
         Vector3 <float> *vectorDes;

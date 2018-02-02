@@ -3,7 +3,7 @@
 #include "Human.h"
 #include "Game.h"
 #include "SoundEngine/SoundSystem.h"
-
+#include "PathPlanner/PathManager.h"
 //Constructor
 UnitManager::UnitManager(Enumeration::Team teamData, Enumeration::BreedType raceData) {
     gridAlignment = 20;
@@ -25,6 +25,7 @@ UnitManager::UnitManager(Enumeration::Team teamData, Enumeration::BreedType race
 
     //Addes by Julian
     this -> breedType = raceData;
+    PathManager::Instance();
 }
 
 //Destroyer
@@ -209,6 +210,17 @@ void UnitManager::moveOrder(Terrain *terrain) {
         SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
         //this -> selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
         //Game::Instance() -> getSoundSystem() -> playVoice(this -> selectedTroop -> getMoveEvent());
+    }
+    // Debug by julian
+    else{
+        Vector2<float> origen = Vector2<float> (0, 0);
+        Vector2<float> destino = Vector2<float> (9000, 9000);
+        std::list< Vector2<float> > path;
+        PathManager::Instance()->createPathTo(origen, destino, path);
+        while(!path.empty()){
+            std::cout << path.front().x << "," << path.front().y << "\n";
+            path.pop_front();
+        }
     }
 }
 

@@ -14,6 +14,7 @@ class NavNode{
         NavNode(int idx):m_index(idx){}
         ~NavNode();
 
+    // Get / setters
         int getIndex();
         void setIndex(int newIndex);
 };
@@ -21,8 +22,11 @@ class LWayPoint : public NavNode{
     protected:
         Vector2<float> m_vPosition;
     public:
-        LWayPoint(Vector2<float> position);
-        Vector2<float> getPosition();
+        LWayPoint(Vector2<float> position):m_vPosition(position){};
         virtual ~LWayPoint();
+    // Get / setters
+        Vector2<float> getPosition();
+        void setPosition(Vector2<float> position);
+        
 };
 #endif /* WAYPOINT_H */
