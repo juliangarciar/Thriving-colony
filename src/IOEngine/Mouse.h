@@ -44,7 +44,7 @@ class Mouse {
         void show();
         void hide();
 
-        GLFWcursor *getCursor();
+        GLFWcursor *getMouse();
         Vector2<int> getPosition();
 
         bool isVisible();

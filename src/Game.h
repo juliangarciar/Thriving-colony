@@ -16,65 +16,75 @@
 
 /**
  * @class Game
- * @brief Esta clase hace algo
+ * @brief Crea un objeto singleton tipo Game
  */
 class Game {
     public:
         /**
-		 * @brief Metodo que hace algo
+		 * @brief Crea una Instancia de Game
 		 */
         static Game* Instance();
 
         /**
-		 * @brief Metodo que hace algo
+		 * @brief Inicializa Game
 		 */
         void init();
         /**
-		 * @brief Metodo que hace algo
+		 * @brief Recoge las entradas de teclado y raton
 		 */
         void input();
         /**
-		 * @brief Metodo que hace algo
+		 * @brief Actualiza Game
 		 */
         void update();
         /**
-		 * @brief Metodo que hace algo
+		 * @brief Renderiza Game
 		 */
         void render();
         /**
-		 * @brief Metodo que hace algo
+		 * @brief Constructor
 		 */
         void cleanUp();
         /**
-		 * @brief Metodo que hace algo
-		 */
+        * @brief Cambia el estado de Game
+        * @param State es el nuevo estado 
+        */
         void changeState(Enumeration::State);
 
         /**
-		 * @brief Metodo que hace algo
+		 * @brief Devuelve la ventana actual
+         * @return Devuelve un objeto tipo Window
 		 */
         Window *getWindow();
-        /**
-		 * @brief Metodo que hace algo
+         /**
+		 * @brief Devuelve la tecla actual
+         * @return Devuelve un objeto tipo Keyboard
 		 */
         Keyboard *getKeyboard();
-        Mouse *getCursor();
-        /**
-		 * @brief Metodo que hace algo
+         /**
+		 * @brief Devuelve las coordenadas del raton
+         * @return Devuelve un objeto tipo getCursor
+		 */
+        Mouse *getMouse();
+         /**
+		 * @brief Devuelve el evento actual
+         * @return Devuelve un objeto tipo EventSystem
 		 */
         EventSystem *getEvents();
         /**
-		 * @brief Metodo que hace algo
+		 * @brief Devuelve el menu actual
+         * @return Devuelve un objeto tipo MenuState
 		 */
         MenuState *getMenuState();
-        /**
-		 * @brief Metodo que hace algo
+         /**
+		 * @brief Devuelve el estado de juego actual
+         * @return Devuelve un objeto tipo GameState
 		 */
 		GameState *getGameState();
         
     protected:
         /**
-		 * @brief Constructor por defecto.
+		 * @brief Constructor de Game.
 		 */
         Game();
         /**
@@ -82,11 +92,13 @@ class Game {
 		 */
         virtual ~Game();
         /**
-		 * @brief No se que hace
+		 * @brief Contructor. Copia una instancia nueva en Game
+         * @param Game es la nueva instancia
+         * @return devuelve la nueva instancia de tipo Game
 		 */
         Game(const Game & );
         /**
-		 * @brief Tampoco se que hace
+		 * @brief Redefine el operador igual
 		 */
         Game &operator = (const Game & );
 

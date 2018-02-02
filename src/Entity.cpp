@@ -2,18 +2,6 @@
 
 #include "Game.h"
 
-//ToDo: temp
-Entity::Entity(SceneNode *layer, int id, int size) {
-    this -> ID = id;
-    this -> target = NULL;
-    //ToDo: hacer aumento de felicidad, tropas nivel y tal
-    model = new Model(layer, id, size);
-    hitbox = new Box3D<float>();
-    position = new Vector3<float>();
-
-    this -> tookDamageTimer = 0.1;
-}
-
 Entity::Entity(SceneNode *layer, int id, const wchar_t *path) {
     this -> ID = id;
     //ToDo: hacer aumento de felicidad, tropas nivel y tal

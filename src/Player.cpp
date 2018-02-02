@@ -1,8 +1,6 @@
 #include "Player.h"
-//#include "Game.h"
-#include "GraphicEngine/Window.h"
-#include "Tower.h"
 #include "Game.h"
+#include <GraphicEngine/Window.h>
 
 #define RESOURCEPRODUCTION 10
 

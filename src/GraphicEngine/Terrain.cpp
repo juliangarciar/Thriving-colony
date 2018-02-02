@@ -37,7 +37,7 @@ Vector3<float> Terrain::getPointCollision(Mouse *cursor){
 }
 
 void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture) {
-	terrain -> setMaterialFlag(video::EMF_LIGHTING, false);
+	//terrain -> setMaterialFlag(video::EMF_LIGHTING, false);
 	terrain -> setMaterialTexture(0, terrainTexture -> getTexture());
 	terrain -> setMaterialTexture(1, detailTexture -> getTexture());
 	terrain -> setMaterialType(video::EMT_DETAIL_MAP);

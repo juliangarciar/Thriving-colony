@@ -19,24 +19,63 @@ using namespace irr;
        
 static TextBox *warningText = 0;
 
+/**
+ * @class Hud
+ * @brief Crea un objeto tipo Hud
+ */
 class Hud {
     
     public:
+        /**
+         * @brief Constructor
+         */
         Hud();
+        /**
+         * @brief Destructor
+         */
         ~Hud();
 
-        void addTab(int id, int type);
+        /**
+         * @brief Crea un boton 
+         * @param id del boton, de tipo entero
+         * @param type sera el tipo de edificio que se creara con ese boton, de tipo entero
+         */
+        void addTab(int, int);
 
+        /**
+         * @brief Despliega y muestra el PopUp
+         */
         void showPopup();
+        /**
+         * @brief Despliega y muestra el PopUp
+         * @param tabId indica el boton al que pertenece el popup
+         */
         void showPopup(int tabId);
+        /**
+         * @brief Oculta el PopUp
+         */
         void hidePopup();
-
+        /**
+         * @brief Establece los distintos eventos asociados a cada uno de los botones del HUD 
+         */
         void setHUDEvents();
 
+        /**
+         * @brief Actualiza el HUD
+         */
         void update();
+        /**
+         * @brief Actualiza las posiciones de los elementos del HUD
+         */
         void updatePositions();
 
+        /**
+         * @brief Lanza una alerta de contruccion
+         */
         static void drawWarning();
+        /**
+         * @brief Borra la alerta lanzada
+         */
         static void deleteWarning();
     private:
         std::vector<int> *menuIDs;

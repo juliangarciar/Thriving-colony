@@ -3,39 +3,6 @@
 #include "Human.h"
 #include "Game.h"
 
-Building::Building(int id, SceneNode *parent, Enumeration::BuildingType buildingType, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(parent, id, 100)
-{
-    this -> happiness = 0;
-    this -> cityLevel = 0;
-
-    this -> metalCost = 0;
-    this -> crystalCost = 0;
-
-    this -> entityType = Enumeration::EntityType::Building;
-
-    buildTimer = 0;
-    buildCountdown = 0;
-
-    this -> type = buildingType;
-    this -> team = teamData;
-
-    this -> tookDamageTimer = 0.1;
-    Init();
-
-    Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
-        this -> model -> getModel() -> getMesh(), baseColor
-    ); //ToDo: esto es fachada 
-
-    this -> setPosition(vectorData);
-    this -> hitbox -> set(this -> model -> getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
-
-    // Tax the IA the moment it builds the building
-    // The player should be taxed when actually building the building
-    if (teamData == Enumeration::Team::IA) {
-        taxPlayer(teamData);
-    }
-}
-
 Building::Building(int id, SceneNode *parent, const wchar_t *path, Enumeration::BuildingType buildingType, Vector3<float> vectorData, Enumeration::Team teamData) : Entity(parent, id, path)
 {
     this -> happiness = 0;
@@ -52,12 +19,8 @@ Building::Building(int id, SceneNode *parent, const wchar_t *path, Enumeration::
 
     Init();
 
-    Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
-        this -> model -> getModel() -> getMesh(), baseColor
-    ); //ToDo: esto es fachada 
-
     this -> setPosition(vectorData);
-    this -> hitbox -> set(this -> model -> getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
+    this -> hitbox -> set(model -> getBoundingBox() . getAABBox3D());
 
     // Tax the IA the moment it builds the building
     // The player should be taxed when actually building the building
@@ -297,17 +260,20 @@ void Building::Init() {
 
         break;
     }
-    
+
     //ToDo: Graphic engine, this should be in the switch (when models done)
-    this -> baseColor = video::SColor(255, r, g, b); //ToDo: esto es fachada 
+    this -> baseColor = video::SColor(255, r, g, b); //ToDo: reemplazar color por material
     if (initialBuilding) {
-        this -> currentColor = video::SColor(255, r, g, b);
+        this -> currentColor = video::SColor(255, r, g, b); //ToDo: reemplazar color por material
         this -> finished = true;
     } else {
         buildCountdown = buildTimer;
-        this -> currentColor = video::SColor(255, 0, 0, 0);
+        this -> currentColor = video::SColor(255, 0, 0, 0); //ToDo: reemplazar color por material
         this -> finished = false;
     }
+    //Texture *tex = new Texture("./media/blanco.bmp");
+    //Material *m = new Material(tex);
+    //this->model->setMaterial(m);
 }
 
 // This update is called once every second
@@ -316,6 +282,7 @@ void Building::update() {
     if (!finished) {
         buildTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
         if (buildTimer <= 0) {
+            //ToDo: reemplazar color por material
             Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
                 this -> model -> getModel() -> getMesh(), baseColor
             );
@@ -331,6 +298,7 @@ void Building::update() {
     }
 }
 
+//ToDo: reemplazar color por material
 irr::video::SColor Building::getColor() {
     return baseColor;
 }
@@ -344,17 +312,13 @@ Enumeration::BuildingType Building::getType() {
  * be it the human or the AI 
  */
 void Building::taxPlayer(Enumeration::Team teamData) {
-    
     // Tax the human
     if (teamData == Enumeration::Team::Human) {
         // Tax costs
         Human::getInstance() -> increaseHappiness(happiness);
         Human::getInstance() -> increaseCityLevel(cityLevel);
         Human::getInstance() -> spendResources(metalCost, crystalCost);
-        
-
-    // Tax the AI
-    } else {
+    } else { // Tax the AI
         // Tax costs
         IA::getInstance() -> increaseHappiness(happiness);
         IA::getInstance() -> increaseCityLevel(cityLevel);
@@ -362,16 +326,15 @@ void Building::taxPlayer(Enumeration::Team teamData) {
         // Increae levels and stuff when built by the ai, instead of waiting for the building to finish building
         specialTax(teamData);
     }
+    //ToDo: reemplazar color por material
     Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
         this -> model -> getModel() -> getMesh(), currentColor
-    );   
-    
+    );
 }
 
 void Building::specialTax(Enumeration::Team teamData) {
-        // Tax the human
+    // Tax the human
     if (teamData == Enumeration::Team::Human) {
-        
         // Special taxes
         switch ((Enumeration::BuildingType)type) {
             case Enumeration::BuildingType::Barn:
@@ -393,10 +356,7 @@ void Building::specialTax(Enumeration::Team teamData) {
                     Human::getInstance() -> setWorkshopBuilt(true);                
             break;
         }
-
-    // Tax the AI
-    } else {
-        
+    } else { // Tax the AI
         // Special taxes
         switch ((Enumeration::BuildingType)type) {
             case Enumeration::BuildingType::Barn:
@@ -430,7 +390,7 @@ int Building::getID() {
 }
 
 void Building::setHitbox() {
-    this -> hitbox -> set(this -> model -> getModel() -> getTransformedBoundingBox()); //ToDo: esto es fachada
+    this -> hitbox -> set(model -> getBoundingBox() . getAABBox3D());
 }
 
 //Esto tendria que haber funcionado bien, pero no, como mi vida

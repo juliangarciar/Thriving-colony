@@ -16,7 +16,7 @@ void IA::init() {
     nodeRootIA -> init(behaviour);
 
     buildings = new BuildingManager();
-    units = new UnitManager(Enumeration::Team::IA, Enumeration::RaceType::Kaonov);
+    units = new UnitManager(Enumeration::Team::IA, Enumeration::BreedType::Kaonov);
 
     // Choices for the debugging system
     choiceIndex = 0;
@@ -95,7 +95,7 @@ Vector3<float> IA::determinatePositionBuilding() {
         float startingX = 2000;
         float startingZ = 2000;
         v.set(startingX, 0, startingZ);
-        v.y = Game::Instance() -> getGameState()  -> getMap() -> getY(v.x, v.z);
+        v.y = Game::Instance() -> getGameState()  -> getTerrain() -> getY(v.x, v.z);
     } else {
 
         //When there are some buildings
@@ -151,7 +151,7 @@ Vector3<float> IA::determinatePositionBuilding() {
                 }
             }
         }
-        v.y = Game::Instance() -> getGameState()  -> getMap() -> getY(v.x, v.z);
+        v.y = Game::Instance() -> getGameState()  -> getTerrain() -> getY(v.x, v.z);
     }
     return v;
 }
@@ -159,7 +159,7 @@ Vector3<float> IA::determinatePositionBuilding() {
 void IA::deployTroops() {
     Vector3<float> v = *(IA::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
     v.x = v.x + 100;
-    v.y = Game::Instance() -> getGameState() -> getMap() -> getY(v.x, v.z);
+    v.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(v.x, v.z);
     IA::getInstance() -> getUnitManager() -> deployAllTroops(v);
     deployedTroops = true;
 }

@@ -5,6 +5,10 @@
 #include <queue>
 #include "NodeGrid.h"
 
+/**
+ * @class Grid
+ * @brief Crea un objeto tipo Grid
+ */
 class grid
 {
   private:

@@ -2,7 +2,6 @@
 #include "Game.h"
 #include "Human.h"
 #include "IA.h"
-#include "Tower.h"
 
 using namespace irr;
 
@@ -28,7 +27,7 @@ BuildingManager::~BuildingManager() {
 
 void BuildingManager::testRaycastCollisions() {
 	if (!buildingMode) {
-		currentCollision = buildingLayer -> getNodeCollision(Game::Instance() -> getCursor());
+		currentCollision = buildingLayer -> getNodeCollision(Game::Instance() -> getMouse());
 	}
 }
 
@@ -63,7 +62,7 @@ void BuildingManager::drawBuilding(Terrain *terrain) {
 		/*
 		* Get position where the cursor is pointing to the terrain
 		*/
-        Vector3<float> xyzPointCollision = terrain -> getPointCollision(g -> getCursor());
+        Vector3<float> xyzPointCollision = terrain -> getPointCollision(g -> getMouse());
 
 		Vector3<float> f = Box3D<float>(tempBuilding -> getModel() -> getModel() -> getTransformedBoundingBox()).getSize();
 
@@ -75,7 +74,7 @@ void BuildingManager::drawBuilding(Terrain *terrain) {
 
 			
 		//Pressing the right mouse button cancels the building
-		if (g -> getCursor() -> rightMouseReleased()){
+		if (g -> getMouse() -> rightMouseReleased()){
 			buildingMode = false;
 
 			delete tempBuilding;		
@@ -95,17 +94,17 @@ void BuildingManager::drawBuilding(Terrain *terrain) {
 		if (collision) {
 			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
 				tempBuilding -> getModel() -> getModel() -> getMesh(), video::SColor(255,0,0,255)
-			); //ToDo: esto es fachada
+			); //ToDo: reemplazar color por material
 		} else {
 			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
 				tempBuilding -> getModel() -> getModel() -> getMesh(), tempBuilding -> getColor()
-			); //ToDo: esto es fachada
+			); //ToDo: reemplazar color por material
 
 			/*
 			* If there is no collision and the player press left button of the mouse,
 			* build the building
 			*/
-			if (g -> getCursor() -> leftMousePressed()) {
+			if (g -> getMouse() -> leftMouseDown()) {
 				buildingMode = false;
 				buildBuilding(Vector3<float>(x, y, z), (Enumeration::BuildingType)tempBuilding -> getType(), Enumeration::Team::Human);
 			}
@@ -153,42 +152,41 @@ void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingTyp
 void BuildingManager::setTempBuildingModel(Vector3<float> pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
 	if (_type == Enumeration::BuildingType::House) {
 		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/vivienda.obj", _type, pos, _team);
-		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Barrack) {
 		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/barraca.obj", _type, pos, _team);
-		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Siderurgy) {
 		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/siderurgia.obj", _type, pos, _team);
-		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::School) {
 		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/escuela.obj", _type, pos, _team);
-		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Market) {
 		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/mercado.obj", _type, pos, _team);
-		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Quarry) {
 		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/cantera.obj", _type, pos, _team);
-		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::MainBuilding) {
 		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/centro_de_mando.obj", _type, pos, _team);
-		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Barn) {
 		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/establo.obj", _type, pos, _team);
-		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Hospital) {
 		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/hospital.obj", _type, pos, _team);
-		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Wall) {
 		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/muralla.obj", _type, pos, _team);
-		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Workshop) {
 		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/taller_maquinas_de_asedio.obj", _type, pos, _team);
-		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
+		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Tower) {
 		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/torre_vigilancia.obj", _type, pos, _team);
-		tempBuilding -> getModel() -> getModel() -> setScale(core::vector3df(25,25,25)); //ToDo: fachada
-	} else
-		tempBuilding = new Building(0, buildingLayer, _type, pos, _team);
+		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
+	}
 }
 
 std::map<int, Building*>* BuildingManager::getBuildings() {
@@ -207,7 +205,6 @@ bool BuildingManager::isSolvent(int metalCost, int crystalCost, Enumeration::Tea
 	} else {
 		metalAmt = IA::getInstance() -> getMetalAmount();
 		crystalAmt = IA::getInstance() -> getCrystalAmount();
-		//std::cout << metalAmt << "/" << metalCost << std::endl;
 	}
 	bool canPayMetal = metalAmt >= metalCost;
 	bool canPayCrystal = crystalAmt >= crystalCost;
@@ -265,7 +262,7 @@ bool BuildingManager::checkCanPay(Enumeration::BuildingType type) {
 
 void BuildingManager::updateBuildingManager() {
 	for (std::map<int,Building*>::iterator it = buildings -> begin(); it != buildings -> end(); ++it) {
-		//Esto es una guarrada y es una mierda, pero si no no va
+		//ToDo: Esto es una guarrada y es una mierda, pero si no no va (esto es para los edificios iniciales)
 		it -> second -> setHitbox();
 		//it -> second  -> updateHitbox();
 		it -> second -> update();
@@ -273,17 +270,18 @@ void BuildingManager::updateBuildingManager() {
 }
 
 bool BuildingManager::checkFinished(int _id) {
+	//ToDo: revisar este metodo
+
 	// Si no no coge bien los ids
-	int targetId = _id -1;
+	int targetId = _id - 1;
 	if (targetId < 0) {
 		// corregir para que el id del edificio principal no sea -1
 		targetId = 0;
 	} 
 
-	//Esto siempre devuelve true
+	//ToDo: Esto siempre devuelve true
 	for (std::map<int,Building*>::iterator it = buildings -> begin(); it != buildings -> end(); ++it) {
 		if (it -> second -> getID() == targetId) {
-			
 			if (it -> second -> getFinished() == true) {
 				return true;
 			}
