@@ -55,9 +55,11 @@ void GameState::init() {
     v.y = map -> getY(v.x, v.z);
     Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::Human);
 
+    /*
     Enumeration::UnitType unitData = Enumeration::UnitType::StandardM;
     Human::getInstance() -> getUnitManager() -> createTroop(unitData);
     Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsHuman);
+    */
 
     //Init HUD
     Window::Instance() -> setGUI();
