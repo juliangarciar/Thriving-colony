@@ -159,18 +159,20 @@ void CameraController::Update(float deltaTime) {
     }
 	
 	//ToDo: mejor en un metodo aparte o algo asi, las pulsaciones de teclas deberian estar en Input no en Update
+	bool centerScreenMode = false;
 	if (g -> getKeyboard() -> keyPressed(GLFW_KEY_SPACE)) { //ToDo: fachada
 		if(Human::getInstance() -> getUnitManager() -> getSelectedTroop() != NULL) {
-			camPos.x = Human::getInstance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> x;
-			camPos.z = Human::getInstance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> z;
+			tarPos.x = Human::getInstance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> x;
+			tarPos.z = Human::getInstance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> z;
 		} else {
-			camPos.x = Enumeration::HumanCityHall::human_x;
-			camPos.z = Enumeration::HumanCityHall::human_z;
+			tarPos.x = Enumeration::HumanCityHall::human_x;
+			tarPos.z = Enumeration::HumanCityHall::human_z;
 		}
-		movementMode = true;
+		camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, delta.x, delta.y);
+		centerScreenMode = true;
 	}
 
-    if (movementMode || rotationOrInclinationMode || zoomMode){
+    if (movementMode || rotationOrInclinationMode || zoomMode || centerScreenMode){
 		int heightvariance = g -> getGameState() -> getTerrain() -> getY(camPos.x, camPos.z) - camHeight;
 		camPos.y = camPos.y + heightvariance;
 
