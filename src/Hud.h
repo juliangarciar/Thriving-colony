@@ -81,8 +81,6 @@ class Hud {
         std::vector<int> *menuIDs;
         std::vector<Button*> *buttons;
 
-        Button *buttonQuit;
-
         Panel *buildingsPanel;
 
         Panel *generalPanel;
@@ -116,12 +114,6 @@ class Hud {
 
         float updateTimer;
         float deleteTextTimer;
-
-/*
-        Text *hallTroopText;
-        //ListBox *hallTroopList;
-
-        //ToDo: mejorar*/
 };
 
 #endif

@@ -109,8 +109,7 @@ void UnitManager::deployTroopAtPosition(int index, Vector3<float> vectorData) {
 }
 */
 
-void UnitManager::startDeployingTroop(int index) { 
-    Game *g = Game::Instance();
+void UnitManager::startDeployingTroop(int index) {
     if (!isDeployingTroop) {
         isDeployingTroop = true;
         currentDeployingTroop = index;
