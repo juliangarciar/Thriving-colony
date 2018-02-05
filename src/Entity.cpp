@@ -25,7 +25,6 @@ int Entity::getHP() {
 * dmg = quantity of hp to drecrease
 */
 void Entity::takeDamage(int dmg) {
-    //std::cout << "I take " << dmg << " damage. I still have " << hp << " health." << std::endl;
     hp = hp-dmg;
     // Tint the model red
     tookDamageCountdown = tookDamageTimer;
@@ -37,7 +36,6 @@ void Entity::takeDamage(int dmg) {
 }
 
 void Entity::die() {
-    //std::cout << "I die" << std::endl;
     //ToDo: DEJAR DE DIBUJAR CUBOS
     // SOLO SE MANDAN AL 0,0,0
     //
@@ -50,7 +48,7 @@ void Entity::die() {
 
 void Entity::changeRedTint() {
     if (!finished && tookDamageCountdown <= 0) {
-        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), baseColor);
+        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), baseColor); //ToDo fachada
     } else {
         tookDamageCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
     }
@@ -59,7 +57,11 @@ void Entity::changeRedTint() {
 void Entity::setPosition(Vector3<float> vectorData) {
     this -> position -> set(vectorData);
     this -> model -> setPosition(vectorData);
-    this -> hitbox -> set(model -> getModel() -> getTransformedBoundingBox());
+    this -> hitbox -> set(model -> getBoundingBox());
+}
+
+void Entity::setHitbox() {
+    this -> hitbox -> set(model -> getBoundingBox());
 }
 
 Vector3<float>* Entity::getPosition() {

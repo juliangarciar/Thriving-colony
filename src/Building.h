@@ -60,14 +60,6 @@ class Building : public Entity {
          */
         bool getFinished();
         /**
-         * @brief establece la hitbox del edificio
-         */
-        void setHitbox();
-        /**
-         * @brief Actualiza la hitbox del edificio
-         */
-        void updateHitbox();
-        /**
          * @brief solicita el id del edificio
          * @return entero con el id 
          */
@@ -81,10 +73,6 @@ class Building : public Entity {
 
         int type;
 
-        float updateHitboxTimer = 3;
-        bool updated;
-
-        //bool finished;
         float buildTimer;
         float buildCountdown;
 

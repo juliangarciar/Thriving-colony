@@ -19,7 +19,7 @@ RamNode::~RamNode() {
 void RamNode::question() {
 
     IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::TrainRam);
-    if (IA::getInstance() -> getWorkshopBuilt()) {
+    if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Workshop) > 0) {
         //std::cout << "Genero un ariete" << std::endl;
         if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::RamMetalCost, Enumeration::UnitCost::RamCrystalCost, Enumeration::Team::IA)) {
             // Unit type

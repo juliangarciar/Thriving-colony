@@ -282,13 +282,13 @@ Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorDa
     if (teamData == Enumeration::Team::Human)
     {
         Human::getInstance() -> increaseHappiness(happiness);
-        Human::getInstance() -> increaseMeleeAmount();
+        Human::getInstance() -> increaseArmySize();
         Human::getInstance() -> spendResources(metalCost, crystalCost);
     }
     else
     {
         IA::getInstance() -> increaseHappiness(happiness);
-        IA::getInstance() -> increaseMeleeAmount();
+        IA::getInstance() -> increaseArmySize();
         IA::getInstance() -> spendResources(metalCost, crystalCost);
     }
 }

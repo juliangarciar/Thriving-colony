@@ -7,29 +7,8 @@ Human::Human() : Player() {
 }
 
 void Human::init() {
-    /*
-    happiness = 0;
-    cityLevel = 1;
-    
-    siderurgyAmount = 0;
-    quarryAmount= 0;
-    
-    metalAmount = 1200;
-    crystalAmount = 1200;
-    citizens = 10; //ToDo: bajar a 10 o asi
+    updateTimer = 0;
 
-    armySize = 0;
-    meleeAmount = 0;
-    rangeAmount = 0;
-    siegeAmount = 0;
-    catapultAmount = 0;
-    ramAmount = 0;
-
-    wallBuilt = false;
-    barrackBuilt = false;
-    barnBuilt = false;
-    workshopBuilt = false;
-    */
     buildings = new BuildingManager();
     units = new UnitManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
 }
@@ -60,7 +39,6 @@ void Human::update() {
     buildings -> updateBuildingManager();
     units -> updateUnitManager();
     if (updateTimer <= 0) {
-        //std::cout << "Probando" << std::endl;
         gainResources();
         if (units -> getInMapTroops() -> empty()) {
             deployedTroops = false;

@@ -17,22 +17,19 @@ Hud::Hud() {
     deleteTextTimer = 0;
 
     menuIDs = new std::vector<int>();
-    buttons = new std::vector<Button*> ();
+    buttons = new std::vector<Button*>();
 
     // Building buttons panel
     buildingsPanel = new Panel("Buildings");
     buildingsPanel->setPosition(Vector2<int>(575, 546).getFixed());
-    //Le botone iniciale
-    //buttonQuit = new Button("Quit");
 
     // General
     generalPanel = new Panel(buildingsPanel, "General functions");
     generalPanel->setPosition(Vector2<int>(20, 640).getFixed());
 
     buttonExpandTerrain = new Button(generalPanel, "Expand terrain");
-    buttonOpenPanel = new Button(generalPanel, "Open Panel");
 
-    //buttonQuit->setPosition(Vector2<int>(30, 40));
+    buttonOpenPanel = new Button(generalPanel, "Open Panel");
     buttonOpenPanel->setPosition(Vector2<int>(100, 20));
 
     generalPanel -> setVerticalAlignment();
@@ -46,6 +43,7 @@ Hud::Hud() {
     buttonQuarry = new Button(resourcePanel, "Quarry");
 
     resourcePanel ->setVerticalAlignment();
+
     // Services
     servicePanel = new Panel(buildingsPanel, "Service buildings");
     servicePanel->setPosition(Vector2<int>(20, 640).getFixed());
@@ -55,6 +53,7 @@ Hud::Hud() {
     buttonHospital = new Button(servicePanel, "Hospital");
 
     servicePanel -> setVerticalAlignment();
+
     // Military
     militaryPanel = new Panel(buildingsPanel, "Military buildings");
     militaryPanel->setPosition(Vector2<int>(20, 640).getFixed());
@@ -64,6 +63,7 @@ Hud::Hud() {
     buttonWorkshop = new Button(militaryPanel, "Workshop");
 
     militaryPanel -> setVerticalAlignment();
+
     // Defense
     defensePanel = new Panel(buildingsPanel, "Defensive buildings");
     defensePanel->setPosition(Vector2<int>(20, 640).getFixed());
@@ -72,8 +72,6 @@ Hud::Hud() {
     buttonWall = new Button(defensePanel, "Wall");
 
     defensePanel -> setVerticalAlignment();
-
-    //buildingsPanel -> center();
 
     buttonBarn->setTooltip("Build a barn that will allow you to train mounted military units.\n Metal cost: 800.");
     buttonBarrack->setTooltip("Build a barrack that will allow you to train basic military units.\n Metal cost: 720.");
@@ -203,9 +201,6 @@ void Hud::addTab(int id, int type){
                 Game::Instance() -> getEvents() -> triggerEvent(Enumeration::RetractTroopsHuman);
             });
             buttons -> push_back(b);
-
-            //tabs->refreshLayout();
-            //tabs->changeActiveTab(0);
         }
         break;
         case Enumeration::BuildingType::Barn:
@@ -246,9 +241,6 @@ void Hud::addTab(int id, int type){
                 Window::Instance()->getGUIEnvironment()->performLayout();
             });
             buttons -> push_back(b);
-            
-            //tabs->refreshLayout();
-            //tabs->changeActiveTab(0);
         }
         break;
         case Enumeration::BuildingType::Barrack:
@@ -280,9 +272,6 @@ void Hud::addTab(int id, int type){
                 Window::Instance()->getGUIEnvironment()->performLayout();
             });
             buttons -> push_back(b);
-            
-            //tabs->refreshLayout();
-            //tabs->changeActiveTab(0);
         }
         break;
         case Enumeration::BuildingType::Workshop:
@@ -314,9 +303,6 @@ void Hud::addTab(int id, int type){
                 Window::Instance()->getGUIEnvironment()->performLayout();
             });
             buttons -> push_back(b);
-            
-            //tabs->refreshLayout();
-            //tabs->changeActiveTab(0);
         }
         break;
         default: break;
@@ -331,6 +317,18 @@ void Hud::showPopup(int tabId){
     //if (tabs -> changeActiveTab(1))
        /* tabs -> changeActiveTab(0);
         tabs -> show();*/
+            
+            //tabs->refreshLayout();
+            //tabs->changeActiveTab(0);
+            
+            //tabs->refreshLayout();
+            //tabs->changeActiveTab(0);
+            
+            //tabs->refreshLayout();
+            //tabs->changeActiveTab(0);
+
+            //tabs->refreshLayout();
+            //tabs->changeActiveTab(0);
 }
 
 void Hud::hidePopup(){
@@ -481,10 +479,10 @@ void Hud::update() {
         "Citizens: " << std::to_string(Human::getInstance() -> getCitizens()) << " " <<
         "Happiness: " << std::to_string(Human::getInstance() -> getHappiness()) <<  " " <<
         "City level: "<< std::to_string(Human::getInstance() -> getCityLevel()) <<  " " <<
-        "Army size: " << std::to_string(Human::getInstance() -> getArmySize()) << " " <<
+        "Army size: " << std::to_string(Human::getInstance() -> getArmySize()) << " "/* <<
         "- Melees: " << std::to_string(Human::getInstance() -> getMeleeAmount()) <<  " " <<
         "- Ranged: " << std::to_string(Human::getInstance() -> getRangeAmount()) << " " <<
-        "- Siege: " << std::to_string(Human::getInstance() -> getSiegeAmount());
+        "- Siege: " << std::to_string(Human::getInstance() -> getSiegeAmount())*/;
         resourceText -> setLabel(os.str());
 
         std::stringstream iaos;
@@ -495,9 +493,9 @@ void Hud::update() {
         "Happiness: " << std::to_string(IA::getInstance() -> getHappiness()) <<  " " <<
         "City level: "<< std::to_string(IA::getInstance() -> getCityLevel()) <<  " " <<
         "Army size: " << std::to_string(IA::getInstance() -> getArmySize()) <<  " " <<
-        " - Melees: " << std::to_string(IA::getInstance() -> getMeleeAmount()) <<  " " <<
+        /*" - Melees: " << std::to_string(IA::getInstance() -> getMeleeAmount()) <<  " " <<
         " - Ranged: " << std::to_string(IA::getInstance() -> getRangeAmount()) <<  " " <<
-        " - Siege: " << std::to_string(IA::getInstance() -> getSiegeAmount()) <<  " " <<
+        " - Siege: " << std::to_string(IA::getInstance() -> getSiegeAmount()) <<  " " <<*/
         "Next choice: " << IA::getInstance() -> getNextChoice() <<  " " <<
         "Behaviour: " << IA::getInstance() -> getChosenBehaviour();
 
@@ -526,12 +524,12 @@ void Hud::updatePositions() {
 }
 
 void Hud::drawWarning() {
-    //std::cout <<  "¡Se ha construido un edificio!" << std::endl;
+    //¡Se ha construido un edificio!
     warningText -> show();
 }
 
 void Hud::deleteWarning() {
-    //std::cout << "¡Se ha borrado un texto que dice que se ha dibujado un texto!" << std::endl;
+    //¡Se ha borrado un texto que dice que se ha dibujado un texto!
     warningText -> hide();
 }
 

@@ -6,95 +6,44 @@
 #include "Unit.h"
 #include <vector>
 
+//ToDo: no se si deberia ir aqui
+#define RESOURCEPRODUCTION 10
+
 class Player {
-    
     public:
         Player();
         virtual ~Player();
 
-        //Getters
-        int getHappiness();
-        int getCityLevel();
-
-        int getMetalProduction();
-        int getCrystalProduction();
-
-        int getMetalAmount();
-        int getCrystalAmount();
-
-        int getCitizens();
-
-        int getArmySize();
-        int getMeleeAmount();
-        int getRangeAmount();
-        int getSiegeAmount();
-        int getRamAmount();
-        int getCatapultAmount();
-
-        bool getWallBuilt();
-        bool getBarrackBuilt();
-        bool getBarnBuilt();
-        bool getWorkshopBuilt();
-
-        int getSiderurgyAmount();
-        int getQuarryAmount();
-
-        int getWallAmount();
-        int getTowerAmount();
-
-        bool getUnderAttack();
-
-        //std::vector<Unit*> * getTroops(); //ToDo: lo del cpp
-
-        bool losingBattle();
-
-        BuildingManager* getBuildingManager();
-        UnitManager* getUnitManager();
-        //Setters
-        void setBarnBuilt(bool);
-        void setBarrackBuilt(bool);
-        void setWorkshopBuilt(bool);
-
-        /////////////////////////////////
         virtual void update() = 0;
 
+        // Control methods
         void gainResources();
-
+        void spendResources(int, int);
         void increaseHappiness(int h);
         void increaseCityLevel(int lvl);
-
-        void increaseSiderurgyAmount();
-        void increaseQuarryAmount();
-
         void increaseCitizens();
-
         void increaseArmySize();
-
-        void increaseMeleeAmount();
-        void increaseRangeAmount();
-        void increaseSiegeAmount();
-        
-        void increaseWallAmount();
-        void increaseTowerAmount();
-
-        void deployTroops();
-        void retractTroops();
-        void closeDoors();
-        void openDoors();
-
-        void increaseRamAmount();
-        void increaseCatapultAmount();
-
         void increaseBuildableRange();
+        bool losingBattle(); //ToDo: battle manager mejor no?
 
-        void spendResources(int, int);
+        // Getters
+        int getHappiness();
+        int getCityLevel();
+        int getCitizens();
+        int getArmySize();
+        int getMetalAmount();
+        int getCrystalAmount();
+        int getMetalProduction();
+        int getCrystalProduction();
+        BuildingManager* getBuildingManager();
+        UnitManager* getUnitManager();
 
+        // Tricks
         void receiveMetal();
         void receiveCrystal();
         void receiveCitizens();
 
     protected:
-        float updateTimer;
         // Resources
         int happiness;
         int cityLevel;
@@ -103,33 +52,14 @@ class Player {
         int citizens;
 
         // Army
-        int armySize;
-
-        int meleeAmount;
-        int rangeAmount;
-        int siegeAmount;
-        int catapultAmount;
-        int ramAmount;
-
-        //Buildings
-        //Resource
-        int siderurgyAmount;
-        int quarryAmount;
-        //Military       
-        bool barrackBuilt;
-        bool barnBuilt;
-        bool workshopBuilt;
-
-        bool wallBuilt;
-        int wallAmount;
-        int towerAmount;
-        
         bool underAttack;
         
+        //Buildings
+        float buildableRange;
+        
+        //Managers
         BuildingManager *buildings;
         UnitManager *units;
-        float buildableRange;
-
     private:
         
 };

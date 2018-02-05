@@ -172,18 +172,18 @@ void Building::Init() {
             this -> cityLevel = 5;
 
             this -> buildTimer = 35;
+
+            //ToDo: esto por que es?
             // If this is the first siderurgy, build it instantly
             if (this -> team == Enumeration::Team::Human) {
-                if (Human::getInstance() -> getSiderurgyAmount() == 0) {
+                if (Human::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Siderurgy) == 0) {
                     this -> buildTimer = 0;
                     initialBuilding = true;
-                    Human::getInstance() -> increaseSiderurgyAmount();  
                 }
             }else{
-                if (IA::getInstance() -> getSiderurgyAmount() == 0) {
+                if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Siderurgy) == 0) {
                     this -> buildTimer = 0;
                     initialBuilding = true;
-                    IA::getInstance() -> increaseSiderurgyAmount();  
                 }
             }
             
@@ -293,7 +293,6 @@ void Building::update() {
 		        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);
             }            
             this -> finished = true;
-            setHitbox();
         }
     }
 }
@@ -338,22 +337,22 @@ void Building::specialTax(Enumeration::Team teamData) {
         // Special taxes
         switch ((Enumeration::BuildingType)type) {
             case Enumeration::BuildingType::Barn:
-                    Human::getInstance() -> setBarnBuilt(true);                
+                //Human::getInstance() -> setBarnBuilt(true);                
             break;
             case Enumeration::BuildingType::Barrack:
-                    Human::getInstance() -> setBarrackBuilt(true);                
+                //Human::getInstance() -> setBarrackBuilt(true);                
             break;            
             case Enumeration::BuildingType::House:
-                    Human::getInstance() -> increaseCitizens();                
+                Human::getInstance() -> increaseCitizens();                
             break;            
             case Enumeration::BuildingType::Quarry:
-                    Human::getInstance() -> increaseQuarryAmount();                
+                //Human::getInstance() -> increaseQuarryAmount();                
             break;
             case Enumeration::BuildingType::Siderurgy:
-                    Human::getInstance() -> increaseSiderurgyAmount();                
+                //Human::getInstance() -> increaseSiderurgyAmount();                
             break;                
             case Enumeration::BuildingType::Workshop:
-                    Human::getInstance() -> setWorkshopBuilt(true);                
+                //Human::getInstance() -> setWorkshopBuilt(true);                
             break;
             //ToDo: incrementar felicidad
         }
@@ -361,22 +360,22 @@ void Building::specialTax(Enumeration::Team teamData) {
         // Special taxes
         switch ((Enumeration::BuildingType)type) {
             case Enumeration::BuildingType::Barn:
-                IA::getInstance() -> setBarnBuilt(true);                
+                //IA::getInstance() -> setBarnBuilt(true);                
             break;
             case Enumeration::BuildingType::Barrack:
-                IA::getInstance() -> setBarrackBuilt(true);                
+                //IA::getInstance() -> setBarrackBuilt(true);                
             break;            
             case Enumeration::BuildingType::House:
                 IA::getInstance() -> increaseCitizens();               
             break;            
             case Enumeration::BuildingType::Quarry: 
-                IA::getInstance() -> increaseQuarryAmount();                
+                //IA::getInstance() -> increaseQuarryAmount();                
             break;
             case Enumeration::BuildingType::Siderurgy:
-                IA::getInstance() -> increaseSiderurgyAmount();                
+                //IA::getInstance() -> increaseSiderurgyAmount();                
             break;                  
             case Enumeration::BuildingType::Workshop:
-                IA::getInstance() -> setWorkshopBuilt(true);                
+                //IA::getInstance() -> setWorkshopBuilt(true);                
             break;
             //ToDo: incrementar felicidad
         }
@@ -389,20 +388,4 @@ bool Building::getFinished() {
 
 int Building::getID() {
     return ID;
-}
-
-void Building::setHitbox() {
-    this -> hitbox -> set(model -> getBoundingBox() . getAABBox3D());
-}
-
-//Esto tendria que haber funcionado bien, pero no, como mi vida
-void Building::updateHitbox() {
-    if (!updated) {
-        if (updateHitboxTimer <= 0) {
-            updated = true;
-        } else {
-            setHitbox();
-            updateHitboxTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
-        }
-    }
 }

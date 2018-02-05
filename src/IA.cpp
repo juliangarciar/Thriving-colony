@@ -7,6 +7,7 @@ IA::IA() : Player() {
 }
 
 void IA::init() {
+    updateTimer = 0;
     // Choose a behaviour
     chooseBehaviour();
     // Create a behaviour and a root node and set them up according to the behaviour
@@ -263,7 +264,7 @@ void IA::initializeChoices() {
     // Y NOS LIAREMOS. SI SE PUEDE PASAR ALGUN DIA A ARRAY
     // ENTONCES SE PUEDE QUEDAR CONTROLAR QUE INDICE TIENE QUE STRING
     // Y TODO ES MAS MANEJABLE. PERO POR AHORA NO HACE MAS QUE DAR ERRORES
-    // ASI QUE LO HE DEJADO COMO VECTOR Y AU
+    // ASI QUE LO HE DEJADO COMO VECTOR Y AU (Y quizas un map?)
     choices = new std::vector<std::string>();
     choices -> push_back("Closing Doors");
     choices -> push_back("Deploying troops");

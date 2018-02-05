@@ -23,6 +23,11 @@ void Box3D<T>::set(core::aabbox3d<T> box){
 }
 
 template <class T>
+void Box3D<T>::set(Box3D<T> other){
+	this -> box = other.getAABBox3D();
+}
+
+template <class T>
 bool Box3D<T>::intersects(Box3D<T> other){
 	return box.intersectsWithBox(other.getAABBox3D());
 }
@@ -41,10 +46,6 @@ Vector3<T> Box3D<T>::getSize() {
    	T height = edges[1].Y - edges[0].Y;
    	T depth = edges[2].Z - edges[0].Z;
 
-   /*std::cout<<"height: "<<height<<std::endl;
-   std::cout<<"width: "<<width<<std::endl;
-   std::cout<<"depth: "<<depth<<std::endl;
-*/
 	return Vector3<T>(width, height, depth);
 }
 

@@ -13,7 +13,7 @@ WorkshopNode::~WorkshopNode() {
 void WorkshopNode::question() {
     IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::BuildWorkshop);
     //std::cout << Construyo un taller << std::endl;
-    if (IA::getInstance() -> getQuarryAmount() == 0) {
+    if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Quarry) == 0) {
         IA::getInstance() -> getTree() -> setRequireCrystal(true);
     } else {
         if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::WorkshopMetalCost, Enumeration::BuildingCost::WorkshopCrystalCost, Enumeration::Team::IA)) {

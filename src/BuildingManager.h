@@ -32,20 +32,9 @@ class BuildingManager {
 		 */
 		void testRaycastCollisions();
 		/**
-		 * @brief Solicita el id de la colision
-		 * @return id de tipo entero
+		 * @brief Actualiza las hitboxs
 		 */
-		int getCollisionID();
-		/**
-		 * @brief Solicita el nombre de la colision
-		 * @return string con el nombre
-		 */
-		std::string getCollisionName();
-		/**
-		 * @brief Solicita los edificios del mapa
-		 * @return devuelve un objeto de tipo hash map con los edificios y sus IDs asociadas
-		 */
-		std::map<int, Building*>* getBuildings();
+		void recalculateHitbox();
 
 		/**
 		 * @brief asigna que un edificio este en construccion
@@ -80,17 +69,16 @@ class BuildingManager {
 		 * @return true si isSolvent()==true y false si !isSolvent()
 		 */
 		bool checkCanPay(Enumeration::BuildingType);
-
-		/**
-		 * @brief Actualiza el manejador de edificios
-		 */
-		void updateBuildingManager();
 		/**
 		 * @brief Comprueba si un edificio ha termiando de construirse o no
 		 * @return true en caso de que este terminado y false, en caso contrario
 		 */
 		bool checkFinished(int);
 
+		/**
+		 * @brief Actualiza el manejador de edificios
+		 */
+		void updateBuildingManager();
 		/**
 		 * @brief Asigna, al edificio que se esta construyendo, el modelo 3D asociado
 		 * @param coordenadas donde colocar el modelo 3D
@@ -100,20 +88,42 @@ class BuildingManager {
 		void setTempBuildingModel(Vector3<float>, Enumeration::BuildingType, Enumeration::Team);
 		
 		/**
+		 * @brief Solicita el id de la colision
+		 * @return id de tipo entero
+		 */
+		int getCollisionID();
+		/**
+		 * @brief Solicita el nombre de la colision
+		 * @return string con el nombre
+		 */
+		std::string getCollisionName();
+		/**
+		 * @brief Solicita los edificios del mapa
+		 * @return devuelve un objeto de tipo hash map con los edificios y sus IDs asociadas
+		 */
+		std::map<int, Building*>* getBuildings();
+		/**
 		 * @brief Solicita la capa en la que esta edificio
 		 * @return layer de tipo SceneNode
 		 */
 		SceneNode* getBuildingLayer();
+		/**
+		 * @brief Obtiene la cantidad de edificios de cualquier tipo
+		 * @param tipo de edificio
+		 * @return cantidad
+		 */
+		int getAmount(Enumeration::BuildingType);
 	private:
-		int id;
+		int nextBuildingId;
         int gridAlignment;
         bool buildingMode;
 		
 		SceneNode *buildingLayer;
 		SceneNode *currentCollision;
 		std::map<int, Building*> *buildings;
-
 		Building *tempBuilding;
+
+		int buildingAmounts[Enumeration::BuildingType::BuildingsSize];
 };
 
 #endif

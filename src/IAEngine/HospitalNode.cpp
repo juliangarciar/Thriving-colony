@@ -13,7 +13,7 @@ HospitalNode::~HospitalNode() {
 void HospitalNode::question() {
 
     IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::BuildHospital);
-    if (IA::getInstance() -> getQuarryAmount() == 0) {
+    if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Quarry) == 0) {
         IA::getInstance() -> getTree() -> setRequireCrystal(true);
     } else {
         //std::cout << "Contruyo un hospital" << std::endl;

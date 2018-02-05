@@ -75,6 +75,7 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
         Unit *newUnit = new Unit(std::rand(), unitLayer, L"media/buildingModels/escuela.obj", Vector3<float>(), this -> teamManager, unitData, this -> breedType);
         newUnit -> getModel() -> setActive(false);
         this -> inHallTroops -> push_back(newUnit);
+        troopsAmount[unitData]++;
         return true;
     }
     return false;

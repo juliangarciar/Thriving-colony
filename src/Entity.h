@@ -50,6 +50,11 @@ class Entity {
         void setPosition(Vector3<float>);
 
         /**
+         * @brief Establece la hitbox de la entidad
+         */
+        void setHitbox();
+
+        /**
 		 * @brief Devuelve el equipo al que pertenece la entidad
          * @return team tipo Enumeration::Team
 		 */

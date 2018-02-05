@@ -62,6 +62,10 @@ Vector3<float> Model::getPosition() {
     return Vector3<float>(meshNode -> getPosition());
 }
 Box3D<float> Model::getBoundingBox() {
+    meshNode->getMesh()->getMeshBuffer(0)->recalculateBoundingBox();
+    core::aabbox3df box = meshNode->getMesh()->getMeshBuffer(0)->getBoundingBox();
+    meshNode->getMesh()->setBoundingBox(box);
+    
     return Box3D<float>(meshNode -> getTransformedBoundingBox());
 }
 
