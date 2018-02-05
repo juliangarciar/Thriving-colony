@@ -25,6 +25,10 @@ UnitManager::UnitManager(Enumeration::Team teamData, Enumeration::BreedType race
 
     //Addes by Julian
     this -> breedType = raceData;
+
+	for (int i = 0; i < Enumeration::UnitType::TroopsSize; i++){
+		troopsAmount[i] = 0;
+	}
 }
 
 //Destroyer
@@ -297,4 +301,8 @@ std::vector<Unit*> * UnitManager::getInHallTroops() {
 
 Unit* UnitManager::getSelectedTroop() {
     return selectedTroop;
+}
+
+int UnitManager::getTroopAmount(Enumeration::UnitType t){
+    return troopsAmount[(int)t];
 }

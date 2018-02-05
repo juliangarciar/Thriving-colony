@@ -13,6 +13,7 @@ class Tab : public GUIElement{
 
         void addChild(GUIElement *elem);
 
+        //ToDo: void toggle()
         void show();
         void hide();
         

@@ -27,11 +27,13 @@ void Tab::setTooltip(std::string text){
 }
 
 void Tab::show(){
+    tab->setEnabled(true);
     tab -> setVisible(true);
 }
  
 void Tab::hide(){
     tab -> setVisible(false);
+    tab->setEnabled(false);
 }
 
 std::string Tab::getTitle(){

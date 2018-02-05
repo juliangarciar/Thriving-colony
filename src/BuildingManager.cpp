@@ -125,9 +125,21 @@ void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingTyp
 
 		buildingAmounts[(int)_type]++;
 
-		//ToDo: si es de tipo militar y tiene mas de 1 edificio de ese tipo
-		//Game::Instance()->getGameState()->getHud()->addTab()
-
+		if (buildingAmounts[(int)_type] == 1){
+			switch (_type){
+				case Enumeration::BuildingType::Barrack:
+					Game::Instance() -> getGameState() -> getHud() -> enableTab(_type);
+				break;
+				case Enumeration::BuildingType::Barn:
+					Game::Instance() -> getGameState() -> getHud() -> enableTab(_type);
+				break;
+				case Enumeration::BuildingType::Workshop:
+					Game::Instance() -> getGameState() -> getHud() -> enableTab(_type);
+				break;
+				default: break;
+			}
+		}
+		
 		// Tax the player when placing the building
 		tempBuilding -> taxPlayer(Enumeration::Team::Human);
 		tempBuilding = NULL;
@@ -303,3 +315,11 @@ SceneNode* BuildingManager::getBuildingLayer() {
 	return buildingLayer;
 }
 
+Building *BuildingManager::getBuilding(int id){
+  	std::map<int,Building*>::iterator it;
+	it = buildings->find(id);
+  	if (it != buildings->end())
+		return it->second;
+	else 
+		return NULL;
+}

@@ -36,21 +36,24 @@ class Hud {
         ~Hud();
 
         /**
-         * @brief Crea un boton 
-         * @param id del boton, de tipo entero
-         * @param type sera el tipo de edificio que se creara con ese boton, de tipo entero
+         * @brief Activa una pestaña
+         * @param Tipo de pestaña
          */
-        void addTab(int, int);
-
+        void enableTab(Enumeration::BuildingType);
+        /**
+         * @brief Desctiva una pestaña
+         * @param Tipo de pestaña
+         */
+        void disableTab(Enumeration::BuildingType);
         /**
          * @brief Despliega y muestra el PopUp
          */
         void showPopup();
         /**
          * @brief Despliega y muestra el PopUp
-         * @param tabId indica el boton al que pertenece el popup
+         * @param indica el tipo de pestaña que mostrar en el popup
          */
-        void showPopup(int tabId);
+        void showPopup(Enumeration::BuildingType);
         /**
          * @brief Oculta el PopUp
          */
@@ -78,7 +81,6 @@ class Hud {
          */
         static void deleteWarning();
     private:
-        std::vector<int> *menuIDs;
         std::vector<Button*> *buttons;
 
         Panel *buildingsPanel;
@@ -111,9 +113,20 @@ class Hud {
 
         Panel *tabContainer;
         TabPanel *tabs;
+        Tab *mainBuildingTab;
+        Tab *barrackTab;
+        Tab *barnTab;
+        Tab *workshopTab;
 
         float updateTimer;
         float deleteTextTimer;
+
+        /**
+         * @brief Crea un boton 
+         * @param id del boton, de tipo entero
+         * @param type sera el tipo de edificio que se creara con ese boton, de tipo entero
+         */
+        void addTab(int, int);
 };
 
 #endif

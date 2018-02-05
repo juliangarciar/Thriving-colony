@@ -98,6 +98,12 @@ class BuildingManager {
 		 */
 		std::string getCollisionName();
 		/**
+		 * @brief Obtiene un edificio por su id
+		 * @param id del edificio
+		 * @return edificio
+		 */
+		Building *getBuilding(int);
+		/**
 		 * @brief Solicita los edificios del mapa
 		 * @return devuelve un objeto de tipo hash map con los edificios y sus IDs asociadas
 		 */
