@@ -43,6 +43,9 @@ CameraController::CameraController() {
 	delta.y = 230.f;
     rotationOrInclinationMode = false;
 
+	//Center
+	centerCameraMode = false;
+
 	//ToDo: deberia actualizarse al redimensionar la pantalla
     screenCenter = Vector2<int>(w->getInitialWindowWidth()/2, w->getInitialWindowHeight()/2);
 
@@ -157,22 +160,13 @@ void CameraController::Update(float deltaTime) {
     if (rotationOrInclinationMode || zoomMode) {
 		camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, delta.x, delta.y);
     }
-	
-	//ToDo: mejor en un metodo aparte o algo asi, las pulsaciones de teclas deberian estar en Input no en Update
-	bool centerScreenMode = false;
-	if (g -> getKeyboard() -> keyPressed(GLFW_KEY_SPACE)) { //ToDo: fachada
-		if(Human::getInstance() -> getUnitManager() -> getSelectedTroop() != NULL) {
-			tarPos.x = Human::getInstance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> x;
-			tarPos.z = Human::getInstance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> z;
-		} else {
-			tarPos.x = Enumeration::HumanCityHall::human_x;
-			tarPos.z = Enumeration::HumanCityHall::human_z;
-		}
-		camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, delta.x, delta.y);
-		centerScreenMode = true;
+
+	if (centerCameraMode){
+		tarPos = userPos;
+		camPos = userPos.rotateFromPoint(zoomDistanceFromTarget, delta.x, delta.y);
 	}
 
-    if (movementMode || rotationOrInclinationMode || zoomMode || centerScreenMode){
+    if (movementMode || rotationOrInclinationMode || zoomMode || centerCameraMode){
 		int heightvariance = g -> getGameState() -> getTerrain() -> getY(camPos.x, camPos.z) - camHeight;
 		camPos.y = camPos.y + heightvariance;
 
@@ -305,6 +299,22 @@ void CameraController::RotateAndInclinate(){
 
 		// refresh distance to target
 		distanceToTarget = camPos.getDistanceTo(tarPos);
+	}
+}
+
+void CameraController::CenterCamera(){
+	Game *g = Game::Instance();
+
+	centerCameraMode = false;
+	if (g -> getKeyboard() -> keyPressed(GLFW_KEY_SPACE)) { //ToDo: fachada
+		if(Human::getInstance() -> getUnitManager() -> getSelectedTroop() != NULL) {
+			userPos.x = Human::getInstance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> x;
+			userPos.z = Human::getInstance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> z;
+		} else {
+			userPos.x = Enumeration::HumanCityHall::human_x;
+			userPos.z = Enumeration::HumanCityHall::human_z;
+		}
+		centerCameraMode = true;
 	}
 }
 

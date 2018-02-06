@@ -16,7 +16,7 @@ GameState::~GameState() {
 }
 
 void GameState::Init() {
-    //ToDo: la luz, terreno, y quizas la camara deberian ir en una cpase Map
+    //ToDo: la luz, terreno, y quizas la camara deberian ir en una clase Map
     light = new Light(Vector3<float>(8000, 4000, 8000), 10000);
 
     //Create map
@@ -63,6 +63,7 @@ void GameState::Input() {
     camera -> Move();
     camera -> RotateAndInclinate();
     camera -> Zoom();
+    camera -> CenterCamera();
 
     //Vector3<float> v = map -> getPointCollision(Game::Instance() -> getMouse());
     Human::getInstance() -> getBuildingManager() -> testRaycastCollisions();
