@@ -11,7 +11,7 @@ TextBox::TextBox(GUIElement *parent, std::string t) {
 
 TextBox::~TextBox() {
     //ToDo: borrar Label
-    this -> hide();
+    hide();
 }
 
 void TextBox::setPosition(Vector2<int> position){

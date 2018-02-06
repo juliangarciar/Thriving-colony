@@ -11,7 +11,7 @@ ScrollPanel::ScrollPanel(GUIElement *parent) {
 
 ScrollPanel::~ScrollPanel() {
     //ToDo: borrar Label
-    this -> hide();
+    hide();
 }
 
 void ScrollPanel::setPosition(Vector2<int> position){

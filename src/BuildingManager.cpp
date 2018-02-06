@@ -83,13 +83,9 @@ void BuildingManager::drawBuilding(Terrain *terrain) {
 			collision = it -> second -> getHitbox() -> intersects(*tempBuilding -> getHitbox());
 		}
 		if (collision) {
-			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
-				tempBuilding -> getModel() -> getModel() -> getMesh(), video::SColor(255,0,0,255)
-			); //ToDo: reemplazar color por material
+			tempBuilding->setColor(video::SColor(255,0,0,255)); //ToDo: reemplazar color por material
 		} else {
-			g -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
-				tempBuilding -> getModel() -> getModel() -> getMesh(), tempBuilding -> getColor()
-			); //ToDo: reemplazar color por material
+			tempBuilding->setColor(tempBuilding -> getColor()); //ToDo: reemplazar color por material
 
 			/*
 			* If there is no collision and the player press left button of the mouse,
@@ -97,7 +93,7 @@ void BuildingManager::drawBuilding(Terrain *terrain) {
 			*/
 			if (g -> getMouse() -> leftMouseDown()) {
 				buildingMode = false;
-				buildBuilding(Vector3<float>(x, y, z), (Enumeration::BuildingType)tempBuilding -> getType(), Enumeration::Team::Human);
+				buildBuilding(Vector3<float>(x, y, z), tempBuilding -> getType(), Enumeration::Team::Human);
 			}
 		}
     }
@@ -106,6 +102,17 @@ void BuildingManager::drawBuilding(Terrain *terrain) {
 void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
 	if (_team == Enumeration::Team::IA) {
 		setTempBuildingModel(pos, _type, _team);
+
+		tempBuilding -> setFinishedCallback([&]{
+			tempBuilding->setColor(tempBuilding->getColor()); //ToDo: cambiar por material
+            //returnToOriginalColor();
+            // Increase stuff when the human ends the building, but do so for the AI
+            // when it places the building. is it fair? i dunno
+            if (_team == Enumeration::Team::Human) {
+                tempBuilding->specialTax(_team);
+		        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);
+            }            
+		});
 
 		buildings -> insert(std::pair<int,Building*>(nextBuildingId, tempBuilding));
 
@@ -269,7 +276,7 @@ void BuildingManager::updateBuildingManager() {
 }
 
 bool BuildingManager::checkFinished(int _id) {	
-	return (this -> buildings -> find(_id) -> second -> getFinished());	
+	return (buildings -> find(_id) -> second -> getFinished());	
 }
 
 int BuildingManager::getAmount(Enumeration::BuildingType t){

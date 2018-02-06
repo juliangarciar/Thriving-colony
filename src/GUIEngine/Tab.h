@@ -7,7 +7,6 @@
 
 class Tab : public GUIElement{
     public:
-        //Tab(TabPanel *parent, std::string title, int id);
         Tab(nanogui::Widget *t);
         virtual ~Tab();
 
@@ -22,7 +21,6 @@ class Tab : public GUIElement{
         void setTooltip(std::string text);
 
         std::string getTitle();
-        int getID();
 
         nanogui::Widget *getGUIElement();
     private:

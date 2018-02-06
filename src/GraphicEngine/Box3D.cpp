@@ -9,7 +9,7 @@ Box3D<T>::Box3D(){
 
 template <class T>
 Box3D<T>::Box3D(core::aabbox3d<T> box){
-	this -> box = box;
+	box = box;
 }
 
 template <class T>
@@ -19,12 +19,12 @@ Box3D<T>::~Box3D(){
 
 template <class T>
 void Box3D<T>::set(core::aabbox3d<T> box){
-	this -> box = box;
+	box = box;
 }
 
 template <class T>
 void Box3D<T>::set(Box3D<T> other){
-	this -> box = other.getAABBox3D();
+	box = other.getAABBox3D();
 }
 
 template <class T>

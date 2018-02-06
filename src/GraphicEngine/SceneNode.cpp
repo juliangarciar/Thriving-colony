@@ -20,7 +20,7 @@ SceneNode::SceneNode(SceneNode *parent) {
 }
 
 SceneNode::SceneNode(scene::ISceneNode *node){ 
-	this -> node = node;
+	node = node;
 }
 
 SceneNode::~SceneNode() {

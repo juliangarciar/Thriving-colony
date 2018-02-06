@@ -5,35 +5,34 @@
 
 //ToDo: cambiar llamada a entity
 Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorData, Enumeration::Team teamData, Enumeration::UnitType typeData, Enumeration::BreedType raceData) : Entity(layer, id, path) {
-    
-    this -> viewRadius = 700;
+    viewRadius = 700;
     //Actions of the units
-    this -> moving = false;
-    this -> attacking = false;
-    this -> retracted = true;
+    moving = false;
+    attacking = false;
+    retracted = true;
     //Default target
-    this -> target = 0;
+    target = 0;
     //Position defined by the constructor parameter
-    this -> vectorPos = new Vector3<float>();
-    this -> vectorDes = new Vector3<float>();
-    this -> vectorMov = new Vector3<float>();
+    vectorPos = new Vector3<float>();
+    vectorDes = new Vector3<float>();
+    vectorMov = new Vector3<float>();
     //Team defined by the constructor parameter
-    this -> team = teamData;
+    team = teamData;
     //Defining model position
-    this -> model -> getModel() -> setPosition(vectorData.getVectorF());
+    model -> getModel() -> setPosition(vectorData.getVectorF());
     //This should be put in the switch
     int metalCost = 0;
     int crystalCost = 0;
     int happiness = -10;
     //Race type and unit type
-    this -> unitRace = raceData;
-    this -> unitType = typeData;
+    unitRace = raceData;
+    unitType = typeData;
     // Target-scanning timers
-    this -> lookForTargetTimer = 0.5;
-    this -> lookForTargetCountdown = lookForTargetTimer;
-    this -> attackCountdown = 0;
+    lookForTargetTimer = 0.5;
+    lookForTargetCountdown = lookForTargetTimer;
+    attackCountdown = 0;
 
-    this -> readyToEnter = false;
+    readyToEnter = false;
     switch (unitType)
     {
     //Basic stats of each unit are here
@@ -46,13 +45,13 @@ Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorDa
      */
     case Enumeration::UnitType::StandardM:
         if(unitRace == Enumeration::BreedType::Drorania) {
-            this -> moveSpeed = 420;
-            this -> attackDamage = 15;
-            this -> attackRange = 100;
-            this -> attackSpeed = 1;
-            this -> viewRange = 450;
-            this -> hpMax = 80;
-            this -> hp = 80;
+            moveSpeed = 420;
+            attackDamage = 15;
+            attackRange = 100;
+            attackSpeed = 1;
+            viewRange = 450;
+            hpMax = 80;
+            hp = 80;
             attackEvent = "event:/UnitAttack/Drorania_melee_S";
             moveEvent = "event:/UnitMovement/Drorania_melee_S";
             selectEvent = "event:/UnitSelect/Drorania_melee_S";
@@ -60,13 +59,13 @@ Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorDa
             crystalCost = Enumeration::UnitCost::MeleeFootmenCrystalCost;
         }
         else if(unitRace == Enumeration::BreedType::Kaonov) {
-            this -> moveSpeed = 420;
-            this -> attackDamage = 15;
-            this -> attackRange = 100;
-            this -> attackSpeed = 1;
-            this -> viewRange = 450;
-            this -> hpMax = 80;
-            this -> hp = 80;
+            moveSpeed = 420;
+            attackDamage = 15;
+            attackRange = 100;
+            attackSpeed = 1;
+            viewRange = 450;
+            hpMax = 80;
+            hp = 80;
             attackEvent = "event:/UnitAttack/Kaonov_melee_S";
             moveEvent = "event:/UnitMovement/Kaonov_melee_S";
             selectEvent = "event:/UnitSelect/Kaonov_melee_S";
@@ -77,13 +76,13 @@ Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorDa
     //Advanced melee soldier (mounted)
     case Enumeration::UnitType::AdvancedM:
         if(unitRace == Enumeration::BreedType::Drorania) {
-            this -> moveSpeed = 530;
-            this -> attackDamage = 21;
-            this -> attackRange = 140;
-            this -> attackSpeed = 1;
-            this -> viewRange = 450;
-            this -> hpMax = 140;
-            this -> hp = 140;
+            moveSpeed = 530;
+            attackDamage = 21;
+            attackRange = 140;
+            attackSpeed = 1;
+            viewRange = 450;
+            hpMax = 140;
+            hp = 140;
             attackEvent = "event:/UnitAttack/Drorania_melee_A";
             moveEvent = "event:/UnitMovement/Drorania_melee_A";
             selectEvent = "event:/UnitSelect/Drorania_melee_A";
@@ -92,13 +91,13 @@ Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorDa
         }
         //This should be changed
         else if(unitRace == Enumeration::BreedType::Kaonov) {
-            this -> moveSpeed = 530;
-            this -> attackDamage = 21;
-            this -> attackRange = 140;
-            this -> attackSpeed = 1;
-            this -> viewRange = 450;
-            this -> hpMax = 140;
-            this -> hp = 140;
+            moveSpeed = 530;
+            attackDamage = 21;
+            attackRange = 140;
+            attackSpeed = 1;
+            viewRange = 450;
+            hpMax = 140;
+            hp = 140;
             attackEvent = "event:/UnitAttack/Kaonov_melee_A";
             moveEvent = "event:/UnitMovement/Kaonov_melee_A";
             selectEvent = "event:/UnitSelect/Kaonov_melee_A";
@@ -109,13 +108,13 @@ Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorDa
     //Idol (to be defined)
     case Enumeration::UnitType::Idol:
         if(unitRace == Enumeration::BreedType::Drorania) {
-            this -> moveSpeed = 250;
-            this -> attackDamage = 27;
-            this -> attackRange = 140;
-            this -> attackSpeed = 1;
-            this -> viewRange = 450;
-            this -> hpMax = 180;
-            this -> hp = 180;
+            moveSpeed = 250;
+            attackDamage = 27;
+            attackRange = 140;
+            attackSpeed = 1;
+            viewRange = 450;
+            hpMax = 180;
+            hp = 180;
             //TO CHANGE
             attackEvent = "event:/UnitAttack/Drorania_melee_A";
             moveEvent = "event:/UnitMovement/Drorania_melee_A";
@@ -124,13 +123,13 @@ Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorDa
             crystalCost = Enumeration::UnitCost::CreatureCrystalCost;
         }
         else if(unitRace == Enumeration::BreedType::Kaonov) {
-            this -> moveSpeed = 250;
-            this -> attackDamage = 27;
-            this -> attackRange = 140;
-            this -> attackSpeed = 1;
-            this -> viewRange = 450;
-            this -> hpMax = 180;
-            this -> hp = 180;
+            moveSpeed = 250;
+            attackDamage = 27;
+            attackRange = 140;
+            attackSpeed = 1;
+            viewRange = 450;
+            hpMax = 180;
+            hp = 180;
             //TO CHANGE
             attackEvent = "event:/UnitAttack/Kaonov_melee_A";
             moveEvent = "event:/UnitMovement/Kaonov_melee_A";
@@ -148,13 +147,13 @@ Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorDa
      */
     case Enumeration::UnitType::StandardR:
         if(unitRace == Enumeration::BreedType::Drorania) {
-            this -> moveSpeed = 350;
-            this -> attackDamage = 13;
-            this -> attackRange = 350;
-            this -> attackSpeed = 1;
-            this -> viewRange = 450;
-            this -> hpMax = 60;
-            this -> hp = 60;
+            moveSpeed = 350;
+            attackDamage = 13;
+            attackRange = 350;
+            attackSpeed = 1;
+            viewRange = 450;
+            hpMax = 60;
+            hp = 60;
             attackEvent = "event:/UnitAttack/Drorania_ranged_S";
             moveEvent = "event:/UnitMovement/Drorania_ranged_S";
             selectEvent = "event:/UnitSelect/Drorania_ranged_S";
@@ -162,13 +161,13 @@ Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorDa
             crystalCost = Enumeration::UnitCost::RangedFootmenCrystalCost;
         }
         else if(unitRace == Enumeration::BreedType::Kaonov) {
-            this -> moveSpeed = 350;
-            this -> attackDamage = 13;
-            this -> attackRange = 350;
-            this -> attackSpeed = 1;
-            this -> viewRange = 450;
-            this -> hpMax = 60;
-            this -> hp = 60;
+            moveSpeed = 350;
+            attackDamage = 13;
+            attackRange = 350;
+            attackSpeed = 1;
+            viewRange = 450;
+            hpMax = 60;
+            hp = 60;
             attackEvent = "event:/UnitAttack/Kaonov_ranged_S";
             moveEvent = "event:/UnitMovement/Kaonov_ranged_S";
             selectEvent = "event:/UnitSelect/Kaonov_ranged_S";
@@ -179,13 +178,13 @@ Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorDa
     //Advanced ranged soldier (mounted)
     case Enumeration::UnitType::AdvancedR:
         if(unitRace == Enumeration::BreedType::Drorania) {
-            this -> moveSpeed = 530;
-            this -> attackDamage = 18;
-            this -> attackRange = 700;
-            this -> attackSpeed = 1;
-            this -> viewRange = 450;
-            this -> hpMax = 110;
-            this -> hp = 110;
+            moveSpeed = 530;
+            attackDamage = 18;
+            attackRange = 700;
+            attackSpeed = 1;
+            viewRange = 450;
+            hpMax = 110;
+            hp = 110;
             attackEvent = "event:/UnitAttack/Drorania_ranged_A";
             moveEvent = "event:/UnitMovement/Drorania_ranged_A";
             selectEvent = "event:/UnitSelect/Drorania_ranged_A";
@@ -193,13 +192,13 @@ Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorDa
             crystalCost = Enumeration::UnitCost::MountedRangedCrystalCost;
         }
         else if(unitRace == Enumeration::BreedType::Kaonov) {
-            this -> moveSpeed = 530;
-            this -> attackDamage = 18;
-            this -> attackRange = 700;
-            this -> attackSpeed = 1;
-            this -> viewRange = 450;
-            this -> hpMax = 110;
-            this -> hp = 110;
+            moveSpeed = 530;
+            attackDamage = 18;
+            attackRange = 700;
+            attackSpeed = 1;
+            viewRange = 450;
+            hpMax = 110;
+            hp = 110;
             attackEvent = "event:/UnitAttack/Kaonov_ranged_A";
             moveEvent = "event:/UnitMovement/Kaonov_ranged_A";
             selectEvent = "event:/UnitSelect/Kaonov_ranged_A";
@@ -210,13 +209,13 @@ Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorDa
         //Rock launcher
         case Enumeration::UnitType::Launcher:
         if(unitRace == Enumeration::BreedType::Drorania) {
-            this -> moveSpeed = 250;
-            this -> attackDamage = 27;
-            this -> attackRange = 900;
-            this -> attackSpeed = 1;
-            this -> viewRange = 450;
-            this -> hpMax = 180;
-            this -> hp = 180;
+            moveSpeed = 250;
+            attackDamage = 27;
+            attackRange = 900;
+            attackSpeed = 1;
+            viewRange = 450;
+            hpMax = 180;
+            hp = 180;
             //CHANGE
             attackEvent = "event:/UnitAttack/Drorania_ranged_S";
             moveEvent = "event:/UnitMovement/Drorania_ranged_S";
@@ -225,13 +224,13 @@ Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorDa
             crystalCost = Enumeration::UnitCost::CatapultCrystalCost;
         }
         else if(unitRace == Enumeration::BreedType::Kaonov) {
-            this -> moveSpeed = 250;
-            this -> attackDamage = 27;
-            this -> attackRange = 900;
-            this -> attackSpeed = 1;
-            this -> viewRange = 450;
-            this -> hpMax = 180;
-            this -> hp = 180;
+            moveSpeed = 250;
+            attackDamage = 27;
+            attackRange = 900;
+            attackSpeed = 1;
+            viewRange = 450;
+            hpMax = 180;
+            hp = 180;
             //CHANGE
             attackEvent = "event:/UnitAttack/Kaonov_ranged_S";
             moveEvent = "event:/UnitMovement/Kaonov_ranged_S";
@@ -243,13 +242,13 @@ Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorDa
         //Wall desintegrator
         case Enumeration::UnitType::Desintegrator:
         if(unitRace == Enumeration::BreedType::Drorania) {
-            this -> moveSpeed = 250;
-            this -> attackDamage = 41;
-            this -> attackRange = 120;
-            this -> attackSpeed = 1;
-            this -> viewRange = 450;
-            this -> hpMax = 220;
-            this -> hp = 220;
+            moveSpeed = 250;
+            attackDamage = 41;
+            attackRange = 120;
+            attackSpeed = 1;
+            viewRange = 450;
+            hpMax = 220;
+            hp = 220;
             //CHANGE
             attackEvent = "event:/UnitAttack/Drorania_ranged_A";
             moveEvent = "event:/UnitMovement/Drorania_ranged_A";
@@ -258,13 +257,13 @@ Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorDa
             crystalCost = Enumeration::UnitCost::RamCrystalCost;
         }
         else if(unitRace == Enumeration::BreedType::Kaonov) {
-            this -> moveSpeed = 250;
-            this -> attackDamage = 41;
-            this -> attackRange = 120;
-            this -> attackSpeed = 1;
-            this -> viewRange = 450;
-            this -> hpMax = 220;
-            this -> hp = 220;
+            moveSpeed = 250;
+            attackDamage = 41;
+            attackRange = 120;
+            attackSpeed = 1;
+            viewRange = 450;
+            hpMax = 220;
+            hp = 220;
             //CHANGE
             attackEvent = "event:/UnitAttack/Kaonov_ranged_A";
             moveEvent = "event:/UnitMovement/Kaonov_ranged_A";
@@ -276,17 +275,13 @@ Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorDa
     }
 
     //Graphic engine, this should be in the switch (when models done)
-    //this -> modelLayer = new SceneNode();
-    Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(125, 125, 0, 125));
+    setColor(video::SColor(125, 125, 0, 125)); //ToDo: cambiar por material
 
-    if (teamData == Enumeration::Team::Human)
-    {
+    if (teamData == Enumeration::Team::Human) {
         Human::getInstance() -> increaseHappiness(happiness);
         Human::getInstance() -> increaseArmySize();
         Human::getInstance() -> spendResources(metalCost, crystalCost);
-    }
-    else
-    {
+    } else {
         IA::getInstance() -> increaseHappiness(happiness);
         IA::getInstance() -> increaseArmySize();
         IA::getInstance() -> spendResources(metalCost, crystalCost);
@@ -298,8 +293,6 @@ Unit::~Unit() {
     delete vectorDes;
     delete vectorMov;
 }
-
-
 
 Entity* Unit::getTarget() {
     return target;
@@ -327,47 +320,49 @@ void Unit::moveTroop() {
             // far from destination, move
             Vector3<float> newPos = *vectorPos + *vectorMov;
             newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
-            this -> setTroopPosition(newPos);
+            setTroopPosition(newPos);
         }
     }
 }
 
 
 void Unit::updateTroop() {
-    changeRedTint();
+    //ToDo: ¿?
+    returnToOriginalColor();
     attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
     //State machine, color changes according to state
     switch (state) {
         case Enumeration::UnitState::Idle:
-            Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 0, 255, 255));
+            setColor(video::SColor(255, 0, 255, 255)); //ToDo: cambiar por materiales
             idleState();
             break;
         case Enumeration::UnitState::Move:
-        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 255, 0, 255));
+            setColor(video::SColor(255, 255, 0, 255)); //ToDo: cambiar por materiales
             moveState();
             break;
         case Enumeration::UnitState::AttackMove:
-        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 255, 255, 0));
+            setColor(video::SColor(255, 255, 255, 0)); //ToDo: cambiar por materiales
             attackMoveState();
             break;
         case Enumeration::UnitState::Attack:
-        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 0, 0, 0));
+            setColor(video::SColor(255, 0, 0, 0)); //ToDo: cambiar por materiales
             attackState();
             break;    
         case Enumeration::UnitState::Chase:
-        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 255, 255, 255));
+            setColor(video::SColor(255, 255, 255, 255)); //ToDo: cambiar por materiales
             chaseState();
             break;
         case Enumeration::UnitState::Retract:
-        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 127, 127, 127));
+            setColor(video::SColor(255, 127, 127, 127)); //ToDo: cambiar por materiales
             retractState();
             break;
+        default: break;
     }
 }
 
 void Unit::setTroopPosition(Vector3<float> vectorData) {
-    this -> vectorPos -> set(vectorData);
-    this -> setPosition(vectorData);
+    vectorPos -> set(vectorData);
+    setPosition(vectorData);
 }
 
 void Unit::setTroopDestination(Vector3<float> vectorData) {
@@ -385,12 +380,11 @@ void Unit::setTroopDestination(Vector3<float> vectorData) {
     vectorMov -> z = (desp.z / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
 
     moving = true;
-    
 }
 
 
 Model* Unit::getModel() {
-    return this -> model;
+    return model;
 }
 
 string Unit::getAttackEvent() {
@@ -498,9 +492,7 @@ void Unit::attack() {
     }
 }
 
-
 /// Chasing the target
-
 void Unit::chaseState() {
     //If I have a target, then chase it
     if (target != NULL) {
@@ -522,7 +514,7 @@ void Unit::chaseTarget() {
         } else { //If i am too far away to attack, then move closer.
             Vector3<float> newPos = *vectorPos + *vectorMov;
             newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
-            this -> setTroopPosition(newPos);
+            setTroopPosition(newPos);
         }
     }
 }

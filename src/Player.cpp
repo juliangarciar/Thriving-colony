@@ -24,8 +24,8 @@ Player::~Player() {
  * CONTROL METHODS
  */
 void Player::gainResources() {
-    this -> metalAmount += getMetalProduction();
-    this -> crystalAmount += getCrystalProduction();
+    metalAmount += getMetalProduction();
+    crystalAmount += getCrystalProduction();
 }
 
 void Player::spendResources(int metalCost, int crystalCost) {

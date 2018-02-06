@@ -109,10 +109,10 @@ Hud::Hud() {
         tabContainer -> setSize(Vector2<int>(350, 280));
         tabContainer -> setGroupLayout();
         tabs = new TabPanel(tabContainer);
-        mainBuildingTab = tabs->createTab("Main Building", 0);
-        barrackTab = tabs->createTab("Barrack", 1);
-        barnTab = tabs->createTab("Barn", 2);
-        workshopTab = tabs->createTab("Workshop", 3);
+        mainBuildingTab = tabs->createTab("Main Building");
+        barrackTab = tabs->createTab("Barrack");
+        barnTab = tabs->createTab("Barn");
+        workshopTab = tabs->createTab("Workshop");
 
         //MainBuildingTab
         {

@@ -33,7 +33,7 @@ class Building : public Entity {
          * el importe del edificio cuando se solicita su construccion
          * @param team indica el equipo al que pertenece el jugador
          */
-        virtual void taxPlayer(Enumeration::Team);
+        void taxPlayer(Enumeration::Team);
         /**
          * @brief una vez vconstruido el edificio, actualiza la cantidad del mismo 
          * y los parametros de felicidad y numero de habitantes que tengan asociados
@@ -41,19 +41,25 @@ class Building : public Entity {
          */
         void specialTax(Enumeration::Team);
         /**
-         * @brief solicita el color del edificio
-         * @return devuelve el color de tipo irr::video::SColor
+         * @brief actualiza el edificio
          */
-        irr::video::SColor getColor();
+        void update();
+        /**
+         * @brief finaliza el edificio
+         */
+        void triggerFinishedCallback();
+
+        /**
+         * @brief
+         * @param
+         */
+        void setFinishedCallback(std::function<void()>);
+        
         /**
          * @brief solicita el tipo de edificio
          * @return devuelve un entero con el tipo
          */
-        int getType();
-        /**
-         * @brief actualiza el edificio
-         */
-        void update();
+        Enumeration::BuildingType getType();
         /**
          * @brief Destructor
          * @return true si esta terminado y false en caso contrario 
@@ -71,12 +77,16 @@ class Building : public Entity {
          */
         void Init();
 
-        int type;
+        //Building type
+        Enumeration::BuildingType type;
 
+        //Building timer
         float buildTimer;
-        float buildCountdown;
 
-        //irr::video::SColor baseColor;
+        //Finish building callback
+        std::function<void()> callback;
+
+        //ToDo: cambiar color por material
         irr::video::SColor currentColor;
 };
 

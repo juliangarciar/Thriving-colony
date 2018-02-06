@@ -13,7 +13,7 @@ Panel::Panel(GUIElement *parent, std::string title) {
 }
 
 Panel::~Panel() {
-    this -> hide();
+    hide();
 }
 
 void Panel::addChild(GUIElement *child){

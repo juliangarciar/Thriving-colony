@@ -29,10 +29,11 @@ class Entity {
         virtual ~Entity();
 
         /**
-		 * @brief Devuelte la salud de la entidad
-         * @return hp de tipo entero
-		 */
-        int getHP();
+         * @brief cobra al jugador del equipo correspondiente, 
+         * el importe del edificio cuando se solicita su construccion
+         * @param team indica el equipo al que pertenece el jugador
+         */
+        virtual void taxPlayer(Enumeration::Team) = 0;
         /**
 		 * @brief Resta el daño que se le haga a una unidad a tu salud total
          * @param dmg es el daño a restar
@@ -42,23 +43,47 @@ class Entity {
 		 * @brief Mueve el objeto 3D a las coordenadas (0,0,0)
 		 */
         void die();
+        /**
+		 * @brief Devuelve el color original al modelo
+         * ToDo: cambiar por material
+		 */
+        void returnToOriginalColor();
+        /**
+		 * @brief Actualiza el target de la entidad para ver si puede realizar un nuevo ataque
+         * @param entity 
+		 */
+        void updateTarget(Entity*);
 
         /**
 		 * @brief Establece la posicion de la entidad
          * @param vertorData es las nuevas coordenadas de la posicion
 		 */
         void setPosition(Vector3<float>);
-
+        /**
+         * @brief
+         * @param
+         */
+        void setColor(irr::video::SColor);
         /**
          * @brief Establece la hitbox de la entidad
          */
         void setHitbox();
 
         /**
+		 * @brief Solicita el rango de ataque de la entidad
+         * @return AttackRange de tipo entero
+		 */
+        int getAttackRange();
+        /**
 		 * @brief Devuelve el equipo al que pertenece la entidad
          * @return team tipo Enumeration::Team
 		 */
         Enumeration::Team getTeam();
+        /**
+		 * @brief Devuelte la salud de la entidad
+         * @return hp de tipo entero
+		 */
+        int getHP();
         /**
 		 * @brief Solicita la posicion actual de la entidad
          * @return position sera el vector de coordenadas devuelto
@@ -75,32 +100,15 @@ class Entity {
 		 */
         Model *getModel();
         /**
-		 * @brief Actualiza el target de la entidad para ver si puede realizar un nuevo ataque
-         * @param entity 
-		 */
-        void updateTarget(Entity*);
-
-        /**
-		 * @brief Solicita el rango de ataque de la entidad
-         * @return AttackRange de tipo entero
-		 */
-        int getAttackRange();
-        /**
-		 * @brief Cambia el color del modelo a rojo cuando la entidad esta siendo atacada
-		 */
-        void changeRedTint();
-
-        /**
-         * @brief cobra al jugador del equipo correspondiente, 
-         * el importe del edificio cuando se solicita su construccion
-         * @param team indica el equipo al que pertenece el jugador
-         */
-        virtual void taxPlayer(Enumeration::Team) = 0;
-        /**
 		 * @brief Devuelve el ViewRadius de la entidad
          * @return viewRadius de tipo entero
 		 */
         int getViewRadius();
+        /**
+         * @brief solicita el color del edificio
+         * @return devuelve el color de tipo irr::video::SColor
+         */
+        irr::video::SColor getColor(); //ToDo: temporal
         
     protected:
         Entity* target;

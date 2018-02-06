@@ -11,7 +11,7 @@ Button::Button(GUIElement *parent, std::string buttonText) {
 
 Button::~Button() {
     //delete button;
-    this -> hide();
+    hide();
 }
 
 bool Button::isButtonPressed(){

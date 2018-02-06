@@ -24,7 +24,7 @@ UnitManager::UnitManager(Enumeration::Team teamData, Enumeration::BreedType race
     selectedTroop = NULL;
 
     //Addes by Julian
-    this -> breedType = raceData;
+    breedType = raceData;
 
 	for (int i = 0; i < Enumeration::UnitType::TroopsSize; i++){
 		troopsAmount[i] = 0;
@@ -76,9 +76,9 @@ void UnitManager::updateUnitManager() {
 //unitData.unitSubClass = Enumeration::UnitType::SubClass::Idol;
 bool UnitManager::createTroop(Enumeration::UnitType unitData) {
     if (checkCanPay(unitData)) {
-        Unit *newUnit = new Unit(std::rand(), unitLayer, L"media/buildingModels/escuela.obj", Vector3<float>(), this -> teamManager, unitData, this -> breedType);
+        Unit *newUnit = new Unit(std::rand(), unitLayer, L"media/buildingModels/escuela.obj", Vector3<float>(), teamManager, unitData, breedType);
         newUnit -> getModel() -> setActive(false);
-        this -> inHallTroops -> push_back(newUnit);
+        inHallTroops -> push_back(newUnit);
         troopsAmount[unitData]++;
         return true;
     }
@@ -107,10 +107,10 @@ std::string UnitManager::getCollisionName() {
 
 /*
 void UnitManager::deployTroopAtPosition(int index, Vector3<float> vectorData) {
-    Unit *u = this -> inHallTroops -> at(index);
+    Unit *u = inHallTroops -> at(index);
     u -> setPosition(vectorData);
-    this -> inMapTroops -> insert(std::pair<int, Unit*>(u -> getModel() -> getID(), u));
-    this -> inHallTroops -> erase(inHallTroops -> begin() + index);
+    inMapTroops -> insert(std::pair<int, Unit*>(u -> getModel() -> getID(), u));
+    inHallTroops -> erase(inHallTroops -> begin() + index);
 }
 */
 
@@ -127,8 +127,8 @@ void UnitManager::deployTroop(Terrain *terrain) {
     if (isDeployingTroop && currentDeployingTroop >= 0 && g -> getMouse() -> leftMouseDown()) { 
         Unit *temp = inHallTroops -> at(currentDeployingTroop);
 
-        this -> inHallTroops -> erase(inHallTroops -> begin() + currentDeployingTroop);
-        this -> inMapTroops -> insert(std::pair<int, Unit*>(temp -> getModel() -> getID(), temp));
+        inHallTroops -> erase(inHallTroops -> begin() + currentDeployingTroop);
+        inMapTroops -> insert(std::pair<int, Unit*>(temp -> getModel() -> getID(), temp));
 
         temp -> setTroopPosition(Vector3<float>(Enumeration::HumanCityHall::human_x, terrain -> getY(Enumeration::HumanCityHall::human_x, Enumeration::HumanCityHall::human_z), Enumeration::HumanCityHall::human_z)); //ToDo
         
@@ -150,8 +150,8 @@ void UnitManager::deployTroop(Terrain *terrain) {
 void UnitManager::deployAllTroops(Vector3<float> vectorData) {
     for (int i = inHallTroops -> size() - 1; i >= 0; i--) {
         Unit *u = inHallTroops -> at(i);
-        this -> inHallTroops -> erase(inHallTroops -> begin() + i);
-        this -> inMapTroops -> insert(std::pair<int, Unit*>(u -> getModel() -> getID(), u));
+        inHallTroops -> erase(inHallTroops -> begin() + i);
+        inMapTroops -> insert(std::pair<int, Unit*>(u -> getModel() -> getID(), u));
 
 
         u -> setTroopPosition(vectorData);
@@ -178,7 +178,7 @@ void UnitManager::selectTroop(int troopID) {
     Game *g = Game::Instance();
     std::map<int,Unit*>::iterator it = inMapTroops -> find(troopID);
     if (it != inMapTroops -> end()) {
-        this -> selectedTroop = it -> second;
+        selectedTroop = it -> second;
         //SELECT VOICE
         SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getSelectEvent());
         g -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
@@ -188,8 +188,8 @@ void UnitManager::selectTroop(int troopID) {
 //Select a troop
 void UnitManager::unSelectTroop() { 
     Game *g = Game::Instance();
-    if (this -> selectedTroop != NULL){
-        this -> selectedTroop = NULL;
+    if (selectedTroop != NULL){
+        selectedTroop = NULL;
         g -> getMouse() -> changeIcon(CURSOR_NORMAL);
     }
 }
@@ -198,21 +198,21 @@ void UnitManager::unSelectTroop() {
 //Pass the order to the selected unit
 void UnitManager::moveOrder(Terrain *terrain) {
     Game *g = Game::Instance();
-    if (this -> selectedTroop != NULL) {
-        this -> selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
+    if (selectedTroop != NULL) {
+        selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
         if (Game::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: arreglar
-            this -> selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
+            selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
 
-            this -> selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
+            selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
         } else {
-            this -> selectedTroop -> switchState(Enumeration::UnitState::Move);
+            selectedTroop -> switchState(Enumeration::UnitState::Move);
 
-            this -> selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
+            selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
         }
         //MOVEMENT VOICE
         SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
-        //this -> selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
-        //Game::Instance() -> getSoundSystem() -> playVoice(this -> selectedTroop -> getMoveEvent());
+        //selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
+        //Game::Instance() -> getSoundSystem() -> playVoice(selectedTroop -> getMoveEvent());
     }
 }
 

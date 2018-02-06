@@ -133,7 +133,7 @@ void SoundSystem::update() {
 }
 
 void SoundSystem::setStat(bool data) {
-    this -> paused = data;
+    paused = data;
 }
 
 /*
