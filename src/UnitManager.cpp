@@ -25,6 +25,8 @@ UnitManager::UnitManager(Enumeration::Team teamData, Enumeration::BreedType race
 
     //Addes by Julian
     this -> breedType = raceData;
+
+    id = 0;
 }
 
 //Destroyer
@@ -72,9 +74,10 @@ void UnitManager::updateUnitManager() {
 //unitData.unitSubClass = Enumeration::UnitType::SubClass::Idol;
 bool UnitManager::createTroop(Enumeration::UnitType unitData) {
     if (checkCanPay(unitData)) {
-        Unit *newUnit = new Unit(std::rand(), unitLayer, L"media/buildingModels/escuela.obj", Vector3<float>(), this -> teamManager, unitData, this -> breedType);
+        Unit *newUnit = new Unit(id, unitLayer, L"media/buildingModels/escuela.obj", Vector3<float>(), this -> teamManager, unitData, this -> breedType);
         newUnit -> getModel() -> setActive(false);
         this -> inHallTroops -> push_back(newUnit);
+        id++;
         return true;
     }
     return false;

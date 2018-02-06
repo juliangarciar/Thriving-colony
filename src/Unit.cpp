@@ -373,18 +373,13 @@ void Unit::setTroopDestination(Vector3<float> vectorData) {
     if (state == Enumeration::UnitState::Move) {
         target = NULL;
     }
-
     vectorDes -> set(vectorData);
-
     Vector3<float> desp = *vectorDes - *vectorPos;
 
     float distance = std::abs(std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2)));
-
     vectorMov -> x = (desp.x / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
     vectorMov -> z = (desp.z / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
-
     moving = true;
-    
 }
 
 
@@ -497,20 +492,18 @@ void Unit::attack() {
                 if (team == Enumeration::Team::Human) {
                     if (target -> getEntityType() == Enumeration::EntityType::Unit) {
                         IA::getInstance() -> getUnitManager() -> deleteUnit(target -> getID());
-                        std::cout<<"IA: "<<IA::getInstance() -> getUnitManager() -> getInHallTroops() ->size()<<std::endl;
                     } else {
                         IA::getInstance() -> getBuildingManager() -> deleteBuilding(target -> getID());
                     }
                 } else {
                     if (target -> getEntityType() == Enumeration::EntityType::Unit) {
                         Human::getInstance() -> getUnitManager() -> deleteUnit(target -> getID());
-                        std::cout<<"Human: "<<Human::getInstance() -> getUnitManager() -> getInHallTroops() ->size()<<std::endl;
                     } else {
                         Human::getInstance() -> getBuildingManager() -> deleteBuilding(target -> getID());
                     }
                 }
                 target = NULL;
-                Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
+                this -> switchState(Enumeration::UnitState::AttackMove);
             }
         }
     }

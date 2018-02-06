@@ -27,6 +27,8 @@ class UnitManager{
         int currentDeployingTroop;
 
         int gridAlignment;
+
+        int id;
         
     public:
         UnitManager(Enumeration::Team teamData, Enumeration::BreedType raceData);             //Constructor
