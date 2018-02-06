@@ -2,7 +2,6 @@
 #include "Game.h"
 
 GameState::GameState() : State() {
-
     gamePaused = false;
 
     prevWindowWidth = 1280;

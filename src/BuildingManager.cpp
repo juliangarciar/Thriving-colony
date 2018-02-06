@@ -109,7 +109,7 @@ void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingTyp
 		tempBuilding -> getModel() -> setID(nextBuildingId);
 
 		tempBuilding -> setFinishedCallback([&]{
-			tempBuilding->setColor(tempBuilding->getColor()); //ToDo: cambiar por material
+			//tempBuilding->setColor(tempBuilding->getColor()); //ToDo: cambiar por material
 			buildingAmounts[(int)_type]++;
             //returnToOriginalColor();     
 		});
@@ -129,7 +129,7 @@ void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingTyp
 		tempBuilding -> getModel() -> setID(nextBuildingId);
 
 		tempBuilding -> setFinishedCallback([&]{
-			tempBuilding->setColor(tempBuilding->getColor()); //ToDo: cambiar por material
+			//tempBuilding->setColor(tempBuilding->getColor()); //ToDo: cambiar por material
             //returnToOriginalColor();
 
 			buildingAmounts[(int)_type]++;
