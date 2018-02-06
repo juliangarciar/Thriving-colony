@@ -3,7 +3,7 @@
 #include "Human.h"
 
 IA::IA() : Player() {
-    
+    init();
 }
 
 void IA::init() {

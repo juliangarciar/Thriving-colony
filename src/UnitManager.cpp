@@ -251,29 +251,29 @@ bool UnitManager::checkCanPay(Enumeration::UnitType type) {
     //ESto esta aqui para no hacer clutter arriba
     bool canPay = false;
     //CHECK IF YOU CAN PAY THE BUILDING
-    
     switch (type) {
-    case Enumeration::UnitType::StandardM:
-        canPay = isSolvent(Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost);
-    break;
-    case Enumeration::UnitType::AdvancedM:
-        canPay = isSolvent(Enumeration::UnitCost::MountedMeleeMetalCost, Enumeration::UnitCost::MountedMeleeCrystalCost);
-    break;
-    case Enumeration::UnitType::Idol:
-        canPay = isSolvent(Enumeration::UnitCost::CreatureMetalCost, Enumeration::UnitCost::CreatureCrystalCost);
-    break;
-    case Enumeration::UnitType::Launcher:
-        canPay = isSolvent(Enumeration::UnitCost::CatapultMetalCost, Enumeration::UnitCost::CatapultCrystalCost);
-    break;
-    case Enumeration::UnitType::Desintegrator:
-        canPay = isSolvent(Enumeration::UnitCost::RamMetalCost, Enumeration::UnitCost::RamCrystalCost);
-    break;
-    case Enumeration::UnitType::StandardR:
-        canPay = isSolvent(Enumeration::UnitCost::RangedFootmenMetalCost, Enumeration::UnitCost::RangedFootmenCrystalCost);
-    break;
-    case Enumeration::UnitType::AdvancedR:
-        canPay = isSolvent(Enumeration::UnitCost::MountedRangedMetalCost, Enumeration::UnitCost::MountedRangedCrystalCost);
-    break;
+        case Enumeration::UnitType::StandardM:
+            canPay = isSolvent(Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost);
+        break;
+        case Enumeration::UnitType::AdvancedM:
+            canPay = isSolvent(Enumeration::UnitCost::MountedMeleeMetalCost, Enumeration::UnitCost::MountedMeleeCrystalCost);
+        break;
+        case Enumeration::UnitType::Idol:
+            canPay = isSolvent(Enumeration::UnitCost::CreatureMetalCost, Enumeration::UnitCost::CreatureCrystalCost);
+        break;
+        case Enumeration::UnitType::Launcher:
+            canPay = isSolvent(Enumeration::UnitCost::CatapultMetalCost, Enumeration::UnitCost::CatapultCrystalCost);
+        break;
+        case Enumeration::UnitType::Desintegrator:
+            canPay = isSolvent(Enumeration::UnitCost::RamMetalCost, Enumeration::UnitCost::RamCrystalCost);
+        break;
+        case Enumeration::UnitType::StandardR:
+            canPay = isSolvent(Enumeration::UnitCost::RangedFootmenMetalCost, Enumeration::UnitCost::RangedFootmenCrystalCost);
+        break;
+        case Enumeration::UnitType::AdvancedR:
+            canPay = isSolvent(Enumeration::UnitCost::MountedRangedMetalCost, Enumeration::UnitCost::MountedRangedCrystalCost);
+        break;
+        default: break;
     }
     return canPay;
 }

@@ -2,36 +2,36 @@
 #include "Game.h"
 
 PauseState::PauseState() : State() {
-    hud = new PauseMenu();
-    Window::Instance() -> setGUI();
-    
     prevWindowWidth = 1280;
     prevWindowHeight = 720;
 }
 
 PauseState::~PauseState() {
-    delete hud;
 }
 
-void PauseState::init() {
+void PauseState::Init() {
+    hud = new PauseMenu();
+    Window::Instance() -> setGUI();
+    
     hud -> setHUDEvents();
 }
 
-void PauseState::input() {
+void PauseState::Input() {
     hud -> update();
 }
 
-void PauseState::update() {
+void PauseState::Update() {
     /*Game *g = Game::Instance();
     if (g -> getWindow() -> getRealWindowWidth() != prevWindowWidth || g -> getWindow() -> getRealWindowHeight() != prevWindowHeight) {
         hud -> updatePositions();
     }*/
 }
 
-void PauseState::render() {
+void PauseState::Render() {
 
 }
 
-void PauseState::cleanUp() {
-
+void PauseState::CleanUp() {
+    delete hud;
+    Window::Instance() -> setGUI();
 }

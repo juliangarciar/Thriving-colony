@@ -2,36 +2,36 @@
 #include "Game.h"
 
 MenuState::MenuState() : State() {
-    hud = new StartMenu();
-    Window::Instance() -> setGUI();
-    
     prevWindowWidth = 1280;
     prevWindowHeight = 720;
 }
 
 MenuState::~MenuState() {
-    delete hud;
 }
 
-void MenuState::init() {
+void MenuState::Init() {
+    hud = new StartMenu();
+    Window::Instance() -> setGUI();
+    
     hud -> setHUDEvents();
 }
 
-void MenuState::input() {
+void MenuState::Input() {
     hud -> update();
 }
 
-void MenuState::update() {
+void MenuState::Update() {
     /*Game *g = Game::Instance();
     if (g -> getWindow() -> getRealWindowWidth() != prevWindowWidth || g -> getWindow() -> getRealWindowHeight() != prevWindowHeight) {
         hud -> updatePositions();
     }*/
 }
 
-void MenuState::render() {
+void MenuState::Render() {
 
 }
 
-void MenuState::cleanUp() {
-
+void MenuState::CleanUp() {
+    delete hud;
+    Window::Instance() -> setGUI();
 }

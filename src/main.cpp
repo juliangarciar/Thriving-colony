@@ -7,15 +7,15 @@ using namespace std;
 int main() {
     Game *game = Game::Instance();
 
-    game -> init();
+    game -> Init();
 
     while (game -> getWindow() -> isOpen()){
-        game -> input();
-        game -> update();
-        game -> render();
+        game -> Input();
+        game -> Update();
+        game -> Render();
     }
 
-    game -> cleanUp();
+    game -> CleanUp();
     
     return 0;
 }

@@ -15,7 +15,7 @@ GameState::~GameState() {
     delete battleManager;
 }
 
-void GameState::init() {
+void GameState::Init() {
     //ToDo: la luz, terreno, y quizas la camara deberian ir en una cpase Map
     light = new Light(Vector3<float>(8000, 4000, 8000), 10000);
 
@@ -27,11 +27,15 @@ void GameState::init() {
     //Init camera controller
     camera = new CameraController();
 
+    //Init HUD
+    hud = new Hud();
+    hud -> setHUDEvents();
+    Window::Instance() -> setGUI();
+
     //Init battle manager
     battleManager = new BattleManager();
 
     //Init SoundSystem
-    hud = new Hud();
     SoundSystem::Instance() -> initSystem();
 
     // Build the main building of IA
@@ -53,19 +57,9 @@ void GameState::init() {
     v.z = Enumeration::HumanCityHall::human_z + 200;
     v.y = map -> getY(v.x, v.z);
     Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy);
-
-    /*
-    Enumeration::UnitType unitData = Enumeration::UnitType::StandardM;
-    Human::getInstance() -> getUnitManager() -> createTroop(unitData);
-    Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsHuman);
-    */
-
-    //Init HUD
-    Window::Instance() -> setGUI();
-    hud -> setHUDEvents();
 }
 
-void GameState::input() {
+void GameState::Input() {
     camera -> Move();
     camera -> RotateAndInclinate();
     camera -> Zoom();
@@ -161,11 +155,12 @@ void GameState::input() {
     }*/   
 }
 
-void GameState::update(){
+void GameState::Update(){
     Game *g = Game::Instance();
 
     //Update camera
     camera -> Update(g -> getWindow() -> getDeltaTime());
+    
     //Update HUD
     hud -> update();
 
@@ -188,11 +183,11 @@ void GameState::update(){
     }
 }
 
-void GameState::render() {
+void GameState::Render() {
 
 }
 
-void GameState::cleanUp() {
+void GameState::CleanUp() {
 
 }
 

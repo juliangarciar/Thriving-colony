@@ -36,23 +36,23 @@ class GameState : public State {
          /**
 		 * @brief Inicializa GameState
 		 */
-        void init();
+        void Init();
         /**
 		 * @brief Recoge las entradas de teclado y raton
 		 */
-        void input();
+        void Input();
         /**
 		 * @brief Actualiza
 		 */
-        void update();
+        void Update();
         /**
 		 * @brief Renderiza
 		 */
-        void render();
+        void Render();
         /**
 		 * @brief Constructor
 		 */
-        void cleanUp();
+        void CleanUp();
         /**
         * @brief Devuelve el mapa
         * @return objeto de tipo Terrain
