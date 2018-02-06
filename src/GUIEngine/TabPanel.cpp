@@ -53,18 +53,8 @@ void TabPanel::hide(){
     ctrl -> setVisible(false);
 }
 
-bool TabPanel::changeActiveTab(int id){
-    std::map<int,Tab*>::iterator it = tabs -> find(id);
-    if (it != tabs -> end()) {
-        ctrl -> setActiveTab(id);
-        return true;
-    }
-    return false;
-}
-
-void TabPanel::refreshLayout(){
-    Window::Instance()->getGUIEnvironment()->performLayout();
-    ctrl->ensureTabVisible(ctrl->tabCount());
+void TabPanel::changeActiveTab(int index){
+    if (index >= 0) ctrl -> setActiveTab(index);
 }
 
 nanogui::Widget *TabPanel::getGUIElement(){

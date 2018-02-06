@@ -14,7 +14,8 @@ class TabPanel : public GUIElement {
 
         Tab *createTab(std::string text, int id);
         Tab *getTab(int id);
-        bool changeActiveTab(int id);
+
+        void changeActiveTab(int index);
         
         void setPosition(Vector2<int> position);
         
@@ -22,8 +23,6 @@ class TabPanel : public GUIElement {
 
         void show();
         void hide();
-
-        void refreshLayout();
 
         nanogui::Widget *getGUIElement();
     private:

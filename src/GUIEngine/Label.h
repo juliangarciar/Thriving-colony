@@ -9,6 +9,7 @@ class Label : public GUIElement {
 
     public:
         Label(std::string t);
+        Label(GUIElement *parent, std::string t);
         virtual ~Label();
         
         void setPosition(Vector2<int> position);
@@ -18,7 +19,6 @@ class Label : public GUIElement {
 
         void setSize(Vector2<int> size);
 
-        
         void show();
         void hide();
         

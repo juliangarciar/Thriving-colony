@@ -2,7 +2,7 @@
 #include "Game.h"
 
 PauseState::PauseState() : State() {
-    hud = new HudPause();
+    hud = new PauseMenu();
     Window::Instance() -> setGUI();
     
     prevWindowWidth = 1280;

@@ -106,14 +106,17 @@ Hud::Hud() {
     deleteWarning();
     
     tabContainer = new Panel("Building viewer");
-        tabContainer -> setSize(Vector2<int>(350, 250));
+        tabContainer -> setSize(Vector2<int>(350, 280));
         tabContainer -> setGroupLayout();
         tabContainer -> center();
         tabs = new TabPanel(tabContainer);
+        mainBuildingTab = tabs->createTab("Main Building", 0);
+        barrackTab = tabs->createTab("Barrack", 1);
+        barnTab = tabs->createTab("Barn", 2);
+        workshopTab = tabs->createTab("Workshop", 3);
+
         //MainBuildingTab
         {
-            mainBuildingTab = tabs->createTab("Main Building", 0);
-
             Button *b = new Button(mainBuildingTab, "Close");
             b->setTooltip("Close popup");
             b->setCallback([&] {
@@ -148,11 +151,11 @@ Hud::Hud() {
                 Game::Instance() -> getEvents() -> triggerEvent(Enumeration::RetractTroopsHuman);
             });
             buttons -> push_back(b);
+
+            mainBuildingTab->hide();
         }
         //BarrackTab
         {
-            barrackTab = tabs->createTab("Barrack", 1);
-
             Button *b = new Button(barrackTab, "Close");
             b->setTooltip("Close popup");
             b->setCallback([&] {
@@ -160,7 +163,13 @@ Hud::Hud() {
             });
             buttons -> push_back(b);
 
-            b = new Button(barrackTab, "Create melee footman");
+            barrackEmpty = new Panel(barrackTab, "");
+            barrackEmptyLabel = new Label(barrackEmpty, "Este edificio no esta activo aun");
+
+            barrackContent = new Panel(barrackTab, "");
+            barrackContent -> setGroupLayout();
+
+            b = new Button(barrackContent, "Create melee footman");
             b -> setTooltip("Create a melee unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardM);
@@ -169,7 +178,7 @@ Hud::Hud() {
             });
             buttons -> push_back(b);
             
-            b = new Button(barrackTab, "Create ranged footman");
+            b = new Button(barrackContent, "Create ranged footman");
             b -> setTooltip("Create a ranged unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardR);
@@ -177,12 +186,10 @@ Hud::Hud() {
                 Window::Instance()->getGUIEnvironment()->performLayout();
             });
             buttons -> push_back(b);
-            barrackTab -> hide();
+            barrackContent -> hide();
         }
         //BarnTab
         {
-            barnTab = tabs->createTab("Barn", 2);
-
             Button *b = new Button(barnTab, "Close");
             b->setTooltip("Close popup");
             b->setCallback([&] {
@@ -190,7 +197,13 @@ Hud::Hud() {
             });
             buttons -> push_back(b);
 
-            b = new Button(barnTab, "Create mounted melee unit");
+            barnEmpty = new Panel(barnTab, "");
+            barnEmptyLabel = new Label(barnEmpty, "Este edificio no esta activo aun");
+
+            barnContent = new Panel(barnTab, "");
+            barnContent -> setGroupLayout();
+
+            b = new Button(barnContent, "Create mounted melee unit");
             b -> setTooltip("Create a melee unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedM);
@@ -199,7 +212,7 @@ Hud::Hud() {
             });
             buttons -> push_back(b);
             
-            b = new Button(barnTab, "Create mounted ranged unit");
+            b = new Button(barnContent, "Create mounted ranged unit");
             b -> setTooltip("Create a ranged unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedR);
@@ -208,7 +221,7 @@ Hud::Hud() {
             });
             buttons -> push_back(b);
 
-            b = new Button(barnTab, "Create monster");
+            b = new Button(barnContent, "Create monster");
             b -> setTooltip("Create a overwhelmingly powerful creature to destroy your enemies\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Idol);
@@ -216,12 +229,10 @@ Hud::Hud() {
                 Window::Instance()->getGUIEnvironment()->performLayout();
             });
             buttons -> push_back(b);
-            barnTab -> hide();
+            barnContent -> hide();
         }
         //Workshop tab
         {
-            workshopTab = tabs->createTab("Workshop", 3);
-
             Button *b = new Button(workshopTab, "Close");
             b->setTooltip("Close popup");
             b->setCallback([&] {
@@ -229,7 +240,13 @@ Hud::Hud() {
             });
             buttons -> push_back(b);
 
-            b = new Button(workshopTab, "Create ram");
+            workshopEmpty = new Panel(workshopTab, "");
+            workshopEmptyLabel = new Label(workshopEmpty, "Este edificio no esta activo aun");
+
+            workshopContent = new Panel(workshopTab, "");
+            workshopContent -> setGroupLayout();
+
+            b = new Button(workshopContent, "Create ram");
             b -> setTooltip("Create a ram that specializes in destroying buildings\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Desintegrator);
@@ -238,7 +255,7 @@ Hud::Hud() {
             });
             buttons -> push_back(b);
             
-            b = new Button(workshopTab, "Create catapult");
+            b = new Button(workshopContent, "Create catapult");
             b -> setTooltip("Create a catapult that heavy area of damage\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Launcher);
@@ -246,7 +263,7 @@ Hud::Hud() {
                 Window::Instance()->getGUIEnvironment()->performLayout();
             });
             buttons -> push_back(b);
-            workshopTab -> hide();
+            workshopContent -> hide();
         }
         tabs->changeActiveTab(0);
     tabContainer->hide();
@@ -296,31 +313,39 @@ Hud::~Hud() {
 void Hud::enableTab(Enumeration::BuildingType t){
     switch (t){
         case Enumeration::BuildingType::Barrack:
-            barrackTab->show();
+            barrackEmpty->hide();
+            barrackContent->show();
         break;
         case Enumeration::BuildingType::Barn:
-            barnTab->show();
+            barnEmpty->hide();
+            barnContent->show();
         break;
         case Enumeration::BuildingType::Workshop:
-            workshopTab->show();
+            workshopEmpty->hide();
+            workshopContent->show();
         break;
         default: break;
     }
+    tabContainer->refreshLayout();
 }
 
 void Hud::disableTab(Enumeration::BuildingType t){
     switch (t){
         case Enumeration::BuildingType::Barrack:
-            barrackTab->hide();
+            barrackEmpty->show();
+            barrackContent->hide();
         break;
         case Enumeration::BuildingType::Barn:
-            barnTab->hide();
+            barnEmpty->show();
+            barnContent->hide();
         break;
         case Enumeration::BuildingType::Workshop:
-            workshopTab->hide();
+            workshopEmpty->show();
+            workshopContent->hide();
         break;
         default: break;
     }
+    tabContainer->refreshLayout();
 }
 
 void Hud::showPopup(){
@@ -343,6 +368,7 @@ void Hud::showPopup(Enumeration::BuildingType t){
         break;
         default: break;
     }
+    tabContainer -> show();
 }
 
 void Hud::hidePopup(){

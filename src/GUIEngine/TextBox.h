@@ -6,9 +6,9 @@
 #include "GUIElement.h"
 
 class TextBox : public GUIElement {
-
     public:
         TextBox(std::string t);
+        TextBox(GUIElement *parent, std::string t);
         virtual ~TextBox();
         
         void setPosition(Vector2<int> position);

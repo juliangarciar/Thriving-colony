@@ -5,6 +5,10 @@ TextBox::TextBox(std::string t) {
     textbox = Window::Instance() -> getGUIEnvironment() -> add<nanogui::TextBox>(t);
 }
 
+TextBox::TextBox(GUIElement *parent, std::string t) {
+    textbox = parent -> getGUIElement() -> add<nanogui::TextBox>(t);
+}
+
 TextBox::~TextBox() {
     //ToDo: borrar Label
     this -> hide();

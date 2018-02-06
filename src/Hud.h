@@ -12,6 +12,7 @@
 #include <GUIEngine/Panel.h>
 #include <GUIEngine/Label.h>
 #include <GUIEngine/ComboBox.h>
+#include <GUIEngine/Widget.h>
 #include <IOEngine/Keyboard.h>
 #include <IOEngine/Mouse.h>
 
@@ -113,10 +114,21 @@ class Hud {
 
         Panel *tabContainer;
         TabPanel *tabs;
+
         Tab *mainBuildingTab;
+        
         Tab *barrackTab;
+        Panel *barrackEmpty;
+        Label *barrackEmptyLabel;
+        Panel *barrackContent;
         Tab *barnTab;
+        Panel *barnEmpty;
+        Label *barnEmptyLabel;
+        Panel *barnContent;
         Tab *workshopTab;
+        Panel *workshopEmpty;
+        Label *workshopEmptyLabel;
+        Panel *workshopContent;
 
         float updateTimer;
         float deleteTextTimer;

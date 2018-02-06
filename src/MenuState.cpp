@@ -2,7 +2,7 @@
 #include "Game.h"
 
 MenuState::MenuState() : State() {
-    hud = new HudMenu();
+    hud = new StartMenu();
     Window::Instance() -> setGUI();
     
     prevWindowWidth = 1280;

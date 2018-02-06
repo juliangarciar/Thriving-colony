@@ -5,6 +5,10 @@ Label::Label(std::string t) {
     label = Window::Instance() -> getGUIEnvironment() -> add<nanogui::Label>(t);
 }
 
+Label::Label(GUIElement *parent, std::string t) {
+    label = parent -> getGUIElement() -> add<nanogui::Label>(t);
+}
+
 Label::~Label() {
     //ToDo: borrar Label
 }

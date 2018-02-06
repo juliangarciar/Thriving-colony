@@ -2,7 +2,7 @@
 #define PAUSESTATE_H
 
 #include "State.h"
-#include "HudPause.h"
+#include "PauseMenu.h"
 
 /**
  * @class PauseState
@@ -42,7 +42,7 @@ class PauseState : public State {
         void cleanUp();
 
     private:
-        HudPause * hud;
+        PauseMenu *hud;
 
         int prevWindowWidth;
         int prevWindowHeight;

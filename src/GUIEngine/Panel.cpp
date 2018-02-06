@@ -3,26 +3,17 @@
 #include <nanogui/layout.h>
 
 Panel::Panel(std::string t) {
-    //panel = Window::Instance() -> getGUIEnvironment() -> add<nanogui::Window>(t);
     panel = new nanogui::Window(Window::Instance() -> getGUIEnvironment(), t);
     panel -> setLayout(new nanogui::BoxLayout(nanogui::Orientation::Horizontal, nanogui::Alignment::Middle, 0, 6));
-}
-
-Panel::Panel(std::string t, Vector2<float> position) {
-   // panel = Window::Instance() -> getGUIEnvironment() -> add<nanogui::Window>(t);
-    panel = new nanogui::Window(Window::Instance() -> getGUIEnvironment(), t);
-    panel -> setLayout(new nanogui::BoxLayout(nanogui::Orientation::Horizontal, nanogui::Alignment::Middle, 0, 6));
-    panel -> setPosition(Eigen::Vector2i(position.x, position.y));
-}
-
-Panel::~Panel() {
-    this -> hide();
 }
 
 Panel::Panel(GUIElement *parent, std::string title) {
     panel = new nanogui::Window(parent -> getGUIElement(), title);
     panel -> setLayout(new nanogui::BoxLayout(nanogui::Orientation::Horizontal, nanogui::Alignment::Middle, 0, 6));
-    
+}
+
+Panel::~Panel() {
+    this -> hide();
 }
 
 void Panel::addChild(GUIElement *child){
@@ -63,6 +54,10 @@ void Panel::setSize(Vector2<int> size) {
 
 void Panel::setGroupLayout() {
     panel -> setLayout(new nanogui::GroupLayout());
+}
+
+void Panel::refreshLayout(){
+    Window::Instance()->getGUIEnvironment()->performLayout();
 }
 
 nanogui::Widget *Panel::getGUIElement(){

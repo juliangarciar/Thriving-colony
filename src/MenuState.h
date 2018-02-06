@@ -2,7 +2,7 @@
 #define MENUSTATE_H
 
 #include "State.h"
-#include "HudMenu.h"
+#include "StartMenu.h"
 
 /**
  * @class MenuState
@@ -42,7 +42,7 @@ public:
         void cleanUp();
 
     private:
-        HudMenu * hud;
+        StartMenu *hud;
 
         int prevWindowWidth;
         int prevWindowHeight;
