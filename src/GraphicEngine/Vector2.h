@@ -23,7 +23,8 @@ class Vector2 {
         void set(core::vector2di v);
         void set(core::vector2df v);
 
-        Vector2<T>& normalize();
+        Vector2<T> normalize();
+        Vector2<T> getDistanceTo(Vector2<T> other);
         Vector2<T> getFromPolarCoordinates(float r, float phi);
 
         Vector2<T> getFixed();

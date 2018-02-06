@@ -74,7 +74,7 @@ void BuildingManager::drawBuilding(Terrain *terrain) {
 
 			
 		//Pressing the right mouse button cancels the building
-		if (g -> getMouse() -> rightMouseReleased()){
+		if (g -> getMouse() -> rightMouseDown()){
 			buildingMode = false;
 
 			delete tempBuilding;		
@@ -256,6 +256,7 @@ bool BuildingManager::checkCanPay(Enumeration::BuildingType type) {
         case Enumeration::BuildingType::Tower:
 			canPay = isSolvent(Enumeration::BuildingCost::TowerMetalCost, Enumeration::BuildingCost::TowerCrystalCost, Enumeration::Team::Human);
         break;
+		default: break;
 	}
 	return canPay;
 }
@@ -287,6 +288,7 @@ bool BuildingManager::checkFinished(int _id) {
 			}
 		}
 	}
+	return false;
 }
 
 SceneNode* BuildingManager::getBuildingLayer() {

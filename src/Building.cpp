@@ -355,6 +355,7 @@ void Building::specialTax(Enumeration::Team teamData) {
             case Enumeration::BuildingType::Workshop:
                     Human::getInstance() -> setWorkshopBuilt(true);                
             break;
+            //ToDo: incrementar felicidad
         }
     } else { // Tax the AI
         // Special taxes
@@ -377,6 +378,7 @@ void Building::specialTax(Enumeration::Team teamData) {
             case Enumeration::BuildingType::Workshop:
                 IA::getInstance() -> setWorkshopBuilt(true);                
             break;
+            //ToDo: incrementar felicidad
         }
     }
 }

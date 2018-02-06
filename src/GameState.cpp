@@ -55,9 +55,11 @@ void GameState::init() {
     v.y = map -> getY(v.x, v.z);
     Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::Human);
 
+    /*
     Enumeration::UnitType unitData = Enumeration::UnitType::StandardM;
     Human::getInstance() -> getUnitManager() -> createTroop(unitData);
     Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsHuman);
+    */
 
     //Init HUD
     Window::Instance() -> setGUI();
@@ -84,9 +86,11 @@ void GameState::input() {
         if (!Human::getInstance() -> getUnitManager() -> isTroopSelected())
             Game::Instance() -> getMouse() -> changeIcon(CURSOR_HAND);
         
-        if (Game::Instance() -> getMouse() -> leftMousePressed()) {
+        if (Game::Instance() -> getMouse() -> leftMouseDown()) {
             // Comprobar que este terminado para enseñar el popup pero no va
             //if (Human::getInstance() -> getBuildingManager() -> checkFinished(idBuilding)) {
+                std::cout << idBuilding << std::endl;
+                
                 hud -> showPopup(idBuilding);
             //}
         }

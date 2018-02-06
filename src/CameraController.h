@@ -33,17 +33,14 @@ class CameraController {
 
         /**
 	 * @brief Mueve la camara
-         * @param cursor de tipo mouse, para moverla segun la posicion de este
 	 */
         void Move();
         /**
 	 * @brief Rota e inclina la camara
-         * @param cursor de tipo mouse, para rotarla e inclinarla segun la posicion de este
 	 */
         void RotateAndInclinate();
         /**
 	 * @brief Hace zoom a la camara
-         * @param cursor de tipo mouse, para hacerle zoom a la camara segun la posicion de este
 	 */
         void Zoom();
 
@@ -56,36 +53,39 @@ class CameraController {
     private:
         //Camera
         Camera *camera;
+
+        //Camera position
+        Vector3<float> camPos, tarPos;
+
         //Camera modes
         bool movementMode;
         bool rotationOrInclinationMode;
         bool zoomMode;
 
-        // Helpers
-        float recipsqrt2;
-		Vector2<float> vector0;
-        Vector3<float> camPos, tarPos;
-
         // Camera movement variables
         int screenMarginV, screenMarginH;
         int direction;
         float camSpeed;
-        Vector2<float> camIncr;
 
-        // Camera rotation, inclination and cursor optimizacion variables
+        // Camera rotation, inclination
         float rotSpeed;
         float inclSpeed;
-		Vector2<float> delta;
         float minInclination, maxInclination;
-
-        int centerMargin;
-        Vector2<int> cursorPosSaved;
+        Vector2<float> delta;
+        Vector3<float> distanceToTarget;
 
         //Camera zoom variables
         int minZoom, maxZoom;
-        float camHeight, currentHeight;
+        int zoomLevels;
+        float zoomDistanceFromTarget;
+        Vector3<float> cameraPositionIncrement;
 
-        //ToDo: Esto no va aqui
-        Vector2<int> screenCenter;
+        // Helpers and cursor optimizacion variables
+        float recipsqrt2;
+
+        int centerMargin;
+        Vector2<int> cursorPosSaved;
+        
+        Vector2<int> screenCenter; //ToDo: Esto no va aqui
 };
 #endif

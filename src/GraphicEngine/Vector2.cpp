@@ -49,16 +49,31 @@ void Vector2<T>::set(core::vector2df v) {
 }
 
 template <class T>
-Vector2<T>& Vector2<T>::normalize() {
-    f64 length = x*x + y*y;
-    // this check isn't an optimization but prevents getting NAN in the sqrt.
-    if (length == 0) return *this;
-        
-    length = core::reciprocal_squareroot(length);
+Vector2<T> Vector2<T>::normalize() {
+    Vector2<T> vector;
 
-    x = (T)(x * length);
-    y = (T)(y * length);
-    return *this;
+    T length = x*x + y*y;
+    length = sqrt(length);
+
+    if(length != 0){
+        vector.x = (T) x/length;
+        vector.y = (T) y/length;
+    }
+    return vector;
+} 
+
+template <class T>
+Vector2<T> Vector2<T>::getDistanceTo(Vector2<T> other) {
+    return Vector2<T>(x - other.x, y - other.y);
+}
+
+template <class T>
+Vector2<T> Vector2<T>::getFromPolarCoordinates(float r, float phi) {
+    phi = phi * (PI/180);
+    Vector2<T> point;
+    point.x = x + (r * cosf(phi));  // Assign to the point member x
+    point.y = y + (r * sinf(phi));  // Assign to the point member y.
+    return point;
 }
 
 template <class T>
@@ -69,15 +84,6 @@ core::vector2di Vector2<T>::getVectorI() {
 template <class T>
 core::vector2df Vector2<T>::getVectorF() {
     return core::vector2df(x, y);
-}
-
-template <class T>
-Vector2<T> Vector2<T>::getFromPolarCoordinates(float r, float phi) {
-    phi = phi * (PI/180);
-    Vector2<T> point;
-    point.x = x + (r * cosf(phi));  // Assign to the point member x
-    point.y = y + (r * sinf(phi));  // Assign to the point member y.
-    return point;
 }
 
 template <class T>

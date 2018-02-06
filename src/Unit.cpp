@@ -33,6 +33,8 @@ Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorDa
     this -> lookForTargetTimer = 0.5;
     this -> lookForTargetCountdown = lookForTargetTimer;
     this -> attackCountdown = 0;
+
+    this -> readyToEnter = false;
     switch (unitType)
     {
     //Basic stats of each unit are here
@@ -316,6 +318,10 @@ void Unit::moveTroop() {
         // close to destination, stop
         if (std::abs(vectorDes -> x - position -> x) < 5.0 && std::abs(vectorDes -> z - position -> z) < 5.0) {
             moving = false;
+            if (state == Enumeration::UnitState::Retract) {
+                readyToEnter = true;
+                return;
+            }
             switchState(Enumeration::Idle);
         } else {
             // far from destination, move
@@ -329,32 +335,32 @@ void Unit::moveTroop() {
 void Unit::updateTroop() {
     changeRedTint();
     attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
-    if (retracted == false) {
-        //State machine, color changes according to state
-        switch (state) {
-            case Enumeration::UnitState::Idle:
-                Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 0, 255, 255));
-                idleState();
-                break;
-            case Enumeration::UnitState::Move:
-            Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 255, 0, 255));
-                moveState();
-                break;
-            case Enumeration::UnitState::AttackMove:
-            Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 255, 255, 0));
-                attackMoveState();
-                break;
-            case Enumeration::UnitState::Attack:
-            Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 0, 0, 0));
-                attackState();
-                break;    
-            case Enumeration::UnitState::Chase:
-            Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 255, 255, 255));
-                chaseState();
-                break;
-        }
-    } else {
-        // REtract
+    //State machine, color changes according to state
+    switch (state) {
+        case Enumeration::UnitState::Idle:
+            Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 0, 255, 255));
+            idleState();
+            break;
+        case Enumeration::UnitState::Move:
+        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 255, 0, 255));
+            moveState();
+            break;
+        case Enumeration::UnitState::AttackMove:
+        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 255, 255, 0));
+            attackMoveState();
+            break;
+        case Enumeration::UnitState::Attack:
+        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 0, 0, 0));
+            attackState();
+            break;    
+        case Enumeration::UnitState::Chase:
+        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 255, 255, 255));
+            chaseState();
+            break;
+        case Enumeration::UnitState::Retract:
+        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 127, 127, 127));
+            retractState();
+            break;
     }
 }
 
@@ -536,4 +542,12 @@ void Unit::chaseTarget() {
             this -> setTroopPosition(newPos);
         }
     }
+}
+
+void Unit::retractState() {
+    moveTroop();
+}
+
+bool Unit::getReadyToEnter() {
+    return readyToEnter;
 }
