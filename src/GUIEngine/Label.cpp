@@ -37,6 +37,10 @@ void Label::hide(){
     label -> setVisible(false);
 }
 
+bool Label::isVisible(){
+    return label -> visible();
+}
+
 nanogui::Widget *Label::getGUIElement(){
     return label;
 }

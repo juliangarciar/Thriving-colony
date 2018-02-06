@@ -108,7 +108,6 @@ Hud::Hud() {
     tabContainer = new Panel("Building viewer");
         tabContainer -> setSize(Vector2<int>(350, 280));
         tabContainer -> setGroupLayout();
-        tabContainer -> center();
         tabs = new TabPanel(tabContainer);
         mainBuildingTab = tabs->createTab("Main Building", 0);
         barrackTab = tabs->createTab("Barrack", 1);
@@ -266,6 +265,8 @@ Hud::Hud() {
             workshopContent -> hide();
         }
         tabs->changeActiveTab(0);
+    tabContainer->refreshLayout();
+    tabContainer->center();
     tabContainer->hide();
 
     setHUDEvents();
@@ -376,8 +377,14 @@ void Hud::hidePopup(){
 }
 
 void Hud::setHUDEvents(){
-    buttonOpenPanel->setCallback([]{
-        Game::Instance()->getGameState()->getHud()->showPopup();
+    buttonOpenPanel->setCallback([&]{
+        if (!tabContainer->isVisible()){
+            buttonOpenPanel -> setText("Close panel");
+            showPopup();
+        } else {
+            buttonOpenPanel -> setText("Open panel");
+            hidePopup();
+        }
     });
 
     buttonBarn->setCallback([]{

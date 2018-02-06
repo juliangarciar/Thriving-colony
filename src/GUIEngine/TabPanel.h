@@ -12,6 +12,10 @@ class TabPanel : public GUIElement {
         TabPanel(GUIElement *parent);
         virtual ~TabPanel();
 
+        void show();
+        void hide();
+        bool isVisible();
+
         Tab *createTab(std::string text, int id);
         Tab *getTab(int id);
 
@@ -20,9 +24,6 @@ class TabPanel : public GUIElement {
         void setPosition(Vector2<int> position);
         
         void setTooltip(std::string text);
-
-        void show();
-        void hide();
 
         nanogui::Widget *getGUIElement();
     private:

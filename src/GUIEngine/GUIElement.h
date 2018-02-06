@@ -9,6 +9,8 @@ class GUIElement {
         virtual void show() = 0;
         virtual void hide() = 0;
 
+        virtual bool isVisible() = 0;
+
         virtual void setPosition(Vector2<int>) = 0;
         virtual void setTooltip(std::string) = 0;
 

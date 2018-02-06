@@ -30,6 +30,10 @@ void ScrollPanel::hide(){
     spanel -> setVisible(false);
 }
 
+bool ScrollPanel::isVisible(){
+    return spanel -> visible();
+}
+
 void ScrollPanel::setSize(Vector2<int> size) {
     spanel -> setFixedSize(Eigen::Vector2i(size.x, size.y));
 }

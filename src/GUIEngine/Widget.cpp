@@ -29,6 +29,10 @@ void Widget::hide(){
     widget -> setVisible(false);
 }
 
+bool Widget::isVisible(){
+    return widget -> visible();
+}
+
 nanogui::Widget *Widget::getGUIElement(){
     return widget;
 }

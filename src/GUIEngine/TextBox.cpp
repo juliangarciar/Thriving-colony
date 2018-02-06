@@ -38,6 +38,10 @@ void TextBox::hide(){
     textbox -> setVisible(false);
 }
 
+bool TextBox::isVisible(){
+    return textbox -> visible();
+}
+
 void TextBox::setSize(Vector2<int> size) {
     textbox -> setFixedSize(Eigen::Vector2i(size.x, size.y));
 }

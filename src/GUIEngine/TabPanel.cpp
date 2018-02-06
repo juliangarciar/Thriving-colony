@@ -53,6 +53,10 @@ void TabPanel::hide(){
     ctrl -> setVisible(false);
 }
 
+bool TabPanel::isVisible(){
+    return ctrl -> visible();
+}
+
 void TabPanel::changeActiveTab(int index){
     if (index >= 0) ctrl -> setActiveTab(index);
 }

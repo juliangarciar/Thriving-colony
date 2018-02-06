@@ -11,6 +11,10 @@ class Panel : public GUIElement {
         Panel(std::string title);
         Panel(GUIElement *parent, std::string title);
         virtual ~Panel();
+        
+        void show();
+        void hide();
+        bool isVisible();
 
         void addChild(GUIElement *child);
         
@@ -21,9 +25,6 @@ class Panel : public GUIElement {
         void setVerticalAlignment();
         void setGroupLayout();
         void setDragable(bool dragable);
-        
-        void show();
-        void hide();
 
         void refreshLayout();
 

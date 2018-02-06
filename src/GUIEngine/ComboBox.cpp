@@ -26,6 +26,10 @@ void ComboBox::hide(){
     combobox -> setVisible(false);
 }
 
+bool ComboBox::isVisible(){
+    return combobox -> visible();
+}
+
 void ComboBox::setPosition(Vector2<int> position){
     combobox -> setPosition(Eigen::Vector2i(position.x, position.y));
 }

@@ -40,6 +40,10 @@ void Panel::hide(){
     panel -> setVisible(false);
 }
 
+bool Panel::isVisible(){
+    return panel -> visible();
+}
+
 void Panel::center(){
     panel -> center();
 }

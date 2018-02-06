@@ -11,11 +11,11 @@ class Tab : public GUIElement{
         Tab(nanogui::Widget *t);
         virtual ~Tab();
 
-        void addChild(GUIElement *elem);
-
-        //ToDo: void toggle()
         void show();
         void hide();
+        bool isVisible();
+
+        void addChild(GUIElement *elem);
         
         void setPosition(Vector2<int> position);
         

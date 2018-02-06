@@ -36,6 +36,10 @@ void Tab::hide(){
     tab->setEnabled(false);
 }
 
+bool Tab::isVisible(){
+    return tab -> visible();
+}
+
 std::string Tab::getTitle(){
     return ""; //ToDo
 }

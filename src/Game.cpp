@@ -24,8 +24,6 @@ Game::Game() {
     events = new EventSystem();
 
     soundSystem = new SoundSystem();
-
-    Window::Instance() -> setGUI();
 }
 
 Game::~Game() {

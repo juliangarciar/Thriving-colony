@@ -11,6 +11,10 @@ class Label : public GUIElement {
         Label(std::string t);
         Label(GUIElement *parent, std::string t);
         virtual ~Label();
+
+        void show();
+        void hide();
+        bool isVisible();
         
         void setPosition(Vector2<int> position);
 
@@ -18,9 +22,6 @@ class Label : public GUIElement {
         void setLabel(std::string t);
 
         void setSize(Vector2<int> size);
-
-        void show();
-        void hide();
         
         nanogui::Widget *getGUIElement();
     private:
