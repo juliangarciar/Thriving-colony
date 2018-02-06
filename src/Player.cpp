@@ -49,8 +49,8 @@ void Player::increaseCityLevel(int lvl) {
     cityLevel += lvl;
 }
 
-void Player::increaseCitizens() {
-    citizens += 5;
+void Player::increaseCitizens(int c) {
+    citizens += c;
 }
 
 void Player::increaseArmySize() {

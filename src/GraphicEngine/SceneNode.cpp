@@ -19,8 +19,8 @@ SceneNode::SceneNode(SceneNode *parent) {
 	collisionNode = NULL;
 }
 
-SceneNode::SceneNode(scene::ISceneNode *node){ 
-	node = node;
+SceneNode::SceneNode(scene::ISceneNode *n){ 
+	node = n;
 }
 
 SceneNode::~SceneNode() {

@@ -37,23 +37,23 @@ void GameState::init() {
 
     // Build the main building of IA
     Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();
-    IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::IA);
+    IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding);
 
     //Build the first siderurgy of IA
     v = IA::getInstance() -> determinatePositionBuilding();
-    IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::IA);
+    IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy);
 
     // Build the main building of Human
     v.x = Enumeration::HumanCityHall::human_x;
     v.z = Enumeration::HumanCityHall::human_z; 
     v.y = map -> getY(v.x, v.z);
-    Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::Human);
+    Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding);
     
     //Build the first siderurgy of Human
     v.x = Enumeration::HumanCityHall::human_x;
     v.z = Enumeration::HumanCityHall::human_z + 200;
     v.y = map -> getY(v.x, v.z);
-    Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::Human);
+    Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy);
 
     /*
     Enumeration::UnitType unitData = Enumeration::UnitType::StandardM;
@@ -146,7 +146,7 @@ void GameState::input() {
     }
 
     if (Game::Instance()-> getMouse() -> rightMousePressed()) {
-        Human::getInstance() -> getUnitManager() -> moveOrder(map);
+        Human::getInstance() -> getUnitManager() -> moveOrder();
     }
 /*  //Hacks
     if (Game::Instance() -> getIO() -> keyPressed(KEY_KEY_1)) {
@@ -171,8 +171,8 @@ void GameState::update(){
     hud -> update();
 
     //If human is building something
-    Human::getInstance() -> getBuildingManager() -> drawBuilding(map);
-    Human::getInstance() -> getUnitManager() -> deployTroop(map);
+    Human::getInstance() -> getBuildingManager() -> drawBuilding();
+    Human::getInstance() -> getUnitManager() -> deployTroop();
     //Human::getInstance() -> getUnitManager() -> updateUnitManager();
 
     //Update human and IA status

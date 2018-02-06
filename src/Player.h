@@ -21,7 +21,7 @@ class Player {
         void spendResources(int, int);
         void increaseHappiness(int h);
         void increaseCityLevel(int lvl);
-        void increaseCitizens();
+        void increaseCitizens(int c);
         void increaseArmySize();
         void increaseBuildableRange();
         bool losingBattle(); //ToDo: battle manager mejor no?

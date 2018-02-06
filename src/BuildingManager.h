@@ -20,8 +20,10 @@ class BuildingManager {
 	public:
 		/**
 		 * @brief Constructor
+		 * @param team
+		 * @param breed
 		 */
-		BuildingManager();
+		BuildingManager(Enumeration::Team, Enumeration::BreedType);
 		/**
 		 * @brief Destructor
 		 */
@@ -45,14 +47,14 @@ class BuildingManager {
 		 * @brief dibuja el edificio a construir en el terreno
 		 * @param terrain donde se indica el terreno en el que construir
 		 */
-		void drawBuilding(Terrain *terrain);
+		void drawBuilding();
 		/**
 		 * @brief Construye el edificio
 		 * @param coordenadas en las que se tiene que construir
 		 * @param buildingType con el tipo de edificio a construir
 		 * @param team indicando el equipo al que pertenece el edificio
 		 */
-		void buildBuilding(Vector3<float>, Enumeration::BuildingType, Enumeration::Team);
+		void buildBuilding(Vector3<float>, Enumeration::BuildingType);
 
 		/**
 		 * @brief Comprueba si el jugador tiene recursos necesarios para comprar el edificio
@@ -61,7 +63,7 @@ class BuildingManager {
 		 * @param team es el equipo al que pertenecera el edificio
 		 * @return true si es solvente y false, en caso contrario
 		 */
-		bool isSolvent(int, int, Enumeration::Team);
+		bool isSolvent(int, int);
 		/**
 		 * @brief Registra el tipo de edifio que se quiere construir y 
 		 * maneja las llamadas al metodo isSolvent(), enviandole su precio.
@@ -85,7 +87,7 @@ class BuildingManager {
 		 * @param buildingType es el tipo de edificio que se construye
 		 * @param team es el equipo al que pertece el edificio
 		 */
-		void setTempBuildingModel(Vector3<float>, Enumeration::BuildingType, Enumeration::Team);
+		void setTempBuildingModel(Vector3<float>, Enumeration::BuildingType);
 		
 		/**
 		 * @brief Solicita el id de la colision
@@ -120,6 +122,9 @@ class BuildingManager {
 		 */
 		int getAmount(Enumeration::BuildingType);
 	private:
+		Enumeration::Team team;
+		Enumeration::BreedType breed;
+
 		int nextBuildingId;
         int gridAlignment;
         bool buildingMode;

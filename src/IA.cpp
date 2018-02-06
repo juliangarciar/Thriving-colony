@@ -16,7 +16,7 @@ void IA::init() {
     nodeRootIA = new RootNode();
     nodeRootIA -> init(behaviour);
 
-    buildings = new BuildingManager();
+    buildings = new BuildingManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
     units = new UnitManager(Enumeration::Team::IA, Enumeration::BreedType::Kaonov);
 
     // Choices for the debugging system

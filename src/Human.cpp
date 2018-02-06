@@ -9,7 +9,7 @@ Human::Human() : Player() {
 void Human::init() {
     updateTimer = 0;
 
-    buildings = new BuildingManager();
+    buildings = new BuildingManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
     units = new UnitManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
 }
 

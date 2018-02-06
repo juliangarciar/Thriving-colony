@@ -20,7 +20,7 @@ class UnitManager{
 
         void deployTroopAtPosition(int index, Vector3<float> vectorData);
         void startDeployingTroop(int index);
-        void deployTroop(Terrain *terrain);
+        void deployTroop();
         void deployAllTroops(Vector3<float> vectorData);
 
         void retractAllTroops(Vector3<float>);
@@ -28,23 +28,23 @@ class UnitManager{
         bool isTroopSelected();
         void selectTroop(int troopID);
         void unSelectTroop();
-        void moveOrder(Terrain *terrain); //ToDo: usar el singleton
+        void moveOrder();
         void startBattle(int enemyID);
 
-        bool isSolvent(int, int, Enumeration::Team);
+        bool isSolvent(int, int);
         bool checkCanPay(Enumeration::UnitType);
 
-
+        int getTroopAmount(Enumeration::UnitType);
         std::map<int, Unit*> * getInMapTroops();
         std::vector<Unit*> * getInHallTroops();
         int getTotalTroops(); 
         Unit* getSelectedTroop();
 		int getCollisionID();
 		std::string getCollisionName();
-
-        int getTroopAmount(Enumeration::UnitType);
-
     private:
+        Enumeration::Team team;
+        Enumeration::BreedType breed;
+
         SceneNode *unitLayer;
 
 		SceneNode *currentCollision;
@@ -55,9 +55,6 @@ class UnitManager{
         std::vector<Unit*> *totalTroops;
 
         Unit *selectedTroop;
-
-        Enumeration::Team teamManager;
-        Enumeration::BreedType breedType;
 
         bool isDeployingTroop;
         int currentDeployingTroop;

@@ -19,7 +19,7 @@ void MeleeFootmenNode::question() {
     if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barrack) > 0) {
         //std::cout << "Genero un soldado a pie melee" << std::endl;
         //Esto va en el constructor
-        if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost, Enumeration::Team::IA)) {
+        if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost)) {
             // Unit type
             Enumeration::UnitType unitData = Enumeration::UnitType::StandardM;
             IA::getInstance() -> getUnitManager() -> createTroop(unitData);

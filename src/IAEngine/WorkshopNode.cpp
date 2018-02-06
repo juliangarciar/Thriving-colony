@@ -16,10 +16,10 @@ void WorkshopNode::question() {
     if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Quarry) == 0) {
         IA::getInstance() -> getTree() -> setRequireCrystal(true);
     } else {
-        if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::WorkshopMetalCost, Enumeration::BuildingCost::WorkshopCrystalCost, Enumeration::Team::IA)) {
+        if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::WorkshopMetalCost, Enumeration::BuildingCost::WorkshopCrystalCost)) {
             IA::getInstance() -> getTree() -> setRequireBarrack(false);
             Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();
-            IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Workshop, Enumeration::Team::IA);
+            IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Workshop);
         }
     }
 }

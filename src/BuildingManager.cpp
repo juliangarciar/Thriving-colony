@@ -5,7 +5,10 @@
 
 using namespace irr;
 
-BuildingManager::BuildingManager() {
+BuildingManager::BuildingManager(Enumeration::Team t, Enumeration::BreedType b) {
+	team = t;
+	breed = b;
+
 	nextBuildingId = 0;
     gridAlignment = 50;
     buildingMode = false;
@@ -40,13 +43,13 @@ void BuildingManager::setBuildingMode(Enumeration::BuildingType type) {
 	if (checkCanPay(type)) {
 		if (!buildingMode) {
 			buildingMode = true;
-			setTempBuildingModel(Vector3<float>(0, 0, 0),type, Enumeration::Team::Human);
+			setTempBuildingModel(Vector3<float>(0, 0, 0), type);
 			recalculateHitbox(); //ToDo: quizas algo guarro pero menos que lo otro
 		}
 	}
 }
 
-void BuildingManager::drawBuilding(Terrain *terrain) {
+void BuildingManager::drawBuilding() {
     Game *g = Game::Instance();
     if (buildingMode && tempBuilding != NULL) {
         // Aqui tenemos que hacer que cuando se haya apretado el boton de nueva ventana,
@@ -54,7 +57,7 @@ void BuildingManager::drawBuilding(Terrain *terrain) {
 		/*
 		* Get position where the cursor is pointing to the terrain
 		*/
-        Vector3<float> xyzPointCollision = terrain -> getPointCollision(g -> getMouse());
+        Vector3<float> xyzPointCollision = g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse());
 
 		Vector3<float> f = Box3D<float>(tempBuilding -> getModel() -> getModel() -> getTransformedBoundingBox()).getSize(); //ToDo: fachada
 
@@ -93,104 +96,111 @@ void BuildingManager::drawBuilding(Terrain *terrain) {
 			*/
 			if (g -> getMouse() -> leftMouseDown()) {
 				buildingMode = false;
-				buildBuilding(Vector3<float>(x, y, z), tempBuilding -> getType(), Enumeration::Team::Human);
+				buildBuilding(Vector3<float>(x, y, z), tempBuilding -> getType());
 			}
 		}
     }
 }
 
-void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
-	if (_team == Enumeration::Team::IA) {
-		setTempBuildingModel(pos, _type, _team);
+void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingType _type) {
+	if (team == Enumeration::Team::IA) {
+		setTempBuildingModel(pos, _type);
+
+		tempBuilding -> getModel() -> setID(nextBuildingId);
 
 		tempBuilding -> setFinishedCallback([&]{
 			tempBuilding->setColor(tempBuilding->getColor()); //ToDo: cambiar por material
-            //returnToOriginalColor();
-            // Increase stuff when the human ends the building, but do so for the AI
-            // when it places the building. is it fair? i dunno
-            if (_team == Enumeration::Team::Human) {
-                tempBuilding->specialTax(_team);
-		        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);
-            }            
+			buildingAmounts[(int)_type]++;
+            //returnToOriginalColor();     
 		});
 
 		buildings -> insert(std::pair<int,Building*>(nextBuildingId, tempBuilding));
 
-		buildingAmounts[(int)_type]++;
+		tempBuilding -> triggerFinishedCallback();    
 
 		tempBuilding = NULL;
 		nextBuildingId++;
 	} else {
 		if (tempBuilding == NULL) {
-			setTempBuildingModel(pos,_type,_team);
+			setTempBuildingModel(pos,_type);
 			tempBuilding -> setPosition(pos);
-			tempBuilding -> setHitbox();
 		}
 
 		tempBuilding -> getModel() -> setID(nextBuildingId);
+
+		tempBuilding -> setFinishedCallback([&]{
+			tempBuilding->setColor(tempBuilding->getColor()); //ToDo: cambiar por material
+            //returnToOriginalColor();
+
+			buildingAmounts[(int)_type]++;
+
+			if (buildingAmounts[(int)_type] == 1){
+				switch (_type){
+					case Enumeration::BuildingType::Barrack:
+						Game::Instance() -> getGameState() -> getHud() -> enableTab(_type);
+					break;
+					case Enumeration::BuildingType::Barn:
+						Game::Instance() -> getGameState() -> getHud() -> enableTab(_type);
+					break;
+					case Enumeration::BuildingType::Workshop:
+						Game::Instance() -> getGameState() -> getHud() -> enableTab(_type);
+					break;
+					default: break;
+				}
+			}
+
+            // Increase stuff when the human ends the building, but do so for the AI
+            // when it places the building. is it fair? i dunno
+			Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);     
+		});
+
 		buildings -> insert(std::pair<int,Building*>(nextBuildingId, tempBuilding));
 
-		buildingAmounts[(int)_type]++;
-
-		if (buildingAmounts[(int)_type] == 1){
-			switch (_type){
-				case Enumeration::BuildingType::Barrack:
-					Game::Instance() -> getGameState() -> getHud() -> enableTab(_type);
-				break;
-				case Enumeration::BuildingType::Barn:
-					Game::Instance() -> getGameState() -> getHud() -> enableTab(_type);
-				break;
-				case Enumeration::BuildingType::Workshop:
-					Game::Instance() -> getGameState() -> getHud() -> enableTab(_type);
-				break;
-				default: break;
-			}
-		}
-		
 		// Tax the player when placing the building
-		tempBuilding -> taxPlayer(Enumeration::Team::Human);
+		tempBuilding -> taxPlayer();
+
 		tempBuilding = NULL;
 		nextBuildingId++;
 	}
 	
 }
 
-void BuildingManager::setTempBuildingModel(Vector3<float> pos, Enumeration::BuildingType _type, Enumeration::Team _team) {
+void BuildingManager::setTempBuildingModel(Vector3<float> pos, Enumeration::BuildingType _type) {
 	if (_type == Enumeration::BuildingType::House) {
-		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/vivienda.obj", _type, pos, _team);
+		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/vivienda.obj", team, breed, _type, pos);
 		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Barrack) {
-		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/barraca.obj", _type, pos, _team);
+		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/barraca.obj", team, breed, _type, pos);
 		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Siderurgy) {
-		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/siderurgia.obj", _type, pos, _team);
+		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/siderurgia.obj", team, breed, _type, pos);
 		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::School) {
-		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/escuela.obj", _type, pos, _team);
+		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/escuela.obj", team, breed, _type, pos);
 		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Market) {
-		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/mercado.obj", _type, pos, _team);
+		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/mercado.obj", team, breed, _type, pos);
 		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Quarry) {
-		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/cantera.obj", _type, pos, _team);
+		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/cantera.obj", team, breed, _type, pos);
 		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::MainBuilding) {
-		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/centro_de_mando.obj", _type, pos, _team);
+		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/centro_de_mando.obj", team, breed, _type, pos);
 		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Barn) {
-		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/establo.obj", _type, pos, _team);
+		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/establo.obj", team, breed, _type, pos);
 		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Hospital) {
-		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/hospital.obj", _type, pos, _team);
+		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/hospital.obj", team, breed, _type, pos);
 		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Wall) {
-		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/muralla.obj", _type, pos, _team);
+		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/muralla.obj", team, breed, _type, pos);
 		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Workshop) {
-		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/taller_maquinas_de_asedio.obj", _type, pos, _team);
+		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/taller_maquinas_de_asedio.obj", team, breed, _type, pos);
 		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	} else if (_type == Enumeration::BuildingType::Tower) {
-		tempBuilding = new Building(0, buildingLayer, L"media/buildingModels/torre_vigilancia.obj", _type, pos, _team);
+		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/torre_vigilancia.obj", team, breed, _type, pos);
 		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
 	}
 }
@@ -198,7 +208,7 @@ void BuildingManager::setTempBuildingModel(Vector3<float> pos, Enumeration::Buil
 /**
  * Checks if the player, either the human or the AI can afford to build a specific building 
  */
-bool BuildingManager::isSolvent(int metalCost, int crystalCost, Enumeration::Team team) {
+bool BuildingManager::isSolvent(int metalCost, int crystalCost) {
 	int metalAmt = 0;
 	int crystalAmt = 0;
 	if (team == Enumeration::Team::Human) {
@@ -226,37 +236,37 @@ bool BuildingManager::checkCanPay(Enumeration::BuildingType type) {
 	//CHECK IF YOU CAN PAY THE BUILDING
 	switch(type) {
         case Enumeration::BuildingType::School:
-			canPay = isSolvent(Enumeration::BuildingCost::SchoolMetalCost, Enumeration::BuildingCost::SchoolCrystalCost, Enumeration::Team::Human);
+			canPay = isSolvent(Enumeration::BuildingCost::SchoolMetalCost, Enumeration::BuildingCost::SchoolCrystalCost);
         break;
         case Enumeration::BuildingType::Market:
-			canPay = isSolvent(Enumeration::BuildingCost::MarketMetalCost, Enumeration::BuildingCost::MarketCrystalCost, Enumeration::Team::Human);
+			canPay = isSolvent(Enumeration::BuildingCost::MarketMetalCost, Enumeration::BuildingCost::MarketCrystalCost);
         break;
         case Enumeration::BuildingType::Hospital:
-			canPay = isSolvent(Enumeration::BuildingCost::HospitalMetalCost, Enumeration::BuildingCost::HospitalCrystalCost, Enumeration::Team::Human);
+			canPay = isSolvent(Enumeration::BuildingCost::HospitalMetalCost, Enumeration::BuildingCost::HospitalCrystalCost);
         break;
         case Enumeration::BuildingType::Siderurgy:
-			canPay = isSolvent(Enumeration::BuildingCost::SiderurgyMetalCost, Enumeration::BuildingCost::SiderurgyCrystalCost, Enumeration::Team::Human);
+			canPay = isSolvent(Enumeration::BuildingCost::SiderurgyMetalCost, Enumeration::BuildingCost::SiderurgyCrystalCost);
         break;
         case Enumeration::BuildingType::Quarry:
-			canPay = isSolvent(Enumeration::BuildingCost::QuarryMetalCost, Enumeration::BuildingCost::QuarryCrystalCost, Enumeration::Team::Human);
+			canPay = isSolvent(Enumeration::BuildingCost::QuarryMetalCost, Enumeration::BuildingCost::QuarryCrystalCost);
         break;
         case Enumeration::BuildingType::House:
-			canPay = isSolvent(Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost, Enumeration::Team::Human);
+			canPay = isSolvent(Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost);
         break;
         case Enumeration::BuildingType::Barrack:
-			canPay = isSolvent(Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost, Enumeration::Team::Human);
+			canPay = isSolvent(Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost);
         break;
         case Enumeration::BuildingType::Barn:
-			canPay = isSolvent(Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost, Enumeration::Team::Human);
+			canPay = isSolvent(Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost);
         break;
         case Enumeration::BuildingType::Workshop:
-			canPay = isSolvent(Enumeration::BuildingCost::WorkshopMetalCost, Enumeration::BuildingCost::WorkshopCrystalCost, Enumeration::Team::Human);
+			canPay = isSolvent(Enumeration::BuildingCost::WorkshopMetalCost, Enumeration::BuildingCost::WorkshopCrystalCost);
         break;
         case Enumeration::BuildingType::Wall:
-			canPay = isSolvent(Enumeration::BuildingCost::WallMetalCost, Enumeration::BuildingCost::WallCrystalCost, Enumeration::Team::Human);
+			canPay = isSolvent(Enumeration::BuildingCost::WallMetalCost, Enumeration::BuildingCost::WallCrystalCost);
         break;
         case Enumeration::BuildingType::Tower:
-			canPay = isSolvent(Enumeration::BuildingCost::TowerMetalCost, Enumeration::BuildingCost::TowerCrystalCost, Enumeration::Team::Human);
+			canPay = isSolvent(Enumeration::BuildingCost::TowerMetalCost, Enumeration::BuildingCost::TowerCrystalCost);
         break;
 		default: break;
 	}
@@ -265,7 +275,7 @@ bool BuildingManager::checkCanPay(Enumeration::BuildingType type) {
 
 void BuildingManager::recalculateHitbox(){
 	for (std::map<int,Building*>::iterator it = buildings -> begin(); it != buildings -> end(); ++it) {
-		it -> second -> setHitbox();
+		it -> second -> refreshHitbox();
 	}
 }
 

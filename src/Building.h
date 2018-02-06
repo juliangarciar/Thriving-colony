@@ -15,14 +15,14 @@ class Building : public Entity {
 
         /**
          * @brief Constructor de Buiding
-         * @param id del edificio
          * @param parent es la capa padre
+         * @param id del edificio
          * @param path ruta del archivo del modelo
+         * @param teamData es el equipo al que pertenece
          * @param buildingType es el tipo del edificio
          * @param vectorData es la posicion del edificio
-         * @param teamData es el equipo al que pertenece
          */
-        Building(int, SceneNode *, const wchar_t *, Enumeration::BuildingType, Vector3<float>, Enumeration::Team);
+        Building(SceneNode *, int, const wchar_t *, Enumeration::Team, Enumeration::BreedType, Enumeration::BuildingType, Vector3<float>);
         /**
          * @brief Destructor
          */
@@ -33,13 +33,7 @@ class Building : public Entity {
          * el importe del edificio cuando se solicita su construccion
          * @param team indica el equipo al que pertenece el jugador
          */
-        void taxPlayer(Enumeration::Team);
-        /**
-         * @brief una vez vconstruido el edificio, actualiza la cantidad del mismo 
-         * y los parametros de felicidad y numero de habitantes que tengan asociados
-         * @param team indica el equipo al que pertenece el jugador
-         */
-        void specialTax(Enumeration::Team);
+        void taxPlayer();
         /**
          * @brief actualiza el edificio
          */
@@ -65,11 +59,6 @@ class Building : public Entity {
          * @return true si esta terminado y false en caso contrario 
          */
         bool getFinished();
-        /**
-         * @brief solicita el id del edificio
-         * @return entero con el id 
-         */
-        int getID();
         
     private:
         /**

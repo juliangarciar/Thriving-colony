@@ -21,7 +21,7 @@ void CatapultNode::question() {
     IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::TrainCatapult);
     if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Workshop) > 0) {
         //std::cout << "Genero una catapulta" << std::endl;
-        if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::CatapultMetalCost, Enumeration::UnitCost::CatapultCrystalCost, Enumeration::Team::IA)) {
+        if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::CatapultMetalCost, Enumeration::UnitCost::CatapultCrystalCost)) {
             // Unit type
             Enumeration::UnitType unitData = Enumeration::UnitType::Launcher; 
             IA::getInstance() -> getUnitManager() -> createTroop(unitData);
