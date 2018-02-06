@@ -280,7 +280,6 @@ void Building::Init() {
 void Building::update() {
     //changeRedTint();
     if (!finished) {
-        buildTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
         if (buildTimer <= 0) {
             //ToDo: reemplazar color por material
             Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
@@ -293,6 +292,8 @@ void Building::update() {
 		        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);
             }            
             this -> finished = true;
+        } else {
+            buildTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
         }
     }
 }

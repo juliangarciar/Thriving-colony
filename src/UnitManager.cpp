@@ -220,8 +220,6 @@ void UnitManager::startBattle(int enemyID) {
     //ToDo: crear batalla
 }
 
-//////PARTE DE LA ECONOMIA PARA RAFA
-
 /**
  * Checks if the player, either the human or the AI can afford to build a specific building 
  */

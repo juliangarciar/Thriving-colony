@@ -268,25 +268,8 @@ void BuildingManager::updateBuildingManager() {
 	}
 }
 
-bool BuildingManager::checkFinished(int _id) {
-	//ToDo: revisar este metodo
-
-	// Si no no coge bien los ids
-	int targetId = _id - 1;
-	if (targetId < 0) {
-		// corregir para que el id del edificio principal no sea -1
-		targetId = 0;
-	} 
-
-	//ToDo: Esto siempre devuelve true
-	for (std::map<int,Building*>::iterator it = buildings -> begin(); it != buildings -> end(); ++it) {
-		if (it -> second -> getID() == targetId) {
-			if (it -> second -> getFinished() == true) {
-				return true;
-			}
-		}
-	}
-	return false;
+bool BuildingManager::checkFinished(int _id) {	
+	return (this -> buildings -> find(_id) -> second -> getFinished());	
 }
 
 int BuildingManager::getAmount(Enumeration::BuildingType t){

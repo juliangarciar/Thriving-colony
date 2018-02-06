@@ -355,23 +355,30 @@ void Hud::showPopup(){
 }
 
 void Hud::showPopup(Enumeration::BuildingType t){
+    bool show = false;
     switch(t){
         case Enumeration::BuildingType::MainBuilding:
+            show = true;
             tabs -> changeActiveTab(0);
         break;
         case Enumeration::BuildingType::Barrack:
+            show = true;
             tabs -> changeActiveTab(1);
         break;
         case Enumeration::BuildingType::Barn:
+            show = true;
             tabs -> changeActiveTab(2);
         break;
         case Enumeration::BuildingType::Workshop:
+            show = true;
             tabs -> changeActiveTab(3);
         break;
         default: break;
     }
-    tabContainer -> show();
-    buttonOpenPanel -> setText("Close Panel");
+    if (show) {
+        tabContainer -> show();
+        buttonOpenPanel -> setText("Close Panel");
+    }
 }
 
 void Hud::hidePopup(){

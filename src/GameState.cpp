@@ -90,9 +90,9 @@ void GameState::input() {
             Building *b = Human::getInstance()->getBuildingManager()->getBuilding(idBuilding);
             if (b != NULL){
                 // Comprobar que este terminado para enseñar el popup pero no va
-                //if (Human::getInstance() -> getBuildingManager() -> checkFinished(idBuilding)) {
+                if (Human::getInstance() -> getBuildingManager() -> checkFinished(idBuilding)) {
                     hud -> showPopup((Enumeration::BuildingType)b->getType());
-                //}
+                }
             }
         }
         
