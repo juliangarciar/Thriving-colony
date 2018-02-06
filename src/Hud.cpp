@@ -119,7 +119,7 @@ Hud::Hud() {
             Button *b = new Button(mainBuildingTab, "Close");
             b->setTooltip("Close popup");
             b->setCallback([&] {
-                tabContainer -> hide();
+                this->hidePopup();
             });
             buttons -> push_back(b);
 
@@ -158,7 +158,7 @@ Hud::Hud() {
             Button *b = new Button(barrackTab, "Close");
             b->setTooltip("Close popup");
             b->setCallback([&] {
-                tabContainer -> hide();
+                this->hidePopup();
             });
             buttons -> push_back(b);
 
@@ -192,7 +192,7 @@ Hud::Hud() {
             Button *b = new Button(barnTab, "Close");
             b->setTooltip("Close popup");
             b->setCallback([&] {
-                tabContainer -> hide();
+                this->hidePopup();
             });
             buttons -> push_back(b);
 
@@ -235,7 +235,7 @@ Hud::Hud() {
             Button *b = new Button(workshopTab, "Close");
             b->setTooltip("Close popup");
             b->setCallback([&] {
-                tabContainer -> hide();
+                this->hidePopup();
             });
             buttons -> push_back(b);
 
@@ -351,6 +351,7 @@ void Hud::disableTab(Enumeration::BuildingType t){
 
 void Hud::showPopup(){
     tabContainer -> show();
+    buttonOpenPanel -> setText("Close Panel");
 }
 
 void Hud::showPopup(Enumeration::BuildingType t){
@@ -370,19 +371,19 @@ void Hud::showPopup(Enumeration::BuildingType t){
         default: break;
     }
     tabContainer -> show();
+    buttonOpenPanel -> setText("Close Panel");
 }
 
 void Hud::hidePopup(){
     tabContainer -> hide();
+    buttonOpenPanel -> setText("Open Panel");
 }
 
 void Hud::setHUDEvents(){
     buttonOpenPanel->setCallback([&]{
         if (!tabContainer->isVisible()){
-            buttonOpenPanel -> setText("Close panel");
             showPopup();
         } else {
-            buttonOpenPanel -> setText("Open panel");
             hidePopup();
         }
     });
