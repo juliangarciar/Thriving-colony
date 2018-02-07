@@ -79,7 +79,7 @@ int CellSpacePartition::positionToIndex(Vector2<float> pos)
 void CellSpacePartition::addEntity(Entity* ent)
 { 
     // Debugging only
-    assert (ent);
+    //assert (ent);
 
     //int sz = mCells.size();
     Vector2<float> dummy = ent->getPosition()->toVector2();

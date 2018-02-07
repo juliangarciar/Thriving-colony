@@ -13,20 +13,6 @@ PathManager::~PathManager(){
 }
 // Change this method
 int PathManager::getClosestNodeToPosition(Vector2<float> pos){
-    //float distance = 10000000;
-    //Vector2<float> b;
-    //int chosen = -1;
-    //for(int i = 0; i < navGraph->getNumNodes(); i++){
-    //    b = navGraph->getNode(i).getPosition();
-    //    float dX = pos.x - b.x;
-    //    float dY = pos.y - b.y;
-    //    float dummy = std::sqrt(std::pow(dX, 2) + std::pow(dY, 2));
-    //    if(dummy < distance){
-    //        distance = dummy;
-    //        chosen = i;
-    //    }
-    //}
-    //return chosen;
     // This is not working properly for some reason
     int idx = (int)(total * pos.x / spaceWidth) + 
                 ((int)((total) * pos.y / spaceWidth) * total);

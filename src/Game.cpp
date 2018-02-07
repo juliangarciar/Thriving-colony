@@ -31,7 +31,7 @@ Game::Game() {
 // Added by Julian
     Graph::Instance();
     cellSpace = new CellSpacePartition(9000, 9000, 100, 100, 100);
-    soundSystem = new SoundSystem();
+    soundSystem = SoundSystem::Instance();
 }
 
 Game::~Game() {

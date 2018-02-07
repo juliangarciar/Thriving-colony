@@ -2,7 +2,6 @@
 #include "Game.h"
 #include "Human.h"
 #include "IA.h"
-#include "PathPlanner/PathManager.h"
 
 Unit::Unit(SceneNode *layer, int id, const wchar_t *path, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t, Vector3<float> p) : Entity(layer, id, path, team, breed) {
     // Esto lo pongo a pelo e igual para todas
@@ -29,7 +28,7 @@ Unit::Unit(SceneNode *layer, int id, const wchar_t *path, Enumeration::Team team
     attackCountdown = 0;
     // Preparado para algo
     readyToEnter = false;
-    
+    pathManager = new PathManager(this);
     Init();
 
     //Graphic engine, this should be in the switch (when models done)
@@ -338,63 +337,6 @@ void Unit::updateTroop() {
     }
 }
 
-<<<<<<< HEAD
-void Unit::setTroopPosition(Vector3<float> vectorData) {
-    this -> vectorPos -> set(vectorData);
-    this -> setPosition(vectorData);
-}
-
-void Unit::setTroopDestination(Vector3<float> vectorData) {
-    if (state == Enumeration::UnitState::Move) {
-        target = NULL;
-    }
-
-    vectorDes -> set(vectorData);
-
-    Vector3<float> desp = *vectorDes - *vectorPos;
-
-    float distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2));
-
-    vectorMov -> x = (desp.x / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
-    vectorMov -> z = (desp.z / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
-    float movDistance = std::sqrt(std::pow(vectorMov -> x, 2) + std::pow(vectorMov -> z, 2));
-    steps = (distance / movDistance);
-    //if(steps % movDistance >= 0.5)
-    //    steps++;
-    std::cout << "Steps: " << steps << "\n";
-    moving = true;
-}
-void Unit::setPath(std::list< Vector2<float> > path){
-    this->pathFollow = path;
-}
-void Unit::setPathToTarget(Vector3<float> vectorData){
-    this->pathManager->createPathTo(vectorData.toVector2());
-    if(!pathFollow.empty()){
-        Vector2<float> dummy = this->pathFollow.front();
-        Vector3<float> newDest;
-        newDest.x = dummy.x;
-        newDest.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(dummy.x, dummy.y);
-        newDest.z = dummy.y;
-        this->setTroopDestination(newDest);
-        this->pathFollow.pop_front();
-    }
-}
-Model* Unit::getModel() {
-    return this -> model;
-}
-
-string Unit::getAttackEvent() {
-    return attackEvent;
-}
-string Unit::getMoveEvent() {
-    return moveEvent;
-}
-string Unit::getSelectEvent() {
-    return selectEvent;
-}
-
-=======
->>>>>>> master
 void Unit::taxPlayer(Enumeration::Team teamData) {
     if (teamData == Enumeration::Team::Human) {
         Human::getInstance() -> increaseHappiness(happiness);
@@ -523,6 +465,9 @@ void Unit::setMoving(bool movingPnt) {
 void Unit::setAttacking(bool attackingPnt) {
     attacking = attackingPnt;
 }
+void Unit::setRetracted(bool data) {
+    retracted = data;
+}
 
 void Unit::setTroopPosition(Vector3<float> vectorData) {
     vectorPos -> set(vectorData);
@@ -538,16 +483,49 @@ void Unit::setTroopDestination(Vector3<float> vectorData) {
 
     Vector3<float> desp = *vectorDes - *vectorPos;
 
-    float distance = std::abs(std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2)));
+    float distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2));
 
     vectorMov -> x = (desp.x / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
     vectorMov -> z = (desp.z / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
 
+    float movDistance = std::sqrt(std::pow(vectorMov -> x, 2) + std::pow(vectorMov -> z, 2));
+    steps = (distance / movDistance);
+
+    std::cout << "Steps: " << steps << "\n";
     moving = true;
 }
 
-void Unit::setRetracted(bool data) {
-    retracted = data;
+void Unit::setPath(std::list< Vector2<float> > path){
+    this->pathFollow = path;
+}
+void Unit::setPathToTarget(Vector3<float> vectorData){
+    this->pathManager->createPathTo(vectorData.toVector2());
+    if(!pathFollow.empty()){
+        Vector2<float> dummy = this->pathFollow.front();
+        Vector3<float> newDest;
+        newDest.x = dummy.x;
+        newDest.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(dummy.x, dummy.y);
+        newDest.z = dummy.y;
+        this->setTroopDestination(newDest);
+        this->pathFollow.pop_front();
+    }
+}
+
+Entity* Unit::getTarget() {
+    return target;
+}
+Model* Unit::getModel() {
+    return model;
+}
+
+string Unit::getAttackEvent() {
+    return attackEvent;
+}
+string Unit::getMoveEvent() {
+    return moveEvent;
+}
+string Unit::getSelectEvent() {
+    return selectEvent;
 }
 
 bool Unit::getReadyToEnter() {
@@ -556,29 +534,8 @@ bool Unit::getReadyToEnter() {
 bool Unit::getRetracted() {
     return retracted;
 }
-
 bool Unit::getMoving() {
     return moving;
-}
-
-Entity* Unit::getTarget() {
-    return target;
-}
-
-Model* Unit::getModel() {
-    return model;
-}
-
-string Unit::getAttackEvent() {
-    return attackEvent;
-}
-
-string Unit::getMoveEvent() {
-    return moveEvent;
-}
-
-string Unit::getSelectEvent() {
-    return selectEvent;
 }
 
 Vector3<float>* Unit::getDestination() {
