@@ -37,7 +37,7 @@ void GameState::Init() {
 
     //Init SoundSystem
     SoundSystem::Instance() -> initSystem();
-/*
+
     // Build the main building of IA
     Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();
     IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding);
@@ -56,14 +56,14 @@ void GameState::Init() {
     v.x = Enumeration::HumanCityHall::human_x;
     v.z = Enumeration::HumanCityHall::human_z + 200;
     v.y = map -> getY(v.x, v.z);
-    Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy);*/
+    Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy);
 }
 
 void GameState::Input() {
     camera -> Move();
     camera -> RotateAndInclinate();
     camera -> Zoom();
-/*    camera -> CenterCamera();
+    camera -> CenterCamera();
 
     //Vector3<float> v = map -> getPointCollision(Game::Instance() -> getMouse());
     Human::getInstance() -> getBuildingManager() -> testRaycastCollisions();
@@ -141,7 +141,7 @@ void GameState::Input() {
 
     if (Game::Instance()-> getMouse() -> rightMousePressed()) {
         Human::getInstance() -> getUnitManager() -> moveOrder();
-    }*/
+    }
 /*  //Hacks
     if (Game::Instance() -> getIO() -> keyPressed(KEY_KEY_1)) {
         Human::getInstance() -> receiveMetal();
@@ -169,7 +169,6 @@ void GameState::Update(){
     SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");
     SoundSystem::Instance() -> update();
     
-/*
     //If human is building something
     Human::getInstance() -> getBuildingManager() -> drawBuilding();
     Human::getInstance() -> getUnitManager() -> deployTroop();
@@ -182,7 +181,7 @@ void GameState::Update(){
     //ToDo: glfw tiene un evento para si se redimensiona la pantalla
     if (g -> getWindow() -> getRealWindowWidth() != prevWindowWidth || g -> getWindow() -> getRealWindowHeight() != prevWindowHeight) {
         hud -> updatePositions();
-    }*/
+    }
 }
 
 void GameState::Render() {

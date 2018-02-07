@@ -8,8 +8,8 @@ Box3D<T>::Box3D(){
 }
 
 template <class T>
-Box3D<T>::Box3D(core::aabbox3d<T> box){
-	box = box;
+Box3D<T>::Box3D(core::aabbox3d<T> b){
+	box = b;
 }
 
 template <class T>
@@ -18,8 +18,8 @@ Box3D<T>::~Box3D(){
 }
 
 template <class T>
-void Box3D<T>::set(core::aabbox3d<T> box){
-	box = box;
+void Box3D<T>::set(core::aabbox3d<T> b){
+	box = b;
 }
 
 template <class T>

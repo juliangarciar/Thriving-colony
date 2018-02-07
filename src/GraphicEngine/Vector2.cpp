@@ -3,26 +3,26 @@
 
 template <class T>
 Vector2<T>::Vector2() {
-    x = 0;
-    y = 0;
+    this -> x = 0;
+    this -> y = 0;
 }
 
 template <class T>
 Vector2<T>::Vector2(T x, T y) {
-    x = x;
-    y = y;
+    this -> x = x;
+    this -> y = y;
 }
 
 template <class T>
 Vector2<T>::Vector2(core::vector2di v) {
-    x = v.X;
-    y = v.Y;
+    this -> x = v.X;
+    this -> y = v.Y;
 }
 
 template <class T>
 Vector2<T>::Vector2(core::vector2df v) {
-    x = v.X;
-    y = v.Y;
+    this -> x = v.X;
+    this -> y = v.Y;
 }
 
 template <class T>
@@ -32,20 +32,20 @@ Vector2<T>::~Vector2() {
 
 template <class T>
 void Vector2<T>::set(T x, T y) {
-    x = x;
-    y = y;
+    this -> x = x;
+    this -> y = y;
 }
 
 template <class T>
 void Vector2<T>::set(core::vector2di v) {
-    x = v.X;
-    y = v.Y;
+    this -> x = v.X;
+    this -> y = v.Y;
 }
 
 template <class T>
 void Vector2<T>::set(core::vector2df v) {
-    x = v.X;
-    y = v.Y;
+    this -> x = v.X;
+    this -> y = v.Y;
 }
 
 template <class T>
