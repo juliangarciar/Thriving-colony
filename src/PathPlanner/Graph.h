@@ -17,6 +17,8 @@ class Graph{
         typedef std::vector<edgeList> edgeListVector;
         
     private:
+    // Graph instance
+        static Graph* pinstance;
     // The nodes that form the graph
         nodeVector m_Nodes;
         edgeListVector m_Edges;
@@ -29,7 +31,8 @@ class Graph{
         std::list< Edge* >::iterator edgeIterator;
         std::vector< LWayPoint* >::iterator nodeIterator;
     public:
-    // ructor
+    // Constructor
+        static Graph* Instance();
         Graph();
         ~Graph();
     // Returns the node at the given index

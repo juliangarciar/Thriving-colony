@@ -92,6 +92,27 @@ Vector2<T> Vector2<T>::getFixed() {
 
     return Vector2<T>(newX, newY);
 }
-
+// Added by Julian
+template <class T>
+T Vector2<T>::calculateDistance(Vector2<T> b){
+    
+    T disX, disY;
+    disX = this->x - b.x;
+    disY = this->y - b.y;
+    T distance = std::sqrt(disX * disX + disY * disY);
+    return distance;
+}
+template <class T>
+Vector2<T> Vector2<T>::operator + (const Vector2<T> &p) const {
+    return Vector2<T>(this -> x + p.x, this -> y + p.y);
+}
+template <class T>
+Vector2<T> Vector2<T>::operator - (const Vector2<T> &p) const {
+    return Vector2<T>(this -> x - p.x, this -> y - p.y);
+}
+template <class T>
+Vector2<T> Vector2<T>::operator / (const float &num) const {
+    return Vector2<T>(this -> x / num, this -> y / num);
+}
 template class Vector2<int>;
 template class Vector2<float>;

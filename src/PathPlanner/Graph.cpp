@@ -1,8 +1,175 @@
 #include "Graph.h"
+#define GRID 100
+#define K 9000
+Graph* Graph::pinstance = 0;
+
+Graph* Graph::Instance() {
+    if(pinstance == 0) {
+        pinstance = new Graph();
+    }
+    return pinstance;
+}
 Graph::Graph(){
     this->nextNode = 0;
     this->m_Nodes = nodeVector();
     this->m_Edges = edgeListVector();
+
+// Lots of waypoints -> debugging purpose
+    int nWaypointsX, nWaypointsY;
+    nWaypointsX = K / GRID;
+    nWaypointsY = K / GRID;
+    for(int y = 0; y < nWaypointsY; y++){
+        for(int x = 0; x < nWaypointsX; x++){
+            float dX = x * GRID + GRID / 2;
+            float dY = y * GRID + GRID / 2;
+            LWayPoint dummy = LWayPoint(Vector2<float>(dX, dY));
+            this->addNode(dummy);
+            if(y == 0){
+                if(x == 0){
+                    Edge a = Edge();
+                    Edge b = Edge();
+                    Edge c = Edge();
+                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() + 1);
+                    b.setFrom(dummy.getIndex()), b.setTo(nWaypointsX);
+                    c.setFrom(dummy.getIndex()), c.setTo(nWaypointsX + 1);
+                    this->addEdge(a);
+                    this->addEdge(b);
+                    this->addEdge(c);
+                }
+                else if(x == nWaypointsX - 1){
+                    Edge a = Edge();
+                    Edge b = Edge();
+                    Edge c = Edge();
+                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() - 1);
+                    b.setFrom(dummy.getIndex()), b.setTo(2 * dummy.getIndex() - 1);
+                    c.setFrom(dummy.getIndex()), c.setTo(2 * dummy.getIndex());
+                    this->addEdge(a);
+                    this->addEdge(b);
+                    this->addEdge(c);
+                }
+                else{
+                    Edge a = Edge();
+                    Edge b = Edge();
+                    Edge c = Edge();
+                    Edge d = Edge();
+                    Edge e = Edge();
+                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() - 1);
+                    b.setFrom(dummy.getIndex()), b.setTo(dummy.getIndex() + 1);
+                    c.setFrom(dummy.getIndex()), c.setTo(2 * dummy.getIndex() - 1);
+                    d.setFrom(dummy.getIndex()), d.setTo(2 * dummy.getIndex());
+                    e.setFrom(dummy.getIndex()), e.setTo(2 * dummy.getIndex() + 1);
+                    this->addEdge(a);
+                    this->addEdge(b);
+                    this->addEdge(c);
+                    this->addEdge(d);
+                    this->addEdge(e);
+                }
+            }
+            else if(y == nWaypointsY - 1){
+                if(x == 0){
+                    Edge a = Edge();
+                    Edge b = Edge();
+                    Edge c = Edge();
+                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() + 1);
+                    b.setFrom(dummy.getIndex()), b.setTo(dummy.getIndex() - nWaypointsX);
+                    c.setFrom(dummy.getIndex()), c.setTo(dummy.getIndex() - nWaypointsX + 1);
+                    this->addEdge(a);
+                    this->addEdge(b);
+                    this->addEdge(c);
+                }
+                else if(x == nWaypointsX - 1){
+                    Edge a = Edge();
+                    Edge b = Edge();
+                    Edge c = Edge();
+                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() - 1);
+                    b.setFrom(dummy.getIndex()), b.setTo(dummy.getIndex() - nWaypointsX);
+                    c.setFrom(dummy.getIndex()), c.setTo(dummy.getIndex() - nWaypointsX - 1);
+                    this->addEdge(a);
+                    this->addEdge(b);
+                    this->addEdge(c);
+                }
+                else{
+                    Edge a = Edge();
+                    Edge b = Edge();
+                    Edge c = Edge();
+                    Edge d = Edge();
+                    Edge e = Edge();
+                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() - 1);
+                    b.setFrom(dummy.getIndex()), b.setTo(dummy.getIndex() + 1);
+                    c.setFrom(dummy.getIndex()), c.setTo(dummy.getIndex() - nWaypointsX - 1);
+                    d.setFrom(dummy.getIndex()), d.setTo(dummy.getIndex() - nWaypointsX);
+                    e.setFrom(dummy.getIndex()), e.setTo(dummy.getIndex() - nWaypointsX + 1);
+                    this->addEdge(a);
+                    this->addEdge(b);
+                    this->addEdge(c);
+                    this->addEdge(d);
+                    this->addEdge(e);
+                }
+            }
+            else{
+                if(x == 0){
+                    Edge a = Edge();
+                    Edge b = Edge();
+                    Edge c = Edge();
+                    Edge d = Edge();
+                    Edge e = Edge();
+                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() - nWaypointsX);
+                    b.setFrom(dummy.getIndex()), b.setTo(dummy.getIndex() - nWaypointsX + 1);
+                    c.setFrom(dummy.getIndex()), c.setTo(dummy.getIndex() + 1);
+                    d.setFrom(dummy.getIndex()), d.setTo(dummy.getIndex() + nWaypointsX);
+                    e.setFrom(dummy.getIndex()), e.setTo(dummy.getIndex() + nWaypointsX + 1);
+                    this->addEdge(a);
+                    this->addEdge(b);
+                    this->addEdge(c);
+                    this->addEdge(d);
+                    this->addEdge(e);
+                }
+                else if(x == nWaypointsX - 1){
+                    Edge a = Edge();
+                    Edge b = Edge();
+                    Edge c = Edge();
+                    Edge d = Edge();
+                    Edge e = Edge();
+                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() - nWaypointsX - 1);
+                    b.setFrom(dummy.getIndex()), b.setTo(dummy.getIndex() - nWaypointsX);
+                    c.setFrom(dummy.getIndex()), c.setTo(dummy.getIndex() - 1);
+                    d.setFrom(dummy.getIndex()), d.setTo(dummy.getIndex() + nWaypointsX - 1);
+                    e.setFrom(dummy.getIndex()), e.setTo(dummy.getIndex() + nWaypointsX);
+                    this->addEdge(a);
+                    this->addEdge(b);
+                    this->addEdge(c);
+                    this->addEdge(d);
+                    this->addEdge(e);
+                }
+                else{
+                    Edge a = Edge();
+                    Edge b = Edge();
+                    Edge c = Edge();
+                    Edge d = Edge();
+                    Edge e = Edge();
+                    Edge f = Edge();
+                    Edge g = Edge();
+                    Edge h = Edge();
+                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() - nWaypointsX - 1);
+                    b.setFrom(dummy.getIndex()), b.setTo(dummy.getIndex() - nWaypointsX);
+                    c.setFrom(dummy.getIndex()), c.setTo(dummy.getIndex() - nWaypointsX + 1);
+                    d.setFrom(dummy.getIndex()), d.setTo(dummy.getIndex() - 1);
+                    e.setFrom(dummy.getIndex()), e.setTo(dummy.getIndex() + 1);
+                    f.setFrom(dummy.getIndex()), f.setTo(dummy.getIndex() + nWaypointsX - 1);
+                    g.setFrom(dummy.getIndex()), g.setTo(dummy.getIndex() + nWaypointsX);
+                    h.setFrom(dummy.getIndex()), h.setTo(dummy.getIndex() + nWaypointsX + 1);
+                    this->addEdge(a);
+                    this->addEdge(b);
+                    this->addEdge(c);
+                    this->addEdge(d);
+                    this->addEdge(e);
+                    this->addEdge(f);
+                    this->addEdge(g);
+                    this->addEdge(h);
+                }
+            }
+        }
+    }
 }
 Graph::~Graph(){
     

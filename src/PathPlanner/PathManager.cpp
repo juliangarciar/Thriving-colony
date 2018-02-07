@@ -1,54 +1,43 @@
 #include "PathManager.h"
-
-PathManager* PathManager::pinstance = 0;
-
-PathManager* PathManager::Instance() {
-    if(pinstance == 0) {
-        pinstance = new PathManager();
-    }
-    return pinstance;
-}
-PathManager::PathManager(){
+#include "SearchAStar.h"
+#define spaceWidth 9000
+#define total 90
+PathManager::PathManager(class Unit* actor){
     // Creates the graph
-    // swap this to graph
-    this->navGraph = Graph();
-    LWayPoint a = LWayPoint(Vector2<float>(8000, 8000));
-    LWayPoint b = LWayPoint(Vector2<float>(2000, 8000));
-    LWayPoint c = LWayPoint(Vector2<float>(8000, 2000));
-    LWayPoint d = LWayPoint(Vector2<float>(2000, 2000));
-    navGraph.addNode(a);
-    navGraph.addNode(b);
-    navGraph.addNode(c);
-    navGraph.addNode(d);
-    Edge ab = Edge();
-    Edge bc = Edge();
-    Edge cd = Edge();
-    Edge da = Edge();
-    ab.setFrom(a.getIndex()), ab.setTo(b.getIndex());
-    bc.setFrom(b.getIndex()), bc.setTo(c.getIndex());
-    cd.setFrom(c.getIndex()), cd.setTo(d.getIndex());
-    da.setFrom(d.getIndex()), da.setTo(a.getIndex());
+    this->navGraph = Graph::Instance();
+    this->unit = actor;
 }
 PathManager::~PathManager(){
-
+    delete this->navGraph;
+    delete this->unit;
 }
+// Change this method
 int PathManager::getClosestNodeToPosition(Vector2<float> pos){
-    float distance = 10000000;
-    Vector2<float> b;
-    int chosen = -1;
-    for(int i = 0; i < navGraph.getNumNodes(); i++){
-        b = navGraph.getNode(i).getPosition();
-        float dX = pos.x - b.x;
-        float dY = pos.y - b.y;
-        float dummy = std::sqrt(std::pow(dX, 2) + std::pow(dY, 2));
-        if(dummy < distance){
-            distance = dummy;
-            chosen = i;
-        }
-    }
-    return chosen;
+    //float distance = 10000000;
+    //Vector2<float> b;
+    //int chosen = -1;
+    //for(int i = 0; i < navGraph->getNumNodes(); i++){
+    //    b = navGraph->getNode(i).getPosition();
+    //    float dX = pos.x - b.x;
+    //    float dY = pos.y - b.y;
+    //    float dummy = std::sqrt(std::pow(dX, 2) + std::pow(dY, 2));
+    //    if(dummy < distance){
+    //        distance = dummy;
+    //        chosen = i;
+    //    }
+    //}
+    //return chosen;
+    // This is not working properly for some reason
+    int idx = (int)(total * pos.x / spaceWidth) + 
+                ((int)((total) * pos.y / spaceWidth) * total);
+    std::cout << idx << "\n";
+    std::cout << navGraph->getNumNodes() << std::endl;
+    if (idx > navGraph->getNumNodes() - 1) 
+        idx = navGraph->getNumNodes() - 1;
+
+    return idx;
 }
-bool PathManager::createPathTo(Vector2<float> unitPos, Vector2<float> targetPos, std::list< Vector2<float> >& path){
+bool PathManager::createPathTo(Vector2<float> targetPos){
     vDestination = targetPos;
     // Dummy variable, to be deleted
     //bool obstructed = false;
@@ -59,7 +48,7 @@ bool PathManager::createPathTo(Vector2<float> unitPos, Vector2<float> targetPos,
     //    return true;
     //}
     // Find closes node to unitPos
-    int closestNodeToUnit = getClosestNodeToPosition(unitPos);
+    int closestNodeToUnit = getClosestNodeToPosition(unit->getPosition()->toVector2());
     if(closestNodeToUnit == no_closest_node_found)
         return false;
 
@@ -68,22 +57,23 @@ bool PathManager::createPathTo(Vector2<float> unitPos, Vector2<float> targetPos,
     if(closestNodeToTarget == no_closest_node_found)
         return false;
 
-    SearchAStar aStar(navGraph, closestNodeToUnit, closestNodeToTarget);
+    SearchAStar aStar(*navGraph, closestNodeToUnit, closestNodeToTarget);
 
     // Complete getPathToTarget
     std::list<int> dummy = aStar.getPathToTarget();
-
+    std::list< Vector2<float> > path;
     if(!dummy.empty()){
-        path.clear();
+        //path.clear();
         while(!dummy.empty()){
-            path.push_back(navGraph.getPositionFrom(dummy.front()));
+            path.push_back(navGraph->getPositionFrom(dummy.front()));
             dummy.pop_front();
         }
         // Complete this method
         // maybe is needed as nodes, instead of edges 
         //convertIndicesToVectors(pathOfNode, path);
         // Add the actual target position to the end of the path
-        path.push_back(targetPos);
+        //path.push_back(targetPos);
+        this->unit->setPath(path);
         std::cout << path.size() << "\n";
         return true;
     }

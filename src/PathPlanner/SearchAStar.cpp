@@ -14,7 +14,7 @@ void SearchAStar::Search(){
     // Contiene ints, y su prioridad depende de m_FCost
     std::priority_queue<int, std::vector<int>, comparePriority> pq(m_FCosts);
     pq.push(m_iSource);
-
+    // Check if exist a direct vector to the target
     while(!pq.empty()){
         int NextClosestNode = pq.top();
         pq.pop();

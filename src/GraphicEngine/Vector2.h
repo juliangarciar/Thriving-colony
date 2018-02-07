@@ -30,7 +30,11 @@ class Vector2 {
 
         core::vector2di getVectorI();
         core::vector2df getVectorF();
-        
+    // Added by Julian
+        T calculateDistance(Vector2<T> b);
+        Vector2<T> operator +(const Vector2<T> &p) const;
+        Vector2<T> operator -(const Vector2<T> &p) const;
+        Vector2<T> operator /(const float &num) const;
     private:
 };
 

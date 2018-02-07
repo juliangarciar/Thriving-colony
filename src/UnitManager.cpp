@@ -23,9 +23,13 @@ UnitManager::UnitManager(Enumeration::Team teamData, Enumeration::BreedType race
 
     selectedTroop = NULL;
 
-    //Addes by Julian
+    
     this -> breedType = raceData;
-    PathManager::Instance();
+    //Addes by Julian
+    createTroop(Enumeration::UnitType::StandardR);
+    createTroop(Enumeration::UnitType::StandardR);
+    createTroop(Enumeration::UnitType::StandardR);
+    createTroop(Enumeration::UnitType::StandardR);
 }
 
 //Destroyer
@@ -73,8 +77,9 @@ void UnitManager::updateUnitManager() {
 //unitData.unitSubClass = Enumeration::UnitType::SubClass::Idol;
 bool UnitManager::createTroop(Enumeration::UnitType unitData) {
     if (checkCanPay(unitData)) {
-        Unit *newUnit = new Unit(std::rand(), unitLayer, L"media/buildingModels/escuela.obj", Vector3<float>(), this -> teamManager, unitData, this -> breedType);
+        Unit *newUnit = new Unit(std::rand(), unitLayer, L"media/buildingModels/dummy.obj", Vector3<float>(), this -> teamManager, unitData, this -> breedType);
         newUnit -> getModel() -> setActive(false);
+        newUnit -> getModel() ->setScale(Vector3<float>(100, 100, 100));
         this -> inHallTroops -> push_back(newUnit);
         return true;
     }
@@ -129,9 +134,13 @@ void UnitManager::deployTroop(Terrain *terrain) {
 
         temp -> setTroopPosition(Vector3<float>(Enumeration::HumanCityHall::human_x, terrain -> getY(Enumeration::HumanCityHall::human_x, Enumeration::HumanCityHall::human_z), Enumeration::HumanCityHall::human_z)); //ToDo
         
+        // Why attack move
         temp -> switchState(Enumeration::UnitState::AttackMove);
 
-        temp -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
+        //temp -> setPosition(Vector3<float>(8000, 0, 8000));
+        //temp -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
+        temp -> setPathToTarget(terrain -> getPointCollision(g -> getMouse()));
+
         temp -> getModel() -> setActive(true);
         temp -> setRetracted(false);
         
@@ -150,12 +159,15 @@ void UnitManager::deployAllTroops(Vector3<float> vectorData) {
         this -> inHallTroops -> erase(inHallTroops -> begin() + i);
         this -> inMapTroops -> insert(std::pair<int, Unit*>(u -> getModel() -> getID(), u));
 
+        //u -> setTroopPosition(Vector3<float>(Enumeration::HumanCityHall::human_x, terrain -> getY(Enumeration::HumanCityHall::human_x, Enumeration::HumanCityHall::human_z), Enumeration::HumanCityHall::human_z)); //ToDo
 
         u -> setTroopPosition(vectorData);
-
+        // u -> setTroopPosition(vectorData);
+        //u -> setPathToTarget(vectorData);
+        // Why attack move
         u -> switchState(Enumeration::UnitState::AttackMove);
 
-        u -> setTroopDestination(vectorData);
+        // u -> setTroopDestination(vectorData);
         u -> getModel() -> setActive(true);
         u -> setRetracted(false);
     }
@@ -193,18 +205,22 @@ void UnitManager::unSelectTroop() {
 
 
 //Pass the order to the selected unit
+// Changed by Julian
 void UnitManager::moveOrder(Terrain *terrain) {
     Game *g = Game::Instance();
     if (this -> selectedTroop != NULL) {
         this -> selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
         if (Game::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: arreglar
+        // To do by Julian -> change attack iddle to pathfinding mode
             this -> selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
 
             this -> selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
+
         } else {
             this -> selectedTroop -> switchState(Enumeration::UnitState::Move);
 
-            this -> selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
+            //this -> selectedTroop -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
+            this->selectedTroop->setPathToTarget(terrain -> getPointCollision(g -> getMouse()));
         }
         //MOVEMENT VOICE
         SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
@@ -212,16 +228,16 @@ void UnitManager::moveOrder(Terrain *terrain) {
         //Game::Instance() -> getSoundSystem() -> playVoice(this -> selectedTroop -> getMoveEvent());
     }
     // Debug by julian
-    else{
-        Vector2<float> origen = Vector2<float> (0, 0);
-        Vector2<float> destino = Vector2<float> (9000, 9000);
-        std::list< Vector2<float> > path;
-        PathManager::Instance()->createPathTo(origen, destino, path);
-        while(!path.empty()){
-            std::cout << path.front().x << "," << path.front().y << "\n";
-            path.pop_front();
-        }
-    }
+    //else{
+    //    Vector2<float> origen = Vector2<float> (0, 0);
+    //    Vector2<float> destino = Vector2<float> (9000, 9000);
+    //    std::list< Vector2<float> > path;
+    //    PathManager::Instance()->createPathTo(origen, destino, path);
+    //    while(!path.empty()){
+    //        std::cout << path.front().x << "," << path.front().y << "\n";
+    //        path.pop_front();
+    //    }
+    //}
 }
 
 void UnitManager::startBattle(int enemyID) {

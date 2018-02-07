@@ -31,7 +31,6 @@ class SearchAStar{
             {
                 return costs.at(a) < costs.at(b);
             }
-            
         };
     public:
         SearchAStar(Graph& graph,

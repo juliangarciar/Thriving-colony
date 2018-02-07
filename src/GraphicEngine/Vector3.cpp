@@ -84,7 +84,15 @@ Vector3<T>& Vector3<T>::normalize() {
     z = (T)(z * length);
     return *this;
 }
-
+// Added by Julian
+template <class T>
+Vector2<T> Vector3<T>::toVector2(){
+    Vector2<T> dummy;
+    dummy.x = this->x;
+    dummy.y = this->z;
+    return dummy;
+}
+//      **      //
 template <class T>
 T Vector3<T>::getLength() {
     return core::squareroot(x*x + y*y + z*z);

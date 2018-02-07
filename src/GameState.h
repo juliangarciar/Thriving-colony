@@ -16,7 +16,6 @@
 #include <GraphicEngine/Light.h>
 
 #include <SoundEngine/SoundSystem.h>
-
 /**
  * @class GameState
  * @brief Tiene herencia publica de State y crea un objeto tipo GameState

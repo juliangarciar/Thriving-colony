@@ -3,7 +3,7 @@
 
 #include "Entity.h"
 #include "GraphicEngine/Vector3.h"
-
+#include <PathPlanner/PathManager.h>
 //#include "Battle.h"
 
 #include <iostream>
@@ -21,7 +21,7 @@ class Unit : public Entity {
         //Getters
         Entity* getTarget();
         Model* getModel();
-        std::list<int>& getPath();
+        std::list< Vector2<float> > getPath();
         //MusicStrings
         string getAttackEvent();
         string getMoveEvent();
@@ -43,7 +43,8 @@ class Unit : public Entity {
         void setRetracted(bool);
         void setTroopPosition(Vector3<float> vectorData);
         void setTroopDestination(Vector3<float> vectorData);
-
+        void setPath(std::list< Vector2<float> > path);
+        void setPathToTarget(Vector3<float> vectorData);
         /////////////////////////
         void attack();
         //void updateTarget(Entity*);
@@ -92,12 +93,13 @@ class Unit : public Entity {
         float attackCountdown;
 
     //Space vectors used for unit movement
-        std::list<int> pathFollow;
+        class PathManager* pathManager;
+        std::list< Vector2<float> > pathFollow;
         //Vector position is in the father
         Vector3 <float> *vectorPos;
         Vector3 <float> *vectorDes;
         Vector3 <float> *vectorMov;
-        
+        float steps;
         //Entity* target;
     //Unit type
         Enumeration::UnitType unitType;

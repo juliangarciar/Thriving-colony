@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <irrlicht.h>
-
+#include "Vector2.h"
 using namespace irr;
 
 template <class T>
@@ -24,6 +24,9 @@ class Vector3 {
         void set(Vector3<T> v);
 
         Vector3<T>& normalize();
+    // Added by Julian
+        Vector2<T> toVector2();
+        // ** //
         T getLength();
 
         core::vector3di getVectorI();

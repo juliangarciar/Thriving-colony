@@ -6,7 +6,8 @@
 
 //ToDo: cambiar llamada a entity
 Unit::Unit(int id, SceneNode *layer, const wchar_t *path,Vector3<float> vectorData, Enumeration::Team teamData, Enumeration::UnitType typeData, Enumeration::BreedType raceData) : Entity(layer, id, path) {
-    
+    this->pathManager = new PathManager(this);
+
     this -> viewRadius = 700;
     //Actions of the units
     this -> moving = false;
@@ -317,23 +318,41 @@ void Unit::setAttacking(bool attackingPnt) {
 void Unit::moveTroop() {
     if (moving) {
         // close to destination, stop
-        if (std::abs(vectorDes -> x - position -> x) < 5.0 && std::abs(vectorDes -> z - position -> z) < 5.0) {
-            moving = false;
-            if (state == Enumeration::UnitState::Retract) {
-                readyToEnter = true;
-                return;
+        if (steps == 0) {
+            if(this->pathFollow.empty()){
+                moving = false;
+                if (state == Enumeration::UnitState::Retract) {
+                    readyToEnter = true;
+                    return;
+                }
+                switchState(Enumeration::Idle);
             }
-            switchState(Enumeration::Idle);
-        } else {
+            else{
+                Vector2<float> dummy = this->pathFollow.front();
+                Vector3<float> newDest(dummy.x, Game::Instance() -> getGameState() -> getTerrain() -> getY(dummy.x, dummy.y), dummy.y);
+                this->pathFollow.pop_front();
+                this->setTroopDestination(newDest);
+            }
+        }
+        else if(std::floor(steps) == 0){
+            Vector3<float> move = *vectorMov;
+            move.x *= steps;
+            //move.y *= steps;
+            move.z *= steps;
+            Vector3<float> newPos = *vectorPos + move;
+            newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
+            this -> setTroopPosition(newPos);
+            steps = 0;
+        } 
+        else {
             // far from destination, move
             Vector3<float> newPos = *vectorPos + *vectorMov;
             newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
             this -> setTroopPosition(newPos);
+            steps--;
         }
     }
 }
-
-
 void Unit::updateTroop() {
     changeRedTint();
     attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
@@ -380,16 +399,32 @@ void Unit::setTroopDestination(Vector3<float> vectorData) {
 
     Vector3<float> desp = *vectorDes - *vectorPos;
 
-    float distance = std::abs(std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2)));
+    float distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2));
 
     vectorMov -> x = (desp.x / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
     vectorMov -> z = (desp.z / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
-
+    float movDistance = std::sqrt(std::pow(vectorMov -> x, 2) + std::pow(vectorMov -> z, 2));
+    steps = (distance / movDistance);
+    //if(steps % movDistance >= 0.5)
+    //    steps++;
+    std::cout << "Steps: " << steps << "\n";
     moving = true;
-    
 }
-
-
+void Unit::setPath(std::list< Vector2<float> > path){
+    this->pathFollow = path;
+}
+void Unit::setPathToTarget(Vector3<float> vectorData){
+    this->pathManager->createPathTo(vectorData.toVector2());
+    if(!pathFollow.empty()){
+        Vector2<float> dummy = this->pathFollow.front();
+        Vector3<float> newDest;
+        newDest.x = dummy.x;
+        newDest.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(dummy.x, dummy.y);
+        newDest.z = dummy.y;
+        this->setTroopDestination(newDest);
+        this->pathFollow.pop_front();
+    }
+}
 Model* Unit::getModel() {
     return this -> model;
 }
@@ -535,6 +570,6 @@ void Unit::retractState() {
 bool Unit::getReadyToEnter() {
     return readyToEnter;
 }
-std::list<int>& Unit::getPath(){
+std::list< Vector2<float> > Unit::getPath(){
     return pathFollow;
 }
