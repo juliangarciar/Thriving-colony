@@ -115,6 +115,9 @@ class BuildingManager {
 		 * @return layer de tipo SceneNode
 		 */
 		SceneNode* getBuildingLayer();
+
+		void deleteBuilding(int);
+
 		/**
 		 * @brief Obtiene la cantidad de edificios de cualquier tipo
 		 * @param tipo de edificio

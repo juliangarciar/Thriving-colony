@@ -308,6 +308,17 @@ SceneNode* BuildingManager::getBuildingLayer() {
 	return buildingLayer;
 }
 
+void BuildingManager::deleteBuilding(int id) {
+	if (buildings -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
+		Human::getInstance() -> decreaseHappiness(buildings -> find(id) -> second -> getHappiness());
+	} else {
+		IA::getInstance() -> decreaseHappiness(buildings -> find(id) -> second -> getHappiness());
+	}
+	buildingAmounts[(int)buildings -> find(id) -> second -> getType()]--;
+	delete buildings -> find(id) -> second;
+	buildings -> erase(id);
+} 
+
 Building *BuildingManager::getBuilding(int id){
   	std::map<int,Building*>::iterator it;
 	it = buildings->find(id);
