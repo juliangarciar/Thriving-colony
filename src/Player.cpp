@@ -12,6 +12,8 @@ Player::Player() {
     crystalAmount = 0;
 
     underAttack = false;
+
+    updateTimer = 1.00;
 }
 
 Player::~Player() {
@@ -96,11 +98,11 @@ int Player::getCrystalAmount() {
 }
 
 int Player::getMetalProduction() {
-    return buildings->getAmount(Enumeration::BuildingType::Siderurgy) * RESOURCEPRODUCTION;
+    return (buildings->getAmount(Enumeration::BuildingType::Siderurgy) * RESOURCEPRODUCTION);
 }
 
 int Player::getCrystalProduction() {
-    return buildings->getAmount(Enumeration::BuildingType::Quarry) * RESOURCEPRODUCTION;
+    return (buildings->getAmount(Enumeration::BuildingType::Quarry) * RESOURCEPRODUCTION);
 }
 
 BuildingManager* Player::getBuildingManager() {

@@ -56,7 +56,7 @@ class Player {
         
         //Buildings
         float buildableRange;
-        
+        float updateTimer;
         //Managers
         BuildingManager *buildings;
         UnitManager *units;

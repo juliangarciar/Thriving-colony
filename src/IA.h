@@ -108,7 +108,6 @@ class IA : public Player {
          */
         void chooseBehaviour();
     private:
-        int updateTimer;
 
         static IA* instance;
         static bool deployedTroops;

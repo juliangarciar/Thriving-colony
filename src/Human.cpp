@@ -7,7 +7,6 @@ Human::Human() : Player() {
 }
 
 void Human::init() {
-    updateTimer = 0;
 
     buildings = new BuildingManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
     units = new UnitManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
@@ -39,6 +38,7 @@ void Human::update() {
     buildings -> updateBuildingManager();
     units -> updateUnitManager();
     if (updateTimer <= 0) {
+        std::cout << updateTimer << std::endl;
         gainResources();
         if (units -> getInMapTroops() -> empty()) {
             deployedTroops = false;

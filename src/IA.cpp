@@ -7,7 +7,6 @@ IA::IA() : Player() {
 }
 
 void IA::init() {
-    updateTimer = 0;
     // Choose a behaviour
     chooseBehaviour();
     // Create a behaviour and a root node and set them up according to the behaviour
