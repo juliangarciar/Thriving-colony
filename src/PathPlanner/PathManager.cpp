@@ -4,12 +4,12 @@
 #define total 90
 PathManager::PathManager(class Unit* actor){
     // Creates the graph
-    this->navGraph = Graph::Instance();
-    this->unit = actor;
+    navGraph = Graph::Instance();
+    unit = actor;
 }
 PathManager::~PathManager(){
-    delete this->navGraph;
-    delete this->unit;
+    delete navGraph;
+    delete unit;
 }
 // Change this method
 int PathManager::getClosestNodeToPosition(Vector2<float> pos){
@@ -59,7 +59,7 @@ bool PathManager::createPathTo(Vector2<float> targetPos){
         //convertIndicesToVectors(pathOfNode, path);
         // Add the actual target position to the end of the path
         //path.push_back(targetPos);
-        this->unit->setPath(path);
+        unit->setPath(path);
         std::cout << path.size() << "\n";
         return true;
     }

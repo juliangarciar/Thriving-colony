@@ -39,6 +39,7 @@ Unit::~Unit() {
     delete vectorPos;
     delete vectorDes;
     delete vectorMov;
+    delete pathManager;
 }
 
 void Unit::Init() {

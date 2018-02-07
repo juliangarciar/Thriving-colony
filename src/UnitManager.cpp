@@ -29,11 +29,6 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
 	for (int i = 0; i < Enumeration::UnitType::TroopsSize; i++){
 		troopsAmount[i] = 0;
 	}
-    //Added by Julian   
-    //createTroop(Enumeration::UnitType::StandardR);
-    //createTroop(Enumeration::UnitType::StandardR);
-    //createTroop(Enumeration::UnitType::StandardR);
-    //createTroop(Enumeration::UnitType::StandardR);
 }
 
 //Destroyer
@@ -164,14 +159,8 @@ void UnitManager::deployAllTroops(Vector3<float> vectorData) {
         //u -> setTroopPosition(Vector3<float>(Enumeration::HumanCityHall::human_x, terrain -> getY(Enumeration::HumanCityHall::human_x, Enumeration::HumanCityHall::human_z), Enumeration::HumanCityHall::human_z)); //ToDo
 
         u -> setTroopPosition(vectorData);
-<<<<<<< HEAD
-        //u -> setPathToTarget(vectorData);
-        u -> switchState(Enumeration::UnitState::AttackMove);
-
-=======
         u -> switchState(Enumeration::UnitState::AttackMove);
         u -> setTroopDestination(vectorData);
->>>>>>> master
         u -> getModel() -> setActive(true);
         u -> setRetracted(false);
     }
