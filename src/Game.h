@@ -5,11 +5,13 @@
 #include "MenuState.h"
 #include "GameState.h"
 #include "PauseState.h"
-#include "IOEngine/EventSystem.h"
+#include "Enumeration.h"
 
+#include <IOEngine/EventSystem.h>
 #include <IOEngine/Mouse.h>
 #include <IOEngine/Keyboard.h>
 #include <IOEngine/EventSystem.h>
+
 #include <GraphicEngine/Window.h>
 
 #include <SoundEngine/SoundSystem.h>

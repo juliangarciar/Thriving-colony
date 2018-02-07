@@ -1,6 +1,4 @@
 #include "Game.h"
-#include "Human.h"
-#include "IA.h"
 
 Game* Game::pinstance = 0;
 

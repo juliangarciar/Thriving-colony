@@ -5,7 +5,6 @@
 #include <GraphicEngine/Box3D.h>
 #include <GraphicEngine/Model.h>
 #include <GraphicEngine/SceneNode.h>
-#include <GraphicEngine/Window.h>
 #include "Enumeration.h"
 //#include "Battle.h"
 

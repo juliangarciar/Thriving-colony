@@ -1,6 +1,5 @@
 #include "Player.h"
 #include "Game.h"
-#include <GraphicEngine/Window.h>
 
 //ToDo: seria ideal que todo fuera parametrizable y todo estuviera en el mismo sitio
 

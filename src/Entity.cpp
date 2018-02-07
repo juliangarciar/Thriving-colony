@@ -73,7 +73,7 @@ void Entity::setPosition(Vector3<float> vectorData) {
 
 void Entity::setColor(irr::video::SColor c){
     //ToDo: reemplazar color por material
-    Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
+    Game::Instance() -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
         model -> getModel() -> getMesh(), c
     );
 }

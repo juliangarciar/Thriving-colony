@@ -2,20 +2,20 @@
 #define GAMESTATE_H
 
 #include <sstream>
-#include "IA.h"
-#include "Hud.h"
-#include "Human.h"
 #include "State.h"
 #include "CameraController.h"
+#include "Hud.h"
+#include "IA.h"
+#include "Human.h"
 #include "BuildingManager.h"
 #include "BattleManager.h"
 
 #include <IAEngine/RootNode.h>
 
+#include <SoundEngine/SoundSystem.h>
+
 #include <GraphicEngine/Terrain.h>
 #include <GraphicEngine/Light.h>
-
-#include <SoundEngine/SoundSystem.h>
 
 /**
  * @class GameState

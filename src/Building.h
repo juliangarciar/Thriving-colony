@@ -2,6 +2,7 @@
 #define BUILDING_H
 
 #include "Entity.h"
+#include <functional>
 
 /**
  * @class Building
