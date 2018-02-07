@@ -70,7 +70,12 @@ void UnitManager::updateUnitManager() {
 //In order to add a new unit, you must specify which one
 bool UnitManager::createTroop(Enumeration::UnitType unitData) {
     if (checkCanPay(unitData)) {
-        Unit *newUnit = new Unit(unitLayer, std::rand(), L"media/buildingModels/escuela.obj", team, breed, unitData, Vector3<float>());
+        Unit *newUnit = setNewUnitModel(unitData);
+        if (newUnit == NULL) {
+            return false;
+        }
+        // Distinto tamaño para distintas unidades?
+        newUnit -> getModel() -> setScale(Vector3<float>(25,25,25));
         newUnit -> getModel() -> setActive(false);
         inHallTroops -> push_back(newUnit);
         troopsAmount[unitData]++;
@@ -297,4 +302,40 @@ Unit* UnitManager::getSelectedTroop() {
 
 int UnitManager::getTroopAmount(Enumeration::UnitType t){
     return troopsAmount[(int)t];
+}
+
+Unit* UnitManager::setNewUnitModel(Enumeration::UnitType unitType) {
+    // Hacer que sean razas diferentes?
+    switch (unitType) {
+        case Enumeration::UnitType::StandardM:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/Soldado_Melee_Drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::StandardR:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/Soldado_Rango_Drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::AdvancedM:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/criatura_drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::AdvancedR:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/criatura_drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::Idol:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/Ente_Drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::Launcher:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/canon_drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::Desintegrator:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/desintegrador_de_Drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+        default:
+            return NULL;
+        break;
+    }
 }

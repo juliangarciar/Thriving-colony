@@ -41,6 +41,7 @@ class UnitManager{
         Unit* getSelectedTroop();
 		int getCollisionID();
 		std::string getCollisionName();
+        Unit* setNewUnitModel(Enumeration::UnitType);
     private:
         Enumeration::Team team;
         Enumeration::BreedType breed;
