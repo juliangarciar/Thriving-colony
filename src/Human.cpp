@@ -37,7 +37,7 @@ Human* Human::getInstance() {
 void Human::update() {
     buildings -> updateBuildingManager();
     units -> updateUnitManager();
-    //if (updateTimer <= 0) {
+    if (updateTimer <= 0) {
         gainResources();
         if (units -> getInMapTroops() -> empty()) {
             deployedTroops = false;
@@ -46,9 +46,9 @@ void Human::update() {
             deployedTroops = true;
         }
         updateTimer = 1;
-    //} else {
-       // updateTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
-    //}
+    } else {
+       updateTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
+    }
 }
 
 void Human::deployTroops() {
