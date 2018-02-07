@@ -31,6 +31,8 @@ class UnitManager{
         void moveOrder();
         void startBattle(int enemyID);
 
+        void deleteUnit(int);
+
         bool isSolvent(int, int);
         bool checkCanPay(Enumeration::UnitType);
 

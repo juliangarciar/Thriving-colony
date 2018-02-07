@@ -186,6 +186,25 @@ class Enumeration {
             VeryUnhappy
         };
 
+        enum EntityType {
+            Building,
+            Unit
+        };
+
+        enum HappinessProvided {
+            AmountHappinessBarn = 0,
+            AmountHappinessBarrack = 0,
+            AmountHapppinesHospital = 40,
+            AmountHappinessHouse = 1,
+            AmountHappinessMarket = 30,
+            AmountHappinessQuarry = 0,
+            AmountHappinessSchool = 20,
+            AmountHappinessSiderurgy = 0,
+            AmountHappinessTower = 1,
+            AmountHappinessWall = 1,
+            AmountHappinessWorkshop = 0
+        };
+        
         enum IACityHall {
             ia_x = 2000,
             ia_z = 2000

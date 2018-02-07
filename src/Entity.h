@@ -30,18 +30,14 @@ class Entity {
         virtual ~Entity();
 
         /**
-		 * @brief Resta el daño que se le haga a una unidad a tu salud total
+        * @brief Resta el daño que se le haga a una unidad a tu salud total
          * @param dmg es el daño a restar
 		 */
         void takeDamage(int);
         /**
 		 * @brief Mueve el objeto 3D a las coordenadas (0,0,0)
 		 */
-        void die();
-        /**
-		 * @brief Actualiza el target de la entidad para ver si puede realizar un nuevo ataque
-         * @param entity 
-		 */
+
         void updateTarget(Entity*);
         /**
          * @brief Establece la hitbox de la entidad
@@ -79,6 +75,8 @@ class Entity {
          * @return team tipo Enumeration::Team
 		 */
         Enumeration::Team getTeam();
+        
+        Enumeration::EntityType getEntityType();
         /**
 		 * @brief Devuelte la salud de la entidad
          * @return hp de tipo entero
@@ -109,6 +107,9 @@ class Entity {
          * @return entero con el id 
          */
         int getID();
+
+        int getHappiness();
+        
         /**
          * @brief solicita el color del edificio
          * @return devuelve el color de tipo irr::video::SColor
@@ -126,6 +127,7 @@ class Entity {
         Box3D<float>* hitbox;
         Enumeration::Team team;
         Enumeration::BreedType breed;
+        Enumeration::EntityType entityType;
 
         int ID;
 

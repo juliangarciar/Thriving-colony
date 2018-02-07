@@ -15,7 +15,7 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
 
     inHallTroops = new std::vector<Unit*>();
     inMapTroops = new std::map<int, Unit*>();
-    totalTroops = new std::vector<Unit*>();
+    //totalTroops = new std::vector<Unit*>();
 
     isDeployingTroop = false;
     currentDeployingTroop = -1;
@@ -52,8 +52,8 @@ UnitManager::~UnitManager() {
     inMapTroops -> clear();
     delete inMapTroops;
 
-    totalTroops -> clear();
-    delete totalTroops;
+    //totalTroops -> clear();
+    //delete totalTroops;
 
     delete unitLayer;
 }
@@ -164,9 +164,14 @@ void UnitManager::deployAllTroops(Vector3<float> vectorData) {
         //u -> setTroopPosition(Vector3<float>(Enumeration::HumanCityHall::human_x, terrain -> getY(Enumeration::HumanCityHall::human_x, Enumeration::HumanCityHall::human_z), Enumeration::HumanCityHall::human_z)); //ToDo
 
         u -> setTroopPosition(vectorData);
+<<<<<<< HEAD
         //u -> setPathToTarget(vectorData);
         u -> switchState(Enumeration::UnitState::AttackMove);
 
+=======
+        u -> switchState(Enumeration::UnitState::AttackMove);
+        u -> setTroopDestination(vectorData);
+>>>>>>> master
         u -> getModel() -> setActive(true);
         u -> setRetracted(false);
     }
@@ -309,6 +314,11 @@ std::vector<Unit*> * UnitManager::getInHallTroops() {
 
 Unit* UnitManager::getSelectedTroop() {
     return selectedTroop;
+}
+
+void UnitManager::deleteUnit(int id) {
+    delete inMapTroops -> find(id) -> second;
+    inMapTroops -> erase(id);
 }
 
 int UnitManager::getTroopAmount(Enumeration::UnitType t){

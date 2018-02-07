@@ -354,9 +354,9 @@ void Unit::taxPlayer(Enumeration::Team teamData) {
 bool Unit::inRangeOfAttack() {
     bool inRange = false;
     if (target != NULL) {
-    float xaux = target -> getPosition() -> x - position -> x;
-    float yaux = target -> getPosition() -> y - position -> y;
-    float dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
+        float xaux = target -> getPosition() -> x - position -> x;
+        float yaux = target -> getPosition() -> y - position -> y;
+        float dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
         if (dist <= attackRange) {
             inRange = true;
         }
@@ -423,6 +423,23 @@ void Unit::attack() {
         if (attackCountdown <= 0) {
             target -> takeDamage(attackDamage);
             attackCountdown = attackSpeed;
+            if (target -> getHP() <= 0) {
+                if (team == Enumeration::Team::Human) {
+                    if (target -> getEntityType() == Enumeration::EntityType::Unit) {
+                        IA::getInstance() -> getUnitManager() -> deleteUnit(target -> getID());
+                    } else {
+                        IA::getInstance() -> getBuildingManager() -> deleteBuilding(target -> getID());
+                    }
+                } else {
+                    if (target -> getEntityType() == Enumeration::EntityType::Unit) {
+                        Human::getInstance() -> getUnitManager() -> deleteUnit(target -> getID());
+                    } else {
+                        Human::getInstance() -> getBuildingManager() -> deleteBuilding(target -> getID());
+                    }
+                }
+                target = NULL;
+                this -> switchState(Enumeration::UnitState::AttackMove);
+            }
         }
     }
 }
@@ -432,9 +449,9 @@ void Unit::chaseState() {
     //If I have a target, then chase it
     if (target != NULL) {
         Vector3<float> tpos = Vector3<float>(0,0,0);
-        tpos.x = target  -> getPosition() -> x;
-        tpos.y = target  -> getPosition() -> y;
-        tpos.z = target  -> getPosition() -> z;
+        tpos.x = target -> getPosition() -> x;
+        tpos.y = target -> getPosition() -> y;
+        tpos.z = target -> getPosition() -> z;
         this  -> setTroopDestination(tpos);
         chaseTarget();    
     }
