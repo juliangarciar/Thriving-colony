@@ -118,22 +118,22 @@ void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingTyp
 		b->posTaxPlayer();
 		b->setColor(b->getBaseColor()); //ToDo: cambiar por material
 
-		buildingAmounts[(int)_type]++;
+		buildingAmounts[(int)b->getType()]++;
 
 		//Cuando te ataquen y paren
 		//returnToOriginalColor(); 
 		
 		if (team == Enumeration::Team::Human){
-			if (buildingAmounts[(int)_type] == 1){
-				switch (_type){
+			if (buildingAmounts[(int)b->getType()] == 1){
+				switch (b->getType()){
 					case Enumeration::BuildingType::Barrack:
-						Game::Instance() -> getGameState() -> getHud() -> enableTab(_type);
+						Game::Instance() -> getGameState() -> getHud() -> enableTab(b->getType());
 					break;
 					case Enumeration::BuildingType::Barn:
-						Game::Instance() -> getGameState() -> getHud() -> enableTab(_type);
+						Game::Instance() -> getGameState() -> getHud() -> enableTab(b->getType());
 					break;
 					case Enumeration::BuildingType::Workshop:
-						Game::Instance() -> getGameState() -> getHud() -> enableTab(_type);
+						Game::Instance() -> getGameState() -> getHud() -> enableTab(b->getType());
 					break;
 					default: break;
 				}

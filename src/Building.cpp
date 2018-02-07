@@ -46,7 +46,7 @@ void Building::Init() {
             currentHP = 720;
             cityLevel = 10;
             
-            buildTimer = 40;
+            buildTimer = 5; //ToDo: antes 40, cambiado para testing
 
             metalCost = Enumeration::BuildingCost::BarrackMetalCost;
             crystalCost = Enumeration::BuildingCost::BarrackCrystalCost;
@@ -267,5 +267,5 @@ Enumeration::BuildingType Building::getType() {
 } 
 
 bool Building::getFinished(){
-    return (buildTimer == 0);
+    return finished;
 }

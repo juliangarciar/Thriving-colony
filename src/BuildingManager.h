@@ -131,7 +131,9 @@ class BuildingManager {
 		
 		SceneNode *buildingLayer;
 		SceneNode *currentCollision;
+
 		std::map<int, Building*> *buildings;
+		
 		Building *tempBuilding;
 
 		int buildingAmounts[Enumeration::BuildingType::BuildingsSize];
