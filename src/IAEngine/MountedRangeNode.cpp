@@ -19,9 +19,9 @@ MountedRangeNode::~MountedRangeNode() {
 void MountedRangeNode::question() {
 
     IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::TrainMountedRanged);
-    if (IA::getInstance() -> getBarnBuilt()) {
+    if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barn) > 0) {
         //std::cout << "Genero un soldado montado de rango" << std::endl;
-        if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MountedRangedMetalCost, Enumeration::UnitCost::MountedRangedCrystalCost, Enumeration::Team::IA)) {
+        if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MountedRangedMetalCost, Enumeration::UnitCost::MountedRangedCrystalCost)) {
             // Unit type
             Enumeration::UnitType unitData = Enumeration::UnitType::StandardR; 
             IA::getInstance() -> getUnitManager() -> createTroop(unitData);

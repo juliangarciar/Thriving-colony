@@ -1,6 +1,6 @@
 #include "Game.h"
-#include "Human.h"
-#include "IA.h"
+//#include "Human.h"
+//#include "IA.h"
 #include <PathPlanner/Graph.h>
 
 Game* Game::pinstance = 0;
@@ -16,15 +16,16 @@ Game::Game() {
     window = Window::Instance();
 
     menu = new MenuState();
-    state = menu;
-    stateData = Enumeration::State::MenuState;
+    game = new GameState();
+    pause = new PauseState();
+
+    state = game;
+    stateData = Enumeration::State::GameState;
 
     cursor = new Mouse();
     keyboard = new Keyboard();
 
     events = new EventSystem();
-
-    
 
     Window::Instance() -> setGUI();
 // Added by Julian
@@ -43,7 +44,7 @@ Game::~Game() {
     delete keyboard;
 }
 
-void Game::init() {
+void Game::Init() {
     //Initialize the event system
     //IA Events
     events -> addEvent(Enumeration::EventType::DeployTroopsIA, IA::deployTroops);
@@ -61,59 +62,45 @@ void Game::init() {
     events -> addEvent(Enumeration::EventType::EnableText, Hud::drawWarning);
     events -> addEvent(Enumeration::EventType::DisableText, Hud::deleteWarning);
 
-    state -> init();
+    state -> Init();
 }
 
-void Game::input() {
-    state -> input();
+void Game::Input() {
+    state -> Input();
     cursor->refreshStates();
 }
 
-void Game::update() {
-    state -> update();
+void Game::Update() {
+    state -> Update();
 }
 
-void Game::render() {
+void Game::Render() {
     window -> beginScene();
-    state -> render();
+    state -> Render();
     window -> endScene();
 }
 
-void Game::cleanUp() {
-    state -> cleanUp();
+void Game::CleanUp() {
+    state -> CleanUp();
     window -> close();
 }
 
 void Game::changeState(Enumeration::State data) {
     switch (data) {
-        case Enumeration::State::MenuState :
-            delete pause;
-            IA::getInstance() -> cleanUp();
-            Human::getInstance() -> cleanUp();
-            delete game;
-            menu = new MenuState();
+        case Enumeration::State::MenuState:
+            state -> CleanUp();
             state = menu;
-            state -> init();
+            state -> Init();
         break;
-
-        case Enumeration::State::GameState :
-            if (stateData == Enumeration::State::MenuState) {
-                delete menu;
-                IA::getInstance() -> init();
-                Human::getInstance() -> init();
-                game = new GameState();
-                state = game;
-                state -> init();
-            } else {
-                delete pause;
-                state = game;
-            }
+        case Enumeration::State::GameState:
+            state -> CleanUp();
+            state = game;
+            state -> Init();
         break;
-
         case Enumeration::State::PauseState :
-            pause = new PauseState();
+            state -> CleanUp();
             state = pause;
-            state -> init();
+            state -> Init();
         break;
     }
     stateData = data;

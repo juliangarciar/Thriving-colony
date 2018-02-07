@@ -3,10 +3,11 @@
 #include "Human.h"
 
 IA::IA() : Player() {
-    
+    init();
 }
 
 void IA::init() {
+    updateTimer = 0;
     // Choose a behaviour
     chooseBehaviour();
     // Create a behaviour and a root node and set them up according to the behaviour
@@ -15,7 +16,7 @@ void IA::init() {
     nodeRootIA = new RootNode();
     nodeRootIA -> init(behaviour);
 
-    buildings = new BuildingManager();
+    buildings = new BuildingManager(Enumeration::Team::IA, Enumeration::BreedType::Drorania);
     units = new UnitManager(Enumeration::Team::IA, Enumeration::BreedType::Kaonov);
 
     // Choices for the debugging system
@@ -263,7 +264,7 @@ void IA::initializeChoices() {
     // Y NOS LIAREMOS. SI SE PUEDE PASAR ALGUN DIA A ARRAY
     // ENTONCES SE PUEDE QUEDAR CONTROLAR QUE INDICE TIENE QUE STRING
     // Y TODO ES MAS MANEJABLE. PERO POR AHORA NO HACE MAS QUE DAR ERRORES
-    // ASI QUE LO HE DEJADO COMO VECTOR Y AU
+    // ASI QUE LO HE DEJADO COMO VECTOR Y AU (Y quizas un map?)
     choices = new std::vector<std::string>();
     choices -> push_back("Closing Doors");
     choices -> push_back("Deploying troops");

@@ -3,7 +3,13 @@
 
 #include <iostream>
 #include <irrlicht.h>
+<<<<<<< HEAD
 #include "Vector2.h"
+=======
+
+#define PI 3.14159265
+
+>>>>>>> master
 using namespace irr;
 
 template <class T>
@@ -23,11 +29,17 @@ class Vector3 {
         void set(core::vector3df v);
         void set(Vector3<T> v);
 
+<<<<<<< HEAD
         Vector3<T>& normalize();
     // Added by Julian
         Vector2<T> toVector2();
         // ** //
         T getLength();
+=======
+        Vector3<T> normalize();
+        Vector3<T> getDistanceTo(Vector3<T> other);
+        Vector3<T> rotateFromPoint(float r, float phi, float theta);
+>>>>>>> master
 
         core::vector3di getVectorI();
         core::vector3df getVectorF();
@@ -38,6 +50,10 @@ class Vector3 {
         Vector3<T> operator +(const float &num) const;
         Vector3<T> operator -(const Vector3<T> &p) const;
         Vector3<T> operator -(const float &num) const;
+        Vector3<T> operator *(const Vector3<T> &p) const;
+        Vector3<T> operator *(const float &num) const;
+        Vector3<T> operator /(const Vector3<T> &p) const;
+        Vector3<T> operator /(const float &num) const;
 
     private:
 };

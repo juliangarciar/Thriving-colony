@@ -120,6 +120,8 @@ int main(int argc, char **argv) {
 
         layer->add<Label>("Function graph widget", "sans-bold");
 
+        layer->setVisible(false);
+
         // Dummy tab used to represent the last tab button.
         tabWidget->createTab("+");
 

@@ -1,13 +1,25 @@
 #include "Entity.h"
-
 #include "Game.h"
 
-Entity::Entity(SceneNode *layer, int id, const wchar_t *path) {
-    this -> ID = id;
-    //ToDo: hacer aumento de felicidad, tropas nivel y tal
+Entity::Entity(SceneNode *layer, int id, const wchar_t *path, Enumeration::Team t, Enumeration::BreedType b) {
+    ID = id;
     model = new Model(layer, id, path);
     hitbox = new Box3D<float>();
     position = new Vector3<float>();
+    team = t;
+
+    baseColor = video::SColor(255, 0, 0, 0); //ToDo: cambiar por material
+    setColor(baseColor);
+
+    currentHP = 0;
+    maxHP = 0;
+    viewRadius = 0;
+    attackRange = 0;
+    metalCost = 0;
+    crystalCost = 0;
+    happiness = 0;
+    citizens = 0;
+    cityLevel = 0;
 }
 
 Entity::~Entity() {
@@ -16,52 +28,64 @@ Entity::~Entity() {
     delete model;
 }
 
-int Entity::getHP() {
-    return hp;
-}
-
-/*
-* Decreases Hp
-* dmg = quantity of hp to drecrease
-*/
+//METHODS
 void Entity::takeDamage(int dmg) {
-    //std::cout << "I take " << dmg << " damage. I still have " << hp << " health." << std::endl;
-    hp = hp-dmg;
-    // Tint the model red
+    currentHP = currentHP-dmg;
     tookDamageCountdown = tookDamageTimer;
-    Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), video::SColor(255, 125, 125, 0));
-    if (hp <= 0) {
-        hp = 0;
+    // Tint the model red
+    setColor(video::SColor(255, 125, 125, 0)); //ToDo: fachada
+    if (currentHP <= 0) {
+        currentHP = 0;
         die();
     }
 }
 
 void Entity::die() {
-    //std::cout << "I die" << std::endl;
-    //ToDo: DEJAR DE DIBUJAR CUBOS
-    // SOLO SE MANDAN AL 0,0,0
-    //
-    //
-    //
+    // ToDo: DEJAR DE DIBUJAR EL MODELO
+    // SOLO SE MANDA AL 0,0,0
     
-    this -> setPosition(Vector3<float>(0, 0, 0));
+    setPosition(Vector3<float>(0, 0, 0));
     //delete this; 
 }
 
-void Entity::changeRedTint() {
-    if (!finished && tookDamageCountdown <= 0) {
-        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(model -> getModel() -> getMesh(), baseColor);
+void Entity::updateTarget(Entity *newTarget) {
+    // target can be null, meaning that he can't attack anything
+    target = newTarget;
+}
+
+void Entity::refreshHitbox() {
+    hitbox -> set(model -> getBoundingBox());
+}
+
+void Entity::returnToOriginalColor() {
+    if (tookDamageCountdown <= 0) {
+        setColor(baseColor); //ToDo: sustituir por material
     } else {
-        tookDamageCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
+        tookDamageCountdown -= Game::Instance() -> getWindow() -> getDeltaTime(); //ToDo: sustituir por timer real
     }
 }
 
+//SETTERS
 void Entity::setPosition(Vector3<float> vectorData) {
-    this -> position -> set(vectorData);
-    this -> model -> setPosition(vectorData);
-    this -> hitbox -> set(model -> getModel() -> getTransformedBoundingBox());
+    position -> set(vectorData);
+    model -> setPosition(vectorData);
+    hitbox -> set(model -> getBoundingBox());
 }
 
+void Entity::setColor(irr::video::SColor c){
+    currentColor = c;
+    //ToDo: reemplazar color por material
+    Game::Instance() -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
+        model -> getModel() -> getMesh(), c
+    );
+}
+
+void Entity::setID(int id){
+    ID = id;
+    model->setID(id);
+}
+
+//GETTERS
 Vector3<float>* Entity::getPosition() {
     return position;
 }
@@ -78,15 +102,26 @@ Enumeration::Team Entity::getTeam() {
     return team;
 }
 
-void Entity::updateTarget(Entity *newTarget) {
-    // target can be null, meaning that he cant attack anything
-    target = newTarget;
-}
-
 int Entity::getAttackRange() {
     return attackRange;
 }
 
 int Entity::getViewRadius() {
     return viewRadius;
+}
+
+int Entity::getHP() {
+    return currentHP;
+}
+
+int Entity::getID() {
+    return ID;
+}
+
+irr::video::SColor Entity::getBaseColor() {
+    return baseColor; //ToDo: reemplazar color por material
+}
+
+irr::video::SColor Entity::getCurrentColor() {
+    return currentColor; //ToDo: reemplazar color por material
 }

@@ -7,6 +7,26 @@
  */
 class Enumeration {
     public:
+        // Breed types
+        enum BreedType {
+            Drorania,
+            Kaonov
+        };
+
+        //Team
+        enum Team {
+            Human,
+            IA
+        };
+
+        //Game states
+        enum State {
+            MenuState,
+            GameState,
+            PauseState
+        };
+
+        //Building types
         enum BuildingType {
             MainBuilding,
             Barn,
@@ -19,73 +39,51 @@ class Enumeration {
             School,
             Tower,
             Wall,
-            Workshop
+            Workshop,
+            BuildingsSize
         };
 
-        enum BreedType {
-            Drorania,
-            Kaonov
+        //Unit types
+        enum UnitType {
+            StandardR,
+            AdvancedR,
+            StandardM,
+            AdvancedM,
+            Launcher,
+            Desintegrator,
+            Idol,
+            TroopsSize
         };
 
-        enum Team {
-            Human,
-            IA
-        };
-
+        //Unit types
         enum EventType {
             //IA
-            CloseDoorsIA,
             DeployTroopsIA,
-            OpenDoorsIA,
             RetractTroopsIA,
 
             //Human
-            CloseDoorsHuman,
             DeployTroopsHuman,
-            OpenDoorsHuman,
             RetractTroopsHuman,
 
             //Text
             DisableText,
-            EnableText
-        }; 
+            EnableText,
 
-        //Old buttons
-        enum idGUI {
-            ID0,
-
-            GUI_ID_BUILD_BARN_BUTTON,
-            GUI_ID_BUILD_BARRACK_BUTTON,
-            GUI_ID_BUILD_HOSPITAL_BUTTON,
-            GUI_ID_BUILD_HOME_BUTTON,
-            GUI_ID_BUILD_MARKET_BUTTON,
-            GUI_ID_BUILD_QUARRY_BUTTON,
-            GUI_ID_BUILD_SIDERURGY_BUTTON,
-            GUI_ID_BUILD_SCHOOL_BUTTON,
-            GUI_ID_BUILD_TOWER_BUTTON,
-            GUI_ID_BUILD_WALL_BUTTON,
-            GUI_ID_BUILD_WORKSHOP_BUTTON,
-
-            GUI_ID_QUIT_BUTTON,
-            GUI_ID_CLOSE_PANEL_BUTTON,
-            GUI_ID_PLAY_BUTTON,
-            GUI_ID_RESUME_BUTTON,
-            GUI_ID_MENU_BUTTON,
-            
-            GUI_ID_CREATE_MELEE_TROOP_BUTTON,
-            GUI_ID_CREATE_RANGED_TROOP_BUTTON,
-            GUI_ID_CREATE_MOUNTED_MELEE_TROOP_BUTTON,
-            GUI_ID_CREATE_MOUNTED_RANGED_TROOP_BUTTON,
-            GUI_ID_CREATE_MONSTER_BUTTON,
-            GUI_ID_CREATE_MACHINE_BUTTON,
-
-            GUI_ID_DEPLOY_TROOPS_BUTTON,
-            GUI_ID_DEPLOY_ALL_TROOPS_BUTTON,
-
-            GUI_ID_RETRACT_ALL_TROOPS_BUTTON,
-
-            GUI_ID_EXPAND_TERRAIN_BUTTON,
-            GUI_ID_OPEN_PANEL_BUTTON
+            //ToDo: Doors?
+            OpenDoorsIA,
+            CloseDoorsIA,
+            OpenDoorsHuman,
+            CloseDoorsHuman
+        };
+        
+        //Unit states
+        enum UnitState {
+            Idle,
+            Move,
+            AttackMove,
+            Attack,
+            Chase,
+            Retract
         };
 
         enum BuildingCost {
@@ -146,39 +144,12 @@ class Enumeration {
             RamCrystalCost = 160,
         };
 
-        //Unit types
-        enum UnitType{
-            StandardR,
-            AdvancedR,
-            Launcher,
-            Desintegrator,
-            StandardM,
-            AdvancedM,
-            Idol
-        };
-
-        //Game states
-        enum State {
-            MenuState,
-            GameState,
-            PauseState
-        };
-
         // Enumeration for UP, DOWN, PRESSED and RELEASED key states. Also used for mouse button states.
         enum ioStatesENUM {
             PRESSED, 
             RELEASED, 
             UP, 
             DOWN
-        };
-        
-        enum UnitState {
-            Idle,
-            Move,
-            AttackMove,
-            Attack,
-            Chase,
-            Retract
         };
 
         enum IAChoices {
@@ -234,6 +205,44 @@ class Enumeration {
 
     private:
         
+        //Old buttons
+        enum idGUI {
+            ID0,
+
+            GUI_ID_BUILD_BARN_BUTTON,
+            GUI_ID_BUILD_BARRACK_BUTTON,
+            GUI_ID_BUILD_HOSPITAL_BUTTON,
+            GUI_ID_BUILD_HOME_BUTTON,
+            GUI_ID_BUILD_MARKET_BUTTON,
+            GUI_ID_BUILD_QUARRY_BUTTON,
+            GUI_ID_BUILD_SIDERURGY_BUTTON,
+            GUI_ID_BUILD_SCHOOL_BUTTON,
+            GUI_ID_BUILD_TOWER_BUTTON,
+            GUI_ID_BUILD_WALL_BUTTON,
+            GUI_ID_BUILD_WORKSHOP_BUTTON,
+
+            GUI_ID_QUIT_BUTTON,
+            GUI_ID_CLOSE_PANEL_BUTTON,
+            GUI_ID_PLAY_BUTTON,
+            GUI_ID_RESUME_BUTTON,
+            GUI_ID_MENU_BUTTON,
+            
+            GUI_ID_CREATE_MELEE_TROOP_BUTTON,
+            GUI_ID_CREATE_RANGED_TROOP_BUTTON,
+            GUI_ID_CREATE_MOUNTED_MELEE_TROOP_BUTTON,
+            GUI_ID_CREATE_MOUNTED_RANGED_TROOP_BUTTON,
+            GUI_ID_CREATE_MONSTER_BUTTON,
+            GUI_ID_CREATE_MACHINE_BUTTON,
+
+            GUI_ID_DEPLOY_TROOPS_BUTTON,
+            GUI_ID_DEPLOY_ALL_TROOPS_BUTTON,
+
+            GUI_ID_RETRACT_ALL_TROOPS_BUTTON,
+
+            GUI_ID_EXPAND_TERRAIN_BUTTON,
+            GUI_ID_OPEN_PANEL_BUTTON
+        };
+
 };
 
 #endif

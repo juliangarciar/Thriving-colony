@@ -22,6 +22,10 @@ void CheckBox::hide(){
     checkbox -> setVisible(false);
 }
 
+bool CheckBox::isVisible(){
+    return checkbox -> visible();
+}
+
 void CheckBox::setPosition(Vector2<int> position){
     checkbox -> setPosition(Eigen::Vector2i(position.x, position.y));
 }

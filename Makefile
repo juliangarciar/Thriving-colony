@@ -12,7 +12,7 @@ SOURCEPATH = src
 #Directories
 SOURCE_DIRS = . GraphicEngine GUIEngine IOEngine SoundEngine IAEngine PathPlanner WorldGeometry
 #C++ compiler
-CXX = clang++
+CXX = g++
 
 ####
 # FLAGS

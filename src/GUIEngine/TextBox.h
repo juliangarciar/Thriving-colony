@@ -6,10 +6,14 @@
 #include "GUIElement.h"
 
 class TextBox : public GUIElement {
-
     public:
         TextBox(std::string t);
+        TextBox(GUIElement *parent, std::string t);
         virtual ~TextBox();
+        
+        void show();
+        void hide();
+        bool isVisible();
         
         void setPosition(Vector2<int> position);
 
@@ -18,9 +22,6 @@ class TextBox : public GUIElement {
         void setEditable(bool b);
 
         void setSize(Vector2<int> size);
-        
-        void show();
-        void hide();
         
         nanogui::Widget *getGUIElement();
     private:

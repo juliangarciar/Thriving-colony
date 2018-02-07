@@ -12,6 +12,7 @@
 #include <GUIEngine/Panel.h>
 #include <GUIEngine/Label.h>
 #include <GUIEngine/ComboBox.h>
+#include <GUIEngine/Widget.h>
 #include <IOEngine/Keyboard.h>
 #include <IOEngine/Mouse.h>
 
@@ -36,21 +37,24 @@ class Hud {
         ~Hud();
 
         /**
-         * @brief Crea un boton 
-         * @param id del boton, de tipo entero
-         * @param type sera el tipo de edificio que se creara con ese boton, de tipo entero
+         * @brief Activa una pestaña
+         * @param Tipo de pestaña
          */
-        void addTab(int, int);
-
+        void enableTab(Enumeration::BuildingType);
+        /**
+         * @brief Desctiva una pestaña
+         * @param Tipo de pestaña
+         */
+        void disableTab(Enumeration::BuildingType);
         /**
          * @brief Despliega y muestra el PopUp
          */
         void showPopup();
         /**
          * @brief Despliega y muestra el PopUp
-         * @param tabId indica el boton al que pertenece el popup
+         * @param indica el tipo de pestaña que mostrar en el popup
          */
-        void showPopup(int tabId);
+        void showPopup(Enumeration::BuildingType);
         /**
          * @brief Oculta el PopUp
          */
@@ -78,10 +82,7 @@ class Hud {
          */
         static void deleteWarning();
     private:
-        std::vector<int> *menuIDs;
         std::vector<Button*> *buttons;
-
-        Button *buttonQuit;
 
         Panel *buildingsPanel;
 
@@ -114,14 +115,30 @@ class Hud {
         Panel *tabContainer;
         TabPanel *tabs;
 
+        Tab *mainBuildingTab;
+        
+        Tab *barrackTab;
+        Panel *barrackEmpty;
+        Label *barrackEmptyLabel;
+        Panel *barrackContent;
+        Tab *barnTab;
+        Panel *barnEmpty;
+        Label *barnEmptyLabel;
+        Panel *barnContent;
+        Tab *workshopTab;
+        Panel *workshopEmpty;
+        Label *workshopEmptyLabel;
+        Panel *workshopContent;
+
         float updateTimer;
         float deleteTextTimer;
 
-/*
-        Text *hallTroopText;
-        //ListBox *hallTroopList;
-
-        //ToDo: mejorar*/
+        /**
+         * @brief Crea un boton 
+         * @param id del boton, de tipo entero
+         * @param type sera el tipo de edificio que se creara con ese boton, de tipo entero
+         */
+        void addTab(int, int);
 };
 
 #endif

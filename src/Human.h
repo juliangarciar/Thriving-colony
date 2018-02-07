@@ -11,24 +11,21 @@ class Human : public Player {
         static Human* getInstance();
 
         void init();
+        void update();
         void cleanUp();
 
+        //ToDo: Por que estático?
         static void deployTroops();
         static void retractTroops();
         static void closeDoors();
         static void openDoors();
 
-        virtual void update();
-
         bool getUnderAttack();
         bool getDeployedTroops();
         bool getClosedDoors();
-        /*
-        void receiveMetal();
-        void receiveCrystal();
-        void receiveCitizens();
-        */
     private:
+        int updateTimer;
+
         static Human* instance;
         static bool deployedTroops;
         static bool closedDoors;

@@ -2,7 +2,7 @@
 #define PAUSESTATE_H
 
 #include "State.h"
-#include "HudPause.h"
+#include "PauseMenu.h"
 
 /**
  * @class PauseState
@@ -23,26 +23,26 @@ class PauseState : public State {
         /**
 		 * @brief Inicializa
 		 */
-        void init();
+        void Init();
         /**
 		 * @brief Recoge las entradas de teclado y raton
 		 */
-        void input();
+        void Input();
         /**
 		 * @brief Actualiza
 		 */
-        void update();
+        void Update();
         /**
 		 * @brief Renderiza
 		 */
-        void render();
+        void Render();
         /**
 		 * @brief Constructor
 		 */
-        void cleanUp();
+        void CleanUp();
 
     private:
-        HudPause * hud;
+        PauseMenu *hud;
 
         int prevWindowWidth;
         int prevWindowHeight;

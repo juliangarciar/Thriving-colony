@@ -2,7 +2,6 @@
 #include "Game.h"
 
 GameState::GameState() : State() {
-
     gamePaused = false;
 
     prevWindowWidth = 1280;
@@ -11,13 +10,13 @@ GameState::GameState() : State() {
 
 GameState::~GameState() {
     delete camera;
-    delete hud;
     delete map;
+    delete hud;
     delete battleManager;
 }
 
-void GameState::init() {
-    //ToDo: la luz, terreno, y quizas la camara deberian ir en una cpase Map
+void GameState::Init() {
+    //ToDo: la luz, terreno, y quizas la camara deberian ir en una clase Map
     light = new Light(Vector3<float>(8000, 4000, 8000), 10000);
 
     //Create map
@@ -28,48 +27,43 @@ void GameState::init() {
     //Init camera controller
     camera = new CameraController();
 
+    //Init HUD
+    hud = new Hud();
+    hud -> setHUDEvents();
+    Window::Instance() -> setGUI();
+
     //Init battle manager
     battleManager = new BattleManager();
 
     //Init SoundSystem
-    hud = new Hud();
     SoundSystem::Instance() -> initSystem();
 
     // Build the main building of IA
     Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();
-    IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::IA);
+    IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, true);
 
     //Build the first siderurgy of IA
     v = IA::getInstance() -> determinatePositionBuilding();
-    IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::IA);
+    IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
 
     // Build the main building of Human
     v.x = Enumeration::HumanCityHall::human_x;
     v.z = Enumeration::HumanCityHall::human_z; 
     v.y = map -> getY(v.x, v.z);
-    Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, Enumeration::Team::Human);
+    Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, true);
     
     //Build the first siderurgy of Human
     v.x = Enumeration::HumanCityHall::human_x;
     v.z = Enumeration::HumanCityHall::human_z + 200;
     v.y = map -> getY(v.x, v.z);
-    Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::Human);
-
-    /*
-    Enumeration::UnitType unitData = Enumeration::UnitType::StandardM;
-    Human::getInstance() -> getUnitManager() -> createTroop(unitData);
-    Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsHuman);
-    */
-
-    //Init HUD
-    Window::Instance() -> setGUI();
-    hud -> setHUDEvents();
+    Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
 }
 
-void GameState::input() {
+void GameState::Input() {
     camera -> Move();
     camera -> RotateAndInclinate();
     camera -> Zoom();
+    camera -> CenterCamera();
 
     //Vector3<float> v = map -> getPointCollision(Game::Instance() -> getMouse());
     Human::getInstance() -> getBuildingManager() -> testRaycastCollisions();
@@ -86,13 +80,14 @@ void GameState::input() {
         if (!Human::getInstance() -> getUnitManager() -> isTroopSelected())
             Game::Instance() -> getMouse() -> changeIcon(CURSOR_HAND);
         
-        if (Game::Instance() -> getMouse() -> leftMouseDown()) {
-            // Comprobar que este terminado para enseñar el popup pero no va
-            //if (Human::getInstance() -> getBuildingManager() -> checkFinished(idBuilding)) {
-                std::cout << idBuilding << std::endl;
-                
-                hud -> showPopup(idBuilding);
-            //}
+        if (Game::Instance() -> getMouse() -> leftMousePressed()) {
+            Building *b = Human::getInstance()->getBuildingManager()->getBuilding(idBuilding);
+            if (b != NULL){
+                // Comprobar que este terminado para enseñar el popup pero no va
+                if (Human::getInstance() -> getBuildingManager() -> checkFinished(idBuilding)) {
+                    hud -> showPopup(b->getType());
+                }
+            }
         }
         
         onMap = false;
@@ -145,7 +140,7 @@ void GameState::input() {
     }
 
     if (Game::Instance()-> getMouse() -> rightMousePressed()) {
-        Human::getInstance() -> getUnitManager() -> moveOrder(map);
+        Human::getInstance() -> getUnitManager() -> moveOrder();
     }
 /*  //Hacks
     if (Game::Instance() -> getIO() -> keyPressed(KEY_KEY_1)) {
@@ -161,26 +156,27 @@ void GameState::input() {
     }*/   
 }
 
-void GameState::update(){
+void GameState::Update(){
     Game *g = Game::Instance();
 
     //Update camera
     camera -> Update(g -> getWindow() -> getDeltaTime());
+    
     //Update HUD
     hud -> update();
 
+    //NEW SOUND SYSTEM
+    SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");
+    SoundSystem::Instance() -> update();
+    
     //If human is building something
-    Human::getInstance() -> getBuildingManager() -> drawBuilding(map);
-    Human::getInstance() -> getUnitManager() -> deployTroop(map);
+    Human::getInstance() -> getBuildingManager() -> drawBuilding();
+    Human::getInstance() -> getUnitManager() -> deployTroop();
     //Human::getInstance() -> getUnitManager() -> updateUnitManager();
 
     //Update human and IA status
     Human::getInstance() -> update();
     IA::getInstance() -> update();
-
-    //NEW SOUND SYSTEM
-    SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");
-    SoundSystem::Instance() -> update();
 
     //ToDo: glfw tiene un evento para si se redimensiona la pantalla
     if (g -> getWindow() -> getRealWindowWidth() != prevWindowWidth || g -> getWindow() -> getRealWindowHeight() != prevWindowHeight) {
@@ -188,11 +184,11 @@ void GameState::update(){
     }
 }
 
-void GameState::render() {
+void GameState::Render() {
 
 }
 
-void GameState::cleanUp() {
+void GameState::CleanUp() {
 
 }
 

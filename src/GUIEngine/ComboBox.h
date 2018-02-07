@@ -14,6 +14,7 @@ class ComboBox : public GUIElement {
 
         void show();
         void hide();
+        bool isVisible();
 
         int addOption(std::string option);
         void removeOption(std::string option);

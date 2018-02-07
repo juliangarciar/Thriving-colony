@@ -10,23 +10,23 @@ class State {
         /**
 		 * @brief Inicializa
 		 */
-        virtual void init() = 0;
+        virtual void Init() = 0;
         /**
 		 * @brief Recoge las entradas de teclado y raton
 		 */
-        virtual void input() = 0;
+        virtual void Input() = 0;
         /**
 		 * @brief Actualiza
 		 */
-        virtual void update() = 0;
+        virtual void Update() = 0;
         /**
 		 * @brief Renderiza
 		 */
-        virtual void render() = 0;
+        virtual void Render() = 0;
         /**
 		 * @brief Constructor
 		 */
-        virtual void cleanUp() = 0;
+        virtual void CleanUp() = 0;
 };
 
 #endif

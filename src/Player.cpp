@@ -1,24 +1,175 @@
 #include "Player.h"
 #include "Game.h"
-#include <GraphicEngine/Window.h>
 
-#define RESOURCEPRODUCTION 10
+//ToDo: seria ideal que todo fuera parametrizable y todo estuviera en el mismo sitio
 
 Player::Player() {
-    updateTimer = 1;
-
     happiness = 0;
     cityLevel = 10;
-    
-    siderurgyAmount = 0;
-    quarryAmount= 0;
+    citizens = 20;
 
     metalAmount = 1200;
     crystalAmount = 0;
 
-    citizens = 20;
+    underAttack = false;
+}
 
-    armySize = 0;
+Player::~Player() {
+    delete units;
+    delete buildings;
+}
+
+/**
+ * CONTROL METHODS
+ */
+void Player::gainResources() {
+    metalAmount += getMetalProduction();
+    crystalAmount += getCrystalProduction();
+}
+
+void Player::spendResources(int metalCost, int crystalCost) {
+    // ToDo: Nunca acabaran siendo menor que 0
+    metalAmount -= metalCost;
+    crystalAmount -= crystalAmount;
+}
+
+void Player::increaseHappiness(int h) {
+    // ToDo: clamp mejor?
+    happiness += h;
+    if (happiness <= -100) {
+        happiness = -100;
+    }
+    if (happiness >= 100) {
+        happiness = 100;
+    }
+}
+
+void Player::increaseCityLevel(int lvl) {
+    cityLevel += lvl;
+}
+
+void Player::increaseCitizens(int c) {
+    citizens += c;
+}
+
+void Player::increaseArmySize() {
+    citizens -= 10;
+    happiness -= 5;
+}
+
+void Player::increaseBuildableRange() {
+    // ToDo: equilibrar la cantidad de aumento
+    buildableRange *= 1.5;
+}
+
+bool Player::losingBattle() {
+    // ToDo: Es necesario? por ahora si
+    // ToDo: calcular si estas perdiendo tu la  batalla
+    return false;
+}
+
+//==========
+// Getters
+//==========
+int Player::getHappiness() {
+    return happiness;
+}
+
+int Player::getCityLevel() {
+    return cityLevel;
+}
+
+int Player::getCitizens() {
+    return citizens;
+}
+
+int Player::getArmySize() {
+    return units -> getTotalTroops();
+}
+
+int Player::getMetalAmount() {
+    return metalAmount;
+}
+
+int Player::getCrystalAmount() {
+    return crystalAmount;
+}
+
+int Player::getMetalProduction() {
+    return buildings->getAmount(Enumeration::BuildingType::Siderurgy) * RESOURCEPRODUCTION;
+}
+
+int Player::getCrystalProduction() {
+    return buildings->getAmount(Enumeration::BuildingType::Quarry) * RESOURCEPRODUCTION;
+}
+
+BuildingManager* Player::getBuildingManager() {
+    return buildings;
+}
+UnitManager* Player::getUnitManager() {
+    return units;
+}
+
+// Tricks
+void Player::receiveMetal() {
+    metalAmount = metalAmount + 200;
+}
+
+void Player::receiveCrystal() {
+    crystalAmount = crystalAmount + 200;
+}
+
+void Player::receiveCitizens() {
+    citizens = citizens + 100;
+}
+
+/*
+
+
+
+        int getMeleeAmount();
+        int getRangeAmount();
+        int getSiegeAmount();
+        int getRamAmount();
+        int getCatapultAmount();
+
+        bool getWallBuilt();
+        bool getBarrackBuilt();
+        bool getBarnBuilt();
+        bool getWorkshopBuilt();
+
+        int getSiderurgyAmount();
+        int getQuarryAmount();
+
+        int getWallAmount();
+        int getTowerAmount();
+
+        bool getUnderAttack();
+
+        void setBarnBuilt(bool);
+        void setBarrackBuilt(bool);
+        void setWorkshopBuilt(bool);
+
+        //ToDo: Mejor un array con los indices del Enum
+        void increaseSiderurgyAmount();
+        void increaseQuarryAmount();
+
+        //ToDo: Mejor un array con los indices del Enum
+        void increaseMeleeAmount();
+        void increaseRangeAmount();
+        void increaseSiegeAmount();
+        
+        void increaseWallAmount();
+        void increaseTowerAmount();
+
+        void deployTroops();
+        void retractTroops();
+        void closeDoors();
+        void openDoors();
+
+        void increaseRamAmount();
+        void increaseCatapultAmount();
+
     meleeAmount = 0;
     rangeAmount = 0;
     siegeAmount = 0;
@@ -29,46 +180,9 @@ Player::Player() {
     barrackBuilt = false;
     barnBuilt = false;
     workshopBuilt = false;
-
-    underAttack = false;
-}
-
-Player::~Player() {
-    delete units;
-    delete buildings;
-}
-
-void Player::update() {
-
-}
-
-//==========
-// Getters
-//==========
-
-int Player::getHappiness() {
-    return happiness;
-}
-
-int Player::getCityLevel() {
-    return cityLevel;
-}
-
-int Player::getMetalProduction() {
-    return siderurgyAmount * RESOURCEPRODUCTION;
-}
-
-int Player::getCrystalProduction() {
-    return quarryAmount * RESOURCEPRODUCTION;
-}
-
-int Player::getCitizens() {
-    return citizens;
-}
-
-int Player::getArmySize() {
-    return units -> getTotalTroops();
-}
+    
+    siderurgyAmount = 0;
+    quarryAmount= 0;
 
 int Player::getMeleeAmount() {
     return meleeAmount;
@@ -122,16 +236,6 @@ int Player::getTowerAmount() {
     return towerAmount;
 }
 
-BuildingManager* Player::getBuildingManager() {
-    return buildings;
-}
-UnitManager* Player::getUnitManager() {
-    return units;
-}
-/*
-* SETTERS
-*/
-
 void Player::setBarnBuilt(bool _barn) {
     barnBuilt = _barn;
 }
@@ -144,51 +248,12 @@ void Player::setWorkshopBuilt(bool _workshop) {
     workshopBuilt = _workshop;
 }
 
-/**
- * CONTROL METHODS
- */
-void Player::gainResources() {
-    this -> metalAmount += getMetalProduction();
-    this -> crystalAmount += getCrystalProduction();
-}
-
-void Player::spendResources(int metalCost, int crystalCost) {
-    // Nunca acabaran siendo menor que 0
-    metalAmount -= metalCost;
-    crystalAmount -= crystalAmount;
-}
-
-void Player::increaseHappiness(int h) {
-    //clamp mejor?
-    happiness += h;
-    if (happiness <= -100) {
-        happiness = -100;
-    }
-    if (happiness >= 100) {
-        happiness = 100;
-    }
-}
-
-void Player::increaseCityLevel(int lvl) {
-    cityLevel += lvl;
-}
-
 void Player::increaseSiderurgyAmount() {
     siderurgyAmount ++;
 }
 
 void Player::increaseQuarryAmount() {
     quarryAmount ++;
-}
-
-void Player::increaseCitizens() {
-    citizens += 5;
-}
-
-void Player::increaseArmySize() {
-    citizens -= 10;
-    happiness -= 5;
-    armySize ++;
 }
 
 void Player::increaseMeleeAmount() {
@@ -216,11 +281,6 @@ void Player::increaseRamAmount() {
     increaseArmySize();
 }
 
-void Player::increaseBuildableRange() {
-    //ToDo: equilibrar la cantidad de aumento
-    buildableRange *= 1.5;
-}
-
 void Player::increaseWallAmount() {
     wallAmount ++;
 }
@@ -229,29 +289,4 @@ void Player::increaseTowerAmount() {
     towerAmount ++;
 }
 
-//Es necesario?
-//por ahora si
-bool Player::losingBattle() {
-    //ToDo: calcular si estas perdiendo tu la  batalla
-    return false;
-}
-
-int Player::getMetalAmount() {
-    return metalAmount;
-}
-
-int Player::getCrystalAmount() {
-    return crystalAmount;
-}
-
-void Player::receiveMetal() {
-    metalAmount = metalAmount + 200;
-}
-
-void Player::receiveCrystal() {
-    crystalAmount = crystalAmount + 200;
-}
-
-void Player::receiveCitizens() {
-    citizens = citizens + 100;
-}
+*/
