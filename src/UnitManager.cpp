@@ -3,7 +3,7 @@
 #include "Human.h"
 #include "Game.h"
 #include "SoundEngine/SoundSystem.h"
-
+#include "PathPlanner/PathManager.h"
 //Constructor
 UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
     gridAlignment = 20;
@@ -24,6 +24,8 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
 
     selectedTroop = NULL;
 
+    
+     
 	for (int i = 0; i < Enumeration::UnitType::TroopsSize; i++){
 		troopsAmount[i] = 0;
 	}
@@ -70,9 +72,12 @@ void UnitManager::updateUnitManager() {
 //In order to add a new unit, you must specify which one
 bool UnitManager::createTroop(Enumeration::UnitType unitData) {
     if (checkCanPay(unitData)) {
-        Unit *newUnit = new Unit(unitLayer, std::rand(), L"media/buildingModels/escuela.obj", team, breed, unitData, Vector3<float>());
+        Unit *newUnit = new Unit(unitLayer, std::rand(), L"media/buildingModels/dummy.obj", team, breed, unitData, Vector3<float>());
+        //Unit *newUnit = new Unit(std::rand(), unitLayer, L"media/buildingModels/dummy.obj", Vector3<float>(), this -> teamManager, unitData, this -> breedType);
         newUnit -> getModel() -> setActive(false);
+        newUnit -> getModel() -> setScale(Vector3<float>(100, 100, 100));
         inHallTroops -> push_back(newUnit);
+
         troopsAmount[unitData]++;
         return true;
     }
@@ -126,9 +131,13 @@ void UnitManager::deployTroop() {
 
         temp -> setTroopPosition(Vector3<float>(Enumeration::HumanCityHall::human_x, g -> getGameState() -> getTerrain() -> getY(Enumeration::HumanCityHall::human_x, Enumeration::HumanCityHall::human_z), Enumeration::HumanCityHall::human_z)); //ToDo
         
+        // Why attack move
         temp -> switchState(Enumeration::UnitState::AttackMove);
 
-        temp -> setTroopDestination(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
+        //temp -> setPosition(Vector3<float>(8000, 0, 8000));
+        //temp -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
+        temp -> setPathToTarget(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
+        
         temp -> getModel() -> setActive(true);
         temp -> setRetracted(false);
         
@@ -147,6 +156,7 @@ void UnitManager::deployAllTroops(Vector3<float> vectorData) {
         inHallTroops -> erase(inHallTroops -> begin() + i);
         inMapTroops -> insert(std::pair<int, Unit*>(u -> getModel() -> getID(), u));
 
+        //u -> setTroopPosition(Vector3<float>(Enumeration::HumanCityHall::human_x, terrain -> getY(Enumeration::HumanCityHall::human_x, Enumeration::HumanCityHall::human_z), Enumeration::HumanCityHall::human_z)); //ToDo
 
         u -> setTroopPosition(vectorData);
         u -> switchState(Enumeration::UnitState::AttackMove);
@@ -172,8 +182,8 @@ void UnitManager::selectTroop(int troopID) {
     if (it != inMapTroops -> end()) {
         selectedTroop = it -> second;
         //SELECT VOICE
-        SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getSelectEvent());
         g -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
+        SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getSelectEvent());
     }
 }
 
@@ -193,13 +203,15 @@ void UnitManager::moveOrder() {
     if (selectedTroop != NULL) {
         selectedTroop -> setTroopDestination(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
         if (Game::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: arreglar
+        // To do by Julian -> change attack iddle to pathfinding mode
             selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
 
-            selectedTroop -> setTroopDestination(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
+            //selectedTroop -> setTroopDestination(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
+            selectedTroop->setPathToTarget(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
         } else {
             selectedTroop -> switchState(Enumeration::UnitState::Move);
 
-            selectedTroop -> setTroopDestination(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
+            selectedTroop->setPathToTarget(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
         }
         //MOVEMENT VOICE
         SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());

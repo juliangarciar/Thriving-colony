@@ -28,7 +28,7 @@ Unit::Unit(SceneNode *layer, int id, const wchar_t *path, Enumeration::Team team
     attackCountdown = 0;
     // Preparado para algo
     readyToEnter = false;
-    
+    pathManager = new PathManager(this);
     Init();
 
     //Graphic engine, this should be in the switch (when models done)
@@ -39,6 +39,7 @@ Unit::~Unit() {
     delete vectorPos;
     delete vectorDes;
     delete vectorMov;
+    delete pathManager;
 }
 
 void Unit::Init() {
@@ -268,18 +269,38 @@ void Unit::Init() {
 void Unit::moveTroop() {
     if (moving) {
         // close to destination, stop
-        if (std::abs(vectorDes -> x - position -> x) < 5.0 && std::abs(vectorDes -> z - position -> z) < 5.0) {
-            moving = false;
-            if (state == Enumeration::UnitState::Retract) {
-                readyToEnter = true;
-                return;
+        if (steps == 0) {
+            if(pathFollow.empty()){
+                moving = false;
+                if (state == Enumeration::UnitState::Retract) {
+                    readyToEnter = true;
+                    return;
+                }
+                switchState(Enumeration::Idle);
             }
-            switchState(Enumeration::Idle);
-        } else {
+            else{
+                Vector2<float> dummy = this->pathFollow.front();
+                Vector3<float> newDest(dummy.x, Game::Instance() -> getGameState() -> getTerrain() -> getY(dummy.x, dummy.y), dummy.y);
+                pathFollow.pop_front();
+                setTroopDestination(newDest);
+            }
+        }
+        else if(std::floor(steps) == 0){
+            Vector3<float> move = *vectorMov;
+            move.x *= steps;
+            //move.y *= steps;
+            move.z *= steps;
+            Vector3<float> newPos = *vectorPos + move;
+            newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
+            this -> setTroopPosition(newPos);
+            steps = 0;
+        } 
+        else {
             // far from destination, move
             Vector3<float> newPos = *vectorPos + *vectorMov;
             newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
             setTroopPosition(newPos);
+            steps--;
         }
     }
 }
@@ -462,6 +483,9 @@ void Unit::setMoving(bool movingPnt) {
 void Unit::setAttacking(bool attackingPnt) {
     attacking = attackingPnt;
 }
+void Unit::setRetracted(bool data) {
+    retracted = data;
+}
 
 void Unit::setTroopPosition(Vector3<float> vectorData) {
     vectorPos -> set(vectorData);
@@ -477,34 +501,37 @@ void Unit::setTroopDestination(Vector3<float> vectorData) {
 
     Vector3<float> desp = *vectorDes - *vectorPos;
 
-    float distance = std::abs(std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2)));
+    float distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2));
 
     vectorMov -> x = (desp.x / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
     vectorMov -> z = (desp.z / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
 
+    float movDistance = std::sqrt(std::pow(vectorMov -> x, 2) + std::pow(vectorMov -> z, 2));
+    steps = (distance / movDistance);
+
+    std::cout << "Steps: " << steps << "\n";
     moving = true;
 }
 
-void Unit::setRetracted(bool data) {
-    retracted = data;
+void Unit::setPath(std::list< Vector2<float> > path){
+    this->pathFollow = path;
 }
-
-bool Unit::getReadyToEnter() {
-    return readyToEnter;
-}
-
-bool Unit::getRetracted() {
-    return retracted;
-}
-
-bool Unit::getMoving() {
-    return moving;
+void Unit::setPathToTarget(Vector3<float> vectorData){
+    this->pathManager->createPathTo(vectorData.toVector2());
+    if(!pathFollow.empty()){
+        Vector2<float> dummy = this->pathFollow.front();
+        Vector3<float> newDest;
+        newDest.x = dummy.x;
+        newDest.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(dummy.x, dummy.y);
+        newDest.z = dummy.y;
+        this->setTroopDestination(newDest);
+        this->pathFollow.pop_front();
+    }
 }
 
 Entity* Unit::getTarget() {
     return target;
 }
-
 Model* Unit::getModel() {
     return model;
 }
@@ -512,15 +539,26 @@ Model* Unit::getModel() {
 string Unit::getAttackEvent() {
     return attackEvent;
 }
-
 string Unit::getMoveEvent() {
     return moveEvent;
 }
-
 string Unit::getSelectEvent() {
     return selectEvent;
 }
 
+bool Unit::getReadyToEnter() {
+    return readyToEnter;
+}
+bool Unit::getRetracted() {
+    return retracted;
+}
+bool Unit::getMoving() {
+    return moving;
+}
+
 Vector3<float>* Unit::getDestination() {
     return vectorDes;
+}
+std::list< Vector2<float> > Unit::getPath(){
+    return pathFollow;
 }

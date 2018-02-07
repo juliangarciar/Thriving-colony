@@ -1,4 +1,7 @@
 #include "Game.h"
+//#include "Human.h"
+//#include "IA.h"
+#include <PathPlanner/Graph.h>
 
 Game* Game::pinstance = 0;
 
@@ -24,7 +27,11 @@ Game::Game() {
 
     events = new EventSystem();
 
-    soundSystem = new SoundSystem();
+    Window::Instance() -> setGUI();
+// Added by Julian
+    Graph::Instance();
+    cellSpace = new CellSpacePartition(9000, 9000, 100, 100, 100);
+    soundSystem = SoundSystem::Instance();
 }
 
 Game::~Game() {
@@ -121,4 +128,8 @@ MenuState *Game::getMenuState() {
 
 GameState *Game::getGameState() {
 	return game;
+}
+
+CellSpacePartition *Game::getCellSpace(){
+    return cellSpace;
 }

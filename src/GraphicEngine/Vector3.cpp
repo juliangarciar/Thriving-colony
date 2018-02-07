@@ -105,6 +105,15 @@ Vector3<T> Vector3<T>::rotateFromPoint(float r, float phi, float theta) {
 
     return point;
 }
+// Added by Julian
+template <class T>
+Vector2<T> Vector3<T>::toVector2(){
+    Vector2<T> dummy;
+    dummy.x = this->x;
+    dummy.y = this->z;
+    return dummy;
+}
+//      **      //
 
 template <class T>
 bool Vector3<T>::operator == (const Vector3<T> &p) const {

@@ -3,12 +3,13 @@
 
 #include "Entity.h"
 #include "GraphicEngine/Vector3.h"
-
+#include <PathPlanner/PathManager.h>
 //#include "Battle.h"
 
 #include <iostream>
 #include <cmath>
 #include <string>
+#include <list>
 using namespace std;
 class Unit : public Entity {
     
@@ -47,7 +48,8 @@ class Unit : public Entity {
         void setRetracted(bool);
         void setTroopPosition(Vector3<float> vectorData);
         void setTroopDestination(Vector3<float> vectorData);
-
+        void setPath(std::list< Vector2<float> > path);
+        void setPathToTarget(Vector3<float> vectorData);
         //Getters
         Entity* getTarget();
         Model* getModel();
@@ -61,6 +63,7 @@ class Unit : public Entity {
         bool getReadyToEnter();
 
         Vector3<float>* getDestination();
+        std::list< Vector2<float> > getPath();
     private:
     //Init
         /**
@@ -86,12 +89,15 @@ class Unit : public Entity {
         float lookForTargetCountdown;
         float attackCountdown;
 
-    // Space vectors used for unit movement
+    //Space vectors used for unit movement
+        class PathManager* pathManager;
+        std::list< Vector2<float> > pathFollow;
         //Vector position is in the father
         Vector3 <float> *vectorPos;
         Vector3 <float> *vectorDes;
         Vector3 <float> *vectorMov;
-        
+        float steps;
+        //Entity* target;
     //Unit type
         Enumeration::UnitType unitType;
         bool readyToEnter;
