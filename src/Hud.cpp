@@ -16,6 +16,8 @@ Hud::Hud() {
     updateTimer = 0.5;
     deleteTextTimer = 0;
 
+    popUpOpen = false;
+
     buttons = new std::vector<Button*>();
 
     // Building buttons panel
@@ -185,6 +187,10 @@ Hud::Hud() {
                 Window::Instance()->getGUIEnvironment()->performLayout();
             });
             buttons -> push_back(b);
+
+            barrackScroll = new ScrollPanel(barrackContent);
+            barrackTroopListPanel = new Panel(barrackScroll, "");
+
             barrackContent -> hide();
         }
         //BarnTab
@@ -228,6 +234,10 @@ Hud::Hud() {
                 Window::Instance()->getGUIEnvironment()->performLayout();
             });
             buttons -> push_back(b);
+
+            barnScroll = new ScrollPanel(barnContent);
+            barnTroopListPanel = new Panel(barnScroll, "");
+
             barnContent -> hide();
         }
         //Workshop tab
@@ -262,6 +272,10 @@ Hud::Hud() {
                 Window::Instance()->getGUIEnvironment()->performLayout();
             });
             buttons -> push_back(b);
+
+            workshopScroll = new ScrollPanel(workshopContent);
+            workshopTroopListPanel = new Panel(workshopScroll, "");
+
             workshopContent -> hide();
         }
         tabs->changeActiveTab(0);
@@ -352,6 +366,7 @@ void Hud::disableTab(Enumeration::BuildingType t){
 void Hud::showPopup(){
     tabContainer -> show();
     buttonOpenPanel -> setText("Close Panel");
+    popUpOpen = true;
 }
 
 void Hud::showPopup(Enumeration::BuildingType t){
@@ -378,12 +393,14 @@ void Hud::showPopup(Enumeration::BuildingType t){
     if (show) {
         tabContainer -> show();
         buttonOpenPanel -> setText("Close Panel");
+        popUpOpen = true;
     }
 }
 
 void Hud::hidePopup(){
     tabContainer -> hide();
     buttonOpenPanel -> setText("Open Panel");
+    popUpOpen = false;
 }
 
 void Hud::setHUDEvents(){
@@ -505,7 +522,6 @@ void Hud::update() {
     }
 }
 
-
 void Hud::updatePositions() {
     buttonOpenPanel -> setPosition(Vector2<int>(100,20).getFixed());
 
@@ -528,107 +544,6 @@ void Hud::deleteWarning() {
     warningText -> hide();
 }
 
-/*hospitalMenu = tabs -> addTab(L"Hospital", Enumeration::BuildingType::Hospital);
-hospitalMenu -> addChild(buttonCloseTab3);
-homeMenu = tabs -> addTab(L"Home", Enumeration::BuildingType::House);
-homeMenu -> addChild(buttonCloseTab4);
-marketMenu = tabs -> addTab(L"Market", Enumeration::BuildingType::Market);
-marketMenu -> addChild(buttonCloseTab5);
-quarryMenu = tabs -> addTab(L"Quarry", Enumeration::BuildingType::Quarry);
-quarryMenu -> addChild(buttonCloseTab6);
-siderurgyMenu = tabs -> addTab(L"Siderurgy", Enumeration::BuildingType::Siderurgy);
-siderurgyMenu -> addChild(buttonCloseTab7);
-schoolMenu = tabs -> addTab(L"School", Enumeration::BuildingType::School);
-schoolMenu -> addChild(buttonCloseTab8);
-towerMenu = tabs -> addTab(L"Tower", Enumeration::BuildingType::Tower);
-towerMenu -> addChild(buttonCloseTab9);
-wallMenu = tabs -> addTab(L"Wall", Enumeration::BuildingType::Wall); 
-wallMenu -> addChild(buttonCloseTab10);
-buttonCloseTab3 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-buttonCloseTab4 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-buttonCloseTab5 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-buttonCloseTab6 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-buttonCloseTab7 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-buttonCloseTab8 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-buttonCloseTab9 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-buttonCloseTab10 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-buttonCloseTab11 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-*/
-
-
-    /*Game *g = Game::Instance();
-    int id = g -> getIO() -> getGUIClickedID();
-
-    switch(id) {
-        //Los botones de cada tab
-        case Enumeration::idGUI::GUI_ID_CREATE_MELEE_TROOP_BUTTON:
-            {
-                Enumeration::UnitType unitData = Enumeration::UnitType::StandardM;
-                
-                //unitData.unitClass = Enumeration::UnitType::Class::Melee;
-                //unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardM;
-                if (Human::getInstance() -> getUnitManager() -> createTroop(unitData))
-                    hallTroopList -> addItem(L"Tropa melee a pie");
-            }
-        break;
-        case Enumeration::idGUI::GUI_ID_CREATE_RANGED_TROOP_BUTTON:
-            {
-                Enumeration::UnitType unitData = Enumeration::UnitType::StandardR;
-                //unitData.unitClass = Enumeration::UnitType::Class::Ranged;
-                //unitData.unitSubClass = Enumeration::UnitType::SubClass::StandardR;
-                if (Human::getInstance() -> getUnitManager() -> createTroop(unitData))
-                    hallTroopList -> addItem(L"Tropa rango a pie");
-            }
-        break;
-        case Enumeration::idGUI::GUI_ID_CREATE_MOUNTED_MELEE_TROOP_BUTTON:
-            {
-                Enumeration::UnitType unitData = Enumeration::UnitType::AdvancedM;
-                //unitData.unitClass = Enumeration::UnitType::Class::Ranged;
-                //unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedM;
-                if (Human::getInstance() -> getUnitManager() -> createTroop(unitData))
-                    hallTroopList -> addItem(L"Tropa melee en montura");
-            }
-        break;
-        case Enumeration::idGUI::GUI_ID_CREATE_MOUNTED_RANGED_TROOP_BUTTON:
-            {
-                Enumeration::UnitType unitData = Enumeration::UnitType::AdvancedR;
-                //unitData.unitClass = Enumeration::UnitType::Class::Ranged;
-                //unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedR;
-                if (Human::getInstance() -> getUnitManager() -> createTroop(unitData))
-                    hallTroopList -> addItem(L"Tropa rango en montura");
-            }
-        break;
-        case Enumeration::idGUI::GUI_ID_CREATE_MONSTER_BUTTON:
-            {
-                Enumeration::UnitType unitData = Enumeration::UnitType::Idol;
-                //unitData.unitClass = Enumeration::UnitType::Class::Ranged;
-                //unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedM;
-                if (Human::getInstance() -> getUnitManager() -> createTroop(unitData))
-                    hallTroopList -> addItem(L"Ente");
-            }
-        break;
-        case Enumeration::idGUI::GUI_ID_CREATE_MACHINE_BUTTON:
-            {
-                Enumeration::UnitType unitData = Enumeration::UnitType::Launcher;
-                //unitData.unitClass = Enumeration::UnitType::Class::Ranged;
-                //unitData.unitSubClass = Enumeration::UnitType::SubClass::AdvancedR;
-                if (Human::getInstance() -> getUnitManager() -> createTroop(unitData))
-                    hallTroopList -> addItem(L"Maquina de guerra 1");
-            }
-        break;
-        case Enumeration::idGUI::GUI_ID_DEPLOY_TROOPS_BUTTON:
-            {
-            }
-        break;
-        case Enumeration::idGUI::GUI_ID_DEPLOY_ALL_TROOPS_BUTTON:
-            {
-                Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsHuman);
-                hallTroopList -> removeAllItems();
-            }
-        break;
-        case Enumeration::idGUI::GUI_ID_RETRACT_ALL_TROOPS_BUTTON:
-            {
-                Game::Instance() -> getEvents() -> triggerEvent(Enumeration::RetractTroopsHuman);
-            }
-        break;
-    }*/
+bool Hud::getPopUpOpen() {
+    return popUpOpen;
+}

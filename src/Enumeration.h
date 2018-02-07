@@ -78,6 +78,8 @@ class Enumeration {
         
         //Unit states
         enum UnitState {
+            Recruiting,
+            InHome,
             Idle,
             Move,
             AttackMove,

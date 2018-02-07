@@ -4,32 +4,42 @@
 #include "IA.h"
 
 Unit::Unit(SceneNode *layer, int id, const wchar_t *path, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t, Vector3<float> p) : Entity(layer, id, path, team, breed) {
-    // Esto lo pongo a pelo e igual para todas
-    // ToDo: ¿Seguro? ¿no deberian tener felicidades diferentes?
-    happiness = -10;
     // Race type and unit type
     unitType = t;
     // Defining model position
     model -> setPosition(p);
 
     // Actions of the units
+    finished = false;
     moving = false;
     attacking = false;
     retracted = true;
+
     // Default target
     target = NULL;
+
+    //Default state
+    state = Enumeration::UnitState::Recruiting;
+
+    //Iniciar
+    Init();
+
     // Position defined by the constructor parameter
     vectorPos = new Vector3<float>();
     vectorDes = new Vector3<float>();
     vectorMov = new Vector3<float>();
-    // Target-scanning timers
+
+    // Timers
+    recruitingTimer = recruitingTime;
     lookForTargetTimer = 0.5;
     lookForTargetCountdown = lookForTargetTimer;
     attackCountdown = 0;
+
     // Preparado para algo
     readyToEnter = false;
+
+    // Pathfinding
     pathManager = new PathManager(this);
-    Init();
 
     //Graphic engine, this should be in the switch (when models done)
     setColor(video::SColor(125, 125, 0, 125)); //ToDo: cambiar por material
@@ -55,6 +65,9 @@ void Unit::Init() {
                 viewRadius = 450;
                 maxHP = 80;
                 currentHP = 80;
+                recruitingTime = 5;
+                happiness = -10;
+                citizens = -10;
                 attackEvent = "event:/UnitAttack/Drorania_melee_S";
                 moveEvent = "event:/UnitMovement/Drorania_melee_S";
                 selectEvent = "event:/UnitSelect/Drorania_melee_S";
@@ -68,6 +81,9 @@ void Unit::Init() {
                 viewRadius = 450;
                 maxHP = 80;
                 currentHP = 80;
+                recruitingTime = 5;
+                happiness = -10;
+                citizens = -10;
                 attackEvent = "event:/UnitAttack/Kaonov_melee_S";
                 moveEvent = "event:/UnitMovement/Kaonov_melee_S";
                 selectEvent = "event:/UnitSelect/Kaonov_melee_S";
@@ -85,6 +101,9 @@ void Unit::Init() {
                 viewRadius = 450;
                 maxHP = 140;
                 currentHP = 140;
+                recruitingTime = 10;
+                happiness = -10;
+                citizens = -10;
                 attackEvent = "event:/UnitAttack/Drorania_melee_A";
                 moveEvent = "event:/UnitMovement/Drorania_melee_A";
                 selectEvent = "event:/UnitSelect/Drorania_melee_A";
@@ -99,6 +118,9 @@ void Unit::Init() {
                 viewRadius = 450;
                 maxHP = 140;
                 currentHP = 140;
+                recruitingTime = 10;
+                happiness = -10;
+                citizens = -10;
                 attackEvent = "event:/UnitAttack/Kaonov_melee_A";
                 moveEvent = "event:/UnitMovement/Kaonov_melee_A";
                 selectEvent = "event:/UnitSelect/Kaonov_melee_A";
@@ -116,6 +138,9 @@ void Unit::Init() {
                 viewRadius = 450;
                 maxHP = 60;
                 currentHP = 60;
+                recruitingTime = 5;
+                happiness = -10;
+                citizens = -10;
                 attackEvent = "event:/UnitAttack/Drorania_ranged_S";
                 moveEvent = "event:/UnitMovement/Drorania_ranged_S";
                 selectEvent = "event:/UnitSelect/Drorania_ranged_S";
@@ -129,6 +154,9 @@ void Unit::Init() {
                 viewRadius = 450;
                 maxHP = 60;
                 currentHP = 60;
+                recruitingTime = 5;
+                happiness = -10;
+                citizens = -10;
                 attackEvent = "event:/UnitAttack/Kaonov_ranged_S";
                 moveEvent = "event:/UnitMovement/Kaonov_ranged_S";
                 selectEvent = "event:/UnitSelect/Kaonov_ranged_S";
@@ -146,6 +174,9 @@ void Unit::Init() {
                 viewRadius = 450;
                 maxHP = 110;
                 currentHP = 110;
+                recruitingTime = 10;
+                happiness = -10;
+                citizens = -10;
                 attackEvent = "event:/UnitAttack/Drorania_ranged_A";
                 moveEvent = "event:/UnitMovement/Drorania_ranged_A";
                 selectEvent = "event:/UnitSelect/Drorania_ranged_A";
@@ -159,6 +190,9 @@ void Unit::Init() {
                 viewRadius = 450;
                 maxHP = 110;
                 currentHP = 110;
+                recruitingTime = 10;
+                happiness = -10;
+                citizens = -10;
                 attackEvent = "event:/UnitAttack/Kaonov_ranged_A";
                 moveEvent = "event:/UnitMovement/Kaonov_ranged_A";
                 selectEvent = "event:/UnitSelect/Kaonov_ranged_A";
@@ -176,7 +210,10 @@ void Unit::Init() {
                 viewRadius = 450;
                 maxHP = 180;
                 currentHP = 180;
-                //ToDo CHANGE
+                recruitingTime = 20;
+                happiness = -10;
+                citizens = -10;
+                //ToDo: CHANGE
                 attackEvent = "event:/UnitAttack/Drorania_melee_A";
                 moveEvent = "event:/UnitMovement/Drorania_melee_A";
                 selectEvent = "event:/UnitSelect/Drorania_melee_A";
@@ -190,7 +227,10 @@ void Unit::Init() {
                 viewRadius = 450;
                 maxHP = 180;
                 currentHP = 180;
-                //ToDo CHANGE
+                recruitingTime = 20;
+                happiness = -10;
+                citizens = -10;
+                //ToDo: CHANGE
                 attackEvent = "event:/UnitAttack/Kaonov_melee_A";
                 moveEvent = "event:/UnitMovement/Kaonov_melee_A";
                 selectEvent = "event:/UnitSelect/Kaonov_melee_A";
@@ -208,7 +248,10 @@ void Unit::Init() {
                 viewRadius = 450;
                 maxHP = 180;
                 currentHP = 180;
-                //CHANGE
+                recruitingTime = 15;
+                happiness = -10;
+                citizens = -10;
+                //ToDo: CHANGE
                 attackEvent = "event:/UnitAttack/Drorania_ranged_S";
                 moveEvent = "event:/UnitMovement/Drorania_ranged_S";
                 selectEvent = "event:/UnitSelect/Drorania_ranged_S";
@@ -222,7 +265,10 @@ void Unit::Init() {
                 viewRadius = 450;
                 maxHP = 180;
                 currentHP = 180;
-                //CHANGE
+                recruitingTime = 15;
+                happiness = -10;
+                citizens = -10;
+                //ToDo: CHANGE
                 attackEvent = "event:/UnitAttack/Kaonov_ranged_S";
                 moveEvent = "event:/UnitMovement/Kaonov_ranged_S";
                 selectEvent = "event:/UnitSelect/Kaonov_ranged_S";
@@ -240,7 +286,10 @@ void Unit::Init() {
                 viewRadius = 450;
                 maxHP = 220;
                 currentHP = 220;
-                //CHANGE
+                recruitingTime = 20;
+                happiness = -10;
+                citizens = -10;
+                //ToDo: CHANGE
                 attackEvent = "event:/UnitAttack/Drorania_ranged_A";
                 moveEvent = "event:/UnitMovement/Drorania_ranged_A";
                 selectEvent = "event:/UnitSelect/Drorania_ranged_A";
@@ -254,7 +303,10 @@ void Unit::Init() {
                 viewRadius = 450;
                 maxHP = 220;
                 currentHP = 220;
-                //CHANGE
+                recruitingTime = 20;
+                happiness = -10;
+                citizens = -10;
+                //ToDo: CHANGE
                 attackEvent = "event:/UnitAttack/Kaonov_ranged_A";
                 moveEvent = "event:/UnitMovement/Kaonov_ranged_A";
                 selectEvent = "event:/UnitSelect/Kaonov_ranged_A";
@@ -264,6 +316,124 @@ void Unit::Init() {
         break;
         default: break;
     }
+}
+
+void Unit::updateTroop() {
+    //State machine, color changes according to state
+    switch (state) {
+        case Enumeration::UnitState::Recruiting:
+            recruitingState();
+        break;
+        case Enumeration::UnitState::InHome:
+            inHomeState();
+        break;
+        case Enumeration::UnitState::Idle:
+            setColor(video::SColor(255, 0, 255, 255)); //ToDo: cambiar por materiales
+            idleState();
+            returnToOriginalColor(); //ToDo: ¿?
+        break;
+        case Enumeration::UnitState::Move:
+            setColor(video::SColor(255, 255, 0, 255)); //ToDo: cambiar por materiales
+            moveState();
+        break;
+        case Enumeration::UnitState::AttackMove:
+            setColor(video::SColor(255, 255, 255, 0)); //ToDo: cambiar por materiales
+            attackMoveState();
+        break;
+        case Enumeration::UnitState::Attack:
+            setColor(video::SColor(255, 0, 0, 0)); //ToDo: cambiar por materiales
+            attackState();
+        break;    
+        case Enumeration::UnitState::Chase:
+            setColor(video::SColor(255, 255, 255, 255)); //ToDo: cambiar por materiales
+            chaseState();
+        break;
+        case Enumeration::UnitState::Retract:
+            setColor(video::SColor(255, 127, 127, 127)); //ToDo: cambiar por materiales
+            retractState();
+        break;
+        default: break;
+    }
+}
+
+void Unit::taxPlayer(Enumeration::Team teamData) {
+    if (teamData == Enumeration::Team::Human) {
+        Human::getInstance() -> increaseHappiness(happiness);
+        Human::getInstance() -> increaseArmySize();
+        Human::getInstance() -> spendResources(metalCost, crystalCost);
+        Human::getInstance() -> increaseCitizens(citizens);
+    } else {
+        IA::getInstance() -> increaseHappiness(happiness);
+        IA::getInstance() -> increaseArmySize();
+        IA::getInstance() -> spendResources(metalCost, crystalCost);
+        IA::getInstance() -> increaseCitizens(citizens);
+    }
+}
+
+void Unit::switchState(Enumeration::UnitState newState) {
+    lookForTargetCountdown = lookForTargetTimer;
+    state = newState;
+}
+
+void Unit::recruitingState(){
+    if (recruitingTimer > 0){
+        recruitingTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
+    } else {
+        callback(this);
+        switchState(Enumeration::UnitState::InHome);
+    }
+}
+
+void Unit::inHomeState() {
+    //ToDo: hay que hacer algo mientras esté en base?
+}
+
+void Unit::idleState() {
+    if (refreshTarget()) { // i got one
+        switchState(Enumeration::UnitState::Chase);
+    }
+}
+
+void Unit::moveState() {
+    moveTroop();
+}
+
+void Unit::attackMoveState() {
+    attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
+    // Scan for targets
+    if (refreshTarget()) { // i got one
+        switchState(Enumeration::UnitState::Chase);
+    } else {
+        switchState(Enumeration::UnitState::AttackMove);
+        moveTroop();  
+    }
+}
+
+void Unit::attackState() {
+    attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
+    if(inRangeOfAttack()) {
+        attack();
+    } else {
+        switchState(Enumeration::UnitState::Chase);
+    }
+}
+
+/// Chasing the target
+void Unit::chaseState() {
+    //If I have a target, then chase it
+    if (target != NULL) {
+        Vector3<float> tpos = Vector3<float>(0,0,0);
+        tpos.x = target -> getPosition() -> x;
+        tpos.y = target -> getPosition() -> y;
+        tpos.z = target -> getPosition() -> z;
+        this  -> setTroopDestination(tpos);
+        chaseTarget();    
+    }
+}
+
+void Unit::retractState() {
+    moveTroop();
+    switchState(Enumeration::UnitState::InHome);
 }
 
 void Unit::moveTroop() {
@@ -305,50 +475,44 @@ void Unit::moveTroop() {
     }
 }
 
-void Unit::updateTroop() {
-    returnToOriginalColor(); //ToDo: ¿?
-    attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
-    //State machine, color changes according to state
-    switch (state) {
-        case Enumeration::UnitState::Idle:
-            setColor(video::SColor(255, 0, 255, 255)); //ToDo: cambiar por materiales
-            idleState();
-            break;
-        case Enumeration::UnitState::Move:
-            setColor(video::SColor(255, 255, 0, 255)); //ToDo: cambiar por materiales
-            moveState();
-            break;
-        case Enumeration::UnitState::AttackMove:
-            setColor(video::SColor(255, 255, 255, 0)); //ToDo: cambiar por materiales
-            attackMoveState();
-            break;
-        case Enumeration::UnitState::Attack:
-            setColor(video::SColor(255, 0, 0, 0)); //ToDo: cambiar por materiales
-            attackState();
-            break;    
-        case Enumeration::UnitState::Chase:
-            setColor(video::SColor(255, 255, 255, 255)); //ToDo: cambiar por materiales
-            chaseState();
-            break;
-        case Enumeration::UnitState::Retract:
-            setColor(video::SColor(255, 127, 127, 127)); //ToDo: cambiar por materiales
-            retractState();
-            break;
-        default: break;
+void Unit::attack() {
+    if (target != NULL) {
+        setAttacking(true);
+        if (attackCountdown <= 0) {
+            target -> takeDamage(attackDamage);
+            attackCountdown = attackSpeed;
+            if (target -> getHP() <= 0) {
+                if (team == Enumeration::Team::Human) {
+                    if (target -> getEntityType() == Enumeration::EntityType::Unit) {
+                        IA::getInstance() -> getUnitManager() -> deleteUnit(target -> getID());
+                    } else {
+                        IA::getInstance() -> getBuildingManager() -> deleteBuilding(target -> getID());
+                    }
+                } else {
+                    if (target -> getEntityType() == Enumeration::EntityType::Unit) {
+                        Human::getInstance() -> getUnitManager() -> deleteUnit(target -> getID());
+                    } else {
+                        Human::getInstance() -> getBuildingManager() -> deleteBuilding(target -> getID());
+                    }
+                }
+                target = NULL;
+                this -> switchState(Enumeration::UnitState::AttackMove);
+            }
+        }
     }
 }
 
-void Unit::taxPlayer(Enumeration::Team teamData) {
-    if (teamData == Enumeration::Team::Human) {
-        Human::getInstance() -> increaseHappiness(happiness);
-        Human::getInstance() -> increaseArmySize();
-        Human::getInstance() -> spendResources(metalCost, crystalCost);
-        Human::getInstance() -> increaseCitizens(citizens);
-    } else {
-        IA::getInstance() -> increaseHappiness(happiness);
-        IA::getInstance() -> increaseArmySize();
-        IA::getInstance() -> spendResources(metalCost, crystalCost);
-        IA::getInstance() -> increaseCitizens(citizens);
+void Unit::chaseTarget() {
+    if (moving) {
+        // If i can attack, then do so
+        if (inRangeOfAttack()) {
+            moving = false;
+            switchState(Enumeration::UnitState::Attack);
+        } else { //If i am too far away to attack, then move closer.
+            Vector3<float> newPos = *vectorPos + *vectorMov;
+            newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
+            setTroopPosition(newPos);
+        }
     }
 }
 
@@ -385,97 +549,12 @@ bool Unit::refreshTarget() {
     return targetUpdated;
 }
 
-void Unit::switchState(Enumeration::UnitState newState) {
-    lookForTargetCountdown = lookForTargetTimer;
-    state = newState;
+void Unit::triggerFinishedCallback(){
+    finished = true;
+    callback(this);
 }
 
-void Unit::idleState() {
-    if (refreshTarget()) { // i got one
-        switchState(Enumeration::UnitState::Chase);
-    }
-}
-
-void Unit::moveState() {
-    moveTroop();
-}
-
-void Unit::attackMoveState() {
-    // Scan for targets
-    if (refreshTarget()) { // i got one
-        switchState(Enumeration::UnitState::Chase);
-    } else {
-        switchState(Enumeration::UnitState::AttackMove);
-        moveTroop();  
-    }
-}
-
-void Unit::attackState() {
-    if(inRangeOfAttack()) {
-        attack();
-    } else {
-        switchState(Enumeration::UnitState::Chase);
-    }
-}
-
-void Unit::attack() {
-    if (target != NULL) {
-        setAttacking(true);
-        if (attackCountdown <= 0) {
-            target -> takeDamage(attackDamage);
-            attackCountdown = attackSpeed;
-            if (target -> getHP() <= 0) {
-                if (team == Enumeration::Team::Human) {
-                    if (target -> getEntityType() == Enumeration::EntityType::Unit) {
-                        IA::getInstance() -> getUnitManager() -> deleteUnit(target -> getID());
-                    } else {
-                        IA::getInstance() -> getBuildingManager() -> deleteBuilding(target -> getID());
-                    }
-                } else {
-                    if (target -> getEntityType() == Enumeration::EntityType::Unit) {
-                        Human::getInstance() -> getUnitManager() -> deleteUnit(target -> getID());
-                    } else {
-                        Human::getInstance() -> getBuildingManager() -> deleteBuilding(target -> getID());
-                    }
-                }
-                target = NULL;
-                this -> switchState(Enumeration::UnitState::AttackMove);
-            }
-        }
-    }
-}
-
-/// Chasing the target
-void Unit::chaseState() {
-    //If I have a target, then chase it
-    if (target != NULL) {
-        Vector3<float> tpos = Vector3<float>(0,0,0);
-        tpos.x = target -> getPosition() -> x;
-        tpos.y = target -> getPosition() -> y;
-        tpos.z = target -> getPosition() -> z;
-        this  -> setTroopDestination(tpos);
-        chaseTarget();    
-    }
-}
-
-void Unit::chaseTarget() {
-    if (moving) {
-        // If i can attack, then do so
-        if (inRangeOfAttack()) {
-            moving = false;
-            switchState(Enumeration::UnitState::Attack);
-        } else { //If i am too far away to attack, then move closer.
-            Vector3<float> newPos = *vectorPos + *vectorMov;
-            newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
-            setTroopPosition(newPos);
-        }
-    }
-}
-
-void Unit::retractState() {
-    moveTroop();
-}
-
+/////SETTERS/////
 void Unit::setMoving(bool movingPnt) {
     moving = movingPnt;
 }
@@ -483,6 +562,7 @@ void Unit::setMoving(bool movingPnt) {
 void Unit::setAttacking(bool attackingPnt) {
     attacking = attackingPnt;
 }
+
 void Unit::setRetracted(bool data) {
     retracted = data;
 }
@@ -516,6 +596,7 @@ void Unit::setTroopDestination(Vector3<float> vectorData) {
 void Unit::setPath(std::list< Vector2<float> > path){
     this->pathFollow = path;
 }
+
 void Unit::setPathToTarget(Vector3<float> vectorData){
     this->pathManager->createPathTo(vectorData.toVector2());
     if(!pathFollow.empty()){
@@ -529,13 +610,11 @@ void Unit::setPathToTarget(Vector3<float> vectorData){
     }
 }
 
-Entity* Unit::getTarget() {
-    return target;
-}
-Model* Unit::getModel() {
-    return model;
+void Unit::setFinishedCallback(std::function<void(Unit*)> f){
+    callback = f;
 }
 
+/////GETTERS/////
 string Unit::getAttackEvent() {
     return attackEvent;
 }

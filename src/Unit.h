@@ -2,15 +2,15 @@
 #define UNIT_H
 
 #include "Entity.h"
-#include "GraphicEngine/Vector3.h"
+#include <GraphicEngine/Vector3.h>
 #include <PathPlanner/PathManager.h>
-//#include "Battle.h"
 
 #include <iostream>
+#include <functional>
 #include <cmath>
 #include <string>
 #include <list>
-using namespace std;
+
 class Unit : public Entity {
     
     public:
@@ -18,30 +18,30 @@ class Unit : public Entity {
         Unit(SceneNode *layer, int id, const wchar_t *path, Enumeration::Team teamData, Enumeration::BreedType raceData, Enumeration::UnitType typeData, Vector3<float> vectorData);
         virtual ~Unit();
 
-        /////////////////////////
-        void attack();
-        //void updateTarget(Entity*);
-        void moveTroop();
-        void attackMoveTroop();
-        void chaseTarget();
-        void updateTroop();
-        //void assignBattle(Battle*);
+        // Economy
         virtual void taxPlayer(Enumeration::Team);
 
-        //int getAttackRange();
+        // Agro methods
+        void attack();
+        void moveTroop();
+        void attackMoveTroop();
+        void updateTroop();
+        void chaseTarget();
+        bool refreshTarget();
         bool inRangeOfAttack();
 
         // State machine
         void switchState(Enumeration::UnitState);
+        void recruitingState();
+        void inHomeState();
         void idleState();
         void moveState();
         void attackMoveState();
         void attackState();
         void chaseState();
         void retractState();
-        
-        bool refreshTarget();
-        
+        void triggerFinishedCallback();
+
         //Setters
         void setMoving(bool);
         void setAttacking(bool);
@@ -50,16 +50,15 @@ class Unit : public Entity {
         void setTroopDestination(Vector3<float> vectorData);
         void setPath(std::list< Vector2<float> > path);
         void setPathToTarget(Vector3<float> vectorData);
-        //Getters
-        Entity* getTarget();
-        Model* getModel();
+        void setFinishedCallback(std::function<void(Unit*)>);
 
-        string getAttackEvent();
-        string getMoveEvent();
-        string getSelectEvent();
+        //Getters
+        std::string getAttackEvent();
+        std::string getMoveEvent();
+        std::string getSelectEvent();
 
         bool getRetracted();
-        bool getMoving();
+        bool getMoving(); 
         bool getReadyToEnter();
 
         Vector3<float>* getDestination();
@@ -67,45 +66,56 @@ class Unit : public Entity {
     private:
     //Init
         /**
-         * @brief cosa
+         * @brief inicia
          */
         void Init();
 
-    //CurrentState
+    // CurrentState
         Enumeration::UnitState state;
 
-    //Unit stats
+    // Unit type
+        Enumeration::UnitType unitType;
+
+    // Unit stats
         int moveSpeed;
         int attackSpeed;
         int attackDamage;
 
     // Action bools
+        bool finished;
         bool moving;
         bool attacking;
         bool retracted;
 
+    // Unit info
+        float recruitingTime;
+
     // Timers
+        float recruitingTimer;
         float lookForTargetTimer;
         float lookForTargetCountdown;
         float attackCountdown;
 
-    //Space vectors used for unit movement
+    // Space vectors used for unit movement
         class PathManager* pathManager;
         std::list< Vector2<float> > pathFollow;
-        //Vector position is in the father
+
+    //Finish recruiting callback
+        std::function<void(Unit*)> callback;
+
+    // Vector position is in the father
         Vector3 <float> *vectorPos;
         Vector3 <float> *vectorDes;
         Vector3 <float> *vectorMov;
         float steps;
-        //Entity* target;
-    //Unit type
-        Enumeration::UnitType unitType;
+
+    // Algo
         bool readyToEnter;
 
-    //Music events to be played
-        string attackEvent;
-        string moveEvent;
-        string selectEvent;
+    // Music events to be played
+        std::string attackEvent;
+        std::string moveEvent;
+        std::string selectEvent;
 };
 
 #endif

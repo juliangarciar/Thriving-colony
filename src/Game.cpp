@@ -97,8 +97,9 @@ void Game::changeState(Enumeration::State data) {
             state = game;
             state -> Init();
         break;
-        case Enumeration::State::PauseState :
-            state -> CleanUp();
+        case Enumeration::State::PauseState:
+            //ToDo: de momento lo dejo asi para que pueda ser un estado pero el menu es parte del gamestate
+            //state -> CleanUp();
             state = pause;
             state -> Init();
         break;

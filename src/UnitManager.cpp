@@ -13,19 +13,17 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
     team = t;
     breed = b;
 
+    unitLayer = new SceneNode();
+
+    inQueueTroops = new std::vector<Unit*>(); //ToDo: por aqui me quedo (falta esto y HUD)
     inHallTroops = new std::vector<Unit*>();
     inMapTroops = new std::map<int, Unit*>();
-    //totalTroops = new std::vector<Unit*>();
 
     isDeployingTroop = false;
     currentDeployingTroop = -1;
 
-    unitLayer = new SceneNode();
-
     selectedTroop = NULL;
 
-    
-     
 	for (int i = 0; i < Enumeration::UnitType::TroopsSize; i++){
 		troopsAmount[i] = 0;
 	}
