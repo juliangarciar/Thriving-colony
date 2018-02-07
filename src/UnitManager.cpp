@@ -60,7 +60,9 @@ void UnitManager::updateUnitManager() {
         it -> second -> updateTroop();
         if (it -> second -> getReadyToEnter()) {
             it -> second -> getModel() -> setActive(false);
+
             inHallTroops -> push_back(it -> second);
+            
             inMapTroops -> erase(it);
         }
     }

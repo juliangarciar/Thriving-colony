@@ -217,7 +217,7 @@ void Building::Init() {
 
 void Building::update() {
     if (!finished){
-        if (buildTimer <= 0.f) {
+        if (buildTimer <= 0.0) {
             finished = true;
             callback(this);
         } else {
