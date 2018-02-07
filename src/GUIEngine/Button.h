@@ -12,11 +12,12 @@ class Button : public GUIElement{
         Button(GUIElement *parent, std::string buttonText);
         virtual ~Button();
 
-        bool isButtonPressed();
-        void setButtonPressed(bool pressed);
-
         void show();
         void hide();
+        bool isVisible();
+
+        bool isButtonPressed();
+        void setButtonPressed(bool pressed);
         
         void setPosition(Vector2<int> position);
         void setSize(Vector2<int> size);

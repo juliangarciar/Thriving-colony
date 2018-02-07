@@ -8,8 +8,8 @@ Box3D<T>::Box3D(){
 }
 
 template <class T>
-Box3D<T>::Box3D(core::aabbox3d<T> box){
-	this -> box = box;
+Box3D<T>::Box3D(core::aabbox3d<T> b){
+	box = b;
 }
 
 template <class T>
@@ -18,8 +18,13 @@ Box3D<T>::~Box3D(){
 }
 
 template <class T>
-void Box3D<T>::set(core::aabbox3d<T> box){
-	this -> box = box;
+void Box3D<T>::set(core::aabbox3d<T> b){
+	box = b;
+}
+
+template <class T>
+void Box3D<T>::set(Box3D<T> other){
+	box = other.getAABBox3D();
 }
 
 template <class T>
@@ -41,10 +46,6 @@ Vector3<T> Box3D<T>::getSize() {
    	T height = edges[1].Y - edges[0].Y;
    	T depth = edges[2].Z - edges[0].Z;
 
-   /*std::cout<<"height: "<<height<<std::endl;
-   std::cout<<"width: "<<width<<std::endl;
-   std::cout<<"depth: "<<depth<<std::endl;
-*/
 	return Vector3<T>(width, height, depth);
 }
 

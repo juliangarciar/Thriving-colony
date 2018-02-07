@@ -14,33 +14,8 @@ class Unit : public Entity {
     
     public:
         //The consctructor is empty because the object it's constructed in the child
-        Unit(int id, SceneNode *layer, const wchar_t *path, Vector3<float> vectorData, Enumeration::Team teamData, Enumeration::UnitType typeData, Enumeration::BreedType raceData);
+        Unit(SceneNode *layer, int id, const wchar_t *path, Enumeration::Team teamData, Enumeration::BreedType raceData, Enumeration::UnitType typeData, Vector3<float> vectorData);
         virtual ~Unit();
-
-        //Getters
-        Entity* getTarget();
-        Model* getModel();
-        //MusicStrings
-        string getAttackEvent();
-        string getMoveEvent();
-        string getSelectEvent();
-        //Cost data -> maybe not needed (because there is an enumeration with this data)
-        
-        int getMetalCost();
-        int getCrystalCost();
-        int getHappinesCost();
-
-        bool getRetracted();
-        bool getMoving();
-
-        Vector3<float>* getDestination();
-        
-        //Setters
-        void setMoving(bool);
-        void setAttacking(bool);
-        void setRetracted(bool);
-        void setTroopPosition(Vector3<float> vectorData);
-        void setTroopDestination(Vector3<float> vectorData);
 
         /////////////////////////
         void attack();
@@ -65,48 +40,66 @@ class Unit : public Entity {
         void retractState();
         
         bool refreshTarget();
-
-        bool getReadyToEnter();
         
+        //Setters
+        void setMoving(bool);
+        void setAttacking(bool);
+        void setRetracted(bool);
+        void setTroopPosition(Vector3<float> vectorData);
+        void setTroopDestination(Vector3<float> vectorData);
+
+        //Getters
+        Entity* getTarget();
+        Model* getModel();
+
+        string getAttackEvent();
+        string getMoveEvent();
+        string getSelectEvent();
+
+        bool getRetracted();
+        bool getMoving();
+        bool getReadyToEnter();
+
+        Vector3<float>* getDestination();
     private:
+    //Init
+        /**
+         * @brief cosa
+         */
+        void Init();
+
+    //CurrentState
         Enumeration::UnitState state;
+
     //Unit stats
         int moveSpeed;
         int attackSpeed;
         int attackDamage;
-        //int attackRange;
-        int viewRange;
-        //Maybe this isn't needed
-        int metalCost;
-        int crystalCost;
-        int happinessCost;
-    //Action bools
+
+    // Action bools
         bool moving;
         bool attacking;
         bool retracted;
-        // Timers
+
+    // Timers
         float lookForTargetTimer;
         float lookForTargetCountdown;
         float attackCountdown;
 
-    //Space vectors used for unit movement
+    // Space vectors used for unit movement
         //Vector position is in the father
         Vector3 <float> *vectorPos;
         Vector3 <float> *vectorDes;
         Vector3 <float> *vectorMov;
         
-        //Entity* target;
     //Unit type
         Enumeration::UnitType unitType;
-        Enumeration::BreedType unitRace;
-        //Battle* battleInvolved;
+        bool readyToEnter;
 
     //Music events to be played
         string attackEvent;
         string moveEvent;
         string selectEvent;
-        
-        bool readyToEnter;
 };
 
 #endif

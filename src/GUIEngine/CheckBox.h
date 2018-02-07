@@ -15,6 +15,7 @@ class CheckBox : public GUIElement {
 
         void show();
         void hide();
+        bool isVisible();
         
         void setPosition(Vector2<int> position);
         

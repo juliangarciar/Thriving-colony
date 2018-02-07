@@ -5,11 +5,13 @@
 #include "MenuState.h"
 #include "GameState.h"
 #include "PauseState.h"
-#include "IOEngine/EventSystem.h"
+#include "Enumeration.h"
 
+#include <IOEngine/EventSystem.h>
 #include <IOEngine/Mouse.h>
 #include <IOEngine/Keyboard.h>
 #include <IOEngine/EventSystem.h>
+
 #include <GraphicEngine/Window.h>
 
 #include <SoundEngine/SoundSystem.h>
@@ -28,23 +30,23 @@ class Game {
         /**
 		 * @brief Inicializa Game
 		 */
-        void init();
+        void Init();
         /**
 		 * @brief Recoge las entradas de teclado y raton
 		 */
-        void input();
+        void Input();
         /**
 		 * @brief Actualiza Game
 		 */
-        void update();
+        void Update();
         /**
 		 * @brief Renderiza Game
 		 */
-        void render();
+        void Render();
         /**
 		 * @brief Constructor
 		 */
-        void cleanUp();
+        void CleanUp();
         /**
         * @brief Cambia el estado de Game
         * @param State es el nuevo estado 
@@ -106,12 +108,13 @@ class Game {
         static Game* pinstance;
 
         State *state;
-        Window *window;
         Enumeration::State stateData;
 
         MenuState *menu;
         GameState *game;
         PauseState *pause;
+        
+        Window *window;
 
         Mouse *cursor;
         Keyboard *keyboard;

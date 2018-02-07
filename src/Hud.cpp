@@ -16,23 +16,19 @@ Hud::Hud() {
     updateTimer = 0.5;
     deleteTextTimer = 0;
 
-    menuIDs = new std::vector<int>();
-    buttons = new std::vector<Button*> ();
+    buttons = new std::vector<Button*>();
 
     // Building buttons panel
     buildingsPanel = new Panel("Buildings");
     buildingsPanel->setPosition(Vector2<int>(575, 546).getFixed());
-    //Le botone iniciale
-    //buttonQuit = new Button("Quit");
 
     // General
     generalPanel = new Panel(buildingsPanel, "General functions");
     generalPanel->setPosition(Vector2<int>(20, 640).getFixed());
 
     buttonExpandTerrain = new Button(generalPanel, "Expand terrain");
-    buttonOpenPanel = new Button(generalPanel, "Open Panel");
 
-    //buttonQuit->setPosition(Vector2<int>(30, 40));
+    buttonOpenPanel = new Button(generalPanel, "Open Panel");
     buttonOpenPanel->setPosition(Vector2<int>(100, 20));
 
     generalPanel -> setVerticalAlignment();
@@ -46,6 +42,7 @@ Hud::Hud() {
     buttonQuarry = new Button(resourcePanel, "Quarry");
 
     resourcePanel ->setVerticalAlignment();
+
     // Services
     servicePanel = new Panel(buildingsPanel, "Service buildings");
     servicePanel->setPosition(Vector2<int>(20, 640).getFixed());
@@ -55,6 +52,7 @@ Hud::Hud() {
     buttonHospital = new Button(servicePanel, "Hospital");
 
     servicePanel -> setVerticalAlignment();
+
     // Military
     militaryPanel = new Panel(buildingsPanel, "Military buildings");
     militaryPanel->setPosition(Vector2<int>(20, 640).getFixed());
@@ -64,6 +62,7 @@ Hud::Hud() {
     buttonWorkshop = new Button(militaryPanel, "Workshop");
 
     militaryPanel -> setVerticalAlignment();
+
     // Defense
     defensePanel = new Panel(buildingsPanel, "Defensive buildings");
     defensePanel->setPosition(Vector2<int>(20, 640).getFixed());
@@ -72,8 +71,6 @@ Hud::Hud() {
     buttonWall = new Button(defensePanel, "Wall");
 
     defensePanel -> setVerticalAlignment();
-
-    //buildingsPanel -> center();
 
     buttonBarn->setTooltip("Build a barn that will allow you to train mounted military units.\n Metal cost: 800.");
     buttonBarrack->setTooltip("Build a barrack that will allow you to train basic military units.\n Metal cost: 720.");
@@ -109,23 +106,173 @@ Hud::Hud() {
     deleteWarning();
     
     tabContainer = new Panel("Building viewer");
-    tabContainer -> setSize(Vector2<int>(350, 250));
-    tabContainer -> setGroupLayout();
-    tabContainer -> center();
-    tabs = new TabPanel(tabContainer);
-    addTab(0, Enumeration::BuildingType::MainBuilding);
-    addTab(1, Enumeration::BuildingType::Barrack);
-    addTab(2, Enumeration::BuildingType::Barn);
-    addTab(3, Enumeration::BuildingType::Workshop);
-    tabs->changeActiveTab(0);
+        tabContainer -> setSize(Vector2<int>(350, 280));
+        tabContainer -> setGroupLayout();
+        tabs = new TabPanel(tabContainer);
+        mainBuildingTab = tabs->createTab("Main Building");
+        barrackTab = tabs->createTab("Barrack");
+        barnTab = tabs->createTab("Barn");
+        workshopTab = tabs->createTab("Workshop");
+
+        //MainBuildingTab
+        {
+            Button *b = new Button(mainBuildingTab, "Close");
+            b->setTooltip("Close popup");
+            b->setCallback([&] {
+                this->hidePopup();
+            });
+            buttons -> push_back(b);
+
+            hallTroopList = new ComboBox(mainBuildingTab, {});
+
+            b = new Button(mainBuildingTab, "Deploy selected troop");
+            b -> setTooltip("Deploy your selected unit onto the map");
+            b -> setCallback([&]{
+                int index = hallTroopList -> getSelectedOption();
+                if (index >= 0) {
+                    hallTroopList -> removeOption(index);
+                    Human::getInstance() -> getUnitManager() -> startDeployingTroop(index);
+                    Window::Instance()->getGUIEnvironment()->performLayout();
+                }
+            });
+            buttons -> push_back(b);
+
+            b = new Button(mainBuildingTab, "Deploy all troops");
+            b -> setTooltip("Deploy all your units onto the map");
+            b -> setCallback([&]{
+                Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsHuman);
+            });
+            buttons -> push_back(b);
+
+            b = new Button(mainBuildingTab, "Retract all troops");
+            b -> setTooltip("Retract your units back into your town hall");
+            b -> setCallback([&]{
+                Game::Instance() -> getEvents() -> triggerEvent(Enumeration::RetractTroopsHuman);
+            });
+            buttons -> push_back(b);
+
+            mainBuildingTab->hide();
+        }
+        //BarrackTab
+        {
+            Button *b = new Button(barrackTab, "Close");
+            b->setTooltip("Close popup");
+            b->setCallback([&] {
+                this->hidePopup();
+            });
+            buttons -> push_back(b);
+
+            barrackEmpty = new Panel(barrackTab, "");
+            barrackEmptyLabel = new Label(barrackEmpty, "Este edificio no esta activo aun");
+
+            barrackContent = new Panel(barrackTab, "");
+            barrackContent -> setGroupLayout();
+
+            b = new Button(barrackContent, "Create melee footman");
+            b -> setTooltip("Create a melee unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardM);
+                hallTroopList -> addOption("Melee footman");
+                Window::Instance()->getGUIEnvironment()->performLayout();
+            });
+            buttons -> push_back(b);
+            
+            b = new Button(barrackContent, "Create ranged footman");
+            b -> setTooltip("Create a ranged unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardR);
+                hallTroopList -> addOption("Ranged footman");
+                Window::Instance()->getGUIEnvironment()->performLayout();
+            });
+            buttons -> push_back(b);
+            barrackContent -> hide();
+        }
+        //BarnTab
+        {
+            Button *b = new Button(barnTab, "Close");
+            b->setTooltip("Close popup");
+            b->setCallback([&] {
+                this->hidePopup();
+            });
+            buttons -> push_back(b);
+
+            barnEmpty = new Panel(barnTab, "");
+            barnEmptyLabel = new Label(barnEmpty, "Este edificio no esta activo aun");
+
+            barnContent = new Panel(barnTab, "");
+            barnContent -> setGroupLayout();
+
+            b = new Button(barnContent, "Create mounted melee unit");
+            b -> setTooltip("Create a melee unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedM);
+                hallTroopList -> addOption("Mounted melee unit");
+                Window::Instance()->getGUIEnvironment()->performLayout();
+            });
+            buttons -> push_back(b);
+            
+            b = new Button(barnContent, "Create mounted ranged unit");
+            b -> setTooltip("Create a ranged unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedR);
+                hallTroopList -> addOption("Mounted ranged unit");
+                Window::Instance()->getGUIEnvironment()->performLayout();
+            });
+            buttons -> push_back(b);
+
+            b = new Button(barnContent, "Create monster");
+            b -> setTooltip("Create a overwhelmingly powerful creature to destroy your enemies\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Idol);
+                hallTroopList -> addOption("Create monster");
+                Window::Instance()->getGUIEnvironment()->performLayout();
+            });
+            buttons -> push_back(b);
+            barnContent -> hide();
+        }
+        //Workshop tab
+        {
+            Button *b = new Button(workshopTab, "Close");
+            b->setTooltip("Close popup");
+            b->setCallback([&] {
+                this->hidePopup();
+            });
+            buttons -> push_back(b);
+
+            workshopEmpty = new Panel(workshopTab, "");
+            workshopEmptyLabel = new Label(workshopEmpty, "Este edificio no esta activo aun");
+
+            workshopContent = new Panel(workshopTab, "");
+            workshopContent -> setGroupLayout();
+
+            b = new Button(workshopContent, "Create ram");
+            b -> setTooltip("Create a ram that specializes in destroying buildings\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Desintegrator);
+                hallTroopList -> addOption("Ram");
+                Window::Instance()->getGUIEnvironment()->performLayout();
+            });
+            buttons -> push_back(b);
+            
+            b = new Button(workshopContent, "Create catapult");
+            b -> setTooltip("Create a catapult that heavy area of damage\nMetal cost: 100\nCrystal cost:100");
+            b->setCallback([&] {
+                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Launcher);
+                hallTroopList -> addOption("Catapult");
+                Window::Instance()->getGUIEnvironment()->performLayout();
+            });
+            buttons -> push_back(b);
+            workshopContent -> hide();
+        }
+        tabs->changeActiveTab(0);
+    tabContainer->refreshLayout();
+    tabContainer->center();
     tabContainer->hide();
 
     setHUDEvents();
 }
 
 Hud::~Hud() {
-    delete menuIDs;
-
     delete buildingsPanel;
     delete generalPanel;
     delete resourcePanel;
@@ -133,7 +280,7 @@ Hud::~Hud() {
     delete militaryPanel;
     delete defensePanel;
 
-    //Los dos botones iniciales
+    //Le botone iniciale
     delete buttonOpenPanel;
 
     //Los botones edificios
@@ -150,196 +297,102 @@ Hud::~Hud() {
     delete buttonTower;
     delete buttonExpandTerrain;
 
+    //Moar
     delete backgroundText;
     delete resourceText;
     delete iaResourceText;
 
+    delete hallTroopList;
+
     delete tabContainer;
     delete tabs;
 
-    delete warningText; //Es estatico asi que no se yo...
-    //delete hallTroopText;
-    //delete hallTroopList;
+    //ToDo: Es estatico asi que no se yo...
+    delete warningText; 
 }
 
-void Hud::addTab(int id, int type){
-    switch (type) {
-        case Enumeration::BuildingType::MainBuilding:
-        {
-            Tab *t = tabs->createTab("Main Building", id);
-            menuIDs -> push_back(id);
-
-            Button *b = new Button(t, "Close");
-            b->setTooltip("Cerrar popup");
-            b->setCallback([&] {
-                tabContainer -> hide();
-            });
-            buttons -> push_back(b);
-
-            hallTroopList = new ComboBox(t, {});
-
-            b = new Button(t, "Deploy selected troop");
-            b -> setTooltip("Deploy your selected unit onto the map");
-            b -> setCallback([&]{
-                int index = hallTroopList -> getSelectedOption();
-                if (index >= 0) {
-                    hallTroopList -> removeOption(index);
-                    Human::getInstance() -> getUnitManager() -> startDeployingTroop(index);
-                    Window::Instance()->getGUIEnvironment()->performLayout();
-                }
-            });
-            buttons -> push_back(b);
-
-            b = new Button(t, "Deploy all troops");
-            b -> setTooltip("Deploy all your units onto the map");
-            b -> setCallback([&]{
-                Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsHuman);
-            });
-            buttons -> push_back(b);
-
-            b = new Button(t, "Retract all troops");
-            b -> setTooltip("Retract your units back into your town hall");
-            b -> setCallback([&]{
-                Game::Instance() -> getEvents() -> triggerEvent(Enumeration::RetractTroopsHuman);
-            });
-            buttons -> push_back(b);
-
-            //tabs->refreshLayout();
-            //tabs->changeActiveTab(0);
-        }
+void Hud::enableTab(Enumeration::BuildingType t){
+    switch (t){
+        case Enumeration::BuildingType::Barrack:
+            barrackEmpty->hide();
+            barrackContent->show();
         break;
         case Enumeration::BuildingType::Barn:
-        {
-            Tab *t = tabs->createTab("Barn", id);
-            menuIDs -> push_back(id);
-
-            Button *b = new Button(t, "Close");
-            b->setTooltip("Cerrar popup");
-            b->setCallback([&] {
-                tabContainer -> hide();
-            });
-            buttons -> push_back(b);
-
-            b = new Button(t, "Create mounted melee unit");
-            b -> setTooltip("Create a melee unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
-            b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedM);
-                hallTroopList -> addOption("Mounted melee unit");
-                Window::Instance()->getGUIEnvironment()->performLayout();
-            });
-            buttons -> push_back(b);
-            
-            b = new Button(t, "Create mounted ranged unit");
-            b -> setTooltip("Create a ranged unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
-            b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedR);
-                hallTroopList -> addOption("Mounted ranged unit");
-                Window::Instance()->getGUIEnvironment()->performLayout();
-            });
-            buttons -> push_back(b);
-
-            b = new Button(t, "Create monster");
-            b -> setTooltip("Create a overwhelmingly powerful creature to destroy your enemies\nMetal cost: 100\nCrystal cost:100");
-            b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Idol);
-                hallTroopList -> addOption("Create monster");
-                Window::Instance()->getGUIEnvironment()->performLayout();
-            });
-            buttons -> push_back(b);
-            
-            //tabs->refreshLayout();
-            //tabs->changeActiveTab(0);
-        }
-        break;
-        case Enumeration::BuildingType::Barrack:
-        {
-            Tab *t = tabs->createTab("Barrack", id);
-            menuIDs -> push_back(id);
-
-            Button *b = new Button(t, "Close");
-            b->setTooltip("Cerrar popup");
-            b->setCallback([&] {
-                tabContainer -> hide();
-            });
-            buttons -> push_back(b);
-
-            b = new Button(t, "Create melee footman");
-            b -> setTooltip("Create a melee unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
-            b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardM);
-                hallTroopList -> addOption("Melee footman");
-                Window::Instance()->getGUIEnvironment()->performLayout();
-            });
-            buttons -> push_back(b);
-            
-            b = new Button(t, "Create ranged footman");
-            b -> setTooltip("Create a ranged unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
-            b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardR);
-                hallTroopList -> addOption("Ranged footman");
-                Window::Instance()->getGUIEnvironment()->performLayout();
-            });
-            buttons -> push_back(b);
-            
-            //tabs->refreshLayout();
-            //tabs->changeActiveTab(0);
-        }
+            barnEmpty->hide();
+            barnContent->show();
         break;
         case Enumeration::BuildingType::Workshop:
-        {
-            Tab *t = tabs->createTab("Workshop", id);
-            menuIDs -> push_back(id);
-
-            Button *b = new Button(t, "Close");
-            b->setTooltip("Cerrar popup");
-            b->setCallback([&] {
-                tabContainer -> hide();
-            });
-            buttons -> push_back(b);
-
-            b = new Button(t, "Create ram");
-            b -> setTooltip("Create a ram that specializes in destroying buildings\nMetal cost: 100\nCrystal cost:100");
-            b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Desintegrator);
-                hallTroopList -> addOption("Ram");
-                Window::Instance()->getGUIEnvironment()->performLayout();
-            });
-            buttons -> push_back(b);
-            
-            b = new Button(t, "Create catapult");
-            b -> setTooltip("Create a catapult that heavy area of damage\nMetal cost: 100\nCrystal cost:100");
-            b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Launcher);
-                hallTroopList -> addOption("Catapult");
-                Window::Instance()->getGUIEnvironment()->performLayout();
-            });
-            buttons -> push_back(b);
-            
-            //tabs->refreshLayout();
-            //tabs->changeActiveTab(0);
-        }
+            workshopEmpty->hide();
+            workshopContent->show();
         break;
         default: break;
     }
+    tabContainer->refreshLayout();
+}
+
+void Hud::disableTab(Enumeration::BuildingType t){
+    switch (t){
+        case Enumeration::BuildingType::Barrack:
+            barrackEmpty->show();
+            barrackContent->hide();
+        break;
+        case Enumeration::BuildingType::Barn:
+            barnEmpty->show();
+            barnContent->hide();
+        break;
+        case Enumeration::BuildingType::Workshop:
+            workshopEmpty->show();
+            workshopContent->hide();
+        break;
+        default: break;
+    }
+    tabContainer->refreshLayout();
 }
 
 void Hud::showPopup(){
     tabContainer -> show();
+    buttonOpenPanel -> setText("Close Panel");
 }
 
-void Hud::showPopup(int tabId){
-    //if (tabs -> changeActiveTab(1))
-       /* tabs -> changeActiveTab(0);
-        tabs -> show();*/
+void Hud::showPopup(Enumeration::BuildingType t){
+    bool show = false;
+    switch(t){
+        case Enumeration::BuildingType::MainBuilding:
+            show = true;
+            tabs -> changeActiveTab(0);
+        break;
+        case Enumeration::BuildingType::Barrack:
+            show = true;
+            tabs -> changeActiveTab(1);
+        break;
+        case Enumeration::BuildingType::Barn:
+            show = true;
+            tabs -> changeActiveTab(2);
+        break;
+        case Enumeration::BuildingType::Workshop:
+            show = true;
+            tabs -> changeActiveTab(3);
+        break;
+        default: break;
+    }
+    if (show) {
+        tabContainer -> show();
+        buttonOpenPanel -> setText("Close Panel");
+    }
 }
 
 void Hud::hidePopup(){
     tabContainer -> hide();
+    buttonOpenPanel -> setText("Open Panel");
 }
 
 void Hud::setHUDEvents(){
-    buttonOpenPanel->setCallback([]{
-        Game::Instance()->getGameState()->getHud()->showPopup();
+    buttonOpenPanel->setCallback([&]{
+        if (!tabContainer->isVisible()){
+            showPopup();
+        } else {
+            hidePopup();
+        }
     });
 
     buttonBarn->setCallback([]{
@@ -390,6 +443,117 @@ void Hud::setHUDEvents(){
         //ToDo: hacer que se expanda el terreno edificable y que el susodicho exista
     });
 
+}
+
+void Hud::update() {
+    float dt = Game::Instance()  -> getWindow() -> getDeltaTime();
+    if (updateTimer <= 0) {
+        int melees = 
+            Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
+            Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
+        int ranges = 
+            Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardR) + 
+            Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedR);
+        int sieges = 
+            Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) + 
+            Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
+
+        std::stringstream os;
+        os << "Player resources: " << 
+        "Metal: " << std::to_string(Human::getInstance() -> getMetalAmount()) << " " <<
+        "Crystal: " << std::to_string(Human::getInstance() -> getCrystalAmount()) << " " <<
+        "Citizens: " << std::to_string(Human::getInstance() -> getCitizens()) << " " <<
+        "Happiness: " << std::to_string(Human::getInstance() -> getHappiness()) <<  " " <<
+        "City level: "<< std::to_string(Human::getInstance() -> getCityLevel()) <<  " " <<
+        "Army size: " << std::to_string(Human::getInstance() -> getArmySize()) << " " <<
+        "- Melees: " << std::to_string(melees) <<  " " <<
+        "- Ranged: " << std::to_string(ranges) << " " <<
+        "- Siege: " << std::to_string(sieges);
+        resourceText -> setLabel(os.str());
+
+        melees = 
+            IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
+            IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
+        ranges = 
+            IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardR) + 
+            IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedR);
+        sieges = 
+            IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) + 
+            IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
+
+        std::stringstream iaos;
+        iaos << "IA resources:" << 
+        "Metal: " << std::to_string(IA::getInstance() -> getMetalAmount()) <<  " " <<
+        "Crystal: " << std::to_string(IA::getInstance() -> getCrystalAmount()) <<  " " <<
+        "Citizens: " << std::to_string(IA::getInstance() -> getCitizens()) <<  " " <<
+        "Happiness: " << std::to_string(IA::getInstance() -> getHappiness()) <<  " " <<
+        "City level: "<< std::to_string(IA::getInstance() -> getCityLevel()) <<  " " <<
+        "Army size: " << std::to_string(IA::getInstance() -> getArmySize()) <<  " " <<
+        " - Melees: " << std::to_string(melees) <<  " " <<
+        " - Ranged: " << std::to_string(ranges) <<  " " <<
+        " - Siege: " << std::to_string(sieges) <<  " " <<
+        "Next choice: " << IA::getInstance() -> getNextChoice() <<  " " <<
+        "Behaviour: " << IA::getInstance() -> getChosenBehaviour();
+
+        iaResourceText -> setLabel(iaos.str());
+
+        updateTimer = 0.5;
+
+        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::DisableText);
+    } else {
+        updateTimer -= dt;
+    }
+}
+
+
+void Hud::updatePositions() {
+    buttonOpenPanel -> setPosition(Vector2<int>(100,20).getFixed());
+
+    buildingsPanel->setPosition(Vector2<int>(20, 640).getFixed());
+
+    resourceText->setPosition(Vector2<int>(1000,0).getFixed());
+    iaResourceText->setPosition(Vector2<int>(1150,0).getFixed());
+    warningText->setPosition(Vector2<int>(1000,650).getFixed());
+
+    tabContainer->center();
+}
+
+void Hud::drawWarning() {
+    //¡Se ha construido un edificio!
+    warningText -> show();
+}
+
+void Hud::deleteWarning() {
+    //¡Se ha borrado un texto que dice que se ha dibujado un texto!
+    warningText -> hide();
+}
+
+/*hospitalMenu = tabs -> addTab(L"Hospital", Enumeration::BuildingType::Hospital);
+hospitalMenu -> addChild(buttonCloseTab3);
+homeMenu = tabs -> addTab(L"Home", Enumeration::BuildingType::House);
+homeMenu -> addChild(buttonCloseTab4);
+marketMenu = tabs -> addTab(L"Market", Enumeration::BuildingType::Market);
+marketMenu -> addChild(buttonCloseTab5);
+quarryMenu = tabs -> addTab(L"Quarry", Enumeration::BuildingType::Quarry);
+quarryMenu -> addChild(buttonCloseTab6);
+siderurgyMenu = tabs -> addTab(L"Siderurgy", Enumeration::BuildingType::Siderurgy);
+siderurgyMenu -> addChild(buttonCloseTab7);
+schoolMenu = tabs -> addTab(L"School", Enumeration::BuildingType::School);
+schoolMenu -> addChild(buttonCloseTab8);
+towerMenu = tabs -> addTab(L"Tower", Enumeration::BuildingType::Tower);
+towerMenu -> addChild(buttonCloseTab9);
+wallMenu = tabs -> addTab(L"Wall", Enumeration::BuildingType::Wall); 
+wallMenu -> addChild(buttonCloseTab10);
+buttonCloseTab3 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+buttonCloseTab4 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+buttonCloseTab5 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+buttonCloseTab6 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+buttonCloseTab7 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+buttonCloseTab8 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+buttonCloseTab9 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+buttonCloseTab10 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+buttonCloseTab11 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
+*/
 
 
     /*Game *g = Game::Instance();
@@ -468,96 +632,3 @@ void Hud::setHUDEvents(){
             }
         break;
     }*/
-}
-
-void Hud::update() {
-    float dt = Game::Instance()  -> getWindow() -> getDeltaTime();
-    if (updateTimer <= 0) {
-
-        std::stringstream os;
-        os << "Player resources: " << 
-        "Metal: " << std::to_string(Human::getInstance() -> getMetalAmount()) << " " <<
-        "Crystal: " << std::to_string(Human::getInstance() -> getCrystalAmount()) << " " <<
-        "Citizens: " << std::to_string(Human::getInstance() -> getCitizens()) << " " <<
-        "Happiness: " << std::to_string(Human::getInstance() -> getHappiness()) <<  " " <<
-        "City level: "<< std::to_string(Human::getInstance() -> getCityLevel()) <<  " " <<
-        "Army size: " << std::to_string(Human::getInstance() -> getArmySize()) << " " <<
-        "- Melees: " << std::to_string(Human::getInstance() -> getMeleeAmount()) <<  " " <<
-        "- Ranged: " << std::to_string(Human::getInstance() -> getRangeAmount()) << " " <<
-        "- Siege: " << std::to_string(Human::getInstance() -> getSiegeAmount());
-        resourceText -> setLabel(os.str());
-
-        std::stringstream iaos;
-        iaos << "IA resources:" << 
-        "Metal: " << std::to_string(IA::getInstance() -> getMetalAmount()) <<  " " <<
-        "Crystal: " << std::to_string(IA::getInstance() -> getCrystalAmount()) <<  " " <<
-        "Citizens: " << std::to_string(IA::getInstance() -> getCitizens()) <<  " " <<
-        "Happiness: " << std::to_string(IA::getInstance() -> getHappiness()) <<  " " <<
-        "City level: "<< std::to_string(IA::getInstance() -> getCityLevel()) <<  " " <<
-        "Army size: " << std::to_string(IA::getInstance() -> getArmySize()) <<  " " <<
-        " - Melees: " << std::to_string(IA::getInstance() -> getMeleeAmount()) <<  " " <<
-        " - Ranged: " << std::to_string(IA::getInstance() -> getRangeAmount()) <<  " " <<
-        " - Siege: " << std::to_string(IA::getInstance() -> getSiegeAmount()) <<  " " <<
-        "Next choice: " << IA::getInstance() -> getNextChoice() <<  " " <<
-        "Behaviour: " << IA::getInstance() -> getChosenBehaviour();
-
-        iaResourceText -> setLabel(iaos.str());
-
-        updateTimer = 0.5;
-
-        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::DisableText);
-    } else {
-        updateTimer -= dt;
-    }
-}
-
-
-void Hud::updatePositions() {
-    //buttonQuit -> setPosition(Vector2<int>(20, 20).getFixed());
-    buttonOpenPanel -> setPosition(Vector2<int>(100,20).getFixed());
-
-    buildingsPanel->setPosition(Vector2<int>(20, 640).getFixed());
-
-    resourceText->setPosition(Vector2<int>(1000,0).getFixed());
-    iaResourceText->setPosition(Vector2<int>(1150,0).getFixed());
-    warningText->setPosition(Vector2<int>(1000,650).getFixed());
-
-    tabContainer->center();
-}
-
-void Hud::drawWarning() {
-    //std::cout <<  "¡Se ha construido un edificio!" << std::endl;
-    warningText -> show();
-}
-
-void Hud::deleteWarning() {
-    //std::cout << "¡Se ha borrado un texto que dice que se ha dibujado un texto!" << std::endl;
-    warningText -> hide();
-}
-
-/*hospitalMenu = tabs -> addTab(L"Hospital", Enumeration::BuildingType::Hospital);
-hospitalMenu -> addChild(buttonCloseTab3);
-homeMenu = tabs -> addTab(L"Home", Enumeration::BuildingType::House);
-homeMenu -> addChild(buttonCloseTab4);
-marketMenu = tabs -> addTab(L"Market", Enumeration::BuildingType::Market);
-marketMenu -> addChild(buttonCloseTab5);
-quarryMenu = tabs -> addTab(L"Quarry", Enumeration::BuildingType::Quarry);
-quarryMenu -> addChild(buttonCloseTab6);
-siderurgyMenu = tabs -> addTab(L"Siderurgy", Enumeration::BuildingType::Siderurgy);
-siderurgyMenu -> addChild(buttonCloseTab7);
-schoolMenu = tabs -> addTab(L"School", Enumeration::BuildingType::School);
-schoolMenu -> addChild(buttonCloseTab8);
-towerMenu = tabs -> addTab(L"Tower", Enumeration::BuildingType::Tower);
-towerMenu -> addChild(buttonCloseTab9);
-wallMenu = tabs -> addTab(L"Wall", Enumeration::BuildingType::Wall); 
-wallMenu -> addChild(buttonCloseTab10);
-buttonCloseTab3 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-buttonCloseTab4 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-buttonCloseTab5 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-buttonCloseTab6 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-buttonCloseTab7 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-buttonCloseTab8 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-buttonCloseTab9 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-buttonCloseTab10 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-buttonCloseTab11 = new Button(Rect2D<int>(340, 10, 50, 20), Enumeration::idGUI::GUI_ID_CLOSE_PANEL_BUTTON, L"Cerrar", L"Cerrar popup");
-*/

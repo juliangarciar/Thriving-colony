@@ -2,20 +2,20 @@
 #define GAMESTATE_H
 
 #include <sstream>
-#include "IA.h"
-#include "Hud.h"
-#include "Human.h"
 #include "State.h"
 #include "CameraController.h"
+#include "Hud.h"
+#include "IA.h"
+#include "Human.h"
 #include "BuildingManager.h"
 #include "BattleManager.h"
 
 #include <IAEngine/RootNode.h>
 
+#include <SoundEngine/SoundSystem.h>
+
 #include <GraphicEngine/Terrain.h>
 #include <GraphicEngine/Light.h>
-
-#include <SoundEngine/SoundSystem.h>
 
 /**
  * @class GameState
@@ -36,23 +36,23 @@ class GameState : public State {
          /**
 		 * @brief Inicializa GameState
 		 */
-        void init();
+        void Init();
         /**
 		 * @brief Recoge las entradas de teclado y raton
 		 */
-        void input();
+        void Input();
         /**
 		 * @brief Actualiza
 		 */
-        void update();
+        void Update();
         /**
 		 * @brief Renderiza
 		 */
-        void render();
+        void Render();
         /**
 		 * @brief Constructor
 		 */
-        void cleanUp();
+        void CleanUp();
         /**
         * @brief Devuelve el mapa
         * @return objeto de tipo Terrain

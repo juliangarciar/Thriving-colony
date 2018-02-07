@@ -79,12 +79,12 @@ bool BehaviourTree::needArmyInvestment() {
      * A player doesn't have it yet
      * A player requires it to create a unit OR a player's city level is high enough for it to be considered a need
      */
-    needBarracks = !(IA::getInstance() -> getBarrackBuilt()) && requireBarrack;
-    needBarn = !(IA::getInstance() -> getBarnBuilt()) && (requireBarn || IA::getInstance() -> getCityLevel() >= barnMilestone);
-    needWorkshop = !(IA::getInstance() -> getWorkshopBuilt()) && (requireWorkshop || IA::getInstance() -> getCityLevel() >= workshopMilestone);
+    needBarracks = !(IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barrack)) && requireBarrack;
+    needBarn = !(IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barn)) && (requireBarn || IA::getInstance() -> getCityLevel() >= barnMilestone);
+    needWorkshop = !(IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Workshop)) && (requireWorkshop || IA::getInstance() -> getCityLevel() >= workshopMilestone);
     
     needWall = evaluateWallNeed();
-    needTower = IA::getInstance() -> getWallBuilt() && IA::getInstance() -> getCityLevel() >= towerMilestone;
+    needTower = IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Wall) && IA::getInstance() -> getCityLevel() >= towerMilestone;
 
     return (needSoldiers || needBarracks || needBarn || needWorkshop || needWall || needTower);
 }
@@ -93,7 +93,7 @@ bool BehaviourTree::needArmyInvestment() {
 * Calculates the ratio between army and melee soldiers
 */
 float BehaviourTree::calculateMeleeRate() {
-    float meleeAmt = IA::getInstance() -> getMeleeAmount();
+    float meleeAmt = IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
 
     float armySize = IA::getInstance() -> getArmySize();
 
@@ -107,7 +107,7 @@ float BehaviourTree::calculateMeleeRate() {
 * Calculates the ratio between army and range soldiers
 */
 float BehaviourTree::calculateRangeRate() {
-    float rangeAmt = IA::getInstance() -> getRangeAmount();
+    float rangeAmt = IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardR) + IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedR);
     float armySize = IA::getInstance() -> getArmySize();
     if (armySize == 0) {
         return 0;
@@ -119,7 +119,7 @@ float BehaviourTree::calculateRangeRate() {
 * Calculates the ratio between army and siege soldiers
 */
 float BehaviourTree::calculateSiegeRate() {
-    float siegeAmt = IA::getInstance() -> getSiegeAmount();
+    float siegeAmt = IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) + IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
     float armySize = IA::getInstance() -> getArmySize();
     if (armySize == 0) {
         return 0;
@@ -130,7 +130,7 @@ float BehaviourTree::calculateSiegeRate() {
 bool BehaviourTree::evaluateWallNeed() {
     //ToDo: Analizar cuando la expansion de terreno edificable llega a donde hay que construir la muralla
 
-    return IA::getInstance() -> getCityLevel() >= wallMilestone && IA::getInstance() -> getWallBuilt() != true;
+    return IA::getInstance() -> getCityLevel() >= wallMilestone && IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Wall) == 0;
 }
 
 bool BehaviourTree::readyToAttack() {
@@ -268,16 +268,16 @@ void BehaviourTree::debugMessage() {
     std::cout << "La cantidad de CIUDADANOS de mi ciudad es de " << IA::getInstance() -> getCitizens() << std::endl;
 
     std::cout << "La generacion de RECURSOS de mi ciudad es: " << std::endl;
-    std::cout << IA::getInstance() -> getSiderurgyAmount() << " siderurgias que generan " << IA::getInstance() -> getMetalProduction() << "metal."<< std::endl;
-    std::cout << IA::getInstance() -> getQuarryAmount() << " canteras que generan " << IA::getInstance() -> getCrystalProduction() << "cristal." << std::endl;
+    std::cout << IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Siderurgy) << " siderurgias que generan " << IA::getInstance() -> getMetalProduction() << "metal."<< std::endl;
+    std::cout << IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Quarry) << " canteras que generan " << IA::getInstance() -> getCrystalProduction() << "cristal." << std::endl;
 
     std::cout << "Mi EJERCITO es de " << IA::getInstance() -> getArmySize() << " unidades, de las cuales tengo: " << std::endl;
-    std::cout << IA::getInstance() -> getMeleeAmount() << " melees" << std::endl;
+    /*std::cout << IA::getInstance() -> getMeleeAmount() << " melees" << std::endl;
     std::cout << IA::getInstance() -> getRangeAmount() << " rangos" << std::endl;
     std::cout << IA::getInstance() -> getSiegeAmount() << " asedios" << std::endl;
     std::cout << "Tengo tambien: " << std::endl;
     std::cout << IA::getInstance() -> getMeleeAmount() << " murallas" << std::endl;
-    std::cout << IA::getInstance() -> getRangeAmount() << " torres" << std::endl;
+    std::cout << IA::getInstance() -> getRangeAmount() << " torres" << std::endl;*/
     std::cout << "////////////////////////////////////////////////////////" << std::endl;
 }
 

@@ -1,16 +1,12 @@
 #include "Tab.h"
 #include <GraphicEngine/Window.h>
 
-/*Tab::Tab(TabPanel *parent, std::string title, int id){ 
-    this -> tab = parent -> createTab(title, id) -> getGUIElement();
-}*/
-
 Tab::Tab(nanogui::Widget *t){
-    this -> tab = t;
+    tab = t;
 }
 
 Tab::~Tab(){
-    this -> tab -> decRef();
+    tab -> decRef();
 }
 
 void Tab::addChild(GUIElement *elem) {
@@ -27,19 +23,21 @@ void Tab::setTooltip(std::string text){
 }
 
 void Tab::show(){
+    tab->setEnabled(true);
     tab -> setVisible(true);
 }
  
 void Tab::hide(){
     tab -> setVisible(false);
+    tab->setEnabled(false);
+}
+
+bool Tab::isVisible(){
+    return tab -> visible();
 }
 
 std::string Tab::getTitle(){
     return ""; //ToDo
-}
-
-int Tab::getID(){
-    return 0; //ToDo
 }
 
 nanogui::Widget *Tab::getGUIElement(){

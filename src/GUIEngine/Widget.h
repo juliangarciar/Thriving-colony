@@ -1,30 +1,27 @@
-#ifndef TAB_H
-#define TAB_H
+#ifndef WIDGET_H
+#define WIDGET_H
 
 #include <nanogui/nanogui.h>
+#include "Rect2D.h"
 #include "GUIElement.h"
-//#include "TabPanel.h"
 
-class Tab : public GUIElement{
+class Widget : public GUIElement {
+
     public:
-        Tab(nanogui::Widget *t);
-        virtual ~Tab();
+        Widget();
+        Widget(GUIElement *parent);
+        virtual ~Widget();
 
         void show();
         void hide();
         bool isVisible();
-
-        void addChild(GUIElement *elem);
         
         void setPosition(Vector2<int> position);
-        
         void setTooltip(std::string text);
-
-        std::string getTitle();
-
+        
         nanogui::Widget *getGUIElement();
     private:
-        nanogui::Widget *tab;
+        nanogui::Widget *widget;
 };
 
 #endif

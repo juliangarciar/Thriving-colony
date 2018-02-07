@@ -2,7 +2,7 @@
 #define MENUSTATE_H
 
 #include "State.h"
-#include "HudMenu.h"
+#include "StartMenu.h"
 
 /**
  * @class MenuState
@@ -23,26 +23,26 @@ public:
         /**
          * @brief Inicializa MenuState
          */
-        void init();
+        void Init();
         /**
          * @brief Recoge las entradas de teclado y raton
          */
-        void input();
+        void Input();
         /**
          * @brief Actualiza
          */
-        void update();
+        void Update();
         /**
          * @brief Renderiza
          */
-        void render();
+        void Render();
         /**
          * @brief Constructor
          */
-        void cleanUp();
+        void CleanUp();
 
     private:
-        HudMenu * hud;
+        StartMenu *hud;
 
         int prevWindowWidth;
         int prevWindowHeight;

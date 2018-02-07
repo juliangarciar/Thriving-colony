@@ -5,9 +5,13 @@ TextBox::TextBox(std::string t) {
     textbox = Window::Instance() -> getGUIEnvironment() -> add<nanogui::TextBox>(t);
 }
 
+TextBox::TextBox(GUIElement *parent, std::string t) {
+    textbox = parent -> getGUIElement() -> add<nanogui::TextBox>(t);
+}
+
 TextBox::~TextBox() {
     //ToDo: borrar Label
-    this -> hide();
+    hide();
 }
 
 void TextBox::setPosition(Vector2<int> position){
@@ -32,6 +36,10 @@ void TextBox::show(){
  
 void TextBox::hide(){
     textbox -> setVisible(false);
+}
+
+bool TextBox::isVisible(){
+    return textbox -> visible();
 }
 
 void TextBox::setSize(Vector2<int> size) {

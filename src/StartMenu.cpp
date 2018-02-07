@@ -1,9 +1,9 @@
-#include "HudMenu.h"
+#include "StartMenu.h"
 #include "Game.h"
 
 #include <string>
 
-HudMenu::HudMenu() {
+StartMenu::StartMenu() {
     buttonQuit = new Button("Quit");
     buttonQuit -> setPosition(Vector2<int>(600, 400));
 
@@ -11,12 +11,12 @@ HudMenu::HudMenu() {
     buttonStart -> setPosition(Vector2<int>(600, 300));    
 }
 
-HudMenu::~HudMenu() {
+StartMenu::~StartMenu() {
     delete buttonQuit;
     delete buttonStart;
 }
 
-void HudMenu::setHUDEvents(){
+void StartMenu::setHUDEvents(){
     buttonQuit -> setCallback([]{
         Game::Instance() -> getWindow() -> close();
     });
@@ -26,6 +26,6 @@ void HudMenu::setHUDEvents(){
     });
 }
 
-void HudMenu::update() {
+void StartMenu::update() {
 
 }

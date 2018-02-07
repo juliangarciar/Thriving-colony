@@ -18,10 +18,15 @@ SiegeNode::~SiegeNode() {
 void SiegeNode::question() {
     //std::cout << "Voy a hacer asedio" << std::endl;
     //First subsubsubbranch: Ram
-    if (IA::getInstance() ->  getRamAmount() <= IA::getInstance() ->  getCatapultAmount()) {
-        children[0] -> question();
+    if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Workshop) > 0) {
+        if (IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) <= IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher)) {
+            children[0] -> question();
+        } else {
+            //Second subsubsubbranch: Catapult
+            children[1] -> question();
+        }
     } else {
-        //Second subsubsubbranch: Catapult
-        children[1] -> question();
+        IA::getInstance() -> getTree() -> setRequireWorkshop(true);
+        //children[0] -> question();
     }
 }

@@ -1,23 +1,23 @@
-#ifndef HUDMENU_H
-#define HUDMENU_H
+#ifndef STARTMENU_H
+#define STARTMENU_H
 
 #include <GUIEngine/Button.h>
 
 /**
- * @class HudMenu
- * @brief Crea un objeto tipo HudMenu
+ * @class StartMenu
+ * @brief Crea un objeto tipo StartMenu
  */
-class HudMenu {
+class StartMenu {
     
     public:
         /**
          * @brief Constructor
          */
-        HudMenu();
+        StartMenu();
         /**
          * @brief Destructor
          */
-        ~HudMenu();
+        ~StartMenu();
 
         /**
          * @brief Establece los distintos eventos asociados a cada uno de los botones del HUD 

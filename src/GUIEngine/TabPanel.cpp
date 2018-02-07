@@ -4,13 +4,13 @@
 TabPanel::TabPanel(){
     ctrl = Window::Instance() -> getGUIEnvironment() -> add<nanogui::TabWidget>();
     ctrl ->setLayout(new nanogui::GroupLayout());
-    tabs = new std::map<int, Tab*>();
+    tabs = new std::vector<Tab*>();
 }
 
 TabPanel::TabPanel(GUIElement *parent){
     ctrl = parent -> getGUIElement() -> add<nanogui::TabWidget>();
     ctrl ->setLayout(new nanogui::GroupLayout());
-    tabs = new std::map<int, Tab*>();
+    tabs = new std::vector<Tab*>();
 }
 
 TabPanel::~TabPanel(){
@@ -21,20 +21,22 @@ TabPanel::~TabPanel(){
     delete tabs;
 }
 
-Tab *TabPanel::createTab(std::string title, int id){ 
+Tab *TabPanel::createTab(std::string title){ 
     nanogui::Widget *layer = ctrl -> createTab(title);
     layer->setLayout(new nanogui::GroupLayout());
 
     Tab *t = new Tab(layer);
-    tabs -> insert(std::pair<int, Tab*>(id, t));
+    tabs -> push_back(t);
     return t;
 } 
 
-Tab *TabPanel::getTab(int id){
-    std::map<int,Tab*>::iterator it;
-    it = tabs -> find(id);
-    if (it != tabs -> end()) return tabs -> find(id) -> second;
-    return NULL; 
+Tab *TabPanel::getTab(int index){
+    if (index < 0 || index > tabs->size()) return NULL; 
+    else return tabs->at(index);
+}
+
+void TabPanel::changeActiveTab(int index){
+    if (index >= 0) ctrl -> setActiveTab(index);
 }
 
 void TabPanel::setPosition(Vector2<int> position){
@@ -53,18 +55,8 @@ void TabPanel::hide(){
     ctrl -> setVisible(false);
 }
 
-bool TabPanel::changeActiveTab(int id){
-    std::map<int,Tab*>::iterator it = tabs -> find(id);
-    if (it != tabs -> end()) {
-        ctrl -> setActiveTab(id);
-        return true;
-    }
-    return false;
-}
-
-void TabPanel::refreshLayout(){
-    Window::Instance()->getGUIEnvironment()->performLayout();
-    ctrl->ensureTabVisible(ctrl->tabCount());
+bool TabPanel::isVisible(){
+    return ctrl -> visible();
 }
 
 nanogui::Widget *TabPanel::getGUIElement(){

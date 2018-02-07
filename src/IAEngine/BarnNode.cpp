@@ -13,13 +13,13 @@ BarnNode::~BarnNode() {
 void BarnNode::question() {
     IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::BuildBarn);
     //std::cout << "Construyo un establo" << std::endl;
-    if (IA::getInstance() -> getQuarryAmount() == 0) {
+    if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Quarry) == 0) {
         IA::getInstance() -> getTree() -> setRequireCrystal(true);
     } else {
-        if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost, Enumeration::Team::IA)) {
+        if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost)) {
             IA::getInstance() -> getTree() -> setRequireBarn(false);
             Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();
-            IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barn, Enumeration::Team::IA);
+            IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barn, true);
         }
     }
 }

@@ -1,23 +1,23 @@
-#ifndef HUDPAUSE_H
-#define HUDPAUSE_H
+#ifndef PAUSEMENU_H
+#define PAUSEMENU_H
 
 #include <GUIEngine/Button.h>
 
 /**
- * @class HudPause
- * @brief Crea un objeto tipo HudPause
+ * @class PauseMenu
+ * @brief Crea un objeto tipo PauseMenu
  */
-class HudPause {
+class PauseMenu {
     
     public:
         /**
          * @brief Constructor
          */
-        HudPause();
+        PauseMenu();
         /**
          * @brief Destructor
          */
-        ~HudPause();
+        ~PauseMenu();
 
         /**
          * @brief Establece los distintos eventos asociados a cada uno de los botones del HUD 

@@ -1,17 +1,16 @@
-#ifndef LABEL_H
-#define LABEL_H
+#ifndef SCROLLPANEL_H
+#define SCROLLPANEL_H
 
 #include <nanogui/nanogui.h>
 #include "Rect2D.h"
 #include "GUIElement.h"
 
-class Label : public GUIElement {
-
+class ScrollPanel : public GUIElement {
     public:
-        Label(std::string t);
-        Label(GUIElement *parent, std::string t);
-        virtual ~Label();
-
+        ScrollPanel();
+        ScrollPanel(GUIElement *parent);
+        virtual ~ScrollPanel();
+        
         void show();
         void hide();
         bool isVisible();
@@ -19,13 +18,12 @@ class Label : public GUIElement {
         void setPosition(Vector2<int> position);
 
         void setTooltip(std::string t);
-        void setLabel(std::string t);
 
         void setSize(Vector2<int> size);
         
         nanogui::Widget *getGUIElement();
     private:
-        nanogui::Label *label;
+        nanogui::VScrollPanel *spanel;
 };
 
 #endif

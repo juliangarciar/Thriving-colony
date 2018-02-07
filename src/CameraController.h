@@ -43,6 +43,10 @@ class CameraController {
 	 * @brief Hace zoom a la camara
 	 */
         void Zoom();
+        /**
+         * @brief Centra la camara
+         */
+        void CenterCamera();
 
         /**
 	 * @brief devuelve la camara activa
@@ -56,11 +60,13 @@ class CameraController {
 
         //Camera position
         Vector3<float> camPos, tarPos;
+        Vector3<float> userPos;
 
         //Camera modes
         bool movementMode;
         bool rotationOrInclinationMode;
         bool zoomMode;
+	bool centerCameraMode;
 
         // Camera movement variables
         int screenMarginV, screenMarginH;

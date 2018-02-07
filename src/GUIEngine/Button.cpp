@@ -11,7 +11,7 @@ Button::Button(GUIElement *parent, std::string buttonText) {
 
 Button::~Button() {
     //delete button;
-    this -> hide();
+    hide();
 }
 
 bool Button::isButtonPressed(){
@@ -28,6 +28,10 @@ void Button::show(){
  
 void Button::hide(){
     button -> setVisible(false);
+}
+
+bool Button::isVisible(){
+    return button -> visible();
 }
 
 void Button::setCallback(std::function<void()> callback){

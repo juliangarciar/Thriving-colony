@@ -1,9 +1,9 @@
-#include "HudPause.h"
+#include "PauseMenu.h"
 #include "Game.h"
 
 #include <string>
 
-HudPause::HudPause() {
+PauseMenu::PauseMenu() {
     buttonQuit = new Button("Quit");
     buttonQuit -> setPosition(Vector2<int>(600, 400));
 
@@ -14,13 +14,13 @@ HudPause::HudPause() {
     buttonMenu -> setPosition(Vector2<int>(600, 300));
 }
 
-HudPause::~HudPause() {
+PauseMenu::~PauseMenu() {
     delete buttonQuit;
     delete buttonResume;
     delete buttonMenu;
 }
 
-void HudPause::setHUDEvents(){
+void PauseMenu::setHUDEvents(){
     buttonQuit -> setCallback([]{
         Game::Instance() -> getWindow() -> close();
     });
@@ -34,6 +34,6 @@ void HudPause::setHUDEvents(){
     });
 }
 
-void HudPause::update() {
+void PauseMenu::update() {
 
 }

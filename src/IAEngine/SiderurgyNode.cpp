@@ -14,8 +14,8 @@ void SiderurgyNode::question() {
 
     IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::BuildSiderurgy);
     //std::cout << "Construyo una siderurgia" << std::endl;
-    if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::SiderurgyMetalCost, Enumeration::BuildingCost::SiderurgyCrystalCost, Enumeration::Team::IA)) {
+    if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::SiderurgyMetalCost, Enumeration::BuildingCost::SiderurgyCrystalCost)) {
         Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();
-        IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, Enumeration::Team::IA);
+        IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
     }
 }

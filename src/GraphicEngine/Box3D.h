@@ -15,6 +15,7 @@ class Box3D {
 
 		~Box3D();
 
+		void set(Box3D<T> other);
 		void set(core::aabbox3d<T> box);
 
 		bool intersects(Box3D<T> other);
