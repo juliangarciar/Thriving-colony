@@ -17,10 +17,6 @@
 #include <GraphicEngine/Terrain.h>
 #include <GraphicEngine/Light.h>
 
-<<<<<<< HEAD
-#include <SoundEngine/SoundSystem.h>
-=======
->>>>>>> master
 /**
  * @class GameState
  * @brief Tiene herencia publica de State y crea un objeto tipo GameState
