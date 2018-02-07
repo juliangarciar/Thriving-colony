@@ -62,7 +62,7 @@ void UnitManager::updateUnitManager() {
             it -> second -> getModel() -> setActive(false);
 
             inHallTroops -> push_back(it -> second);
-            
+
             inMapTroops -> erase(it);
         }
     }
@@ -340,4 +340,9 @@ Unit* UnitManager::setNewUnitModel(Enumeration::UnitType unitType) {
             return NULL;
         break;
     }
+}
+
+void UnitManager::enterMainBuilding(Enumeration::UnitType) {
+    //ToDo: Crear una tropa nueva, que sea gratis y meterla en el inhalltroops
+    std::cout << "entro" << std::endl;
 }

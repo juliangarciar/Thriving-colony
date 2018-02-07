@@ -272,6 +272,11 @@ void Unit::moveTroop() {
             moving = false;
             if (state == Enumeration::UnitState::Retract) {
                 readyToEnter = true;
+                if (team == Enumeration::Team::Human) {
+                    Human::getInstance() -> getUnitManager() -> enterMainBuilding(unitType);
+                } else {
+                    IA::getInstance() -> getUnitManager() -> enterMainBuilding(unitType);
+                }
                 return;
             }
             switchState(Enumeration::Idle);

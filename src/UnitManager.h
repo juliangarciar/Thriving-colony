@@ -42,6 +42,7 @@ class UnitManager{
 		int getCollisionID();
 		std::string getCollisionName();
         Unit* setNewUnitModel(Enumeration::UnitType);
+        void enterMainBuilding(Enumeration::UnitType);
     private:
         Enumeration::Team team;
         Enumeration::BreedType breed;
