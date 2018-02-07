@@ -63,6 +63,11 @@ class Entity {
          * @param
          */
         void setColor(irr::video::SColor);
+        /**
+         * @brief set the id
+         * @param id
+         */
+        void setID(int);
 
         /**
 		 * @brief Solicita el rango de ataque de la entidad
@@ -108,7 +113,12 @@ class Entity {
          * @brief solicita el color del edificio
          * @return devuelve el color de tipo irr::video::SColor
          */
-        irr::video::SColor getColor(); //ToDo: temporal
+        irr::video::SColor getBaseColor(); //ToDo: cambiar por material
+        /**
+         * @brief solicita el color del edificio
+         * @return devuelve el color de tipo irr::video::SColor
+         */
+        irr::video::SColor getCurrentColor(); //ToDo: cambiar por material
         
     protected:
         Model* model;
@@ -123,6 +133,7 @@ class Entity {
         float tookDamageCountdown;
 
         irr::video::SColor baseColor; //ToDo: cambiar por material
+        irr::video::SColor currentColor; //ToDo: cambiar color por material
 
         Entity* target;
         

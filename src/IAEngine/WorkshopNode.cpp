@@ -19,7 +19,7 @@ void WorkshopNode::question() {
         if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::WorkshopMetalCost, Enumeration::BuildingCost::WorkshopCrystalCost)) {
             IA::getInstance() -> getTree() -> setRequireBarrack(false);
             Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();
-            IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Workshop);
+            IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Workshop, true);
         }
     }
 }

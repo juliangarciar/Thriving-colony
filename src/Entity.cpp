@@ -8,7 +8,8 @@ Entity::Entity(SceneNode *layer, int id, const wchar_t *path, Enumeration::Team 
     position = new Vector3<float>();
     team = t;
 
-    baseColor = video::SColor(255, 255, 255, 255); //ToDo: cambiar por material
+    baseColor = video::SColor(255, 0, 0, 0); //ToDo: cambiar por material
+    setColor(baseColor);
 
     currentHP = 0;
     maxHP = 0;
@@ -72,10 +73,16 @@ void Entity::setPosition(Vector3<float> vectorData) {
 }
 
 void Entity::setColor(irr::video::SColor c){
+    currentColor = c;
     //ToDo: reemplazar color por material
     Game::Instance() -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
         model -> getModel() -> getMesh(), c
     );
+}
+
+void Entity::setID(int id){
+    ID = id;
+    model->setID(id);
 }
 
 //GETTERS
@@ -103,14 +110,18 @@ int Entity::getViewRadius() {
     return viewRadius;
 }
 
-irr::video::SColor Entity::getColor() {
-    return baseColor; //ToDo: reemplazar color por material
-}
-
 int Entity::getHP() {
     return currentHP;
 }
 
 int Entity::getID() {
     return ID;
+}
+
+irr::video::SColor Entity::getBaseColor() {
+    return baseColor; //ToDo: reemplazar color por material
+}
+
+irr::video::SColor Entity::getCurrentColor() {
+    return currentColor; //ToDo: reemplazar color por material
 }

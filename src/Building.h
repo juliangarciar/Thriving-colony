@@ -32,9 +32,13 @@ class Building : public Entity {
         /**
          * @brief cobra al jugador del equipo correspondiente, 
          * el importe del edificio cuando se solicita su construccion
-         * @param team indica el equipo al que pertenece el jugador
          */
-        void taxPlayer();
+        void preTaxPlayer();
+        /**
+         * @brief cobra al jugador del equipo correspondiente, 
+         * el importe del edificio cuando se termina de construir
+         */
+        void posTaxPlayer();
         /**
          * @brief actualiza el edificio
          */
@@ -48,7 +52,7 @@ class Building : public Entity {
          * @brief
          * @param
          */
-        void setFinishedCallback(std::function<void()>);
+        void setFinishedCallback(std::function<void(Building*)>);
         
         /**
          * @brief solicita el tipo de edificio
@@ -74,10 +78,10 @@ class Building : public Entity {
         float buildTimer;
 
         //Finish building callback
-        std::function<void()> callback;
+        std::function<void(Building*)> callback;
 
-        //ToDo: cambiar color por material
-        irr::video::SColor currentColor;
+        //is built
+        int finished;
 };
 
 #endif

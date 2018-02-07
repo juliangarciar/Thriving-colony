@@ -205,9 +205,10 @@ void Building::Init() {
         default: break;
     }
 
-    //ToDo: Graphic engine, this should be in the switch (when models done)
+    //Establece el color base del edificio
     baseColor = video::SColor(255, r, g, b); //ToDo: reemplazar color por material
-    currentColor = video::SColor(255, 0, 0, 0); //ToDo: reemplazar color por material
+
+    finished = false;
     
     //Texture *tex = new Texture("./media/blanco.bmp");
     //Material *m = new Material(tex);
@@ -215,45 +216,49 @@ void Building::Init() {
 }
 
 void Building::update() {
-    if (buildTimer <= 0.f) {
-        taxPlayer();
-        buildTimer = 0.f;
-        callback();
-    } else {
-        // This update is called once every second
-        buildTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
+    if (!finished){
+        if (buildTimer <= 0.f) {
+            finished = true;
+            callback(this);
+        } else {
+            // This update is called once every second
+            buildTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
+        }
     }
 }
+
 void Building::triggerFinishedCallback(){
-    taxPlayer();
-    buildTimer = 0.f;
-    callback();
+    finished = true;
+    callback(this);
 }
 
-/**
- * This method taxes the costs of a building to the player that builds it
- * be it the human or the AI 
- */
-void Building::taxPlayer() {
+void Building::preTaxPlayer() {
+    // Tax the human
+    if (team == Enumeration::Team::Human) {
+        // Tax costs
+        Human::getInstance() -> spendResources(metalCost, crystalCost);
+        Human::getInstance() -> increaseCityLevel(cityLevel);  
+    } else { // Tax the AI
+        // Tax costs
+        IA::getInstance() -> spendResources(metalCost, crystalCost);
+        IA::getInstance() -> increaseCityLevel(cityLevel); //ToDo: deberia ir en el pos?
+    }
+}
+
+void Building::posTaxPlayer() {
     // Tax the human
     if (team == Enumeration::Team::Human) {
         // Tax costs
         Human::getInstance() -> increaseHappiness(happiness);
-        Human::getInstance() -> increaseCityLevel(cityLevel);
-        Human::getInstance() -> spendResources(metalCost, crystalCost);
         Human::getInstance() -> increaseCitizens(citizens);   
     } else { // Tax the AI
         // Tax costs
         IA::getInstance() -> increaseHappiness(happiness);
-        IA::getInstance() -> increaseCityLevel(cityLevel);
-        IA::getInstance() -> spendResources(metalCost, crystalCost);
         IA::getInstance() -> increaseCitizens(citizens);   
     }
-    //ToDo: reemplazar color por material
-    setColor(currentColor);
 }
 
-void Building::setFinishedCallback(std::function<void()> f){
+void Building::setFinishedCallback(std::function<void(Building*)> f){
     callback = f;
 }
 

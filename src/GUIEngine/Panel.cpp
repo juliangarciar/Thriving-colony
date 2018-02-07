@@ -5,6 +5,7 @@
 Panel::Panel(std::string t) {
     panel = new nanogui::Window(Window::Instance() -> getGUIEnvironment(), t);
     panel -> setLayout(new nanogui::BoxLayout(nanogui::Orientation::Horizontal, nanogui::Alignment::Middle, 0, 6));
+    panel -> setModal(false);
 }
 
 Panel::Panel(GUIElement *parent, std::string title) {

@@ -52,9 +52,9 @@ class BuildingManager {
 		 * @brief Construye el edificio
 		 * @param coordenadas en las que se tiene que construir
 		 * @param buildingType con el tipo de edificio a construir
-		 * @param team indicando el equipo al que pertenece el edificio
+		 * @param instabuild
 		 */
-		void buildBuilding(Vector3<float>, Enumeration::BuildingType);
+		void buildBuilding(Vector3<float>, Enumeration::BuildingType, bool = false);
 
 		/**
 		 * @brief Comprueba si el jugador tiene recursos necesarios para comprar el edificio

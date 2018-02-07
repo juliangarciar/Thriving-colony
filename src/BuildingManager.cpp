@@ -88,7 +88,7 @@ void BuildingManager::drawBuilding() {
 		if (collision) {
 			tempBuilding->setColor(video::SColor(255,0,0,255)); //ToDo: reemplazar color por material
 		} else {
-			tempBuilding->setColor(tempBuilding -> getColor()); //ToDo: reemplazar color por material
+			tempBuilding->setColor(tempBuilding -> getBaseColor()); //ToDo: reemplazar color por material
 
 			/*
 			* If there is no collision and the player press left button of the mouse,
@@ -102,38 +102,28 @@ void BuildingManager::drawBuilding() {
     }
 }
 
-void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingType _type) {
-	if (team == Enumeration::Team::IA) {
+void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingType _type, bool instabuild) {
+	if (team == Enumeration::Team::IA || tempBuilding == NULL) {
 		setTempBuildingModel(pos, _type);
+		tempBuilding -> setPosition(pos);
+	}
 
-		tempBuilding -> getModel() -> setID(nextBuildingId);
+    //Establece la ID inicial del edificio
+	tempBuilding -> setID(nextBuildingId);
+    //Establece el color inicial del edificio
+    tempBuilding -> setColor(video::SColor(255, 0, 0, 0)); //ToDo: reemplazar color por material
 
-		tempBuilding -> setFinishedCallback([&]{
-			//tempBuilding->setColor(tempBuilding->getColor()); //ToDo: cambiar por material
-			buildingAmounts[(int)_type]++;
-            //returnToOriginalColor();     
-		});
+	tempBuilding -> setFinishedCallback([&](Building *b){
+		//Tax the player when building is finished
+		b->posTaxPlayer();
+		b->setColor(b->getBaseColor()); //ToDo: cambiar por material
 
-		buildings -> insert(std::pair<int,Building*>(nextBuildingId, tempBuilding));
+		buildingAmounts[(int)_type]++;
 
-		tempBuilding -> triggerFinishedCallback();    
-
-		tempBuilding = NULL;
-		nextBuildingId++;
-	} else {
-		if (tempBuilding == NULL) {
-			setTempBuildingModel(pos,_type);
-			tempBuilding -> setPosition(pos);
-		}
-
-		tempBuilding -> getModel() -> setID(nextBuildingId);
-
-		tempBuilding -> setFinishedCallback([&]{
-			//tempBuilding->setColor(tempBuilding->getColor()); //ToDo: cambiar por material
-            //returnToOriginalColor();
-
-			buildingAmounts[(int)_type]++;
-
+		//Cuando te ataquen y paren
+		//returnToOriginalColor(); 
+		
+		if (team == Enumeration::Team::Human){
 			if (buildingAmounts[(int)_type] == 1){
 				switch (_type){
 					case Enumeration::BuildingType::Barrack:
@@ -148,60 +138,74 @@ void BuildingManager::buildBuilding(Vector3<float> pos, Enumeration::BuildingTyp
 					default: break;
 				}
 			}
-
             // Increase stuff when the human ends the building, but do so for the AI
             // when it places the building. is it fair? i dunno
-			Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);     
-		});
+			Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);    
+		}
+	});
 
-		buildings -> insert(std::pair<int,Building*>(nextBuildingId, tempBuilding));
+	buildings -> insert(std::pair<int,Building*>(nextBuildingId, tempBuilding));
 
-		// Tax the player when placing the building
-		tempBuilding -> taxPlayer();
+	// Tax the player when placing the building
+	tempBuilding -> preTaxPlayer();
 
-		tempBuilding = NULL;
-		nextBuildingId++;
-	}
-	
+	if (instabuild) tempBuilding -> triggerFinishedCallback();    
+
+	tempBuilding = NULL;
+	nextBuildingId++;
 }
 
 void BuildingManager::setTempBuildingModel(Vector3<float> pos, Enumeration::BuildingType _type) {
-	if (_type == Enumeration::BuildingType::House) {
-		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/vivienda.obj", team, breed, _type, pos);
-		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
-	} else if (_type == Enumeration::BuildingType::Barrack) {
-		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/barraca.obj", team, breed, _type, pos);
-		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
-	} else if (_type == Enumeration::BuildingType::Siderurgy) {
-		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/siderurgia.obj", team, breed, _type, pos);
-		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
-	} else if (_type == Enumeration::BuildingType::School) {
-		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/escuela.obj", team, breed, _type, pos);
-		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
-	} else if (_type == Enumeration::BuildingType::Market) {
-		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/mercado.obj", team, breed, _type, pos);
-		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
-	} else if (_type == Enumeration::BuildingType::Quarry) {
-		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/cantera.obj", team, breed, _type, pos);
-		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
-	} else if (_type == Enumeration::BuildingType::MainBuilding) {
-		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/centro_de_mando.obj", team, breed, _type, pos);
-		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
-	} else if (_type == Enumeration::BuildingType::Barn) {
-		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/establo.obj", team, breed, _type, pos);
-		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
-	} else if (_type == Enumeration::BuildingType::Hospital) {
-		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/hospital.obj", team, breed, _type, pos);
-		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
-	} else if (_type == Enumeration::BuildingType::Wall) {
-		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/muralla.obj", team, breed, _type, pos);
-		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
-	} else if (_type == Enumeration::BuildingType::Workshop) {
-		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/taller_maquinas_de_asedio.obj", team, breed, _type, pos);
-		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
-	} else if (_type == Enumeration::BuildingType::Tower) {
-		tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/torre_vigilancia.obj", team, breed, _type, pos);
-		tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
+	switch (_type){
+		case Enumeration::BuildingType::Barn:
+			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/establo.obj", team, breed, _type, pos);
+			tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
+		break;
+		case Enumeration::BuildingType::Barrack:
+			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/barraca.obj", team, breed, _type, pos);
+			tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
+		break;
+		case Enumeration::BuildingType::Hospital:
+			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/hospital.obj", team, breed, _type, pos);
+			tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
+		break;
+		case Enumeration::BuildingType::House:
+			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/vivienda.obj", team, breed, _type, pos);
+			tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
+		break;
+		case Enumeration::BuildingType::MainBuilding:
+			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/centro_de_mando.obj", team, breed, _type, pos);
+			tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
+		break;
+		case Enumeration::BuildingType::Market:
+			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/mercado.obj", team, breed, _type, pos);
+			tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
+		break;
+		case Enumeration::BuildingType::Quarry:
+			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/cantera.obj", team, breed, _type, pos);
+			tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
+		break;
+		case Enumeration::BuildingType::School:
+			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/escuela.obj", team, breed, _type, pos);
+			tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
+		break;
+		case Enumeration::BuildingType::Siderurgy:
+			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/siderurgia.obj", team, breed, _type, pos);
+			tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
+		break;
+		case Enumeration::BuildingType::Tower:
+			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/torre_vigilancia.obj", team, breed, _type, pos);
+			tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
+		break;
+		case Enumeration::BuildingType::Wall:
+			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/muralla.obj", team, breed, _type, pos);
+			tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
+		break;
+		case Enumeration::BuildingType::Workshop:
+			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/taller_maquinas_de_asedio.obj", team, breed, _type, pos);
+			tempBuilding -> getModel() -> setScale(Vector3<float>(25,25,25));
+		break;
+		default: break;
 	}
 }
 
