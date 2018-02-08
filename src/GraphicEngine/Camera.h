@@ -3,6 +3,7 @@
 
 #include <irrlicht.h>
 #include "Vector3.h"
+#include <Types.h>
 
 using namespace irr;
 
@@ -12,18 +13,18 @@ class Camera {
         Camera();
         ~Camera();
 
-        void setCameraPosition(Vector3<float> position);
-        void setTargetPosition(Vector3<float> position);
+        void setCameraPosition(Vector3<f32> position);
+        void setTargetPosition(Vector3<f32> position);
 
-        //void setCameraRotation(Vector3<float> rotation);
+        //void setCameraRotation(Vector3<f32> rotation);
 
-        void setShadowDistance(float sd);
+        void setShadowDistance(f32 sd);
 
-        Vector3<float> getCameraPosition();
-        Vector3<float> getTargetPosition();
+        Vector3<f32> getCameraPosition();
+        Vector3<f32> getTargetPosition();
 
         //ToDo: no se donde meter esto
-        float getReciprocalSquareroot() {
+        f32 getReciprocalSquareroot() {
             return core::reciprocal_squareroot((f32)2);
         }
     private:

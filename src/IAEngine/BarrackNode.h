@@ -2,6 +2,7 @@
 #define BARRACK_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class BarrackNode : public Node {
 

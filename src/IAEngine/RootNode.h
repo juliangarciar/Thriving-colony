@@ -3,6 +3,7 @@
 
 #include "Node.h"
 #include "../Enumeration.h"
+#include <Types.h>
 
 class RootNode : public Node {
 

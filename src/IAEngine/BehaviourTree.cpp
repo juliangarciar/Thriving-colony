@@ -34,37 +34,37 @@ bool BehaviourTree::needResourcesInvestment() {
 /**
 * Calculates the ratio between metal production and city level
 */
-float BehaviourTree::calculateMetalProductionRate() {
-    float cityLvl = IA::getInstance() -> getCityLevel();
-    float metalPr = IA::getInstance() -> getMetalProduction();
+f32 BehaviourTree::calculateMetalProductionRate() {
+    f32 cityLvl = IA::getInstance() -> getCityLevel();
+    f32 metalPr = IA::getInstance() -> getMetalProduction();
     return (metalPr / cityLvl);
 }
 
 /**
 * Calculates the ratio between crystal production and city level
 */
-float BehaviourTree::calculateCrystalProductionRate() {
-    float cityLvl = IA::getInstance() -> getCityLevel();
-    float crystalPr = IA::getInstance() -> getCrystalProduction();
+f32 BehaviourTree::calculateCrystalProductionRate() {
+    f32 cityLvl = IA::getInstance() -> getCityLevel();
+    f32 crystalPr = IA::getInstance() -> getCrystalProduction();
     return (crystalPr / cityLvl);
 }
 
 /**
 * Calculates the ratio between citizens and city level
 */
-float BehaviourTree::calculateCitizensRate() {
-    float cityLvl = IA::getInstance() -> getCityLevel();
-    float citizens = IA::getInstance() -> getCitizens();
+f32 BehaviourTree::calculateCitizensRate() {
+    f32 cityLvl = IA::getInstance() -> getCityLevel();
+    f32 citizens = IA::getInstance() -> getCitizens();
     return (citizens / cityLvl);
 }
 
 /**
 * Calculates the ratio between citizens and army
 */
-float BehaviourTree::calculateArmyCitizensRate() {
-    float armySize = IA::getInstance() -> getUnitManager() -> getTotalTroops();
+f32 BehaviourTree::calculateArmyCitizensRate() {
+    f32 armySize = IA::getInstance() -> getUnitManager() -> getTotalTroops();
     // Numbers of soldiers / Number of total cicitzens (citizens + soldiers)
-    float totalCitizens = IA::getInstance() -> getCitizens() + armySize;
+    f32 totalCitizens = IA::getInstance() -> getCitizens() + armySize;
     return (armySize / totalCitizens);
 }
 
@@ -92,10 +92,10 @@ bool BehaviourTree::needArmyInvestment() {
 /**
 * Calculates the ratio between army and melee soldiers
 */
-float BehaviourTree::calculateMeleeRate() {
-    float meleeAmt = IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
+f32 BehaviourTree::calculateMeleeRate() {
+    f32 meleeAmt = IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
 
-    float armySize = IA::getInstance() -> getArmySize();
+    f32 armySize = IA::getInstance() -> getArmySize();
 
     if (armySize == 0) {
         return 0;
@@ -106,9 +106,9 @@ float BehaviourTree::calculateMeleeRate() {
 /**
 * Calculates the ratio between army and range soldiers
 */
-float BehaviourTree::calculateRangeRate() {
-    float rangeAmt = IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardR) + IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedR);
-    float armySize = IA::getInstance() -> getArmySize();
+f32 BehaviourTree::calculateRangeRate() {
+    f32 rangeAmt = IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardR) + IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedR);
+    f32 armySize = IA::getInstance() -> getArmySize();
     if (armySize == 0) {
         return 0;
     }
@@ -118,9 +118,9 @@ float BehaviourTree::calculateRangeRate() {
 /**
 * Calculates the ratio between army and siege soldiers
 */
-float BehaviourTree::calculateSiegeRate() {
-    float siegeAmt = IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) + IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
-    float armySize = IA::getInstance() -> getArmySize();
+f32 BehaviourTree::calculateSiegeRate() {
+    f32 siegeAmt = IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) + IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
+    f32 armySize = IA::getInstance() -> getArmySize();
     if (armySize == 0) {
         return 0;
     }
@@ -140,39 +140,39 @@ bool BehaviourTree::readyToAttack() {
 /**
  * GETTERS
  */
-int BehaviourTree::getHospitalMilestone() {
+i32 BehaviourTree::getHospitalMilestone() {
     return hospitalMilestone;
 }
 
-int BehaviourTree::getMarketMilestone() {
+i32 BehaviourTree::getMarketMilestone() {
     return marketMilestone;
 }
 
-int BehaviourTree::getQuarryMilestone() {
+i32 BehaviourTree::getQuarryMilestone() {
     return quarryMilestone;
 }
 
-int BehaviourTree::getMountedCreatureMilestone() {
+i32 BehaviourTree::getMountedCreatureMilestone() {
     return mountedCreatureMilestone;
 }
 
-int BehaviourTree::getCreatureMilestone() {
+i32 BehaviourTree::getCreatureMilestone() {
     return creatureMilestone;
 }
 
-int BehaviourTree::getHappinessThreshold() {
+i32 BehaviourTree::getHappinessThreshold() {
     return happinessThreshold;
 }
 
-float BehaviourTree::getMeleeThreshold() {
+f32 BehaviourTree::getMeleeThreshold() {
     return meleeThreshold;
 }
 
-float BehaviourTree::getRangeThreshold() {
+f32 BehaviourTree::getRangeThreshold() {
     return rangeThreshold;
 }
 
-float BehaviourTree::getCitizensThreshold() {
+f32 BehaviourTree::getCitizensThreshold() {
     return citizensThreshold;
 }
 
@@ -282,7 +282,7 @@ void BehaviourTree::debugMessage() {
 }
 
 // Down here so it doesnt clutter the top
-void BehaviourTree::init(int behaviour) {
+void BehaviourTree::init(i32 behaviour) {
     // Set the variables' values according to the behaviour choosen by the AI
     switch (behaviour) {
         case Enumeration::IABehaviour::VeryHappy:

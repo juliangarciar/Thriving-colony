@@ -17,6 +17,7 @@
 #include <SoundEngine/SoundSystem.h>
 // Added by Julian
 #include <WorldGeometry/CellSpacePartition.h>
+#include <Types.h>
 class CellSpacePartition;
 /**
  * @class Game

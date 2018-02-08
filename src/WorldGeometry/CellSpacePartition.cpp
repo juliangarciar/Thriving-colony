@@ -4,11 +4,11 @@ Cell::~Cell(){
     this->entities.clear();
     //delete cube;
 }
-CellSpacePartition::CellSpacePartition( float  width,        //width of 2D space
-                                        float  height,       //height...
-                                        int    nCellsX,       //number of divisions horizontally
-                                        int    nCellsY,       //and vertically
-                                        int    MaxTs):  //maximum number of entities to partition
+CellSpacePartition::CellSpacePartition( f32  width,        //width of 2D space
+                                        f32  height,       //height...
+                                        i32    nCellsX,       //number of divisions horizontally
+                                        i32    nCellsY,       //and vertically
+                                        i32    MaxTs):  //maximum number of entities to partition
                     spaceWidth(width),
                     spaceHeight(height),
                     cellsX(nCellsX),
@@ -19,17 +19,17 @@ CellSpacePartition::CellSpacePartition( float  width,        //width of 2D space
     cellSizeX = width  / cellsX;
     cellSizeY = height / cellsY;
 //create the cells
-    for (int y = 0; y < 1; y++)
+    for (i32 y = 0; y < 1; y++)
     {
-        for (int x = 0; x < 4; x++)
+        for (i32 x = 0; x < 4; x++)
         {
-            float left  = x * cellSizeX;
-            float right = left + cellSizeX;
-            float top   = y * cellSizeY;
-            float bot   = top + cellSizeY;
-            //float center = left + cellSizeX / 2;
-            //float center2 = top - cellSizeY / 2;
-            mCells.push_back(Cell(Vector2<float>(left, top), Vector2<float>(right, bot)));
+            f32 left  = x * cellSizeX;
+            f32 right = left + cellSizeX;
+            f32 top   = y * cellSizeY;
+            f32 bot   = top + cellSizeY;
+            //f32 center = left + cellSizeX / 2;
+            //f32 center2 = top - cellSizeY / 2;
+            mCells.push_back(Cell(Vector2<f32>(left, top), Vector2<f32>(right, bot)));
         }
     }
 }
@@ -37,10 +37,10 @@ CellSpacePartition::~CellSpacePartition(){
     this->mNeighbors.clear();
     this->mCells.clear();
 }
-void CellSpacePartition::calculateNeighbors(Vector2<float> targetPos, float radious){
+void CellSpacePartition::calculateNeighbors(Vector2<f32> targetPos, f32 radious){
     std::vector< Entity* >::iterator itNeighbor = mNeighbors.begin();
 
-    Box2D queryBox(targetPos - Vector2<float>(radious, radious), targetPos + Vector2<float>(radious, radious));
+    Box2D queryBox(targetPos - Vector2<f32>(radious, radious), targetPos + Vector2<f32>(radious, radious));
     std::vector< Cell >::iterator itCell;
     for(itCell = mCells.begin(); itCell != mCells.end(); itCell++){
         if(itCell->BBox.isOverlappedWith(queryBox) && !itCell->entities.empty()){
@@ -65,10 +65,10 @@ void CellSpacePartition::clearCells()
         it->entities.clear();
     }
 }
-int CellSpacePartition::positionToIndex(Vector2<float> pos)
+i32 CellSpacePartition::positionToIndex(Vector2<f32> pos)
 {
-    int idx = (int)(cellsX * pos.x / spaceWidth) + 
-                ((int)((cellsY) * pos.y / spaceHeight) * cellsX);
+    i32 idx = (i32)(cellsX * pos.x / spaceWidth) + 
+                ((i32)((cellsY) * pos.y / spaceHeight) * cellsX);
 
     if (idx > mCells.size() - 1) 
         idx = mCells.size() - 1;
@@ -81,19 +81,19 @@ void CellSpacePartition::addEntity(Entity* ent)
     // Debugging only
     //assert (ent);
 
-    //int sz = mCells.size();
-    Vector2<float> dummy = ent->getPosition()->toVector2();
-    int idx = positionToIndex(dummy);
+    //i32 sz = mCells.size();
+    Vector2<f32> dummy = ent->getPosition()->toVector2();
+    i32 idx = positionToIndex(dummy);
     
     mCells[idx].entities.push_back(ent);
 }
 
-void CellSpacePartition::updateEntity(Entity* ent, Vector2<float> OldPos)
+void CellSpacePartition::updateEntity(Entity* ent, Vector2<f32> OldPos)
 {
     //if the index for the old pos and the new pos are not equal then
     //the T has moved to another cell.
-    int OldIdx = positionToIndex(OldPos);
-    int NewIdx = positionToIndex(ent->getPosition()->toVector2());
+    i32 OldIdx = positionToIndex(OldPos);
+    i32 NewIdx = positionToIndex(ent->getPosition()->toVector2());
 
     if (NewIdx == OldIdx) return;
 

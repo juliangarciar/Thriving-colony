@@ -2,6 +2,7 @@
 #define SIEGE_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class SiegeNode : public Node {
 

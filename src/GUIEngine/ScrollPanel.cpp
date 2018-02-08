@@ -14,7 +14,7 @@ ScrollPanel::~ScrollPanel() {
     hide();
 }
 
-void ScrollPanel::setPosition(Vector2<int> position){
+void ScrollPanel::setPosition(Vector2<i32> position){
     spanel -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 
@@ -34,7 +34,7 @@ bool ScrollPanel::isVisible(){
     return spanel -> visible();
 }
 
-void ScrollPanel::setSize(Vector2<int> size) {
+void ScrollPanel::setSize(Vector2<i32> size) {
     spanel -> setFixedSize(Eigen::Vector2i(size.x, size.y));
 }
 

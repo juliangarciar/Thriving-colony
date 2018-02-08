@@ -2,6 +2,7 @@
 #define BUILDING_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class BuildingNode : public Node {
 

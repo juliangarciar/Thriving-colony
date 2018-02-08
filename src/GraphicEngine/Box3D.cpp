@@ -49,5 +49,5 @@ Vector3<T> Box3D<T>::getSize() {
 	return Vector3<T>(width, height, depth);
 }
 
-template class Box3D<int>;
-template class Box3D<float>;
+template class Box3D<i32>;
+template class Box3D<f32>;

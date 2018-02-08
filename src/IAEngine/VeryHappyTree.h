@@ -2,6 +2,7 @@
 #define VERYHAPPY_TREE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class VeryHappyTree : public Node {
     

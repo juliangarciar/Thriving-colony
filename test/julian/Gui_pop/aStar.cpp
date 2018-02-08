@@ -23,7 +23,7 @@ aStar::~aStar(){
         delete (*it);
     } 
     neighbors.clear();
-    for (int i = 0; i < frontier.size(); i++){
+    for (i32 i = 0; i < frontier.size(); i++){
         frontier.pop();
     }
 }
@@ -38,7 +38,7 @@ std::vector< nodeGrid* > aStar::startAlgoritm(){
         frontier.pop();
         
         neighbors = map -> getNeighbours(current);
-        for (int i = 0; i < neighbors.size(); i++)
+        for (i32 i = 0; i < neighbors.size(); i++)
         {
             if(neighbors[i] -> itsDiag()){
                 newCost = current -> getWeight() + sqrt(2.00);
@@ -49,11 +49,11 @@ std::vector< nodeGrid* > aStar::startAlgoritm(){
             if ((neighbors[i] -> itsCounted() == false) || (newCost < neighbors[i] -> getWeight()))
             {
                 //Realle needed ?
-                //int dx1 = neighbors[i] -> getX() - end -> getX();
-                //int dy1 = neighbors[i] -> getY() - end -> getY();
-                //int dx2 = start -> getX() - end -> getX();
-                //int dy2 = start -> getY() - end -> getY();
-                //int cross = abs(dx1 * dy2 - dx2 * dy1);
+                //i32 dx1 = neighbors[i] -> getX() - end -> getX();
+                //i32 dy1 = neighbors[i] -> getY() - end -> getY();
+                //i32 dx2 = start -> getX() - end -> getX();
+                //i32 dy2 = start -> getY() - end -> getY();
+                //i32 cross = abs(dx1 * dy2 - dx2 * dy1);
 
                 neighbors[i] -> swapColor(irr::video::SColor(0, 127, 0, 127));
                 neighbors[i] -> setWeight(newCost);

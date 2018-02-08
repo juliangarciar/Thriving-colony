@@ -2,6 +2,7 @@
 #define DEPLOY_TROOPS_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class DeployTroopsNode : public Node {
 

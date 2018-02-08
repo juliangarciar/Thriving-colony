@@ -2,6 +2,7 @@
 #define DEFEND_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class DefendNode : public Node {
 

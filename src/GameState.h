@@ -16,6 +16,7 @@
 
 #include <GraphicEngine/Terrain.h>
 #include <GraphicEngine/Light.h>
+#include <Types.h>
 
 /**
  * @class GameState
@@ -79,7 +80,7 @@ class GameState : public State {
         // This is for pausing, in a future it will be a gamestate different?
         bool gamePaused;
 
-        int prevWindowWidth, prevWindowHeight;
+        i32 prevWindowWidth, prevWindowHeight;
 };
 
 #endif

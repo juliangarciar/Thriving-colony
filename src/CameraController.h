@@ -8,6 +8,7 @@
 #include <IOEngine/Keyboard.h>
 #include <IOEngine/Mouse.h>
 #include "Enumeration.h"
+#include <Types.h>
 
 /**
  * @class CameraController
@@ -29,7 +30,7 @@ class CameraController {
 	* @brief Actualiza CameraController
         * @param deltaTime para la interpolacion
 	*/
-        void Update(float);
+        void Update(f32);
 
         /**
 	 * @brief Mueve la camara
@@ -59,8 +60,8 @@ class CameraController {
         Camera *camera;
 
         //Camera position
-        Vector3<float> camPos, tarPos;
-        Vector3<float> userPos;
+        Vector3<f32> camPos, tarPos;
+        Vector3<f32> userPos;
 
         //Camera modes
         bool movementMode;
@@ -69,29 +70,29 @@ class CameraController {
 	bool centerCameraMode;
 
         // Camera movement variables
-        int screenMarginV, screenMarginH;
-        int direction;
-        float camSpeed;
+        i32 screenMarginV, screenMarginH;
+        i32 direction;
+        f32 camSpeed;
 
         // Camera rotation, inclination
-        float rotSpeed;
-        float inclSpeed;
-        float minInclination, maxInclination;
-        Vector2<float> delta;
-        Vector3<float> distanceToTarget;
+        f32 rotSpeed;
+        f32 inclSpeed;
+        f32 minInclination, maxInclination;
+        Vector2<f32> delta;
+        Vector3<f32> distanceToTarget;
 
         //Camera zoom variables
-        int minZoom, maxZoom;
-        int zoomLevels;
-        float zoomDistanceFromTarget;
-        Vector3<float> cameraPositionIncrement;
+        i32 minZoom, maxZoom;
+        i32 zoomLevels;
+        f32 zoomDistanceFromTarget;
+        Vector3<f32> cameraPositionIncrement;
 
         // Helpers and cursor optimizacion variables
-        float recipsqrt2;
+        f32 recipsqrt2;
 
-        int centerMargin;
-        Vector2<int> cursorPosSaved;
+        i32 centerMargin;
+        Vector2<i32> cursorPosSaved;
         
-        Vector2<int> screenCenter; //ToDo: Esto no va aqui
+        Vector2<i32> screenCenter; //ToDo: Esto no va aqui
 };
 #endif

@@ -2,6 +2,7 @@
 #define STARTMENU_H
 
 #include <GUIEngine/Button.h>
+#include <Types.h>
 
 /**
  * @class StartMenu

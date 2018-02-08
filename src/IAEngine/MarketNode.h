@@ -2,6 +2,7 @@
 #define MARKET_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class MarketNode : public Node {
 

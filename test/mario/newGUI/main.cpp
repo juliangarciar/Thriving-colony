@@ -9,9 +9,9 @@ using namespace std;
 using namespace irr;
 using namespace nanogui;
 
-int main(int argc, char **argv) {
-    int windowWidth = 1280;
-    int windowHeight = 720;
+i32 main(i32 argc, char **argv) {
+    i32 windowWidth = 1280;
+    i32 windowHeight = 720;
 
     GLFWwindow* gwindow;
     IrrlichtDevice* device;
@@ -55,21 +55,21 @@ int main(int argc, char **argv) {
     glfwSetWindowUserPointer(gwindow, gui);
 
     glfwSetCharCallback(gwindow,
-        [](GLFWwindow *w, unsigned int codepoint) {
+        [](GLFWwindow *w, unsigned i32 codepoint) {
             nanogui::Screen *gui = (nanogui::Screen*)glfwGetWindowUserPointer(w);
             gui -> charCallbackEvent(codepoint);
         }
     );
 
     glfwSetDropCallback(gwindow,
-        [](GLFWwindow *w, int count, const char **filenames) {
+        [](GLFWwindow *w, i32 count, const char **filenames) {
             nanogui::Screen *gui = (nanogui::Screen*)glfwGetWindowUserPointer(w);
             gui -> dropCallbackEvent(count, filenames);
         }
     );
 
     glfwSetFramebufferSizeCallback(gwindow,
-        [](GLFWwindow *w, int width, int height) {
+        [](GLFWwindow *w, i32 width, i32 height) {
             nanogui::Screen *gui = (nanogui::Screen*)glfwGetWindowUserPointer(w);
             gui -> resizeCallbackEvent(width, height);
         }
@@ -91,7 +91,7 @@ int main(int argc, char **argv) {
     );
 
     glfwSetMouseButtonCallback(gwindow,
-        [](GLFWwindow *w, int button, int action, int modifiers) {
+        [](GLFWwindow *w, i32 button, i32 action, i32 modifiers) {
             nanogui::Screen *gui = (nanogui::Screen*)glfwGetWindowUserPointer(w);
             gui -> mouseButtonCallbackEvent(button, action, modifiers);
         }
@@ -126,8 +126,8 @@ int main(int argc, char **argv) {
         tabWidget->createTab("+");
 
         // A simple counter.
-        int counter = 1;
-        tabWidget->setCallback([tabWidget, gui, counter] (int index) mutable {
+        i32 counter = 1;
+        tabWidget->setCallback([tabWidget, gui, counter] (i32 index) mutable {
             if (index == (tabWidget->tabCount()-1)) {
                 // When the "+" tab has been clicked, simply add a new tab.
                 string tabName = "Dynamic " + to_string(counter);
@@ -140,7 +140,7 @@ int main(int argc, char **argv) {
                 graphDyn->setFooter("Iteration " + to_string(index*counter));
                 VectorXf &funcDyn = graphDyn->values();
                 funcDyn.resize(100);
-                for (int i = 0; i < 100; ++i)
+                for (i32 i = 0; i < 100; ++i)
                     funcDyn[i] = 0.5f *
                         std::abs((0.5f * std::sin(i / 10.f + counter) +
                                   0.5f * std::cos(i / 23.f + 1 + counter)));
