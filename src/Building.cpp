@@ -211,6 +211,7 @@ void Building::Init() {
         default: break;
     }
 
+    buildTimer = 0;
     //Establece el color base del edificio
     baseColor = video::SColor(255, r, g, b); //ToDo: reemplazar color por material
 
