@@ -1,7 +1,7 @@
 #include "PathManager.h"
 #include "SearchAStar.h"
-#define spaceWidth 9000
-#define total 90
+#define spaceWidth 10240
+#define total 80
 PathManager::PathManager(class Unit* actor){
     // Creates the graph
     navGraph = Graph::Instance();

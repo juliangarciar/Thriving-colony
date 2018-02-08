@@ -157,7 +157,6 @@ void UnitManager::deployAllTroops(Vector3<float> vectorData) {
         inMapTroops -> insert(std::pair<int, Unit*>(u -> getModel() -> getID(), u));
 
         //u -> setTroopPosition(Vector3<float>(Enumeration::HumanCityHall::human_x, terrain -> getY(Enumeration::HumanCityHall::human_x, Enumeration::HumanCityHall::human_z), Enumeration::HumanCityHall::human_z)); //ToDo
-
         u -> setTroopPosition(vectorData);
         u -> switchState(Enumeration::UnitState::AttackMove);
         u -> setTroopDestination(vectorData);

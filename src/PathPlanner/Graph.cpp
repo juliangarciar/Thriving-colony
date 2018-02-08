@@ -1,6 +1,6 @@
 #include "Graph.h"
-#define GRID 100
-#define K 9000
+#define GRID 128
+#define K 10240
 Graph* Graph::pinstance = 0;
 
 Graph* Graph::Instance() {
@@ -10,14 +10,16 @@ Graph* Graph::Instance() {
     return pinstance;
 }
 Graph::Graph(){
-    this->nextNode = 0;
-    this->m_Nodes = nodeVector();
-    this->m_Edges = edgeListVector();
+    nextNode = 0;
 
 // Lots of waypoints -> debugging purpose
     int nWaypointsX, nWaypointsY;
+    int maxSize = (nWaypointsX * nWaypointsY);
     nWaypointsX = K / GRID;
     nWaypointsY = K / GRID;
+    //m_Nodes.resize(nWaypointsX * nWaypointsY);
+    //m_Edges.resize(nWaypointsX * nWaypointsY);
+    std::cout << "Max waypoints = " << maxSize << "\n";
     for(int y = 0; y < nWaypointsY; y++){
         for(int x = 0; x < nWaypointsX; x++){
             float dX = x * GRID + GRID / 2;
@@ -170,6 +172,7 @@ Graph::Graph(){
             }
         }
     }
+    std::cout << "Nwaypoints = " << m_Nodes.size() << std::endl;
 }
 Graph::~Graph(){
     
