@@ -1,5 +1,6 @@
 #include "CellSpacePartition.h"
-
+#define MAX_MAP 10240
+#define CELL_SPACE 128
 Cell::~Cell(){
     this->entities.clear();
     //delete cube;

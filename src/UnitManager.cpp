@@ -60,7 +60,7 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
     if (checkCanPay(unitData)) {
         Unit *newUnit = new Unit(unitLayer, std::rand(), L"media/buildingModels/dummy.obj", team, breed, unitData, Vector3<f32>());
         newUnit -> getModel() -> setActive(false);
-        newUnit -> getModel() -> setScale(Vector3<f32>(100, 100, 100));
+        newUnit -> getModel() -> setScale(Vector3<f32>(128, 128, 128));
         newUnit -> setRecruitedCallback([&] (Unit* u){
             std::cout << "Si" << std::endl;
             //Delete in Queue
@@ -154,6 +154,7 @@ void UnitManager::deployAllTroops(Vector3<f32> vectorData) {
         inHallTroops -> erase(inHallTroops -> begin() + i);
         inMapTroops -> insert(std::pair<i32, Unit*>(u -> getModel() -> getID(), u));
 
+        //u -> setTroopPosition(Vector3<float>(Enumeration::HumanCityHall::human_x, terrain -> getY(Enumeration::HumanCityHall::human_x, Enumeration::HumanCityHall::human_z), Enumeration::HumanCityHall::human_z)); //ToDo
         u -> setTroopPosition(vectorData);
         u -> switchState(Enumeration::UnitState::AttackMove);
         u -> setTroopDestination(vectorData);
