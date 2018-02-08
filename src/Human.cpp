@@ -2,31 +2,7 @@
 #include "Game.h"
 #include "IA.h"
 
-Human::Human() : Player() {
-    init();
-}
-
-void Human::init() {
-    updateTimer = 0;
-
-    buildings = new BuildingManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
-    units = new UnitManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
-}
-
-void Human::cleanUp() {
-    delete buildings;
-    delete units;
-}
-
-Human::~Human() {
-    delete buildings;
-    delete units;
-}
-
 Human* Human::instance = 0;
-
-bool Human::deployedTroops = false;
-bool Human::closedDoors = false;
 
 Human* Human::Instance() {
     if (instance == 0) {
@@ -35,29 +11,34 @@ Human* Human::Instance() {
     return instance;
 }
 
-void Human::update() {
+Human::Human() : Player() {
+    Init();
+}
+
+Human::~Human() {
+    delete buildings;
+    delete units;
+}
+
+void Human::Init() {
+    buildings = new BuildingManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
+    units = new UnitManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
+}
+
+void Human::Update() {
     buildings -> updateBuildingManager();
     units -> updateUnitManager();
-    if (updateTimer <= 0) {
+    if (updateTimer <= 0.0) {
         gainResources();
-        if (units -> getInMapTroops() -> empty()) {
-            deployedTroops = false;
-        }
-        if (units -> getInHallTroops() -> empty()) {
-            deployedTroops = true;
-        }
-        updateTimer = 1;
+        updateTimer = 1.0;
     } else {
-        updateTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
+       updateTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
     }
 }
 
-/*
-* Troops come back to their building (barn, barrack or workshop)
-*/
-void Human::retractTroops() {
-    Vector3<f32> v = *(Human::Instance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
-    Human::Instance() -> getUnitManager() -> retractAllTroops(v);
+void Human::CleanUp() {
+    delete buildings;
+    delete units;
 }
 
 bool Human::getUnderAttack() {
@@ -87,14 +68,6 @@ bool Human::getUnderAttack() {
     return underAttack;
 }
 
-// Return wether or not our troops are deployed
-bool Human::getDeployedTroops() {
-    return deployedTroops;
-}
-
-bool Human::getClosedDoors() {
-    return closedDoors;
-}
 /*
 void Human::receiveMetal() {
     metalAmount = metalAmount + 200;

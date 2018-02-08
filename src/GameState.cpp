@@ -222,6 +222,4 @@ BattleManager* GameState::getBattleManager() {
     if (Game::Instance() -> getIO() -> keyPressed(KEY_KEY_3)) {
         Human::Instance() -> receiveCitizens();
     }
-    Vector3<f32> v = map -> getPointCollision(Game::Instance() -> getMouse());
-    Human::Instance() -> getUnitManager() -> updateUnitManager();
 */

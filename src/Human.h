@@ -5,30 +5,20 @@
 #include <Types.h>
 
 class Human : public Player {
-    
     public:
-        Human();
-        virtual ~Human();
         static Human* Instance();
 
-        void init();
-        void update();
-        void cleanUp();
-
-        //ToDo: Por que estático?
-        static void retractTroops();
+        void Init();
+        void Update();
+        void CleanUp();
 
         bool getUnderAttack();
-        bool getDeployedTroops();
-        bool getClosedDoors();
+    protected:
+        Human();
+        virtual ~Human();
+
     private:
         static Human* instance;
-
-        i32 updateTimer;
-
-        //ToDo: Por que estático?
-        static bool deployedTroops;
-        static bool closedDoors;
 };
 
 #endif

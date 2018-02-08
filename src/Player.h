@@ -15,7 +15,9 @@ class Player {
         Player();
         virtual ~Player();
 
-        virtual void update() = 0;
+        virtual void Init() = 0;
+        virtual void Update() = 0;
+        virtual void CleanUp() = 0;
 
         // Control methods
         void gainResources();
@@ -60,6 +62,7 @@ class Player {
         // Army
         bool underAttack;
         
+        f32 updateTimer;
         //Buildings
         f32 buildableRange;
         

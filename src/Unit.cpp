@@ -23,6 +23,9 @@ Unit::Unit(SceneNode *layer, i32 id, const wchar_t *path, Enumeration::Team team
     //Iniciar
     Init();
 
+    //Tax the player
+    //preTaxPlayer();
+
     // Position defined by the constructor parameter
     vectorPos = new Vector3<f32>();
     vectorDes = new Vector3<f32>();
@@ -316,8 +319,34 @@ void Unit::Init() {
         default: break;
     }
 }
+/*
+void Unit::moveTroop() {
+    if (moving) {
+        // close to destination, stop
+        if (std::abs(vectorDes -> x - position -> x) < 5.0 && std::abs(vectorDes -> z - position -> z) < 5.0) {
+            moving = false;
+            if (state == Enumeration::UnitState::Retract) {
+                readyToEnter = true;
+                if (team == Enumeration::Team::Human) {
+                    Human::getInstance() -> getUnitManager() -> enterMainBuilding(unitType);
+                } else {
+                    IA::getInstance() -> getUnitManager() -> enterMainBuilding(unitType);
+                }
+                return;
+            }
+            switchState(Enumeration::Idle);
+        } else {
+            // far from destination, move
+            Vector3<float> newPos = *vectorPos + *vectorMov;
+            newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
+            setTroopPosition(newPos);
+        }
+    }
+}*/
 
 void Unit::update() {
+    returnToOriginalColor(); //ToDo: ¿?
+    attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
     //State machine, color changes according to state
     switch (state) {
         case Enumeration::UnitState::Recruiting:
@@ -329,7 +358,6 @@ void Unit::update() {
         case Enumeration::UnitState::Idle:
             setColor(video::SColor(255, 0, 255, 255)); //ToDo: cambiar por materiales
             idleState();
-            returnToOriginalColor(); //ToDo: ¿?
         break;
         case Enumeration::UnitState::Move:
             setColor(video::SColor(255, 255, 0, 255)); //ToDo: cambiar por materiales
@@ -452,7 +480,11 @@ void Unit::moveTroop() {
             if(pathFollow.empty()){
                 moving = false;
                 if (state == Enumeration::UnitState::Retract) {
-                    readyToEnter = true;
+                    if (team == Enumeration::Team::Human) {
+                        Human::getInstance() -> getUnitManager() -> enterMainBuilding(unitType);
+                    } else {
+                        IA::getInstance() -> getUnitManager() -> enterMainBuilding(unitType);
+                    }
                     return;
                 }
                 switchState(Enumeration::Idle);
@@ -466,17 +498,19 @@ void Unit::moveTroop() {
         }
         else if(std::floor(steps) == 0){
             Vector3<f32> move = *vectorMov;
-            move.x *= steps;
-            //move.y *= steps;
-            move.z *= steps;
+            //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
+            //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
             Vector3<f32> newPos = *vectorPos + move;
             newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
-            this -> setTroopPosition(newPos);
+            setTroopPosition(newPos);
             steps = 0;
         } 
         else {
             // far from destination, move
-            Vector3<f32> newPos = *vectorPos + *vectorMov;
+            Vector3<f32> move = *vectorMov;
+            //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime();
+            //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime();
+            Vector3<f32> newPos = *vectorPos + move;
             newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
             setTroopPosition(newPos);
             steps--;
@@ -581,7 +615,7 @@ void Unit::setTroopPosition(Vector3<f32> vectorData) {
     vectorPos -> set(vectorData);
     setPosition(vectorData);
 }
-
+// To do -> adjust units movement
 void Unit::setTroopDestination(Vector3<f32> vectorData) {
     if (state == Enumeration::UnitState::Move) {
         target = NULL;
@@ -593,12 +627,14 @@ void Unit::setTroopDestination(Vector3<f32> vectorData) {
 
     f32 distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2));
 
-    vectorMov -> x = (desp.x / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
-    vectorMov -> z = (desp.z / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
-
+    //vectorMov -> x = (desp.x / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
+    //vectorMov -> z = (desp.z / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
+    vectorMov -> x = (desp.x / distance) * (moveSpeed / 100);
+    vectorMov -> z = (desp.z / distance) * (moveSpeed / 100);
     f32 movDistance = std::sqrt(std::pow(vectorMov -> x, 2) + std::pow(vectorMov -> z, 2));
     steps = (distance / movDistance);
-
+    std::cout << "Distance: " << distance << "\n";
+    std::cout << "Mov distance " << movDistance << "\n"; 
     std::cout << "Steps: " << steps << "\n";
     moving = true;
 }

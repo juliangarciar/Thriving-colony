@@ -56,9 +56,15 @@ UnitManager::~UnitManager() {
 //In order to add a new unit, you must specify which one
 bool UnitManager::createTroop(Enumeration::UnitType unitData) {
     if (checkCanPay(unitData)) {
-        Unit *newUnit = new Unit(unitLayer, std::rand(), L"media/buildingModels/dummy.obj", team, breed, unitData, Vector3<f32>());
+        Unit *newUnit = setNewUnitModel(unitData);
+        if (newUnit == NULL) {
+            return false;
+        }
+        // Distinto tamaño para distintas unidades?
+        newUnit -> getModel() -> setScale(Vector3<float>(25,25,25)); //VERSION DEFINITIVA, LO DE DEBAJO ES DE JULIAN DE DEBUGERUNIS
+        //Unit *newUnit = new Unit(unitLayer, std::rand(), L"media/buildingModels/dummy.obj", team, breed, unitData, Vector3<float>());
         newUnit -> getModel() -> setActive(false);
-        newUnit -> getModel() -> setScale(Vector3<f32>(128, 128, 128));
+        //newUnit -> getModel() -> setScale(Vector3<f32>(128, 128, 128));
         newUnit -> setRecruitedCallback([&] (Unit* u){
             std::cout << "Se ha terminado de reclutar la unidad " << u->getID() << std::endl;
             //Delete in Queue
@@ -304,7 +310,65 @@ i32 UnitManager::getTroopAmount(Enumeration::UnitType t){
     return troopsAmount[(i32)t];
 }
 
-//Returns the ammount of troops
+Unit* UnitManager::setNewUnitModel(Enumeration::UnitType unitType) {
+    // Hacer que sean razas diferentes?
+    switch (unitType) {
+        case Enumeration::UnitType::StandardM:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/Soldado_Melee_Drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::StandardR:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/Soldado_Rango_Drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::AdvancedM:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/criatura_drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::AdvancedR:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/criatura_drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::Idol:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/Ente_Drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::Launcher:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/canon_drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::Desintegrator:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/desintegrador_de_Drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+        default:
+            return NULL;
+        break;
+    }
+}
+
+void UnitManager::enterMainBuilding(Enumeration::UnitType) {
+    //ToDo: Crear una tropa nueva, que sea gratis y meterla en el inhalltroops
+    std::cout << "entro" << std::endl;
+}
+
+//Returns the amount of troops
 i32 UnitManager::getTotalTroopAmount() {
     return inQueueTroops -> size() + inHallTroops -> size() + inMapTroops -> size();
 } 
+
+/*
+void UnitManager::deployTroopAtPosition(i32 index, Vector3<f32> vectorData) {
+    Unit *u = inHallTroops -> at(index);
+    u -> setPosition(vectorData);
+    inMapTroops -> insert(std::pair<i32, Unit*>(u -> getModel() -> getID(), u));
+    inHallTroops -> erase(inHallTroops -> begin() + index);
+
+    //temp -> setPosition(Vector3<f32>(8000, 0, 8000));
+    //temp -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
+    //u -> setTroopPosition(Vector3<f32>(Enumeration::HumanCityHall::human_x, terrain -> getY(Enumeration::HumanCityHall::human_x, Enumeration::HumanCityHall::human_z), Enumeration::HumanCityHall::human_z)); //ToDo
+
+    //selectedTroop -> setTroopDestination(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
+    //Game::Instance() -> getSoundSystem() -> playVoice(selectedTroop -> getMoveEvent());
+    //selectedTroop -> setTroopDestination(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
+}
+*/
