@@ -12,7 +12,7 @@ Window* Window::Instance() {
     return pinstance;
 }
 
-Window::Window(int width, int height) {
+Window::Window(i32 width, i32 height) {
     closeWindow = false;
 
     windowWidth = width;
@@ -54,19 +54,19 @@ Window::Window(int width, int height) {
     glfwSetWindowUserPointer(window, gui);
 
     glfwSetCharCallback(window,
-        [](GLFWwindow *w, unsigned int codepoint) {
+        [](GLFWwindow *w, u32 codepoint) {
             Window::Instance() -> getGUIEnvironment() -> charCallbackEvent(codepoint);
         }
     );
 
     glfwSetDropCallback(window,
-        [](GLFWwindow *w, int count, const char **filenames) {
+        [](GLFWwindow *w, i32 count, const char **filenames) {
             //Window::Instance() -> getGUIEnvironment() -> dropCallbackEvent(count, filenames);
         }
     );
 
     glfwSetFramebufferSizeCallback(window,
-        [](GLFWwindow *w, int width, int height) {
+        [](GLFWwindow *w, i32 width, i32 height) {
             Window::Instance() -> getGUIEnvironment() -> resizeCallbackEvent(width, height);
         }
     );
@@ -130,24 +130,24 @@ nanogui::Screen* Window::getGUIEnvironment(){
     return gui;
 }
 
-int Window::getInitialWindowWidth(){
+i32 Window::getInitialWindowWidth(){
     return windowWidth;
 }
 
-int Window::getInitialWindowHeight(){
+i32 Window::getInitialWindowHeight(){
     return windowHeight;
 }
 
-int Window::getRealWindowWidth(){
+i32 Window::getRealWindowWidth(){
     return windowWidth;
     //return driver -> getViewPort().getWidth(); 
 }
 
-int Window::getRealWindowHeight(){
+i32 Window::getRealWindowHeight(){
     return windowHeight;
     //return driver -> getViewPort().getHeight(); 
 }
 
-float Window::getDeltaTime() {
+f32 Window::getDeltaTime() {
     return deltaTime;
 }

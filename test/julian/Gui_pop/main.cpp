@@ -11,15 +11,15 @@ using namespace std;
 using namespace irr;
 
 //MAIN FUNCTION
-int main(){
-    int gridX = 24;
-    int gridY = 24;
+i32 main(){
+    i32 gridX = 24;
+    i32 gridY = 24;
 
     //INIT START AND END
-    int pStartX;
-    int pStartY;
-    int pEndX;
-    int pEndY;
+    i32 pStartX;
+    i32 pStartY;
+    i32 pEndX;
+    i32 pEndY;
     std::cout << "Introduzca las coordenadas de un waypoint de inicio (0 a 19)." << endl;
     std::cout << "X: ";
     std::cin >> pStartX;
@@ -59,7 +59,7 @@ int main(){
 
         
         //DRAW OBSTACLES
-        for (int x = 13, y = 15; x < 20; x++, y--)
+        for (i32 x = 13, y = 15; x < 20; x++, y--)
         {
             if(start -> getX() != x && end -> getX() != x && start -> getY() != y && end -> getY() != y){
                 mapita -> getGrid()[x][y] -> swapColor(irr::video::SColor(0, 0, 0, 0));
@@ -67,7 +67,7 @@ int main(){
             }
             
         }
-        for (int x = 12, y = 15; x < 20; x++, y--)
+        for (i32 x = 12, y = 15; x < 20; x++, y--)
         {
             if (start -> getX() != x && end -> getX() != x && start -> getY() != y && end -> getY() != y)
             {

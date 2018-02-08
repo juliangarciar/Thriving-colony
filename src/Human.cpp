@@ -52,7 +52,7 @@ void Human::update() {
 }
 
 void Human::deployTroops() {
-    Vector3<float> v = *(Human::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
+    Vector3<f32> v = *(Human::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
     v.x = v.x + 100;
     v.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(v.x, v.z);
     Human::getInstance() -> getUnitManager() -> deployAllTroops(v);
@@ -73,22 +73,22 @@ void Human::openDoors() {
 * Troops come back to their building (barn, barrack or workshop)
 */
 void Human::retractTroops() {
-    Vector3<float> v = *(Human::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
+    Vector3<f32> v = *(Human::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
     Human::getInstance() -> getUnitManager() -> retractAllTroops(v);
 }
 
 bool Human::getUnderAttack() {
     if(underAttack == false){
-        Vector3<float> *pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
-        int requesterRange = 1000;
+        Vector3<f32> *pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
+        i32 requesterRange = 1000;
         
-        float xaux = 0;
-        float yaux = 0;
-        float dist = 0;
+        f32 xaux = 0;
+        f32 yaux = 0;
+        f32 dist = 0;
         // Get units in the map of the opposing team
-        std::map<int, Unit*> *inMapTroops = IA::getInstance() -> getUnitManager() -> getInMapTroops();
+        std::map<i32, Unit*> *inMapTroops = IA::getInstance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map
-        for (std::map<int,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
+        for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
             if (it  -> second != NULL) {
             // Calculate distance between troop requesting target and posible targets
                 xaux = it -> second -> getPosition() -> x - pos -> x;

@@ -2,6 +2,7 @@
 #define MOUNTED_MELEE_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class MountedMeleeNode : public Node {
 

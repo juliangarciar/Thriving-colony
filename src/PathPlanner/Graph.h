@@ -6,6 +6,8 @@
 #include <list>
 #include <vector>
 #include <map>
+#include <Types.h>
+
 class Graph{
     public:
     // Vector containing all the nodes from the graph
@@ -24,9 +26,9 @@ class Graph{
         edgeListVector m_Edges;
     // The edge list 
     // Indicates the next free position 
-        int nextNode;
+        i32 nextNode;
     // A map with the wayponts
-        std::map< int, Vector2<float> > positionMap;
+        std::map< i32, Vector2<f32> > positionMap;
     // Iteratos
         std::list< Edge* >::iterator edgeIterator;
         std::vector< LWayPoint* >::iterator nodeIterator;
@@ -36,40 +38,40 @@ class Graph{
         Graph();
         ~Graph();
     // Returns the node at the given index
-        LWayPoint& getNode(int idx);
+        LWayPoint& getNode(i32 idx);
     // Returns an edge
-        Edge& getEdge(int from ,int to);
+        Edge& getEdge(i32 from ,i32 to);
     // Retrieves the next free index
-        int getNextIndex();
+        i32 getNextIndex();
     // Adds a node to the graph and returns its index
-        int addNode(LWayPoint node);
+        i32 addNode(LWayPoint node);
     // Removes a node by its index (set to invalid)
-        void removeNode(int node);
+        void removeNode(i32 node);
     // Add and remove edges
         void addEdge(Edge edge);
-        void removeEdge(int from, int to);
+        void removeEdge(i32 from, i32 to);
     // Returns the number of nodes in the graph
-        int getNumNodes();
+        i32 getNumNodes();
     // Returns the number of nodes in the graph
-        int getNumEdges();
+        i32 getNumEdges();
     // Returns if the graph is empty
         bool isEmpty();
     // Returns if the graph contains the node
-        bool isPresent(int index);
+        bool isPresent(i32 index);
     // Eucliden distance from 2 nodes
-        float calculateDistance(Vector2<float> a, Vector2<float> b);
+        f32 calculateDistance(Vector2<f32> a, Vector2<f32> b);
     // Clears the graph for new node insertions
         void Clear();
     // Getters
         nodeVector getNodeVector();
         edgeListVector getEdgeListVector();
-        Vector2<float> getPositionFrom(int index);
+        Vector2<f32> getPositionFrom(i32 index);
     // Extra functions to load data 
         // To do
         //bool Load( char* fileName);
         //bool Load(std::ifstream& stream);
     // Iterators to acces nodes and edges
-        //std::list< Edge* >::iterator getEdgeIterator(int node);
+        //std::list< Edge* >::iterator getEdgeIterator(i32 node);
         //std::vector< LWayPoint* >::iterator getNodeIterator();
         //void incNodeIterator();
         //void incEdgeIterator();

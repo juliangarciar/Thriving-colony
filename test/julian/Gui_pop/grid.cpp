@@ -1,16 +1,16 @@
 #include "grid.h"
 #include "nodeGrid.h"
 //Constructor
-grid::grid(int x, int y, irr::scene::ISceneManager *smgrData)
+grid::grid(i32 x, i32 y, irr::scene::ISceneManager *smgrData)
 {
     ox = x;
     oy = y;
     map = new nodeGrid**[ox];
-    for (int i = 0; i < ox; i++){
+    for (i32 i = 0; i < ox; i++){
         map[i] = new nodeGrid*[oy];
     }
-    for (int i = 0; i < ox; i++){
-        for (int j = 0; j < oy; j++){
+    for (i32 i = 0; i < ox; i++){
+        for (i32 j = 0; j < oy; j++){
             map[i][j] = new nodeGrid(i , j, 0, smgrData);
         }
     }
@@ -22,8 +22,8 @@ grid::grid(const grid &orig){
 grid::~grid(){
     //Retocar 
     delete smgrData;
-    for(int i = 0; i < ox; i++){
-        for(int j = 0; j < oy; j++){
+    for(i32 i = 0; i < ox; i++){
+        for(i32 j = 0; j < oy; j++){
             delete map[i][j];
         }
         delete[] map[i];
@@ -31,27 +31,27 @@ grid::~grid(){
     delete[] map;
 }
 //Manhattan distance
-float grid::checkDistance(nodeGrid* a, nodeGrid* b, nodeGrid* startData){
-    //int dx1 = b -> getX() - a -> getX();
-    //int dy1 = b -> getY() - a -> getY();
-    //int dx2 = startData -> getX() - a -> getX();
-    //int dy2 = startData -> getY() - a -> getY();
-    //int cross = abs(dx1 * dy2 - dx2 * dy1);
+f32 grid::checkDistance(nodeGrid* a, nodeGrid* b, nodeGrid* startData){
+    //i32 dx1 = b -> getX() - a -> getX();
+    //i32 dy1 = b -> getY() - a -> getY();
+    //i32 dx2 = startData -> getX() - a -> getX();
+    //i32 dy2 = startData -> getY() - a -> getY();
+    //i32 cross = abs(dx1 * dy2 - dx2 * dy1);
     //heuristic += cross * 0.001 
 
-    float dx = abs(a -> getX() - b -> getX());
-    float dy = abs(a -> getY() - b -> getY());
-    float twoD = sqrt(2);
-    int oneD = 1;
-    float result = oneD * (dx + dy) + (twoD - 2 * oneD) * std::min(dx, dy);
+    f32 dx = abs(a -> getX() - b -> getX());
+    f32 dy = abs(a -> getY() - b -> getY());
+    f32 twoD = sqrt(2);
+    i32 oneD = 1;
+    f32 result = oneD * (dx + dy) + (twoD - 2 * oneD) * std::min(dx, dy);
     //result += cross * 1.001;
     return result;
     //return abs(a -> getX() - b -> getX()) + abs(a -> getY() - b -> getY());
 }
 std::vector< nodeGrid* > grid::getNeighbours(nodeGrid* currentData){
     std::vector < nodeGrid* > neighbours;
-    int x = currentData -> getX();
-    int y = currentData -> getY();
+    i32 x = currentData -> getX();
+    i32 y = currentData -> getY();
     //Right node
     if((x + 1) < this -> ox && (x + 1) >= 0){
         if(!map[x + 1][y] -> itsBlock()){

@@ -48,15 +48,15 @@ void Rect2D<T>::setRect2D(core::rect<T> rect) {
 
 template <class T>
 Rect2D<T> Rect2D<T>::getFixed() {
-    int initialWidth = Window::Instance() -> getInitialWindowWidth();
-    int initialHeight = Window::Instance() -> getInitialWindowHeight();
-    int actualWidth = Window::Instance() -> getRealWindowWidth();
-    int actualHeight = Window::Instance() -> getRealWindowHeight();
+    i32 initialWidth = Window::Instance() -> getInitialWindowWidth();
+    i32 initialHeight = Window::Instance() -> getInitialWindowHeight();
+    i32 actualWidth = Window::Instance() -> getRealWindowWidth();
+    i32 actualHeight = Window::Instance() -> getRealWindowHeight();
 
-    int newX = x*actualWidth/initialWidth; 
-    int newY = y*actualHeight/initialHeight; 
-    int newW = w*actualWidth/initialWidth; 
-    int newH = h*actualHeight/initialHeight; 
+    i32 newX = x*actualWidth/initialWidth; 
+    i32 newY = y*actualHeight/initialHeight; 
+    i32 newW = w*actualWidth/initialWidth; 
+    i32 newH = h*actualHeight/initialHeight; 
 
     return Rect2D<T>(newX, newY, newW, newH);
 }
@@ -66,5 +66,5 @@ core::rect<T> Rect2D<T>::getRect2D() {
     return core::rect<T>(core::vector2d<T>(x, y), core::dimension2d<T>(w, h));
 }
 
-template class Rect2D<int>;
-template class Rect2D<float>;
+template class Rect2D<i32>;
+template class Rect2D<f32>;

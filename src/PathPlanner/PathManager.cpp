@@ -1,7 +1,7 @@
 #include "PathManager.h"
 #include "SearchAStar.h"
-#define spaceWidth 9000
-#define total 90
+#define spaceWidth 10240
+#define total 80
 PathManager::PathManager(class Unit* actor){
     // Creates the graph
     navGraph = Graph::Instance();
@@ -12,10 +12,10 @@ PathManager::~PathManager(){
     delete unit;
 }
 // Change this method
-int PathManager::getClosestNodeToPosition(Vector2<float> pos){
+i32 PathManager::getClosestNodeToPosition(Vector2<f32> pos){
     // This is not working properly for some reason
-    int idx = (int)(total * pos.x / spaceWidth) + 
-                ((int)((total) * pos.y / spaceWidth) * total);
+    i32 idx = (i32)(total * pos.x / spaceWidth) + 
+                ((i32)((total) * pos.y / spaceWidth) * total);
     std::cout << idx << "\n";
     std::cout << navGraph->getNumNodes() << std::endl;
     if (idx > navGraph->getNumNodes() - 1) 
@@ -23,7 +23,7 @@ int PathManager::getClosestNodeToPosition(Vector2<float> pos){
 
     return idx;
 }
-bool PathManager::createPathTo(Vector2<float> targetPos){
+bool PathManager::createPathTo(Vector2<f32> targetPos){
     vDestination = targetPos;
     // Dummy variable, to be deleted
     //bool obstructed = false;
@@ -34,20 +34,20 @@ bool PathManager::createPathTo(Vector2<float> targetPos){
     //    return true;
     //}
     // Find closes node to unitPos
-    int closestNodeToUnit = getClosestNodeToPosition(unit->getPosition()->toVector2());
+    i32 closestNodeToUnit = getClosestNodeToPosition(unit->getPosition()->toVector2());
     if(closestNodeToUnit == no_closest_node_found)
         return false;
 
     // Same for target
-    int closestNodeToTarget = getClosestNodeToPosition(targetPos);
+    i32 closestNodeToTarget = getClosestNodeToPosition(targetPos);
     if(closestNodeToTarget == no_closest_node_found)
         return false;
 
     SearchAStar aStar(*navGraph, closestNodeToUnit, closestNodeToTarget);
 
     // Complete getPathToTarget
-    std::list<int> dummy = aStar.getPathToTarget();
-    std::list< Vector2<float> > path;
+    std::list<i32> dummy = aStar.getPathToTarget();
+    std::list< Vector2<f32> > path;
     if(!dummy.empty()){
         //path.clear();
         while(!dummy.empty()){

@@ -7,6 +7,7 @@
 //#include "Entity.h"
 #include "Unit.h"
 #include "Building.h"
+#include <Types.h>
 
 /**
  * @class BattleManager

@@ -7,6 +7,7 @@
 #include <GraphicEngine/SceneNode.h>
 #include "Enumeration.h"
 //#include "Battle.h"
+#include <Types.h>
 
 /**
  * @class Entity
@@ -23,7 +24,7 @@ class Entity {
          * @param team
          * @param breed
 		 */
-        Entity(SceneNode *, int, const wchar_t *, Enumeration::Team, Enumeration::BreedType);
+        Entity(SceneNode *, i32, const wchar_t *, Enumeration::Team, Enumeration::BreedType);
         /**
 		 * @brief Destructor
 		 */
@@ -33,7 +34,7 @@ class Entity {
         * @brief Resta el daño que se le haga a una unidad a tu salud total
          * @param dmg es el daño a restar
 		 */
-        void takeDamage(int);
+        void takeDamage(i32);
         /**
 		 * @brief Mueve el objeto 3D a las coordenadas (0,0,0)
 		 */
@@ -53,7 +54,7 @@ class Entity {
 		 * @brief Establece la posicion de la entidad
          * @param vertorData es las nuevas coordenadas de la posicion
 		 */
-        void setPosition(Vector3<float>);
+        void setPosition(Vector3<f32>);
         /**
          * @brief
          * @param
@@ -63,13 +64,13 @@ class Entity {
          * @brief set the id
          * @param id
          */
-        void setID(int);
+        void setID(i32);
 
         /**
 		 * @brief Solicita el rango de ataque de la entidad
          * @return AttackRange de tipo entero
 		 */
-        int getAttackRange();
+        i32 getAttackRange();
         /**
 		 * @brief Devuelve el equipo al que pertenece la entidad
          * @return team tipo Enumeration::Team
@@ -81,17 +82,17 @@ class Entity {
 		 * @brief Devuelte la salud de la entidad
          * @return hp de tipo entero
 		 */
-        int getHP();
+        i32 getHP();
         /**
 		 * @brief Solicita la posicion actual de la entidad
          * @return position sera el vector de coordenadas devuelto
 		 */
-        Vector3<float> *getPosition();
+        Vector3<f32> *getPosition();
         /**
 		 * @brief Solicita la hitbox de la entidad
          * @return hitbox de tipo Box3D
 		 */
-        Box3D<float> *getHitbox();
+        Box3D<f32> *getHitbox();
         /**
 		 * @brief Solicita el modelo 3D de la entidad
          * @return model3D de tipo Model
@@ -101,14 +102,14 @@ class Entity {
 		 * @brief Devuelve el ViewRadius de la entidad
          * @return viewRadius de tipo entero
 		 */
-        int getViewRadius();
+        i32 getViewRadius();
         /**
          * @brief solicita el id del edificio
          * @return entero con el id 
          */
-        int getID();
+        i32 getID();
 
-        int getHappiness();
+        i32 getHappiness();
         
         /**
          * @brief solicita el color del edificio
@@ -123,16 +124,16 @@ class Entity {
         
     protected:
         Model* model;
-        Vector3<float> *position;
-        Box3D<float>* hitbox;
+        Vector3<f32> *position;
+        Box3D<f32>* hitbox;
         Enumeration::Team team;
         Enumeration::BreedType breed;
         Enumeration::EntityType entityType;
 
-        int ID;
+        i32 ID;
 
-        float tookDamageTimer;
-        float tookDamageCountdown;
+        f32 tookDamageTimer;
+        f32 tookDamageCountdown;
 
         irr::video::SColor baseColor; //ToDo: cambiar por material
         irr::video::SColor currentColor; //ToDo: cambiar color por material
@@ -140,16 +141,16 @@ class Entity {
         Entity* target;
         
         // Values, costs, etc
-        int currentHP;
-        int maxHP;
-        int viewRadius;
-        int attackRange;
-        int metalCost;
-        int crystalCost;
-        int happiness;
-        int citizens;
+        i32 currentHP;
+        i32 maxHP;
+        i32 viewRadius;
+        i32 attackRange;
+        i32 metalCost;
+        i32 crystalCost;
+        i32 happiness;
+        i32 citizens;
         // For IA and info
-        int cityLevel;
+        i32 cityLevel;
       private:
 };
 

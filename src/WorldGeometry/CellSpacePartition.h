@@ -6,6 +6,7 @@
 #include <irrlicht.h>
 #include <vector>
 #include <list>
+#include <Types.h>
 
 class CellSpacePartition;
 struct Cell{
@@ -14,8 +15,8 @@ struct Cell{
 // Cell bounding box
     Box2D BBox;
 // Constructor
-    Cell(Vector2<float> topLeft,
-         Vector2<float> botRight):BBox(topLeft, botRight)
+    Cell(Vector2<f32> topLeft,
+         Vector2<f32> botRight):BBox(topLeft, botRight)
     {}
 // Destructor
     ~Cell();
@@ -23,14 +24,14 @@ struct Cell{
 class CellSpacePartition{
     private:
     // Width and height
-        float spaceWidth;
-        float spaceHeight;
+        f32 spaceWidth;
+        f32 spaceHeight;
     // Number of cells the space is going to be divided into
-        int cellsX;
-        int cellsY;
+        i32 cellsX;
+        i32 cellsY;
     
-        float cellSizeX;
-        float cellSizeY;
+        f32 cellSizeX;
+        f32 cellSizeY;
     // Required number of cells
         std::vector< Cell > mCells;
     // Stores valid neighbors 
@@ -38,22 +39,22 @@ class CellSpacePartition{
     // Iterator used by methods next and begin
         std::vector< Entity* >::iterator mCurNeighbor;
     // Returns an index from a position 
-        int positionToIndex(Vector2<float> position);
+        i32 positionToIndex(Vector2<f32> position);
     public:
     // Constructor
-        CellSpacePartition( float width,
-                            float height,
-                            int nCellsX,
-                            int nCellsY,
-                            int maxEntities);
+        CellSpacePartition( f32 width,
+                            f32 height,
+                            i32 nCellsX,
+                            i32 nCellsY,
+                            i32 maxEntities);
     // Destructor
         ~CellSpacePartition();
     // Add entities to the proper cell
         inline void addEntity(Entity* ent);
     // Updates a entity's cell, calling this from the entity update method
-        inline void updateEntity(Entity* ent, Vector2<float> oldPos);
+        inline void updateEntity(Entity* ent, Vector2<f32> oldPos);
     // Calculate neighbors and add them in the neighbor vector
-        inline void calculateNeighbors(Vector2<float> targetPos, float radious);
+        inline void calculateNeighbors(Vector2<f32> targetPos, f32 radious);
     // Returns a reference to the entity of the neighbor vector
         Entity* begin();
     // Used to iterate trought the neighbor vector

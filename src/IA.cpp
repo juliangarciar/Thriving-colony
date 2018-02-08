@@ -80,11 +80,11 @@ void IA::update() {
 * Goes over the vector of buildings looking up, right, down and left of every building built
 * until find the first empty position
 */
-Vector3<float> IA::determinatePositionBuilding() {
-    Vector3<float> v;
+Vector3<f32> IA::determinatePositionBuilding() {
+    Vector3<f32> v;
     bool found = false;
     bool occupied = false;
-    std::map<int, Building*> *b = buildings -> getBuildings();
+    std::map<i32, Building*> *b = buildings -> getBuildings();
 
     // If it is the first building start always on the same position
     if (b -> size() == 0) {
@@ -92,20 +92,20 @@ Vector3<float> IA::determinatePositionBuilding() {
          * These coordinates determine the position of the main building
          * the y component of it is determined based on the map
          */
-        float startingX = 2000;
-        float startingZ = 2000;
+        f32 startingX = 2000;
+        f32 startingZ = 2000;
         v.set(startingX, 0, startingZ);
         v.y = Game::Instance() -> getGameState()  -> getTerrain() -> getY(v.x, v.z);
     } else {
 
         //When there are some buildings
-        Vector3<float> *v2 = 0;
-        Vector3<float> *v3 = 0;
-        for (std::map<int,Building*>::iterator it = b -> begin(); it != b -> end() && found == false; ++it){
+        Vector3<f32> *v2 = 0;
+        Vector3<f32> *v3 = 0;
+        for (std::map<i32,Building*>::iterator it = b -> begin(); it != b -> end() && found == false; ++it){
             v2 = it -> second -> getPosition();
             occupied = false;
-            v = Vector3<float>(v2 -> x, v2 -> y, v2 -> z + 200);
-            for (std::map<int,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
+            v = Vector3<f32>(v2 -> x, v2 -> y, v2 -> z + 200);
+            for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                 v3 = it2 -> second -> getPosition();
                 if (v3 -> x == v.x && v3 -> z == v.z) {
                     occupied = true;
@@ -114,9 +114,9 @@ Vector3<float> IA::determinatePositionBuilding() {
             if (occupied == false ) {
                 found = true;
             } else {
-                v = Vector3<float>(v2 -> x + 200, v2 -> y, v2 -> z);
+                v = Vector3<f32>(v2 -> x + 200, v2 -> y, v2 -> z);
                 occupied = false;
-                for (std::map<int,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
+                for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                     v3 = it2 -> second -> getPosition();
                     if (v3 -> x == v.x && v3 -> z == v.z) {
                         occupied = true;
@@ -125,9 +125,9 @@ Vector3<float> IA::determinatePositionBuilding() {
                 if (occupied == false ) {
                     found = true;
                 } else {
-                    v = Vector3<float>(v2 -> x, v2 -> y, v2 -> z - 200);
+                    v = Vector3<f32>(v2 -> x, v2 -> y, v2 -> z - 200);
                     occupied = false;
-                    for (std::map<int,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
+                    for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                         v3 = it2 -> second -> getPosition();
                         if (v3 -> x == v.x && v3 -> z == v.z) {
                             occupied = true;
@@ -136,9 +136,9 @@ Vector3<float> IA::determinatePositionBuilding() {
                     if (occupied == false ) {
                         found = true;
                     } else {
-                        v = Vector3<float>(v2 -> x - 200, v2 -> y, v2 -> z);
+                        v = Vector3<f32>(v2 -> x - 200, v2 -> y, v2 -> z);
                         occupied = false;
-                        for (std::map<int,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
+                        for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                             v3 = it2 -> second -> getPosition();
                             if (v3 -> x == v.x && v3 -> z == v.z) {
                                 occupied = true;
@@ -157,7 +157,7 @@ Vector3<float> IA::determinatePositionBuilding() {
 }
 
 void IA::deployTroops() {
-    Vector3<float> v = *(IA::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
+    Vector3<f32> v = *(IA::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
     v.x = v.x + 100;
     v.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(v.x, v.z);
     IA::getInstance() -> getUnitManager() -> deployAllTroops(v);
@@ -178,23 +178,23 @@ void IA::openDoors() {
 * Troops come back to their building (barn, barrack or workshop)
 */
 void IA::retractTroops() {
-    Vector3<float> v = *(IA::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
+    Vector3<f32> v = *(IA::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
     IA::getInstance() -> getUnitManager() -> retractAllTroops(v);
 }
 
 bool IA::getUnderAttack() {
     if(underAttack == false){
-        Vector3<float> *pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
-        int requesterRange = 1000;
+        Vector3<f32> *pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
+        i32 requesterRange = 1000;
         
-        float xaux = 0;
-        float yaux = 0;
-        float dist = 0;
+        f32 xaux = 0;
+        f32 yaux = 0;
+        f32 dist = 0;
 
         // Get units in the map of the opposing team
-        std::map<int, Unit*> *inMapTroops = Human::getInstance() -> getUnitManager() -> getInMapTroops();
+        std::map<i32, Unit*> *inMapTroops = Human::getInstance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map
-        for (std::map<int,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
+        for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
             if (it -> second != NULL) {
             // Calculate distance between troop requesting target and posible targets
                 xaux = it -> second -> getPosition() -> x - pos -> x;
@@ -247,7 +247,7 @@ std::string IA::getNextChoice() {
     return choices -> at(choiceIndex);
 }
 
-void IA::setChoiceIndex(int newIndex) {
+void IA::setChoiceIndex(i32 newIndex) {
     choiceIndex = newIndex;
 }
 

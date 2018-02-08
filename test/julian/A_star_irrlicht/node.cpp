@@ -1,13 +1,13 @@
 #include <limits>
 #include "node.h"
-node::node(int x, int y, irr::scene::ISceneManager *smgrData)
+node::node(i32 x, i32 y, irr::scene::ISceneManager *smgrData)
 {
     posX = x;
     posY = y;
     visited = false;
     block = false;
     frontier = false;
-    weight = std::numeric_limits<int>::max();
+    weight = std::numeric_limits<i32>::max();
     cameFrom = NULL;
     smgr = smgrData;
     cube = smgr -> addCubeSceneNode(20.f);
@@ -32,11 +32,11 @@ void node::swapColor(irr::video::SColor colorData){
     smgr -> getMeshManipulator() -> setVertexColors(cube -> getMesh(), colorData);
 }
 
-int node::getX()
+i32 node::getX()
 {
     return posX;
 }
-int node::getY()
+i32 node::getY()
 {
     return posY;
 }
@@ -64,11 +64,11 @@ void node::setFrontier(bool frontierData)
 {
     this -> frontier = frontierData;
 }
-int node::getWeight()
+i32 node::getWeight()
 {
     return this -> weight;
 }
-void node::setWeight(int weightData)
+void node::setWeight(i32 weightData)
 {
     this -> weight = weightData;
 }
@@ -88,11 +88,11 @@ void node::setCounted(bool countedData)
 {
     this -> counted = countedData;
 }
-int node::getPriority()
+i32 node::getPriority()
 {
     return this -> priority;
 }
-void node::setPriority(int priorityData)
+void node::setPriority(i32 priorityData)
 {
     this -> priority = priorityData;
 }

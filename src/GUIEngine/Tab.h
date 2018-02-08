@@ -4,6 +4,7 @@
 #include <nanogui/nanogui.h>
 #include "GUIElement.h"
 //#include "TabPanel.h"
+#include <Types.h>
 
 class Tab : public GUIElement{
     public:
@@ -16,7 +17,7 @@ class Tab : public GUIElement{
 
         void addChild(GUIElement *elem);
         
-        void setPosition(Vector2<int> position);
+        void setPosition(Vector2<i32> position);
         
         void setTooltip(std::string text);
 

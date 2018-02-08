@@ -4,6 +4,7 @@
 #include <nanogui/nanogui.h>
 #include <GraphicEngine/Vector2.h>
 #include "GUIElement.h"
+#include <Types.h>
 
 class Button : public GUIElement{
     
@@ -19,8 +20,8 @@ class Button : public GUIElement{
         bool isButtonPressed();
         void setButtonPressed(bool pressed);
         
-        void setPosition(Vector2<int> position);
-        void setSize(Vector2<int> size);
+        void setPosition(Vector2<i32> position);
+        void setSize(Vector2<i32> size);
 
         void setTooltip(std::string text);
         void setText(std::string text);

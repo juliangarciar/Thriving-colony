@@ -13,7 +13,7 @@ ProgressBar::~ProgressBar() {
     //ToDo: borrar ProgressBar
 }
 
-void ProgressBar::setPosition(Vector2<int> position){
+void ProgressBar::setPosition(Vector2<i32> position){
     progressBar -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 
@@ -21,11 +21,11 @@ void ProgressBar::setTooltip(std::string t){
     progressBar->setTooltip(t);
 }
 
-void ProgressBar::setValue(float v) {
+void ProgressBar::setValue(f32 v) {
     progressBar -> setValue(v);
 }
 
-void ProgressBar::setSize(Vector2<int> size) {
+void ProgressBar::setSize(Vector2<i32> size) {
     progressBar -> setFixedSize(Eigen::Vector2i(size.x, size.y));
 }
 

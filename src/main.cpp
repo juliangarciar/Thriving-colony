@@ -4,7 +4,7 @@
 
 using namespace std;
 
-int main() {
+i32 main() {
     Game *game = Game::Instance();
 
     game -> Init();

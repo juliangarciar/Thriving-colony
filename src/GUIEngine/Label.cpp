@@ -14,7 +14,7 @@ Label::~Label() {
     hide();
 }
 
-void Label::setPosition(Vector2<int> position){
+void Label::setPosition(Vector2<i32> position){
     label -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 
@@ -26,7 +26,7 @@ void Label::setLabel(std::string t) {
     label -> setCaption(t);
 }
 
-void Label::setSize(Vector2<int> size) {
+void Label::setSize(Vector2<i32> size) {
     label -> setFixedSize(Eigen::Vector2i(size.x, size.y));
 }
 

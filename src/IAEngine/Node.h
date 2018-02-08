@@ -2,6 +2,7 @@
 #define NODE_H
 
 #include "BehaviourTree.h"
+#include <Types.h>
 
 class Node {
     

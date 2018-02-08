@@ -2,6 +2,7 @@
 #define WORKSHOP_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class WorkshopNode : public Node {
 

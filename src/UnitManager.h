@@ -7,6 +7,8 @@
 #include <vector>
 #include <map>
 #include <GraphicEngine/Terrain.h>
+#include <Types.h>
+
 class UnitManager{
     public:
         UnitManager(Enumeration::Team teamData, Enumeration::BreedType raceData);
@@ -18,27 +20,27 @@ class UnitManager{
 
         //Call for creating new troops, see the .cpp for more info on how to insert the desired unit
         bool createTroop(Enumeration::UnitType unitData);
-        void deployTroopAtPosition(int index, Vector3<float> vectorData);
-        void startDeployingTroop(int index);
+        void deployTroopAtPosition(i32 index, Vector3<f32> vectorData);
+        void startDeployingTroop(i32 index);
         void deployTroop();
-        void deployAllTroops(Vector3<float> vectorData);
-        void retractAllTroops(Vector3<float>);
+        void deployAllTroops(Vector3<f32> vectorData);
+        void retractAllTroops(Vector3<f32>);
 
         bool isTroopSelected();
         void unSelectTroop();
         void moveOrder();
-        void selectTroop(int troopID);
-        void startBattle(int enemyID);
-        void deleteUnit(int);
+        void selectTroop(i32 troopID);
+        void startBattle(i32 enemyID);
+        void deleteUnit(i32);
 
-        bool isSolvent(int, int);
+        bool isSolvent(i32, i32);
         bool checkCanPay(Enumeration::UnitType);
 
-        int getTotalTroops(); 
-		int getCollisionID();
-        int getTroopAmount(Enumeration::UnitType);
+        i32 getTotalTroops(); 
+		i32 getCollisionID();
+        i32 getTroopAmount(Enumeration::UnitType);
         Unit* getSelectedTroop();
-        std::map<int, Unit*> * getInMapTroops();
+        std::map<i32, Unit*> * getInMapTroops();
         std::vector<Unit*> * getInHallTroops();
 		std::string getCollisionName();
         Unit* setNewUnitModel(Enumeration::UnitType);
@@ -53,18 +55,18 @@ class UnitManager{
 
         std::vector<Unit*> *inQueueTroops;
         std::vector<Unit*> *inHallTroops;
-        std::map<int, Unit*> *inMapTroops;
+        std::map<i32, Unit*> *inMapTroops;
 
         std::vector<Unit*> *totalTroops;
 
         Unit *selectedTroop;
 
         bool isDeployingTroop;
-        int currentDeployingTroop;
+        i32 currentDeployingTroop;
 
-        int gridAlignment;
+        i32 gridAlignment;
         
-        int troopsAmount[Enumeration::UnitType::TroopsSize];
+        i32 troopsAmount[Enumeration::UnitType::TroopsSize];
 };
 
 #endif

@@ -3,7 +3,7 @@
 #include "Human.h"
 #include "Game.h"
 
-Building::Building(SceneNode *parent, int id, const wchar_t *path, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::BuildingType t, Vector3<float> p) : Entity(parent, id, path, team, breed) {
+Building::Building(SceneNode *parent, i32 id, const wchar_t *path, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::BuildingType t, Vector3<f32> p) : Entity(parent, id, path, team, breed) {
     buildTimer = 0;
     type = t;
 
@@ -17,9 +17,9 @@ Building::~Building() {
 }
 
 void Building::Init() {
-    float r = 0;
-    float g = 0;
-    float b = 0;
+    f32 r = 0;
+    f32 g = 0;
+    f32 b = 0;
     switch (type) {
         case Enumeration::BuildingType::Barn:
             // Different color for diferent buildings

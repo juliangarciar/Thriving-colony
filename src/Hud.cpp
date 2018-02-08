@@ -10,7 +10,7 @@
 
 using namespace irr;
 
-//warningText = 0;//new Text(Rect2D<int>(200, 60, 50, 20), L"Edificio construido", true);
+//warningText = 0;//new Text(Rect2D<i32>(200, 60, 50, 20), L"Edificio construido", true);
 
 Hud::Hud() {
     updateTimer = 0.5;
@@ -22,22 +22,22 @@ Hud::Hud() {
 
     // Building buttons panel
     buildingsPanel = new Panel("Buildings");
-    buildingsPanel->setPosition(Vector2<int>(575, 546).getFixed());
+    buildingsPanel->setPosition(Vector2<i32>(575, 546).getFixed());
 
     // General
     generalPanel = new Panel(buildingsPanel, "General functions");
-    generalPanel->setPosition(Vector2<int>(20, 640).getFixed());
+    generalPanel->setPosition(Vector2<i32>(20, 640).getFixed());
 
     buttonExpandTerrain = new Button(generalPanel, "Expand terrain");
 
     buttonOpenPanel = new Button(generalPanel, "Open Panel");
-    buttonOpenPanel->setPosition(Vector2<int>(100, 20));
+    buttonOpenPanel->setPosition(Vector2<i32>(100, 20));
 
     generalPanel -> setVerticalAlignment();
 
     // Resources
     resourcePanel = new Panel(buildingsPanel, "Resource buildings");
-    resourcePanel->setPosition(Vector2<int>(20, 640).getFixed());
+    resourcePanel->setPosition(Vector2<i32>(20, 640).getFixed());
 
     buttonHome = new Button(resourcePanel, "Home");
     buttonSiderurgy = new Button(resourcePanel, "Siderurgy");
@@ -47,7 +47,7 @@ Hud::Hud() {
 
     // Services
     servicePanel = new Panel(buildingsPanel, "Service buildings");
-    servicePanel->setPosition(Vector2<int>(20, 640).getFixed());
+    servicePanel->setPosition(Vector2<i32>(20, 640).getFixed());
 
     buttonSchool = new Button(servicePanel, "School");
     buttonMarket = new Button(servicePanel, "Market");
@@ -57,7 +57,7 @@ Hud::Hud() {
 
     // Military
     militaryPanel = new Panel(buildingsPanel, "Military buildings");
-    militaryPanel->setPosition(Vector2<int>(20, 640).getFixed());
+    militaryPanel->setPosition(Vector2<i32>(20, 640).getFixed());
 
     buttonBarrack = new Button(militaryPanel, "Barrack");
     buttonBarn = new Button(militaryPanel, "Barn");
@@ -67,7 +67,7 @@ Hud::Hud() {
 
     // Defense
     defensePanel = new Panel(buildingsPanel, "Defensive buildings");
-    defensePanel->setPosition(Vector2<int>(20, 640).getFixed());
+    defensePanel->setPosition(Vector2<i32>(20, 640).getFixed());
 
     buttonTower = new Button(defensePanel, "Tower");
     buttonWall = new Button(defensePanel, "Wall");
@@ -95,20 +95,20 @@ Hud::Hud() {
     warningText = new TextBox("Edificio construido");
 
     backgroundText = new TextBox("");
-    backgroundText -> setPosition(Vector2<int>(0,0));
-    backgroundText -> setSize(Vector2<int>(950,35));
+    backgroundText -> setPosition(Vector2<i32>(0,0));
+    backgroundText -> setSize(Vector2<i32>(950,35));
 
-    resourceText->setPosition(Vector2<int>(0,0).getFixed());
-    iaResourceText->setPosition(Vector2<int>(0,20).getFixed());
-    warningText->setPosition(Vector2<int>(1000,650).getFixed());
+    resourceText->setPosition(Vector2<i32>(0,0).getFixed());
+    iaResourceText->setPosition(Vector2<i32>(0,20).getFixed());
+    warningText->setPosition(Vector2<i32>(1000,650).getFixed());
 
-    resourceText -> setSize(Vector2<int>(1000,100));
-    iaResourceText -> setSize(Vector2<int>(1000,100));
+    resourceText -> setSize(Vector2<i32>(1000,100));
+    iaResourceText -> setSize(Vector2<i32>(1000,100));
 
     deleteWarning();
     
     tabContainer = new Panel("Building viewer");
-        tabContainer -> setSize(Vector2<int>(350, 280));
+        tabContainer -> setSize(Vector2<i32>(350, 280));
         tabContainer -> setGroupLayout();
         tabs = new TabPanel(tabContainer);
         mainBuildingTab = tabs->createTab("Main Building");
@@ -130,7 +130,7 @@ Hud::Hud() {
             b = new Button(mainBuildingTab, "Deploy selected troop");
             b -> setTooltip("Deploy your selected unit onto the map");
             b -> setCallback([&]{
-                int index = hallTroopList -> getSelectedOption();
+                i32 index = hallTroopList -> getSelectedOption();
                 if (index >= 0) {
                     hallTroopList -> removeOption(index);
                     Human::getInstance() -> getUnitManager() -> startDeployingTroop(index);
@@ -463,15 +463,15 @@ void Hud::setHUDEvents(){
 }
 
 void Hud::update() {
-    float dt = Game::Instance()  -> getWindow() -> getDeltaTime();
+    f32 dt = Game::Instance()  -> getWindow() -> getDeltaTime();
     if (updateTimer <= 0) {
-        int melees = 
+        i32 melees = 
             Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
             Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
-        int ranges = 
+        i32 ranges = 
             Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardR) + 
             Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedR);
-        int sieges = 
+        i32 sieges = 
             Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) + 
             Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
 
@@ -523,13 +523,13 @@ void Hud::update() {
 }
 
 void Hud::updatePositions() {
-    buttonOpenPanel -> setPosition(Vector2<int>(100,20).getFixed());
+    buttonOpenPanel -> setPosition(Vector2<i32>(100,20).getFixed());
 
-    buildingsPanel->setPosition(Vector2<int>(20, 640).getFixed());
+    buildingsPanel->setPosition(Vector2<i32>(20, 640).getFixed());
 
-    resourceText->setPosition(Vector2<int>(1000,0).getFixed());
-    iaResourceText->setPosition(Vector2<int>(1150,0).getFixed());
-    warningText->setPosition(Vector2<int>(1000,650).getFixed());
+    resourceText->setPosition(Vector2<i32>(1000,0).getFixed());
+    iaResourceText->setPosition(Vector2<i32>(1150,0).getFixed());
+    warningText->setPosition(Vector2<i32>(1000,650).getFixed());
 
     tabContainer->center();
 }

@@ -6,7 +6,7 @@
 using namespace std;
 
 
-int main(){
+i32 main(){
     IA* pl = new IA();
     
     VeryHappyTree* t = new VeryHappyTree(pl);

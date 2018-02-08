@@ -2,6 +2,7 @@
 #define HUMAN_H
 
 #include "Player.h"
+#include <Types.h>
 
 class Human : public Player {
     

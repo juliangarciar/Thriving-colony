@@ -2,6 +2,7 @@
 #define HOME_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class HomeNode : public Node {
 

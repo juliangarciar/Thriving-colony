@@ -2,6 +2,7 @@
 #define PAUSEMENU_H
 
 #include <GUIEngine/Button.h>
+#include <Types.h>
 
 /**
  * @class PauseMenu

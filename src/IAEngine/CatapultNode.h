@@ -2,6 +2,7 @@
 #define CATAPULT_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class CatapultNode : public Node {
 

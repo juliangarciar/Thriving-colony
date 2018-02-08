@@ -11,6 +11,7 @@
 #include <fmod/fmod_studio.h>
 #include <fmod/fmod_errors.h>
 #include <GraphicEngine/Vector3.h>
+#include <Types.h>
 
 using namespace std;
 using namespace FMOD;
@@ -43,12 +44,12 @@ public:
     /**
      *  Modifica el volumen general del motor de sonido
      */
-    void setVolume(float vol);
+    void setVolume(f32 vol);
     
     /**
      *  Modifica la posición del punto de escucha (en esta aplicación sólo hay uno)
      */
-    void setListernerPosition(Vector3<float> pos);
+    void setListernerPosition(Vector3<f32> pos);
     
     /**
      *  Actualiza el motor de audio
@@ -119,19 +120,19 @@ public:
      *  Modifica el volumen del evento
      *  \param vol volumen del evento: 0=silencio, 1=máximo volumen
      */
-    void setVolume(float vol);
+    void setVolume(f32 vol);
     
     /**
      *  Modifca el volumen del evento multiplicando por un factor de ganancia
      *  \param gain factor de ganancia. 0=silencio, 1=mantener el volumen
      */
-    void setGain(float gain);
+    void setGain(f32 gain);
     
     /**
      *  Modifica la posición 3D del evento de sonido
      *  \param pos nuevo vector de posición
      */
-    void setPosition(Vector3<float> pos);
+    void setPosition(Vector3<f32> pos);
     
     /**
      *  Consulta si el evento está sonando

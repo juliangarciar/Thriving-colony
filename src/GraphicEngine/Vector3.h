@@ -4,6 +4,7 @@
 //#include <iostream>
 //#include <irrlicht.h>
 #include "Vector2.h"
+#include <Types.h>
 
 #define PI 3.14159265
 
@@ -28,7 +29,7 @@ class Vector3 {
 
         Vector3<T> normalize();
         Vector3<T> getDistanceTo(Vector3<T> other);
-        Vector3<T> rotateFromPoint(float r, float phi, float theta);
+        Vector3<T> rotateFromPoint(f32 r, f32 phi, f32 theta);
         Vector2<T> toVector2();
         core::vector3di getVectorI();
         core::vector3df getVectorF();
@@ -36,13 +37,13 @@ class Vector3 {
         bool operator ==(const Vector3<T> &p) const;
         bool operator !=(const Vector3<T> &p) const;
         Vector3<T> operator +(const Vector3<T> &p) const;
-        Vector3<T> operator +(const float &num) const;
+        Vector3<T> operator +(const f32 &num) const;
         Vector3<T> operator -(const Vector3<T> &p) const;
-        Vector3<T> operator -(const float &num) const;
+        Vector3<T> operator -(const f32 &num) const;
         Vector3<T> operator *(const Vector3<T> &p) const;
-        Vector3<T> operator *(const float &num) const;
+        Vector3<T> operator *(const f32 &num) const;
         Vector3<T> operator /(const Vector3<T> &p) const;
-        Vector3<T> operator /(const float &num) const;
+        Vector3<T> operator /(const f32 &num) const;
 
     private:
 };

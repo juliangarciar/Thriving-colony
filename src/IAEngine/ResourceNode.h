@@ -2,6 +2,7 @@
 #define RESOURCE_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class ResourceNode : public Node {
 

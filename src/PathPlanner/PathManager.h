@@ -5,6 +5,8 @@
 #include "../Unit.h"
 #include <vector>
 #include <queue>
+#include <Types.h>
+
 class PathManager{
     private:
         enum {no_closest_node_found = -1};
@@ -14,7 +16,7 @@ class PathManager{
     // A local reference to the navgraph
         Graph* navGraph;
     // Position the unit wants to plan a path
-        Vector2<float> vDestination;
+        Vector2<f32> vDestination;
     
     public:
     // Constructor
@@ -22,11 +24,11 @@ class PathManager{
         PathManager(const PathManager &orig);
         virtual ~PathManager();
     // Closest node to the unit maybe this is not needed
-        int getClosestNodeToPosition(Vector2<float> pos);
+        i32 getClosestNodeToPosition(Vector2<f32> pos);
     // Finds the least cost path between unit's position and the target
     // returns true and a list full of waypoints if successful.
     // Returns false if else.
-        bool createPathTo(Vector2<float> targetPos);
+        bool createPathTo(Vector2<f32> targetPos);
 
 };
 #endif /* PATHMANAGER_H */

@@ -2,6 +2,7 @@
 #define HOSPITAL_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class HospitalNode : public Node {
 

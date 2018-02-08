@@ -4,6 +4,7 @@
 #include <vector>
 #include <nanogui/nanogui.h>
 #include "GUIElement.h"
+#include <Types.h>
 
 class ComboBox : public GUIElement {
 
@@ -16,13 +17,13 @@ class ComboBox : public GUIElement {
         void hide();
         bool isVisible();
 
-        int addOption(std::string option);
+        i32 addOption(std::string option);
         void removeOption(std::string option);
-        void removeOption(int option);
-        int getSelectedOption();
+        void removeOption(i32 option);
+        i32 getSelectedOption();
         std::string getSelectedOptionText();
         
-        void setPosition(Vector2<int> position);
+        void setPosition(Vector2<i32> position);
         
         void setTooltip(std::string text);
         void setCallback(std::function<void(bool)> callback);

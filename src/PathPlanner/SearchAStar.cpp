@@ -3,20 +3,20 @@ SearchAStar::~SearchAStar(){
     this->m_shortestPathTree.clear();
     this->m_searchFrontier.clear();
 }
-float SearchAStar::Calculate(int a, int b){
-    float dX = m_Graph.getNode(a).getPosition().x - m_Graph.getNode(b).getPosition().x;
-    float dY = m_Graph.getNode(a).getPosition().y - m_Graph.getNode(b).getPosition().y;
-    float distance = std::sqrt(std::pow(dX, 2) + std::pow(dY, 2));
+f32 SearchAStar::Calculate(i32 a, i32 b){
+    f32 dX = m_Graph.getNode(a).getPosition().x - m_Graph.getNode(b).getPosition().x;
+    f32 dY = m_Graph.getNode(a).getPosition().y - m_Graph.getNode(b).getPosition().y;
+    f32 distance = std::sqrt(std::pow(dX, 2) + std::pow(dY, 2));
     return distance;
 }
 void SearchAStar::Search(){
     // Fix this priority queue
     // Contiene ints, y su prioridad depende de m_FCost
-    std::priority_queue<int, std::vector<int>, comparePriority> pq(m_FCosts);
+    std::priority_queue<i32, std::vector<i32>, comparePriority> pq(m_FCosts);
     pq.push(m_iSource);
     // Check if exist a direct vector to the target
     while(!pq.empty()){
-        int NextClosestNode = pq.top();
+        i32 NextClosestNode = pq.top();
         pq.pop();
         m_shortestPathTree[NextClosestNode] = m_searchFrontier[NextClosestNode];
         if(NextClosestNode == m_iTarget) return;
@@ -53,13 +53,13 @@ void SearchAStar::Search(){
         }
     }
 }
-std::list<int> SearchAStar::getPathToTarget(){
-    std::list<int> path;
+std::list<i32> SearchAStar::getPathToTarget(){
+    std::list<i32> path;
 
     //just return an empty path if no target or no path found
     if (m_iTarget < 0)  return path;    
 
-    int nd = m_iTarget;
+    i32 nd = m_iTarget;
 
     path.push_front(nd);
         
