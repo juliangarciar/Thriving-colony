@@ -466,17 +466,19 @@ void Unit::moveTroop() {
         }
         else if(std::floor(steps) == 0){
             Vector3<f32> move = *vectorMov;
-            move.x *= steps;
-            //move.y *= steps;
-            move.z *= steps;
+            //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
+            //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
             Vector3<f32> newPos = *vectorPos + move;
             newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
-            this -> setTroopPosition(newPos);
+            setTroopPosition(newPos);
             steps = 0;
         } 
         else {
             // far from destination, move
-            Vector3<f32> newPos = *vectorPos + *vectorMov;
+            Vector3<f32> move = *vectorMov;
+            //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime();
+            //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime();
+            Vector3<f32> newPos = *vectorPos + move;
             newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
             setTroopPosition(newPos);
             steps--;
@@ -581,7 +583,7 @@ void Unit::setTroopPosition(Vector3<f32> vectorData) {
     vectorPos -> set(vectorData);
     setPosition(vectorData);
 }
-
+// To do -> adjust units movement
 void Unit::setTroopDestination(Vector3<f32> vectorData) {
     if (state == Enumeration::UnitState::Move) {
         target = NULL;
@@ -593,12 +595,14 @@ void Unit::setTroopDestination(Vector3<f32> vectorData) {
 
     f32 distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2));
 
-    vectorMov -> x = (desp.x / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
-    vectorMov -> z = (desp.z / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
-
+    //vectorMov -> x = (desp.x / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
+    //vectorMov -> z = (desp.z / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
+    vectorMov -> x = (desp.x / distance) * (moveSpeed / 100);
+    vectorMov -> z = (desp.z / distance) * (moveSpeed / 100);
     f32 movDistance = std::sqrt(std::pow(vectorMov -> x, 2) + std::pow(vectorMov -> z, 2));
     steps = (distance / movDistance);
-
+    std::cout << "Distance: " << distance << "\n";
+    std::cout << "Mov distance " << movDistance << "\n"; 
     std::cout << "Steps: " << steps << "\n";
     moving = true;
 }
