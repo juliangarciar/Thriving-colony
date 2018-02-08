@@ -11,6 +11,7 @@ Label::Label(GUIElement *parent, std::string t) {
 
 Label::~Label() {
     //ToDo: borrar Label
+    hide();
 }
 
 void Label::setPosition(Vector2<i32> position){

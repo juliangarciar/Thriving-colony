@@ -23,6 +23,9 @@ Unit::Unit(SceneNode *layer, i32 id, const wchar_t *path, Enumeration::Team team
     //Iniciar
     Init();
 
+    //Tax the player
+    //preTaxPlayer();
+
     // Position defined by the constructor parameter
     vectorPos = new Vector3<f32>();
     vectorDes = new Vector3<f32>();
@@ -316,8 +319,34 @@ void Unit::Init() {
         default: break;
     }
 }
+/*
+void Unit::moveTroop() {
+    if (moving) {
+        // close to destination, stop
+        if (std::abs(vectorDes -> x - position -> x) < 5.0 && std::abs(vectorDes -> z - position -> z) < 5.0) {
+            moving = false;
+            if (state == Enumeration::UnitState::Retract) {
+                readyToEnter = true;
+                if (team == Enumeration::Team::Human) {
+                    Human::getInstance() -> getUnitManager() -> enterMainBuilding(unitType);
+                } else {
+                    IA::getInstance() -> getUnitManager() -> enterMainBuilding(unitType);
+                }
+                return;
+            }
+            switchState(Enumeration::Idle);
+        } else {
+            // far from destination, move
+            Vector3<float> newPos = *vectorPos + *vectorMov;
+            newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
+            setTroopPosition(newPos);
+        }
+    }
+}*/
 
 void Unit::update() {
+    returnToOriginalColor(); //ToDo: ¿?
+    attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
     //State machine, color changes according to state
     switch (state) {
         case Enumeration::UnitState::Recruiting:
@@ -329,7 +358,6 @@ void Unit::update() {
         case Enumeration::UnitState::Idle:
             setColor(video::SColor(255, 0, 255, 255)); //ToDo: cambiar por materiales
             idleState();
-            returnToOriginalColor(); //ToDo: ¿?
         break;
         case Enumeration::UnitState::Move:
             setColor(video::SColor(255, 255, 0, 255)); //ToDo: cambiar por materiales
@@ -452,7 +480,11 @@ void Unit::moveTroop() {
             if(pathFollow.empty()){
                 moving = false;
                 if (state == Enumeration::UnitState::Retract) {
-                    readyToEnter = true;
+                    if (team == Enumeration::Team::Human) {
+                        Human::getInstance() -> getUnitManager() -> enterMainBuilding(unitType);
+                    } else {
+                        IA::getInstance() -> getUnitManager() -> enterMainBuilding(unitType);
+                    }
                     return;
                 }
                 switchState(Enumeration::Idle);

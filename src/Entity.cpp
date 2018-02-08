@@ -11,6 +11,8 @@ Entity::Entity(SceneNode *layer, i32 id, const wchar_t *path, Enumeration::Team 
     baseColor = video::SColor(255, 0, 0, 0); //ToDo: cambiar por material
     setColor(baseColor);
 
+    tookDamageTimer = 0.1;
+
     currentHP = 0;
     maxHP = 0;
     viewRadius = 0;
@@ -49,7 +51,7 @@ void Entity::refreshHitbox() {
 }
 
 void Entity::returnToOriginalColor() {
-    if (tookDamageCountdown <= 0) {
+    if (tookDamageCountdown <= 0.0) {
         setColor(baseColor); //ToDo: sustituir por material
     } else {
         tookDamageCountdown -= Game::Instance() -> getWindow() -> getDeltaTime(); //ToDo: sustituir por timer real

@@ -108,7 +108,7 @@ class Unit : public Entity {
         Vector3 <f32> *vectorPos;
         Vector3 <f32> *vectorDes;
         Vector3 <f32> *vectorMov;
-        f32 steps;
+        float steps;
 
     // Algo
         bool readyToEnter;

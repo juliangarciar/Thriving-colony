@@ -58,6 +58,7 @@ class Player {
         // Army
         bool underAttack;
         
+        f32 updateTimer;
         //Buildings
         f32 buildableRange;
         

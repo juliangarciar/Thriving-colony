@@ -58,9 +58,15 @@ UnitManager::~UnitManager() {
 //In order to add a new unit, you must specify which one
 bool UnitManager::createTroop(Enumeration::UnitType unitData) {
     if (checkCanPay(unitData)) {
-        Unit *newUnit = new Unit(unitLayer, std::rand(), L"media/buildingModels/dummy.obj", team, breed, unitData, Vector3<f32>());
+        Unit *newUnit = setNewUnitModel(unitData);
+        if (newUnit == NULL) {
+            return false;
+        }
+        // Distinto tamaño para distintas unidades?
+        newUnit -> getModel() -> setScale(Vector3<float>(25,25,25)); //VERSION DEFINITIVA, LO DE DEBAJO ES DE JULIAN DE DEBUGERUNIS
+        //Unit *newUnit = new Unit(unitLayer, std::rand(), L"media/buildingModels/dummy.obj", team, breed, unitData, Vector3<float>());
         newUnit -> getModel() -> setActive(false);
-        newUnit -> getModel() -> setScale(Vector3<f32>(128, 128, 128));
+        //newUnit -> getModel() -> setScale(Vector3<f32>(128, 128, 128));
         newUnit -> setRecruitedCallback([&] (Unit* u){
             std::cout << "Si" << std::endl;
             //Delete in Queue
@@ -73,6 +79,11 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
             //ToDo: modificar el HUD
         });
         newUnit -> setRetractedCallback([&] (Unit *u){
+
+            //ToDo: modificar los vectores
+            //Eliminar del map
+            //Añadir al hall
+
             //Delete in Map
             inMapTroops->erase(u->getID());
 
@@ -318,6 +329,46 @@ i32 UnitManager::getTroopAmount(Enumeration::UnitType t){
     return troopsAmount[(i32)t];
 }
 
+Unit* UnitManager::setNewUnitModel(Enumeration::UnitType unitType) {
+    // Hacer que sean razas diferentes?
+    switch (unitType) {
+        case Enumeration::UnitType::StandardM:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/Soldado_Melee_Drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::StandardR:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/Soldado_Rango_Drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::AdvancedM:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/criatura_drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::AdvancedR:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/criatura_drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::Idol:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/Ente_Drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::Launcher:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/canon_drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+
+        case Enumeration::UnitType::Desintegrator:
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/desintegrador_de_Drorania.obj", team, breed, unitType, Vector3<float>());
+        break;
+        default:
+            return NULL;
+        break;
+    }
+}
+
+void UnitManager::enterMainBuilding(Enumeration::UnitType) {
+    //ToDo: Crear una tropa nueva, que sea gratis y meterla en el inhalltroops
+    std::cout << "entro" << std::endl;
+}
 //Returns all troops the player has
 i32 UnitManager::getTotalTroops() {
     return inHallTroops -> size() + inMapTroops -> size();

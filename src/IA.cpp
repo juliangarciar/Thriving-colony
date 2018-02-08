@@ -7,7 +7,6 @@ IA::IA() : Player() {
 }
 
 void IA::init() {
-    updateTimer = 0;
     // Choose a behaviour
     chooseBehaviour();
     // Create a behaviour and a root node and set them up according to the behaviour
@@ -61,7 +60,7 @@ BehaviourTree* IA::getTree() {
 void IA::update() {
     buildings -> updateBuildingManager();
     units -> updateUnitManager();
-    if (updateTimer <= 0) {
+    if (updateTimer <= 0.0) {
         gainResources();
         nodeRootIA -> question();
         if (units -> getInMapTroops() -> empty()) {
@@ -70,7 +69,7 @@ void IA::update() {
         if (units -> getInHallTroops() -> empty()) {
             deployedTroops = true;
         }
-        updateTimer = 1;
+        updateTimer = 1.0;
     } else {
         updateTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
     }

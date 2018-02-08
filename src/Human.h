@@ -25,7 +25,6 @@ class Human : public Player {
         bool getDeployedTroops();
         bool getClosedDoors();
     private:
-        i32 updateTimer;
 
         static Human* instance;
         static bool deployedTroops;

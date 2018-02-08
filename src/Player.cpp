@@ -12,6 +12,8 @@ Player::Player() {
     crystalAmount = 0;
 
     underAttack = false;
+
+    updateTimer = 1.00;
 }
 
 Player::~Player() {

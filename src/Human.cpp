@@ -7,7 +7,6 @@ Human::Human() : Player() {
 }
 
 void Human::init() {
-    updateTimer = 0;
 
     buildings = new BuildingManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
     units = new UnitManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
@@ -38,7 +37,7 @@ Human* Human::getInstance() {
 void Human::update() {
     buildings -> updateBuildingManager();
     units -> updateUnitManager();
-    if (updateTimer <= 0) {
+    if (updateTimer <= 0.0) {
         gainResources();
         if (units -> getInMapTroops() -> empty()) {
             deployedTroops = false;
@@ -46,9 +45,9 @@ void Human::update() {
         if (units -> getInHallTroops() -> empty()) {
             deployedTroops = true;
         }
-        updateTimer = 1;
+        updateTimer = 1.0;
     } else {
-        updateTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
+       updateTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
     }
 }
 

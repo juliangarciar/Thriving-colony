@@ -43,6 +43,8 @@ class UnitManager{
         std::map<i32, Unit*> * getInMapTroops();
         std::vector<Unit*> * getInHallTroops();
 		std::string getCollisionName();
+        Unit* setNewUnitModel(Enumeration::UnitType);
+        void enterMainBuilding(Enumeration::UnitType);
     private:
         Enumeration::Team team;
         Enumeration::BreedType breed;
