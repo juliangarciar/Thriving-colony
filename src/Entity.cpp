@@ -38,16 +38,7 @@ void Entity::takeDamage(int dmg) {
     setColor(video::SColor(255, 125, 125, 0)); //ToDo: fachada
     if (currentHP <= 0) {
         currentHP = 0;
-        die();
     }
-}
-
-void Entity::die() {
-    // ToDo: DEJAR DE DIBUJAR EL MODELO
-    // SOLO SE MANDA AL 0,0,0
-    
-    setPosition(Vector3<float>(0, 0, 0));
-    //delete this; 
 }
 
 void Entity::updateTarget(Entity *newTarget) {
@@ -112,12 +103,20 @@ int Entity::getViewRadius() {
     return viewRadius;
 }
 
+Enumeration::EntityType Entity::getEntityType() {
+    return entityType;
+}
+
 int Entity::getHP() {
     return currentHP;
 }
 
 int Entity::getID() {
     return ID;
+}
+
+int Entity::getHappiness() {
+    return happiness;
 }
 
 irr::video::SColor Entity::getBaseColor() {

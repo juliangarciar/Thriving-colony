@@ -15,7 +15,9 @@
 #include <GraphicEngine/Window.h>
 
 #include <SoundEngine/SoundSystem.h>
-
+// Added by Julian
+#include <WorldGeometry/CellSpacePartition.h>
+class CellSpacePartition;
 /**
  * @class Game
  * @brief Crea un objeto singleton tipo Game
@@ -84,6 +86,8 @@ class Game {
 		 */
 		GameState *getGameState();
         
+        // Added by Julian
+        CellSpacePartition *getCellSpace();
     protected:
         /**
 		 * @brief Constructor de Game.
@@ -122,6 +126,8 @@ class Game {
         EventSystem *events;
         
         SoundSystem *soundSystem;
+        //Added by Julian
+        CellSpacePartition *cellSpace;
 };
 
 #endif

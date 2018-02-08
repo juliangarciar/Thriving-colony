@@ -29,6 +29,7 @@ void Building::Init() {
 
             maxHP = 1100;
             currentHP = 1100;
+            happiness = Enumeration::HappinessProvided::AmountHappinessBarn;
             cityLevel = 15;
 
             buildTimer = 50;
@@ -45,6 +46,7 @@ void Building::Init() {
             maxHP = 720;
             currentHP = 720;
             cityLevel = 10;
+            happiness = Enumeration::HappinessProvided::AmountHappinessBarrack;
             
             buildTimer = 5; //ToDo: antes 40, cambiado para testing
 
@@ -59,7 +61,7 @@ void Building::Init() {
 
             maxHP = 750;
             currentHP = 750;
-            happiness = 40;
+            happiness = Enumeration::HappinessProvided::AmountHapppinesHospital;
             cityLevel = 5;
 
             buildTimer = 60;
@@ -75,7 +77,7 @@ void Building::Init() {
 
             maxHP = 150;
             currentHP = 150;
-            happiness = 1;
+            happiness = Enumeration::HappinessProvided::AmountHappinessHouse;
             cityLevel = 5;
             citizens = 5;
 
@@ -101,7 +103,7 @@ void Building::Init() {
 
             maxHP = 600;
             currentHP = 600;
-            happiness = 30;
+            happiness = Enumeration::HappinessProvided::AmountHappinessMarket;
             cityLevel = 5;
 
             buildTimer = 60;
@@ -118,6 +120,7 @@ void Building::Init() {
             maxHP = 1000;
             currentHP = 1000;
             cityLevel = 15;
+            happiness = Enumeration::HappinessProvided::AmountHappinessQuarry;
 
             buildTimer = 35;
             
@@ -133,6 +136,7 @@ void Building::Init() {
             maxHP = 1000;
             currentHP = 1000;
             cityLevel = 5;
+            happiness = Enumeration::HappinessProvided::AmountHappinessSiderurgy;
 
             buildTimer = 35;
             
@@ -144,10 +148,11 @@ void Building::Init() {
             r = 0;
             g = 255;
             b = 0;
-            
+
+            this -> buildTimer = 35;
             maxHP = 550;
             currentHP = 550;
-            happiness = 20;
+            happiness = Enumeration::HappinessProvided::AmountHappinessSchool;
             cityLevel = 5;
 
             buildTimer = 35;
@@ -163,7 +168,7 @@ void Building::Init() {
 
             maxHP = 500;
             currentHP = 500;
-            happiness = 1;
+            happiness = Enumeration::HappinessProvided::AmountHappinessTower;
             cityLevel = 5;
 
             buildTimer = 50;
@@ -179,7 +184,7 @@ void Building::Init() {
 
             maxHP = 200;
             currentHP = 200;
-            happiness = 1;
+            happiness = Enumeration::HappinessProvided::AmountHappinessWall;
             cityLevel = 1;
 
             buildTimer = 10;
@@ -196,6 +201,7 @@ void Building::Init() {
             maxHP = 800;
             currentHP = 800;
             cityLevel = 15;
+            happiness = Enumeration::HappinessProvided::AmountHappinessWorkshop;
             
             buildTimer = 50;
             

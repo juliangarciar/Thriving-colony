@@ -20,6 +20,7 @@ class Player {
         void gainResources();
         void spendResources(int, int);
         void increaseHappiness(int h);
+        void decreaseHappiness(int);
         void increaseCityLevel(int lvl);
         void increaseCitizens(int c);
         void increaseArmySize();
@@ -42,6 +43,8 @@ class Player {
         void receiveMetal();
         void receiveCrystal();
         void receiveCitizens();
+
+        void decreaseBuildings(Enumeration::BuildingType);
 
     protected:
         // Resources

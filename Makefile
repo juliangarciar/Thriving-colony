@@ -10,9 +10,9 @@ BUILDPATH = obj
 # Path for the source files
 SOURCEPATH = src
 #Directories
-SOURCE_DIRS = . GraphicEngine GUIEngine IOEngine SoundEngine IAEngine
+SOURCE_DIRS = . GraphicEngine GUIEngine IOEngine SoundEngine IAEngine PathPlanner WorldGeometry
 #C++ compiler
-CXX = g++
+CXX = clang++
 
 ####
 # FLAGS

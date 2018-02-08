@@ -52,11 +52,10 @@ void BuildingManager::setBuildingMode(Enumeration::BuildingType type) {
 void BuildingManager::drawBuilding() {
     Game *g = Game::Instance();
     if (buildingMode && tempBuilding != NULL) {
-        // Aqui tenemos que hacer que cuando se haya apretado el boton de nueva ventana,
+        // ToDo: Aqui tenemos que hacer que cuando se haya apretado el boton de nueva ventana,
         // tambien se cree una caja en las coordenadas actuales del cursor del raton.
-		/*
-		* Get position where the cursor is pointing to the terrain
-		*/
+
+		//Get position where the cursor is pointing to the terrain
         Vector3<float> xyzPointCollision = g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse());
 
 		Vector3<float> f = Box3D<float>(tempBuilding -> getModel() -> getModel() -> getTransformedBoundingBox()).getSize(); //ToDo: fachada
@@ -70,17 +69,12 @@ void BuildingManager::drawBuilding() {
 		//Pressing the right mouse button cancels the building
 		if (g -> getMouse() -> rightMouseDown()){
 			buildingMode = false;
-
 			delete tempBuilding;		
-
 			tempBuilding = NULL;
-
 			return;
 		}
 
-		/* 
-		* Look if there is any other building built there
-		*/
+		//Look if there is any other building built there
 		bool collision = false;
 		for (std::map<int,Building*>::iterator it = buildings -> begin(); it != buildings -> end() && !collision; ++it) {
 			collision = it -> second -> getHitbox() -> intersects(*tempBuilding -> getHitbox());
@@ -90,10 +84,7 @@ void BuildingManager::drawBuilding() {
 		} else {
 			tempBuilding->setColor(tempBuilding -> getBaseColor()); //ToDo: reemplazar color por material
 
-			/*
-			* If there is no collision and the player press left button of the mouse,
-			* build the building
-			*/
+			//If there is no collision and the player press left button of the mouse, build the building
 			if (g -> getMouse() -> leftMouseDown()) {
 				buildingMode = false;
 				buildBuilding(Vector3<float>(x, y, z), tempBuilding -> getType());
@@ -209,9 +200,7 @@ void BuildingManager::setTempBuildingModel(Vector3<float> pos, Enumeration::Buil
 	}
 }
 
-/**
- * Checks if the player, either the human or the AI can afford to build a specific building 
- */
+//Checks if the player, either the human or the AI can afford to build a specific building 
 bool BuildingManager::isSolvent(int metalCost, int crystalCost) {
 	int metalAmt = 0;
 	int crystalAmt = 0;
@@ -318,6 +307,17 @@ std::map<int, Building*>* BuildingManager::getBuildings() {
 SceneNode* BuildingManager::getBuildingLayer() {
 	return buildingLayer;
 }
+
+void BuildingManager::deleteBuilding(int id) {
+	if (buildings -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
+		Human::getInstance() -> decreaseHappiness(buildings -> find(id) -> second -> getHappiness());
+	} else {
+		IA::getInstance() -> decreaseHappiness(buildings -> find(id) -> second -> getHappiness());
+	}
+	buildingAmounts[(int)buildings -> find(id) -> second -> getType()]--;
+	delete buildings -> find(id) -> second;
+	buildings -> erase(id);
+} 
 
 Building *BuildingManager::getBuilding(int id){
   	std::map<int,Building*>::iterator it;

@@ -125,6 +125,10 @@ void Player::receiveCitizens() {
     citizens = citizens + 100;
 }
 
+void Player::decreaseHappiness(int h) {
+    happiness = happiness - h;
+}
+
 /*
 
 

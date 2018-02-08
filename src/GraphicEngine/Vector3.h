@@ -1,8 +1,9 @@
 #ifndef VECTOR3_H
 #define VECTOR3_H
 
-#include <iostream>
-#include <irrlicht.h>
+//#include <iostream>
+//#include <irrlicht.h>
+#include "Vector2.h"
 
 #define PI 3.14159265
 
@@ -28,7 +29,7 @@ class Vector3 {
         Vector3<T> normalize();
         Vector3<T> getDistanceTo(Vector3<T> other);
         Vector3<T> rotateFromPoint(float r, float phi, float theta);
-
+        Vector2<T> toVector2();
         core::vector3di getVectorI();
         core::vector3df getVectorF();
         
