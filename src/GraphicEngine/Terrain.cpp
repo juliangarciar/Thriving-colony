@@ -22,6 +22,20 @@ Terrain::Terrain(const char* heightMap) {
     collisionManager = sc -> getSceneManager() -> getSceneCollisionManager();
 }
 
+Terrain::~Terrain() {
+    //ToDo: borrar terreno y selector
+    terrain -> removeAll();
+	terrain -> remove();
+}
+
+void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture) {
+	//terrain -> setMaterialFlag(video::EMF_LIGHTING, false);
+	terrain -> setMaterialTexture(0, terrainTexture -> getTexture());
+	terrain -> setMaterialTexture(1, detailTexture -> getTexture());
+	terrain -> setMaterialType(video::EMT_DETAIL_MAP);
+    terrain -> scaleTexture(1.0f, 20.0f);
+}
+
 Vector3<float> Terrain::getPointCollision(Mouse *cursor){
 	Vector2<int> p = cursor -> getPosition();
 	core::position2d<s32> pos = core::position2d<s32>(p.x, p.y);
@@ -35,23 +49,8 @@ Vector3<float> Terrain::getPointCollision(Mouse *cursor){
 	return Vector3<float>();
 }
 
-void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture) {
-	//terrain -> setMaterialFlag(video::EMF_LIGHTING, false);
-	terrain -> setMaterialTexture(0, terrainTexture -> getTexture());
-	terrain -> setMaterialTexture(1, detailTexture -> getTexture());
-	terrain -> setMaterialType(video::EMT_DETAIL_MAP);
-    terrain -> scaleTexture(1.0f, 20.0f);
-}
-
 float Terrain::getY(float x, float z) {
-	float y = terrain -> getHeight(x, z);
-	return y;
-}
-
-Terrain::~Terrain() {
-    //ToDo: borrar terreno y selector
-    terrain -> removeAll();
-	terrain -> remove();
+	return (float)terrain -> getHeight(x, z);
 }
 
 scene::ITerrainSceneNode* Terrain::getTerrain() {

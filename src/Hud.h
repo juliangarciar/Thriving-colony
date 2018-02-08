@@ -13,6 +13,8 @@
 #include <GUIEngine/Label.h>
 #include <GUIEngine/ComboBox.h>
 #include <GUIEngine/Widget.h>
+#include <GUIEngine/ScrollPanel.h>
+#include <GUIEngine/ProgressBar.h>
 #include <IOEngine/Keyboard.h>
 #include <IOEngine/Mouse.h>
 
@@ -72,6 +74,12 @@ class Hud {
          * @brief Actualiza las posiciones de los elementos del HUD
          */
         void updatePositions();
+        
+        /**
+         * @brief Devuelve cosas
+         * @return pop
+         */
+        bool getPopUpOpen();
 
         /**
          * @brief Lanza una alerta de contruccion
@@ -82,6 +90,8 @@ class Hud {
          */
         static void deleteWarning();
     private:
+        bool popUpOpen;
+    
         std::vector<Button*> *buttons;
 
         Panel *buildingsPanel;
@@ -121,14 +131,22 @@ class Hud {
         Panel *barrackEmpty;
         Label *barrackEmptyLabel;
         Panel *barrackContent;
+        ScrollPanel *barrackScroll;
+        Panel *barrackTroopListPanel;
+
         Tab *barnTab;
         Panel *barnEmpty;
         Label *barnEmptyLabel;
         Panel *barnContent;
+        ScrollPanel *barnScroll;
+        Panel *barnTroopListPanel;
+
         Tab *workshopTab;
         Panel *workshopEmpty;
         Label *workshopEmptyLabel;
         Panel *workshopContent;
+        ScrollPanel *workshopScroll;
+        Panel *workshopTroopListPanel;
 
         float updateTimer;
         float deleteTextTimer;
