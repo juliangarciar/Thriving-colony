@@ -68,6 +68,10 @@ bool Player::losingBattle() {
     return false;
 }
 
+void Player::setHallPosition(Vector3<f32> p){
+    hallPosition = p;
+}
+
 //==========
 // Getters
 //==========
@@ -125,6 +129,10 @@ void Player::receiveCitizens() {
 
 void Player::decreaseHappiness(i32 h) {
     happiness = happiness - h;
+}
+
+Vector3<f32> Player::getHallPosition() {
+    return hallPosition;
 }
 
 /*
