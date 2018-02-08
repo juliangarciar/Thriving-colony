@@ -60,7 +60,7 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
     if (checkCanPay(unitData)) {
         Unit *newUnit = new Unit(unitLayer, std::rand(), L"media/buildingModels/dummy.obj", team, breed, unitData, Vector3<f32>());
         newUnit -> getModel() -> setActive(false);
-        newUnit -> getModel() -> setScale(Vector3<f32>(100, 100, 100));
+        newUnit -> getModel() -> setScale(Vector3<f32>(128, 128, 128));
         newUnit -> setRecruitedCallback([&] (Unit* u){
             //Delete in Queue
             ptrdiff_t pos = distance(inQueueTroops->begin(), find(inQueueTroops->begin(), inQueueTroops->end(), u));
@@ -173,7 +173,7 @@ void UnitManager::selectTroop(i32 troopID) {
         selectedTroop = it -> second;
         //SELECT VOICE
         g -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
-        SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getSelectEvent());
+        //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getSelectEvent());
     }
 }
 
@@ -202,7 +202,7 @@ void UnitManager::moveOrder() {
             selectedTroop->setPathToTarget(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
         }
         //MOVEMENT VOICE
-        SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
+        //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
     }
 }
 
