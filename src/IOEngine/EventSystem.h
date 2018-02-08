@@ -4,6 +4,7 @@
 #include <map>
 #include <functional>
 #include "../Enumeration.h"
+#include <Types.h>
 
 class EventSystem {
 

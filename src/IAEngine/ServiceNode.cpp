@@ -19,7 +19,7 @@ ServiceNode::~ServiceNode() {
 
 void ServiceNode::question() {
     //std::cout << "Voy a invertir en servicios" << std::endl;
-    float cityLvl = IA::getInstance() -> getCityLevel();
+    f32 cityLvl = IA::getInstance() -> getCityLevel();
     //std::cout << cityLvl << std::endl;
     if (cityLvl >= IA::getInstance() -> getTree() -> getHospitalMilestone()) {
         children[2] -> question();

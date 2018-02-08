@@ -2,6 +2,7 @@
 #define TEXTURE_H
 
 #include <irrlicht.h>
+#include <Types.h>
 
 using namespace irr;
 

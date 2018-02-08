@@ -4,6 +4,7 @@
 #include <nanogui/nanogui.h>
 #include "Rect2D.h"
 #include "GUIElement.h"
+#include <Types.h>
 
 class Widget : public GUIElement {
 
@@ -16,7 +17,7 @@ class Widget : public GUIElement {
         void hide();
         bool isVisible();
         
-        void setPosition(Vector2<int> position);
+        void setPosition(Vector2<i32> position);
         void setTooltip(std::string text);
         
         nanogui::Widget *getGUIElement();

@@ -21,7 +21,7 @@ void Panel::addChild(GUIElement *child){
     panel -> addChild(child -> getGUIElement());
 }
 
-void Panel::setPosition(Vector2<int> position){
+void Panel::setPosition(Vector2<i32> position){
     panel -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 
@@ -53,7 +53,7 @@ void Panel::setVerticalAlignment() {
    panel -> setLayout(new nanogui::BoxLayout(nanogui::Orientation::Vertical, nanogui::Alignment::Middle, 0, 6));
 }
 
-void Panel::setSize(Vector2<int> size) {
+void Panel::setSize(Vector2<i32> size) {
     panel -> setFixedSize(Eigen::Vector2i(size.x, size.y));
 }
 

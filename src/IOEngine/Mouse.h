@@ -4,6 +4,7 @@
 #include <GLFW/glfw3.h>
 #include <GraphicEngine/Vector2.h>
 #include <Enumeration.h>
+#include <Types.h>
 
 #define CURSOR_NORMAL GLFW_ARROW_CURSOR
 #define CURSOR_IBEAM GLFW_IBEAM_CURSOR
@@ -34,30 +35,30 @@ class Mouse {
         bool rightMouseUp();
         bool rightMouseDown();
 
-        float getWheelX();
-        float getWheelY();
+        f32 getWheelX();
+        f32 getWheelY();
 
-        void setPosition(Vector2<int> p);
+        void setPosition(Vector2<i32> p);
 
-        void changeIcon(int shape);
+        void changeIcon(i32 shape);
 
         void show();
         void hide();
 
         GLFWcursor *getMouse();
-        Vector2<int> getPosition();
+        Vector2<i32> getPosition();
 
         bool isVisible();
 
         // Mouse position
-        Vector2<int> position;
+        Vector2<i32> position;
         // Mouse wheel
-        Vector2<float> wheel;
+        Vector2<f32> wheel;
 		// Mouse button states.
 		Enumeration::ioStatesENUM mouseButtonState[GLFW_MOUSE_BUTTON_LAST]; //Left(0), Right(1), Middle(2) and more buttons.
     private:
         bool visible;
-        int currentCursor;
+        i32 currentCursor;
 
         GLFWcursor* cursor;
 };

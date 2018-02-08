@@ -9,6 +9,7 @@
 #include <GraphicEngine/Model.h>
 #include <Enumeration.h>
 #include <Building.h>
+#include <Types.h>
 
 using namespace irr;
 
@@ -54,7 +55,7 @@ class BuildingManager {
 		 * @param buildingType con el tipo de edificio a construir
 		 * @param instabuild
 		 */
-		void buildBuilding(Vector3<float>, Enumeration::BuildingType, bool = false);
+		void buildBuilding(Vector3<f32>, Enumeration::BuildingType, bool = false);
 
 		/**
 		 * @brief Comprueba si el jugador tiene recursos necesarios para comprar el edificio
@@ -63,7 +64,7 @@ class BuildingManager {
 		 * @param team es el equipo al que pertenecera el edificio
 		 * @return true si es solvente y false, en caso contrario
 		 */
-		bool isSolvent(int, int);
+		bool isSolvent(i32, i32);
 		/**
 		 * @brief Registra el tipo de edifio que se quiere construir y 
 		 * maneja las llamadas al metodo isSolvent(), enviandole su precio.
@@ -75,7 +76,7 @@ class BuildingManager {
 		 * @brief Comprueba si un edificio ha termiando de construirse o no
 		 * @return true en caso de que este terminado y false, en caso contrario
 		 */
-		bool checkFinished(int);
+		bool checkFinished(i32);
 
 		/**
 		 * @brief Actualiza el manejador de edificios
@@ -87,13 +88,13 @@ class BuildingManager {
 		 * @param buildingType es el tipo de edificio que se construye
 		 * @param team es el equipo al que pertece el edificio
 		 */
-		void setTempBuildingModel(Vector3<float>, Enumeration::BuildingType);
+		void setTempBuildingModel(Vector3<f32>, Enumeration::BuildingType);
 		
 		/**
 		 * @brief Solicita el id de la colision
 		 * @return id de tipo entero
 		 */
-		int getCollisionID();
+		i32 getCollisionID();
 		/**
 		 * @brief Solicita el nombre de la colision
 		 * @return string con el nombre
@@ -104,42 +105,42 @@ class BuildingManager {
 		 * @param id del edificio
 		 * @return edificio
 		 */
-		Building *getBuilding(int);
+		Building *getBuilding(i32);
 		/**
 		 * @brief Solicita los edificios del mapa
 		 * @return devuelve un objeto de tipo hash map con los edificios y sus IDs asociadas
 		 */
-		std::map<int, Building*>* getBuildings();
+		std::map<i32, Building*>* getBuildings();
 		/**
 		 * @brief Solicita la capa en la que esta edificio
 		 * @return layer de tipo SceneNode
 		 */
 		SceneNode* getBuildingLayer();
 
-		void deleteBuilding(int);
+		void deleteBuilding(i32);
 
 		/**
 		 * @brief Obtiene la cantidad de edificios de cualquier tipo
 		 * @param tipo de edificio
 		 * @return cantidad
 		 */
-		int getAmount(Enumeration::BuildingType);
+		i32 getAmount(Enumeration::BuildingType);
 	private:
 		Enumeration::Team team;
 		Enumeration::BreedType breed;
 
-		int nextBuildingId;
-        int gridAlignment;
+		i32 nextBuildingId;
+        i32 gridAlignment;
         bool buildingMode;
 		
 		SceneNode *buildingLayer;
 		SceneNode *currentCollision;
 
-		std::map<int, Building*> *buildings;
+		std::map<i32, Building*> *buildings;
 		
 		Building *tempBuilding;
 
-		int buildingAmounts[Enumeration::BuildingType::BuildingsSize];
+		i32 buildingAmounts[Enumeration::BuildingType::BuildingsSize];
 };
 
 #endif

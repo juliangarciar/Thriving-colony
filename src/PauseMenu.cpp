@@ -5,13 +5,13 @@
 
 PauseMenu::PauseMenu() {
     buttonQuit = new Button("Quit");
-    buttonQuit -> setPosition(Vector2<int>(600, 400));
+    buttonQuit -> setPosition(Vector2<i32>(600, 400));
 
     buttonResume = new Button("Resume game");
-    buttonResume -> setPosition(Vector2<int>(600, 200));
+    buttonResume -> setPosition(Vector2<i32>(600, 200));
 
     buttonMenu = new Button("Main menu");
-    buttonMenu -> setPosition(Vector2<int>(600, 300));
+    buttonMenu -> setPosition(Vector2<i32>(600, 300));
 }
 
 PauseMenu::~PauseMenu() {

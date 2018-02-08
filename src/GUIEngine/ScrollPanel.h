@@ -4,6 +4,7 @@
 #include <nanogui/nanogui.h>
 #include "Rect2D.h"
 #include "GUIElement.h"
+#include <Types.h>
 
 class ScrollPanel : public GUIElement {
     public:
@@ -15,11 +16,11 @@ class ScrollPanel : public GUIElement {
         void hide();
         bool isVisible();
         
-        void setPosition(Vector2<int> position);
+        void setPosition(Vector2<i32> position);
 
         void setTooltip(std::string t);
 
-        void setSize(Vector2<int> size);
+        void setSize(Vector2<i32> size);
         
         nanogui::Widget *getGUIElement();
     private:

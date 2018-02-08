@@ -13,7 +13,7 @@ GameState::~GameState() {
 
 void GameState::Init() {
     //ToDo: la luz, terreno, y quizas la camara deberian ir en una clase Map
-    light = new Light(Vector3<float>(8000, 4000, 8000), 10000);
+    light = new Light(Vector3<f32>(8000, 4000, 8000), 10000);
 
     //Create map
     map = new Terrain("media/mapa3-256x256.bmp");
@@ -35,7 +35,7 @@ void GameState::Init() {
     SoundSystem::Instance() -> initSystem();
 
     // Build the main building of IA
-    Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();
+    Vector3<f32> v = IA::getInstance() -> determinatePositionBuilding();
     IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, true);
 
     //Build the first siderurgy of IA
@@ -68,10 +68,10 @@ void GameState::Input() {
         IA::getInstance() -> getBuildingManager() -> testRaycastCollisions();
         IA::getInstance() -> getUnitManager() -> testRaycastCollisions();
 
-        int onMap = true;
+        i32 onMap = true;
 
         //Interactions with our entities
-        int idBuilding = Human::getInstance() -> getBuildingManager() -> getCollisionID();
+        i32 idBuilding = Human::getInstance() -> getBuildingManager() -> getCollisionID();
         if (idBuilding != -1){
             if (!Human::getInstance() -> getUnitManager() -> isTroopSelected())
                 Game::Instance() -> getMouse() -> changeIcon(CURSOR_HAND);
@@ -88,7 +88,7 @@ void GameState::Input() {
             onMap = false;
         }
 
-        int idTroop = Human::getInstance() -> getUnitManager() -> getCollisionID();
+        i32 idTroop = Human::getInstance() -> getUnitManager() -> getCollisionID();
         if (idTroop != -1){
             if (!Human::getInstance() -> getUnitManager() -> isTroopSelected())
                 Game::Instance() -> getMouse() -> changeIcon(CURSOR_HAND);
@@ -100,7 +100,7 @@ void GameState::Input() {
         }
 
         //Interactions with IA's entities
-        int idBuildingIA =  IA::getInstance() -> getBuildingManager() -> getCollisionID();
+        i32 idBuildingIA =  IA::getInstance() -> getBuildingManager() -> getCollisionID();
         if (idBuildingIA != -1 && Human::getInstance() -> getUnitManager() -> isTroopSelected()){
             Game::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
 
@@ -109,7 +109,7 @@ void GameState::Input() {
             onMap = false;
         }
 
-        int idTroopIA = IA::getInstance() -> getUnitManager() -> getCollisionID();
+        i32 idTroopIA = IA::getInstance() -> getUnitManager() -> getCollisionID();
         if (idTroopIA != -1 && Human::getInstance() -> getUnitManager() -> isTroopSelected()){
             Game::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
 
@@ -208,6 +208,6 @@ BattleManager* GameState::getBattleManager() {
     if (Game::Instance() -> getIO() -> keyPressed(KEY_KEY_3)) {
         Human::getInstance() -> receiveCitizens();
     }
-    Vector3<float> v = map -> getPointCollision(Game::Instance() -> getMouse());
+    Vector3<f32> v = map -> getPointCollision(Game::Instance() -> getMouse());
     Human::getInstance() -> getUnitManager() -> updateUnitManager();
 */

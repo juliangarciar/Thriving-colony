@@ -3,6 +3,7 @@
 
 #include <nanogui/nanogui.h>
 #include <GraphicEngine/Vector2.h>
+#include <Types.h>
 
 class GUIElement {
     public:
@@ -11,7 +12,7 @@ class GUIElement {
 
         virtual bool isVisible() = 0;
 
-        virtual void setPosition(Vector2<int>) = 0;
+        virtual void setPosition(Vector2<i32>) = 0;
         virtual void setTooltip(std::string) = 0;
 
         virtual nanogui::Widget *getGUIElement() = 0;

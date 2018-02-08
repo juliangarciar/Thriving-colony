@@ -3,6 +3,7 @@
 
 #include "BehaviourTree.h"
 #include "Node.h"
+#include <Types.h>
 
 class UnhappyTree : public BehaviourTree, public Node {
 

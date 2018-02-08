@@ -8,7 +8,7 @@ Mouse::Mouse(){
     visible = true;
     currentCursor = CURSOR_NORMAL;
 
-    for (int i = 0; i < GLFW_MOUSE_BUTTON_LAST;i++){
+    for (i32 i = 0; i < GLFW_MOUSE_BUTTON_LAST;i++){
         mouseButtonState[i] = Enumeration::UP;
     }
 
@@ -34,7 +34,7 @@ Mouse::Mouse(){
     );
 
     glfwSetMouseButtonCallback(window,
-        [](GLFWwindow *w, int button, int action, int modifiers) {
+        [](GLFWwindow *w, i32 button, i32 action, i32 modifiers) {
             Window::Instance() -> getGUIEnvironment() -> mouseButtonCallbackEvent(button, action, modifiers);
             Mouse *s = Game::Instance() -> getMouse();
             if (action == GLFW_PRESS) {
@@ -53,7 +53,7 @@ Mouse::~Mouse(){
 
 void Mouse::refreshStates(){
     // Reset pressed
-    for (int i = 0; i < GLFW_MOUSE_BUTTON_LAST;i++){
+    for (i32 i = 0; i < GLFW_MOUSE_BUTTON_LAST;i++){
         if (mouseButtonState[i] == Enumeration::PRESSED) {
             mouseButtonState[i] = Enumeration::DOWN; // Set to Pressed
         } else if (mouseButtonState[i] == Enumeration::RELEASED) {
@@ -165,16 +165,16 @@ bool Mouse::rightMouseDown() {
 }
 
 // Mouse wheel
-float Mouse::getWheelX(){
+f32 Mouse::getWheelX(){
     return wheel.x;
 }
 
-float Mouse::getWheelY(){
+f32 Mouse::getWheelY(){
     return wheel.y;
 }
 
 // Set position
-void Mouse::setPosition(Vector2<int> p){
+void Mouse::setPosition(Vector2<i32> p){
     if (position.x != p.x || position.y != p.y){
         glfwSetCursorPos(Window::Instance() -> getWindow(), p.x, p.y);
         position.set(p.x, p.y);
@@ -182,7 +182,7 @@ void Mouse::setPosition(Vector2<int> p){
 }
 
 // Icon
-void Mouse::changeIcon(int shape){
+void Mouse::changeIcon(i32 shape){
     if (isVisible() && shape != currentCursor) {
         glfwDestroyCursor(cursor);
         cursor = glfwCreateStandardCursor(shape);
@@ -202,7 +202,7 @@ void Mouse::hide(){
     visible = false;
 }
 
-Vector2<int> Mouse::getPosition() {
+Vector2<i32> Mouse::getPosition() {
     double x, y;
     glfwGetCursorPos(Window::Instance() -> getWindow(), &x, &y);
     position.set(x, y);

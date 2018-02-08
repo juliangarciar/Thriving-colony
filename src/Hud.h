@@ -17,6 +17,7 @@
 #include <GUIEngine/ProgressBar.h>
 #include <IOEngine/Keyboard.h>
 #include <IOEngine/Mouse.h>
+#include <Types.h>
 
 using namespace irr;
        
@@ -148,15 +149,15 @@ class Hud {
         ScrollPanel *workshopScroll;
         Panel *workshopTroopListPanel;
 
-        float updateTimer;
-        float deleteTextTimer;
+        f32 updateTimer;
+        f32 deleteTextTimer;
 
         /**
          * @brief Crea un boton 
          * @param id del boton, de tipo entero
          * @param type sera el tipo de edificio que se creara con ese boton, de tipo entero
          */
-        void addTab(int, int);
+        void addTab(i32, i32);
 };
 
 #endif

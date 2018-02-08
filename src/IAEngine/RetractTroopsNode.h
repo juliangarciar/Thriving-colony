@@ -2,6 +2,7 @@
 #define RETRACT_TROOPS_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class RetractTroopsNode : public Node {
 

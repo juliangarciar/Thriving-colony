@@ -9,7 +9,7 @@
 
 #include <iostream>
 
-int main(int argc, char **argv) {
+i32 main(i32 argc, char **argv) {
     Window *w = Window::Instance();
 
     InputManager *io = new InputManager();
@@ -23,7 +23,7 @@ int main(int argc, char **argv) {
     scene::IMeshSceneNode *cube;
     cube = w -> getSceneManager() -> addCubeSceneNode(100);
     cube -> setMaterialFlag(video::EMF_LIGHTING, false);
-    int y = map -> getY(7000,7000);
+    i32 y = map -> getY(7000,7000);
     cube -> setPosition(core::vector3df(7000, y+500, 7000));
 
     // Create nanogui gui

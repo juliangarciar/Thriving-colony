@@ -2,6 +2,7 @@
 #define RANGE_FOOTMEN_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class RangeFootmenNode : public Node {
 

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <irrlicht.h>
+#include <Types.h>
 
 #define PI 3.14159265
 
@@ -25,7 +26,7 @@ class Vector2 {
 
         Vector2<T> normalize();
         Vector2<T> getDistanceTo(Vector2<T> other);
-        Vector2<T> getFromPolarCoordinates(float r, float phi);
+        Vector2<T> getFromPolarCoordinates(f32 r, f32 phi);
 
         Vector2<T> getFixed();
 
@@ -35,7 +36,7 @@ class Vector2 {
         T calculateDistance(Vector2<T> b);
         Vector2<T> operator +(const Vector2<T> &p) const;
         Vector2<T> operator -(const Vector2<T> &p) const;
-        Vector2<T> operator /(const float &num) const;
+        Vector2<T> operator /(const f32 &num) const;
     private:
 };
 

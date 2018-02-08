@@ -46,11 +46,11 @@ void Button::setText(std::string text){
     button -> setCaption(text);
 }
 
-void Button::setSize(Vector2<int> size){
+void Button::setSize(Vector2<i32> size){
     button -> setSize(Eigen::Vector2i(size.x, size.y));
 }
 
-void Button::setPosition(Vector2<int> position){
+void Button::setPosition(Vector2<i32> position){
     button -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 

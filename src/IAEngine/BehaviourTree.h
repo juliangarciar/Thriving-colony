@@ -1,6 +1,8 @@
 #ifndef BEHAVIOUR_TREE_H
 #define BEHAVIOUR_TREE_H
 
+#include <Types.h>
+
 class BehaviourTree {
     
     public:
@@ -21,26 +23,26 @@ class BehaviourTree {
 
         bool readyToAttack();
 
-        float calculateMetalProductionRate();
-        float calculateCrystalProductionRate();
-        float calculateCitizensRate();
-        float calculateArmyCitizensRate();
-        float calculateMeleeRate();
-        float calculateRangeRate();
-        float calculateSiegeRate();
+        f32 calculateMetalProductionRate();
+        f32 calculateCrystalProductionRate();
+        f32 calculateCitizensRate();
+        f32 calculateArmyCitizensRate();
+        f32 calculateMeleeRate();
+        f32 calculateRangeRate();
+        f32 calculateSiegeRate();
 
-        int getHospitalMilestone();
-        int getMarketMilestone();
-        int getQuarryMilestone();
+        i32 getHospitalMilestone();
+        i32 getMarketMilestone();
+        i32 getQuarryMilestone();
         
-        int getCreatureMilestone();
-        int getMountedCreatureMilestone();
+        i32 getCreatureMilestone();
+        i32 getMountedCreatureMilestone();
 
-        int getHappinessThreshold();
+        i32 getHappinessThreshold();
 
-        float getMeleeThreshold();
-        float getRangeThreshold();
-        float getCitizensThreshold();
+        f32 getMeleeThreshold();
+        f32 getRangeThreshold();
+        f32 getCitizensThreshold();
 
         bool getShortOnCrystal();
         bool getShortOnMetal(); 
@@ -73,29 +75,29 @@ class BehaviourTree {
         void setRequireCitizens(bool);
         bool getRequireCitizens();
 
-        void init(int);
+        void init(i32);
 
     protected:
 
-        int happinessThreshold;
-        int quarryMilestone;
-        int mountedCreatureMilestone;
-        int wallMilestone;
-        int towerMilestone;
-        int barnMilestone;
-        int workshopMilestone;
-        int creatureMilestone;
+        i32 happinessThreshold;
+        i32 quarryMilestone;
+        i32 mountedCreatureMilestone;
+        i32 wallMilestone;
+        i32 towerMilestone;
+        i32 barnMilestone;
+        i32 workshopMilestone;
+        i32 creatureMilestone;
 
-        int hospitalMilestone;
-        int marketMilestone;
+        i32 hospitalMilestone;
+        i32 marketMilestone;
 
-        float metalThreshold;
-        float crystalThreshold;
-        float citizensThreshold;
-        float armyThreshold;
-        float meleeThreshold;
-        float rangeThreshold;
-        float siegeThreshold;
+        f32 metalThreshold;
+        f32 crystalThreshold;
+        f32 citizensThreshold;
+        f32 armyThreshold;
+        f32 meleeThreshold;
+        f32 rangeThreshold;
+        f32 siegeThreshold;
 
         bool underAttack;
         // The production rate of a given resource is low in comparison with your city level

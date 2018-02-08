@@ -27,13 +27,13 @@ void Player::gainResources() {
     crystalAmount += getCrystalProduction();
 }
 
-void Player::spendResources(int metalCost, int crystalCost) {
+void Player::spendResources(i32 metalCost, i32 crystalCost) {
     // ToDo: Nunca acabaran siendo menor que 0
     metalAmount -= metalCost;
     crystalAmount -= crystalAmount;
 }
 
-void Player::increaseHappiness(int h) {
+void Player::increaseHappiness(i32 h) {
     // ToDo: clamp mejor?
     happiness += h;
     if (happiness <= -100) {
@@ -44,11 +44,11 @@ void Player::increaseHappiness(int h) {
     }
 }
 
-void Player::increaseCityLevel(int lvl) {
+void Player::increaseCityLevel(i32 lvl) {
     cityLevel += lvl;
 }
 
-void Player::increaseCitizens(int c) {
+void Player::increaseCitizens(i32 c) {
     citizens += c;
 }
 
@@ -71,35 +71,35 @@ bool Player::losingBattle() {
 //==========
 // Getters
 //==========
-int Player::getHappiness() {
+i32 Player::getHappiness() {
     return happiness;
 }
 
-int Player::getCityLevel() {
+i32 Player::getCityLevel() {
     return cityLevel;
 }
 
-int Player::getCitizens() {
+i32 Player::getCitizens() {
     return citizens;
 }
 
-int Player::getArmySize() {
+i32 Player::getArmySize() {
     return units -> getTotalTroops();
 }
 
-int Player::getMetalAmount() {
+i32 Player::getMetalAmount() {
     return metalAmount;
 }
 
-int Player::getCrystalAmount() {
+i32 Player::getCrystalAmount() {
     return crystalAmount;
 }
 
-int Player::getMetalProduction() {
+i32 Player::getMetalProduction() {
     return buildings->getAmount(Enumeration::BuildingType::Siderurgy) * RESOURCEPRODUCTION;
 }
 
-int Player::getCrystalProduction() {
+i32 Player::getCrystalProduction() {
     return buildings->getAmount(Enumeration::BuildingType::Quarry) * RESOURCEPRODUCTION;
 }
 
@@ -123,7 +123,7 @@ void Player::receiveCitizens() {
     citizens = citizens + 100;
 }
 
-void Player::decreaseHappiness(int h) {
+void Player::decreaseHappiness(i32 h) {
     happiness = happiness - h;
 }
 
@@ -131,22 +131,22 @@ void Player::decreaseHappiness(int h) {
 
 
 
-        int getMeleeAmount();
-        int getRangeAmount();
-        int getSiegeAmount();
-        int getRamAmount();
-        int getCatapultAmount();
+        i32 getMeleeAmount();
+        i32 getRangeAmount();
+        i32 getSiegeAmount();
+        i32 getRamAmount();
+        i32 getCatapultAmount();
 
         bool getWallBuilt();
         bool getBarrackBuilt();
         bool getBarnBuilt();
         bool getWorkshopBuilt();
 
-        int getSiderurgyAmount();
-        int getQuarryAmount();
+        i32 getSiderurgyAmount();
+        i32 getQuarryAmount();
 
-        int getWallAmount();
-        int getTowerAmount();
+        i32 getWallAmount();
+        i32 getTowerAmount();
 
         bool getUnderAttack();
 
@@ -188,7 +188,7 @@ void Player::decreaseHappiness(int h) {
     siderurgyAmount = 0;
     quarryAmount= 0;
 
-int Player::getMeleeAmount() {
+i32 Player::getMeleeAmount() {
     return meleeAmount;
 }
 
@@ -208,35 +208,35 @@ bool Player::getWorkshopBuilt() {
     return workshopBuilt;
 }
 
-int Player::getRangeAmount() {
+i32 Player::getRangeAmount() {
     return rangeAmount;
 }
 
-int Player::getSiegeAmount() {
+i32 Player::getSiegeAmount() {
     return siegeAmount;
 }
 
-int Player::getRamAmount() {
+i32 Player::getRamAmount() {
     return ramAmount;
 }
 
-int Player::getCatapultAmount() {
+i32 Player::getCatapultAmount() {
     return catapultAmount;
 }
 
-int Player::getSiderurgyAmount() {
+i32 Player::getSiderurgyAmount() {
     return siderurgyAmount;
 }
 
-int Player::getQuarryAmount() {
+i32 Player::getQuarryAmount() {
     return quarryAmount;
 }
 
-int Player::getWallAmount() {
+i32 Player::getWallAmount() {
     return wallAmount;
 }
 
-int Player::getTowerAmount() {
+i32 Player::getTowerAmount() {
     return towerAmount;
 }
 

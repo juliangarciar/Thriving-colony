@@ -16,12 +16,12 @@ void BirdsEyeCAM::Update(ICameraSceneNode * pCamera, IrrlichtDevice * pDevice, I
    //pCamera -> setTarget(cpos); 
 
    // get the cursor positions 
-   int x = pDevice -> getCursorControl() -> getPosition().X; 
-   int y = pDevice -> getCursorControl() -> getPosition().Y; 
+   i32 x = pDevice -> getCursorControl() -> getPosition().X; 
+   i32 y = pDevice -> getCursorControl() -> getPosition().Y; 
 
    // make the move distance the same for different frame rates 
-   int fps = pDriver -> getFPS(); 
-   float dist; 
+   i32 fps = pDriver -> getFPS(); 
+   f32 dist; 
 
    if (fps > 1) 
       dist = 200.0f / fps; 

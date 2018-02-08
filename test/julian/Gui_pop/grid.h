@@ -9,18 +9,18 @@ class grid
 {
     private:
         nodeGrid*** map;
-        int ox;
-        int oy;
+        i32 ox;
+        i32 oy;
         irr::scene::ISceneManager *smgrData;
     public:
-      grid(int x, int y, irr::scene::ISceneManager *smgrData);
+      grid(i32 x, i32 y, irr::scene::ISceneManager *smgrData);
       grid(const grid &orig);
       virtual ~grid();
 
-      int getX(){return ox;};
-      int getY(){return oy;};
-      nodeGrid* getNode(int x, int y);
-      float checkDistance(nodeGrid* a, nodeGrid* b, nodeGrid* startData);
+      i32 getX(){return ox;};
+      i32 getY(){return oy;};
+      nodeGrid* getNode(i32 x, i32 y);
+      f32 checkDistance(nodeGrid* a, nodeGrid* b, nodeGrid* startData);
       nodeGrid*** getGrid(){
           return map;
       };
