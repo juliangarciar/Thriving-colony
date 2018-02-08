@@ -63,6 +63,9 @@ class Player {
         //Managers
         BuildingManager *buildings;
         UnitManager *units;
+
+        //City Hall
+        Vector3<f32> hallPosition;
     private:
         
 };

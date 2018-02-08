@@ -62,6 +62,7 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
         newUnit -> getModel() -> setActive(false);
         newUnit -> getModel() -> setScale(Vector3<float>(100, 100, 100));
         newUnit -> setRecruitedCallback([&] (Unit* u){
+            std::cout << "Si" << std::endl;
             //Delete in Queue
             ptrdiff_t pos = distance(inQueueTroops->begin(), find(inQueueTroops->begin(), inQueueTroops->end(), u));
             inQueueTroops->erase(inQueueTroops->begin()+pos);
@@ -72,9 +73,13 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
             //ToDo: modificar el HUD
         });
         newUnit -> setRetractedCallback([&] (Unit *u){
-            //ToDo: modificar los vectores
-            //Eliminar del map
-            //Añadir al hall
+            //Delete in Map
+            inMapTroops->erase(u->getID());
+
+            //Add in Hall
+            inHallTroops->push_back(u);
+
+            //ToDo: modificar el HUD
         });
 
         inQueueTroops -> push_back(newUnit);
@@ -117,10 +122,14 @@ void UnitManager::deployTroop() {
     if (isDeployingTroop && currentDeployingTroop >= 0 && g -> getMouse() -> leftMouseDown()) { 
         Unit *temp = inHallTroops -> at(currentDeployingTroop);
 
-        inHallTroops -> erase(inHallTroops -> begin() + currentDeployingTroop);
+        //Delete in Queue
+        ptrdiff_t pos = distance(inHallTroops->begin(), find(inHallTroops->begin(), inHallTroops->end(), temp));
+        inHallTroops->erase(inHallTroops->begin()+pos);
+
+        //Insert in map
         inMapTroops -> insert(std::pair<int, Unit*>(temp -> getModel() -> getID(), temp));
 
-        temp -> setTroopPosition(Vector3<float>(Enumeration::HumanCityHall::human_x, g -> getGameState() -> getTerrain() -> getY(Enumeration::HumanCityHall::human_x, Enumeration::HumanCityHall::human_z), Enumeration::HumanCityHall::human_z)); //ToDo
+        temp -> setTroopPosition(Vector3<float>(Enumeration::HumanCityHall::human_x+100, g -> getGameState() -> getTerrain() -> getY(Enumeration::HumanCityHall::human_x, Enumeration::HumanCityHall::human_z), Enumeration::HumanCityHall::human_z)); //ToDo
         
         // Why attack move
         temp -> switchState(Enumeration::UnitState::AttackMove);
@@ -172,7 +181,7 @@ void UnitManager::selectTroop(int troopID) {
         selectedTroop = it -> second;
         //SELECT VOICE
         g -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
-        SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getSelectEvent());
+        //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getSelectEvent());
     }
 }
 
@@ -201,7 +210,7 @@ void UnitManager::moveOrder() {
             selectedTroop->setPathToTarget(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
         }
         //MOVEMENT VOICE
-        SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
+        //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
     }
 }
 
