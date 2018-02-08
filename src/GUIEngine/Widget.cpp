@@ -13,7 +13,7 @@ Widget::~Widget() {
     //ToDo: borrar Widget
 }
 
-void Widget::setPosition(Vector2<int> position){
+void Widget::setPosition(Vector2<i32> position){
     widget -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 

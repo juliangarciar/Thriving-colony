@@ -5,6 +5,7 @@
 #include <nanogui/nanogui.h>
 #include "Tab.h"
 #include "GUIElement.h"
+#include <Types.h>
 
 class TabPanel : public GUIElement {
     public:
@@ -17,11 +18,11 @@ class TabPanel : public GUIElement {
         bool isVisible();
 
         Tab *createTab(std::string text);
-        Tab *getTab(int index);
+        Tab *getTab(i32 index);
 
-        void changeActiveTab(int index);
+        void changeActiveTab(i32 index);
         
-        void setPosition(Vector2<int> position);
+        void setPosition(Vector2<i32> position);
         
         void setTooltip(std::string text);
 

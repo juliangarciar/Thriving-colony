@@ -2,6 +2,7 @@
 #define MOUNTED_RANGE_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class MountedRangeNode : public Node {
 

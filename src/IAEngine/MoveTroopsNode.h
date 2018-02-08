@@ -2,6 +2,7 @@
 #define MOVE_TROOPS_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class MoveTroopsNode : public Node {
 

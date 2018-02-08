@@ -2,6 +2,7 @@
 #define SCHOOL_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class SchoolNode : public Node {
 

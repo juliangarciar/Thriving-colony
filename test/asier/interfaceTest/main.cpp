@@ -5,7 +5,7 @@
 using namespace irr;
 using namespace std;
 
-int main() {
+i32 main() {
 
 	// create device and exit if creation failed
 	irr::SIrrlichtCreationParameters params;
@@ -113,7 +113,7 @@ int main() {
 
 	/* LOGO */
 	/*env -> addImage(driver -> getTexture("Starcraft2.png"),
-			core::position2d<int>(10,10));*/
+			core::position2d<i32>(10,10));*/
 
 
 	while(device -> run() && driver) {

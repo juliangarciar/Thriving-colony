@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <irrlicht.h>
+#include <Types.h>
 
 using namespace irr;
 
@@ -58,15 +59,15 @@ class Rect2D {
         //Return
         core::rect<T> getRect2D();
         
-        friend std::ostream& operator << (std::ostream &o,const Rect2D<float> &p);
-        friend std::ostream& operator << (std::ostream &o,const Rect2D<int> &p);
+        friend std::ostream& operator << (std::ostream &o,const Rect2D<f32> &p);
+        friend std::ostream& operator << (std::ostream &o,const Rect2D<i32> &p);
 };
 
-inline std::ostream& operator << (std::ostream &o,const Rect2D<float> &p) {
+inline std::ostream& operator << (std::ostream &o,const Rect2D<f32> &p) {
     o << "(" << p.x << ", " << p.y << ", " << p.w << ", " << p.h << ")\n";
     return o;
 }
-inline std::ostream& operator << (std::ostream &o,const Rect2D<int> &p) {
+inline std::ostream& operator << (std::ostream &o,const Rect2D<i32> &p) {
     o << "(" << p.x << ", " << p.y << ", " << p.w << ", " << p.h << ")\n";
     return o;
 }

@@ -4,6 +4,7 @@
 #include <nanogui/nanogui.h>
 #include <GraphicEngine/Vector2.h>
 #include "GUIElement.h"
+#include <Types.h>
 
 class Panel : public GUIElement {
 
@@ -18,10 +19,10 @@ class Panel : public GUIElement {
 
         void addChild(GUIElement *child);
         
-        void setPosition(Vector2<int> position);
+        void setPosition(Vector2<i32> position);
         void setTitle(std::string t);
         void setTooltip(std::string text);
-        void setSize(Vector2<int> size);
+        void setSize(Vector2<i32> size);
         void setVerticalAlignment();
         void setGroupLayout();
         void setDragable(bool dragable);

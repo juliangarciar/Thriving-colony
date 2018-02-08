@@ -30,7 +30,7 @@ bool ComboBox::isVisible(){
     return combobox -> visible();
 }
 
-void ComboBox::setPosition(Vector2<int> position){
+void ComboBox::setPosition(Vector2<i32> position){
     combobox -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 
@@ -42,14 +42,14 @@ void ComboBox::setCallback(std::function<void(bool)> callback){
     combobox -> setCallback(callback);
 }
 
-int ComboBox::addOption(std::string option){
+i32 ComboBox::addOption(std::string option){
     options.push_back(option);
     combobox->setItems(options);
     if (options.size() == 1) this->show();
     return options.size()-1;
 }
 
-void ComboBox::removeOption(int option){
+void ComboBox::removeOption(i32 option){
     options.erase(options.begin()+option);
     combobox->setItems(options);
     if (options.size() < 1) this->hide();
@@ -64,7 +64,7 @@ void ComboBox::removeOption(std::string option){
     }
 }
 
-int ComboBox::getSelectedOption(){
+i32 ComboBox::getSelectedOption(){
     return combobox->selectedIndex();
 }
 

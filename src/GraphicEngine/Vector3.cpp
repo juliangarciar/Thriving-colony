@@ -92,7 +92,7 @@ Vector3<T> Vector3<T>::getDistanceTo(Vector3<T> other) {
 }
 
 template <class T>
-Vector3<T> Vector3<T>::rotateFromPoint(float r, float phi, float theta) {
+Vector3<T> Vector3<T>::rotateFromPoint(f32 r, f32 phi, f32 theta) {
     Vector3<T> point;
 
     // Convert to radians
@@ -131,7 +131,7 @@ Vector3<T> Vector3<T>::operator + (const Vector3<T> &p) const {
 }
 
 template <class T>
-Vector3<T> Vector3<T>::operator + (const float &p) const {
+Vector3<T> Vector3<T>::operator + (const f32 &p) const {
     return Vector3<T>(this -> x+p, this -> y+p, this -> z+p);
 }
 
@@ -141,7 +141,7 @@ Vector3<T> Vector3<T>::operator - (const Vector3<T> &p) const {
 }
 
 template <class T>
-Vector3<T> Vector3<T>::operator - (const float &p) const {
+Vector3<T> Vector3<T>::operator - (const f32 &p) const {
     return Vector3<T>(this -> x-p, this -> y-p, this -> z-p);
 }
 
@@ -151,7 +151,7 @@ Vector3<T> Vector3<T>::operator * (const Vector3<T> &p) const {
 }
 
 template <class T>
-Vector3<T> Vector3<T>::operator * (const float &p) const {
+Vector3<T> Vector3<T>::operator * (const f32 &p) const {
     return Vector3<T>(this -> x*p, this -> y*p, this -> z*p);
 }
 
@@ -161,9 +161,9 @@ Vector3<T> Vector3<T>::operator / (const Vector3<T> &p) const {
 }
 
 template <class T>
-Vector3<T> Vector3<T>::operator / (const float &p) const {
+Vector3<T> Vector3<T>::operator / (const f32 &p) const {
     return Vector3<T>(this -> x/p, this -> y/p, this -> z/p);
 }
 
-template class Vector3<int>;
-template class Vector3<float>; 
+template class Vector3<i32>;
+template class Vector3<f32>; 

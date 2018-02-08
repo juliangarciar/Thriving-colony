@@ -3,6 +3,7 @@
 
 #include "State.h"
 #include "StartMenu.h"
+#include <Types.h>
 
 /**
  * @class MenuState
@@ -44,8 +45,8 @@ public:
     private:
         StartMenu *hud;
 
-        int prevWindowWidth;
-        int prevWindowHeight;
+        i32 prevWindowWidth;
+        i32 prevWindowHeight;
 };
 
 #endif

@@ -2,6 +2,7 @@
 #define TOWER_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class TowerNode : public Node {
 

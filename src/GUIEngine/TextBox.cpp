@@ -14,7 +14,7 @@ TextBox::~TextBox() {
     hide();
 }
 
-void TextBox::setPosition(Vector2<int> position){
+void TextBox::setPosition(Vector2<i32> position){
     textbox -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 
@@ -42,7 +42,7 @@ bool TextBox::isVisible(){
     return textbox -> visible();
 }
 
-void TextBox::setSize(Vector2<int> size) {
+void TextBox::setSize(Vector2<i32> size) {
     textbox -> setFixedSize(Eigen::Vector2i(size.x, size.y));
 }
 

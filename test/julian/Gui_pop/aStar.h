@@ -11,8 +11,8 @@ private:
         }
     };
     bool finish;
-    float newCost;
-    float priority;
+    f32 newCost;
+    f32 priority;
     nodeGrid* start;
     nodeGrid* end;
     nodeGrid* current;

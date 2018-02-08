@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "IAEngine/BehaviourTree.h"
 #include "IAEngine/RootNode.h"
+#include <Types.h>
 
 /**
  * @class Hud
@@ -61,7 +62,7 @@ class IA : public Player {
          * @brief Determina la posicion de construccion de un edificio
          * @return position sera un vector de posicion con las coordenadas del nuevo edificio
          */
-        Vector3<float> determinatePositionBuilding();
+        Vector3<f32> determinatePositionBuilding();
         /**
          * @brief Actualiza la IA
          */
@@ -87,7 +88,7 @@ class IA : public Player {
          * @brief Cambia el choiceIndex actual por el pasado por parametro
          * @param choiceIndex con el nuevo numero
          */
-        void setChoiceIndex(int);
+        void setChoiceIndex(i32);
         /**
          * @brief Solicita la proxima decision de la IA
          * @return nextChoice de tipo string 
@@ -108,7 +109,7 @@ class IA : public Player {
          */
         void chooseBehaviour();
     private:
-        int updateTimer;
+        i32 updateTimer;
 
         static IA* instance;
         static bool deployedTroops;
@@ -118,7 +119,7 @@ class IA : public Player {
 
         Enumeration::IABehaviour behaviour;
         std::string chosenBehaviour;
-        int choiceIndex;
+        i32 choiceIndex;
 
         std::vector<std::string> * choices;
 

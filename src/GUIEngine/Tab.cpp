@@ -14,7 +14,7 @@ void Tab::addChild(GUIElement *elem) {
     tab -> addChild(elem -> getGUIElement());
 }
 
-void Tab::setPosition(Vector2<int> position){
+void Tab::setPosition(Vector2<i32> position){
     tab -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 

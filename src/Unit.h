@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include <GraphicEngine/Vector3.h>
 #include <PathPlanner/PathManager.h>
+#include <Types.h>
 
 #include <iostream>
 #include <functional>
@@ -15,7 +16,7 @@ class Unit : public Entity {
     
     public:
         //The consctructor is empty because the object it's constructed in the child
-        Unit(SceneNode *layer, int id, const wchar_t *path, Enumeration::Team teamData, Enumeration::BreedType raceData, Enumeration::UnitType typeData, Vector3<float> vectorData);
+        Unit(SceneNode *layer, i32 id, const wchar_t *path, Enumeration::Team teamData, Enumeration::BreedType raceData, Enumeration::UnitType typeData, Vector3<f32> vectorData);
         virtual ~Unit();
 
         // Game
@@ -49,10 +50,10 @@ class Unit : public Entity {
         //Setters
         void setMoving(bool);
         void setAttacking(bool);
-        void setTroopPosition(Vector3<float> vectorData);
-        void setTroopDestination(Vector3<float> vectorData);
-        void setPath(std::list< Vector2<float> > path);
-        void setPathToTarget(Vector3<float> vectorData);
+        void setTroopPosition(Vector3<f32> vectorData);
+        void setTroopDestination(Vector3<f32> vectorData);
+        void setPath(std::list< Vector2<f32> > path);
+        void setPathToTarget(Vector3<f32> vectorData);
         void setRecruitedCallback(std::function<void(Unit*)>);
         void setRetractedCallback(std::function<void(Unit*)>);
 
@@ -61,8 +62,8 @@ class Unit : public Entity {
         std::string getMoveEvent();
         std::string getSelectEvent();
 
-        Vector3<float>* getDestination();
-        std::list< Vector2<float> > getPath();
+        Vector3<f32>* getDestination();
+        std::list< Vector2<f32> > getPath();
     private:
     //Init
         /**
@@ -77,9 +78,9 @@ class Unit : public Entity {
         Enumeration::UnitType unitType;
 
     // Unit stats
-        int moveSpeed;
-        int attackSpeed;
-        int attackDamage;
+        i32 moveSpeed;
+        i32 attackSpeed;
+        i32 attackDamage;
 
     // Action bools
         bool finished;
@@ -87,27 +88,27 @@ class Unit : public Entity {
         bool attacking;
 
     // Unit info
-        float recruitingTime;
+        f32 recruitingTime;
 
     // Timers
-        float recruitingTimer;
-        float lookForTargetTimer;
-        float lookForTargetCountdown;
-        float attackCountdown;
+        f32 recruitingTimer;
+        f32 lookForTargetTimer;
+        f32 lookForTargetCountdown;
+        f32 attackCountdown;
 
     // Space vectors used for unit movement
         class PathManager* pathManager;
-        std::list< Vector2<float> > pathFollow;
+        std::list< Vector2<f32> > pathFollow;
 
     //Finish recruiting callback
         std::function<void(Unit*)> recruitedCallback;
         std::function<void(Unit*)> retractedCallback;
 
     // Vector position is in the father
-        Vector3 <float> *vectorPos;
-        Vector3 <float> *vectorDes;
-        Vector3 <float> *vectorMov;
-        float steps;
+        Vector3 <f32> *vectorPos;
+        Vector3 <f32> *vectorDes;
+        Vector3 <f32> *vectorMov;
+        f32 steps;
 
     // Algo
         bool readyToEnter;

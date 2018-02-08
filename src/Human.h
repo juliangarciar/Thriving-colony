@@ -2,6 +2,7 @@
 #define HUMAN_H
 
 #include "Player.h"
+#include <Types.h>
 
 class Human : public Player {
     
@@ -24,7 +25,7 @@ class Human : public Player {
         bool getDeployedTroops();
         bool getClosedDoors();
     private:
-        int updateTimer;
+        i32 updateTimer;
 
         static Human* instance;
         static bool deployedTroops;

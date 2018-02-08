@@ -176,7 +176,7 @@ Ok, now for the more interesting part. First, create the Irrlicht device. As in
 some examples before, we ask the user which driver he wants to use for this
 example:
 */
-int main()
+i32 main()
 {
 	// ask user for driver
 	video::E_DRIVER_TYPE driverType=driverChoiceConsole();
@@ -266,7 +266,7 @@ int main()
 	And at last, we create a nice Irrlicht Engine logo in the top left corner. 
 	*/
 	env -> addImage(driver -> getTexture("../../media/irrlichtlogo2.png"),
-			position2d<int>(10,10));
+			position2d<i32>(10,10));
 
 
 	/*

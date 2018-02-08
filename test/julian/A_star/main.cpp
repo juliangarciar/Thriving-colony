@@ -13,8 +13,8 @@ struct comparePriority{
 //CHECK NEIGHBOURS
 std::vector < node* > getNeighbours(node* currentData, node*** mapData){
     std::vector < node* > neighbours;
-    int x = currentData -> getX();
-    int y = currentData -> getY();
+    i32 x = currentData -> getX();
+    i32 y = currentData -> getY();
     if((x + 1) < 25){
         if(!mapData[x + 1][y] -> itsBlock())
         neighbours.push_back(mapData[x + 1][y]);
@@ -34,31 +34,31 @@ std::vector < node* > getNeighbours(node* currentData, node*** mapData){
     return neighbours;
 }
 //MANHATTAN DISTANCE
-int checkDistance(node* a, node* b){
-    int x1 = a -> getX();
-    int y1 = a -> getY();
-    int x2 = b -> getX();
-    int y2 = b -> getY();
-    int distance = abs(x1 - x2) + abs(y1 - y2);
+i32 checkDistance(node* a, node* b){
+    i32 x1 = a -> getX();
+    i32 y1 = a -> getY();
+    i32 x2 = b -> getX();
+    i32 y2 = b -> getY();
+    i32 distance = abs(x1 - x2) + abs(y1 - y2);
     return distance;
 }
 //MAIN FUNCTION
-int main(){
+i32 main(){
     char insertKey;
-    int clicks = 0;
+    i32 clicks = 0;
     bool released = true;
     bool finish = false;
-    int newCost = 0;
-    int currentCost = 0;
-    int priority = 0;
+    i32 newCost = 0;
+    i32 currentCost = 0;
+    i32 priority = 0;
     //INIT NEIGHBOURS DATA
     std::vector < node* > neighbors;
     //INIT MAP DATA
     node*** mapita = new node**[25];
-    for (int x = 0; x < 25; x++)
+    for (i32 x = 0; x < 25; x++)
     {
         mapita[x] = new node*[25];
-        for (int y = 0; y < 25; y++)
+        for (i32 y = 0; y < 25; y++)
         {
             mapita[x][y] = new node(x, y);
         }
@@ -77,7 +77,7 @@ int main(){
         end -> swapColor(sf::Color::Red);
 
     //DRAW OBSTACLES
-    for (int x = 13, y = 15; x < 20; x++, y--)
+    for (i32 x = 13, y = 15; x < 20; x++, y--)
     {
         mapita[x][y] -> swapColor(sf::Color::Black);
         mapita[x][y] -> setBlock(true);
@@ -123,9 +123,9 @@ int main(){
                         current = current -> getCameFrom();
                         current -> swapColor(sf::Color::Red);
                     }
-                    for (int x = 0; x < 25; x++)
+                    for (i32 x = 0; x < 25; x++)
                     {
-                        for (int y = 0; y < 25; y++)
+                        for (i32 y = 0; y < 25; y++)
                         {
                             window.draw(*mapita[x][y] -> getRectangle());
                         }
@@ -135,7 +135,7 @@ int main(){
                 }
 
                 neighbors = getNeighbours(current, mapita);
-                for (int i = 0; i < neighbors.size(); i++)
+                for (i32 i = 0; i < neighbors.size(); i++)
                 {
                     newCost = current -> getWeight() + 1;
                     if (!frontier.top() -> itsCounted() || newCost < neighbors[i] -> getWeight())
@@ -156,9 +156,9 @@ int main(){
         }
         window.clear();
         
-        for (int x = 0; x < 25; x++)
+        for (i32 x = 0; x < 25; x++)
         {
-            for (int y = 0; y < 25; y++)
+            for (i32 y = 0; y < 25; y++)
             {
                 window.draw(*mapita[x][y] -> getRectangle());
             }
@@ -174,9 +174,9 @@ int main(){
     delete end;
     delete current;
 
-    for (int i = 0 ; i < 24; i++)
+    for (i32 i = 0 ; i < 24; i++)
     {
-        for (int j = 0; j < 24; j++){
+        for (i32 j = 0; j < 24; j++){
             delete mapita[i][j];
         }
         delete[] mapita[i];

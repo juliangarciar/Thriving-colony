@@ -4,7 +4,7 @@
 using namespace irr;
 using namespace std;
 
-int main() {
+i32 main() {
 	// create device with full flexibility over creation parameters
 	// you can add more parameters if desired, check irr::SIrrlichtCreationParameters
 	irr::SIrrlichtCreationParameters params;
@@ -67,7 +67,7 @@ int main() {
         cubeNode -> setPosition(core::vector3df(0,1000,0));
     }
 
-	int lastFPS = -1;
+	i32 lastFPS = -1;
 
 	while(device -> run()) {
         if (device -> isWindowActive()) {
@@ -110,7 +110,7 @@ int main() {
             driver -> endScene();
             
             // display frames per second in window title
-            int fps = driver -> getFPS();
+            i32 fps = driver -> getFPS();
             if (lastFPS != fps) {
                 core::stringw str = L"Terrain Renderer - Irrlicht Engine [";
                 str += driver -> getName();

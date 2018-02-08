@@ -18,15 +18,15 @@ class Box2D
 {
     private:
     // Top-left point
-        Vector2<float>  m_vTopLeft;
+        Vector2<f32>  m_vTopLeft;
     // Top-right point
-        Vector2<float>  m_vBottomRight;
+        Vector2<f32>  m_vBottomRight;
     // Center point
-        Vector2<float>  m_vCenter;
+        Vector2<f32>  m_vCenter;
     public:
     // Constructor
-        Box2D(Vector2<float> tl,
-                        Vector2<float> br):m_vTopLeft(tl),
+        Box2D(Vector2<f32> tl,
+                        Vector2<f32> br):m_vTopLeft(tl),
                                         m_vBottomRight(br),
                                         m_vCenter((tl+br)/2.0)
         {}
@@ -40,10 +40,10 @@ class Box2D
         }
 
     // Getters
-        Vector2<float> TopLeft(){
+        Vector2<f32> TopLeft(){
             return m_vTopLeft;
         }
-        Vector2<float> BottomRight(){
+        Vector2<f32> BottomRight(){
             return m_vBottomRight;
         }
         double    Top(){
@@ -58,7 +58,7 @@ class Box2D
         double    Right(){
             return m_vBottomRight.x;
         }
-        Vector2<float> Center(){
+        Vector2<f32> Center(){
             return m_vCenter;
         }
 };

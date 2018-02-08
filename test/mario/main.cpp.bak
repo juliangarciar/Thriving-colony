@@ -10,10 +10,10 @@ using namespace nanogui;
 
 Screen *screen = nullptr;
 
-int winWidth = 1280;
-int winHeight = 720;
+i32 winWidth = 1280;
+i32 winHeight = 720;
 
-int main(int argc, char **argv) {
+i32 main(i32 argc, char **argv) {
     glfwInit();
 
     glfwSetTime(0);
@@ -54,25 +54,25 @@ int main(int argc, char **argv) {
     );
 
     glfwSetMouseButtonCallback(window,
-        [](GLFWwindow *, int button, int action, int modifiers) {
+        [](GLFWwindow *, i32 button, i32 action, i32 modifiers) {
             screen -> mouseButtonCallbackEvent(button, action, modifiers);
         }
     );
 
     glfwSetKeyCallback(window,
-        [](GLFWwindow *, int key, int scancode, int action, int mods) {
+        [](GLFWwindow *, i32 key, i32 scancode, i32 action, i32 mods) {
             screen -> keyCallbackEvent(key, scancode, action, mods);
         }
     );
 
     glfwSetCharCallback(window,
-        [](GLFWwindow *, unsigned int codepoint) {
+        [](GLFWwindow *, unsigned i32 codepoint) {
             screen -> charCallbackEvent(codepoint);
         }
     );
 
     glfwSetDropCallback(window,
-        [](GLFWwindow *, int count, const char **filenames) {
+        [](GLFWwindow *, i32 count, const char **filenames) {
             screen -> dropCallbackEvent(count, filenames);
         }
     );
@@ -84,7 +84,7 @@ int main(int argc, char **argv) {
     );
 
     glfwSetFramebufferSizeCallback(window,
-        [](GLFWwindow *, int width, int height) {
+        [](GLFWwindow *, i32 width, i32 height) {
             screen -> resizeCallbackEvent(width, height);
         }
     );

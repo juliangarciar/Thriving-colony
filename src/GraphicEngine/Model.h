@@ -5,26 +5,27 @@
 #include "SceneNode.h"
 #include "Material.h"
 #include "Box3D.h"
+#include <Types.h>
 
 using namespace irr;
 
 class Model {
     public:
-        Model(int id, const wchar_t *path);
-        Model(SceneNode *parent, int id, const wchar_t *path);
+        Model(i32 id, const wchar_t *path);
+        Model(SceneNode *parent, i32 id, const wchar_t *path);
 
         ~Model();
 
-        void setID(int id);
+        void setID(i32 id);
         void setName(const wchar_t *name);
         void setActive(bool a);
         void setMaterial(Material *m);
-        void setPosition(Vector3<float> pos);
-        void setScale(Vector3<float> s);
+        void setPosition(Vector3<f32> pos);
+        void setScale(Vector3<f32> s);
 
-        int getID();
-        Vector3<float> getPosition();
-        Box3D<float> getBoundingBox();
+        i32 getID();
+        Vector3<f32> getPosition();
+        Box3D<f32> getBoundingBox();
 		scene::IMeshSceneNode *getModel();
         
     private:

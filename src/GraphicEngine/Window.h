@@ -6,6 +6,7 @@
 #include <irrlicht.h>
 #include <nanogui/nanogui.h>
 #include <GraphicEngine/Vector2.h>
+#include <Types.h>
 
 #include <iostream>
 
@@ -34,20 +35,20 @@ class Window {
         scene::ISceneManager* getSceneManager();
         nanogui::Screen* getGUIEnvironment();
 
-        int getInitialWindowWidth();
-        int getInitialWindowHeight();
+        i32 getInitialWindowWidth();
+        i32 getInitialWindowHeight();
 
-        int getRealWindowWidth();
-        int getRealWindowHeight();
+        i32 getRealWindowWidth();
+        i32 getRealWindowHeight();
 
-        float getDeltaTime();
+        f32 getDeltaTime();
 
         GLFWwindow *getWindow() {
             return window;
         }
         
     protected:
-        Window(int width, int height);
+        Window(i32 width, i32 height);
         virtual ~Window();
         Window(const Window & );
         Window &operator = (const Window & );
@@ -66,8 +67,8 @@ class Window {
         scene::ISceneManager* scene;
         nanogui::Screen* gui;
 
-        int windowWidth;
-        int windowHeight;
+        i32 windowWidth;
+        i32 windowHeight;
         
         double dtThen;
         double deltaTime;
