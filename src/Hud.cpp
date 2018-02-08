@@ -133,7 +133,7 @@ Hud::Hud() {
                 i32 index = hallTroopList -> getSelectedOption();
                 if (index >= 0) {
                     hallTroopList -> removeOption(index);
-                    Human::getInstance() -> getUnitManager() -> startDeployingTroop(index);
+                    Human::Instance() -> getUnitManager() -> startDeployingTroop(index);
                     Window::Instance()->getGUIEnvironment()->performLayout();
                 }
             });
@@ -142,7 +142,13 @@ Hud::Hud() {
             b = new Button(mainBuildingTab, "Deploy all troops");
             b -> setTooltip("Deploy all your units onto the map");
             b -> setCallback([&]{
-                Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsHuman);
+                i32 index = hallTroopList -> getSelectedOption();
+                while (index >= 0) {
+                    hallTroopList -> removeOption(index);
+                    Human::Instance() -> getUnitManager() -> startDeployingTroop(index);
+                    Window::Instance()->getGUIEnvironment()->performLayout();
+                    index = hallTroopList -> getSelectedOption();
+                }
             });
             buttons -> push_back(b);
 
@@ -173,7 +179,7 @@ Hud::Hud() {
             b = new Button(barrackContent, "Create melee footman");
             b -> setTooltip("Create a melee unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardM);
+                Human::Instance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardM);
                 hallTroopList -> addOption("Melee footman");
                 Window::Instance()->getGUIEnvironment()->performLayout();
             });
@@ -182,7 +188,7 @@ Hud::Hud() {
             b = new Button(barrackContent, "Create ranged footman");
             b -> setTooltip("Create a ranged unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardR);
+                Human::Instance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardR);
                 hallTroopList -> addOption("Ranged footman");
                 Window::Instance()->getGUIEnvironment()->performLayout();
             });
@@ -211,7 +217,7 @@ Hud::Hud() {
             b = new Button(barnContent, "Create mounted melee unit");
             b -> setTooltip("Create a melee unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedM);
+                Human::Instance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedM);
                 hallTroopList -> addOption("Mounted melee unit");
                 Window::Instance()->getGUIEnvironment()->performLayout();
             });
@@ -220,7 +226,7 @@ Hud::Hud() {
             b = new Button(barnContent, "Create mounted ranged unit");
             b -> setTooltip("Create a ranged unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedR);
+                Human::Instance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedR);
                 hallTroopList -> addOption("Mounted ranged unit");
                 Window::Instance()->getGUIEnvironment()->performLayout();
             });
@@ -229,7 +235,7 @@ Hud::Hud() {
             b = new Button(barnContent, "Create monster");
             b -> setTooltip("Create a overwhelmingly powerful creature to destroy your enemies\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Idol);
+                Human::Instance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Idol);
                 hallTroopList -> addOption("Create monster");
                 Window::Instance()->getGUIEnvironment()->performLayout();
             });
@@ -258,7 +264,7 @@ Hud::Hud() {
             b = new Button(workshopContent, "Create ram");
             b -> setTooltip("Create a ram that specializes in destroying buildings\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Desintegrator);
+                Human::Instance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Desintegrator);
                 hallTroopList -> addOption("Ram");
                 Window::Instance()->getGUIEnvironment()->performLayout();
             });
@@ -267,7 +273,7 @@ Hud::Hud() {
             b = new Button(workshopContent, "Create catapult");
             b -> setTooltip("Create a catapult that heavy area of damage\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Launcher);
+                Human::Instance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Launcher);
                 hallTroopList -> addOption("Catapult");
                 Window::Instance()->getGUIEnvironment()->performLayout();
             });
@@ -413,47 +419,47 @@ void Hud::setHUDEvents(){
     });
 
     buttonBarn->setCallback([]{
-        Human::getInstance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Barn);
+        Human::Instance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Barn);
     });
 
     buttonBarrack->setCallback([]{
-        Human::getInstance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Barrack);
+        Human::Instance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Barrack);
     });
 
     buttonHome->setCallback([]{
-        Human::getInstance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::House);
+        Human::Instance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::House);
     });
 
     buttonHospital->setCallback([]{
-        Human::getInstance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Hospital);
+        Human::Instance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Hospital);
     });
 
     buttonMarket->setCallback([]{
-        Human::getInstance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Market);
+        Human::Instance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Market);
     });
 
     buttonQuarry->setCallback([]{
-        Human::getInstance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Quarry);
+        Human::Instance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Quarry);
     });
 
     buttonSchool->setCallback([]{
-        Human::getInstance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::School);
+        Human::Instance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::School);
     });
 
     buttonSiderurgy->setCallback([]{
-        Human::getInstance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Siderurgy);
+        Human::Instance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Siderurgy);
     });
 
     buttonTower->setCallback([]{
-        Human::getInstance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Tower);
+        Human::Instance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Tower);
     });
 
     buttonWall->setCallback([]{
-        Human::getInstance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Wall);
+        Human::Instance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Wall);
     });
 
     buttonWorkshop->setCallback([]{
-        Human::getInstance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Workshop);
+        Human::Instance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Workshop);
     });
 
     buttonExpandTerrain->setCallback([]{
@@ -466,51 +472,51 @@ void Hud::update() {
     f32 dt = Game::Instance()  -> getWindow() -> getDeltaTime();
     if (updateTimer <= 0) {
         i32 melees = 
-            Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
-            Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
+            Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
+            Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
         i32 ranges = 
-            Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardR) + 
-            Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedR);
+            Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardR) + 
+            Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedR);
         i32 sieges = 
-            Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) + 
-            Human::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
+            Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) + 
+            Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
 
         std::stringstream os;
         os << "Player resources: " << 
-        "Metal: " << std::to_string(Human::getInstance() -> getMetalAmount()) << " " <<
-        "Crystal: " << std::to_string(Human::getInstance() -> getCrystalAmount()) << " " <<
-        "Citizens: " << std::to_string(Human::getInstance() -> getCitizens()) << " " <<
-        "Happiness: " << std::to_string(Human::getInstance() -> getHappiness()) <<  " " <<
-        "City level: "<< std::to_string(Human::getInstance() -> getCityLevel()) <<  " " <<
-        "Army size: " << std::to_string(Human::getInstance() -> getArmySize()) << " " <<
+        "Metal: " << std::to_string(Human::Instance() -> getMetalAmount()) << " " <<
+        "Crystal: " << std::to_string(Human::Instance() -> getCrystalAmount()) << " " <<
+        "Citizens: " << std::to_string(Human::Instance() -> getCitizens()) << " " <<
+        "Happiness: " << std::to_string(Human::Instance() -> getHappiness()) <<  " " <<
+        "City level: "<< std::to_string(Human::Instance() -> getCityLevel()) <<  " " <<
+        "Army size: " << std::to_string(Human::Instance() -> getArmySize()) << " " <<
         "- Melees: " << std::to_string(melees) <<  " " <<
         "- Ranged: " << std::to_string(ranges) << " " <<
         "- Siege: " << std::to_string(sieges);
         resourceText -> setLabel(os.str());
 
         melees = 
-            IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
-            IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
+            IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
+            IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
         ranges = 
-            IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardR) + 
-            IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedR);
+            IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardR) + 
+            IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedR);
         sieges = 
-            IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) + 
-            IA::getInstance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
+            IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) + 
+            IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
 
         std::stringstream iaos;
         iaos << "IA resources:" << 
-        "Metal: " << std::to_string(IA::getInstance() -> getMetalAmount()) <<  " " <<
-        "Crystal: " << std::to_string(IA::getInstance() -> getCrystalAmount()) <<  " " <<
-        "Citizens: " << std::to_string(IA::getInstance() -> getCitizens()) <<  " " <<
-        "Happiness: " << std::to_string(IA::getInstance() -> getHappiness()) <<  " " <<
-        "City level: "<< std::to_string(IA::getInstance() -> getCityLevel()) <<  " " <<
-        "Army size: " << std::to_string(IA::getInstance() -> getArmySize()) <<  " " <<
+        "Metal: " << std::to_string(IA::Instance() -> getMetalAmount()) <<  " " <<
+        "Crystal: " << std::to_string(IA::Instance() -> getCrystalAmount()) <<  " " <<
+        "Citizens: " << std::to_string(IA::Instance() -> getCitizens()) <<  " " <<
+        "Happiness: " << std::to_string(IA::Instance() -> getHappiness()) <<  " " <<
+        "City level: "<< std::to_string(IA::Instance() -> getCityLevel()) <<  " " <<
+        "Army size: " << std::to_string(IA::Instance() -> getArmySize()) <<  " " <<
         " - Melees: " << std::to_string(melees) <<  " " <<
         " - Ranged: " << std::to_string(ranges) <<  " " <<
         " - Siege: " << std::to_string(sieges) <<  " " <<
-        "Next choice: " << IA::getInstance() -> getNextChoice() <<  " " <<
-        "Behaviour: " << IA::getInstance() -> getChosenBehaviour();
+        "Next choice: " << IA::Instance() -> getNextChoice() <<  " " <<
+        "Behaviour: " << IA::Instance() -> getChosenBehaviour();
 
         iaResourceText -> setLabel(iaos.str());
 

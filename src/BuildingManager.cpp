@@ -205,11 +205,11 @@ bool BuildingManager::isSolvent(i32 metalCost, i32 crystalCost) {
 	i32 metalAmt = 0;
 	i32 crystalAmt = 0;
 	if (team == Enumeration::Team::Human) {
-		metalAmt = Human::getInstance() -> getMetalAmount();
-		crystalAmt = Human::getInstance() -> getCrystalAmount();
+		metalAmt = Human::Instance() -> getMetalAmount();
+		crystalAmt = Human::Instance() -> getCrystalAmount();
 	} else {
-		metalAmt = IA::getInstance() -> getMetalAmount();
-		crystalAmt = IA::getInstance() -> getCrystalAmount();
+		metalAmt = IA::Instance() -> getMetalAmount();
+		crystalAmt = IA::Instance() -> getCrystalAmount();
 	}
 	bool canPayMetal = metalAmt >= metalCost;
 	bool canPayCrystal = crystalAmt >= crystalCost;
@@ -310,9 +310,9 @@ SceneNode* BuildingManager::getBuildingLayer() {
 
 void BuildingManager::deleteBuilding(i32 id) {
 	if (buildings -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
-		Human::getInstance() -> decreaseHappiness(buildings -> find(id) -> second -> getHappiness());
+		Human::Instance() -> decreaseHappiness(buildings -> find(id) -> second -> getHappiness());
 	} else {
-		IA::getInstance() -> decreaseHappiness(buildings -> find(id) -> second -> getHappiness());
+		IA::Instance() -> decreaseHappiness(buildings -> find(id) -> second -> getHappiness());
 	}
 	buildingAmounts[(i32)buildings -> find(id) -> second -> getType()]--;
 	delete buildings -> find(id) -> second;

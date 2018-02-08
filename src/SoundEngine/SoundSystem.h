@@ -141,7 +141,7 @@ public:
     bool isPlaying();
     
     void release();
-    FMOD_STUDIO_EVENTINSTANCE* getInstance();
+    FMOD_STUDIO_EVENTINSTANCE* Instance();
 private:
     FMOD_STUDIO_EVENTINSTANCE *soundInstance;
     /**

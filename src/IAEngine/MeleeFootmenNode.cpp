@@ -15,17 +15,17 @@ MeleeFootmenNode::~MeleeFootmenNode() {
 }
 
 void MeleeFootmenNode::question() {
-    IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::TrainMeleeFootman);
-    if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barrack) > 0) {
+    IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::TrainMeleeFootman);
+    if (IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barrack) > 0) {
         //std::cout << "Genero un soldado a pie melee" << std::endl;
         //Esto va en el constructor
-        if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost)) {
+        if (IA::Instance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost)) {
             // Unit type
             Enumeration::UnitType unitData = Enumeration::UnitType::StandardM;
-            IA::getInstance() -> getUnitManager() -> createTroop(unitData);
+            IA::Instance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {
-        IA::getInstance() -> getTree() -> setRequireBarrack(true);
+        IA::Instance() -> getTree() -> setRequireBarrack(true);
         //children[0] -> question();
     }
 }

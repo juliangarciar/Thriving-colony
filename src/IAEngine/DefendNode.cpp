@@ -21,13 +21,13 @@ DefendNode::~DefendNode() {
 
 void DefendNode::question() {
     //To Do:defend
-    if (IA::getInstance() -> getClosedDoors() == false) {
+    if (IA::Instance() -> getClosedDoors() == false) {
         children[0] -> question();
     } else {
-        if (IA::getInstance() -> getDeployedTroops() == false) {
+        if (IA::Instance() -> getDeployedTroops() == false) {
             children[1] -> question();
         } else {
-            if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barrack) > 0) {
+            if (IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barrack) > 0) {
                 children[2] -> question();
             } else {
                 children[3] -> question();

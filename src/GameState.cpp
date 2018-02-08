@@ -35,24 +35,26 @@ void GameState::Init() {
     SoundSystem::Instance() -> initSystem();
 
     // Build the main building of IA
-    Vector3<f32> v = IA::getInstance() -> determinatePositionBuilding();
-    IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, true);
+    Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
+    IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, true);
+    IA::Instance() -> setHallPosition(v);
 
     //Build the first siderurgy of IA
-    v = IA::getInstance() -> determinatePositionBuilding();
-    IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
+    v = IA::Instance() -> determinatePositionBuilding();
+    IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
 
     // Build the main building of Human
     v.x = Enumeration::HumanCityHall::human_x;
     v.z = Enumeration::HumanCityHall::human_z; 
     v.y = map -> getY(v.x, v.z);
-    Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, true);
+    Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, true);
+    Human::Instance() -> setHallPosition(v);
     
     //Build the first siderurgy of Human
     v.x = Enumeration::HumanCityHall::human_x;
     v.z = Enumeration::HumanCityHall::human_z + 200;
     v.y = map -> getY(v.x, v.z);
-    Human::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
+    Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
 }
 
 void GameState::Input() {
@@ -62,24 +64,35 @@ void GameState::Input() {
     camera -> CenterCamera();
 
     if (!hud->getPopUpOpen()){
-        Human::getInstance() -> getBuildingManager() -> testRaycastCollisions();
-        Human::getInstance() -> getUnitManager() -> testRaycastCollisions();
+        Human::Instance() -> getBuildingManager() -> testRaycastCollisions();
+        Human::Instance() -> getUnitManager() -> testRaycastCollisions();
 
-        IA::getInstance() -> getBuildingManager() -> testRaycastCollisions();
-        IA::getInstance() -> getUnitManager() -> testRaycastCollisions();
+        IA::Instance() -> getBuildingManager() -> testRaycastCollisions();
+        IA::Instance() -> getUnitManager() -> testRaycastCollisions();
 
         i32 onMap = true;
 
+        //Deploy troops
+        if (Human::Instance() -> getUnitManager() -> isDeployingTroop()){
+            Game::Instance() -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
+            Human::Instance() -> getUnitManager() -> selectTroop(idTroop);
+            if (Game::Instance() -> getMouse() -> leftMousePressed()){
+                Vector3<f32> hall = Human::Instance() -> getHallPosition();
+                hall = Vector3<f32>(hall.x+100, hall.y, hall.z)
+                Human::Instance() -> getUnitManager() -> deployTroop(hall);
+            }
+        }
+
         //Interactions with our entities
-        i32 idBuilding = Human::getInstance() -> getBuildingManager() -> getCollisionID();
+        i32 idBuilding = Human::Instance() -> getBuildingManager() -> getCollisionID();
         if (idBuilding != -1){
-            if (!Human::getInstance() -> getUnitManager() -> isTroopSelected())
+            if (!Human::Instance() -> getUnitManager() -> isTroopSelected())
                 Game::Instance() -> getMouse() -> changeIcon(CURSOR_HAND);
             
             if (Game::Instance() -> getMouse() -> leftMousePressed()) {
-                Building *b = Human::getInstance()->getBuildingManager()->getBuilding(idBuilding);
+                Building *b = Human::Instance()->getBuildingManager()->getBuilding(idBuilding);
                 if (b != NULL){
-                    if (Human::getInstance() -> getBuildingManager() -> checkFinished(idBuilding)) {
+                    if (Human::Instance() -> getBuildingManager() -> checkFinished(idBuilding)) {
                         hud -> showPopup(b->getType());
                     }
                 }
@@ -88,20 +101,22 @@ void GameState::Input() {
             onMap = false;
         }
 
-        i32 idTroop = Human::getInstance() -> getUnitManager() -> getCollisionID();
+        i32 idTroop = Human::Instance() -> getUnitManager() -> getCollisionID();
         if (idTroop != -1){
-            if (!Human::getInstance() -> getUnitManager() -> isTroopSelected())
+            if (!Human::Instance() -> getUnitManager() -> isTroopSelected())
                 Game::Instance() -> getMouse() -> changeIcon(CURSOR_HAND);
             
-            if (Game::Instance() -> getMouse() -> leftMousePressed())
-                Human::getInstance() -> getUnitManager() -> selectTroop(idTroop);
+            if (Game::Instance() -> getMouse() -> leftMousePressed()){
+                Game::Instance() -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
+                Human::Instance() -> getUnitManager() -> selectTroop(idTroop);
+            }
             
             onMap = false;
         }
 
         //Interactions with IA's entities
-        i32 idBuildingIA =  IA::getInstance() -> getBuildingManager() -> getCollisionID();
-        if (idBuildingIA != -1 && Human::getInstance() -> getUnitManager() -> isTroopSelected()){
+        i32 idBuildingIA =  IA::Instance() -> getBuildingManager() -> getCollisionID();
+        if (idBuildingIA != -1 && Human::Instance() -> getUnitManager() -> isTroopSelected()){
             Game::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
 
             if (Game::Instance() -> getMouse() -> rightMousePressed())
@@ -109,8 +124,8 @@ void GameState::Input() {
             onMap = false;
         }
 
-        i32 idTroopIA = IA::getInstance() -> getUnitManager() -> getCollisionID();
-        if (idTroopIA != -1 && Human::getInstance() -> getUnitManager() -> isTroopSelected()){
+        i32 idTroopIA = IA::Instance() -> getUnitManager() -> getCollisionID();
+        if (idTroopIA != -1 && Human::Instance() -> getUnitManager() -> isTroopSelected()){
             Game::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
 
             if (Game::Instance() -> getMouse() -> rightMousePressed())
@@ -120,13 +135,13 @@ void GameState::Input() {
         
         //If nothing happens
         if (onMap){
-            if (Human::getInstance() -> getUnitManager() -> isTroopSelected())
+            if (Human::Instance() -> getUnitManager() -> isTroopSelected())
                 Game::Instance() -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
             else 
                 Game::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);
             
             if (Game::Instance() -> getMouse() -> leftMousePressed())
-                Human::getInstance() -> getUnitManager() -> unSelectTroop();
+                Human::Instance() -> getUnitManager() -> unSelectTroop();
         }
         onMap = false;
 
@@ -135,7 +150,7 @@ void GameState::Input() {
         }
 
         if (Game::Instance()-> getMouse() -> rightMousePressed()) {
-            Human::getInstance() -> getUnitManager() -> moveOrder();
+            Human::Instance() -> getUnitManager() -> moveOrder();
         }
     } else {
         Game::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);
@@ -156,12 +171,11 @@ void GameState::Update(){
     SoundSystem::Instance() -> update();
     
     //If human is building something
-    Human::getInstance() -> getBuildingManager() -> drawBuilding();
-    Human::getInstance() -> getUnitManager() -> deployTroop();
+    Human::Instance() -> getBuildingManager() -> drawBuilding();
 
     //Update human and IA status
-    Human::getInstance() -> update();
-    IA::getInstance() -> update();
+    Human::Instance() -> update();
+    IA::Instance() -> update();
 
     //ToDo: glfw tiene un evento para si se redimensiona la pantalla
     if (g -> getWindow() -> getRealWindowWidth() != prevWindowWidth || g -> getWindow() -> getRealWindowHeight() != prevWindowHeight) {
@@ -198,16 +212,16 @@ BattleManager* GameState::getBattleManager() {
 /*  
     //Hacks
     if (Game::Instance() -> getIO() -> keyPressed(KEY_KEY_1)) {
-        Human::getInstance() -> receiveMetal();
+        Human::Instance() -> receiveMetal();
     }
 
     if (Game::Instance() -> getIO() -> keyPressed(KEY_KEY_2)) {
-        Human::getInstance() -> receiveCrystal();
+        Human::Instance() -> receiveCrystal();
     }
 
     if (Game::Instance() -> getIO() -> keyPressed(KEY_KEY_3)) {
-        Human::getInstance() -> receiveCitizens();
+        Human::Instance() -> receiveCitizens();
     }
     Vector3<f32> v = map -> getPointCollision(Game::Instance() -> getMouse());
-    Human::getInstance() -> getUnitManager() -> updateUnitManager();
+    Human::Instance() -> getUnitManager() -> updateUnitManager();
 */

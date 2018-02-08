@@ -47,16 +47,12 @@ Game::~Game() {
 void Game::Init() {
     //Initialize the event system
     //IA Events
-    events -> addEvent(Enumeration::EventType::DeployTroopsIA, IA::deployTroops);
     events -> addEvent(Enumeration::EventType::RetractTroopsIA, IA::retractTroops);
-    events -> addEvent(Enumeration::EventType::OpenDoorsIA, IA::openDoors);
-    events -> addEvent(Enumeration::EventType::CloseDoorsIA, IA::closeDoors);
+    //events -> addEvent(Enumeration::EventType::DeployAllTroopsIA, IA::deployAllTroops);
 
     //Human events
-    events -> addEvent(Enumeration::EventType::DeployTroopsHuman, Human::deployTroops);
     events -> addEvent(Enumeration::EventType::RetractTroopsHuman, Human::retractTroops);
-    events -> addEvent(Enumeration::EventType::OpenDoorsHuman, Human::openDoors);
-    events -> addEvent(Enumeration::EventType::CloseDoorsHuman, Human::closeDoors);
+    //events -> addEvent(Enumeration::EventType::DeployAllTroopsHuman, Human::deployAllTroops);
 
     //Hud events
     events -> addEvent(Enumeration::EventType::EnableText, Hud::drawWarning);

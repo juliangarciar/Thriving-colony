@@ -357,21 +357,21 @@ void Unit::update() {
 
 void Unit::preTaxPlayer() {
     if (team == Enumeration::Team::Human) {
-        Human::getInstance() -> spendResources(metalCost, crystalCost);
-        Human::getInstance() -> increaseHappiness(happiness);
-        Human::getInstance() -> increaseCitizens(citizens);
+        Human::Instance() -> spendResources(metalCost, crystalCost);
+        Human::Instance() -> increaseHappiness(happiness);
+        Human::Instance() -> increaseCitizens(citizens);
     } else {
-        IA::getInstance() -> spendResources(metalCost, crystalCost);
-        IA::getInstance() -> increaseHappiness(happiness);
-        IA::getInstance() -> increaseCitizens(citizens);
+        IA::Instance() -> spendResources(metalCost, crystalCost);
+        IA::Instance() -> increaseHappiness(happiness);
+        IA::Instance() -> increaseCitizens(citizens);
     }
 }
 
 void Unit::posTaxPlayer(){
     if (team == Enumeration::Team::Human) {
-        Human::getInstance() -> increaseArmySize();
+        Human::Instance() -> increaseArmySize();
     } else {
-        IA::getInstance() -> increaseArmySize();
+        IA::Instance() -> increaseArmySize();
     }
 }
 
@@ -493,15 +493,15 @@ void Unit::attack() {
             if (target -> getHP() <= 0) {
                 if (team == Enumeration::Team::Human) {
                     if (target -> getEntityType() == Enumeration::EntityType::Unit) {
-                        IA::getInstance() -> getUnitManager() -> deleteUnit(target -> getID());
+                        IA::Instance() -> getUnitManager() -> deleteUnit(target -> getID());
                     } else {
-                        IA::getInstance() -> getBuildingManager() -> deleteBuilding(target -> getID());
+                        IA::Instance() -> getBuildingManager() -> deleteBuilding(target -> getID());
                     }
                 } else {
                     if (target -> getEntityType() == Enumeration::EntityType::Unit) {
-                        Human::getInstance() -> getUnitManager() -> deleteUnit(target -> getID());
+                        Human::Instance() -> getUnitManager() -> deleteUnit(target -> getID());
                     } else {
-                        Human::getInstance() -> getBuildingManager() -> deleteBuilding(target -> getID());
+                        Human::Instance() -> getBuildingManager() -> deleteBuilding(target -> getID());
                     }
                 }
                 target = NULL;

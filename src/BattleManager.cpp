@@ -23,7 +23,7 @@ void BattleManager::askForTarget(Entity* requester) {
 
     if (requester  -> getTeam() == Enumeration::Team::Human) { // Requester is human
         // Get units in the map of the opposing team
-        std::map<i32, Unit*> *inMapTroops = IA::getInstance() -> getUnitManager() -> getInMapTroops();
+        std::map<i32, Unit*> *inMapTroops = IA::Instance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map
         for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
             if (it  -> second != NULL) {
@@ -39,7 +39,7 @@ void BattleManager::askForTarget(Entity* requester) {
             }
         }
         if (target == NULL) { // No target unit found, search buildings
-            std::map<i32, Building*> *buildings = IA::getInstance() -> getBuildingManager() -> getBuildings();
+            std::map<i32, Building*> *buildings = IA::Instance() -> getBuildingManager() -> getBuildings();
             for (std::map<i32,Building*>::iterator it = buildings -> begin(); it != buildings -> end(); ++it) {
                 if (it  -> second != NULL) {
                 // Calculate distance between troop requesting target and posible targets
@@ -58,7 +58,7 @@ void BattleManager::askForTarget(Entity* requester) {
     } else { // Requester is IA
 
         // Get units in the map of the opposing team
-        std::map<i32, Unit*> *inMapTroops = Human::getInstance() -> getUnitManager() -> getInMapTroops();
+        std::map<i32, Unit*> *inMapTroops = Human::Instance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map
         for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
             if (it  -> second != NULL) {
@@ -76,7 +76,7 @@ void BattleManager::askForTarget(Entity* requester) {
         
         if (target == NULL) { // No target unit found, search buildings
             
-            std::map<i32, Building*> *buildings = Human::getInstance() -> getBuildingManager() -> getBuildings();
+            std::map<i32, Building*> *buildings = Human::Instance() -> getBuildingManager() -> getBuildings();
             for (std::map<i32,Building*>::iterator it = buildings -> begin(); it != buildings -> end(); ++it) {
                 if (it  -> second != NULL) {
                 // Calculate distance between troop requesting target and posible targets

@@ -88,7 +88,7 @@ i32 Player::getCitizens() {
 }
 
 i32 Player::getArmySize() {
-    return units -> getTotalTroops();
+    return units -> getTotalTroopAmount();
 }
 
 i32 Player::getMetalAmount() {

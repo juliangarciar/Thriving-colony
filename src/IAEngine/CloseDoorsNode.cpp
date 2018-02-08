@@ -13,7 +13,7 @@ CloseDoorsNode::~CloseDoorsNode() {
 
 void CloseDoorsNode::question() {
 
-    IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::ClosingDoors);
+    IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::ClosingDoors);
     //std::cout << "Cierro las puertas" << std::endl;
     Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::CloseDoorsIA);
 }

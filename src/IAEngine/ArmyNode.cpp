@@ -19,19 +19,19 @@ void ArmyNode::question() {
     //First subbranch: Units
     // Goal oriented behaviour
     //requirement have higher priority
-    if (IA::getInstance() -> getTree() -> getRequireBarrack() || IA::getInstance() -> getTree() -> getRequireBarn() || IA::getInstance() -> getTree() -> getRequireWorkshop()) {
+    if (IA::Instance() -> getTree() -> getRequireBarrack() || IA::Instance() -> getTree() -> getRequireBarn() || IA::Instance() -> getTree() -> getRequireWorkshop()) {
         children[1] -> question();
         return;
     } 
-    if (IA::getInstance() -> getTree() -> getNeedSoldiers()) {
-        if (IA::getInstance() -> getCitizens() < 10) {
-            IA::getInstance() -> getTree() -> setRequireCitizens(true);
+    if (IA::Instance() -> getTree() -> getNeedSoldiers()) {
+        if (IA::Instance() -> getCitizens() < 10) {
+            IA::Instance() -> getTree() -> setRequireCitizens(true);
         } else {
             children[0] -> question();
         }
     } else {
         //Second subbranch: Buildings
-        if (IA::getInstance() -> getTree() -> getNeedBuildings()) {
+        if (IA::Instance() -> getTree() -> getNeedBuildings()) {
             children[1] -> question();
         }
     }

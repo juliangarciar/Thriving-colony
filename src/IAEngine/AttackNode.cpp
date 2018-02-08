@@ -21,10 +21,10 @@ AttackNode::~AttackNode() {
 void AttackNode::question() {
     //std::cout << "Voy a atacar" << std::endl;
     //To Do: Attack the enemy
-    if (IA::getInstance() -> getDeployedTroops()) {
+    if (IA::Instance() -> getDeployedTroops()) {
         children[0] -> question();
     } else {
-        if (IA::getInstance() -> losingBattle()) {
+        if (IA::Instance() -> losingBattle()) {
             children[1] -> question();
         } else {
             //Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::DeployTroops);

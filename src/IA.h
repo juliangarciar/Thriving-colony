@@ -25,7 +25,7 @@ class IA : public Player {
          * @brief Solicita la instancia IA
          * @return Devuelve un puntero al objeto IA
          */
-        static IA* getInstance();
+        static IA* Instance();
 
         /**
          * @brief Inicializa la IA

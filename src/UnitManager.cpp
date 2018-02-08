@@ -1,9 +1,7 @@
 #include "UnitManager.h"
+#include "Game.h"
 #include "IA.h"
 #include "Human.h"
-#include "Game.h"
-#include "SoundEngine/SoundSystem.h"
-#include "PathPlanner/PathManager.h"
 //Constructor
 UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
     gridAlignment = 20;
@@ -19,7 +17,7 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
     inHallTroops = new std::vector<Unit*>();
     inMapTroops = new std::map<i32, Unit*>();
 
-    isDeployingTroop = false;
+    deployingTroop = false;
     currentDeployingTroop = -1;
 
     selectedTroop = NULL;
@@ -62,7 +60,7 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
         newUnit -> getModel() -> setActive(false);
         newUnit -> getModel() -> setScale(Vector3<f32>(128, 128, 128));
         newUnit -> setRecruitedCallback([&] (Unit* u){
-            std::cout << "Si" << std::endl;
+            std::cout << "Se ha terminado de reclutar la unidad " << u->getID() << std::endl;
             //Delete in Queue
             ptrdiff_t pos = distance(inQueueTroops->begin(), find(inQueueTroops->begin(), inQueueTroops->end(), u));
             inQueueTroops->erase(inQueueTroops->begin()+pos);
@@ -73,6 +71,7 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
             //ToDo: modificar el HUD
         });
         newUnit -> setRetractedCallback([&] (Unit *u){
+            std::cout << "Se ha terminado de guardar la unidad " << u->getID() << std::endl;
             //Delete in Map
             inMapTroops->erase(u->getID());
 
@@ -104,22 +103,22 @@ void UnitManager::updateUnitManager() {
 }
 
 void UnitManager::testRaycastCollisions() {
-	if (!isDeployingTroop) {
+	if (!deployingTroop) {
 		currentCollision = unitLayer -> getNodeCollision(Game::Instance() -> getMouse());
 	}
 } 
 
 void UnitManager::startDeployingTroop(i32 index) {
-    if (!isDeployingTroop) {
-        isDeployingTroop = true;
+    if (!deployingTroop) {
+        deployingTroop = true;
         currentDeployingTroop = index;
         selectedTroop = inHallTroops -> at(currentDeployingTroop);
     }
 } 
 
-void UnitManager::deployTroop() { 
+void UnitManager::deployTroop(Vector3<f32> p) { 
     Game *g = Game::Instance();
-    if (isDeployingTroop && currentDeployingTroop >= 0 && g -> getMouse() -> leftMouseDown()) { 
+    if (deployingTroop && currentDeployingTroop >= 0) { 
         Unit *temp = inHallTroops -> at(currentDeployingTroop);
 
         //Delete in Queue
@@ -129,38 +128,16 @@ void UnitManager::deployTroop() {
         //Insert in map
         inMapTroops -> insert(std::pair<i32, Unit*>(temp -> getModel() -> getID(), temp));
 
-        temp -> setTroopPosition(Vector3<f32>(Enumeration::HumanCityHall::human_x+100, g -> getGameState() -> getTerrain() -> getY(Enumeration::HumanCityHall::human_x, Enumeration::HumanCityHall::human_z), Enumeration::HumanCityHall::human_z)); //ToDo
-        
-        // Why attack move
-        temp -> switchState(Enumeration::UnitState::AttackMove);
-
+        temp -> setTroopPosition(p); //ToDo: select where deploy
+        temp -> switchState(Enumeration::UnitState::AttackMove); // ToDo: why attack move?
         temp -> setPathToTarget(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
-        
         temp -> getModel() -> setActive(true);
-        // ToDo: esto para que era?
-        //temp -> setRetracted(false);
         
         g -> getMouse() -> changeIcon(CURSOR_NORMAL);
 
         currentDeployingTroop = -1;
         selectedTroop = NULL;
-        isDeployingTroop = false;
-    }
-}
-
-void UnitManager::deployAllTroops(Vector3<f32> vectorData) {
-    for (i32 i = inHallTroops -> size() - 1; i >= 0; i--) {
-        Unit *u = inHallTroops -> at(i);
-        inHallTroops -> erase(inHallTroops -> begin() + i);
-        inMapTroops -> insert(std::pair<i32, Unit*>(u -> getModel() -> getID(), u));
-
-        //u -> setTroopPosition(Vector3<float>(Enumeration::HumanCityHall::human_x, terrain -> getY(Enumeration::HumanCityHall::human_x, Enumeration::HumanCityHall::human_z), Enumeration::HumanCityHall::human_z)); //ToDo
-        u -> setTroopPosition(vectorData);
-        u -> switchState(Enumeration::UnitState::AttackMove);
-        u -> setTroopDestination(vectorData);
-        u -> getModel() -> setActive(true);
-        // ToDo: esto para que era?
-        //temp -> setRetracted(false);
+        deployingTroop = false;
     }
 }
 
@@ -169,8 +146,6 @@ void UnitManager::retractAllTroops(Vector3<f32> vectorData) {
         Unit *u = it -> second;
         u -> switchState(Enumeration::UnitState::Retract);
         u -> setTroopDestination(vectorData);
-        // ToDo: esto para que era?
-        //temp -> setRetracted(false);
     }
 }
 
@@ -181,7 +156,6 @@ void UnitManager::selectTroop(i32 troopID) {
     if (it != inMapTroops -> end()) {
         selectedTroop = it -> second;
         //SELECT VOICE
-        g -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
         //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getSelectEvent());
     }
 }
@@ -227,13 +201,13 @@ bool UnitManager::isSolvent(i32 metalCost, i32 crystalCost) {
     i32 crystalAmt = 0;
     i32 citizensAmt = 0;
     if (team == Enumeration::Team::Human) {
-        metalAmt = Human::getInstance() -> getMetalAmount();
-        crystalAmt = Human::getInstance() -> getCrystalAmount();
-        citizensAmt = Human::getInstance() -> getCitizens();
+        metalAmt = Human::Instance() -> getMetalAmount();
+        crystalAmt = Human::Instance() -> getCrystalAmount();
+        citizensAmt = Human::Instance() -> getCitizens();
     } else {
-        metalAmt = IA::getInstance() -> getMetalAmount();
-        crystalAmt = IA::getInstance() -> getCrystalAmount();
-        citizensAmt = IA::getInstance() -> getCitizens();
+        metalAmt = IA::Instance() -> getMetalAmount();
+        crystalAmt = IA::Instance() -> getCrystalAmount();
+        citizensAmt = IA::Instance() -> getCitizens();
     }
     bool canPayMetal = metalAmt >= metalCost;
     bool canPayCrystal = crystalAmt >= crystalCost;
@@ -283,6 +257,10 @@ bool UnitManager::isTroopSelected() {
     else return false;
 }
 
+bool UnitManager::isDeployingTroop(){
+    return deployingTroop;
+}
+
 void UnitManager::deleteUnit(i32 id) {
     delete inMapTroops -> find(id) -> second;
     inMapTroops -> erase(id);
@@ -302,6 +280,14 @@ std::string UnitManager::getCollisionName() {
 	return NULL;
 }
 
+i32 UnitManager::getDeployingTroopID(){
+    if (isDeployingTroop){
+        return currentDeployingTroop;
+    } else {
+        return -1;
+    }
+}
+
 std::map<i32, Unit*> * UnitManager::getInMapTroops() {
     return inMapTroops;
 }
@@ -318,24 +304,7 @@ i32 UnitManager::getTroopAmount(Enumeration::UnitType t){
     return troopsAmount[(i32)t];
 }
 
-//Returns all troops the player has
-i32 UnitManager::getTotalTroops() {
-    return inHallTroops -> size() + inMapTroops -> size();
+//Returns the ammount of troops
+i32 UnitManager::getTotalTroopAmount() {
+    return inQueueTroops -> size() + inHallTroops -> size() + inMapTroops -> size();
 } 
-
-/*
-void UnitManager::deployTroopAtPosition(i32 index, Vector3<f32> vectorData) {
-    Unit *u = inHallTroops -> at(index);
-    u -> setPosition(vectorData);
-    inMapTroops -> insert(std::pair<i32, Unit*>(u -> getModel() -> getID(), u));
-    inHallTroops -> erase(inHallTroops -> begin() + index);
-
-    //temp -> setPosition(Vector3<f32>(8000, 0, 8000));
-    //temp -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
-    //u -> setTroopPosition(Vector3<f32>(Enumeration::HumanCityHall::human_x, terrain -> getY(Enumeration::HumanCityHall::human_x, Enumeration::HumanCityHall::human_z), Enumeration::HumanCityHall::human_z)); //ToDo
-
-    //selectedTroop -> setTroopDestination(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
-    //Game::Instance() -> getSoundSystem() -> playVoice(selectedTroop -> getMoveEvent());
-    //selectedTroop -> setTroopDestination(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
-}
-*/

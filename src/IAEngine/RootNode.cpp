@@ -21,11 +21,11 @@ RootNode::~RootNode() {
 
 void RootNode::question() {
     //First branch: Attacking the enemy
-    if (IA::getInstance() -> getTree() -> readyToAttack()) {
+    if (IA::Instance() -> getTree() -> readyToAttack()) {
         children[0] -> question();
     } else  {
         //Second branch: Being attacked
-        if (IA::getInstance() -> getUnderAttack()) {
+        if (IA::Instance() -> getUnderAttack()) {
             children[1] -> question();
         } else {
             //Third branch: Peaceful, develop the city

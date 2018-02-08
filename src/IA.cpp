@@ -47,7 +47,7 @@ IA* IA::instance = 0;
 bool IA::deployedTroops = false;
 bool IA::closedDoors = false;
 
-IA* IA::getInstance() {
+IA* IA::Instance() {
     if (instance == 0) {
         instance = new IA();
     }
@@ -158,10 +158,10 @@ Vector3<f32> IA::determinatePositionBuilding() {
 }
 
 void IA::deployTroops() {
-    Vector3<f32> v = *(IA::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
+    Vector3<f32> v = *(IA::Instance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
     v.x = v.x + 100;
     v.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(v.x, v.z);
-    IA::getInstance() -> getUnitManager() -> deployAllTroops(v);
+    IA::Instance() -> getUnitManager() -> deployAllTroops(v);
     deployedTroops = true;
 }
 
@@ -179,8 +179,8 @@ void IA::openDoors() {
 * Troops come back to their building (barn, barrack or workshop)
 */
 void IA::retractTroops() {
-    Vector3<f32> v = *(IA::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
-    IA::getInstance() -> getUnitManager() -> retractAllTroops(v);
+    Vector3<f32> v = *(IA::Instance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
+    IA::Instance() -> getUnitManager() -> retractAllTroops(v);
 }
 
 bool IA::getUnderAttack() {
@@ -193,7 +193,7 @@ bool IA::getUnderAttack() {
         f32 dist = 0;
 
         // Get units in the map of the opposing team
-        std::map<i32, Unit*> *inMapTroops = Human::getInstance() -> getUnitManager() -> getInMapTroops();
+        std::map<i32, Unit*> *inMapTroops = Human::Instance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map
         for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
             if (it -> second != NULL) {

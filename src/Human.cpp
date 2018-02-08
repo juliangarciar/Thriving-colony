@@ -28,7 +28,7 @@ Human* Human::instance = 0;
 bool Human::deployedTroops = false;
 bool Human::closedDoors = false;
 
-Human* Human::getInstance() {
+Human* Human::Instance() {
     if (instance == 0) {
         instance = new Human();
     }
@@ -52,30 +52,12 @@ void Human::update() {
     }
 }
 
-void Human::deployTroops() {
-    Vector3<f32> v = *(Human::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
-    v.x = v.x + 100;
-    v.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(v.x, v.z);
-    Human::getInstance() -> getUnitManager() -> deployAllTroops(v);
-    deployedTroops = true;
-}
-
-void Human::closeDoors() {
-    // ToDo: hacer de verdad
-    closedDoors = true;
-}
-
-void Human::openDoors() {
-    // ToDo: hacer de verdad
-    closedDoors = false;
-}
-
 /*
 * Troops come back to their building (barn, barrack or workshop)
 */
 void Human::retractTroops() {
-    Vector3<f32> v = *(Human::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
-    Human::getInstance() -> getUnitManager() -> retractAllTroops(v);
+    Vector3<f32> v = *(Human::Instance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
+    Human::Instance() -> getUnitManager() -> retractAllTroops(v);
 }
 
 bool Human::getUnderAttack() {
@@ -87,7 +69,7 @@ bool Human::getUnderAttack() {
         f32 yaux = 0;
         f32 dist = 0;
         // Get units in the map of the opposing team
-        std::map<i32, Unit*> *inMapTroops = IA::getInstance() -> getUnitManager() -> getInMapTroops();
+        std::map<i32, Unit*> *inMapTroops = IA::Instance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map
         for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
             if (it  -> second != NULL) {
