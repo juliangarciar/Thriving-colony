@@ -1,7 +1,4 @@
 #include "Game.h"
-//#include "Human.h"
-//#include "IA.h"
-#include <PathPlanner/Graph.h>
 
 Game* Game::pinstance = 0;
 
@@ -47,12 +44,20 @@ Game::~Game() {
 void Game::Init() {
     //Initialize the event system
     //IA Events
-    events -> addEvent(Enumeration::EventType::RetractTroopsIA, IA::retractTroops);
-    //events -> addEvent(Enumeration::EventType::DeployAllTroopsIA, IA::deployAllTroops);
+    events -> addEvent(Enumeration::EventType::RetractTroopsIA, []() {
+        IA::Instance()->getUnitManager()->retractAllTroops();
+    });
+    /*events -> addEvent(Enumeration::EventType::DeployAllTroopsIA, []() {
+        IA::Instance()->getUnitManager()->deployAllTroops();
+    });*/
 
     //Human events
-    events -> addEvent(Enumeration::EventType::RetractTroopsHuman, Human::retractTroops);
-    //events -> addEvent(Enumeration::EventType::DeployAllTroopsHuman, Human::deployAllTroops);
+    events -> addEvent(Enumeration::EventType::RetractTroopsHuman, []() {
+        Human::Instance()->getUnitManager()->retractAllTroops();
+    });
+    /*events -> addEvent(Enumeration::EventType::DeployAllTroopsHuman, []() {
+        Human::Instance()->getUnitManager()->deployAllTroops();
+    });*/
 
     //Hud events
     events -> addEvent(Enumeration::EventType::EnableText, Hud::drawWarning);

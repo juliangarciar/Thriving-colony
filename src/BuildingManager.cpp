@@ -39,14 +39,16 @@ void BuildingManager::testRaycastCollisions() {
 	}
 }
 
-void BuildingManager::setBuildingMode(Enumeration::BuildingType type) {
+bool BuildingManager::setBuildingMode(Enumeration::BuildingType type) {
 	if (checkCanPay(type)) {
 		if (!buildingMode) {
 			buildingMode = true;
 			setTempBuildingModel(Vector3<f32>(0, 0, 0), type);
 			recalculateHitbox(); //ToDo: quizas algo guarro pero menos que lo otro
+			return true;
 		}
 	}
+	return false;
 }
 
 void BuildingManager::drawBuilding() {

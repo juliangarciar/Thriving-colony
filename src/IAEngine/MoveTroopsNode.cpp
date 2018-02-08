@@ -11,9 +11,10 @@ MoveTroopsNode::~MoveTroopsNode(){
 }
 
 void MoveTroopsNode::question() {
-
     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::Attacking);
     //std::cout << "Ataco al enemigo" << std::endl;
-    //ToDo: Fijar cento de mando como objetivo
-    IA::Instance() ->  deployTroops();
+    //ToDo: Fijar centro de mando como objetivo
+    Vector3<f32> p = IA::Instance() -> getHallPosition();
+    p.x = p.x + 100;
+    IA::Instance() -> getUnitManager() -> deployAllTroops(p);
 }

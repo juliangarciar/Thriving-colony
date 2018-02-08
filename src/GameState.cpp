@@ -70,16 +70,19 @@ void GameState::Input() {
         IA::Instance() -> getBuildingManager() -> testRaycastCollisions();
         IA::Instance() -> getUnitManager() -> testRaycastCollisions();
 
+        Vector3<f32> mapCollision = map->getPointCollision(Game::Instance()->getMouse());
+
         i32 onMap = true;
 
         //Deploy troops
         if (Human::Instance() -> getUnitManager() -> isDeployingTroop()){
-            Game::Instance() -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
-            Human::Instance() -> getUnitManager() -> selectTroop(idTroop);
-            if (Game::Instance() -> getMouse() -> leftMousePressed()){
-                Vector3<f32> hall = Human::Instance() -> getHallPosition();
-                hall = Vector3<f32>(hall.x+100, hall.y, hall.z)
-                Human::Instance() -> getUnitManager() -> deployTroop(hall);
+            i32 idTroop = Human::Instance() -> getUnitManager() -> getDeployingTroopID();
+            if (idTroop != -1){
+                Game::Instance() -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
+                if (Game::Instance() -> getMouse() -> rightMousePressed()){
+                    Human::Instance() -> getUnitManager() -> deploySelectedTroop(mapCollision);
+                    Human::Instance() -> getUnitManager() -> selectTroop(idTroop);
+                }
             }
         }
 
@@ -119,7 +122,9 @@ void GameState::Input() {
         if (idBuildingIA != -1 && Human::Instance() -> getUnitManager() -> isTroopSelected()){
             Game::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
 
-            if (Game::Instance() -> getMouse() -> rightMousePressed())
+            if (Game::Instance() -> getMouse() -> rightMousePressed()) {
+                //ToDo
+            }
             
             onMap = false;
         }
@@ -128,7 +133,9 @@ void GameState::Input() {
         if (idTroopIA != -1 && Human::Instance() -> getUnitManager() -> isTroopSelected()){
             Game::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
 
-            if (Game::Instance() -> getMouse() -> rightMousePressed())
+            if (Game::Instance() -> getMouse() -> rightMousePressed()){
+                //ToDo
+            }
             
             onMap = false;
         }
@@ -174,8 +181,8 @@ void GameState::Update(){
     Human::Instance() -> getBuildingManager() -> drawBuilding();
 
     //Update human and IA status
-    Human::Instance() -> update();
-    IA::Instance() -> update();
+    Human::Instance() -> Update();
+    IA::Instance() -> Update();
 
     //ToDo: glfw tiene un evento para si se redimensiona la pantalla
     if (g -> getWindow() -> getRealWindowWidth() != prevWindowWidth || g -> getWindow() -> getRealWindowHeight() != prevWindowHeight) {

@@ -43,7 +43,7 @@ class BuildingManager {
 		 * @brief asigna que un edificio este en construccion
 		 * @param entero con el tipo de edificio que se esta construyendo
 		 */
-		void setBuildingMode(Enumeration::BuildingType);
+		bool setBuildingMode(Enumeration::BuildingType);
 		/**
 		 * @brief dibuja el edificio a construir en el terreno
 		 * @param terrain donde se indica el terreno en el que construir

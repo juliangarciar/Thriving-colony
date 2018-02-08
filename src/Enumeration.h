@@ -67,13 +67,7 @@ class Enumeration {
 
             //Text
             DisableText,
-            EnableText,
-
-            //ToDo: Doors?
-            OpenDoorsIA,
-            CloseDoorsIA,
-            OpenDoorsHuman,
-            CloseDoorsHuman
+            EnableText
         };
         
         //Unit states
@@ -155,7 +149,6 @@ class Enumeration {
         };
 
         enum IAChoices {
-            ClosingDoors,
             DeployingTroops,
             TrainMeleeFootman,
             BuildBarrack,

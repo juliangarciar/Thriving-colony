@@ -6,6 +6,7 @@
 UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
     gridAlignment = 20;
     selectedTroop = 0; 
+    nextTroopId = 0;
 
     //Addes by Julian
     team = t;
@@ -13,8 +14,8 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
 
     unitLayer = new SceneNode();
 
-    inQueueTroops = new std::vector<Unit*>(); //ToDo: por aqui me quedo (falta esto y HUD)
-    inHallTroops = new std::vector<Unit*>();
+    inQueueTroops = new std::map<i32, Unit*>();
+    inHallTroops = new std::map<i32, Unit*>();
     inMapTroops = new std::map<i32, Unit*>();
 
     deployingTroop = false;
@@ -31,25 +32,26 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
 UnitManager::~UnitManager() {
     delete selectedTroop;
 
-    for (i32 i = 0; i < inQueueTroops -> size(); i++) {
-        inQueueTroops -> erase(inQueueTroops -> begin() + i);
+    for (std::map<i32, Unit*>::iterator it = inQueueTroops -> begin(); it != inQueueTroops -> end(); ++it){
+        delete it->second;
     }
     inQueueTroops -> clear();
     delete inQueueTroops;
 
-    for (i32 i = 0; i < inHallTroops -> size(); i++) {
-        inHallTroops -> erase(inHallTroops -> begin() + i);
+    for (std::map<i32, Unit*>::iterator it = inHallTroops -> begin(); it != inHallTroops -> end(); ++it){
+        delete it->second;
     }
     inHallTroops -> clear();
     delete inHallTroops;
 
-    for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
+    for (std::map<i32, Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
 		delete it -> second;
     }
     inMapTroops -> clear();
     delete inMapTroops;
 
     delete unitLayer;
+    if (selectedTroop != NULL) delete selectedTroop;
 }
 
 //Create a new troops
@@ -60,6 +62,7 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
         if (newUnit == NULL) {
             return false;
         }
+        newUnit -> setID(nextTroopId);
         // Distinto tamaño para distintas unidades?
         newUnit -> getModel() -> setScale(Vector3<float>(25,25,25)); //VERSION DEFINITIVA, LO DE DEBAJO ES DE JULIAN DE DEBUGERUNIS
         //Unit *newUnit = new Unit(unitLayer, std::rand(), L"media/buildingModels/dummy.obj", team, breed, unitData, Vector3<float>());
@@ -68,11 +71,10 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
         newUnit -> setRecruitedCallback([&] (Unit* u){
             std::cout << "Se ha terminado de reclutar la unidad " << u->getID() << std::endl;
             //Delete in Queue
-            ptrdiff_t pos = distance(inQueueTroops->begin(), find(inQueueTroops->begin(), inQueueTroops->end(), u));
-            inQueueTroops->erase(inQueueTroops->begin()+pos);
+            inQueueTroops->erase(u->getID());
 
             //Add in Hall
-            inHallTroops->push_back(u);
+            inHallTroops->insert(std::pair<i32, Unit*>(u->getID(), u));
             
             //ToDo: modificar el HUD
         });
@@ -82,14 +84,15 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
             inMapTroops->erase(u->getID());
 
             //Add in Hall
-            inHallTroops->push_back(u);
+            inHallTroops->insert(std::pair<i32, Unit*>(u->getID(), u));
 
             //ToDo: modificar el HUD
         });
 
-        inQueueTroops -> push_back(newUnit);
+        inQueueTroops -> insert(std::pair<i32, Unit*>(newUnit->getID(), newUnit));
 
         troopsAmount[unitData]++;
+        nextTroopId++;
         return true;
     }
     return false;
@@ -122,24 +125,24 @@ void UnitManager::startDeployingTroop(i32 index) {
     }
 } 
 
-void UnitManager::deployTroop(Vector3<f32> p) { 
-    Game *g = Game::Instance();
+void UnitManager::deploySelectedTroop(Vector3<f32> p) {
     if (deployingTroop && currentDeployingTroop >= 0) { 
         Unit *temp = inHallTroops -> at(currentDeployingTroop);
 
-        //Delete in Queue
-        ptrdiff_t pos = distance(inHallTroops->begin(), find(inHallTroops->begin(), inHallTroops->end(), temp));
-        inHallTroops->erase(inHallTroops->begin()+pos);
+        //Delete in hall
+        inHallTroops->erase(temp->getID());
 
         //Insert in map
         inMapTroops -> insert(std::pair<i32, Unit*>(temp -> getModel() -> getID(), temp));
 
-        temp -> setTroopPosition(p); //ToDo: select where deploy
         temp -> switchState(Enumeration::UnitState::AttackMove); // ToDo: why attack move?
-        temp -> setPathToTarget(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
+        if (team == Enumeration::Team::IA){
+            temp -> setTroopPosition(IA::Instance()->getHallPosition());
+        } else {
+            temp -> setTroopPosition(Human::Instance()->getHallPosition());
+        }
+        temp -> setPathToTarget(p);
         temp -> getModel() -> setActive(true);
-        
-        g -> getMouse() -> changeIcon(CURSOR_NORMAL);
 
         currentDeployingTroop = -1;
         selectedTroop = NULL;
@@ -147,17 +150,40 @@ void UnitManager::deployTroop(Vector3<f32> p) {
     }
 }
 
-void UnitManager::retractAllTroops(Vector3<f32> vectorData) {
+void UnitManager::deployAllTroops(Vector3<f32> p){
     for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
-        Unit *u = it -> second;
-        u -> switchState(Enumeration::UnitState::Retract);
-        u -> setTroopDestination(vectorData);
+        Unit *temp = it -> second;
+        //Delete in hall
+        inHallTroops->erase(temp->getID());
+
+        //Insert in map
+        inMapTroops -> insert(std::pair<i32, Unit*>(temp -> getModel() -> getID(), temp));
+
+        temp -> switchState(Enumeration::UnitState::AttackMove); // ToDo: why attack move?
+        if (team == Enumeration::Team::IA){
+            temp -> setTroopPosition(IA::Instance()->getHallPosition());
+        } else {
+            temp -> setTroopPosition(Human::Instance()->getHallPosition());
+        }
+        temp -> setPathToTarget(p);
+        temp -> getModel() -> setActive(true);
+    }
+}
+
+void UnitManager::retractAllTroops() {
+    for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
+        Unit *temp = it -> second;
+        if (team == Enumeration::Team::IA){
+            temp -> setTroopDestination(IA::Instance()->getHallPosition());
+        } else {
+            temp -> setTroopDestination(Human::Instance()->getHallPosition());
+        }
+        temp -> switchState(Enumeration::UnitState::Retract);
     }
 }
 
 //Select a troop
-void UnitManager::selectTroop(i32 troopID) { 
-    Game *g = Game::Instance();
+void UnitManager::selectTroop(i32 troopID) {
     std::map<i32,Unit*>::iterator it = inMapTroops -> find(troopID);
     if (it != inMapTroops -> end()) {
         selectedTroop = it -> second;
@@ -287,19 +313,23 @@ std::string UnitManager::getCollisionName() {
 }
 
 i32 UnitManager::getDeployingTroopID(){
-    if (isDeployingTroop){
+    if (deployingTroop){
         return currentDeployingTroop;
     } else {
         return -1;
     }
 }
 
-std::map<i32, Unit*> * UnitManager::getInMapTroops() {
-    return inMapTroops;
+std::map<i32, Unit*> *UnitManager::getInQueueTroops() {
+    return inQueueTroops;
 }
 
-std::vector<Unit*> * UnitManager::getInHallTroops() {
+std::map<i32, Unit*> *UnitManager::getInHallTroops() {
     return inHallTroops;
+}
+
+std::map<i32, Unit*> *UnitManager::getInMapTroops() {
+    return inMapTroops;
 }
 
 Unit* UnitManager::getSelectedTroop() {
@@ -349,6 +379,10 @@ Unit* UnitManager::setNewUnitModel(Enumeration::UnitType unitType) {
 void UnitManager::enterMainBuilding(Enumeration::UnitType) {
     //ToDo: Crear una tropa nueva, que sea gratis y meterla en el inhalltroops
     std::cout << "entro" << std::endl;
+}
+
+bool UnitManager::areTroopsDeployed(){
+    return (inHallTroops->size() == 0);
 }
 
 //Returns the amount of troops

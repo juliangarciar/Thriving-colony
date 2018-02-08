@@ -2,11 +2,29 @@
 #include "Game.h"
 #include "Human.h"
 
-IA::IA() : Player() {
-    init();
+IA* IA::instance = 0;
+
+IA* IA::Instance() {
+    if (instance == 0) {
+        instance = new IA();
+    }
+    return instance;
 }
 
-void IA::init() {
+IA::IA() : Player() {
+    Init();
+}
+
+IA::~IA() {
+    delete tree;
+    delete nodeRootIA;
+    delete buildings;
+    delete units;
+    choices -> clear();
+    delete choices;
+}
+
+void IA::Init() {
     // Choose a behaviour
     chooseBehaviour();
     // Create a behaviour and a root node and set them up according to the behaviour
@@ -23,56 +41,29 @@ void IA::init() {
     initializeChoices();
 }
 
-void IA::cleanUp() {
-    delete tree;
-    delete nodeRootIA;
-    delete buildings;
-    delete units;
-    choices -> clear();
-    delete choices;
-}
-
-IA::~IA() {
-    delete tree;
-    delete nodeRootIA;
-    delete buildings;
-    delete units;
-    choices -> clear();
-    delete choices;
-}
-
-IA* IA::instance = 0;
-
-bool IA::deployedTroops = false;
-bool IA::closedDoors = false;
-
-IA* IA::Instance() {
-    if (instance == 0) {
-        instance = new IA();
-    }
-    return instance;
-}
-
-BehaviourTree* IA::getTree() {
-    return tree;
-}
-
-void IA::update() {
+void IA::Update() {
     buildings -> updateBuildingManager();
     units -> updateUnitManager();
     if (updateTimer <= 0.0) {
         gainResources();
         nodeRootIA -> question();
-        if (units -> getInMapTroops() -> empty()) {
-            deployedTroops = false;
-        }
-        if (units -> getInHallTroops() -> empty()) {
-            deployedTroops = true;
-        }
         updateTimer = 1.0;
     } else {
         updateTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
     }
+}
+
+void IA::CleanUp() {
+    delete tree;
+    delete nodeRootIA;
+    delete buildings;
+    delete units;
+    choices -> clear();
+    delete choices;
+}
+
+BehaviourTree* IA::getTree() {
+    return tree;
 }
 
 /*
@@ -156,32 +147,6 @@ Vector3<f32> IA::determinatePositionBuilding() {
     return v;
 }
 
-void IA::deployTroops() {
-    Vector3<f32> v = *(IA::Instance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
-    v.x = v.x + 100;
-    v.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(v.x, v.z);
-    IA::Instance() -> getUnitManager() -> deployAllTroops(v);
-    deployedTroops = true;
-}
-
-void IA::closeDoors() {
-    // ToDo: hacer de verdad
-    closedDoors = true;
-}
-
-void IA::openDoors() {
-    // ToDo: hacer de verdad
-    closedDoors = false;
-}
-
-/*
-* Troops come back to their building (barn, barrack or workshop)
-*/
-void IA::retractTroops() {
-    Vector3<f32> v = *(IA::Instance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
-    IA::Instance() -> getUnitManager() -> retractAllTroops(v);
-}
-
 bool IA::getUnderAttack() {
     if(underAttack == false){
         Vector3<f32> *pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
@@ -234,15 +199,6 @@ void IA::chooseBehaviour() {
     }
 }
 
-// Return wether or not our troops are deployed
-bool IA::getDeployedTroops() {
-    return deployedTroops;
-}
-
-bool IA::getClosedDoors() {
-    return closedDoors;
-}
-
 std::string IA::getNextChoice() {
     return choices -> at(choiceIndex);
 }
@@ -265,7 +221,6 @@ void IA::initializeChoices() {
     // Y TODO ES MAS MANEJABLE. PERO POR AHORA NO HACE MAS QUE DAR ERRORES
     // ASI QUE LO HE DEJADO COMO VECTOR Y AU (Y quizas un map?)
     choices = new std::vector<std::string>();
-    choices -> push_back("Closing Doors");
     choices -> push_back("Deploying troops");
     choices -> push_back("Train melee footman");
     choices -> push_back("Build barrack");
@@ -294,7 +249,6 @@ void IA::initializeChoices() {
     // SI ALGUN DIA SE PONE ASI SERIA FANTISTOCOSO
     /*
     // Commented choices are repeated through
-    choices[Enumeration::IAChoices::ClosingDoors] = "Closing doors";
     choices[Enumeration::IAChoices::DeployingTroops] = "Deploying troops";
     choices[Enumeration::IAChoices::TrainMeleeFootman] = "Train melee footman";
     choices[Enumeration::IAChoices::BuildBarrack] = "Build barrack";
