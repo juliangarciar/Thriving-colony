@@ -13,7 +13,6 @@ Unit::Unit(SceneNode *layer, int id, const wchar_t *path, Enumeration::Team team
     finished = false;
     moving = false;
     attacking = false;
-    retracted = true;
 
     // Default target
     target = NULL;
@@ -318,7 +317,7 @@ void Unit::Init() {
     }
 }
 
-void Unit::updateTroop() {
+void Unit::update() {
     //State machine, color changes according to state
     switch (state) {
         case Enumeration::UnitState::Recruiting:
@@ -356,17 +355,23 @@ void Unit::updateTroop() {
     }
 }
 
-void Unit::taxPlayer(Enumeration::Team teamData) {
-    if (teamData == Enumeration::Team::Human) {
-        Human::getInstance() -> increaseHappiness(happiness);
-        Human::getInstance() -> increaseArmySize();
+void Unit::preTaxPlayer() {
+    if (team == Enumeration::Team::Human) {
         Human::getInstance() -> spendResources(metalCost, crystalCost);
+        Human::getInstance() -> increaseHappiness(happiness);
         Human::getInstance() -> increaseCitizens(citizens);
     } else {
-        IA::getInstance() -> increaseHappiness(happiness);
-        IA::getInstance() -> increaseArmySize();
         IA::getInstance() -> spendResources(metalCost, crystalCost);
+        IA::getInstance() -> increaseHappiness(happiness);
         IA::getInstance() -> increaseCitizens(citizens);
+    }
+}
+
+void Unit::posTaxPlayer(){
+    if (team == Enumeration::Team::Human) {
+        Human::getInstance() -> increaseArmySize();
+    } else {
+        IA::getInstance() -> increaseArmySize();
     }
 }
 
@@ -379,7 +384,7 @@ void Unit::recruitingState(){
     if (recruitingTimer > 0){
         recruitingTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
     } else {
-        callback(this);
+        recruitedCallback(this);
         switchState(Enumeration::UnitState::InHome);
     }
 }
@@ -433,7 +438,11 @@ void Unit::chaseState() {
 
 void Unit::retractState() {
     moveTroop();
-    switchState(Enumeration::UnitState::InHome);
+    if (readyToEnter){
+        retractedCallback(this);
+        getModel() -> setActive(false);
+        switchState(Enumeration::UnitState::InHome);
+    }
 }
 
 void Unit::moveTroop() {
@@ -549,9 +558,14 @@ bool Unit::refreshTarget() {
     return targetUpdated;
 }
 
-void Unit::triggerFinishedCallback(){
+void Unit::triggerRecruitedCallback(){
     finished = true;
-    callback(this);
+    recruitedCallback(this);
+}
+
+void Unit::triggerRetractedCallback(){
+    finished = true;
+    retractedCallback(this);
 }
 
 /////SETTERS/////
@@ -561,10 +575,6 @@ void Unit::setMoving(bool movingPnt) {
 
 void Unit::setAttacking(bool attackingPnt) {
     attacking = attackingPnt;
-}
-
-void Unit::setRetracted(bool data) {
-    retracted = data;
 }
 
 void Unit::setTroopPosition(Vector3<float> vectorData) {
@@ -610,34 +620,31 @@ void Unit::setPathToTarget(Vector3<float> vectorData){
     }
 }
 
-void Unit::setFinishedCallback(std::function<void(Unit*)> f){
-    callback = f;
+void Unit::setRecruitedCallback(std::function<void(Unit*)> f){
+    recruitedCallback = f;
+}
+
+void Unit::setRetractedCallback(std::function<void(Unit*)> f){
+    retractedCallback = f;
 }
 
 /////GETTERS/////
 string Unit::getAttackEvent() {
     return attackEvent;
 }
+
 string Unit::getMoveEvent() {
     return moveEvent;
 }
+
 string Unit::getSelectEvent() {
     return selectEvent;
-}
-
-bool Unit::getReadyToEnter() {
-    return readyToEnter;
-}
-bool Unit::getRetracted() {
-    return retracted;
-}
-bool Unit::getMoving() {
-    return moving;
 }
 
 Vector3<float>* Unit::getDestination() {
     return vectorDes;
 }
+
 std::list< Vector2<float> > Unit::getPath(){
     return pathFollow;
 }

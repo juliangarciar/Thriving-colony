@@ -1,11 +1,12 @@
 #ifndef UNITMANAGER_H
 #define UNITMANAGER_H
 
+#include "Unit.h"
+#include <cstdlib>
 #include <iostream>
 #include <vector>
 #include <map>
 #include <GraphicEngine/Terrain.h>
-#include "Unit.h"
 class UnitManager{
     public:
         UnitManager(Enumeration::Team teamData, Enumeration::BreedType raceData);

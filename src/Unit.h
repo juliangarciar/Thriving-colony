@@ -18,17 +18,20 @@ class Unit : public Entity {
         Unit(SceneNode *layer, int id, const wchar_t *path, Enumeration::Team teamData, Enumeration::BreedType raceData, Enumeration::UnitType typeData, Vector3<float> vectorData);
         virtual ~Unit();
 
-        // Economy
-        virtual void taxPlayer(Enumeration::Team);
+        // Game
+        virtual void preTaxPlayer();
+        virtual void posTaxPlayer();
+        void update();
 
         // Agro methods
         void attack();
         void moveTroop();
         void attackMoveTroop();
-        void updateTroop();
         void chaseTarget();
         bool refreshTarget();
         bool inRangeOfAttack();
+
+        bool isMoving(); 
 
         // State machine
         void switchState(Enumeration::UnitState);
@@ -40,26 +43,23 @@ class Unit : public Entity {
         void attackState();
         void chaseState();
         void retractState();
-        void triggerFinishedCallback();
+        void triggerRecruitedCallback();
+        void triggerRetractedCallback();
 
         //Setters
         void setMoving(bool);
         void setAttacking(bool);
-        void setRetracted(bool);
         void setTroopPosition(Vector3<float> vectorData);
         void setTroopDestination(Vector3<float> vectorData);
         void setPath(std::list< Vector2<float> > path);
         void setPathToTarget(Vector3<float> vectorData);
-        void setFinishedCallback(std::function<void(Unit*)>);
+        void setRecruitedCallback(std::function<void(Unit*)>);
+        void setRetractedCallback(std::function<void(Unit*)>);
 
         //Getters
         std::string getAttackEvent();
         std::string getMoveEvent();
         std::string getSelectEvent();
-
-        bool getRetracted();
-        bool getMoving(); 
-        bool getReadyToEnter();
 
         Vector3<float>* getDestination();
         std::list< Vector2<float> > getPath();
@@ -85,7 +85,6 @@ class Unit : public Entity {
         bool finished;
         bool moving;
         bool attacking;
-        bool retracted;
 
     // Unit info
         float recruitingTime;
@@ -101,7 +100,8 @@ class Unit : public Entity {
         std::list< Vector2<float> > pathFollow;
 
     //Finish recruiting callback
-        std::function<void(Unit*)> callback;
+        std::function<void(Unit*)> recruitedCallback;
+        std::function<void(Unit*)> retractedCallback;
 
     // Vector position is in the father
         Vector3 <float> *vectorPos;
