@@ -63,10 +63,10 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
             return false;
         }
         // Distinto tamaño para distintas unidades?
-        newUnit -> getModel() -> setScale(Vector3<float>(25,25,25)); //VERSION DEFINITIVA, LO DE DEBAJO ES DE JULIAN DE DEBUGERUNIS
+        //newUnit -> getModel() -> setScale(Vector3<float>(25,25,25)); //VERSION DEFINITIVA, LO DE DEBAJO ES DE JULIAN DE DEBUGERUNIS
         //Unit *newUnit = new Unit(unitLayer, std::rand(), L"media/buildingModels/dummy.obj", team, breed, unitData, Vector3<float>());
         newUnit -> getModel() -> setActive(false);
-        //newUnit -> getModel() -> setScale(Vector3<f32>(128, 128, 128));
+        newUnit -> getModel() -> setScale(Vector3<f32>(128, 128, 128));
         newUnit -> setRecruitedCallback([&] (Unit* u){
             std::cout << "Si" << std::endl;
             //Delete in Queue
@@ -333,11 +333,11 @@ Unit* UnitManager::setNewUnitModel(Enumeration::UnitType unitType) {
     // Hacer que sean razas diferentes?
     switch (unitType) {
         case Enumeration::UnitType::StandardM:
-            return new Unit(unitLayer, std::rand(), L"media/unitModels/Soldado_Melee_Drorania.obj", team, breed, unitType, Vector3<float>());
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/dummy.obj", team, breed, unitType, Vector3<float>());
         break;
 
         case Enumeration::UnitType::StandardR:
-            return new Unit(unitLayer, std::rand(), L"media/unitModels/Soldado_Rango_Drorania.obj", team, breed, unitType, Vector3<float>());
+            return new Unit(unitLayer, std::rand(), L"media/unitModels/dummy.obj", team, breed, unitType, Vector3<float>());
         break;
 
         case Enumeration::UnitType::AdvancedM:

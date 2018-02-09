@@ -1,28 +1,30 @@
 #include "CellSpacePartition.h"
 #define MAX_MAP 10240
-#define CELL_SPACE 128
+#define TOTAL 80
 Cell::~Cell(){
     this->entities.clear();
     //delete cube;
 }
-CellSpacePartition::CellSpacePartition( f32  width,        //width of 2D space
-                                        f32  height,       //height...
-                                        i32    nCellsX,       //number of divisions horizontally
-                                        i32    nCellsY,       //and vertically
-                                        i32    MaxTs):  //maximum number of entities to partition
-                    spaceWidth(width),
-                    spaceHeight(height),
-                    cellsX(nCellsX),
-                    cellsY(nCellsY),
-                    mNeighbors(MaxTs)
+CellSpacePartition* CellSpacePartition::pinstance = 0;
+
+CellSpacePartition* CellSpacePartition::Instance() {
+    if(pinstance == 0) {
+        pinstance = new CellSpacePartition();
+    }
+    return pinstance;
+}
+
+CellSpacePartition::CellSpacePartition()
 {
+    mCells.reserve(TOTAL * TOTAL);
+    //mNeighbors.resize(4);
 //calculate bounds of each cell
-    cellSizeX = width  / cellsX;
-    cellSizeY = height / cellsY;
+    cellSizeX = MAX_MAP / TOTAL;
+    cellSizeY = MAX_MAP / TOTAL;
 //create the cells
-    for (i32 y = 0; y < 1; y++)
+    for (i32 y = 0; y < TOTAL; y++)
     {
-        for (i32 x = 0; x < 4; x++)
+        for (i32 x = 0; x < TOTAL; x++)
         {
             f32 left  = x * cellSizeX;
             f32 right = left + cellSizeX;
@@ -33,7 +35,9 @@ CellSpacePartition::CellSpacePartition( f32  width,        //width of 2D space
             mCells.push_back(Cell(Vector2<f32>(left, top), Vector2<f32>(right, bot)));
         }
     }
+    std::cout << "Number of cells " << mCells.size() << "\n";
 }
+
 CellSpacePartition::~CellSpacePartition(){
     this->mNeighbors.clear();
     this->mCells.clear();
@@ -68,8 +72,8 @@ void CellSpacePartition::clearCells()
 }
 i32 CellSpacePartition::positionToIndex(Vector2<f32> pos)
 {
-    i32 idx = (i32)(cellsX * pos.x / spaceWidth) + 
-                ((i32)((cellsY) * pos.y / spaceHeight) * cellsX);
+    i32 idx = (i32)(TOTAL * pos.x / MAX_MAP) + 
+                ((i32)((TOTAL) * pos.y / MAX_MAP) * TOTAL);
 
     if (idx > mCells.size() - 1) 
         idx = mCells.size() - 1;
@@ -102,4 +106,24 @@ void CellSpacePartition::updateEntity(Entity* ent, Vector2<f32> OldPos)
     //and add to new one
     mCells[OldIdx].entities.remove(ent);
     mCells[NewIdx].entities.push_back(ent);
+}
+
+Vector3<f32> CellSpacePartition::correctPosition(Vector3<f32> targetPos, i32 buildingSpace){
+    Cell dummy = mCells.at(positionToIndex(targetPos.toVector2()));
+    Vector3<f32> correctOne;
+    if(buildingSpace % 2 == 0){
+        Vector2<f32> storage = dummy.BBox.TopLeft();
+        correctOne.x = storage.x;
+        correctOne.z = storage.y;
+    }
+    else{
+        Vector2<f32> storage = dummy.BBox.Center();
+        correctOne.x = storage.x;
+        correctOne.z = storage.y;
+    }
+    return correctOne;
+}
+bool CellSpacePartition::isBlocked(Vector3<f32> targetPos){
+    Cell dummy = mCells.at(positionToIndex(targetPos.toVector2()));
+    return dummy.blocked;
 }

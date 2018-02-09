@@ -14,6 +14,8 @@ struct Cell{
     std::list< Entity* > entities;
 // Cell bounding box
     Box2D BBox;
+// Bool block
+    bool blocked = false;
 // Constructor
     Cell(Vector2<f32> topLeft,
          Vector2<f32> botRight):BBox(topLeft, botRight)
@@ -23,12 +25,14 @@ struct Cell{
 };
 class CellSpacePartition{
     private:
+    // CellSpace instance
+        static CellSpacePartition* pinstance;
     // Width and height
-        f32 spaceWidth;
-        f32 spaceHeight;
+        //f32 spaceWidth;
+        //f32 spaceHeight;
     // Number of cells the space is going to be divided into
-        i32 cellsX;
-        i32 cellsY;
+        //i32 cellsX;
+        //i32 cellsY;
     
         f32 cellSizeX;
         f32 cellSizeY;
@@ -42,11 +46,8 @@ class CellSpacePartition{
         i32 positionToIndex(Vector2<f32> position);
     public:
     // Constructor
-        CellSpacePartition( f32 width,
-                            f32 height,
-                            i32 nCellsX,
-                            i32 nCellsY,
-                            i32 maxEntities);
+        static CellSpacePartition* Instance();
+        CellSpacePartition();
     // Destructor
         ~CellSpacePartition();
     // Add entities to the proper cell
@@ -55,6 +56,10 @@ class CellSpacePartition{
         inline void updateEntity(Entity* ent, Vector2<f32> oldPos);
     // Calculate neighbors and add them in the neighbor vector
         inline void calculateNeighbors(Vector2<f32> targetPos, f32 radious);
+    // Returns the correct position where the building is built
+        Vector3<f32> correctPosition(Vector3<f32> targetPos, i32 buildingSpace);
+    // Checks if the cell is blocked
+        bool isBlocked(Vector3<f32> targetPos);
     // Returns a reference to the entity of the neighbor vector
         Entity* begin();
     // Used to iterate trought the neighbor vector

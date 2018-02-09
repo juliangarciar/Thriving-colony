@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "Human.h"
 #include "IA.h"
-
+#include "WorldGeometry/CellSpacePartition.h"
 using namespace irr;
 
 BuildingManager::BuildingManager(Enumeration::Team t, Enumeration::BreedType b) {
@@ -59,12 +59,15 @@ void BuildingManager::drawBuilding() {
         Vector3<f32> xyzPointCollision = g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse());
 
 		Vector3<f32> f = Box3D<f32>(tempBuilding -> getModel() -> getModel() -> getTransformedBoundingBox()).getSize(); //ToDo: fachada
-
-        f32 x = roundf(xyzPointCollision.x / gridAlignment) * gridAlignment;
-        f32 y = (roundf(xyzPointCollision.y / gridAlignment) * gridAlignment) + (f.y/2);
-        f32 z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
-
-		tempBuilding -> setPosition (Vector3<f32>(x, y, z));
+	// Change gridAligment -> by Julian
+        //f32 x = roundf(xyzPointCollision.x / gridAlignment) * gridAlignment;
+        //f32 y = (roundf(xyzPointCollision.y / gridAlignment) * gridAlignment) + (f.y/2);
+        //f32 z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
+	// Change 2nd parameter
+		Vector3<f32> dummy = CellSpacePartition::Instance() -> correctPosition(xyzPointCollision, 1);
+		std::cout << "Position: " << dummy.x << "," << dummy.y << "," << dummy.z << "\n";
+		dummy.y = g -> getGameState() -> getTerrain() -> getY(dummy.x, dummy.z) + + (f.y/2);
+		tempBuilding -> setPosition (dummy);
 
 		//Pressing the right mouse button cancels the building
 		if (g -> getMouse() -> rightMouseDown()){
@@ -76,18 +79,18 @@ void BuildingManager::drawBuilding() {
 
 		//Look if there is any other building built there
 		bool collision = false;
-		for (std::map<i32,Building*>::iterator it = buildings -> begin(); it != buildings -> end() && !collision; ++it) {
-			collision = it -> second -> getHitbox() -> intersects(*tempBuilding -> getHitbox());
-		}
+		// Make a collision mode with 
+		//for (std::map<i32,Building*>::iterator it = buildings -> begin(); it != buildings -> end() && !collision; ++it) {
+		//	collision = it -> second -> getHitbox() -> intersects(*tempBuilding -> getHitbox());
+		//}
 		if (collision) {
 			tempBuilding->setColor(video::SColor(255,0,0,255)); //ToDo: reemplazar color por material
 		} else {
 			tempBuilding->setColor(tempBuilding -> getBaseColor()); //ToDo: reemplazar color por material
-
 			//If there is no collision and the player press left button of the mouse, build the building
 			if (g -> getMouse() -> leftMouseDown()) {
 				buildingMode = false;
-				buildBuilding(Vector3<f32>(x, y, z), tempBuilding -> getType());
+				buildBuilding(dummy, tempBuilding -> getType());
 			}
 		}
     }

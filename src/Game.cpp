@@ -30,7 +30,8 @@ Game::Game() {
     Window::Instance() -> setGUI();
 // Added by Julian
     Graph::Instance();
-    cellSpace = new CellSpacePartition(10240, 10240, 128, 128, 4);
+    //cellSpace = new CellSpacePartition(10240, 10240, 128, 128, 4);
+    cellSpace = CellSpacePartition::Instance();
     soundSystem = SoundSystem::Instance();
 }
 
