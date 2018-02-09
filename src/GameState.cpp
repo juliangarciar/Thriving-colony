@@ -74,18 +74,6 @@ void GameState::Input() {
 
         i32 onMap = true;
 
-        //Deploy troops
-        if (Human::Instance() -> getUnitManager() -> isDeployingTroop()){
-            i32 idTroop = Human::Instance() -> getUnitManager() -> getDeployingTroopID();
-            if (idTroop != -1){
-                Game::Instance() -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
-                if (Game::Instance() -> getMouse() -> rightMousePressed()){
-                    Human::Instance() -> getUnitManager() -> deploySelectedTroop(mapCollision);
-                    Human::Instance() -> getUnitManager() -> selectTroop(idTroop);
-                }
-            }
-        }
-
         //Interactions with our entities
         i32 idBuilding = Human::Instance() -> getBuildingManager() -> getCollisionID();
         if (idBuilding != -1){
@@ -142,11 +130,26 @@ void GameState::Input() {
         
         //If nothing happens
         if (onMap){
-            if (Human::Instance() -> getUnitManager() -> isTroopSelected())
+            if (Human::Instance() -> getUnitManager() -> isTroopSelected()){
                 Game::Instance() -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
-            else 
+            } else if (Human::Instance() -> getUnitManager() -> isDeployingTroop()){
+                Game::Instance() -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
+                i32 idTroop = Human::Instance() -> getUnitManager() -> getDeployingTroopID();
+                if (idTroop > 0){
+                    if (Game::Instance() -> getMouse() -> rightMousePressed()){
+                        Human::Instance() -> getUnitManager() -> deploySelectedTroop(mapCollision);
+                        Human::Instance() -> getUnitManager() -> selectTroop(idTroop);
+                    }
+                } else if (idTroop == 0) {
+                    if (Game::Instance() -> getMouse() -> rightMousePressed()){
+                        Human::Instance() -> getUnitManager() -> deployAllTroops(mapCollision);
+                    }
+                } else {
+                    std::cout << "Ninguna tropa seleccionada" << std::endl;
+                }
+            } else 
                 Game::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);
-            
+
             if (Game::Instance() -> getMouse() -> leftMousePressed())
                 Human::Instance() -> getUnitManager() -> unSelectTroop();
         }

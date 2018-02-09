@@ -12,6 +12,7 @@ Entity::Entity(SceneNode *layer, i32 id, const wchar_t *path, Enumeration::Team 
     setColor(baseColor);
 
     tookDamageTimer = 0.1;
+    tookDamageCountdown = tookDamageTimer;
 
     currentHP = 0;
     maxHP = 0;

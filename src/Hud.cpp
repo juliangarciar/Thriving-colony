@@ -18,8 +18,6 @@ Hud::Hud() {
 
     popUpOpen = false;
 
-    buttons = new std::vector<Button*>();
-
     // Building buttons panel
     buildingsPanel = new Panel("Buildings");
     buildingsPanel->setPosition(Vector2<i32>(575, 546).getFixed());
@@ -123,7 +121,7 @@ Hud::Hud() {
             b->setCallback([&] {
                 this->hidePopup();
             });
-            buttons -> push_back(b);
+            buttons . push_back(b);
 
             hallTroopList = new ComboBox(mainBuildingTab, {});
 
@@ -132,32 +130,27 @@ Hud::Hud() {
             b -> setCallback([&]{
                 i32 index = hallTroopList -> getSelectedOption();
                 if (index >= 0) {
-                    hallTroopList -> removeOption(index);
-                    Human::Instance() -> getUnitManager() -> startDeployingTroop(index);
-                    Window::Instance()->getGUIEnvironment()->performLayout();
+                    i32 id = troopIDs . at(index);
+                    Human::Instance() -> getUnitManager() -> startDeployingTroop(id);
                 }
+                hidePopup();
             });
-            buttons -> push_back(b);
+            buttons . push_back(b);
 
             b = new Button(mainBuildingTab, "Deploy all troops");
             b -> setTooltip("Deploy all your units onto the map");
             b -> setCallback([&]{
-                i32 index = hallTroopList -> getSelectedOption();
-                while (index >= 0) {
-                    hallTroopList -> removeOption(index);
-                    Human::Instance() -> getUnitManager() -> startDeployingTroop(index);
-                    Window::Instance()->getGUIEnvironment()->performLayout();
-                    index = hallTroopList -> getSelectedOption();
-                }
+                Human::Instance() -> getUnitManager() -> startDeployingAllTroops();
+                hidePopup();
             });
-            buttons -> push_back(b);
+            buttons . push_back(b);
 
             b = new Button(mainBuildingTab, "Retract all troops");
             b -> setTooltip("Retract your units back into your town hall");
             b -> setCallback([&]{
                 Game::Instance() -> getEvents() -> triggerEvent(Enumeration::RetractTroopsHuman);
             });
-            buttons -> push_back(b);
+            buttons . push_back(b);
 
             mainBuildingTab->hide();
         }
@@ -168,7 +161,7 @@ Hud::Hud() {
             b->setCallback([&] {
                 this->hidePopup();
             });
-            buttons -> push_back(b);
+            buttons . push_back(b);
 
             barrackEmpty = new Panel(barrackTab, "");
             barrackEmptyLabel = new Label(barrackEmpty, "Este edificio no esta activo aun");
@@ -180,19 +173,17 @@ Hud::Hud() {
             b -> setTooltip("Create a melee unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::Instance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardM);
-                hallTroopList -> addOption("Melee footman");
-                Window::Instance()->getGUIEnvironment()->performLayout();
+                //ToDo: añadir a la cola de produccion (HUD)
             });
-            buttons -> push_back(b);
+            buttons . push_back(b);
             
             b = new Button(barrackContent, "Create ranged footman");
             b -> setTooltip("Create a ranged unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::Instance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardR);
-                hallTroopList -> addOption("Ranged footman");
-                Window::Instance()->getGUIEnvironment()->performLayout();
+                //ToDo: añadir a la cola de produccion (HUD)
             });
-            buttons -> push_back(b);
+            buttons . push_back(b);
 
             barrackScroll = new ScrollPanel(barrackContent);
             barrackTroopListPanel = new Panel(barrackScroll, "");
@@ -206,7 +197,7 @@ Hud::Hud() {
             b->setCallback([&] {
                 this->hidePopup();
             });
-            buttons -> push_back(b);
+            buttons . push_back(b);
 
             barnEmpty = new Panel(barnTab, "");
             barnEmptyLabel = new Label(barnEmpty, "Este edificio no esta activo aun");
@@ -218,28 +209,25 @@ Hud::Hud() {
             b -> setTooltip("Create a melee unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::Instance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedM);
-                hallTroopList -> addOption("Mounted melee unit");
-                Window::Instance()->getGUIEnvironment()->performLayout();
+                //ToDo: añadir a la cola de produccion (HUD)
             });
-            buttons -> push_back(b);
+            buttons . push_back(b);
             
             b = new Button(barnContent, "Create mounted ranged unit");
             b -> setTooltip("Create a ranged unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::Instance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedR);
-                hallTroopList -> addOption("Mounted ranged unit");
-                Window::Instance()->getGUIEnvironment()->performLayout();
+                //ToDo: añadir a la cola de produccion (HUD)
             });
-            buttons -> push_back(b);
+            buttons . push_back(b);
 
             b = new Button(barnContent, "Create monster");
             b -> setTooltip("Create a overwhelmingly powerful creature to destroy your enemies\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::Instance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Idol);
-                hallTroopList -> addOption("Create monster");
-                Window::Instance()->getGUIEnvironment()->performLayout();
+                //ToDo: añadir a la cola de produccion (HUD)
             });
-            buttons -> push_back(b);
+            buttons . push_back(b);
 
             barnScroll = new ScrollPanel(barnContent);
             barnTroopListPanel = new Panel(barnScroll, "");
@@ -253,7 +241,7 @@ Hud::Hud() {
             b->setCallback([&] {
                 this->hidePopup();
             });
-            buttons -> push_back(b);
+            buttons . push_back(b);
 
             workshopEmpty = new Panel(workshopTab, "");
             workshopEmptyLabel = new Label(workshopEmpty, "Este edificio no esta activo aun");
@@ -265,19 +253,17 @@ Hud::Hud() {
             b -> setTooltip("Create a ram that specializes in destroying buildings\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::Instance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Desintegrator);
-                hallTroopList -> addOption("Ram");
-                Window::Instance()->getGUIEnvironment()->performLayout();
+                //ToDo: añadir a la cola de produccion (HUD)
             });
-            buttons -> push_back(b);
+            buttons . push_back(b);
             
             b = new Button(workshopContent, "Create catapult");
             b -> setTooltip("Create a catapult that heavy area of damage\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::Instance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Launcher);
-                hallTroopList -> addOption("Catapult");
-                Window::Instance()->getGUIEnvironment()->performLayout();
+                //ToDo: añadir a la cola de produccion (HUD)
             });
-            buttons -> push_back(b);
+            buttons . push_back(b);
 
             workshopScroll = new ScrollPanel(workshopContent);
             workshopTroopListPanel = new Panel(workshopScroll, "");
@@ -407,6 +393,46 @@ void Hud::hidePopup(){
     tabContainer -> hide();
     buttonOpenPanel -> setText("Open Panel");
     popUpOpen = false;
+}
+
+void Hud::addTroopOption(i32 idTroop, Enumeration::UnitType t){
+    switch(t){
+        case Enumeration::UnitType::StandardM:
+            hallTroopList -> addOption("Melee footman");
+        break;
+        case Enumeration::UnitType::StandardR:
+            hallTroopList -> addOption("Ranged footman");
+        break;
+        case Enumeration::UnitType::AdvancedM:
+            hallTroopList -> addOption("Mounted melee unit");
+        break;
+        case Enumeration::UnitType::AdvancedR:
+            hallTroopList -> addOption("Mounted ranged unit");
+        break;
+        case Enumeration::UnitType::Idol:
+            hallTroopList -> addOption("Create idol");
+        break;
+        case Enumeration::UnitType::Launcher:
+            hallTroopList -> addOption("Catapult");
+        break;
+        case Enumeration::UnitType::Desintegrator:
+            hallTroopList -> addOption("Ram");
+        break;
+        default: break;
+    }
+    troopIDs . push_back(idTroop);
+    Window::Instance()->getGUIEnvironment()->performLayout();
+}
+
+void Hud::deleteTroopOption(i32 idTroop){
+   std::vector<i32>::iterator it = find(troopIDs.begin(), troopIDs.end(), idTroop);
+   if (it != troopIDs.end()) {
+        i32 nPosition = std::distance(troopIDs.begin(), it);
+        hallTroopList -> removeOption(nPosition);
+        troopIDs . erase(it);
+        Window::Instance()->getGUIEnvironment()->performLayout();
+        std::cout << "Pos: " << nPosition;
+   }
 }
 
 void Hud::setHUDEvents(){

@@ -49,6 +49,7 @@ class Hud {
          * @param Tipo de pestaña
          */
         void disableTab(Enumeration::BuildingType);
+
         /**
          * @brief Despliega y muestra el PopUp
          */
@@ -62,10 +63,6 @@ class Hud {
          * @brief Oculta el PopUp
          */
         void hidePopup();
-        /**
-         * @brief Establece los distintos eventos asociados a cada uno de los botones del HUD 
-         */
-        void setHUDEvents();
 
         /**
          * @brief Actualiza el HUD
@@ -77,12 +74,6 @@ class Hud {
         void updatePositions();
         
         /**
-         * @brief Devuelve cosas
-         * @return pop
-         */
-        bool getPopUpOpen();
-
-        /**
          * @brief Lanza una alerta de contruccion
          */
         static void drawWarning();
@@ -90,10 +81,31 @@ class Hud {
          * @brief Borra la alerta lanzada
          */
         static void deleteWarning();
+
+        /**
+         * @brief 
+         */
+        void addTroopOption(i32, Enumeration::UnitType);
+        /**
+         * @brief 
+         */
+        void deleteTroopOption(i32);
+
+        /**
+         * @brief Establece los distintos eventos asociados a cada uno de los botones del HUD 
+         */
+        void setHUDEvents();
+
+        /**
+         * @brief Devuelve cosas
+         * @return pop
+         */
+        bool getPopUpOpen();
     private:
         bool popUpOpen;
     
-        std::vector<Button*> *buttons;
+        std::vector<Button*> buttons;
+        std::vector<i32> troopIDs;
 
         Panel *buildingsPanel;
 

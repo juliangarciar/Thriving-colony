@@ -17,8 +17,9 @@ class UnitManager{
         virtual ~UnitManager();
 
         bool createTroop(Enumeration::UnitType unitData);
-        void startDeployingTroop(i32 index);
+        void startDeployingTroop(i32 troopID);
         void deploySelectedTroop(Vector3<f32>);
+        void startDeployingAllTroops();
         void deployAllTroops(Vector3<f32>);
         void retractAllTroops();
 

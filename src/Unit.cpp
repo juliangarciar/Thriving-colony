@@ -5,7 +5,7 @@
 
 Unit::Unit(SceneNode *layer, i32 id, const wchar_t *path, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t, Vector3<f32> p) : Entity(layer, id, path, team, breed) {
     // Race type and unit type
-    unitType = t;
+    type = t;
     // Defining model position
     model -> setPosition(p);
 
@@ -56,7 +56,7 @@ Unit::~Unit() {
 
 void Unit::Init() {
     // Basic stats of each unit are here
-    switch (unitType) {
+    switch (type) {
         // Basic melee soldier
         case Enumeration::UnitType::StandardM:
             if (breed == Enumeration::BreedType::Drorania) {
@@ -319,30 +319,6 @@ void Unit::Init() {
         default: break;
     }
 }
-/*
-void Unit::moveTroop() {
-    if (moving) {
-        // close to destination, stop
-        if (std::abs(vectorDes -> x - position -> x) < 5.0 && std::abs(vectorDes -> z - position -> z) < 5.0) {
-            moving = false;
-            if (state == Enumeration::UnitState::Retract) {
-                readyToEnter = true;
-                if (team == Enumeration::Team::Human) {
-                    Human::Instance() -> getUnitManager() -> enterMainBuilding(unitType);
-                } else {
-                    IA::Instance() -> getUnitManager() -> enterMainBuilding(unitType);
-                }
-                return;
-            }
-            switchState(Enumeration::Idle);
-        } else {
-            // far from destination, move
-            Vector3<float> newPos = *vectorPos + *vectorMov;
-            newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
-            setTroopPosition(newPos);
-        }
-    }
-}*/
 
 void Unit::update() {
     returnToOriginalColor(); //ToDo: ¿?
@@ -481,9 +457,9 @@ void Unit::moveTroop() {
                 moving = false;
                 if (state == Enumeration::UnitState::Retract) {
                     if (team == Enumeration::Team::Human) {
-                        Human::Instance() -> getUnitManager() -> enterMainBuilding(unitType);
+                        Human::Instance() -> getUnitManager() -> enterMainBuilding(type);
                     } else {
-                        IA::Instance() -> getUnitManager() -> enterMainBuilding(unitType);
+                        IA::Instance() -> getUnitManager() -> enterMainBuilding(type);
                     }
                     return;
                 }
@@ -517,6 +493,30 @@ void Unit::moveTroop() {
         }
     }
 }
+/*
+void Unit::moveTroop() {
+    if (moving) {
+        // close to destination, stop
+        if (std::abs(vectorDes -> x - position -> x) < 5.0 && std::abs(vectorDes -> z - position -> z) < 5.0) {
+            moving = false;
+            if (state == Enumeration::UnitState::Retract) {
+                readyToEnter = true;
+                if (team == Enumeration::Team::Human) {
+                    Human::Instance() -> getUnitManager() -> enterMainBuilding(type);
+                } else {
+                    IA::Instance() -> getUnitManager() -> enterMainBuilding(type);
+                }
+                return;
+            }
+            switchState(Enumeration::Idle);
+        } else {
+            // far from destination, move
+            Vector3<f32> newPos = *vectorPos + *vectorMov;
+            newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
+            setTroopPosition(newPos);
+        }
+    }
+}*/
 
 void Unit::attack() {
     if (target != NULL) {
@@ -683,4 +683,8 @@ Vector3<f32>* Unit::getDestination() {
 
 std::list< Vector2<f32> > Unit::getPath(){
     return pathFollow;
+}
+
+Enumeration::UnitType Unit::getType(){
+    return type;
 }
