@@ -11,12 +11,12 @@ using namespace irr;
 Keyboard::Keyboard() {
     GLFWwindow *window = Window::Instance() -> getWindow();
 
-    for (int i = 0; i < GLFW_KEY_LAST;i++){
+    for (i32 i = 0; i < GLFW_KEY_LAST;i++){
         keyState[i] = Enumeration::UP;
     }
 
     glfwSetKeyCallback(window,
-        [](GLFWwindow *w, int key, int scancode, int action, int mods) {
+        [](GLFWwindow *w, i32 key, i32 scancode, i32 action, i32 mods) {
             Window::Instance() -> getGUIEnvironment() -> keyCallbackEvent(key, scancode, action, mods);
             Keyboard *s = Game::Instance() -> getKeyboard();
             // Key actions
@@ -38,24 +38,24 @@ Keyboard::~Keyboard() {
 /// ==============================
 /// Event functions
 /// ==============================
-bool Keyboard::keyPressed(int keycode) {
-    if (keyState[(int)keycode] == Enumeration::PRESSED || keyState[(int)keycode] == Enumeration::DOWN) {
+bool Keyboard::keyPressed(i32 keycode) {
+    if (keyState[(i32)keycode] == Enumeration::PRESSED || keyState[(i32)keycode] == Enumeration::DOWN) {
         return true;
     } else {
         return false;
     }
 }
 
-bool Keyboard::keyReleased(int keycode) {
-    if (keyState[(int)keycode] == Enumeration::RELEASED) {
+bool Keyboard::keyReleased(i32 keycode) {
+    if (keyState[(i32)keycode] == Enumeration::RELEASED) {
         return true;
     } else {
         return false;
     }
 }
 
-bool Keyboard::keyRepeat(int keycode) {
-    if (keyState[(int)keycode] == Enumeration::DOWN) {
+bool Keyboard::keyRepeat(i32 keycode) {
+    if (keyState[(i32)keycode] == Enumeration::DOWN) {
         return true;
     } else {
         return false;

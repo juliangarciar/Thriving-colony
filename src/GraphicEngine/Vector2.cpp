@@ -68,7 +68,7 @@ Vector2<T> Vector2<T>::getDistanceTo(Vector2<T> other) {
 }
 
 template <class T>
-Vector2<T> Vector2<T>::getFromPolarCoordinates(float r, float phi) {
+Vector2<T> Vector2<T>::getFromPolarCoordinates(f32 r, f32 phi) {
     phi = phi * (PI/180);
     Vector2<T> point;
     point.x = x + (r * cosf(phi));  // Assign to the point member x
@@ -88,13 +88,13 @@ core::vector2df Vector2<T>::getVectorF() {
 
 template <class T>
 Vector2<T> Vector2<T>::getFixed() {
-    int initialWidth = Window::Instance() -> getInitialWindowWidth();
-    int initialHeight = Window::Instance() -> getInitialWindowHeight();
-    int actualWidth = Window::Instance() -> getRealWindowWidth();
-    int actualHeight = Window::Instance() -> getRealWindowHeight();
+    i32 initialWidth = Window::Instance() -> getInitialWindowWidth();
+    i32 initialHeight = Window::Instance() -> getInitialWindowHeight();
+    i32 actualWidth = Window::Instance() -> getRealWindowWidth();
+    i32 actualHeight = Window::Instance() -> getRealWindowHeight();
 
-    int newX = x*actualWidth/initialWidth; 
-    int newY = y*actualHeight/initialHeight; 
+    i32 newX = x*actualWidth/initialWidth; 
+    i32 newY = y*actualHeight/initialHeight; 
 
     return Vector2<T>(newX, newY);
 }
@@ -117,8 +117,8 @@ Vector2<T> Vector2<T>::operator - (const Vector2<T> &p) const {
     return Vector2<T>(this -> x - p.x, this -> y - p.y);
 }
 template <class T>
-Vector2<T> Vector2<T>::operator / (const float &num) const {
+Vector2<T> Vector2<T>::operator / (const f32 &num) const {
     return Vector2<T>(this -> x / num, this -> y / num);
 }
-template class Vector2<int>;
-template class Vector2<float>;
+template class Vector2<i32>;
+template class Vector2<f32>;

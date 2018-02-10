@@ -4,6 +4,7 @@
 #include <iostream>
 #include <irrlicht.h>
 #include "Vector3.h"
+#include <Types.h>
 
 using namespace irr;
 

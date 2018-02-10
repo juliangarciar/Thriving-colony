@@ -1,7 +1,4 @@
 #include "Game.h"
-//#include "Human.h"
-//#include "IA.h"
-#include <PathPlanner/Graph.h>
 
 Game* Game::pinstance = 0;
 
@@ -31,7 +28,7 @@ Game::Game() {
     Window::Instance() -> setGUI();
 // Added by Julian
     Graph::Instance();
-    cellSpace = new CellSpacePartition(9000, 9000, 100, 100, 100);
+    cellSpace = new CellSpacePartition(10240, 10240, 128, 128, 4);
     soundSystem = SoundSystem::Instance();
 }
 
@@ -48,16 +45,20 @@ Game::~Game() {
 void Game::Init() {
     //Initialize the event system
     //IA Events
-    events -> addEvent(Enumeration::EventType::DeployTroopsIA, IA::deployTroops);
-    events -> addEvent(Enumeration::EventType::RetractTroopsIA, IA::retractTroops);
-    events -> addEvent(Enumeration::EventType::OpenDoorsIA, IA::openDoors);
-    events -> addEvent(Enumeration::EventType::CloseDoorsIA, IA::closeDoors);
+    events -> addEvent(Enumeration::EventType::RetractTroopsIA, []() {
+        IA::Instance()->getUnitManager()->retractAllTroops();
+    });
+    /*events -> addEvent(Enumeration::EventType::DeployAllTroopsIA, []() {
+        IA::Instance()->getUnitManager()->deployAllTroops();
+    });*/
 
     //Human events
-    events -> addEvent(Enumeration::EventType::DeployTroopsHuman, Human::deployTroops);
-    events -> addEvent(Enumeration::EventType::RetractTroopsHuman, Human::retractTroops);
-    events -> addEvent(Enumeration::EventType::OpenDoorsHuman, Human::openDoors);
-    events -> addEvent(Enumeration::EventType::CloseDoorsHuman, Human::closeDoors);
+    events -> addEvent(Enumeration::EventType::RetractTroopsHuman, []() {
+        Human::Instance()->getUnitManager()->retractAllTroops();
+    });
+    /*events -> addEvent(Enumeration::EventType::DeployAllTroopsHuman, []() {
+        Human::Instance()->getUnitManager()->deployAllTroops();
+    });*/
 
     //Hud events
     events -> addEvent(Enumeration::EventType::EnableText, Hud::drawWarning);

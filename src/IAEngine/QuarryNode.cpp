@@ -12,11 +12,11 @@ QuarryNode::~QuarryNode() {
 
 void QuarryNode::question() {
 
-    IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::BuildQuarry);
+    IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildQuarry);
     //std::cout << "Construyo una cantera" << std::endl;
-    if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::QuarryMetalCost, Enumeration::BuildingCost::QuarryCrystalCost)) {
-        IA::getInstance() -> getTree() -> setRequireCrystal(false);
-        Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();
-        IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Quarry, true);
+    if (IA::Instance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::QuarryMetalCost, Enumeration::BuildingCost::QuarryCrystalCost)) {
+        IA::Instance() -> getTree() -> setRequireCrystal(false);
+        Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
+        IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Quarry, true);
     }
 }

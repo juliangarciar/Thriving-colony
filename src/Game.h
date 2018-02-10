@@ -7,6 +7,7 @@
 #include "PauseState.h"
 #include "WinState.h"
 #include "Enumeration.h"
+#include <Types.h>
 
 #include <IOEngine/EventSystem.h>
 #include <IOEngine/Mouse.h>
@@ -17,6 +18,7 @@
 
 #include <SoundEngine/SoundSystem.h>
 // Added by Julian
+#include <PathPlanner/Graph.h>
 #include <WorldGeometry/CellSpacePartition.h>
 class CellSpacePartition;
 /**

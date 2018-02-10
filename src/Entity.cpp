@@ -1,15 +1,18 @@
 #include "Entity.h"
 #include "Game.h"
 
-Entity::Entity(SceneNode *layer, int id, const wchar_t *path, Enumeration::Team t, Enumeration::BreedType b) {
+Entity::Entity(SceneNode *layer, i32 id, const wchar_t *path, Enumeration::Team t, Enumeration::BreedType b) {
     ID = id;
     model = new Model(layer, id, path);
-    hitbox = new Box3D<float>();
-    position = new Vector3<float>();
+    hitbox = new Box3D<f32>();
+    position = new Vector3<f32>();
     team = t;
 
     baseColor = video::SColor(255, 0, 0, 0); //ToDo: cambiar por material
     setColor(baseColor);
+
+    tookDamageTimer = 0.1;
+    tookDamageCountdown = tookDamageTimer;
 
     currentHP = 0;
     maxHP = 0;
@@ -29,7 +32,7 @@ Entity::~Entity() {
 }
 
 //METHODS
-void Entity::takeDamage(int dmg) {
+void Entity::takeDamage(i32 dmg) {
     currentHP = currentHP-dmg;
     tookDamageCountdown = tookDamageTimer;
     // Tint the model red
@@ -49,7 +52,7 @@ void Entity::refreshHitbox() {
 }
 
 void Entity::returnToOriginalColor() {
-    if (tookDamageCountdown <= 0) {
+    if (tookDamageCountdown <= 0.0) {
         setColor(baseColor); //ToDo: sustituir por material
     } else {
         tookDamageCountdown -= Game::Instance() -> getWindow() -> getDeltaTime(); //ToDo: sustituir por timer real
@@ -57,7 +60,7 @@ void Entity::returnToOriginalColor() {
 }
 
 //SETTERS
-void Entity::setPosition(Vector3<float> vectorData) {
+void Entity::setPosition(Vector3<f32> vectorData) {
     position -> set(vectorData);
     model -> setPosition(vectorData);
     hitbox -> set(model -> getBoundingBox());
@@ -71,17 +74,17 @@ void Entity::setColor(irr::video::SColor c){
     );
 }
 
-void Entity::setID(int id){
+void Entity::setID(i32 id){
     ID = id;
     model->setID(id);
 }
 
 //GETTERS
-Vector3<float>* Entity::getPosition() {
+Vector3<f32>* Entity::getPosition() {
     return position;
 }
 
-Box3D<float>* Entity::getHitbox() {
+Box3D<f32>* Entity::getHitbox() {
     return hitbox;
 }
 
@@ -93,11 +96,11 @@ Enumeration::Team Entity::getTeam() {
     return team;
 }
 
-int Entity::getAttackRange() {
+i32 Entity::getAttackRange() {
     return attackRange;
 }
 
-int Entity::getViewRadius() {
+i32 Entity::getViewRadius() {
     return viewRadius;
 }
 
@@ -105,15 +108,15 @@ Enumeration::EntityType Entity::getEntityType() {
     return entityType;
 }
 
-int Entity::getHP() {
+i32 Entity::getHP() {
     return currentHP;
 }
 
-int Entity::getID() {
+i32 Entity::getID() {
     return ID;
 }
 
-int Entity::getHappiness() {
+i32 Entity::getHappiness() {
     return happiness;
 }
 

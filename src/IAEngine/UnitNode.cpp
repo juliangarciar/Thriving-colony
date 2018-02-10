@@ -21,12 +21,12 @@ UnitNode::~UnitNode() {
 
 void UnitNode::question() {
     //First subsubbranch: Melee
-    if (IA::getInstance() -> getTree() -> calculateMeleeRate() < IA::getInstance() -> getTree() -> getMeleeThreshold()) {
+    if (IA::Instance() -> getTree() -> calculateMeleeRate() < IA::Instance() -> getTree() -> getMeleeThreshold()) {
         //std::cout << "Voy a hacer melees" << std::endl;
         children[0] -> question();
     } else {
         //Second subsubbranch: Range
-        if (IA::getInstance() -> getTree() -> calculateRangeRate() < IA::getInstance() -> getTree()  -> getRangeThreshold()) {
+        if (IA::Instance() -> getTree() -> calculateRangeRate() < IA::Instance() -> getTree()  -> getRangeThreshold()) {
             //std::cout << "Voy a hacer rangos" << std::endl;
             children[1] -> question();
         } else {

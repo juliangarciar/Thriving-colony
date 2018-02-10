@@ -18,16 +18,16 @@ MountedRangeNode::~MountedRangeNode() {
 
 void MountedRangeNode::question() {
 
-    IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::TrainMountedRanged);
-    if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barn) > 0) {
+    IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::TrainMountedRanged);
+    if (IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barn) > 0) {
         //std::cout << "Genero un soldado montado de rango" << std::endl;
-        if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MountedRangedMetalCost, Enumeration::UnitCost::MountedRangedCrystalCost)) {
+        if (IA::Instance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MountedRangedMetalCost, Enumeration::UnitCost::MountedRangedCrystalCost)) {
             // Unit type
             Enumeration::UnitType unitData = Enumeration::UnitType::StandardR; 
-            IA::getInstance() -> getUnitManager() -> createTroop(unitData);
+            IA::Instance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {
-        IA::getInstance() -> getTree() -> setRequireBarn(true);
+        IA::Instance() -> getTree() -> setRequireBarn(true);
         //children[0] -> question();
     }
 }

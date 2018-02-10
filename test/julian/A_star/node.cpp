@@ -1,12 +1,12 @@
 #include <limits>
 #include "node.h"
-node::node(int x, int y){
+node::node(i32 x, i32 y){
     posX = x;
     posY = y;
     visited = false;
     block = false;
     frontier = false;
-    weight = std::numeric_limits<int>::max();
+    weight = std::numeric_limits<i32>::max();
     //weight = 0;
     cameFrom = NULL;
     rectangle = new sf::RectangleShape(sf::Vector2f(20.f, 20.f));
@@ -28,10 +28,10 @@ void node::swapColor(sf::Color color)
 sf::RectangleShape *node::getRectangle(){
     return rectangle;
 }
-int node::getX(){
+i32 node::getX(){
     return posX;
 }
-int node::getY(){
+i32 node::getY(){
     return posY;
 }
 bool node::itsBlock(){
@@ -52,11 +52,11 @@ bool node::itsFrontier(){
 void node::setFrontier(bool frontierData){
     this -> frontier = frontierData;
 }
-int node::getWeight()
+i32 node::getWeight()
 {
     return this -> weight;
 }
-void node::setWeight(int weightData){
+void node::setWeight(i32 weightData){
     this -> weight = weightData;
 }
 node* node::getCameFrom(){
@@ -71,9 +71,9 @@ bool node::itsCounted(){
 void node::setCounted(bool countedData){
     this -> counted = countedData;
 }
-int node::getPriority(){
+i32 node::getPriority(){
     return this -> priority;
 }
-void node::setPriority(int priorityData){
+void node::setPriority(i32 priorityData){
     this -> priority = priorityData;
 }

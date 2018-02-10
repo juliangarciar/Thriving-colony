@@ -6,6 +6,7 @@
 #include <IOEngine/Mouse.h>
 #include "Texture.h"
 #include "Vector3.h"
+#include <Types.h>
 
 using namespace irr;
 
@@ -16,11 +17,11 @@ class Terrain{
 
         void setTexture(Texture* terrainTexture, Texture* detailTexture);
 
-        Vector3<float> getPointCollision(Mouse *cursor);
+        Vector3<f32> getPointCollision(Mouse *cursor);
 
         scene::ITerrainSceneNode* getTerrain();
 
-        float getY(float, float);
+        f32 getY(f32, f32);
     private:
         scene::ITerrainSceneNode* terrain;
         scene::ITriangleSelector* selector;

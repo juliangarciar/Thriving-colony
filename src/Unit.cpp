@@ -3,9 +3,9 @@
 #include "Human.h"
 #include "IA.h"
 
-Unit::Unit(SceneNode *layer, int id, const wchar_t *path, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t, Vector3<float> p) : Entity(layer, id, path, team, breed) {
+Unit::Unit(SceneNode *layer, i32 id, const wchar_t *path, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t, Vector3<f32> p) : Entity(layer, id, path, team, breed) {
     // Race type and unit type
-    unitType = t;
+    type = t;
     // Defining model position
     model -> setPosition(p);
 
@@ -23,10 +23,13 @@ Unit::Unit(SceneNode *layer, int id, const wchar_t *path, Enumeration::Team team
     //Iniciar
     Init();
 
+    //Tax the player
+    //preTaxPlayer();
+
     // Position defined by the constructor parameter
-    vectorPos = new Vector3<float>();
-    vectorDes = new Vector3<float>();
-    vectorMov = new Vector3<float>();
+    vectorPos = new Vector3<f32>();
+    vectorDes = new Vector3<f32>();
+    vectorMov = new Vector3<f32>();
 
     // Timers
     recruitingTimer = recruitingTime;
@@ -53,7 +56,7 @@ Unit::~Unit() {
 
 void Unit::Init() {
     // Basic stats of each unit are here
-    switch (unitType) {
+    switch (type) {
         // Basic melee soldier
         case Enumeration::UnitType::StandardM:
             if (breed == Enumeration::BreedType::Drorania) {
@@ -318,6 +321,8 @@ void Unit::Init() {
 }
 
 void Unit::update() {
+    returnToOriginalColor(); //ToDo: ¿?
+    attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
     //State machine, color changes according to state
     switch (state) {
         case Enumeration::UnitState::Recruiting:
@@ -329,7 +334,6 @@ void Unit::update() {
         case Enumeration::UnitState::Idle:
             setColor(video::SColor(255, 0, 255, 255)); //ToDo: cambiar por materiales
             idleState();
-            returnToOriginalColor(); //ToDo: ¿?
         break;
         case Enumeration::UnitState::Move:
             setColor(video::SColor(255, 255, 0, 255)); //ToDo: cambiar por materiales
@@ -357,21 +361,21 @@ void Unit::update() {
 
 void Unit::preTaxPlayer() {
     if (team == Enumeration::Team::Human) {
-        Human::getInstance() -> spendResources(metalCost, crystalCost);
-        Human::getInstance() -> increaseHappiness(happiness);
-        Human::getInstance() -> increaseCitizens(citizens);
+        Human::Instance() -> spendResources(metalCost, crystalCost);
+        Human::Instance() -> increaseHappiness(happiness);
+        Human::Instance() -> increaseCitizens(citizens);
     } else {
-        IA::getInstance() -> spendResources(metalCost, crystalCost);
-        IA::getInstance() -> increaseHappiness(happiness);
-        IA::getInstance() -> increaseCitizens(citizens);
+        IA::Instance() -> spendResources(metalCost, crystalCost);
+        IA::Instance() -> increaseHappiness(happiness);
+        IA::Instance() -> increaseCitizens(citizens);
     }
 }
 
 void Unit::posTaxPlayer(){
     if (team == Enumeration::Team::Human) {
-        Human::getInstance() -> increaseArmySize();
+        Human::Instance() -> increaseArmySize();
     } else {
-        IA::getInstance() -> increaseArmySize();
+        IA::Instance() -> increaseArmySize();
     }
 }
 
@@ -427,7 +431,7 @@ void Unit::attackState() {
 void Unit::chaseState() {
     //If I have a target, then chase it
     if (target != NULL) {
-        Vector3<float> tpos = Vector3<float>(0,0,0);
+        Vector3<f32> tpos = Vector3<f32>(0,0,0);
         tpos.x = target -> getPosition() -> x;
         tpos.y = target -> getPosition() -> y;
         tpos.z = target -> getPosition() -> z;
@@ -452,37 +456,67 @@ void Unit::moveTroop() {
             if(pathFollow.empty()){
                 moving = false;
                 if (state == Enumeration::UnitState::Retract) {
-                    readyToEnter = true;
+                    if (team == Enumeration::Team::Human) {
+                        Human::Instance() -> getUnitManager() -> enterMainBuilding(type);
+                    } else {
+                        IA::Instance() -> getUnitManager() -> enterMainBuilding(type);
+                    }
                     return;
                 }
                 switchState(Enumeration::Idle);
             }
             else{
-                Vector2<float> dummy = this->pathFollow.front();
-                Vector3<float> newDest(dummy.x, Game::Instance() -> getGameState() -> getTerrain() -> getY(dummy.x, dummy.y), dummy.y);
+                Vector2<f32> dummy = this->pathFollow.front();
+                Vector3<f32> newDest(dummy.x, Game::Instance() -> getGameState() -> getTerrain() -> getY(dummy.x, dummy.y), dummy.y);
                 pathFollow.pop_front();
                 setTroopDestination(newDest);
             }
         }
         else if(std::floor(steps) == 0){
-            Vector3<float> move = *vectorMov;
-            move.x *= steps;
-            //move.y *= steps;
-            move.z *= steps;
-            Vector3<float> newPos = *vectorPos + move;
+            Vector3<f32> move = *vectorMov;
+            //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
+            //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
+            Vector3<f32> newPos = *vectorPos + move;
             newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
-            this -> setTroopPosition(newPos);
+            setTroopPosition(newPos);
             steps = 0;
         } 
         else {
             // far from destination, move
-            Vector3<float> newPos = *vectorPos + *vectorMov;
+            Vector3<f32> move = *vectorMov;
+            //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime();
+            //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime();
+            Vector3<f32> newPos = *vectorPos + move;
             newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
             setTroopPosition(newPos);
             steps--;
         }
     }
 }
+/*
+void Unit::moveTroop() {
+    if (moving) {
+        // close to destination, stop
+        if (std::abs(vectorDes -> x - position -> x) < 5.0 && std::abs(vectorDes -> z - position -> z) < 5.0) {
+            moving = false;
+            if (state == Enumeration::UnitState::Retract) {
+                readyToEnter = true;
+                if (team == Enumeration::Team::Human) {
+                    Human::Instance() -> getUnitManager() -> enterMainBuilding(type);
+                } else {
+                    IA::Instance() -> getUnitManager() -> enterMainBuilding(type);
+                }
+                return;
+            }
+            switchState(Enumeration::Idle);
+        } else {
+            // far from destination, move
+            Vector3<f32> newPos = *vectorPos + *vectorMov;
+            newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
+            setTroopPosition(newPos);
+        }
+    }
+}*/
 
 void Unit::attack() {
     if (target != NULL) {
@@ -493,15 +527,15 @@ void Unit::attack() {
             if (target -> getHP() <= 0) {
                 if (team == Enumeration::Team::Human) {
                     if (target -> getEntityType() == Enumeration::EntityType::Unit) {
-                        IA::getInstance() -> getUnitManager() -> deleteUnit(target -> getID());
+                        IA::Instance() -> getUnitManager() -> deleteUnit(target -> getID());
                     } else {
-                        IA::getInstance() -> getBuildingManager() -> deleteBuilding(target -> getID());
+                        IA::Instance() -> getBuildingManager() -> deleteBuilding(target -> getID());
                     }
                 } else {
                     if (target -> getEntityType() == Enumeration::EntityType::Unit) {
-                        Human::getInstance() -> getUnitManager() -> deleteUnit(target -> getID());
+                        Human::Instance() -> getUnitManager() -> deleteUnit(target -> getID());
                     } else {
-                        Human::getInstance() -> getBuildingManager() -> deleteBuilding(target -> getID());
+                        Human::Instance() -> getBuildingManager() -> deleteBuilding(target -> getID());
                     }
                 }
                 target = NULL;
@@ -518,7 +552,7 @@ void Unit::chaseTarget() {
             moving = false;
             switchState(Enumeration::UnitState::Attack);
         } else { //If i am too far away to attack, then move closer.
-            Vector3<float> newPos = *vectorPos + *vectorMov;
+            Vector3<f32> newPos = *vectorPos + *vectorMov;
             newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
             setTroopPosition(newPos);
         }
@@ -528,9 +562,9 @@ void Unit::chaseTarget() {
 bool Unit::inRangeOfAttack() {
     bool inRange = false;
     if (target != NULL) {
-        float xaux = target -> getPosition() -> x - position -> x;
-        float yaux = target -> getPosition() -> y - position -> y;
-        float dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
+        f32 xaux = target -> getPosition() -> x - position -> x;
+        f32 yaux = target -> getPosition() -> y - position -> y;
+        f32 dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
         if (dist <= attackRange) {
             inRange = true;
         }
@@ -577,41 +611,43 @@ void Unit::setAttacking(bool attackingPnt) {
     attacking = attackingPnt;
 }
 
-void Unit::setTroopPosition(Vector3<float> vectorData) {
+void Unit::setTroopPosition(Vector3<f32> vectorData) {
     vectorPos -> set(vectorData);
     setPosition(vectorData);
 }
-
-void Unit::setTroopDestination(Vector3<float> vectorData) {
+// To do -> adjust units movement
+void Unit::setTroopDestination(Vector3<f32> vectorData) {
     if (state == Enumeration::UnitState::Move) {
         target = NULL;
     }
 
     vectorDes -> set(vectorData);
 
-    Vector3<float> desp = *vectorDes - *vectorPos;
+    Vector3<f32> desp = *vectorDes - *vectorPos;
 
-    float distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2));
+    f32 distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2));
 
-    vectorMov -> x = (desp.x / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
-    vectorMov -> z = (desp.z / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
-
-    float movDistance = std::sqrt(std::pow(vectorMov -> x, 2) + std::pow(vectorMov -> z, 2));
+    //vectorMov -> x = (desp.x / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
+    //vectorMov -> z = (desp.z / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
+    vectorMov -> x = (desp.x / distance) * (moveSpeed / 100);
+    vectorMov -> z = (desp.z / distance) * (moveSpeed / 100);
+    f32 movDistance = std::sqrt(std::pow(vectorMov -> x, 2) + std::pow(vectorMov -> z, 2));
     steps = (distance / movDistance);
-
+    std::cout << "Distance: " << distance << "\n";
+    std::cout << "Mov distance " << movDistance << "\n"; 
     std::cout << "Steps: " << steps << "\n";
     moving = true;
 }
 
-void Unit::setPath(std::list< Vector2<float> > path){
+void Unit::setPath(std::list< Vector2<f32> > path){
     this->pathFollow = path;
 }
 
-void Unit::setPathToTarget(Vector3<float> vectorData){
+void Unit::setPathToTarget(Vector3<f32> vectorData){
     this->pathManager->createPathTo(vectorData.toVector2());
     if(!pathFollow.empty()){
-        Vector2<float> dummy = this->pathFollow.front();
-        Vector3<float> newDest;
+        Vector2<f32> dummy = this->pathFollow.front();
+        Vector3<f32> newDest;
         newDest.x = dummy.x;
         newDest.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(dummy.x, dummy.y);
         newDest.z = dummy.y;
@@ -641,10 +677,14 @@ string Unit::getSelectEvent() {
     return selectEvent;
 }
 
-Vector3<float>* Unit::getDestination() {
+Vector3<f32>* Unit::getDestination() {
     return vectorDes;
 }
 
-std::list< Vector2<float> > Unit::getPath(){
+std::list< Vector2<f32> > Unit::getPath(){
     return pathFollow;
+}
+
+Enumeration::UnitType Unit::getType(){
+    return type;
 }

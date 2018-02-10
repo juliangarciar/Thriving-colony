@@ -4,6 +4,7 @@
 #include <irrlicht.h>
 #include <IOEngine/Mouse.h>
 #include "Vector3.h"
+#include <Types.h>
 
 using namespace irr;
 

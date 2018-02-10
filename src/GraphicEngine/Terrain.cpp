@@ -1,6 +1,6 @@
 #include "Terrain.h"
 #include "Window.h"
-
+#define SCALE 40
 using namespace irr;
 
 Terrain::Terrain(const char* heightMap) {
@@ -11,7 +11,7 @@ Terrain::Terrain(const char* heightMap) {
 		-1,										// node id
 		core::vector3df(0.f, 0.f, 0.f),			// position
 		core::vector3df(0.f, 0.f, 0.f),			// rotation
-		core::vector3df(40.f, 10.4f, 40.f),		// scale
+		core::vector3df(SCALE, SCALE / 2, SCALE),		// scale
 		video::SColor ( 255, 255, 255, 255 ), 	// vertexColor
 		5,										// maxLOD
 		scene::ETPS_9,							// patchSize
@@ -36,21 +36,21 @@ void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture) {
     terrain -> scaleTexture(1.0f, 20.0f);
 }
 
-Vector3<float> Terrain::getPointCollision(Mouse *cursor){
-	Vector2<int> p = cursor -> getPosition();
+Vector3<f32> Terrain::getPointCollision(Mouse *cursor){
+	Vector2<i32> p = cursor -> getPosition();
 	core::position2d<s32> pos = core::position2d<s32>(p.x, p.y);
 	core::vector3df point;
 	core::triangle3df triangle;
 	scene::ISceneNode *node = 0;
     const core::line3d<f32> ray = collisionManager -> getRayFromScreenCoordinates(pos);
     if (collisionManager -> getCollisionPoint (ray, selector, point, triangle, node)) {
-		return Vector3<float>(point);
+		return Vector3<f32>(point);
     }
-	return Vector3<float>();
+	return Vector3<f32>();
 }
 
-float Terrain::getY(float x, float z) {
-	return (float)terrain -> getHeight(x, z);
+f32 Terrain::getY(f32 x, f32 z) {
+	return (f32)terrain -> getHeight(x, z);
 }
 
 scene::ITerrainSceneNode* Terrain::getTerrain() {

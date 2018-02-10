@@ -3,6 +3,7 @@
 
 #include "State.h"
 #include "PauseMenu.h"
+#include <Types.h>
 
 /**
  * @class PauseState
@@ -44,8 +45,8 @@ class PauseState : public State {
     private:
         PauseMenu *hud;
 
-        int prevWindowWidth;
-        int prevWindowHeight;
+        i32 prevWindowWidth;
+        i32 prevWindowHeight;
 };
 
 #endif

@@ -18,16 +18,16 @@ RamNode::~RamNode() {
 
 void RamNode::question() {
 
-    IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::TrainRam);
-    if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Workshop) > 0) {
+    IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::TrainRam);
+    if (IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Workshop) > 0) {
         //std::cout << "Genero un ariete" << std::endl;
-        if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::RamMetalCost, Enumeration::UnitCost::RamCrystalCost)) {
+        if (IA::Instance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::RamMetalCost, Enumeration::UnitCost::RamCrystalCost)) {
             // Unit type
             Enumeration::UnitType unitData = Enumeration::UnitType::Desintegrator;
-            IA::getInstance() -> getUnitManager() -> createTroop(unitData);
+            IA::Instance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {
-        IA::getInstance() -> getTree() -> setRequireWorkshop(true);
+        IA::Instance() -> getTree() -> setRequireWorkshop(true);
         //children[0] -> question();
     }
 }

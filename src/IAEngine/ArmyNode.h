@@ -2,6 +2,7 @@
 #define ARMY_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class ArmyNode : public Node {
 

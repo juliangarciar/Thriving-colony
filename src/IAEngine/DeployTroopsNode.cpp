@@ -13,7 +13,7 @@ DeployTroopsNode::~DeployTroopsNode() {
 
 void DeployTroopsNode::question() {
 
-    IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::DeployingTroops);
+    IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::DeployingTroops);
     //std::cout<<"Despliego tropas"<<std::endl;
     //Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsIA);
 }

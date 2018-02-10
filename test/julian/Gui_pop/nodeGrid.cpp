@@ -1,6 +1,6 @@
 #include <limits>
 #include "nodeGrid.h"
-nodeGrid::nodeGrid(int x, int y, int z, irr::scene::ISceneManager *smgrData)
+nodeGrid::nodeGrid(i32 x, i32 y, i32 z, irr::scene::ISceneManager *smgrData)
 {
     posX = x;
     posY = y;
@@ -35,11 +35,11 @@ void nodeGrid::swapColor(irr::video::SColor colorData){
     smgr -> getMeshManipulator() -> setVertexColors(cube -> getMesh(), colorData);
 }
 
-int nodeGrid::getX()
+i32 nodeGrid::getX()
 {
     return posX;
 }
-int nodeGrid::getY()
+i32 nodeGrid::getY()
 {
     return posY;
 }
@@ -65,11 +65,11 @@ void nodeGrid::setFrontier(bool frontierData)
 {
     this -> frontier = frontierData;
 }
-float nodeGrid::getWeight()
+f32 nodeGrid::getWeight()
 {
     return this -> weight;
 }
-void nodeGrid::setWeight(float weightData)
+void nodeGrid::setWeight(f32 weightData)
 {
     this -> weight = weightData;
 }
@@ -89,11 +89,11 @@ void nodeGrid::setCounted(bool countedData)
 {
     this -> counted = countedData;
 }
-float nodeGrid::getPriority()
+f32 nodeGrid::getPriority()
 {
     return this -> priority;
 }
-void nodeGrid::setPriority(float priorityData)
+void nodeGrid::setPriority(f32 priorityData)
 {
     this -> priority = priorityData;
 }

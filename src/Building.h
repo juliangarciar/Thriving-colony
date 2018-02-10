@@ -3,6 +3,7 @@
 
 #include "Entity.h"
 #include <functional>
+#include <Types.h>
 
 /**
  * @class Building
@@ -23,7 +24,7 @@ class Building : public Entity {
          * @param buildingType es el tipo del edificio
          * @param vectorData es la posicion del edificio
          */
-        Building(SceneNode *, int, const wchar_t *, Enumeration::Team, Enumeration::BreedType, Enumeration::BuildingType, Vector3<float>);
+        Building(SceneNode *, i32, const wchar_t *, Enumeration::Team, Enumeration::BreedType, Enumeration::BuildingType, Vector3<f32>);
         /**
          * @brief Destructor
          */
@@ -75,13 +76,13 @@ class Building : public Entity {
         Enumeration::BuildingType type;
 
         //Building timer
-        float buildTimer;
+        f32 buildTimer;
 
         //Finish building callback
         std::function<void(Building*)> callback;
 
         //is built
-        int finished;
+        i32 finished;
 };
 
 #endif

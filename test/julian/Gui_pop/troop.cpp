@@ -1,5 +1,5 @@
 #include "troop.h"
-troop::troop(int x, int y, int z, irr::scene::ISceneManager *smgrData){
+troop::troop(i32 x, i32 y, i32 z, irr::scene::ISceneManager *smgrData){
     posX = x;
     posY = y;
     posZ = z;
@@ -25,16 +25,16 @@ troop::troop(const troop& orig0){
 troop::~troop(){
 
 }
-int troop::getX(){
+i32 troop::getX(){
     return this -> posX;
 }
 
-int troop::getY()
+i32 troop::getY()
 {
     return this -> posY;
 }
 
-int troop::getZ()
+i32 troop::getZ()
 {
     return this -> posZ;
 }
@@ -71,7 +71,7 @@ void troop::setDes(irr::core::vector3df vectorData){
         vectorDes -> X = vectorData.X;
         vectorDes -> Z = vectorData.Z;
 
-        float distance, distX, distZ;
+        f32 distance, distX, distZ;
         distX = vectorData.X - vectorPos -> X;
         distZ = vectorData.Z - vectorPos -> Z;
         distance = sqrt(abs(distX) + abs(distZ));

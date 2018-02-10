@@ -26,7 +26,7 @@ bool CheckBox::isVisible(){
     return checkbox -> visible();
 }
 
-void CheckBox::setPosition(Vector2<int> position){
+void CheckBox::setPosition(Vector2<i32> position){
     checkbox -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 
@@ -38,7 +38,7 @@ void CheckBox::setCallback(std::function<void(bool)> callback){
     checkbox -> setCallback(callback);
 }
 
-int CheckBox::isChecked(){
+i32 CheckBox::isChecked(){
     return checkbox -> checked();
 }
 

@@ -3,7 +3,7 @@
 #include "Human.h"
 #include "Game.h"
 
-Building::Building(SceneNode *parent, int id, const wchar_t *path, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::BuildingType t, Vector3<float> p) : Entity(parent, id, path, team, breed) {
+Building::Building(SceneNode *parent, i32 id, const wchar_t *path, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::BuildingType t, Vector3<f32> p) : Entity(parent, id, path, team, breed) {
     buildTimer = 0;
     type = t;
 
@@ -17,9 +17,9 @@ Building::~Building() {
 }
 
 void Building::Init() {
-    float r = 0;
-    float g = 0;
-    float b = 0;
+    f32 r = 0;
+    f32 g = 0;
+    f32 b = 0;
     switch (type) {
         case Enumeration::BuildingType::Barn:
             // Different color for diferent buildings
@@ -211,6 +211,8 @@ void Building::Init() {
         default: break;
     }
 
+    buildTimer = 0; //ToDo: sin tiempo de construcción
+
     //Establece el color base del edificio
     baseColor = video::SColor(255, r, g, b); //ToDo: reemplazar color por material
 
@@ -223,7 +225,7 @@ void Building::Init() {
 
 void Building::update() {
     if (!finished){
-        if (buildTimer <= 0.f) {
+        if (buildTimer <= 0.0) {
             finished = true;
             callback(this);
         } else {
@@ -242,12 +244,12 @@ void Building::preTaxPlayer() {
     // Tax the human
     if (team == Enumeration::Team::Human) {
         // Tax costs
-        Human::getInstance() -> spendResources(metalCost, crystalCost);
-        Human::getInstance() -> increaseCityLevel(cityLevel);  
+        Human::Instance() -> spendResources(metalCost, crystalCost);
+        Human::Instance() -> increaseCityLevel(cityLevel);  
     } else { // Tax the AI
         // Tax costs
-        IA::getInstance() -> spendResources(metalCost, crystalCost);
-        IA::getInstance() -> increaseCityLevel(cityLevel); //ToDo: deberia ir en el pos?
+        IA::Instance() -> spendResources(metalCost, crystalCost);
+        IA::Instance() -> increaseCityLevel(cityLevel); //ToDo: deberia ir en el pos?
     }
 }
 
@@ -255,12 +257,12 @@ void Building::posTaxPlayer() {
     // Tax the human
     if (team == Enumeration::Team::Human) {
         // Tax costs
-        Human::getInstance() -> increaseHappiness(happiness);
-        Human::getInstance() -> increaseCitizens(citizens);   
+        Human::Instance() -> increaseHappiness(happiness);
+        Human::Instance() -> increaseCitizens(citizens);   
     } else { // Tax the AI
         // Tax costs
-        IA::getInstance() -> increaseHappiness(happiness);
-        IA::getInstance() -> increaseCitizens(citizens);   
+        IA::Instance() -> increaseHappiness(happiness);
+        IA::Instance() -> increaseCitizens(citizens);   
     }
 }
 

@@ -3,11 +3,11 @@
 NavNode::~NavNode(){
 
 }
-int NavNode::getIndex(){
+i32 NavNode::getIndex(){
     return this->m_index;
 }
 
-void NavNode::setIndex(int newIndex){
+void NavNode::setIndex(i32 newIndex){
     this->m_index = newIndex;
 }
 
@@ -15,9 +15,9 @@ void NavNode::setIndex(int newIndex){
 LWayPoint::~LWayPoint(){
 
 }
-Vector2<float> LWayPoint::getPosition(){
+Vector2<f32> LWayPoint::getPosition(){
     return this->m_vPosition;
 }
-void LWayPoint::setPosition(Vector2<float> position){
+void LWayPoint::setPosition(Vector2<f32> position){
     this->m_vPosition = position;
 }

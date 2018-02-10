@@ -30,16 +30,16 @@ Tab *TabPanel::createTab(std::string title){
     return t;
 } 
 
-Tab *TabPanel::getTab(int index){
+Tab *TabPanel::getTab(i32 index){
     if (index < 0 || index > tabs->size()) return NULL; 
     else return tabs->at(index);
 }
 
-void TabPanel::changeActiveTab(int index){
+void TabPanel::changeActiveTab(i32 index){
     if (index >= 0) ctrl -> setActiveTab(index);
 }
 
-void TabPanel::setPosition(Vector2<int> position){
+void TabPanel::setPosition(Vector2<i32> position){
     ctrl -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 

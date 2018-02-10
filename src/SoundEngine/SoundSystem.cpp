@@ -1,7 +1,7 @@
 #include "SoundSystem.h"
 #define ERRCHECK(_result) ERRCHECK_fn(_result, __FILE__, __LINE__)
 
-void ERRCHECK_fn(FMOD_RESULT result, const char *file, int line) {
+void ERRCHECK_fn(FMOD_RESULT result, const char *file, i32 line) {
 	if (result != FMOD_OK) {
 		std::cerr << file << "(" << line << "): FMOD error " << result << " - " << FMOD_ErrorString(result) << std::endl;
 		exit(-1);
@@ -118,12 +118,12 @@ FMOD_STUDIO_EVENTINSTANCE* SoundSystem::getEvent(string pathData) {
 
 }
 
-void SoundSystem::setVolume(float volData) {
+void SoundSystem::setVolume(f32 volData) {
    //ERRCHECK(FMOD_Studio_Bus_SetVolume(bus, volData));
 }
 
 //NOT IMPLEMENTED
-void SoundSystem::setListernerPosition(Vector3<float> vectorData) {
+void SoundSystem::setListernerPosition(Vector3<f32> vectorData) {
 
 }
 
@@ -248,16 +248,16 @@ void SoundEvent::pause() {
     ERRCHECK(FMOD_Studio_EventInstance_SetPaused(soundInstance, !paused));
 }
 
-void SoundEvent::setVolume(float volumeData) {
+void SoundEvent::setVolume(f32 volumeData) {
     ERRCHECK(FMOD_Studio_EventInstance_SetVolume(soundInstance, volumeData));
 }
 
-void SoundEvent::setGain(float gainData) {
+void SoundEvent::setGain(f32 gainData) {
     ERRCHECK(FMOD_Studio_EventInstance_SetPitch(soundInstance, gainData));
 }
 
 //NOT IMPLEMENTED
-void SoundEvent::setPosition(Vector3<float> vectorData) {
+void SoundEvent::setPosition(Vector3<f32> vectorData) {
 
 }
 
@@ -279,6 +279,6 @@ void SoundEvent::newSoundEvent(FMOD_STUDIO_EVENTINSTANCE *EventInstance) {
     soundInstance = EventInstance;
 }
 
-FMOD_STUDIO_EVENTINSTANCE* SoundEvent::getInstance() {
+FMOD_STUDIO_EVENTINSTANCE* SoundEvent::Instance() {
     return soundInstance;
 }

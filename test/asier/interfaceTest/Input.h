@@ -31,7 +31,7 @@ class Input : public IEventReceiver {
     
     private:
         //SAppContext & Context;
-        int counter = 0;
+        i32 counter = 0;
 
         IrrlichtDevice* device;
         video::IVideoDriver* driver;
@@ -44,6 +44,6 @@ class Input : public IEventReceiver {
         scene::ISceneCollisionManager* collisionManager;
         scene::ISceneNode* sphere;
 
-        Vector3<float> xyzPointCollision; // xyz del terreno
-        int x, y, z;
+        Vector3<f32> xyzPointCollision; // xyz del terreno
+        i32 x, y, z;
 };

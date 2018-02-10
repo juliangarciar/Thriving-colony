@@ -12,14 +12,14 @@ HospitalNode::~HospitalNode() {
 
 void HospitalNode::question() {
 
-    IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::BuildHospital);
-    if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Quarry) == 0) {
-        IA::getInstance() -> getTree() -> setRequireCrystal(true);
+    IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildHospital);
+    if (IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Quarry) == 0) {
+        IA::Instance() -> getTree() -> setRequireCrystal(true);
     } else {
         //std::cout << "Contruyo un hospital" << std::endl;
-        if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::HospitalMetalCost, Enumeration::BuildingCost::HospitalCrystalCost)) {
-            Vector3<float> v = IA::getInstance() -> determinatePositionBuilding();
-            IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Hospital, true);
+        if (IA::Instance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::HospitalMetalCost, Enumeration::BuildingCost::HospitalCrystalCost)) {
+            Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
+            IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Hospital, true);
         }
     }
 }

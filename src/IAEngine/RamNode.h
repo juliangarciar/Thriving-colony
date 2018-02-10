@@ -2,6 +2,7 @@
 #define RAM_NODE_H
 
 #include "Node.h"
+#include <Types.h>
 
 class RamNode : public Node {
 

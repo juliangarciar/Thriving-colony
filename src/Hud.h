@@ -17,6 +17,7 @@
 #include <GUIEngine/ProgressBar.h>
 #include <IOEngine/Keyboard.h>
 #include <IOEngine/Mouse.h>
+#include <Types.h>
 
 using namespace irr;
        
@@ -48,6 +49,7 @@ class Hud {
          * @param Tipo de pestaña
          */
         void disableTab(Enumeration::BuildingType);
+
         /**
          * @brief Despliega y muestra el PopUp
          */
@@ -61,10 +63,6 @@ class Hud {
          * @brief Oculta el PopUp
          */
         void hidePopup();
-        /**
-         * @brief Establece los distintos eventos asociados a cada uno de los botones del HUD 
-         */
-        void setHUDEvents();
 
         /**
          * @brief Actualiza el HUD
@@ -76,12 +74,6 @@ class Hud {
         void updatePositions();
         
         /**
-         * @brief Devuelve cosas
-         * @return pop
-         */
-        bool getPopUpOpen();
-
-        /**
          * @brief Lanza una alerta de contruccion
          */
         static void drawWarning();
@@ -89,10 +81,31 @@ class Hud {
          * @brief Borra la alerta lanzada
          */
         static void deleteWarning();
+
+        /**
+         * @brief 
+         */
+        void addTroopOption(i32, Enumeration::UnitType);
+        /**
+         * @brief 
+         */
+        void deleteTroopOption(i32);
+
+        /**
+         * @brief Establece los distintos eventos asociados a cada uno de los botones del HUD 
+         */
+        void setHUDEvents();
+
+        /**
+         * @brief Devuelve cosas
+         * @return pop
+         */
+        bool getPopUpOpen();
     private:
         bool popUpOpen;
     
-        std::vector<Button*> *buttons;
+        std::vector<Button*> buttons;
+        std::vector<i32> troopIDs;
 
         Panel *buildingsPanel;
 
@@ -148,15 +161,15 @@ class Hud {
         ScrollPanel *workshopScroll;
         Panel *workshopTroopListPanel;
 
-        float updateTimer;
-        float deleteTextTimer;
+        f32 updateTimer;
+        f32 deleteTextTimer;
 
         /**
          * @brief Crea un boton 
          * @param id del boton, de tipo entero
          * @param type sera el tipo de edificio que se creara con ese boton, de tipo entero
          */
-        void addTab(int, int);
+        void addTab(i32, i32);
 };
 
 #endif

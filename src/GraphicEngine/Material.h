@@ -3,6 +3,7 @@
 
 #include <irrlicht.h>
 #include "Texture.h"
+#include <Types.h>
 
 using namespace irr;
 

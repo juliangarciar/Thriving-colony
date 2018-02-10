@@ -2,33 +2,23 @@
 #define HUMAN_H
 
 #include "Player.h"
+#include <Types.h>
 
 class Human : public Player {
-    
     public:
-        Human();
-        virtual ~Human();
-        static Human* getInstance();
+        static Human* Instance();
 
-        void init();
-        void update();
-        void cleanUp();
-
-        //ToDo: Por que estático?
-        static void deployTroops();
-        static void retractTroops();
-        static void closeDoors();
-        static void openDoors();
+        void Init();
+        void Update();
+        void CleanUp();
 
         bool getUnderAttack();
-        bool getDeployedTroops();
-        bool getClosedDoors();
-    private:
-        int updateTimer;
+    protected:
+        Human();
+        virtual ~Human();
 
+    private:
         static Human* instance;
-        static bool deployedTroops;
-        static bool closedDoors;
 };
 
 #endif
