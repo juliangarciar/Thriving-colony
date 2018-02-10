@@ -63,7 +63,7 @@ void BuildingManager::drawBuilding() {
 		Vector3<f32> f = Box3D<f32>(tempBuilding -> getModel() -> getModel() -> getTransformedBoundingBox()).getSize(); //ToDo: fachada
 
         f32 x = roundf(xyzPointCollision.x / gridAlignment) * gridAlignment;
-        f32 y = (roundf(xyzPointCollision.y / gridAlignment) * gridAlignment) + (f.y/2);
+        f32 y = (roundf(xyzPointCollision.y / gridAlignment) * gridAlignment);
         f32 z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
 
 		tempBuilding -> setPosition (Vector3<f32>(x, y, z));

@@ -509,7 +509,7 @@ void Unit::moveTroop() {
 }*/
 
 void Unit::attack() {
-    if (target != NULL) {
+    if (target != NULL && target -> getTeam() != team) {
         setAttacking(true);
         if (attackCountdown <= 0) {
             target -> takeDamage(attackDamage);
