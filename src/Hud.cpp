@@ -599,7 +599,7 @@ void Hud::addTroopToHall(i32 idTroop, Enumeration::UnitType t){
         default: break;
     }
     troopsInHallIDs . push_back(idTroop);
-    Window::Instance()->getGUIEnvironment()->performLayout();
+    tabContainer->refreshLayout();
 }
 
 void Hud::removeTroopFromHall(i32 idTroop){
@@ -608,7 +608,7 @@ void Hud::removeTroopFromHall(i32 idTroop){
         i32 nPosition = std::distance(troopsInHallIDs.begin(), it);
         hallTroopList -> removeOption(nPosition);
         troopsInHallIDs . erase(it);
-        Window::Instance()->getGUIEnvironment()->performLayout();
+        tabContainer->refreshLayout();
    }
 }
 
@@ -686,28 +686,28 @@ void Hud::addTroopToQueue(i32 idTroop, Enumeration::UnitType t){
         break;
         default: break;
     }
-    Window::Instance()->getGUIEnvironment()->performLayout();
+    tabContainer->refreshLayout();
 }
 
 void Hud::modifyTroopFromQueue(i32 idTroop, f32 newValue){
-   std::map<i32,ProgressBar*>::iterator it = troopQueueProgressBars . find(idTroop);
-   if (it != troopQueueProgressBars.end()) {
-       it->second->setValue(newValue);
-   }
-    Window::Instance()->getGUIEnvironment()->performLayout();
+    std::map<i32,ProgressBar*>::iterator it = troopQueueProgressBars . find(idTroop);
+    if (it != troopQueueProgressBars.end()) {
+        it->second->setValue(newValue);
+    }
+    tabContainer->refreshLayout();
 }
 
 void Hud::removeTroopFromQueue(i32 idTroop){
-   std::map<i32,ProgressBar*>::iterator it = troopQueueProgressBars . find(idTroop);
-   if (it != troopQueueProgressBars.end()) {
+    std::map<i32,ProgressBar*>::iterator it = troopQueueProgressBars . find(idTroop);
+    if (it != troopQueueProgressBars.end()) {
         troopQueueProgressBars . erase(it);
-   }
-   std::map<i32, Widget*>::iterator it2 = troopQueueList . find(idTroop);
-   if (it2 != troopQueueList.end()) {
+    }
+    std::map<i32, Widget*>::iterator it2 = troopQueueList . find(idTroop);
+    if (it2 != troopQueueList.end()) {
         delete it2->second;
         troopQueueList . erase(it2);
         Window::Instance()->getGUIEnvironment()->performLayout();
-   }
+    }
 }
 
 void Hud::updatePositions() {
