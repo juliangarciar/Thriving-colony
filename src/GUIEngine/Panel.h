@@ -20,9 +20,11 @@ class Panel : public GUIElement {
         bool isVisible();
         
         void setPosition(Vector2<i32> position);
+        void setSize(Vector2<i32> size);
+
         void setTitle(std::string t);
         void setTooltip(std::string text);
-        void setSize(Vector2<i32> size);
+        
         void setVerticalAlignment();
         void setGroupLayout();
         void setDragable(bool dragable);

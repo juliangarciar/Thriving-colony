@@ -19,12 +19,11 @@ class TextBox : public GUIElement {
         bool isVisible();
         
         void setPosition(Vector2<i32> position);
+        void setSize(Vector2<i32> size);
 
         void setTooltip(std::string t);
         void setText(std::string t);
         void setEditable(bool b);
-
-        void setSize(Vector2<i32> size);
         
         nanogui::Widget *getGUIElement();
     private:

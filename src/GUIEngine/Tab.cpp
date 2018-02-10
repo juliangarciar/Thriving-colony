@@ -17,6 +17,10 @@ void Tab::setPosition(Vector2<i32> position){
     tab -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 
+void Tab::setSize(Vector2<i32> size){
+    tab -> setSize(Eigen::Vector2i(size.x, size.y));
+}
+
 void Tab::setTooltip(std::string text){
     tab -> setTooltip(text);
 }

@@ -251,8 +251,10 @@ void Hud::Init(){
             });
 
             ScrollPanel *barrackScroll = new ScrollPanel(barrackContent);
-            barrackTroopQueuePanel = new Panel(barrackScroll, "");
-            barrackTroopQueuePanel -> setVerticalAlignment();
+            barrackScroll -> setSize(Vector2<i32>(250, 50));
+            barrackTroopQueueWidget = new Widget(barrackScroll);
+            barrackTroopQueueWidget -> setSize(Vector2<i32>(250, 50));
+            barrackTroopQueueWidget -> setVerticalAlignment();
 
             barrackContent -> hide();
         }
@@ -292,8 +294,9 @@ void Hud::Init(){
             });
 
             ScrollPanel *barnScroll = new ScrollPanel(barnContent);
-            barnTroopQueuePanel = new Panel(barnScroll, "");
-            barnTroopQueuePanel -> setVerticalAlignment();
+            barnScroll -> setSize(Vector2<i32>(250, 50));
+            barnTroopQueueWidget = new Widget(barnScroll);
+            barnTroopQueueWidget -> setVerticalAlignment();
 
             barnContent -> hide();
         }
@@ -326,8 +329,9 @@ void Hud::Init(){
             });
 
             ScrollPanel *workshopScroll = new ScrollPanel(workshopContent);
-            workshopTroopQueuePanel = new Panel(workshopScroll, "");
-            workshopTroopQueuePanel -> setVerticalAlignment();
+            workshopScroll -> setSize(Vector2<i32>(250, 50));
+            workshopTroopQueueWidget = new Widget(workshopScroll);
+            workshopTroopQueueWidget -> setVerticalAlignment();
 
             workshopContent -> hide();
         }
@@ -520,65 +524,72 @@ void Hud::addTroopToQueue(i32 idTroop, Enumeration::UnitType t){
     switch(t){
         case Enumeration::UnitType::StandardM:
         {
-            Panel *p = new Panel(barrackTroopQueuePanel, "");
+            Widget *p = new Widget(barrackTroopQueueWidget);
+            p->setVerticalAlignment();
             new Label(p, "Melee footman");
-            new ProgressBar(p);
-            //ToDo: añadir label y progressBar
-            troopQueueList . insert(std::pair<i32, Panel*>(idTroop, p));
+            ProgressBar *pb = new ProgressBar(p);
+            troopQueueProgressBars . insert(std::pair<i32, ProgressBar*>(idTroop, pb));
+            troopQueueList . insert(std::pair<i32, Widget*>(idTroop, p));
         }
         break;
         case Enumeration::UnitType::StandardR:
         {
-            Panel *p = new Panel(barrackTroopQueuePanel, "");
+            Widget *p = new Widget(barrackTroopQueueWidget);
+            p->setVerticalAlignment();
             new Label(p, "Ranged footman");
-            new ProgressBar(p);
-            //ToDo: añadir label y progressBar
-            troopQueueList . insert(std::pair<i32, Panel*>(idTroop, p));
+            ProgressBar *pb = new ProgressBar(p);
+            troopQueueProgressBars . insert(std::pair<i32, ProgressBar*>(idTroop, pb));
+            troopQueueList . insert(std::pair<i32, Widget*>(idTroop, p));
         }
         break;
         case Enumeration::UnitType::AdvancedM:
         {
-            Panel *p = new Panel(barnTroopQueuePanel, "");
+            Widget *p = new Widget(barrackTroopQueueWidget);
+            p->setVerticalAlignment();
             new Label(p, "Mounted melee unit");
-            new ProgressBar(p);
-            //ToDo: añadir label y progressBar
-            troopQueueList . insert(std::pair<i32, Panel*>(idTroop, p));
+            ProgressBar *pb = new ProgressBar(p);
+            troopQueueProgressBars . insert(std::pair<i32, ProgressBar*>(idTroop, pb));
+            troopQueueList . insert(std::pair<i32, Widget*>(idTroop, p));
         }
         break;
         case Enumeration::UnitType::AdvancedR:
         {
-            Panel *p = new Panel(barnTroopQueuePanel, "");
+            Widget *p = new Widget(barrackTroopQueueWidget);
+            p->setVerticalAlignment();
             new Label(p, "Mounted ranged unit");
-            new ProgressBar(p);
-            //ToDo: añadir label y progressBar
-            troopQueueList . insert(std::pair<i32, Panel*>(idTroop, p));
+            ProgressBar *pb = new ProgressBar(p);
+            troopQueueProgressBars . insert(std::pair<i32, ProgressBar*>(idTroop, pb));
+            troopQueueList . insert(std::pair<i32, Widget*>(idTroop, p));
         }
         break;
         case Enumeration::UnitType::Idol:
         {
-            Panel *p = new Panel(barnTroopQueuePanel, "");
+            Widget *p = new Widget(barnTroopQueueWidget);
+            p->setVerticalAlignment();
             new Label(p, "Create idol");
-            new ProgressBar(p);
-            //ToDo: añadir label y progressBar
-            troopQueueList . insert(std::pair<i32, Panel*>(idTroop, p));
+            ProgressBar *pb = new ProgressBar(p);
+            troopQueueProgressBars . insert(std::pair<i32, ProgressBar*>(idTroop, pb));
+            troopQueueList . insert(std::pair<i32, Widget*>(idTroop, p));
         }
         break;
         case Enumeration::UnitType::Launcher:
         {
-            Panel *p = new Panel(workshopTroopQueuePanel, "");
+            Widget *p = new Widget(workshopTroopQueueWidget);
+            p->setVerticalAlignment();
             new Label(p, "Catapult");
-            new ProgressBar(p);
-            //ToDo: añadir label y progressBar
-            troopQueueList . insert(std::pair<i32, Panel*>(idTroop, p));
+            ProgressBar *pb = new ProgressBar(p);
+            troopQueueProgressBars . insert(std::pair<i32, ProgressBar*>(idTroop, pb));
+            troopQueueList . insert(std::pair<i32, Widget*>(idTroop, p));
         }
         break;
         case Enumeration::UnitType::Desintegrator:
         {
-            Panel *p = new Panel(workshopTroopQueuePanel, "");
+            Widget *p = new Widget(workshopTroopQueueWidget);
+            p->setVerticalAlignment();
             new Label(p, "Ram");
-            new ProgressBar(p);
-            //ToDo: añadir label y progressBar
-            troopQueueList . insert(std::pair<i32, Panel*>(idTroop, p));
+            ProgressBar *pb = new ProgressBar(p);
+            troopQueueProgressBars . insert(std::pair<i32, ProgressBar*>(idTroop, pb));
+            troopQueueList . insert(std::pair<i32, Widget*>(idTroop, p));
         }
         break;
         default: break;
@@ -586,11 +597,23 @@ void Hud::addTroopToQueue(i32 idTroop, Enumeration::UnitType t){
     Window::Instance()->getGUIEnvironment()->performLayout();
 }
 
+void Hud::modifyTroopFromQueue(i32 idTroop, f32 newValue){
+   std::map<i32,ProgressBar*>::iterator it = troopQueueProgressBars . find(idTroop);
+   if (it != troopQueueProgressBars.end()) {
+       it->second->setValue(newValue);
+   }
+    Window::Instance()->getGUIEnvironment()->performLayout();
+}
+
 void Hud::removeTroopFromQueue(i32 idTroop){
-   std::map<i32,Panel*>::iterator it = troopQueueList . find(idTroop);
-   if (it != troopQueueList.end()) {
-        //ToDo: eliminar label y progressBar
-        troopQueueList . erase(it);
+   std::map<i32,ProgressBar*>::iterator it = troopQueueProgressBars . find(idTroop);
+   if (it != troopQueueProgressBars.end()) {
+        troopQueueProgressBars . erase(it);
+   }
+   std::map<i32, Widget*>::iterator it2 = troopQueueList . find(idTroop);
+   if (it2 != troopQueueList.end()) {
+        delete it2->second;
+        troopQueueList . erase(it2);
         Window::Instance()->getGUIEnvironment()->performLayout();
    }
 }

@@ -23,9 +23,6 @@ Unit::Unit(SceneNode *layer, i32 id, const wchar_t *path, Enumeration::Team team
     //Iniciar
     Init();
 
-    //Tax the player
-    //preTaxPlayer();
-
     // Position defined by the constructor parameter
     vectorPos = new Vector3<f32>();
     vectorDes = new Vector3<f32>();
@@ -55,6 +52,7 @@ Unit::~Unit() {
 }
 
 void Unit::Init() {
+    std::cout << (int)type << std::endl;
     // Basic stats of each unit are here
     switch (type) {
         // Basic melee soldier
@@ -385,8 +383,11 @@ void Unit::switchState(Enumeration::UnitState newState) {
 }
 
 void Unit::recruitingState(){
-    if (recruitingTimer > 0){
+    if (recruitingTimer > 0.0f){
         recruitingTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
+        if (team == Enumeration::Team::Human){
+            Game::Instance()->getGameState()->getHud()->modifyTroopFromQueue(ID, recruitingTimer/recruitingTime);
+        }
     } else {
         recruitedCallback(this);
         switchState(Enumeration::UnitState::InHome);

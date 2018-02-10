@@ -57,12 +57,12 @@ void GameState::Init() {
 }
 
 void GameState::Input() {
-    camera -> Move();
-    camera -> RotateAndInclinate();
-    camera -> Zoom();
-    camera -> CenterCamera();
-
     if (!hud->getPopUpOpen()){
+        camera -> Move();
+        camera -> RotateAndInclinate();
+        camera -> Zoom();
+        camera -> CenterCamera();
+
         Human::Instance() -> getBuildingManager() -> testRaycastCollisions();
         Human::Instance() -> getUnitManager() -> testRaycastCollisions();
 

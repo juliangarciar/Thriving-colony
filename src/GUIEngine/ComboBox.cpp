@@ -42,6 +42,10 @@ void ComboBox::setPosition(Vector2<i32> position){
     combobox -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 
+void ComboBox::setSize(Vector2<i32> size){
+    combobox -> setSize(Eigen::Vector2i(size.x, size.y));
+}
+
 void ComboBox::setTooltip(std::string text){
     combobox -> setTooltip(text);
 }
