@@ -7,11 +7,13 @@ Entity::Entity(SceneNode *layer, i32 id, const wchar_t *path, Enumeration::Team 
     hitbox = new Box3D<f32>();
     position = new Vector3<f32>();
     team = t;
+    breed = b;
 
     baseColor = video::SColor(255, 0, 0, 0); //ToDo: cambiar por material
     setColor(baseColor);
 
     tookDamageTimer = 0.1;
+    tookDamageCountdown = tookDamageTimer;
 
     currentHP = 0;
     maxHP = 0;

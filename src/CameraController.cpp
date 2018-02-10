@@ -307,12 +307,12 @@ void CameraController::CenterCamera(){
 
 	centerCameraMode = false;
 	if (g -> getKeyboard() -> keyPressed(GLFW_KEY_SPACE)) { //ToDo: fachada
-		if(Human::getInstance() -> getUnitManager() -> getSelectedTroop() != NULL) {
-			userPos.x = Human::getInstance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> x;
-			userPos.z = Human::getInstance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> z;
+		if(Human::Instance() -> getUnitManager() -> getSelectedTroop() != NULL) {
+			userPos.x = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> x;
+			userPos.z = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> z;
 		} else {
-			userPos.x = Enumeration::HumanCityHall::human_x;
-			userPos.z = Enumeration::HumanCityHall::human_z;
+			userPos.x = Human::Instance() -> getHallPosition().x;
+			userPos.z = Human::Instance() -> getHallPosition().z;
 		}
 		centerCameraMode = true;
 	}

@@ -11,18 +11,19 @@ class TextBox : public GUIElement {
         TextBox(std::string t);
         TextBox(GUIElement *parent, std::string t);
         virtual ~TextBox();
+
+        void addChild(GUIElement *);
         
         void show();
         void hide();
         bool isVisible();
         
         void setPosition(Vector2<i32> position);
+        void setSize(Vector2<i32> size);
 
         void setTooltip(std::string t);
         void setText(std::string t);
         void setEditable(bool b);
-
-        void setSize(Vector2<i32> size);
         
         nanogui::Widget *getGUIElement();
     private:

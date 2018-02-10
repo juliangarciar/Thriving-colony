@@ -223,7 +223,8 @@ void Building::Init() {
         default: break;
     }
 
-    buildTimer = 0;
+    buildTimer = 0; //ToDo: sin tiempo de construcción
+
     //Establece el color base del edificio
     baseColor = video::SColor(255, r, g, b); //ToDo: reemplazar color por material
 
@@ -255,12 +256,12 @@ void Building::preTaxPlayer() {
     // Tax the human
     if (team == Enumeration::Team::Human) {
         // Tax costs
-        Human::getInstance() -> spendResources(metalCost, crystalCost);
-        Human::getInstance() -> increaseCityLevel(cityLevel);  
+        Human::Instance() -> spendResources(metalCost, crystalCost);
+        Human::Instance() -> increaseCityLevel(cityLevel);  
     } else { // Tax the AI
         // Tax costs
-        IA::getInstance() -> spendResources(metalCost, crystalCost);
-        IA::getInstance() -> increaseCityLevel(cityLevel); //ToDo: deberia ir en el pos?
+        IA::Instance() -> spendResources(metalCost, crystalCost);
+        IA::Instance() -> increaseCityLevel(cityLevel); //ToDo: deberia ir en el pos?
     }
 }
 
@@ -268,12 +269,12 @@ void Building::posTaxPlayer() {
     // Tax the human
     if (team == Enumeration::Team::Human) {
         // Tax costs
-        Human::getInstance() -> increaseHappiness(happiness);
-        Human::getInstance() -> increaseCitizens(citizens);   
+        Human::Instance() -> increaseHappiness(happiness);
+        Human::Instance() -> increaseCitizens(citizens);   
     } else { // Tax the AI
         // Tax costs
-        IA::getInstance() -> increaseHappiness(happiness);
-        IA::getInstance() -> increaseCitizens(citizens);   
+        IA::Instance() -> increaseHappiness(happiness);
+        IA::Instance() -> increaseCitizens(citizens);   
     }
 }
 

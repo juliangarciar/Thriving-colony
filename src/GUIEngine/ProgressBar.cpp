@@ -7,10 +7,19 @@ ProgressBar::ProgressBar() {
 
 ProgressBar::ProgressBar(GUIElement *parent) {
     progressBar = parent -> getGUIElement() -> add<nanogui::ProgressBar>();
+    parent->addChild(this);
 }
 
 ProgressBar::~ProgressBar() {
-    //ToDo: borrar ProgressBar
+    for (int i = 0; i < children.size(); i++){
+        //ToDo: eliminar hijos
+    }
+    //ToDo: eliminar este
+    hide();
+}
+
+void ProgressBar::addChild(GUIElement *elem) {
+    children . push_back(elem);
 }
 
 void ProgressBar::setPosition(Vector2<i32> position){

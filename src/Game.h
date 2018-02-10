@@ -4,8 +4,10 @@
 #include "State.h"
 #include "MenuState.h"
 #include "GameState.h"
-#include "PauseState.h"
+#include "WinState.h"
+#include "DefeatState.h"
 #include "Enumeration.h"
+#include <Types.h>
 
 #include <IOEngine/EventSystem.h>
 #include <IOEngine/Mouse.h>
@@ -16,8 +18,8 @@
 
 #include <SoundEngine/SoundSystem.h>
 // Added by Julian
+#include <PathPlanner/Graph.h>
 #include <WorldGeometry/CellSpacePartition.h>
-#include <Types.h>
 class CellSpacePartition;
 /**
  * @class Game
@@ -117,7 +119,8 @@ class Game {
 
         MenuState *menu;
         GameState *game;
-        PauseState *pause;
+        WinState *win;
+        DefeatState *defeat;
         
         Window *window;
 

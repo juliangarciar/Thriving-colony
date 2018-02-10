@@ -20,11 +20,11 @@ void ResourceNode::question() {
     //std::cout << "Voy a invertir en recursos" << std::endl;
     //First subbranch: Quarry
     //Requirement has a higher priority
-    if (IA::getInstance() -> getTree() -> getRequireCrystal() || (IA::getInstance() -> getTree() -> getShortOnCrystal() && IA::getInstance() -> getCityLevel() >= IA::getInstance() -> getTree() -> getQuarryMilestone())) {
+    if (IA::Instance() -> getTree() -> getRequireCrystal() || (IA::Instance() -> getTree() -> getShortOnCrystal() && IA::Instance() -> getCityLevel() >= IA::Instance() -> getTree() -> getQuarryMilestone())) {
         children[0] -> question();
     } else {
         //Second subbranch: Siderurgy
-        if (IA::getInstance() -> getTree() -> getShortOnMetal()) {            
+        if (IA::Instance() -> getTree() -> getShortOnMetal()) {            
             children[1] -> question();
         }
         

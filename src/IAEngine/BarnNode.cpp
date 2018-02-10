@@ -11,15 +11,15 @@ BarnNode::~BarnNode() {
 }
 
 void BarnNode::question() {
-    IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::BuildBarn);
+    IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildBarn);
     //std::cout << "Construyo un establo" << std::endl;
-    if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Quarry) == 0) {
-        IA::getInstance() -> getTree() -> setRequireCrystal(true);
+    if (IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Quarry) == 0) {
+        IA::Instance() -> getTree() -> setRequireCrystal(true);
     } else {
-        if (IA::getInstance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost)) {
-            IA::getInstance() -> getTree() -> setRequireBarn(false);
-            Vector3<f32> v = IA::getInstance() -> determinatePositionBuilding();
-            IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barn, true);
+        if (IA::Instance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost)) {
+            IA::Instance() -> getTree() -> setRequireBarn(false);
+            Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
+            IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barn, true);
         }
     }
 }

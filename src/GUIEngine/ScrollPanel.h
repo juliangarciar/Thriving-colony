@@ -11,16 +11,17 @@ class ScrollPanel : public GUIElement {
         ScrollPanel();
         ScrollPanel(GUIElement *parent);
         virtual ~ScrollPanel();
+
+        void addChild(GUIElement *);
         
         void show();
         void hide();
         bool isVisible();
         
         void setPosition(Vector2<i32> position);
+        void setSize(Vector2<i32> size);
 
         void setTooltip(std::string t);
-
-        void setSize(Vector2<i32> size);
         
         nanogui::Widget *getGUIElement();
     private:

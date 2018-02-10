@@ -7,11 +7,19 @@ Label::Label(std::string t) {
 
 Label::Label(GUIElement *parent, std::string t) {
     label = parent -> getGUIElement() -> add<nanogui::Label>(t);
+    parent->addChild(this);
 }
 
 Label::~Label() {
-    //ToDo: borrar Label
+    for (int i = 0; i < children.size(); i++){
+        //ToDo: eliminar hijos
+    }
+    //ToDo: eliminar este
     hide();
+}
+
+void Label::addChild(GUIElement *elem) {
+    children . push_back(elem);
 }
 
 void Label::setPosition(Vector2<i32> position){

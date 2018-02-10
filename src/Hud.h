@@ -28,7 +28,6 @@ static TextBox *warningText = 0;
  * @brief Crea un objeto tipo Hud
  */
 class Hud {
-    
     public:
         /**
          * @brief Constructor
@@ -40,6 +39,15 @@ class Hud {
         ~Hud();
 
         /**
+         * @brief Inicializa el HUD
+         */
+        void Init();
+        /**
+         * @brief Actualiza el HUD
+         */
+        void Update();
+
+        /**
          * @brief Activa una pestaña
          * @param Tipo de pestaña
          */
@@ -49,6 +57,7 @@ class Hud {
          * @param Tipo de pestaña
          */
         void disableTab(Enumeration::BuildingType);
+
         /**
          * @brief Despliega y muestra el PopUp
          */
@@ -62,92 +71,102 @@ class Hud {
          * @brief Oculta el PopUp
          */
         void hidePopup();
-        /**
-         * @brief Establece los distintos eventos asociados a cada uno de los botones del HUD 
-         */
-        void setHUDEvents();
 
-        /**
-         * @brief Actualiza el HUD
-         */
-        void update();
         /**
          * @brief Actualiza las posiciones de los elementos del HUD
          */
         void updatePositions();
-        
+
+        /**
+         * @brief 
+         * @param
+         * @param
+         */
+        void addTroopToHall(i32, Enumeration::UnitType);
+        /**
+         * @brief 
+         * @param
+         */
+        void removeTroopFromHall(i32);
+
+        /**
+         * @brief 
+         * @param
+         * @param
+         */
+        void addTroopToQueue(i32, Enumeration::UnitType);
+        /**
+         * @brief
+         * @param
+         * @param
+         */
+        void modifyTroopFromQueue(i32, f32);
+        /**
+         * @brief 
+         * @param
+         */
+        void removeTroopFromQueue(i32);
+
         /**
          * @brief Devuelve cosas
          * @return pop
          */
         bool getPopUpOpen();
-
-        /**
-         * @brief Lanza una alerta de contruccion
-         */
-        static void drawWarning();
-        /**
-         * @brief Borra la alerta lanzada
-         */
-        static void deleteWarning();
     private:
         bool popUpOpen;
     
-        std::vector<Button*> *buttons;
+        std::vector<i32> troopsInHallIDs;
 
+        std::map<i32, Widget*> troopQueueList;
+        std::map<i32, ProgressBar*> troopQueueProgressBars;
+
+        //Buildings panel
         Panel *buildingsPanel;
 
-        Panel *generalPanel;
-        Panel *servicePanel;
-        Panel *militaryPanel;
-        Panel *resourcePanel;
-        Panel *defensePanel;
-
-        Button *buttonBarn;
-        Button *buttonBarrack;
-        Button *buttonHospital;
-        Button *buttonHome;
-        Button *buttonMarket;
-        Button *buttonQuarry;
-        Button *buttonSiderurgy;
-        Button *buttonSchool;
-        Button *buttonTower;
-        Button *buttonWall;
-        Button *buttonWorkshop;
-        Button *buttonExpandTerrain;
         Button *buttonOpenPanel;
+
+        //Popup panel
+        Panel *tabContainer;
         
-        TextBox *backgroundText;
-        Label *resourceText;
-        Label *iaResourceText;
+        TabPanel *tabs;
+        
+        Widget *barrackEmpty;
+        Widget *barrackContent;
+        Widget *barnEmpty;
+        Widget *barnContent;
+        Widget *workshopEmpty;
+        Widget *workshopContent;
+
+        Widget *barrackTroopQueueWidget;
+        Widget *barnTroopQueueWidget;
+        Widget *workshopTroopQueueWidget;
 
         ComboBox *hallTroopList;
-
-        Panel *tabContainer;
-        TabPanel *tabs;
-
-        Tab *mainBuildingTab;
         
-        Tab *barrackTab;
-        Panel *barrackEmpty;
-        Label *barrackEmptyLabel;
-        Panel *barrackContent;
-        ScrollPanel *barrackScroll;
-        Panel *barrackTroopListPanel;
+        //Text
+        Panel *playerResources;
+        Label *playerMetalAmount;
+        Label *playerCrystalAmount;
+        Label *playerCitizens;
+        Label *playerHappiness;
+        Label *playerCityLevel;
+        Label *playerArmySize;
+        Label *playerMelees;
+        Label *playerRangeds;
+        Label *playerSieges;
 
-        Tab *barnTab;
-        Panel *barnEmpty;
-        Label *barnEmptyLabel;
-        Panel *barnContent;
-        ScrollPanel *barnScroll;
-        Panel *barnTroopListPanel;
-
-        Tab *workshopTab;
-        Panel *workshopEmpty;
-        Label *workshopEmptyLabel;
-        Panel *workshopContent;
-        ScrollPanel *workshopScroll;
-        Panel *workshopTroopListPanel;
+        Panel *iaResources;
+        Label *iaMetalAmount;
+        Label *iaCrystalAmount;
+        Label *iaCitizens;
+        Label *iaHappiness;
+        Label *iaCityLevel;
+        Label *iaArmySize;
+        Label *iaMelees;
+        Label *iaRangeds;
+        Label *iaSieges;
+        Label *iaNextChoice;
+        Label *iaBehaviour;
 
         f32 updateTimer;
         f32 deleteTextTimer;

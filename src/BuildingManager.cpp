@@ -39,14 +39,16 @@ void BuildingManager::testRaycastCollisions() {
 	}
 }
 
-void BuildingManager::setBuildingMode(Enumeration::BuildingType type) {
+bool BuildingManager::setBuildingMode(Enumeration::BuildingType type) {
 	if (checkCanPay(type)) {
 		if (!buildingMode) {
 			buildingMode = true;
 			setTempBuildingModel(Vector3<f32>(0, 0, 0), type);
 			recalculateHitbox(); //ToDo: quizas algo guarro pero menos que lo otro
+			return true;
 		}
 	}
+	return false;
 }
 
 void BuildingManager::drawBuilding() {
@@ -137,7 +139,7 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 			}
             // Increase stuff when the human ends the building, but do so for the AI
             // when it places the building. is it fair? i dunno
-			Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);    
+			//Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);    
 		}
 	});
 
@@ -212,11 +214,11 @@ bool BuildingManager::isSolvent(i32 metalCost, i32 crystalCost) {
 	i32 metalAmt = 0;
 	i32 crystalAmt = 0;
 	if (team == Enumeration::Team::Human) {
-		metalAmt = Human::getInstance() -> getMetalAmount();
-		crystalAmt = Human::getInstance() -> getCrystalAmount();
+		metalAmt = Human::Instance() -> getMetalAmount();
+		crystalAmt = Human::Instance() -> getCrystalAmount();
 	} else {
-		metalAmt = IA::getInstance() -> getMetalAmount();
-		crystalAmt = IA::getInstance() -> getCrystalAmount();
+		metalAmt = IA::Instance() -> getMetalAmount();
+		crystalAmt = IA::Instance() -> getCrystalAmount();
 	}
 	bool canPayMetal = metalAmt >= metalCost;
 	bool canPayCrystal = crystalAmt >= crystalCost;
@@ -317,9 +319,9 @@ SceneNode* BuildingManager::getBuildingLayer() {
 
 void BuildingManager::deleteBuilding(i32 id) {
 	if (buildings -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
-		Human::getInstance() -> decreaseHappiness(buildings -> find(id) -> second -> getHappiness());
+		Human::Instance() -> decreaseHappiness(buildings -> find(id) -> second -> getHappiness());
 	} else {
-		IA::getInstance() -> decreaseHappiness(buildings -> find(id) -> second -> getHappiness());
+		IA::Instance() -> decreaseHappiness(buildings -> find(id) -> second -> getHappiness());
 	}
 	buildingAmounts[(i32)buildings -> find(id) -> second -> getType()]--;
 	delete buildings -> find(id) -> second;

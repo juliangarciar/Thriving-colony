@@ -17,16 +17,16 @@ MountedMeleeNode::~MountedMeleeNode() {
 }
 
 void MountedMeleeNode::question() {
-    IA::getInstance() -> setChoiceIndex(Enumeration::IAChoices::TrainMountedMelee);
-    if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barn) > 0) {
+    IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::TrainMountedMelee);
+    if (IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barn) > 0) {
     //std::cout << "Genero un soldado montado melee" << std::endl;
-        if (IA::getInstance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MountedMeleeMetalCost, Enumeration::UnitCost::MountedMeleeCrystalCost)) {
+        if (IA::Instance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MountedMeleeMetalCost, Enumeration::UnitCost::MountedMeleeCrystalCost)) {
             // Unit type
             Enumeration::UnitType unitData = Enumeration::UnitType::AdvancedM; 
-            IA::getInstance() -> getUnitManager() -> createTroop(unitData);
+            IA::Instance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {
-        IA::getInstance() -> getTree() -> setRequireBarn(true);
+        IA::Instance() -> getTree() -> setRequireBarn(true);
         //children[0] -> question();
     }
 }

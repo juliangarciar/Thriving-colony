@@ -2,19 +2,17 @@
 #include "Game.h"
 #include "IA.h"
 
+Human* Human::instance = 0;
+
+Human* Human::Instance() {
+    if (instance == 0) {
+        instance = new Human();
+    }
+    return instance;
+}
+
 Human::Human() : Player() {
-    init();
-}
-
-void Human::init() {
-
-    buildings = new BuildingManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
-    units = new UnitManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
-}
-
-void Human::cleanUp() {
-    delete buildings;
-    delete units;
+    
 }
 
 Human::~Human() {
@@ -22,59 +20,26 @@ Human::~Human() {
     delete units;
 }
 
-Human* Human::instance = 0;
-
-bool Human::deployedTroops = false;
-bool Human::closedDoors = false;
-
-Human* Human::getInstance() {
-    if (instance == 0) {
-        instance = new Human();
-    }
-    return instance;
+void Human::Init() {
+    Player::Init();
+    buildings = new BuildingManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
+    units = new UnitManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
 }
 
-void Human::update() {
+void Human::Update() {
     buildings -> updateBuildingManager();
     units -> updateUnitManager();
     if (updateTimer <= 0.0) {
         gainResources();
-        if (units -> getInMapTroops() -> empty()) {
-            deployedTroops = false;
-        }
-        if (units -> getInHallTroops() -> empty()) {
-            deployedTroops = true;
-        }
         updateTimer = 1.0;
     } else {
        updateTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
     }
 }
 
-void Human::deployTroops() {
-    Vector3<f32> v = *(Human::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
-    v.x = v.x + 100;
-    v.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(v.x, v.z);
-    Human::getInstance() -> getUnitManager() -> deployAllTroops(v);
-    deployedTroops = true;
-}
-
-void Human::closeDoors() {
-    // ToDo: hacer de verdad
-    closedDoors = true;
-}
-
-void Human::openDoors() {
-    // ToDo: hacer de verdad
-    closedDoors = false;
-}
-
-/*
-* Troops come back to their building (barn, barrack or workshop)
-*/
-void Human::retractTroops() {
-    Vector3<f32> v = *(Human::getInstance() -> getBuildingManager() -> getBuildings() -> begin() -> second -> getPosition());
-    Human::getInstance() -> getUnitManager() -> retractAllTroops(v);
+void Human::CleanUp() {
+    delete buildings;
+    delete units;
 }
 
 bool Human::getUnderAttack() {
@@ -86,7 +51,7 @@ bool Human::getUnderAttack() {
         f32 yaux = 0;
         f32 dist = 0;
         // Get units in the map of the opposing team
-        std::map<i32, Unit*> *inMapTroops = IA::getInstance() -> getUnitManager() -> getInMapTroops();
+        std::map<i32, Unit*> *inMapTroops = IA::Instance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map
         for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
             if (it  -> second != NULL) {
@@ -104,14 +69,6 @@ bool Human::getUnderAttack() {
     return underAttack;
 }
 
-// Return wether or not our troops are deployed
-bool Human::getDeployedTroops() {
-    return deployedTroops;
-}
-
-bool Human::getClosedDoors() {
-    return closedDoors;
-}
 /*
 void Human::receiveMetal() {
     metalAmount = metalAmount + 200;

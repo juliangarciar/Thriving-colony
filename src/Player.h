@@ -15,7 +15,9 @@ class Player {
         Player();
         virtual ~Player();
 
-        virtual void update() = 0;
+        void Init();
+        virtual void Update() = 0;
+        virtual void CleanUp() = 0;
 
         // Control methods
         void gainResources();
@@ -27,6 +29,10 @@ class Player {
         void increaseArmySize();
         void increaseBuildableRange();
         bool losingBattle(); //ToDo: battle manager mejor no?
+        void decreaseBuildings(Enumeration::BuildingType);
+
+        // Setters
+        void setHallPosition(Vector3<f32>);
 
         // Getters
         i32 getHappiness();
@@ -39,14 +45,12 @@ class Player {
         i32 getCrystalProduction();
         BuildingManager* getBuildingManager();
         UnitManager* getUnitManager();
+        Vector3<f32> getHallPosition();
 
         // Tricks
         void receiveMetal();
         void receiveCrystal();
         void receiveCitizens();
-
-        void decreaseBuildings(Enumeration::BuildingType);
-
     protected:
         // Resources
         i32 happiness;

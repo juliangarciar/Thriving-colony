@@ -10,12 +10,15 @@ Tab::~Tab(){
 }
 
 void Tab::addChild(GUIElement *elem) {
-    elem -> getGUIElement() -> setParent(tab);
-    tab -> addChild(elem -> getGUIElement());
+    children . push_back(elem);
 }
 
 void Tab::setPosition(Vector2<i32> position){
     tab -> setPosition(Eigen::Vector2i(position.x, position.y));
+}
+
+void Tab::setSize(Vector2<i32> size){
+    tab -> setSize(Eigen::Vector2i(size.x, size.y));
 }
 
 void Tab::setTooltip(std::string text){

@@ -62,8 +62,9 @@ class Unit : public Entity {
         std::string getMoveEvent();
         std::string getSelectEvent();
 
-        Vector3<f32>* getDestination();
+        Vector3<f32> getDestination();
         std::list< Vector2<f32> > getPath();
+        Enumeration::UnitType getType();
     private:
     //Init
         /**
@@ -75,7 +76,7 @@ class Unit : public Entity {
         Enumeration::UnitState state;
 
     // Unit type
-        Enumeration::UnitType unitType;
+        Enumeration::UnitType type;
 
     // Unit stats
         i32 moveSpeed;
@@ -105,10 +106,10 @@ class Unit : public Entity {
         std::function<void(Unit*)> retractedCallback;
 
     // Vector position is in the father
-        Vector3 <f32> *vectorPos;
-        Vector3 <f32> *vectorDes;
-        Vector3 <f32> *vectorMov;
-        float steps;
+        Vector3 <f32> vectorPos;
+        Vector3 <f32> vectorDes;
+        Vector3 <f32> vectorMov;
+        f32 steps;
 
     // Algo
         bool readyToEnter;

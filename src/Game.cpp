@@ -1,7 +1,4 @@
 #include "Game.h"
-//#include "Human.h"
-//#include "IA.h"
-#include <PathPlanner/Graph.h>
 
 Game* Game::pinstance = 0;
 
@@ -17,9 +14,11 @@ Game::Game() {
 
     menu = new MenuState();
     game = new GameState();
-    pause = new PauseState();
+    //pause = new PauseState();
+    win = new WinState();
+    defeat = new DefeatState();
 
-    state = game;
+    state = menu;
     stateData = Enumeration::State::GameState;
 
     cursor = new Mouse();
@@ -38,7 +37,7 @@ Game::Game() {
 Game::~Game() {
     delete menu;
     delete game;
-    delete pause;
+    //delete pause;
     delete cursor;
     delete events;
     delete soundSystem;
@@ -48,20 +47,24 @@ Game::~Game() {
 void Game::Init() {
     //Initialize the event system
     //IA Events
-    events -> addEvent(Enumeration::EventType::DeployTroopsIA, IA::deployTroops);
-    events -> addEvent(Enumeration::EventType::RetractTroopsIA, IA::retractTroops);
-    events -> addEvent(Enumeration::EventType::OpenDoorsIA, IA::openDoors);
-    events -> addEvent(Enumeration::EventType::CloseDoorsIA, IA::closeDoors);
+    events -> addEvent(Enumeration::EventType::RetractTroopsIA, []() {
+        IA::Instance()->getUnitManager()->retractAllTroops();
+    });
+    /*events -> addEvent(Enumeration::EventType::DeployAllTroopsIA, []() {
+        IA::Instance()->getUnitManager()->deployAllTroops();
+    });*/
 
     //Human events
-    events -> addEvent(Enumeration::EventType::DeployTroopsHuman, Human::deployTroops);
-    events -> addEvent(Enumeration::EventType::RetractTroopsHuman, Human::retractTroops);
-    events -> addEvent(Enumeration::EventType::OpenDoorsHuman, Human::openDoors);
-    events -> addEvent(Enumeration::EventType::CloseDoorsHuman, Human::closeDoors);
+    events -> addEvent(Enumeration::EventType::RetractTroopsHuman, []() {
+        Human::Instance()->getUnitManager()->retractAllTroops();
+    });
+    /*events -> addEvent(Enumeration::EventType::DeployAllTroopsHuman, []() {
+        Human::Instance()->getUnitManager()->deployAllTroops();
+    });*/
 
     //Hud events
-    events -> addEvent(Enumeration::EventType::EnableText, Hud::drawWarning);
-    events -> addEvent(Enumeration::EventType::DisableText, Hud::deleteWarning);
+    //events -> addEvent(Enumeration::EventType::EnableText, Hud::drawWarning);
+    //events -> addEvent(Enumeration::EventType::DisableText, Hud::deleteWarning);
 
     state -> Init();
 }
@@ -98,10 +101,14 @@ void Game::changeState(Enumeration::State data) {
             state = game;
             state -> Init();
         break;
-        case Enumeration::State::PauseState:
-            //ToDo: de momento lo dejo asi para que pueda ser un estado pero el menu es parte del gamestate
-            //state -> CleanUp();
-            state = pause;
+        case Enumeration::State::WinState:
+            state -> CleanUp();
+            state = win;
+            state -> Init();
+        break;
+        case Enumeration::State::DefeatState:
+            state -> CleanUp();
+            state = defeat;
             state -> Init();
         break;
     }

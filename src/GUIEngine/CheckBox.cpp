@@ -7,11 +7,19 @@ CheckBox::CheckBox(std::string text) {
 
 CheckBox::CheckBox(GUIElement *parent, std::string text) {
     checkbox = parent -> getGUIElement() -> add<nanogui::CheckBox>(text);
+    parent->addChild(this);
 }
 
 CheckBox::~CheckBox() {
-    delete checkbox;
-    checkbox = NULL;
+    for (int i = 0; i < children.size(); i++){
+        //ToDo: eliminar hijos
+    }
+    //ToDo: eliminar este
+    hide();
+}
+
+void CheckBox::addChild(GUIElement *elem) {
+    children . push_back(elem);
 }
 
 void CheckBox::show(){
@@ -28,6 +36,10 @@ bool CheckBox::isVisible(){
 
 void CheckBox::setPosition(Vector2<i32> position){
     checkbox -> setPosition(Eigen::Vector2i(position.x, position.y));
+}
+
+void CheckBox::setSize(Vector2<i32> size){
+    checkbox -> setSize(Eigen::Vector2i(size.x, size.y));
 }
 
 void CheckBox::setTooltip(std::string text){

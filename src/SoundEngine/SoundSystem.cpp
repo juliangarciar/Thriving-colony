@@ -279,6 +279,6 @@ void SoundEvent::newSoundEvent(FMOD_STUDIO_EVENTINSTANCE *EventInstance) {
     soundInstance = EventInstance;
 }
 
-FMOD_STUDIO_EVENTINSTANCE* SoundEvent::getInstance() {
+FMOD_STUDIO_EVENTINSTANCE* SoundEvent::Instance() {
     return soundInstance;
 }

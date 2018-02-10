@@ -13,16 +13,17 @@ class Label : public GUIElement {
         Label(GUIElement *parent, std::string t);
         virtual ~Label();
 
+        void addChild(GUIElement *);
+
         void show();
         void hide();
         bool isVisible();
         
         void setPosition(Vector2<i32> position);
+        void setSize(Vector2<i32> size);
 
         void setTooltip(std::string t);
         void setLabel(std::string t);
-
-        void setSize(Vector2<i32> size);
         
         nanogui::Widget *getGUIElement();
     private:

@@ -13,12 +13,19 @@ class Widget : public GUIElement {
         Widget(GUIElement *parent);
         virtual ~Widget();
 
+        void addChild(GUIElement *);
+
         void show();
         void hide();
         bool isVisible();
         
         void setPosition(Vector2<i32> position);
+        void setSize(Vector2<i32> size);
+        
         void setTooltip(std::string text);
+        
+        void setVerticalLayout();
+        void setGroupLayout();
         
         nanogui::Widget *getGUIElement();
     private:

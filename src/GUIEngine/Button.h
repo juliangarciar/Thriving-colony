@@ -13,6 +13,8 @@ class Button : public GUIElement{
         Button(GUIElement *parent, std::string buttonText);
         virtual ~Button();
 
+        void addChild(GUIElement *);
+
         void show();
         void hide();
         bool isVisible();

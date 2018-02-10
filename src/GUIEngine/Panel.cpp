@@ -10,27 +10,20 @@ Panel::Panel(std::string t) {
 
 Panel::Panel(GUIElement *parent, std::string title) {
     panel = new nanogui::Window(parent -> getGUIElement(), title);
+    parent->addChild(this);
     panel -> setLayout(new nanogui::BoxLayout(nanogui::Orientation::Horizontal, nanogui::Alignment::Middle, 0, 6));
 }
 
 Panel::~Panel() {
+    for (int i = 0; i < children.size(); i++){
+        //ToDo: eliminar hijos
+    }
+    //ToDo: eliminar este
     hide();
 }
 
-void Panel::addChild(GUIElement *child){
-    panel -> addChild(child -> getGUIElement());
-}
-
-void Panel::setPosition(Vector2<i32> position){
-    panel -> setPosition(Eigen::Vector2i(position.x, position.y));
-}
-
-void Panel::setTooltip(std::string text){
-    panel->setTooltip(text);
-}
-
-void Panel::setTitle(std::string t) {
-    panel -> setTitle(t);
+void Panel::addChild(GUIElement *elem) {
+    children . push_back(elem);
 }
 
 void Panel::show(){
@@ -49,20 +42,32 @@ void Panel::center(){
     panel -> center();
 }
 
-void Panel::setVerticalAlignment() {
-   panel -> setLayout(new nanogui::BoxLayout(nanogui::Orientation::Vertical, nanogui::Alignment::Middle, 0, 6));
+void Panel::refreshLayout(){
+    Window::Instance()->getGUIEnvironment()->performLayout();
 }
 
-void Panel::setSize(Vector2<i32> size) {
-    panel -> setFixedSize(Eigen::Vector2i(size.x, size.y));
+void Panel::setPosition(Vector2<i32> position){
+    panel -> setPosition(Eigen::Vector2i(position.x, position.y));
+}
+
+void Panel::setTooltip(std::string text){
+    panel->setTooltip(text);
+}
+
+void Panel::setTitle(std::string t) {
+    panel -> setTitle(t);
+}
+
+void Panel::setVerticalLayout() {
+   panel -> setLayout(new nanogui::BoxLayout(nanogui::Orientation::Vertical, nanogui::Alignment::Middle, 0, 6));
 }
 
 void Panel::setGroupLayout() {
     panel -> setLayout(new nanogui::GroupLayout());
 }
 
-void Panel::refreshLayout(){
-    Window::Instance()->getGUIEnvironment()->performLayout();
+void Panel::setSize(Vector2<i32> size) {
+    panel -> setFixedSize(Eigen::Vector2i(size.x, size.y));
 }
 
 nanogui::Widget *Panel::getGUIElement(){

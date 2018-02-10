@@ -22,19 +22,19 @@ BuildingNode::~BuildingNode() {
 }
 
 void BuildingNode::question() {
-    if (IA::getInstance() -> getTree() -> getNeedBarracks()) {
+    if (IA::Instance() -> getTree() -> getNeedBarracks()) {
         children[0] -> question();
     } else {
-        if (IA::getInstance() -> getTree() -> getNeedBarn()) {
+        if (IA::Instance() -> getTree() -> getNeedBarn()) {
             children[1] -> question();
         } else {
-            if (IA::getInstance() -> getTree() -> getNeedWorkshop()) {
+            if (IA::Instance() -> getTree() -> getNeedWorkshop()) {
                 children[2] -> question();
             } else {
-                if (IA::getInstance() -> getTree() -> getNeedWall()) {
+                if (IA::Instance() -> getTree() -> getNeedWall()) {
                     children[3] -> question();
                 } else {
-                    if (IA::getInstance() -> getTree() -> getNeedTower()) {
+                    if (IA::Instance() -> getTree() -> getNeedTower()) {
                         children[4] -> question();
                     }
                 }
