@@ -96,7 +96,7 @@ class Enumeration {
             MarketCrystalCost = 0,
 
             HospitalMetalCost = 800,
-            HospitalCrystalCost = 300,
+            HospitalCrystalCost = 0,
 
             SiderurgyMetalCost = 500,
             SiderurgyCrystalCost = 0,
@@ -122,7 +122,32 @@ class Enumeration {
             TowerMetalCost = 300,
             TowerCrystalCost = 0,
         };
+        enum BuildingCells{
+            MainCells = 3,
 
+            SchoolCells = 2,
+
+            MarketCells = 2,
+
+            HospitalCells = 3,
+
+            SiderurgyCells = 3,
+
+            QuarryCells = 3,
+
+            HomeCells = 1,
+
+            BarrackCells = 2,
+
+            BarnCells = 2,
+
+            WorkshopCells = 2,
+
+            WallCells = 1,
+
+            TowerCells = 1
+
+        };
         enum UnitCost {
             MeleeFootmenMetalCost = 125,
             MeleeFootmenCrystalCost = 0,

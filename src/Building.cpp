@@ -36,6 +36,7 @@ void Building::Init() {
 
             metalCost = Enumeration::BuildingCost::BarnMetalCost;
             crystalCost = Enumeration::BuildingCost::BarnCrystalCost;
+            kCells = Enumeration::BuildingCells::BarnCells;
         break;
         case Enumeration::BuildingType::Barrack:
             // Different color for diferent buildings
@@ -52,6 +53,7 @@ void Building::Init() {
 
             metalCost = Enumeration::BuildingCost::BarrackMetalCost;
             crystalCost = Enumeration::BuildingCost::BarrackCrystalCost;
+            kCells = Enumeration::BuildingCells::BarrackCells;
         break;
         case Enumeration::BuildingType::Hospital:
             // Different color for diferent buildings
@@ -68,6 +70,7 @@ void Building::Init() {
 
             metalCost = Enumeration::BuildingCost::HospitalMetalCost;
             crystalCost = Enumeration::BuildingCost::HospitalCrystalCost;
+            kCells = Enumeration::BuildingCells::HospitalCells;
         break;
         case Enumeration::BuildingType::House:
             // Different color for diferent buildings
@@ -85,6 +88,7 @@ void Building::Init() {
             
             metalCost = Enumeration::BuildingCost::HomeMetalCost;
             crystalCost = Enumeration::BuildingCost::HomeCrystalCost;
+            kCells = Enumeration::BuildingCells::HomeCells;
         break;
         case Enumeration::BuildingType::MainBuilding:
             // Different color for diferent buildings
@@ -94,6 +98,7 @@ void Building::Init() {
  
             maxHP = 3000;
             currentHP = 3000;
+            kCells = Enumeration::BuildingCells::MainCells;
         break;
         case Enumeration::BuildingType::Market:
             // Different color for diferent buildings
@@ -110,6 +115,7 @@ void Building::Init() {
 
             metalCost = Enumeration::BuildingCost::MarketMetalCost;
             crystalCost = Enumeration::BuildingCost::MarketCrystalCost;
+            kCells = Enumeration::BuildingCells::MarketCells;
         break;
         case Enumeration::BuildingType::Quarry:
             // Different color for diferent buildings
@@ -126,6 +132,7 @@ void Building::Init() {
             
             metalCost = Enumeration::BuildingCost::QuarryMetalCost;
             crystalCost = Enumeration::BuildingCost::QuarryCrystalCost;
+            kCells = Enumeration::BuildingCells::QuarryCells;
         break;
         case Enumeration::BuildingType::Siderurgy:
             // Different color for diferent buildings
@@ -142,6 +149,7 @@ void Building::Init() {
             
             metalCost = Enumeration::BuildingCost::SiderurgyMetalCost;
             crystalCost = Enumeration::BuildingCost::SiderurgyCrystalCost;
+            kCells = Enumeration::BuildingCells::SiderurgyCells;
         break;
         case Enumeration::BuildingType::School:
             // Different color for diferent buildings
@@ -159,6 +167,7 @@ void Building::Init() {
 
             metalCost = Enumeration::BuildingCost::SchoolMetalCost;
             crystalCost = Enumeration::BuildingCost::SchoolCrystalCost;
+            kCells = Enumeration::BuildingCells::SchoolCells;
         break;
         case Enumeration::BuildingType::Tower:
             // Different color for diferent buildings
@@ -175,6 +184,7 @@ void Building::Init() {
 
             metalCost = Enumeration::BuildingCost::TowerMetalCost;
             crystalCost = Enumeration::BuildingCost::TowerCrystalCost;
+            kCells = Enumeration::BuildingCells::TowerCells;
         break;
         case Enumeration::BuildingType::Wall:
             // Different color for diferent buildings
@@ -191,6 +201,7 @@ void Building::Init() {
 
             metalCost = Enumeration::BuildingCost::WallMetalCost;
             crystalCost = Enumeration::BuildingCost::WallCrystalCost;
+            kCells = Enumeration::BuildingCells::WallCells;
         break;
         case Enumeration::BuildingType::Workshop:
             // Different color for diferent buildings
@@ -207,6 +218,7 @@ void Building::Init() {
             
             metalCost = Enumeration::BuildingCost::WorkshopMetalCost;
             crystalCost = Enumeration::BuildingCost::WorkshopCrystalCost;
+            kCells = Enumeration::BuildingCells::WorkshopCells;
         break;
         default: break;
     }

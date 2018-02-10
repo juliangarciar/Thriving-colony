@@ -51,13 +51,16 @@ class CellSpacePartition{
     // Destructor
         ~CellSpacePartition();
     // Add entities to the proper cell
-        inline void addEntity(Entity* ent);
+        void addEntity(Entity* ent);
     // Updates a entity's cell, calling this from the entity update method
-        inline void updateEntity(Entity* ent, Vector2<f32> oldPos);
+        void updateEntity(Entity* ent, Vector2<f32> oldPos);
     // Calculate neighbors and add them in the neighbor vector
-        inline void calculateNeighbors(Vector2<f32> targetPos, f32 radious);
+        void calculateNeighbors(Vector2<f32> targetPos, f32 radious);
     // Returns the correct position where the building is built
-        Vector3<f32> correctPosition(Vector3<f32> targetPos, i32 buildingSpace);
+        Vector3<f32> correctPosition(Vector3<f32> targetPos, Entity *object, bool &collision);
+    // Returns if the given hitbox collides with a blocked cell
+        void updateCell(Entity *object);
+        //bool checkBuildingCollision();
     // Checks if the cell is blocked
         bool isBlocked(Vector3<f32> targetPos);
     // Returns a reference to the entity of the neighbor vector

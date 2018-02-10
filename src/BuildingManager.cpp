@@ -64,9 +64,10 @@ void BuildingManager::drawBuilding() {
         //f32 y = (roundf(xyzPointCollision.y / gridAlignment) * gridAlignment) + (f.y/2);
         //f32 z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
 	// Change 2nd parameter
-		Vector3<f32> dummy = CellSpacePartition::Instance() -> correctPosition(xyzPointCollision, 1);
-		std::cout << "Position: " << dummy.x << "," << dummy.y << "," << dummy.z << "\n";
-		dummy.y = g -> getGameState() -> getTerrain() -> getY(dummy.x, dummy.z) + + (f.y/2);
+		bool collision = false;
+		Vector3<f32> dummy = CellSpacePartition::Instance() -> correctPosition(xyzPointCollision, tempBuilding, collision);
+		//std::cout << "Position: " << dummy.x << "," << dummy.y << "," << dummy.z << "\n";
+		dummy.y = g -> getGameState() -> getTerrain() -> getY(dummy.x, dummy.z);
 		tempBuilding -> setPosition (dummy);
 
 		//Pressing the right mouse button cancels the building
@@ -78,11 +79,12 @@ void BuildingManager::drawBuilding() {
 		}
 
 		//Look if there is any other building built there
-		bool collision = false;
+		
 		// Make a collision mode with 
 		//for (std::map<i32,Building*>::iterator it = buildings -> begin(); it != buildings -> end() && !collision; ++it) {
 		//	collision = it -> second -> getHitbox() -> intersects(*tempBuilding -> getHitbox());
 		//}
+
 		if (collision) {
 			tempBuilding->setColor(video::SColor(255,0,0,255)); //ToDo: reemplazar color por material
 		} else {
@@ -91,6 +93,7 @@ void BuildingManager::drawBuilding() {
 			if (g -> getMouse() -> leftMouseDown()) {
 				buildingMode = false;
 				buildBuilding(dummy, tempBuilding -> getType());
+				
 			}
 		}
     }
@@ -139,12 +142,13 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 	});
 
 	buildings -> insert(std::pair<i32,Building*>(nextBuildingId, tempBuilding));
-
+	
 	// Tax the player when placing the building
 	tempBuilding -> preTaxPlayer();
 
 	if (instabuild) tempBuilding -> triggerFinishedCallback();    
-
+	// Added by Julian
+	CellSpacePartition::Instance() -> updateCell(tempBuilding);
 	tempBuilding = NULL;
 	nextBuildingId++;
 }
@@ -161,15 +165,15 @@ void BuildingManager::setTempBuildingModel(Vector3<f32> pos, Enumeration::Buildi
 		break;
 		case Enumeration::BuildingType::Hospital:
 			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/hospital.obj", team, breed, _type, pos);
-			tempBuilding -> getModel() -> setScale(Vector3<f32>(25,25,25));
+			tempBuilding -> getModel() -> setScale(Vector3<f32>(64,64,64));
 		break;
 		case Enumeration::BuildingType::House:
-			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/vivienda.obj", team, breed, _type, pos);
-			tempBuilding -> getModel() -> setScale(Vector3<f32>(25,25,25));
+			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/house.obj", team, breed, _type, pos);
+			tempBuilding -> getModel() -> setScale(Vector3<f32>(64,64,64));
 		break;
 		case Enumeration::BuildingType::MainBuilding:
-			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/centro_de_mando.obj", team, breed, _type, pos);
-			tempBuilding -> getModel() -> setScale(Vector3<f32>(25,25,25));
+			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/command_center.obj", team, breed, _type, pos);
+			tempBuilding -> getModel() -> setScale(Vector3<f32>(48,48,48));
 		break;
 		case Enumeration::BuildingType::Market:
 			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/mercado.obj", team, breed, _type, pos);

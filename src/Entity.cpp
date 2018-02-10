@@ -126,3 +126,6 @@ irr::video::SColor Entity::getBaseColor() {
 irr::video::SColor Entity::getCurrentColor() {
     return currentColor; //ToDo: reemplazar color por material
 }
+i32 Entity::getCells(){
+    return kCells;
+}

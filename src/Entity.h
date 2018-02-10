@@ -121,7 +121,8 @@ class Entity {
          * @return devuelve el color de tipo irr::video::SColor
          */
         irr::video::SColor getCurrentColor(); //ToDo: cambiar por material
-        
+        // Added by Julian
+        i32 getCells();
     protected:
         Model* model;
         Vector3<f32> *position;
@@ -151,6 +152,9 @@ class Entity {
         i32 citizens;
         // For IA and info
         i32 cityLevel;
+
+        // Added by Julian
+        i32 kCells;
       private:
 };
 

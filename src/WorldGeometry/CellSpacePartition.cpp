@@ -108,20 +108,69 @@ void CellSpacePartition::updateEntity(Entity* ent, Vector2<f32> OldPos)
     mCells[NewIdx].entities.push_back(ent);
 }
 
-Vector3<f32> CellSpacePartition::correctPosition(Vector3<f32> targetPos, i32 buildingSpace){
+Vector3<f32> CellSpacePartition::correctPosition(Vector3<f32> targetPos, Entity *object, bool &collision){
     Cell dummy = mCells.at(positionToIndex(targetPos.toVector2()));
     Vector3<f32> correctOne;
-    if(buildingSpace % 2 == 0){
+    if(object -> getCells() % 2 == 0){
         Vector2<f32> storage = dummy.BBox.TopLeft();
         correctOne.x = storage.x;
         correctOne.z = storage.y;
+        storage.x -= cellSizeX / 2;
+        storage.y -= cellSizeY / 2;
+        storage.x -= (object -> getCells() / 2) * (cellSizeX / 2);
+        storage.y -= (object -> getCells() / 2) * (cellSizeY / 2);
+        for(i32 i = 0; i < object -> getCells() && collision == false; i++){
+            for(i32 j = 0; j < object->getCells() && collision == false; j++){
+                if(!mCells.at(positionToIndex(Vector2<f32>(storage.x + cellSizeX * i, storage.y + cellSizeY * j))).entities.empty()){
+                    collision = true;
+                    std::cout << "Colision \n";
+                }
+                    
+            }
+        }
     }
     else{
         Vector2<f32> storage = dummy.BBox.Center();
         correctOne.x = storage.x;
         correctOne.z = storage.y;
+        storage.x -= (object -> getCells() - 1) * (cellSizeX / 2);
+        storage.y -= (object -> getCells() - 1) * (cellSizeY / 2);
+        for(i32 i = 0; i < object -> getCells() && collision == false; i++){
+            for(i32 j = 0; j < object->getCells() && collision == false; j++){
+                if(!mCells.at(positionToIndex(Vector2<f32>(storage.x + cellSizeX * i, storage.y + cellSizeY * j))).entities.empty()){
+                    collision = true;
+                    std::cout << "Colision \n";
+                }
+                    
+            }
+        }
     }
     return correctOne;
+}
+void CellSpacePartition::updateCell(Entity *object){
+    Vector2<f32> storage = object -> getPosition() -> toVector2();
+    if(object -> getCells() % 2 == 0){
+        storage.x -= cellSizeX / 2;
+        storage.y -= cellSizeY / 2;
+        storage.x -= (object -> getCells() / 2) * (cellSizeX / 2);
+        storage.y -= (object -> getCells() / 2) * (cellSizeY / 2);
+        for(i32 i = 0; i < object -> getCells(); i++){
+            for(i32 j = 0; j < object->getCells(); j++){
+                mCells.at(positionToIndex(Vector2<f32>(storage.x + cellSizeX * i, storage.y + cellSizeY * j))).entities.push_back(object);
+                std::cout << "Colision creada en: " << i << "," << j << "\n";
+            }
+        }
+    }
+    else{
+        storage.x -= (object -> getCells() - 1) * (cellSizeX / 2);
+        storage.y -= (object -> getCells() - 1) * (cellSizeY / 2);
+        for(i32 i = 0; i < object -> getCells(); i++){
+            for(i32 j = 0; j < object->getCells(); j++){
+                mCells.at(positionToIndex(Vector2<f32>(storage.x + cellSizeX * i, storage.y + cellSizeY * j))).entities.push_back(object);
+                std::cout << "Colision creada en: " << i << "," << j << "\n";
+            }
+        }
+    }
 }
 bool CellSpacePartition::isBlocked(Vector3<f32> targetPos){
     Cell dummy = mCells.at(positionToIndex(targetPos.toVector2()));
