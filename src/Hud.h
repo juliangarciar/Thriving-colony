@@ -28,7 +28,6 @@ static TextBox *warningText = 0;
  * @brief Crea un objeto tipo Hud
  */
 class Hud {
-    
     public:
         /**
          * @brief Constructor
@@ -38,6 +37,15 @@ class Hud {
          * @brief Destructor
          */
         ~Hud();
+
+        /**
+         * @brief Inicializa el HUD
+         */
+        void Init();
+        /**
+         * @brief Actualiza el HUD
+         */
+        void Update();
 
         /**
          * @brief Activa una pestaña
@@ -65,10 +73,6 @@ class Hud {
         void hidePopup();
 
         /**
-         * @brief Actualiza el HUD
-         */
-        void update();
-        /**
          * @brief Actualiza las posiciones de los elementos del HUD
          */
         void updatePositions();
@@ -84,17 +88,27 @@ class Hud {
 
         /**
          * @brief 
+         * @param
+         * @param
          */
-        void addTroopOption(i32, Enumeration::UnitType);
+        void addTroopToHall(i32, Enumeration::UnitType);
         /**
          * @brief 
+         * @param
          */
-        void deleteTroopOption(i32);
+        void removeTroopFromHall(i32);
 
         /**
-         * @brief Establece los distintos eventos asociados a cada uno de los botones del HUD 
+         * @brief 
+         * @param
+         * @param
          */
-        void setHUDEvents();
+        void addTroopToQueue(i32, Enumeration::UnitType);
+        /**
+         * @brief 
+         * @param
+         */
+        void removeTroopFromQueue(i32);
 
         /**
          * @brief Devuelve cosas
@@ -104,62 +118,33 @@ class Hud {
     private:
         bool popUpOpen;
     
-        std::vector<Button*> buttons;
-        std::vector<i32> troopIDs;
+        std::vector<i32> troopsInHallIDs;
+
+        std::map<i32, Panel*> troopQueueList;
+        
+        TabPanel *tabs;
 
         Panel *buildingsPanel;
-
-        Panel *generalPanel;
-        Panel *servicePanel;
-        Panel *militaryPanel;
-        Panel *resourcePanel;
-        Panel *defensePanel;
-
-        Button *buttonBarn;
-        Button *buttonBarrack;
-        Button *buttonHospital;
-        Button *buttonHome;
-        Button *buttonMarket;
-        Button *buttonQuarry;
-        Button *buttonSiderurgy;
-        Button *buttonSchool;
-        Button *buttonTower;
-        Button *buttonWall;
-        Button *buttonWorkshop;
-        Button *buttonExpandTerrain;
-        Button *buttonOpenPanel;
         
         TextBox *backgroundText;
         Label *resourceText;
         Label *iaResourceText;
 
-        ComboBox *hallTroopList;
-
         Panel *tabContainer;
-        TabPanel *tabs;
-
-        Tab *mainBuildingTab;
         
-        Tab *barrackTab;
         Panel *barrackEmpty;
-        Label *barrackEmptyLabel;
         Panel *barrackContent;
-        ScrollPanel *barrackScroll;
-        Panel *barrackTroopListPanel;
-
-        Tab *barnTab;
+        Panel *barrackTroopQueuePanel;
         Panel *barnEmpty;
-        Label *barnEmptyLabel;
         Panel *barnContent;
-        ScrollPanel *barnScroll;
-        Panel *barnTroopListPanel;
-
-        Tab *workshopTab;
+        Panel *barnTroopQueuePanel;
         Panel *workshopEmpty;
-        Label *workshopEmptyLabel;
         Panel *workshopContent;
-        ScrollPanel *workshopScroll;
-        Panel *workshopTroopListPanel;
+        Panel *workshopTroopQueuePanel;
+
+        Button *buttonOpenPanel;
+
+        ComboBox *hallTroopList;
 
         f32 updateTimer;
         f32 deleteTextTimer;

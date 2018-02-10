@@ -7,6 +7,8 @@
 
 class GUIElement {
     public:
+        virtual void addChild(GUIElement *) = 0;
+
         virtual void show() = 0;
         virtual void hide() = 0;
 
@@ -16,7 +18,8 @@ class GUIElement {
         virtual void setTooltip(std::string) = 0;
 
         virtual nanogui::Widget *getGUIElement() = 0;
-    private:
+    protected:
+        std::vector<GUIElement*> children;
 };
 
 #endif

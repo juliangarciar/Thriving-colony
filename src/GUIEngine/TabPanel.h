@@ -13,6 +13,8 @@ class TabPanel : public GUIElement {
         TabPanel(GUIElement *parent);
         virtual ~TabPanel();
 
+        void addChild(GUIElement *);
+
         void show();
         void hide();
         bool isVisible();
@@ -29,7 +31,7 @@ class TabPanel : public GUIElement {
         nanogui::Widget *getGUIElement();
     private:
         nanogui::TabWidget *ctrl;
-        std::vector<Tab*> *tabs;
+        std::vector<Tab*> tabs;
 };
 
 #endif

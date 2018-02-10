@@ -12,6 +12,8 @@ class ProgressBar : public GUIElement {
         ProgressBar(GUIElement *parent);
         virtual ~ProgressBar();
 
+        void addChild(GUIElement *);
+
         void show();
         void hide();
         bool isVisible();

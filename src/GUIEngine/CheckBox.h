@@ -14,6 +14,8 @@ class CheckBox : public GUIElement {
         CheckBox(GUIElement *parent, std::string text);
         virtual ~CheckBox();
 
+        void addChild(GUIElement *);
+
         void show();
         void hide();
         bool isVisible();

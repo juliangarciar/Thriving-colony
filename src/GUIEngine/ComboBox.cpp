@@ -9,13 +9,21 @@ ComboBox::ComboBox(std::vector<std::string> opts) {
 
 ComboBox::ComboBox(GUIElement *parent, std::vector<std::string> opts) {
     combobox = parent -> getGUIElement() -> add<nanogui::ComboBox>(opts);
+    parent->addChild(this);
     options = opts;
     if (options.size() < 1) this->hide();
 }
 
 ComboBox::~ComboBox() {
-    delete combobox;
-    combobox = NULL;
+    for (int i = 0; i < children.size(); i++){
+        //ToDo: eliminar hijos
+    }
+    //ToDo: eliminar este
+    hide();
+}
+
+void ComboBox::addChild(GUIElement *elem) {
+    children . push_back(elem);
 }
 
 void ComboBox::show(){

@@ -12,12 +12,12 @@ class Panel : public GUIElement {
         Panel(std::string title);
         Panel(GUIElement *parent, std::string title);
         virtual ~Panel();
+
+        void addChild(GUIElement *);
         
         void show();
         void hide();
         bool isVisible();
-
-        void addChild(GUIElement *child);
         
         void setPosition(Vector2<i32> position);
         void setTitle(std::string t);

@@ -7,11 +7,19 @@ Button::Button(std::string buttonText) {
 
 Button::Button(GUIElement *parent, std::string buttonText) {
     button = parent -> getGUIElement() -> add<nanogui::Button>(buttonText);
+    parent->addChild(this);
 }
 
 Button::~Button() {
-    //delete button;
+    for (int i = 0; i < children.size(); i++){
+        //ToDo: eliminar hijos
+    }
+    //ToDo: eliminar este
     hide();
+}
+
+void Button::addChild(GUIElement *elem) {
+    children . push_back(elem);
 }
 
 bool Button::isButtonPressed(){

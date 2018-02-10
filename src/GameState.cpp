@@ -28,8 +28,7 @@ void GameState::Init() {
 
     //Init HUD
     hud = new Hud();
-    hud -> setHUDEvents();
-    Window::Instance() -> setGUI();
+    hud -> Init();
 
     //Init battle manager
     battleManager = new BattleManager();
@@ -75,10 +74,12 @@ void GameState::Input() {
         IA::Instance() -> getBuildingManager() -> testRaycastCollisions();
         IA::Instance() -> getUnitManager() -> testRaycastCollisions();
 
-        int onMap = true;
+        Vector3<f32> mapCollision = map->getPointCollision(Game::Instance()->getMouse());
+
+        i32 onMap = true;
 
         //Interactions with our entities
-        int idBuilding = Human::Instance() -> getBuildingManager() -> getCollisionID();
+        i32 idBuilding = Human::Instance() -> getBuildingManager() -> getCollisionID();
         if (idBuilding != -1){
             if (!Human::Instance() -> getUnitManager() -> isTroopSelected())
                 Game::Instance() -> getMouse() -> changeIcon(CURSOR_HAND);
@@ -95,43 +96,64 @@ void GameState::Input() {
             onMap = false;
         }
 
-        int idTroop = Human::Instance() -> getUnitManager() -> getCollisionID();
+        i32 idTroop = Human::Instance() -> getUnitManager() -> getCollisionID();
         if (idTroop != -1){
             if (!Human::Instance() -> getUnitManager() -> isTroopSelected())
                 Game::Instance() -> getMouse() -> changeIcon(CURSOR_HAND);
             
-            if (Game::Instance() -> getMouse() -> leftMousePressed())
+            if (Game::Instance() -> getMouse() -> leftMousePressed()){
+                Game::Instance() -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
                 Human::Instance() -> getUnitManager() -> selectTroop(idTroop);
+            }
             
             onMap = false;
         }
 
         //Interactions with IA's entities
-        int idBuildingIA =  IA::Instance() -> getBuildingManager() -> getCollisionID();
+        i32 idBuildingIA =  IA::Instance() -> getBuildingManager() -> getCollisionID();
         if (idBuildingIA != -1 && Human::Instance() -> getUnitManager() -> isTroopSelected()){
             Game::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
 
-            if (Game::Instance() -> getMouse() -> rightMousePressed())
+            if (Game::Instance() -> getMouse() -> rightMousePressed()) {
+                //ToDo
+            }
             
             onMap = false;
         }
 
-        int idTroopIA = IA::Instance() -> getUnitManager() -> getCollisionID();
+        i32 idTroopIA = IA::Instance() -> getUnitManager() -> getCollisionID();
         if (idTroopIA != -1 && Human::Instance() -> getUnitManager() -> isTroopSelected()){
             Game::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
 
-            if (Game::Instance() -> getMouse() -> rightMousePressed())
+            if (Game::Instance() -> getMouse() -> rightMousePressed()){
+                //ToDo
+            }
             
             onMap = false;
         }
         
         //If nothing happens
         if (onMap){
-            if (Human::Instance() -> getUnitManager() -> isTroopSelected())
+            if (Human::Instance() -> getUnitManager() -> isTroopSelected()){
                 Game::Instance() -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
-            else 
+            } else if (Human::Instance() -> getUnitManager() -> isDeployingTroop()){
+                Game::Instance() -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
+                i32 idTroop = Human::Instance() -> getUnitManager() -> getDeployingTroopID();
+                if (idTroop > 0){
+                    if (Game::Instance() -> getMouse() -> rightMousePressed()){
+                        Human::Instance() -> getUnitManager() -> deploySelectedTroop(mapCollision);
+                        Human::Instance() -> getUnitManager() -> selectTroop(idTroop);
+                    }
+                } else if (idTroop == 0) {
+                    if (Game::Instance() -> getMouse() -> rightMousePressed()){
+                        Human::Instance() -> getUnitManager() -> deployAllTroops(mapCollision);
+                    }
+                } else {
+                    std::cout << "Ninguna tropa seleccionada" << std::endl;
+                }
+            } else 
                 Game::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);
-            
+
             if (Game::Instance() -> getMouse() -> leftMousePressed())
                 Human::Instance() -> getUnitManager() -> unSelectTroop();
         }
@@ -146,7 +168,7 @@ void GameState::Input() {
         }
     } else {
         Game::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);
-    }
+}
 }
 
 void GameState::Update(){
@@ -156,7 +178,7 @@ void GameState::Update(){
     camera -> Update(g -> getWindow() -> getDeltaTime());
     
     //Update HUD
-    hud -> update();
+    hud -> Update();
 
     //NEW SOUND SYSTEM
    /* SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");*/

@@ -10,15 +10,20 @@ Panel::Panel(std::string t) {
 
 Panel::Panel(GUIElement *parent, std::string title) {
     panel = new nanogui::Window(parent -> getGUIElement(), title);
+    parent->addChild(this);
     panel -> setLayout(new nanogui::BoxLayout(nanogui::Orientation::Horizontal, nanogui::Alignment::Middle, 0, 6));
 }
 
 Panel::~Panel() {
+    for (int i = 0; i < children.size(); i++){
+        //ToDo: eliminar hijos
+    }
+    //ToDo: eliminar este
     hide();
 }
 
-void Panel::addChild(GUIElement *child){
-    panel -> addChild(child -> getGUIElement());
+void Panel::addChild(GUIElement *elem) {
+    children . push_back(elem);
 }
 
 void Panel::setPosition(Vector2<i32> position){
