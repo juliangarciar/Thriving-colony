@@ -76,15 +76,6 @@ class Hud {
          * @brief Actualiza las posiciones de los elementos del HUD
          */
         void updatePositions();
-        
-        /**
-         * @brief Lanza una alerta de contruccion
-         */
-        static void drawWarning();
-        /**
-         * @brief Borra la alerta lanzada
-         */
-        static void deleteWarning();
 
         /**
          * @brief 
@@ -128,31 +119,54 @@ class Hud {
 
         std::map<i32, Widget*> troopQueueList;
         std::map<i32, ProgressBar*> troopQueueProgressBars;
-        
-        TabPanel *tabs;
 
+        //Buildings panel
         Panel *buildingsPanel;
-        
-        TextBox *backgroundText;
-        Label *resourceText;
-        Label *iaResourceText;
 
+        Button *buttonOpenPanel;
+
+        //Popup panel
         Panel *tabContainer;
         
-        Panel *barrackEmpty;
-        Panel *barrackContent;
-        Panel *barnEmpty;
-        Panel *barnContent;
-        Panel *workshopEmpty;
-        Panel *workshopContent;
+        TabPanel *tabs;
+        
+        Widget *barrackEmpty;
+        Widget *barrackContent;
+        Widget *barnEmpty;
+        Widget *barnContent;
+        Widget *workshopEmpty;
+        Widget *workshopContent;
 
         Widget *barrackTroopQueueWidget;
         Widget *barnTroopQueueWidget;
         Widget *workshopTroopQueueWidget;
 
-        Button *buttonOpenPanel;
-
         ComboBox *hallTroopList;
+        
+        //Text
+        Panel *playerResources;
+        Label *playerMetalAmount;
+        Label *playerCrystalAmount;
+        Label *playerCitizens;
+        Label *playerHappiness;
+        Label *playerCityLevel;
+        Label *playerArmySize;
+        Label *playerMelees;
+        Label *playerRangeds;
+        Label *playerSieges;
+
+        Panel *iaResources;
+        Label *iaMetalAmount;
+        Label *iaCrystalAmount;
+        Label *iaCitizens;
+        Label *iaHappiness;
+        Label *iaCityLevel;
+        Label *iaArmySize;
+        Label *iaMelees;
+        Label *iaRangeds;
+        Label *iaSieges;
+        Label *iaNextChoice;
+        Label *iaBehaviour;
 
         f32 updateTimer;
         f32 deleteTextTimer;

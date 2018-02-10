@@ -35,8 +35,12 @@ void Widget::setTooltip(std::string t){
     widget->setTooltip(t);
 }
 
-void Widget::setVerticalAlignment() {
-    widget -> setLayout(new nanogui::BoxLayout(nanogui::Orientation::Vertical, nanogui::Alignment::Middle, 0, 6));
+void Widget::setVerticalLayout() {
+   widget -> setLayout(new nanogui::BoxLayout(nanogui::Orientation::Vertical, nanogui::Alignment::Middle, 0, 6));
+}
+
+void Widget::setGroupLayout() {
+    widget -> setLayout(new nanogui::GroupLayout());
 }
 
 void Widget::show(){

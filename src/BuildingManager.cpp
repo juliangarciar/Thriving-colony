@@ -133,7 +133,7 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 			}
             // Increase stuff when the human ends the building, but do so for the AI
             // when it places the building. is it fair? i dunno
-			Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);    
+			//Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);    
 		}
 	});
 

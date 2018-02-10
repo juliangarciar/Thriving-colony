@@ -24,7 +24,8 @@ class Widget : public GUIElement {
         
         void setTooltip(std::string text);
         
-        void setVerticalAlignment();
+        void setVerticalLayout();
+        void setGroupLayout();
         
         nanogui::Widget *getGUIElement();
     private:
