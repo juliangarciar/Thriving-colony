@@ -252,6 +252,7 @@ void Hud::Init(){
 
             ScrollPanel *barrackScroll = new ScrollPanel(barrackContent);
             barrackTroopQueuePanel = new Panel(barrackScroll, "");
+            barrackTroopQueuePanel -> setVerticalAlignment();
 
             barrackContent -> hide();
         }
@@ -292,6 +293,7 @@ void Hud::Init(){
 
             ScrollPanel *barnScroll = new ScrollPanel(barnContent);
             barnTroopQueuePanel = new Panel(barnScroll, "");
+            barnTroopQueuePanel -> setVerticalAlignment();
 
             barnContent -> hide();
         }
@@ -325,6 +327,7 @@ void Hud::Init(){
 
             ScrollPanel *workshopScroll = new ScrollPanel(workshopContent);
             workshopTroopQueuePanel = new Panel(workshopScroll, "");
+            workshopTroopQueuePanel -> setVerticalAlignment();
 
             workshopContent -> hide();
         }
