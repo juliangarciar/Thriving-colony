@@ -25,9 +25,8 @@ class Panel : public GUIElement {
         void setTitle(std::string t);
         void setTooltip(std::string text);
         
-        void setVerticalAlignment();
+        void setVerticalLayout();
         void setGroupLayout();
-        void setDragable(bool dragable);
 
         void refreshLayout();
 

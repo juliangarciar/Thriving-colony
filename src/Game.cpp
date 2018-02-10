@@ -60,8 +60,8 @@ void Game::Init() {
     });*/
 
     //Hud events
-    events -> addEvent(Enumeration::EventType::EnableText, Hud::drawWarning);
-    events -> addEvent(Enumeration::EventType::DisableText, Hud::deleteWarning);
+    //events -> addEvent(Enumeration::EventType::EnableText, Hud::drawWarning);
+    //events -> addEvent(Enumeration::EventType::DisableText, Hud::deleteWarning);
 
     state -> Init();
 }

@@ -10,8 +10,6 @@
 
 using namespace irr;
 
-//warningText = 0;//new Text(Rect2D<i32>(200, 60, 50, 20), L"Edificio construido", true);
-
 Hud::Hud() {
     updateTimer = 0.5;
     deleteTextTimer = 0;
@@ -21,73 +19,64 @@ Hud::Hud() {
 
 Hud::~Hud() {
     delete buildingsPanel;
-
-    //Moar
-    delete backgroundText;
-    delete resourceText;
-    delete iaResourceText;
-
     delete tabContainer;
-
-    //ToDo: Es estatico asi que no se yo...
-    delete warningText; 
 }
 
 void Hud::Init(){
     // Building buttons panel
     buildingsPanel = new Panel("Buildings");
-    buildingsPanel->setPosition(Vector2<i32>(575, 546).getFixed());
+    buildingsPanel -> setPosition(Vector2<i32>(575, 546).getFixed());
 
     // General
-    Panel *generalPanel = new Panel(buildingsPanel, "General functions");
-    generalPanel->setPosition(Vector2<i32>(20, 640).getFixed());
+    Widget *generalWidget = new Widget(buildingsPanel);
+    generalWidget -> setVerticalLayout();
+    generalWidget -> setPosition(Vector2<i32>(20, 640).getFixed());
 
-    Button *buttonExpandTerrain = new Button(generalPanel, "Expand terrain");
-
-    buttonOpenPanel = new Button(generalPanel, "Open Panel");
-    buttonOpenPanel->setPosition(Vector2<i32>(100, 20));
-
-    generalPanel -> setVerticalAlignment();
+    new Label(generalWidget, "General functions");
+    Button *buttonExpandTerrain = new Button(generalWidget, "Expand terrain");
+    buttonOpenPanel = new Button(generalWidget, "Open Panel");
+    buttonOpenPanel -> setPosition(Vector2<i32>(100, 20));
 
     // Resources
-    Panel *resourcePanel = new Panel(buildingsPanel, "Resource buildings");
-    resourcePanel->setPosition(Vector2<i32>(20, 640).getFixed());
+    Widget *resourceWidget = new Widget(buildingsPanel);
+    resourceWidget -> setVerticalLayout();
+    resourceWidget -> setPosition(Vector2<i32>(20, 640).getFixed());
 
-    Button *buttonHome = new Button(resourcePanel, "House");
-    Button *buttonSiderurgy = new Button(resourcePanel, "Siderurgy");
-    Button *buttonQuarry = new Button(resourcePanel, "Quarry");
-
-    resourcePanel ->setVerticalAlignment();
+    new Label(resourceWidget, "Resource buildings");
+    Button *buttonHome = new Button(resourceWidget, "House");
+    Button *buttonSiderurgy = new Button(resourceWidget, "Siderurgy");
+    Button *buttonQuarry = new Button(resourceWidget, "Quarry");
 
     // Services
-    Panel *servicePanel = new Panel(buildingsPanel, "Service buildings");
-    servicePanel->setPosition(Vector2<i32>(20, 640).getFixed());
+    Widget *serviceWidget = new Widget(buildingsPanel);
+    serviceWidget -> setVerticalLayout();
+    serviceWidget -> setPosition(Vector2<i32>(20, 640).getFixed());
 
-    Button *buttonSchool = new Button(servicePanel, "School");
-    Button *buttonMarket = new Button(servicePanel, "Market");
-    Button *buttonHospital = new Button(servicePanel, "Hospital");
-
-    servicePanel -> setVerticalAlignment();
+    new Label(serviceWidget, "Service buildings");
+    Button *buttonSchool = new Button(serviceWidget, "School");
+    Button *buttonMarket = new Button(serviceWidget, "Market");
+    Button *buttonHospital = new Button(serviceWidget, "Hospital");
 
     // Military
-    Panel *militaryPanel = new Panel(buildingsPanel, "Military buildings");
-    militaryPanel->setPosition(Vector2<i32>(20, 640).getFixed());
+    Widget *militaryWidget = new Widget(buildingsPanel);
+    militaryWidget -> setVerticalLayout();
+    militaryWidget -> setPosition(Vector2<i32>(20, 640).getFixed());
 
-    Button *buttonBarrack = new Button(militaryPanel, "Barrack");
-    Button *buttonBarn = new Button(militaryPanel, "Barn");
-    Button *buttonWorkshop = new Button(militaryPanel, "Workshop");
-
-    militaryPanel -> setVerticalAlignment();
+    new Label(militaryWidget, "Military buildings");
+    Button *buttonBarrack = new Button(militaryWidget, "Barrack");
+    Button *buttonBarn = new Button(militaryWidget, "Barn");
+    Button *buttonWorkshop = new Button(militaryWidget, "Workshop");
 
     // Defense
-    Panel *defensePanel = new Panel(buildingsPanel, "Defensive buildings");
-    defensePanel->setPosition(Vector2<i32>(20, 640).getFixed());
+    Widget *defenseWidget = new Widget(buildingsPanel);
+    defenseWidget -> setVerticalLayout();
+    defenseWidget -> setPosition(Vector2<i32>(20, 640).getFixed());
 
-    Button *buttonTower = new Button(defensePanel, "Tower");
-    Button *buttonWall = new Button(defensePanel, "Wall");
+    new Label(defenseWidget, "Defensive buildings");
+    Button *buttonTower = new Button(defenseWidget, "Tower");
+    Button *buttonWall = new Button(defenseWidget, "Wall");
 
-    defensePanel -> setVerticalAlignment();
-
+    // Button callbacks
     buttonBarn->setTooltip("Build a barn that will allow you to train mounted military units.\n Metal cost: 800.");
     buttonBarn->setCallback([]{
         Human::Instance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Barn);
@@ -158,27 +147,96 @@ void Hud::Init(){
         }
     });
 
-    // Solo de debug
-    resourceText = new Label("");
-    iaResourceText = new Label("");
-
-    warningText = new TextBox("Edificio construido");
-
-    backgroundText = new TextBox("");
-    backgroundText -> setPosition(Vector2<i32>(0,0));
-    backgroundText -> setSize(Vector2<i32>(950,35));
-
-    resourceText->setPosition(Vector2<i32>(0,0).getFixed());
-    iaResourceText->setPosition(Vector2<i32>(0,20).getFixed());
-    warningText->setPosition(Vector2<i32>(1000,650).getFixed());
-
-    resourceText -> setSize(Vector2<i32>(1000,100));
-    iaResourceText -> setSize(Vector2<i32>(1000,100));
-
-    deleteWarning();
+    ///// DEBUG /////
+    playerResources = new Panel("Player Resources");
+    playerResources ->setVerticalLayout();
+    i32 melees = 
+        Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
+        Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
+    i32 ranges = 
+        Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardR) + 
+        Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedR);
+    i32 sieges = 
+        Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) + 
+        Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
+    std::stringstream os;
+    os << "Metal: " << std::to_string(Human::Instance() -> getMetalAmount());
+    playerMetalAmount = new Label(playerResources, os.str());
+    os = std::stringstream();
+    os << "Crystal: " << std::to_string(Human::Instance() -> getCrystalAmount());
+    playerCrystalAmount = new Label(playerResources, os.str());
+    os = std::stringstream();
+    os << "Citizens: " << std::to_string(Human::Instance() -> getCitizens());
+    playerCitizens = new Label(playerResources, os.str());
+    os = std::stringstream();
+    os << "Happiness: " << std::to_string(Human::Instance() -> getHappiness());
+    playerHappiness = new Label(playerResources, os.str());
+    os = std::stringstream();
+    os << "City level: "<< std::to_string(Human::Instance() -> getCityLevel());
+    playerCityLevel = new Label(playerResources, os.str());
+    os = std::stringstream();
+    os << "Army size: " << std::to_string(Human::Instance() -> getArmySize());
+    playerArmySize = new Label(playerResources, os.str());
+    os = std::stringstream();
+    os << "Melee: " << std::to_string(melees);
+    playerMelees = new Label(playerResources, os.str());
+    os = std::stringstream();
+    os << "Ranged: " << std::to_string(ranges);
+    playerRangeds = new Label(playerResources, os.str());
+    os = std::stringstream();
+    os << "Siege: " << std::to_string(sieges);
+    playerSieges = new Label(playerResources, os.str());
+    os = std::stringstream();
+    
+    iaResources = new Panel("IA Resources");
+    iaResources -> setVerticalLayout();
+    iaResources -> setPosition(Vector2<i32>(1100, 0));
+    melees = 
+        IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
+        IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
+    ranges = 
+        IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardR) + 
+        IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedR);
+    sieges = 
+        IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) + 
+        IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
+    std::stringstream iaos;
+    iaos << "Metal: " << std::to_string(IA::Instance() -> getMetalAmount());
+    iaMetalAmount = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Crystal: " << std::to_string(IA::Instance() -> getCrystalAmount());
+    iaCrystalAmount = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Citizens: " << std::to_string(IA::Instance() -> getCitizens());
+    iaCitizens = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Happiness: " << std::to_string(IA::Instance() -> getHappiness());
+    iaHappiness = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "City level: "<< std::to_string(IA::Instance() -> getCityLevel());
+    iaCityLevel = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Army size: " << std::to_string(IA::Instance() -> getArmySize());
+    iaArmySize = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Melee: " << std::to_string(melees);
+    iaMelees = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Ranged: " << std::to_string(ranges);
+    iaRangeds = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Siege: " << std::to_string(sieges);
+    iaSieges = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Next choice: " << IA::Instance() -> getNextChoice();
+    iaNextChoice = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Behaviour: " << IA::Instance() -> getChosenBehaviour();
+    iaBehaviour = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
     
     tabContainer = new Panel("Building viewer");
-        tabContainer -> setSize(Vector2<i32>(350, 280));
+        tabContainer -> setSize(Vector2<i32>(350, 300));
         tabContainer -> setGroupLayout();
         tabs = new TabPanel(tabContainer);
         Tab *mainBuildingTab = tabs->createTab("Main Building");
@@ -230,10 +288,10 @@ void Hud::Init(){
                 this->hidePopup();
             });
 
-            barrackEmpty = new Panel(barrackTab, "");
+            barrackEmpty = new Widget(barrackTab);
             new Label(barrackEmpty, "Este edificio no esta activo aun");
 
-            barrackContent = new Panel(barrackTab, "");
+            barrackContent = new Widget(barrackTab);
             barrackContent -> setGroupLayout();
 
             b = new Button(barrackContent, "Create melee footman");
@@ -253,8 +311,7 @@ void Hud::Init(){
             ScrollPanel *barrackScroll = new ScrollPanel(barrackContent);
             barrackScroll -> setSize(Vector2<i32>(250, 50));
             barrackTroopQueueWidget = new Widget(barrackScroll);
-            barrackTroopQueueWidget -> setSize(Vector2<i32>(250, 50));
-            barrackTroopQueueWidget -> setVerticalAlignment();
+            barrackTroopQueueWidget -> setGroupLayout();
 
             barrackContent -> hide();
         }
@@ -266,10 +323,10 @@ void Hud::Init(){
                 this->hidePopup();
             });
 
-            barnEmpty = new Panel(barnTab, "");
+            barnEmpty = new Widget(barnTab);
             new Label(barnEmpty, "Este edificio no esta activo aun");
 
-            barnContent = new Panel(barnTab, "");
+            barnContent = new Widget(barnTab);
             barnContent -> setGroupLayout();
 
             b = new Button(barnContent, "Create mounted melee unit");
@@ -296,7 +353,7 @@ void Hud::Init(){
             ScrollPanel *barnScroll = new ScrollPanel(barnContent);
             barnScroll -> setSize(Vector2<i32>(250, 50));
             barnTroopQueueWidget = new Widget(barnScroll);
-            barnTroopQueueWidget -> setVerticalAlignment();
+            barnTroopQueueWidget -> setVerticalLayout();
 
             barnContent -> hide();
         }
@@ -308,10 +365,10 @@ void Hud::Init(){
                 this->hidePopup();
             });
 
-            workshopEmpty = new Panel(workshopTab, "");
+            workshopEmpty = new Widget(workshopTab);
             new Label(workshopEmpty, "Este edificio no esta activo aun");
 
-            workshopContent = new Panel(workshopTab, "");
+            workshopContent = new Widget(workshopTab);
             workshopContent -> setGroupLayout();
 
             b = new Button(workshopContent, "Create ram");
@@ -331,7 +388,7 @@ void Hud::Init(){
             ScrollPanel *workshopScroll = new ScrollPanel(workshopContent);
             workshopScroll -> setSize(Vector2<i32>(250, 50));
             workshopTroopQueueWidget = new Widget(workshopScroll);
-            workshopTroopQueueWidget -> setVerticalAlignment();
+            workshopTroopQueueWidget -> setVerticalLayout();
 
             workshopContent -> hide();
         }
@@ -357,17 +414,33 @@ void Hud::Update() {
             Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
 
         std::stringstream os;
-        os << "Player resources: " << 
-        "Metal: " << std::to_string(Human::Instance() -> getMetalAmount()) << " " <<
-        "Crystal: " << std::to_string(Human::Instance() -> getCrystalAmount()) << " " <<
-        "Citizens: " << std::to_string(Human::Instance() -> getCitizens()) << " " <<
-        "Happiness: " << std::to_string(Human::Instance() -> getHappiness()) <<  " " <<
-        "City level: "<< std::to_string(Human::Instance() -> getCityLevel()) <<  " " <<
-        "Army size: " << std::to_string(Human::Instance() -> getArmySize()) << " " <<
-        "- Melees: " << std::to_string(melees) <<  " " <<
-        "- Ranged: " << std::to_string(ranges) << " " <<
-        "- Siege: " << std::to_string(sieges);
-        resourceText -> setLabel(os.str());
+        os << "Metal: " << std::to_string(Human::Instance() -> getMetalAmount());
+        playerMetalAmount -> setLabel(os.str());
+        os = std::stringstream();
+        os << "Crystal: " << std::to_string(Human::Instance() -> getCrystalAmount());
+        playerCrystalAmount -> setLabel(os.str());
+        os = std::stringstream();
+        os << "Citizens: " << std::to_string(Human::Instance() -> getCitizens());
+        playerCitizens -> setLabel(os.str());
+        os = std::stringstream();
+        os << "Happiness: " << std::to_string(Human::Instance() -> getHappiness());
+        playerHappiness -> setLabel(os.str());
+        os = std::stringstream();
+        os << "City level: "<< std::to_string(Human::Instance() -> getCityLevel());
+        playerCityLevel -> setLabel(os.str());
+        os = std::stringstream();
+        os << "Army size: " << std::to_string(Human::Instance() -> getArmySize());
+        playerArmySize -> setLabel(os.str());
+        os = std::stringstream();
+        os << "Melee: " << std::to_string(melees);
+        playerMelees -> setLabel(os.str());
+        os = std::stringstream();
+        os << "Ranged: " << std::to_string(ranges);
+        playerRangeds -> setLabel(os.str());
+        os = std::stringstream();
+        os << "Siege: " << std::to_string(sieges);
+        playerSieges -> setLabel(os.str());
+        os = std::stringstream();
 
         melees = 
             IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
@@ -380,24 +453,43 @@ void Hud::Update() {
             IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
 
         std::stringstream iaos;
-        iaos << "IA resources:" << 
-        "Metal: " << std::to_string(IA::Instance() -> getMetalAmount()) <<  " " <<
-        "Crystal: " << std::to_string(IA::Instance() -> getCrystalAmount()) <<  " " <<
-        "Citizens: " << std::to_string(IA::Instance() -> getCitizens()) <<  " " <<
-        "Happiness: " << std::to_string(IA::Instance() -> getHappiness()) <<  " " <<
-        "City level: "<< std::to_string(IA::Instance() -> getCityLevel()) <<  " " <<
-        "Army size: " << std::to_string(IA::Instance() -> getArmySize()) <<  " " <<
-        " - Melees: " << std::to_string(melees) <<  " " <<
-        " - Ranged: " << std::to_string(ranges) <<  " " <<
-        " - Siege: " << std::to_string(sieges) <<  " " <<
-        "Next choice: " << IA::Instance() -> getNextChoice() <<  " " <<
-        "Behaviour: " << IA::Instance() -> getChosenBehaviour();
-
-        iaResourceText -> setLabel(iaos.str());
+        iaos << "Metal: " << std::to_string(IA::Instance() -> getMetalAmount());
+        iaMetalAmount -> setLabel(iaos.str());
+        iaos = std::stringstream();
+        iaos << "Crystal: " << std::to_string(IA::Instance() -> getCrystalAmount());
+        iaCrystalAmount -> setLabel(iaos.str());
+        iaos = std::stringstream();
+        iaos << "Citizens: " << std::to_string(IA::Instance() -> getCitizens());
+        iaCitizens -> setLabel(iaos.str());
+        iaos = std::stringstream();
+        iaos << "Happiness: " << std::to_string(IA::Instance() -> getHappiness());
+        iaHappiness -> setLabel(iaos.str());
+        iaos = std::stringstream();
+        iaos << "City level: "<< std::to_string(IA::Instance() -> getCityLevel());
+        iaCityLevel -> setLabel(iaos.str());
+        iaos = std::stringstream();
+        iaos << "Army size: " << std::to_string(IA::Instance() -> getArmySize());
+        iaArmySize -> setLabel(iaos.str());
+        iaos = std::stringstream();
+        iaos << "Melee: " << std::to_string(melees);
+        iaMelees -> setLabel(iaos.str());
+        iaos = std::stringstream();
+        iaos << "Ranged: " << std::to_string(ranges);
+        iaRangeds -> setLabel(iaos.str());
+        iaos = std::stringstream();
+        iaos << "Siege: " << std::to_string(sieges);
+        iaSieges -> setLabel(iaos.str());
+        iaos = std::stringstream();
+        iaos << "Next choice: " << IA::Instance() -> getNextChoice();
+        iaNextChoice -> setLabel(iaos.str());
+        iaos = std::stringstream();
+        iaos << "Behaviour: " << IA::Instance() -> getChosenBehaviour();
+        iaBehaviour -> setLabel(iaos.str());
+        iaos = std::stringstream();
 
         updateTimer = 0.5;
 
-        Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::DisableText);
+        //Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::DisableText);
     } else {
         updateTimer -= dt;
     }
@@ -525,7 +617,7 @@ void Hud::addTroopToQueue(i32 idTroop, Enumeration::UnitType t){
         case Enumeration::UnitType::StandardM:
         {
             Widget *p = new Widget(barrackTroopQueueWidget);
-            p->setVerticalAlignment();
+            p->setVerticalLayout();
             new Label(p, "Melee footman");
             ProgressBar *pb = new ProgressBar(p);
             troopQueueProgressBars . insert(std::pair<i32, ProgressBar*>(idTroop, pb));
@@ -535,7 +627,7 @@ void Hud::addTroopToQueue(i32 idTroop, Enumeration::UnitType t){
         case Enumeration::UnitType::StandardR:
         {
             Widget *p = new Widget(barrackTroopQueueWidget);
-            p->setVerticalAlignment();
+            p->setVerticalLayout();
             new Label(p, "Ranged footman");
             ProgressBar *pb = new ProgressBar(p);
             troopQueueProgressBars . insert(std::pair<i32, ProgressBar*>(idTroop, pb));
@@ -545,7 +637,7 @@ void Hud::addTroopToQueue(i32 idTroop, Enumeration::UnitType t){
         case Enumeration::UnitType::AdvancedM:
         {
             Widget *p = new Widget(barrackTroopQueueWidget);
-            p->setVerticalAlignment();
+            p->setVerticalLayout();
             new Label(p, "Mounted melee unit");
             ProgressBar *pb = new ProgressBar(p);
             troopQueueProgressBars . insert(std::pair<i32, ProgressBar*>(idTroop, pb));
@@ -555,7 +647,7 @@ void Hud::addTroopToQueue(i32 idTroop, Enumeration::UnitType t){
         case Enumeration::UnitType::AdvancedR:
         {
             Widget *p = new Widget(barrackTroopQueueWidget);
-            p->setVerticalAlignment();
+            p->setVerticalLayout();
             new Label(p, "Mounted ranged unit");
             ProgressBar *pb = new ProgressBar(p);
             troopQueueProgressBars . insert(std::pair<i32, ProgressBar*>(idTroop, pb));
@@ -565,7 +657,7 @@ void Hud::addTroopToQueue(i32 idTroop, Enumeration::UnitType t){
         case Enumeration::UnitType::Idol:
         {
             Widget *p = new Widget(barnTroopQueueWidget);
-            p->setVerticalAlignment();
+            p->setVerticalLayout();
             new Label(p, "Create idol");
             ProgressBar *pb = new ProgressBar(p);
             troopQueueProgressBars . insert(std::pair<i32, ProgressBar*>(idTroop, pb));
@@ -575,7 +667,7 @@ void Hud::addTroopToQueue(i32 idTroop, Enumeration::UnitType t){
         case Enumeration::UnitType::Launcher:
         {
             Widget *p = new Widget(workshopTroopQueueWidget);
-            p->setVerticalAlignment();
+            p->setVerticalLayout();
             new Label(p, "Catapult");
             ProgressBar *pb = new ProgressBar(p);
             troopQueueProgressBars . insert(std::pair<i32, ProgressBar*>(idTroop, pb));
@@ -585,7 +677,7 @@ void Hud::addTroopToQueue(i32 idTroop, Enumeration::UnitType t){
         case Enumeration::UnitType::Desintegrator:
         {
             Widget *p = new Widget(workshopTroopQueueWidget);
-            p->setVerticalAlignment();
+            p->setVerticalLayout();
             new Label(p, "Ram");
             ProgressBar *pb = new ProgressBar(p);
             troopQueueProgressBars . insert(std::pair<i32, ProgressBar*>(idTroop, pb));
@@ -623,21 +715,9 @@ void Hud::updatePositions() {
 
     buildingsPanel->setPosition(Vector2<i32>(20, 640).getFixed());
 
-    resourceText->setPosition(Vector2<i32>(1000,0).getFixed());
-    iaResourceText->setPosition(Vector2<i32>(1150,0).getFixed());
     warningText->setPosition(Vector2<i32>(1000,650).getFixed());
 
     tabContainer->center();
-}
-
-void Hud::drawWarning() {
-    //¡Se ha construido un edificio!
-    warningText -> show();
-}
-
-void Hud::deleteWarning() {
-    //¡Se ha borrado un texto que dice que se ha dibujado un texto!
-    warningText -> hide();
 }
 
 bool Hud::getPopUpOpen() {
