@@ -62,7 +62,7 @@ class Unit : public Entity {
         std::string getMoveEvent();
         std::string getSelectEvent();
 
-        Vector3<f32>* getDestination();
+        Vector3<f32> getDestination();
         std::list< Vector2<f32> > getPath();
         Enumeration::UnitType getType();
     private:
@@ -106,9 +106,9 @@ class Unit : public Entity {
         std::function<void(Unit*)> retractedCallback;
 
     // Vector position is in the father
-        Vector3 <f32> *vectorPos;
-        Vector3 <f32> *vectorDes;
-        Vector3 <f32> *vectorMov;
+        Vector3 <f32> vectorPos;
+        Vector3 <f32> vectorDes;
+        Vector3 <f32> vectorMov;
         f32 steps;
 
     // Algo

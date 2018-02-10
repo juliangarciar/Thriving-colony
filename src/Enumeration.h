@@ -24,7 +24,6 @@ class Enumeration {
             DefeatState,
             GameState,
             MenuState,
-            PauseState,
             WinState
         };
 

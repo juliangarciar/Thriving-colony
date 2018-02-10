@@ -30,8 +30,6 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
 
 //Destroyer
 UnitManager::~UnitManager() {
-    delete selectedTroop;
-
     for (std::map<i32, Unit*>::iterator it = inQueueTroops -> begin(); it != inQueueTroops -> end(); ++it){
         delete it->second;
     }

@@ -14,11 +14,11 @@ Game::Game() {
 
     menu = new MenuState();
     game = new GameState();
-    pause = new PauseState();
+    //pause = new PauseState();
     win = new WinState();
     defeat = new DefeatState();
 
-    state = game;
+    state = menu;
     stateData = Enumeration::State::GameState;
 
     cursor = new Mouse();
@@ -36,7 +36,7 @@ Game::Game() {
 Game::~Game() {
     delete menu;
     delete game;
-    delete pause;
+    //delete pause;
     delete cursor;
     delete events;
     delete soundSystem;
@@ -98,12 +98,6 @@ void Game::changeState(Enumeration::State data) {
         case Enumeration::State::GameState:
             state -> CleanUp();
             state = game;
-            state -> Init();
-        break;
-        case Enumeration::State::PauseState:
-            //ToDo: de momento lo dejo asi para que pueda ser un estado pero el menu es parte del gamestate
-            //state -> CleanUp();
-            state = pause;
             state -> Init();
         break;
         case Enumeration::State::WinState:
