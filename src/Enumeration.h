@@ -21,9 +21,11 @@ class Enumeration {
 
         //Game states
         enum State {
-            MenuState,
+            DefeatState,
             GameState,
-            PauseState
+            MenuState,
+            PauseState,
+            WinState
         };
 
         //Building types

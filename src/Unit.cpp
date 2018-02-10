@@ -134,7 +134,7 @@ void Unit::Init() {
         case Enumeration::UnitType::StandardR:
             if (breed == Enumeration::BreedType::Drorania) {
                 moveSpeed = 350;
-                attackDamage = 13;
+                attackDamage = 100;
                 attackRange = 350;
                 attackSpeed = 1;
                 viewRadius = 450;
