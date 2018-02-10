@@ -37,7 +37,7 @@ class Hud {
          * @brief Destructor
          */
         ~Hud();
-        
+
         /**
          * @brief Inicializa el HUD
          */
@@ -118,8 +118,9 @@ class Hud {
     private:
         bool popUpOpen;
     
-        std::vector<i32> troopsInQueueIDs;
         std::vector<i32> troopsInHallIDs;
+
+        std::map<i32, Panel*> troopQueueList;
         
         TabPanel *tabs;
 
@@ -133,13 +134,13 @@ class Hud {
         
         Panel *barrackEmpty;
         Panel *barrackContent;
-        Panel *barrackTroopListPanel;
+        Panel *barrackTroopQueuePanel;
         Panel *barnEmpty;
         Panel *barnContent;
-        Panel *barnTroopListPanel;
+        Panel *barnTroopQueuePanel;
         Panel *workshopEmpty;
         Panel *workshopContent;
-        Panel *workshopTroopListPanel;
+        Panel *workshopTroopQueuePanel;
 
         Button *buttonOpenPanel;
 

@@ -96,7 +96,9 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
 
         std::cout << "Se ha empezado a reclutar la unidad " << newUnit->getID() << std::endl;
         inQueueTroops -> insert(std::pair<i32, Unit*>(newUnit->getID(), newUnit));
-        Game::Instance()->getGameState()->getHud()->addTroopToQueue(newUnit->getID(), newUnit->getType());
+        if (team == Enumeration::Team::Human){
+            Game::Instance()->getGameState()->getHud()->addTroopToQueue(newUnit->getID(), newUnit->getType());
+        }
 
         troopsAmount[unitData]++;
         nextTroopId++;

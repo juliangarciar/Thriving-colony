@@ -251,7 +251,7 @@ void Hud::Init(){
             });
 
             ScrollPanel *barrackScroll = new ScrollPanel(barrackContent);
-            barrackTroopListPanel = new Panel(barrackScroll, "");
+            barrackTroopQueuePanel = new Panel(barrackScroll, "");
 
             barrackContent -> hide();
         }
@@ -291,7 +291,7 @@ void Hud::Init(){
             });
 
             ScrollPanel *barnScroll = new ScrollPanel(barnContent);
-            barnTroopListPanel = new Panel(barnScroll, "");
+            barnTroopQueuePanel = new Panel(barnScroll, "");
 
             barnContent -> hide();
         }
@@ -324,7 +324,7 @@ void Hud::Init(){
             });
 
             ScrollPanel *workshopScroll = new ScrollPanel(workshopContent);
-            workshopTroopListPanel = new Panel(workshopScroll, "");
+            workshopTroopQueuePanel = new Panel(workshopScroll, "");
 
             workshopContent -> hide();
         }
@@ -516,38 +516,78 @@ void Hud::removeTroopFromHall(i32 idTroop){
 void Hud::addTroopToQueue(i32 idTroop, Enumeration::UnitType t){
     switch(t){
         case Enumeration::UnitType::StandardM:
+        {
+            Panel *p = new Panel(barrackTroopQueuePanel, "");
+            new Label(p, "Melee footman");
+            new ProgressBar(p);
             //ToDo: añadir label y progressBar
+            troopQueueList . insert(std::pair<i32, Panel*>(idTroop, p));
+        }
         break;
         case Enumeration::UnitType::StandardR:
+        {
+            Panel *p = new Panel(barrackTroopQueuePanel, "");
+            new Label(p, "Ranged footman");
+            new ProgressBar(p);
             //ToDo: añadir label y progressBar
+            troopQueueList . insert(std::pair<i32, Panel*>(idTroop, p));
+        }
         break;
         case Enumeration::UnitType::AdvancedM:
+        {
+            Panel *p = new Panel(barnTroopQueuePanel, "");
+            new Label(p, "Mounted melee unit");
+            new ProgressBar(p);
             //ToDo: añadir label y progressBar
+            troopQueueList . insert(std::pair<i32, Panel*>(idTroop, p));
+        }
         break;
         case Enumeration::UnitType::AdvancedR:
+        {
+            Panel *p = new Panel(barnTroopQueuePanel, "");
+            new Label(p, "Mounted ranged unit");
+            new ProgressBar(p);
             //ToDo: añadir label y progressBar
+            troopQueueList . insert(std::pair<i32, Panel*>(idTroop, p));
+        }
         break;
         case Enumeration::UnitType::Idol:
+        {
+            Panel *p = new Panel(barnTroopQueuePanel, "");
+            new Label(p, "Create idol");
+            new ProgressBar(p);
             //ToDo: añadir label y progressBar
+            troopQueueList . insert(std::pair<i32, Panel*>(idTroop, p));
+        }
         break;
         case Enumeration::UnitType::Launcher:
+        {
+            Panel *p = new Panel(workshopTroopQueuePanel, "");
+            new Label(p, "Catapult");
+            new ProgressBar(p);
             //ToDo: añadir label y progressBar
+            troopQueueList . insert(std::pair<i32, Panel*>(idTroop, p));
+        }
         break;
         case Enumeration::UnitType::Desintegrator:
+        {
+            Panel *p = new Panel(workshopTroopQueuePanel, "");
+            new Label(p, "Ram");
+            new ProgressBar(p);
             //ToDo: añadir label y progressBar
+            troopQueueList . insert(std::pair<i32, Panel*>(idTroop, p));
+        }
         break;
         default: break;
     }
-    troopsInQueueIDs . push_back(idTroop);
     Window::Instance()->getGUIEnvironment()->performLayout();
 }
 
 void Hud::removeTroopFromQueue(i32 idTroop){
-   std::vector<i32>::iterator it = find(troopsInQueueIDs.begin(), troopsInQueueIDs.end(), idTroop);
-   if (it != troopsInQueueIDs.end()) {
-        i32 nPosition = std::distance(troopsInQueueIDs.begin(), it);
+   std::map<i32,Panel*>::iterator it = troopQueueList . find(idTroop);
+   if (it != troopQueueList.end()) {
         //ToDo: eliminar label y progressBar
-        troopsInQueueIDs . erase(it);
+        troopQueueList . erase(it);
         Window::Instance()->getGUIEnvironment()->performLayout();
    }
 }
