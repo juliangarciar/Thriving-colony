@@ -12,8 +12,11 @@ GameState::~GameState() {
 }
 
 void GameState::Init() {
+    /*IA::Instance() -> init();
+    Human::Instance() -> init();*/
+
     //ToDo: la luz, terreno, y quizas la camara deberian ir en una clase Map
-    light = new Light(Vector3<f32>(8000, 4000, 8000), 10000);
+    light = new Light(Vector3<float>(8000, 4000, 8000), 10000);
 
     //Create map
     map = new Terrain("media/mapa3-256x256.bmp");
@@ -34,9 +37,8 @@ void GameState::Init() {
     SoundSystem::Instance() -> initSystem();
 
     // Build the main building of IA
-    Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
+    Vector3<float> v = IA::Instance() -> determinatePositionBuilding();
     IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, true);
-    IA::Instance() -> setHallPosition(v);
 
     //Build the first siderurgy of IA
     v = IA::Instance() -> determinatePositionBuilding();
@@ -47,7 +49,6 @@ void GameState::Init() {
     v.z = Enumeration::HumanCityHall::human_z; 
     v.y = map -> getY(v.x, v.z);
     Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, true);
-    Human::Instance() -> setHallPosition(v);
     
     //Build the first siderurgy of Human
     v.x = Enumeration::HumanCityHall::human_x;
@@ -163,11 +164,19 @@ void GameState::Input() {
         }
     } else {
         Game::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);
-    }
+}
 }
 
 void GameState::Update(){
     Game *g = Game::Instance();
+
+    //Win/Lose
+    if (IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
+        Game::Instance() -> changeState(Enumeration::State::WinState);
+    }
+    if (Human::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
+        Game::Instance() -> changeState(Enumeration::State::DefeatState);
+    }
 
     //Update camera
     camera -> Update(g -> getWindow() -> getDeltaTime());
@@ -176,7 +185,7 @@ void GameState::Update(){
     hud -> Update();
 
     //NEW SOUND SYSTEM
-    SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");
+   /* SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");*/
     SoundSystem::Instance() -> update();
     
     //If human is building something
@@ -202,6 +211,8 @@ void GameState::CleanUp() {
     delete map;
     delete hud;
     delete battleManager;
+    //IA::Instance() -> cleanUp();
+    //Human::Instance() -> cleanUp();
     //ToDo: clean IA
     //ToDo: Clean Human
     //ToDo: Clean Map
@@ -231,4 +242,6 @@ BattleManager* GameState::getBattleManager() {
     if (Game::Instance() -> getIO() -> keyPressed(KEY_KEY_3)) {
         Human::Instance() -> receiveCitizens();
     }
+    Vector3<float> v = map -> getPointCollision(Game::Instance() -> getMouse());
+    Human::Instance() -> getUnitManager() -> UpdateUnitManager();
 */

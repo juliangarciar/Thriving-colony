@@ -132,7 +132,7 @@ void Unit::Init() {
         case Enumeration::UnitType::StandardR:
             if (breed == Enumeration::BreedType::Drorania) {
                 moveSpeed = 350;
-                attackDamage = 13;
+                attackDamage = 100;
                 attackRange = 350;
                 attackSpeed = 1;
                 viewRadius = 450;
@@ -457,11 +457,8 @@ void Unit::moveTroop() {
             if(pathFollow.empty()){
                 moving = false;
                 if (state == Enumeration::UnitState::Retract) {
-                    if (team == Enumeration::Team::Human) {
-                        Human::Instance() -> getUnitManager() -> enterMainBuilding(type);
-                    } else {
-                        IA::Instance() -> getUnitManager() -> enterMainBuilding(type);
-                    }
+                    triggerRetractedCallback();
+                    
                     return;
                 }
                 switchState(Enumeration::Idle);
@@ -599,7 +596,6 @@ void Unit::triggerRecruitedCallback(){
 }
 
 void Unit::triggerRetractedCallback(){
-    finished = true;
     retractedCallback(this);
 }
 

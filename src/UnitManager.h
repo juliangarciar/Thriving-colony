@@ -37,7 +37,6 @@ class UnitManager{
         bool checkCanPay(Enumeration::UnitType);
         bool isDeployingTroop();
         bool areTroopsDeployed();
-        void enterMainBuilding(Enumeration::UnitType);
 
         //SETTER
         Unit* setNewUnitModel(Enumeration::UnitType);
