@@ -30,8 +30,6 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
 
 //Destroyer
 UnitManager::~UnitManager() {
-    delete selectedTroop;
-
     for (std::map<i32, Unit*>::iterator it = inQueueTroops -> begin(); it != inQueueTroops -> end(); ++it){
         delete it->second;
     }
@@ -110,6 +108,15 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
 
 //Update all troops
 void UnitManager::updateUnitManager() {
+    // Retractear una sola unidad
+    if (selectedTroop != NULL) {
+        if (Game::Instance() -> getKeyboard() -> keyPressed(82)) { //82 = R, R de retracted
+            if (team == Enumeration::Team::Human){
+                selectedTroop -> setTroopDestination(Human::Instance()->getHallPosition());
+            }
+            selectedTroop -> switchState(Enumeration::UnitState::Retract);
+        }
+    }
     int i = 0;
     for (std::map<i32,Unit*>::iterator it = inQueueTroops -> begin(); it != inQueueTroops -> end() && i < inQueueTroops->size(); ++it) {
         if (it -> second != NULL) {

@@ -15,7 +15,7 @@ class Player {
         Player();
         virtual ~Player();
 
-        virtual void Init() = 0;
+        void Init();
         virtual void Update() = 0;
         virtual void CleanUp() = 0;
 

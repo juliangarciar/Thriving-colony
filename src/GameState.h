@@ -5,6 +5,7 @@
 #include "State.h"
 #include "CameraController.h"
 #include "Hud.h"
+#include "PauseMenu.h"
 #include "IA.h"
 #include "Human.h"
 #include "BuildingManager.h"
@@ -69,6 +70,8 @@ class GameState : public State {
         * @return objeto de tipo BattleManager
         */
         BattleManager* getBattleManager();
+
+        void cleanGamePaused();
         
     private:
         Light *light;
@@ -79,6 +82,7 @@ class GameState : public State {
 
         // This is for pausing, in a future it will be a gamestate different?
         bool gamePaused;
+        PauseMenu *pauseMenu;
 
         i32 prevWindowWidth, prevWindowHeight;
 };

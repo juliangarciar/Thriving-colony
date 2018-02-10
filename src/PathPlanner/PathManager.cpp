@@ -8,8 +8,7 @@ PathManager::PathManager(class Unit* actor){
     unit = actor;
 }
 PathManager::~PathManager(){
-    delete navGraph;
-    delete unit;
+    
 }
 // Change this method
 i32 PathManager::getClosestNodeToPosition(Vector2<f32> pos){

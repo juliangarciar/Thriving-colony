@@ -4,7 +4,6 @@
 #include "State.h"
 #include "MenuState.h"
 #include "GameState.h"
-#include "PauseState.h"
 #include "WinState.h"
 #include "DefeatState.h"
 #include "Enumeration.h"
@@ -120,7 +119,6 @@ class Game {
 
         MenuState *menu;
         GameState *game;
-        PauseState *pause;
         WinState *win;
         DefeatState *defeat;
         

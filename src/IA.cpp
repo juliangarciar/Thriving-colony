@@ -12,7 +12,7 @@ IA* IA::Instance() {
 }
 
 IA::IA() : Player() {
-    Init();
+    
 }
 
 IA::~IA() {
@@ -25,6 +25,7 @@ IA::~IA() {
 }
 
 void IA::Init() {
+    Player::Init();
     // Choose a behaviour
     chooseBehaviour();
     // Create a behaviour and a root node and set them up according to the behaviour

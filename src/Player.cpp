@@ -4,6 +4,15 @@
 //ToDo: seria ideal que todo fuera parametrizable y todo estuviera en el mismo sitio
 
 Player::Player() {
+    
+}
+
+Player::~Player() {
+    delete units;
+    delete buildings;
+}
+
+void Player::Init() {
     happiness = 0;
     cityLevel = 10;
     citizens = 20;
@@ -14,11 +23,6 @@ Player::Player() {
     underAttack = false;
 
     updateTimer = 1.00;
-}
-
-Player::~Player() {
-    delete units;
-    delete buildings;
 }
 
 /**

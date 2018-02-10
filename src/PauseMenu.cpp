@@ -26,7 +26,7 @@ void PauseMenu::setHUDEvents(){
     });
 
     buttonResume -> setCallback([]{
-        Game::Instance() -> changeState(Enumeration::State::GameState);
+        Game::Instance() -> getGameState() -> cleanGamePaused();
     });
 
     buttonMenu -> setCallback([]{

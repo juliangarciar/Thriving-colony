@@ -12,7 +12,7 @@ Human* Human::Instance() {
 }
 
 Human::Human() : Player() {
-    Init();
+    
 }
 
 Human::~Human() {
@@ -21,6 +21,7 @@ Human::~Human() {
 }
 
 void Human::Init() {
+    Player::Init();
     buildings = new BuildingManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
     units = new UnitManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
 }
