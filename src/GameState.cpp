@@ -61,6 +61,9 @@ void GameState::Input() {
     if (IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
         Game::Instance() -> changeState(Enumeration::State::WinState);
     }
+    if (Human::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
+        Game::Instance() -> changeState(Enumeration::State::DefeatState);
+    }
     
     camera -> Move();
     camera -> RotateAndInclinate();

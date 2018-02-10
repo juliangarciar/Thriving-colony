@@ -16,6 +16,7 @@ Game::Game() {
     game = new GameState();
     pause = new PauseState();
     win = new WinState();
+    defeat = new DefeatState();
 
     state = game;
     stateData = Enumeration::State::GameState;
@@ -108,6 +109,11 @@ void Game::changeState(Enumeration::State data) {
         case Enumeration::State::WinState:
             state -> CleanUp();
             state = win;
+            state -> Init();
+        break;
+        case Enumeration::State::DefeatState:
+            state -> CleanUp();
+            state = defeat;
             state -> Init();
         break;
     }

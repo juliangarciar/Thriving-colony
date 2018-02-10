@@ -6,6 +6,7 @@
 #include "GameState.h"
 #include "PauseState.h"
 #include "WinState.h"
+#include "DefeatState.h"
 #include "Enumeration.h"
 #include <Types.h>
 
@@ -121,6 +122,7 @@ class Game {
         GameState *game;
         PauseState *pause;
         WinState *win;
+        DefeatState *defeat;
         
         Window *window;
 
