@@ -76,7 +76,8 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
 
             //Añadir al HUD
             if (team == Enumeration::Team::Human){
-                Game::Instance()->getGameState()->getHud()->addTroopOption(u->getID(), u->getType());
+                Game::Instance()->getGameState()->getHud()->removeTroopFromQueue(u->getID());
+                Game::Instance()->getGameState()->getHud()->addTroopToHall(u->getID(), u->getType());
             }
         });
         newUnit -> setRetractedCallback([&] (Unit *u){
@@ -89,12 +90,13 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
 
             //Añadir al HUD
             if (team == Enumeration::Team::Human){
-                Game::Instance()->getGameState()->getHud()->addTroopOption(u->getID(), u->getType());
+                Game::Instance()->getGameState()->getHud()->addTroopToHall(u->getID(), u->getType());
             }
         });
 
         std::cout << "Se ha empezado a reclutar la unidad " << newUnit->getID() << std::endl;
         inQueueTroops -> insert(std::pair<i32, Unit*>(newUnit->getID(), newUnit));
+        Game::Instance()->getGameState()->getHud()->addTroopToQueue(newUnit->getID(), newUnit->getType());
 
         troopsAmount[unitData]++;
         nextTroopId++;
@@ -168,7 +170,7 @@ void UnitManager::deploySelectedTroop(Vector3<f32> p) {
         temp -> getModel() -> setActive(true);
 
         if (team == Enumeration::Team::Human){
-            Game::Instance()->getGameState()->getHud()->deleteTroopOption(temp->getID());
+            Game::Instance()->getGameState()->getHud()->removeTroopFromHall(temp->getID());
         }
         std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
 
@@ -194,7 +196,7 @@ void UnitManager::deployAllTroops(Vector3<f32> p){
         temp -> getModel() -> setActive(true);
         
         if (team == Enumeration::Team::Human){
-            Game::Instance()->getGameState()->getHud()->deleteTroopOption(temp->getID());
+            Game::Instance()->getGameState()->getHud()->removeTroopFromHall(temp->getID());
         }
         std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
     }

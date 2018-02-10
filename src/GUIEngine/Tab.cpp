@@ -10,8 +10,7 @@ Tab::~Tab(){
 }
 
 void Tab::addChild(GUIElement *elem) {
-    elem -> getGUIElement() -> setParent(tab);
-    tab -> addChild(elem -> getGUIElement());
+    children . push_back(elem);
 }
 
 void Tab::setPosition(Vector2<i32> position){

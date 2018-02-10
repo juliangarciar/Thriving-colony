@@ -7,11 +7,19 @@ ScrollPanel::ScrollPanel() {
 
 ScrollPanel::ScrollPanel(GUIElement *parent) {
     spanel = parent -> getGUIElement() -> add<nanogui::VScrollPanel>();
+    parent->addChild(this);
 }
 
 ScrollPanel::~ScrollPanel() {
-    //ToDo: borrar Label
+    for (int i = 0; i < children.size(); i++){
+        //ToDo: eliminar hijos
+    }
+    //ToDo: eliminar este
     hide();
+}
+
+void ScrollPanel::addChild(GUIElement *elem) {
+    children . push_back(elem);
 }
 
 void ScrollPanel::setPosition(Vector2<i32> position){

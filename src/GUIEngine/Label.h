@@ -13,6 +13,8 @@ class Label : public GUIElement {
         Label(GUIElement *parent, std::string t);
         virtual ~Label();
 
+        void addChild(GUIElement *);
+
         void show();
         void hide();
         bool isVisible();

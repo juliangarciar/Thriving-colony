@@ -13,6 +13,8 @@ class Widget : public GUIElement {
         Widget(GUIElement *parent);
         virtual ~Widget();
 
+        void addChild(GUIElement *);
+
         void show();
         void hide();
         bool isVisible();

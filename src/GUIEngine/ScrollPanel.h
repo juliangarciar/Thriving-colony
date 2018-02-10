@@ -11,6 +11,8 @@ class ScrollPanel : public GUIElement {
         ScrollPanel();
         ScrollPanel(GUIElement *parent);
         virtual ~ScrollPanel();
+
+        void addChild(GUIElement *);
         
         void show();
         void hide();

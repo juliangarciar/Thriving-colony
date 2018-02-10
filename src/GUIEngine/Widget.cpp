@@ -7,10 +7,20 @@ Widget::Widget() {
 
 Widget::Widget(GUIElement *parent) {
     widget = parent -> getGUIElement() -> add<nanogui::Widget>();
+    parent->addChild(this);
 }
 
 Widget::~Widget() {
-    //ToDo: borrar Widget
+    for (int i = 0; i < children.size(); i++){
+        //ToDo: eliminar hijos
+    }
+    //ToDo: eliminar este
+    hide();
+
+}
+
+void Widget::addChild(GUIElement *elem) {
+    children . push_back(elem);
 }
 
 void Widget::setPosition(Vector2<i32> position){

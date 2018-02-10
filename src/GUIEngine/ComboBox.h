@@ -13,6 +13,8 @@ class ComboBox : public GUIElement {
         ComboBox(GUIElement *parent, std::vector<std::string> opts);
         virtual ~ComboBox();
 
+        void addChild(GUIElement *);
+
         void show();
         void hide();
         bool isVisible();

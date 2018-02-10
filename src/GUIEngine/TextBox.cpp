@@ -7,11 +7,20 @@ TextBox::TextBox(std::string t) {
 
 TextBox::TextBox(GUIElement *parent, std::string t) {
     textbox = parent -> getGUIElement() -> add<nanogui::TextBox>(t);
+    parent->addChild(this);
 }
 
 TextBox::~TextBox() {
-    //ToDo: borrar Label
+    for (int i = 0; i < children.size(); i++){
+        //ToDo: eliminar hijos
+    }
+    //ToDo: eliminar este
     hide();
+
+}
+
+void TextBox::addChild(GUIElement *elem) {
+    children . push_back(elem);
 }
 
 void TextBox::setPosition(Vector2<i32> position){

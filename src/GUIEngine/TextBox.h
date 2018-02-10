@@ -11,6 +11,8 @@ class TextBox : public GUIElement {
         TextBox(std::string t);
         TextBox(GUIElement *parent, std::string t);
         virtual ~TextBox();
+
+        void addChild(GUIElement *);
         
         void show();
         void hide();

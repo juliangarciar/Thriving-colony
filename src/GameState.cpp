@@ -25,8 +25,7 @@ void GameState::Init() {
 
     //Init HUD
     hud = new Hud();
-    hud -> setHUDEvents();
-    Window::Instance() -> setGUI();
+    hud -> Init();
 
     //Init battle manager
     battleManager = new BattleManager();
@@ -174,7 +173,7 @@ void GameState::Update(){
     camera -> Update(g -> getWindow() -> getDeltaTime());
     
     //Update HUD
-    hud -> update();
+    hud -> Update();
 
     //NEW SOUND SYSTEM
     SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");
