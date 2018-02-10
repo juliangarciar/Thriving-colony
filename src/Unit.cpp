@@ -44,6 +44,7 @@ Unit::~Unit() {
 }
 
 void Unit::Init() {
+    std::cout << (int)type << std::endl;
     // Basic stats of each unit are here
     switch (type) {
         // Basic melee soldier
@@ -374,8 +375,11 @@ void Unit::switchState(Enumeration::UnitState newState) {
 }
 
 void Unit::recruitingState(){
-    if (recruitingTimer > 0){
+    if (recruitingTimer > 0.0f){
         recruitingTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
+        if (team == Enumeration::Team::Human){
+            Game::Instance()->getGameState()->getHud()->modifyTroopFromQueue(ID, recruitingTimer/recruitingTime);
+        }
     } else {
         recruitedCallback(this);
         switchState(Enumeration::UnitState::InHome);
@@ -445,11 +449,8 @@ void Unit::moveTroop() {
             if(pathFollow.empty()){
                 moving = false;
                 if (state == Enumeration::UnitState::Retract) {
-                    if (team == Enumeration::Team::Human) {
-                        Human::Instance() -> getUnitManager() -> enterMainBuilding(type);
-                    } else {
-                        IA::Instance() -> getUnitManager() -> enterMainBuilding(type);
-                    }
+                    triggerRetractedCallback();
+                    
                     return;
                 }
                 switchState(Enumeration::Idle);
@@ -587,7 +588,6 @@ void Unit::triggerRecruitedCallback(){
 }
 
 void Unit::triggerRetractedCallback(){
-    finished = true;
     retractedCallback(this);
 }
 

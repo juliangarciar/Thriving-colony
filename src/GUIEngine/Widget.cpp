@@ -27,8 +27,16 @@ void Widget::setPosition(Vector2<i32> position){
     widget -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 
+void Widget::setSize(Vector2<i32> size){
+    widget -> setSize(Eigen::Vector2i(size.x, size.y));
+}
+
 void Widget::setTooltip(std::string t){
     widget->setTooltip(t);
+}
+
+void Widget::setVerticalAlignment() {
+    widget -> setLayout(new nanogui::BoxLayout(nanogui::Orientation::Vertical, nanogui::Alignment::Middle, 0, 6));
 }
 
 void Widget::show(){

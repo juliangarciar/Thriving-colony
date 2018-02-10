@@ -80,11 +80,12 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
         });
         newUnit -> setRetractedCallback([&] (Unit *u){
             std::cout << "Se ha terminado de guardar la unidad " << u->getID() << std::endl;
-            //Delete in Map
-            inMapTroops->erase(inQueueTroops->find(u->getID()));
-
             //Add in Hall
             inHallTroops->insert(std::pair<i32, Unit*>(u->getID(), u));
+            //Delete in Map
+            u -> getModel() -> setActive(false);
+            inMapTroops->erase(inMapTroops->find(u->getID()));
+
 
             //Añadir al HUD
             if (team == Enumeration::Team::Human){
@@ -412,11 +413,6 @@ Unit* UnitManager::setNewUnitModel(Enumeration::UnitType unitType) {
             return NULL;
         break;
     }
-}
-
-void UnitManager::enterMainBuilding(Enumeration::UnitType) {
-    //ToDo: Crear una tropa nueva, que sea gratis y meterla en el inhalltroops
-    std::cout << "entro" << std::endl;
 }
 
 bool UnitManager::areTroopsDeployed(){

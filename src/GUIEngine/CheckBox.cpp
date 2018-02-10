@@ -38,6 +38,10 @@ void CheckBox::setPosition(Vector2<i32> position){
     checkbox -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 
+void CheckBox::setSize(Vector2<i32> size){
+    checkbox -> setSize(Eigen::Vector2i(size.x, size.y));
+}
+
 void CheckBox::setTooltip(std::string text){
     checkbox -> setTooltip(text);
 }

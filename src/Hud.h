@@ -105,6 +105,12 @@ class Hud {
          */
         void addTroopToQueue(i32, Enumeration::UnitType);
         /**
+         * @brief
+         * @param
+         * @param
+         */
+        void modifyTroopFromQueue(i32, f32);
+        /**
          * @brief 
          * @param
          */
@@ -120,7 +126,8 @@ class Hud {
     
         std::vector<i32> troopsInHallIDs;
 
-        std::map<i32, Panel*> troopQueueList;
+        std::map<i32, Widget*> troopQueueList;
+        std::map<i32, ProgressBar*> troopQueueProgressBars;
         
         TabPanel *tabs;
 
@@ -134,13 +141,14 @@ class Hud {
         
         Panel *barrackEmpty;
         Panel *barrackContent;
-        Panel *barrackTroopQueuePanel;
         Panel *barnEmpty;
         Panel *barnContent;
-        Panel *barnTroopQueuePanel;
         Panel *workshopEmpty;
         Panel *workshopContent;
-        Panel *workshopTroopQueuePanel;
+
+        Widget *barrackTroopQueueWidget;
+        Widget *barnTroopQueueWidget;
+        Widget *workshopTroopQueueWidget;
 
         Button *buttonOpenPanel;
 

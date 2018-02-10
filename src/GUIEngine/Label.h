@@ -20,11 +20,10 @@ class Label : public GUIElement {
         bool isVisible();
         
         void setPosition(Vector2<i32> position);
+        void setSize(Vector2<i32> size);
 
         void setTooltip(std::string t);
         void setLabel(std::string t);
-
-        void setSize(Vector2<i32> size);
         
         nanogui::Widget *getGUIElement();
     private:

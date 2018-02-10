@@ -61,13 +61,6 @@ void GameState::Init() {
 
 void GameState::Input() {
     if(gamePaused ==  false){
-        if (IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
-            Game::Instance() -> changeState(Enumeration::State::WinState);
-        }
-        if (Human::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
-            Game::Instance() -> changeState(Enumeration::State::DefeatState);
-        }
-        
         camera -> Move();
         camera -> RotateAndInclinate();
         camera -> Zoom();
@@ -187,11 +180,19 @@ void GameState::Update(){
     if (gamePaused == false) {
         Game *g = Game::Instance();
 
-        //Update camera
-        camera -> Update(g -> getWindow() -> getDeltaTime());
-        
-        //Update HUD
-        hud -> Update();
+    //Win/Lose
+    if (IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
+        Game::Instance() -> changeState(Enumeration::State::WinState);
+    }
+    if (Human::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
+        Game::Instance() -> changeState(Enumeration::State::DefeatState);
+    }
+
+    //Update camera
+    camera -> Update(g -> getWindow() -> getDeltaTime());
+    
+    //Update HUD
+    hud -> Update();
 
         //NEW SOUND SYSTEM
     /* SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");*/

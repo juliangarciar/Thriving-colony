@@ -18,6 +18,7 @@ class Tab : public GUIElement{
         bool isVisible();
         
         void setPosition(Vector2<i32> position);
+        void setSize(Vector2<i32> size);
         
         void setTooltip(std::string text);
 

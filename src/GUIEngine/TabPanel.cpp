@@ -51,6 +51,10 @@ void TabPanel::setPosition(Vector2<i32> position){
     ctrl -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 
+void TabPanel::setSize(Vector2<i32> size){
+    ctrl -> setSize(Eigen::Vector2i(size.x, size.y));
+}
+
 void TabPanel::setTooltip(std::string text){
     ctrl->setTooltip(text);
 }
