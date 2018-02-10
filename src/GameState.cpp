@@ -12,6 +12,9 @@ GameState::~GameState() {
 }
 
 void GameState::Init() {
+    /*IA::getInstance() -> init();
+    Human::getInstance() -> init();*/
+
     //ToDo: la luz, terreno, y quizas la camara deberian ir en una clase Map
     light = new Light(Vector3<float>(8000, 4000, 8000), 10000);
 
@@ -42,6 +45,9 @@ void GameState::Init() {
     v = IA::getInstance() -> determinatePositionBuilding();
     IA::getInstance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
 
+
+    HUman::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardR);
+
     // Build the main building of Human
     v.x = Enumeration::HumanCityHall::human_x;
     v.z = Enumeration::HumanCityHall::human_z; 
@@ -56,6 +62,10 @@ void GameState::Init() {
 }
 
 void GameState::Input() {
+    if (IA::getInstance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
+        Game::Instance() -> changeState(Enumeration::State::WinState);
+    }
+    
     camera -> Move();
     camera -> RotateAndInclinate();
     camera -> Zoom();
@@ -152,7 +162,7 @@ void GameState::Update(){
     hud -> update();
 
     //NEW SOUND SYSTEM
-    SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");
+   /* SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");*/
     SoundSystem::Instance() -> update();
     
     //If human is building something
@@ -179,6 +189,8 @@ void GameState::CleanUp() {
     delete map;
     delete hud;
     delete battleManager;
+    //IA::getInstance() -> cleanUp();
+    //Human::getInstance() -> cleanUp();
     //ToDo: clean IA
     //ToDo: Clean Human
     //ToDo: Clean Map

@@ -108,177 +108,177 @@ Hud::Hud() {
     deleteWarning();
     
     tabContainer = new Panel("Building viewer");
-        tabContainer -> setSize(Vector2<int>(350, 280));
-        tabContainer -> setGroupLayout();
-        tabs = new TabPanel(tabContainer);
-        mainBuildingTab = tabs->createTab("Main Building");
-        barrackTab = tabs->createTab("Barrack");
-        barnTab = tabs->createTab("Barn");
-        workshopTab = tabs->createTab("Workshop");
+    tabContainer -> setSize(Vector2<int>(350, 280));
+    tabContainer -> setGroupLayout();
+    tabs = new TabPanel(tabContainer);
+    mainBuildingTab = tabs->createTab("Main Building");
+    barrackTab = tabs->createTab("Barrack");
+    barnTab = tabs->createTab("Barn");
+    workshopTab = tabs->createTab("Workshop");
 
-        //MainBuildingTab
-        {
-            Button *b = new Button(mainBuildingTab, "Close");
-            b->setTooltip("Close popup");
-            b->setCallback([&] {
-                this->hidePopup();
-            });
-            buttons -> push_back(b);
+    //MainBuildingTab
+    {
+        Button *b = new Button(mainBuildingTab, "Close");
+        b->setTooltip("Close popup");
+        b->setCallback([&] {
+            this->hidePopup();
+        });
+        buttons -> push_back(b);
 
-            hallTroopList = new ComboBox(mainBuildingTab, {});
+        hallTroopList = new ComboBox(mainBuildingTab, {});
 
-            b = new Button(mainBuildingTab, "Deploy selected troop");
-            b -> setTooltip("Deploy your selected unit onto the map");
-            b -> setCallback([&]{
-                int index = hallTroopList -> getSelectedOption();
-                if (index >= 0) {
-                    hallTroopList -> removeOption(index);
-                    Human::getInstance() -> getUnitManager() -> startDeployingTroop(index);
-                    Window::Instance()->getGUIEnvironment()->performLayout();
-                }
-            });
-            buttons -> push_back(b);
-
-            b = new Button(mainBuildingTab, "Deploy all troops");
-            b -> setTooltip("Deploy all your units onto the map");
-            b -> setCallback([&]{
-                Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsHuman);
-            });
-            buttons -> push_back(b);
-
-            b = new Button(mainBuildingTab, "Retract all troops");
-            b -> setTooltip("Retract your units back into your town hall");
-            b -> setCallback([&]{
-                Game::Instance() -> getEvents() -> triggerEvent(Enumeration::RetractTroopsHuman);
-            });
-            buttons -> push_back(b);
-
-            mainBuildingTab->hide();
-        }
-        //BarrackTab
-        {
-            Button *b = new Button(barrackTab, "Close");
-            b->setTooltip("Close popup");
-            b->setCallback([&] {
-                this->hidePopup();
-            });
-            buttons -> push_back(b);
-
-            barrackEmpty = new Panel(barrackTab, "");
-            barrackEmptyLabel = new Label(barrackEmpty, "Este edificio no esta activo aun");
-
-            barrackContent = new Panel(barrackTab, "");
-            barrackContent -> setGroupLayout();
-
-            b = new Button(barrackContent, "Create melee footman");
-            b -> setTooltip("Create a melee unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
-            b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardM);
-                hallTroopList -> addOption("Melee footman");
+        b = new Button(mainBuildingTab, "Deploy selected troop");
+        b -> setTooltip("Deploy your selected unit onto the map");
+        b -> setCallback([&]{
+            int index = hallTroopList -> getSelectedOption();
+            if (index >= 0) {
+                hallTroopList -> removeOption(index);
+                Human::getInstance() -> getUnitManager() -> startDeployingTroop(index);
                 Window::Instance()->getGUIEnvironment()->performLayout();
-            });
-            buttons -> push_back(b);
-            
-            b = new Button(barrackContent, "Create ranged footman");
-            b -> setTooltip("Create a ranged unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
-            b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardR);
-                hallTroopList -> addOption("Ranged footman");
-                Window::Instance()->getGUIEnvironment()->performLayout();
-            });
-            buttons -> push_back(b);
+            }
+        });
+        buttons -> push_back(b);
 
-            barrackScroll = new ScrollPanel(barrackContent);
-            barrackTroopListPanel = new Panel(barrackScroll, "");
+        b = new Button(mainBuildingTab, "Deploy all troops");
+        b -> setTooltip("Deploy all your units onto the map");
+        b -> setCallback([&]{
+            Game::Instance() -> getEvents() -> triggerEvent(Enumeration::DeployTroopsHuman);
+        });
+        buttons -> push_back(b);
 
-            barrackContent -> hide();
-        }
-        //BarnTab
-        {
-            Button *b = new Button(barnTab, "Close");
-            b->setTooltip("Close popup");
-            b->setCallback([&] {
-                this->hidePopup();
-            });
-            buttons -> push_back(b);
+        b = new Button(mainBuildingTab, "Retract all troops");
+        b -> setTooltip("Retract your units back into your town hall");
+        b -> setCallback([&]{
+            Game::Instance() -> getEvents() -> triggerEvent(Enumeration::RetractTroopsHuman);
+        });
+        buttons -> push_back(b);
 
-            barnEmpty = new Panel(barnTab, "");
-            barnEmptyLabel = new Label(barnEmpty, "Este edificio no esta activo aun");
+        mainBuildingTab->hide();
+    }
+    //BarrackTab
+    {
+        Button *b = new Button(barrackTab, "Close");
+        b->setTooltip("Close popup");
+        b->setCallback([&] {
+            this->hidePopup();
+        });
+        buttons -> push_back(b);
 
-            barnContent = new Panel(barnTab, "");
-            barnContent -> setGroupLayout();
+        barrackEmpty = new Panel(barrackTab, "");
+        barrackEmptyLabel = new Label(barrackEmpty, "Este edificio no esta activo aun");
 
-            b = new Button(barnContent, "Create mounted melee unit");
-            b -> setTooltip("Create a melee unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
-            b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedM);
-                hallTroopList -> addOption("Mounted melee unit");
-                Window::Instance()->getGUIEnvironment()->performLayout();
-            });
-            buttons -> push_back(b);
-            
-            b = new Button(barnContent, "Create mounted ranged unit");
-            b -> setTooltip("Create a ranged unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
-            b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedR);
-                hallTroopList -> addOption("Mounted ranged unit");
-                Window::Instance()->getGUIEnvironment()->performLayout();
-            });
-            buttons -> push_back(b);
+        barrackContent = new Panel(barrackTab, "");
+        barrackContent -> setGroupLayout();
 
-            b = new Button(barnContent, "Create monster");
-            b -> setTooltip("Create a overwhelmingly powerful creature to destroy your enemies\nMetal cost: 100\nCrystal cost:100");
-            b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Idol);
-                hallTroopList -> addOption("Create monster");
-                Window::Instance()->getGUIEnvironment()->performLayout();
-            });
-            buttons -> push_back(b);
+        b = new Button(barrackContent, "Create melee footman");
+        b -> setTooltip("Create a melee unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
+        b->setCallback([&] {
+            Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardM);
+            hallTroopList -> addOption("Melee footman");
+            Window::Instance()->getGUIEnvironment()->performLayout();
+        });
+        buttons -> push_back(b);
+        
+        b = new Button(barrackContent, "Create ranged footman");
+        b -> setTooltip("Create a ranged unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
+        b->setCallback([&] {
+            Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::StandardR);
+            hallTroopList -> addOption("Ranged footman");
+            Window::Instance()->getGUIEnvironment()->performLayout();
+        });
+        buttons -> push_back(b);
 
-            barnScroll = new ScrollPanel(barnContent);
-            barnTroopListPanel = new Panel(barnScroll, "");
+        barrackScroll = new ScrollPanel(barrackContent);
+        barrackTroopListPanel = new Panel(barrackScroll, "");
 
-            barnContent -> hide();
-        }
-        //Workshop tab
-        {
-            Button *b = new Button(workshopTab, "Close");
-            b->setTooltip("Close popup");
-            b->setCallback([&] {
-                this->hidePopup();
-            });
-            buttons -> push_back(b);
+        barrackContent -> hide();
+    }
+    //BarnTab
+    {
+        Button *b = new Button(barnTab, "Close");
+        b->setTooltip("Close popup");
+        b->setCallback([&] {
+            this->hidePopup();
+        });
+        buttons -> push_back(b);
 
-            workshopEmpty = new Panel(workshopTab, "");
-            workshopEmptyLabel = new Label(workshopEmpty, "Este edificio no esta activo aun");
+        barnEmpty = new Panel(barnTab, "");
+        barnEmptyLabel = new Label(barnEmpty, "Este edificio no esta activo aun");
 
-            workshopContent = new Panel(workshopTab, "");
-            workshopContent -> setGroupLayout();
+        barnContent = new Panel(barnTab, "");
+        barnContent -> setGroupLayout();
 
-            b = new Button(workshopContent, "Create ram");
-            b -> setTooltip("Create a ram that specializes in destroying buildings\nMetal cost: 100\nCrystal cost:100");
-            b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Desintegrator);
-                hallTroopList -> addOption("Ram");
-                Window::Instance()->getGUIEnvironment()->performLayout();
-            });
-            buttons -> push_back(b);
-            
-            b = new Button(workshopContent, "Create catapult");
-            b -> setTooltip("Create a catapult that heavy area of damage\nMetal cost: 100\nCrystal cost:100");
-            b->setCallback([&] {
-                Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Launcher);
-                hallTroopList -> addOption("Catapult");
-                Window::Instance()->getGUIEnvironment()->performLayout();
-            });
-            buttons -> push_back(b);
+        b = new Button(barnContent, "Create mounted melee unit");
+        b -> setTooltip("Create a melee unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
+        b->setCallback([&] {
+            Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedM);
+            hallTroopList -> addOption("Mounted melee unit");
+            Window::Instance()->getGUIEnvironment()->performLayout();
+        });
+        buttons -> push_back(b);
+        
+        b = new Button(barnContent, "Create mounted ranged unit");
+        b -> setTooltip("Create a ranged unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
+        b->setCallback([&] {
+            Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::AdvancedR);
+            hallTroopList -> addOption("Mounted ranged unit");
+            Window::Instance()->getGUIEnvironment()->performLayout();
+        });
+        buttons -> push_back(b);
 
-            workshopScroll = new ScrollPanel(workshopContent);
-            workshopTroopListPanel = new Panel(workshopScroll, "");
+        b = new Button(barnContent, "Create monster");
+        b -> setTooltip("Create a overwhelmingly powerful creature to destroy your enemies\nMetal cost: 100\nCrystal cost:100");
+        b->setCallback([&] {
+            Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Idol);
+            hallTroopList -> addOption("Create monster");
+            Window::Instance()->getGUIEnvironment()->performLayout();
+        });
+        buttons -> push_back(b);
 
-            workshopContent -> hide();
-        }
-        tabs->changeActiveTab(0);
+        barnScroll = new ScrollPanel(barnContent);
+        barnTroopListPanel = new Panel(barnScroll, "");
+
+        barnContent -> hide();
+    }
+    //Workshop tab
+    {
+        Button *b = new Button(workshopTab, "Close");
+        b->setTooltip("Close popup");
+        b->setCallback([&] {
+            this->hidePopup();
+        });
+        buttons -> push_back(b);
+
+        workshopEmpty = new Panel(workshopTab, "");
+        workshopEmptyLabel = new Label(workshopEmpty, "Este edificio no esta activo aun");
+
+        workshopContent = new Panel(workshopTab, "");
+        workshopContent -> setGroupLayout();
+
+        b = new Button(workshopContent, "Create ram");
+        b -> setTooltip("Create a ram that specializes in destroying buildings\nMetal cost: 100\nCrystal cost:100");
+        b->setCallback([&] {
+            Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Desintegrator);
+            hallTroopList -> addOption("Ram");
+            Window::Instance()->getGUIEnvironment()->performLayout();
+        });
+        buttons -> push_back(b);
+        
+        b = new Button(workshopContent, "Create catapult");
+        b -> setTooltip("Create a catapult that heavy area of damage\nMetal cost: 100\nCrystal cost:100");
+        b->setCallback([&] {
+            Human::getInstance() -> getUnitManager() -> createTroop(Enumeration::UnitType::Launcher);
+            hallTroopList -> addOption("Catapult");
+            Window::Instance()->getGUIEnvironment()->performLayout();
+        });
+        buttons -> push_back(b);
+
+        workshopScroll = new ScrollPanel(workshopContent);
+        workshopTroopListPanel = new Panel(workshopScroll, "");
+
+        workshopContent -> hide();
+    }
+    tabs->changeActiveTab(0);
     tabContainer->refreshLayout();
     tabContainer->center();
     tabContainer->hide();

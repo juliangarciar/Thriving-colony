@@ -5,6 +5,7 @@
 #include "MenuState.h"
 #include "GameState.h"
 #include "PauseState.h"
+#include "WinState.h"
 #include "Enumeration.h"
 
 #include <IOEngine/EventSystem.h>
@@ -117,6 +118,7 @@ class Game {
         MenuState *menu;
         GameState *game;
         PauseState *pause;
+        WinState *win;
         
         Window *window;
 
