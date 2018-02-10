@@ -456,11 +456,8 @@ void Unit::moveTroop() {
             if(pathFollow.empty()){
                 moving = false;
                 if (state == Enumeration::UnitState::Retract) {
-                    if (team == Enumeration::Team::Human) {
-                        Human::Instance() -> getUnitManager() -> enterMainBuilding(type);
-                    } else {
-                        IA::Instance() -> getUnitManager() -> enterMainBuilding(type);
-                    }
+                    triggerRetractedCallback();
+                    
                     return;
                 }
                 switchState(Enumeration::Idle);
@@ -598,7 +595,6 @@ void Unit::triggerRecruitedCallback(){
 }
 
 void Unit::triggerRetractedCallback(){
-    finished = true;
     retractedCallback(this);
 }
 
