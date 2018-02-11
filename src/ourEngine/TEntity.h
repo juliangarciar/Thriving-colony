@@ -3,11 +3,11 @@
 
 class TEntity {
     public:
-    TEntity();
-    ~TEntity();
+        TEntity();
+        virtual ~TEntity();
 
-    virtual void beginDraw() = 0;
-    virtual void endDraw() = 0;
+        virtual void beginDraw() = 0;
+        virtual void endDraw() = 0;
 
     private:
 };
