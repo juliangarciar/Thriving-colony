@@ -1,16 +1,15 @@
 #ifndef UNIT_H
 #define UNIT_H
 
-#include "Entity.h"
-#include <GraphicEngine/Vector3.h>
-#include <PathPlanner/PathManager.h>
-#include <Types.h>
-
 #include <iostream>
 #include <functional>
 #include <cmath>
 #include <string>
 #include <list>
+#include <Types.h>
+#include <Entity.h>
+#include <MathEngine/Vector3.h>
+#include <PathPlanner/PathManager.h>
 
 class Unit : public Entity {
     

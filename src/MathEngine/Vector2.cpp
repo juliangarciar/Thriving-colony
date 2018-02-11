@@ -1,5 +1,4 @@
 #include "Vector2.h"
-#include "Window.h"
 
 template <class T>
 Vector2<T>::Vector2() {
@@ -86,18 +85,6 @@ core::vector2df Vector2<T>::getVectorF() {
     return core::vector2df(x, y);
 }
 
-template <class T>
-Vector2<T> Vector2<T>::getFixed() {
-    i32 initialWidth = Window::Instance() -> getInitialWindowWidth();
-    i32 initialHeight = Window::Instance() -> getInitialWindowHeight();
-    i32 actualWidth = Window::Instance() -> getRealWindowWidth();
-    i32 actualHeight = Window::Instance() -> getRealWindowHeight();
-
-    i32 newX = x*actualWidth/initialWidth; 
-    i32 newY = y*actualHeight/initialHeight; 
-
-    return Vector2<T>(newX, newY);
-}
 // Added by Julian
 template <class T>
 T Vector2<T>::calculateDistance(Vector2<T> b){
@@ -108,6 +95,7 @@ T Vector2<T>::calculateDistance(Vector2<T> b){
     T distance = std::sqrt(disX * disX + disY * disY);
     return distance;
 }
+
 template <class T>
 Vector2<T> Vector2<T>::operator + (const Vector2<T> &p) const {
     return Vector2<T>(this -> x + p.x, this -> y + p.y);
@@ -120,5 +108,6 @@ template <class T>
 Vector2<T> Vector2<T>::operator / (const f32 &num) const {
     return Vector2<T>(this -> x / num, this -> y / num);
 }
+
 template class Vector2<i32>;
 template class Vector2<f32>;

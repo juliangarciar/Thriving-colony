@@ -2,10 +2,10 @@
 #define MODEL_H
 
 #include <irrlicht.h>
-#include "SceneNode.h"
-#include "Material.h"
-#include "Box3D.h"
 #include <Types.h>
+#include <GraphicEngine/SceneNode.h>
+#include <GraphicEngine/Material.h>
+#include <MathEngine/Box3D.h>
 
 using namespace irr;
 

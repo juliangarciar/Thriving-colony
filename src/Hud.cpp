@@ -28,12 +28,12 @@ Hud::~Hud() {
 void Hud::Init(){
     // Building buttons panel
     buildingsPanel = new Panel("Buildings");
-    buildingsPanel -> setPosition(Vector2<i32>(575, 546).getFixed());
+    buildingsPanel -> setPosition(Vector2<i32>(575, 546));
 
     // General
     Widget *generalWidget = new Widget(buildingsPanel);
     generalWidget -> setVerticalLayout();
-    generalWidget -> setPosition(Vector2<i32>(20, 640).getFixed());
+    generalWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(generalWidget, "General functions");
     Button *buttonExpandTerrain = new Button(generalWidget, "Expand terrain");
@@ -43,7 +43,7 @@ void Hud::Init(){
     // Resources
     Widget *resourceWidget = new Widget(buildingsPanel);
     resourceWidget -> setVerticalLayout();
-    resourceWidget -> setPosition(Vector2<i32>(20, 640).getFixed());
+    resourceWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(resourceWidget, "Resource buildings");
     Button *buttonHome = new Button(resourceWidget, "House");
@@ -53,7 +53,7 @@ void Hud::Init(){
     // Services
     Widget *serviceWidget = new Widget(buildingsPanel);
     serviceWidget -> setVerticalLayout();
-    serviceWidget -> setPosition(Vector2<i32>(20, 640).getFixed());
+    serviceWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(serviceWidget, "Service buildings");
     Button *buttonSchool = new Button(serviceWidget, "School");
@@ -63,7 +63,7 @@ void Hud::Init(){
     // Military
     Widget *militaryWidget = new Widget(buildingsPanel);
     militaryWidget -> setVerticalLayout();
-    militaryWidget -> setPosition(Vector2<i32>(20, 640).getFixed());
+    militaryWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(militaryWidget, "Military buildings");
     Button *buttonBarrack = new Button(militaryWidget, "Barrack");
@@ -73,7 +73,7 @@ void Hud::Init(){
     // Defense
     Widget *defenseWidget = new Widget(buildingsPanel);
     defenseWidget -> setVerticalLayout();
-    defenseWidget -> setPosition(Vector2<i32>(20, 640).getFixed());
+    defenseWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(defenseWidget, "Defensive buildings");
     Button *buttonTower = new Button(defenseWidget, "Tower");
@@ -651,9 +651,9 @@ void Hud::removeTroopFromQueue(i32 idTroop){
 }
 
 void Hud::updatePositions() {
-    buttonOpenPanel -> setPosition(Vector2<i32>(100,20).getFixed());
+    buttonOpenPanel -> setPosition(Vector2<i32>(100,20));
 
-    buildingsPanel->setPosition(Vector2<i32>(20, 640).getFixed());
+    buildingsPanel->setPosition(Vector2<i32>(20, 640));
 
     tabContainer->center();
 }
@@ -676,88 +676,88 @@ void Hud::hideToast(){
 
 void Hud::debug(){
     i32 melees = 
-            Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
-            Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
-        i32 ranges = 
-            Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardR) + 
-            Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedR);
-        i32 sieges = 
-            Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) + 
-            Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
+        Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
+        Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
+    i32 ranges = 
+        Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardR) + 
+        Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedR);
+    i32 sieges = 
+        Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) + 
+        Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
 
-        std::stringstream os;
-        os << "Metal: " << std::to_string(Human::Instance() -> getMetalAmount());
-        playerMetalAmount -> setLabel(os.str());
-        os = std::stringstream();
-        os << "Crystal: " << std::to_string(Human::Instance() -> getCrystalAmount());
-        playerCrystalAmount -> setLabel(os.str());
-        os = std::stringstream();
-        os << "Citizens: " << std::to_string(Human::Instance() -> getCitizens());
-        playerCitizens -> setLabel(os.str());
-        os = std::stringstream();
-        os << "Happiness: " << std::to_string(Human::Instance() -> getHappiness());
-        playerHappiness -> setLabel(os.str());
-        os = std::stringstream();
-        os << "City level: "<< std::to_string(Human::Instance() -> getCityLevel());
-        playerCityLevel -> setLabel(os.str());
-        os = std::stringstream();
-        os << "Army size: " << std::to_string(Human::Instance() -> getArmySize());
-        playerArmySize -> setLabel(os.str());
-        os = std::stringstream();
-        os << "Melee: " << std::to_string(melees);
-        playerMelees -> setLabel(os.str());
-        os = std::stringstream();
-        os << "Ranged: " << std::to_string(ranges);
-        playerRangeds -> setLabel(os.str());
-        os = std::stringstream();
-        os << "Siege: " << std::to_string(sieges);
-        playerSieges -> setLabel(os.str());
-        os = std::stringstream();
+    std::stringstream os;
+    os << "Metal: " << std::to_string(Human::Instance() -> getMetalAmount());
+    playerMetalAmount -> setLabel(os.str());
+    os = std::stringstream();
+    os << "Crystal: " << std::to_string(Human::Instance() -> getCrystalAmount());
+    playerCrystalAmount -> setLabel(os.str());
+    os = std::stringstream();
+    os << "Citizens: " << std::to_string(Human::Instance() -> getCitizens());
+    playerCitizens -> setLabel(os.str());
+    os = std::stringstream();
+    os << "Happiness: " << std::to_string(Human::Instance() -> getHappiness());
+    playerHappiness -> setLabel(os.str());
+    os = std::stringstream();
+    os << "City level: "<< std::to_string(Human::Instance() -> getCityLevel());
+    playerCityLevel -> setLabel(os.str());
+    os = std::stringstream();
+    os << "Army size: " << std::to_string(Human::Instance() -> getArmySize());
+    playerArmySize -> setLabel(os.str());
+    os = std::stringstream();
+    os << "Melee: " << std::to_string(melees);
+    playerMelees -> setLabel(os.str());
+    os = std::stringstream();
+    os << "Ranged: " << std::to_string(ranges);
+    playerRangeds -> setLabel(os.str());
+    os = std::stringstream();
+    os << "Siege: " << std::to_string(sieges);
+    playerSieges -> setLabel(os.str());
+    os = std::stringstream();
 
-        melees = 
-            IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
-            IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
-        ranges = 
-            IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardR) + 
-            IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedR);
-        sieges = 
-            IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) + 
-            IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
+    melees = 
+        IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
+        IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
+    ranges = 
+        IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardR) + 
+        IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedR);
+    sieges = 
+        IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) + 
+        IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
 
-        std::stringstream iaos;
-        iaos << "Metal: " << std::to_string(IA::Instance() -> getMetalAmount());
-        iaMetalAmount -> setLabel(iaos.str());
-        iaos = std::stringstream();
-        iaos << "Crystal: " << std::to_string(IA::Instance() -> getCrystalAmount());
-        iaCrystalAmount -> setLabel(iaos.str());
-        iaos = std::stringstream();
-        iaos << "Citizens: " << std::to_string(IA::Instance() -> getCitizens());
-        iaCitizens -> setLabel(iaos.str());
-        iaos = std::stringstream();
-        iaos << "Happiness: " << std::to_string(IA::Instance() -> getHappiness());
-        iaHappiness -> setLabel(iaos.str());
-        iaos = std::stringstream();
-        iaos << "City level: "<< std::to_string(IA::Instance() -> getCityLevel());
-        iaCityLevel -> setLabel(iaos.str());
-        iaos = std::stringstream();
-        iaos << "Army size: " << std::to_string(IA::Instance() -> getArmySize());
-        iaArmySize -> setLabel(iaos.str());
-        iaos = std::stringstream();
-        iaos << "Melee: " << std::to_string(melees);
-        iaMelees -> setLabel(iaos.str());
-        iaos = std::stringstream();
-        iaos << "Ranged: " << std::to_string(ranges);
-        iaRangeds -> setLabel(iaos.str());
-        iaos = std::stringstream();
-        iaos << "Siege: " << std::to_string(sieges);
-        iaSieges -> setLabel(iaos.str());
-        iaos = std::stringstream();
-        iaos << "Next choice: " << IA::Instance() -> getNextChoice();
-        iaNextChoice -> setLabel(iaos.str());
-        iaos = std::stringstream();
-        iaos << "Behaviour: " << IA::Instance() -> getChosenBehaviour();
-        iaBehaviour -> setLabel(iaos.str());
-        iaos = std::stringstream();
+    std::stringstream iaos;
+    iaos << "Metal: " << std::to_string(IA::Instance() -> getMetalAmount());
+    iaMetalAmount -> setLabel(iaos.str());
+    iaos = std::stringstream();
+    iaos << "Crystal: " << std::to_string(IA::Instance() -> getCrystalAmount());
+    iaCrystalAmount -> setLabel(iaos.str());
+    iaos = std::stringstream();
+    iaos << "Citizens: " << std::to_string(IA::Instance() -> getCitizens());
+    iaCitizens -> setLabel(iaos.str());
+    iaos = std::stringstream();
+    iaos << "Happiness: " << std::to_string(IA::Instance() -> getHappiness());
+    iaHappiness -> setLabel(iaos.str());
+    iaos = std::stringstream();
+    iaos << "City level: "<< std::to_string(IA::Instance() -> getCityLevel());
+    iaCityLevel -> setLabel(iaos.str());
+    iaos = std::stringstream();
+    iaos << "Army size: " << std::to_string(IA::Instance() -> getArmySize());
+    iaArmySize -> setLabel(iaos.str());
+    iaos = std::stringstream();
+    iaos << "Melee: " << std::to_string(melees);
+    iaMelees -> setLabel(iaos.str());
+    iaos = std::stringstream();
+    iaos << "Ranged: " << std::to_string(ranges);
+    iaRangeds -> setLabel(iaos.str());
+    iaos = std::stringstream();
+    iaos << "Siege: " << std::to_string(sieges);
+    iaSieges -> setLabel(iaos.str());
+    iaos = std::stringstream();
+    iaos << "Next choice: " << IA::Instance() -> getNextChoice();
+    iaNextChoice -> setLabel(iaos.str());
+    iaos = std::stringstream();
+    iaos << "Behaviour: " << IA::Instance() -> getChosenBehaviour();
+    iaBehaviour -> setLabel(iaos.str());
+    iaos = std::stringstream();
 }
 
 bool Hud::getPopUpOpen() {
