@@ -28,9 +28,10 @@ class Vector3 {
         void set(Vector3<T> v);
 
         Vector3<T> normalize();
-        Vector3<T> getDistanceTo(Vector3<T> other);
         Vector3<T> rotateFromPoint(f32 r, f32 phi, f32 theta);
         Vector2<T> toVector2();
+        
+        Vector3<T> getDistanceTo(Vector3<T> other);
         core::vector3di getVectorI();
         core::vector3df getVectorF();
         

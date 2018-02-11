@@ -2,9 +2,9 @@
 #define SCENE_NODE_H
 
 #include <irrlicht.h>
-#include <IOEngine/Mouse.h>
-#include "Vector3.h"
 #include <Types.h>
+#include <MathEngine/Vector3.h>
+#include <IOEngine/Mouse.h>
 
 using namespace irr;
 

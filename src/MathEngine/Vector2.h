@@ -26,13 +26,12 @@ class Vector2 {
         Vector2<T> normalize();
         Vector2<T> getDistanceTo(Vector2<T> other);
         Vector2<T> getFromPolarCoordinates(f32 r, f32 phi);
-
-        Vector2<T> getFixed();
+        // Added by Julian
+        T calculateDistance(Vector2<T> b);
 
         core::vector2di getVectorI();
         core::vector2df getVectorF();
-    // Added by Julian
-        T calculateDistance(Vector2<T> b);
+
         Vector2<T> operator +(const Vector2<T> &p) const;
         Vector2<T> operator -(const Vector2<T> &p) const;
         Vector2<T> operator /(const f32 &num) const;

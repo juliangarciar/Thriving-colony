@@ -2,9 +2,9 @@
 #define PANEL_H
 
 #include <nanogui/nanogui.h>
-#include <GraphicEngine/Vector2.h>
-#include "GUIElement.h"
 #include <Types.h>
+#include <MathEngine/Vector2.h>
+#include <GUIEngine/GUIElement.h>
 
 class Panel : public GUIElement {
 

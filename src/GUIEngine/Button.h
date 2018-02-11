@@ -2,9 +2,9 @@
 #define BUTTON_H
 
 #include <nanogui/nanogui.h>
-#include <GraphicEngine/Vector2.h>
-#include "GUIElement.h"
 #include <Types.h>
+#include <GUIEngine/GUIElement.h>
+#include <MathEngine/Vector2.h>
 
 class Button : public GUIElement{
     
