@@ -2,7 +2,9 @@
 #include "IA.h"
 #include "Human.h"
 #include "Game.h"
-
+#include "WorldGeometry/CellSpacePartition.h"
+#define MAX_MAP 10240
+#define TOTAL 80
 Building::Building(SceneNode *parent, i32 id, const wchar_t *path, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::BuildingType t, Vector3<f32> p) : Entity(parent, id, path, team, breed) {
     buildTimer = 0;
     type = t;
@@ -13,9 +15,31 @@ Building::Building(SceneNode *parent, i32 id, const wchar_t *path, Enumeration::
 }
 
 Building::~Building() {
-    
+    Clear();
 }
-
+void Building::Clear(){
+    // Clears the cells where the building is
+    CellSpacePartition *cells = CellSpacePartition::Instance();
+    Vector2<f32> storage = getPosition() -> toVector2();
+    i32 cellSizeX, cellSizeY;
+    cellSizeX = cellSizeY = MAX_MAP / TOTAL;
+    if(kCells % 2 == 0){
+        storage.x -= cellSizeX / 2;
+        storage.y -= cellSizeY / 2;
+        storage.x -= (kCells / 2) * (cellSizeX / 2);
+        storage.y -= (kCells / 2) * (cellSizeY / 2);
+    }
+    else{
+        storage.x -= (kCells - 1) * (cellSizeX / 2);
+        storage.y -= (kCells - 1) * (cellSizeY / 2);
+    }
+    for(i32 i = 0; i < kCells; i++){
+        for(i32 j = 0; j < kCells; j++){
+            cells -> removeEntity(this, Vector2<f32>(storage.x + cellSizeX * i, storage.y + cellSizeY * j));
+        }
+    }
+    // End clear cells
+}
 void Building::Init() {
     f32 r = 0;
     f32 g = 0;
