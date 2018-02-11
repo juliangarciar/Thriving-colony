@@ -2,6 +2,7 @@
 
 TNode::TNode(TNode *p){
     parent = p;
+    entity = NULL;
 }
 
 TNode::~TNode(){
@@ -21,10 +22,11 @@ void TNode::removeChild(TNode *c){
 }
 
 void TNode::draw(){
-    //ToDo: draw
+    if (entity != NULL) entity->beginDraw();
     for (int i=0; i<children.size(); i++){
         children[i] -> draw();
     }
+    if (entity != NULL) entity->endDraw();
 }
 
 void TNode::setEntity(TEntity *e){
