@@ -160,6 +160,7 @@ void CameraController::Update(f32 deltaTime) {
     }
 
 	if (centerCameraMode){
+		std::cout << userPos << std::endl;
 		tarPos = userPos;
 		camPos = userPos.rotateFromPoint(zoomDistanceFromTarget, delta.x, delta.y);
 	}
