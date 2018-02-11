@@ -8,11 +8,11 @@ TLight::~TLight(){
 
 }
 
-void TLight::TLight(){
+void TLight::beginDraw(){
 
 }
 
-void TLight::TLight(){
+void TLight::endDraw(){
 
 }
 
