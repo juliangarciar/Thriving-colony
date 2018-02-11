@@ -2,6 +2,7 @@
 #define TTRANSFORM_H
 
 #include "TEntity.h"
+#include "../MathEngine/TMatrix4x4"
 #include "../Types.h"
 
 class TTransform : public TEntity {
