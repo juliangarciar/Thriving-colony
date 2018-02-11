@@ -66,6 +66,10 @@ class Building : public Entity {
         bool getFinished();
         
     private:
+         /**
+         * @brief Called from the destructor, clears the cells
+         */
+        void Clear();
         /**
          * @brief Inicializa Building
          */
