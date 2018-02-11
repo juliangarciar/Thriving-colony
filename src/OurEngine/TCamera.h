@@ -1,6 +1,8 @@
 #ifndef TCAMERA_H
 #define TCAMERA_H
 
+#include "TEntity.h"
+
 class TCamera : public TEntity {
     public:
         TCamera();
