@@ -10,6 +10,9 @@ class TTransform : public TEntity {
         TTransform();
         virtual ~TTransform();
 
+        void beginDraw();
+        void endDraw();
+
         // Matrix operations
         void identity();
         void load(TMatrix4x4);
@@ -23,9 +26,6 @@ class TTransform : public TEntity {
         void rotate(f32, f32, f32, f32);
         void scale(f32);
         // TBA
-
-        virtual void beginDraw();
-        virtual void endDraw();
 
     private:
 

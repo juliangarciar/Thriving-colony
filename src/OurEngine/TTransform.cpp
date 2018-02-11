@@ -1,10 +1,18 @@
 #include "TTransform.h"
 
-TTransform::TTransform() {
+TTransform::TTransform() : TEntity() {
 
 }
 
 TTransform::~TTransform() {
+
+}
+
+void TTransform::beginDraw(){
+
+}
+
+void TTransform::endDraw(){
 
 }
 
@@ -16,7 +24,7 @@ void TTransform::load(TMatrix4x4 newMatrix) {
     matrix = newMatrix;
 }
 
-void TTrasform::transpose(); {
+void TTransform::transpose() {
 
 }
 
@@ -32,7 +40,7 @@ void TTransform::translate(f32 x, f32 y, f32 z) {
 
 }
 
-void TTransform::rotate(f32 x, f32 y, f32 z, f32 z) {
+void TTransform::rotate(f32 x, f32 y, f32 z, f32 h) {
 
 }
 
