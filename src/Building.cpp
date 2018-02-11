@@ -3,7 +3,6 @@
 #include "WorldGeometry/CellSpacePartition.h"
 #define MAX_MAP 10240
 #define TOTAL 80
-Building::Building(SceneNode *parent, i32 id, const wchar_t *path, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::BuildingType t, Vector3<f32> p) : Entity(parent, id, path, team, breed) {
 
 Building::Building(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::BuildingType t) : Entity(id, team, breed) {
     buildTimer = 0;
