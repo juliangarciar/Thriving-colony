@@ -16,7 +16,7 @@ class Unit : public Entity {
     
     public:
         //The consctructor is empty because the object it's constructed in the child
-        Unit(SceneNode *layer, i32 id, const wchar_t *path, Enumeration::Team teamData, Enumeration::BreedType raceData, Enumeration::UnitType typeData, Vector3<f32> vectorData);
+        Unit(SceneNode *, i32, Enumeration::Team, Enumeration::BreedType, Enumeration::UnitType);
         virtual ~Unit();
 
         // Game
@@ -66,55 +66,57 @@ class Unit : public Entity {
         std::list< Vector2<f32> > getPath();
         Enumeration::UnitType getType();
     private:
-    //Init
         /**
          * @brief inicia
          */
         void Init();
 
-    // CurrentState
+        // CurrentState
         Enumeration::UnitState state;
 
-    // Unit type
+        // Unit type
         Enumeration::UnitType type;
 
-    // Unit stats
+        // Unit stats
         i32 moveSpeed;
         i32 attackSpeed;
         i32 attackDamage;
 
-    // Action bools
+        // Action bools
         bool finished;
         bool moving;
         bool attacking;
 
-    // Unit info
+        // Unit info
         f32 recruitingTime;
 
-    // Timers
+        // Timers
         f32 recruitingTimer;
         f32 lookForTargetTimer;
         f32 lookForTargetCountdown;
         f32 attackCountdown;
 
-    // Space vectors used for unit movement
+        // Scene Node
+        SceneNode *layer;
+
+        // Space vectors used for unit movement
         class PathManager* pathManager;
         std::list< Vector2<f32> > pathFollow;
 
-    //Finish recruiting callback
+        //Finish recruiting callback
         std::function<void(Unit*)> recruitedCallback;
         std::function<void(Unit*)> retractedCallback;
 
-    // Vector position is in the father
+        // Vector position is in the father
         Vector3 <f32> vectorPos;
         Vector3 <f32> vectorDes;
         Vector3 <f32> vectorMov;
         f32 steps;
 
-    // Algo
+        // Stuff
         bool readyToEnter;
 
-    // Music events to be played
+        // Music events to be played
         std::string attackEvent;
         std::string moveEvent;
         std::string selectEvent;

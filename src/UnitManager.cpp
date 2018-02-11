@@ -54,9 +54,9 @@ UnitManager::~UnitManager() {
 
 //Create a new troops
 //In order to add a new unit, you must specify which one
-bool UnitManager::createTroop(Enumeration::UnitType unitData) {
-    if (checkCanPay(unitData)) {
-        Unit *newUnit = setNewUnitModel(unitData);
+bool UnitManager::createTroop(Enumeration::UnitType type) {
+    if (checkCanPay(type)) {
+        Unit *newUnit = new Unit(unitLayer, nextTroopId, team, breed, type);
         if (newUnit == NULL) {
             return false;
         }
@@ -76,6 +76,9 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
             if (team == Enumeration::Team::Human){
                 Game::Instance()->getGameState()->getHud()->removeTroopFromQueue(u->getID());
                 Game::Instance()->getGameState()->getHud()->addTroopToHall(u->getID(), u->getType());
+
+                //Mostrar texto de reclutamiento
+                Game::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showRecruitedText);  
             }
         });
         newUnit -> setRetractedCallback([&] (Unit *u){
@@ -99,7 +102,7 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
             Game::Instance()->getGameState()->getHud()->addTroopToQueue(newUnit->getID(), newUnit->getType());
         }
 
-        troopsAmount[unitData]++;
+        troopsAmount[type]++;
         nextTroopId++;
         return true;
     }
@@ -386,42 +389,6 @@ Unit* UnitManager::getSelectedTroop() {
 
 i32 UnitManager::getTroopAmount(Enumeration::UnitType t){
     return troopsAmount[(i32)t];
-}
-
-Unit* UnitManager::setNewUnitModel(Enumeration::UnitType unitType) {
-    // Hacer que sean razas diferentes?
-    switch (unitType) {
-        case Enumeration::UnitType::StandardM:
-            return new Unit(unitLayer, std::rand(), L"media/unitModels/Soldado_Melee_Drorania.obj", team, breed, unitType, Vector3<f32>());
-        break;
-
-        case Enumeration::UnitType::StandardR:
-            return new Unit(unitLayer, std::rand(), L"media/unitModels/Soldado_Rango_Drorania.obj", team, breed, unitType, Vector3<f32>());
-        break;
-
-        case Enumeration::UnitType::AdvancedM:
-            return new Unit(unitLayer, std::rand(), L"media/unitModels/criatura_drorania.obj", team, breed, unitType, Vector3<f32>());
-        break;
-
-        case Enumeration::UnitType::AdvancedR:
-            return new Unit(unitLayer, std::rand(), L"media/unitModels/criatura_drorania.obj", team, breed, unitType, Vector3<f32>());
-        break;
-
-        case Enumeration::UnitType::Idol:
-            return new Unit(unitLayer, std::rand(), L"media/unitModels/Ente_Drorania.obj", team, breed, unitType, Vector3<f32>());
-        break;
-
-        case Enumeration::UnitType::Launcher:
-            return new Unit(unitLayer, std::rand(), L"media/unitModels/canon_drorania.obj", team, breed, unitType, Vector3<f32>());
-        break;
-
-        case Enumeration::UnitType::Desintegrator:
-            return new Unit(unitLayer, std::rand(), L"media/unitModels/desintegrador_de_Drorania.obj", team, breed, unitType, Vector3<f32>());
-        break;
-        default:
-            return NULL;
-        break;
-    }
 }
 
 bool UnitManager::areTroopsDeployed(){

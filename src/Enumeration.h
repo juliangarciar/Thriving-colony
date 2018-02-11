@@ -67,8 +67,8 @@ class Enumeration {
             RetractTroopsHuman,
 
             //Text
-            DisableText,
-            EnableText
+            showBuiltText,
+            showRecruitedText
         };
         
         //Unit states

@@ -108,11 +108,29 @@ class Hud {
         void removeTroopFromQueue(i32);
 
         /**
+         * @brief 
+         * @param text
+         */
+        void showToast(std::string);
+
+        /**
+         * @brief 
+         */
+        void hideToast();
+
+        /**
+         * @brief 
+         * @param std::string 
+         */
+        void debug();
+
+        /**
          * @brief Devuelve cosas
          * @return pop
          */
         bool getPopUpOpen();
     private:
+        //Stuff
         bool popUpOpen;
     
         std::vector<i32> troopsInHallIDs;
@@ -143,7 +161,7 @@ class Hud {
 
         ComboBox *hallTroopList;
         
-        //Text
+        //Debug
         Panel *playerResources;
         Label *playerMetalAmount;
         Label *playerCrystalAmount;
@@ -168,8 +186,16 @@ class Hud {
         Label *iaNextChoice;
         Label *iaBehaviour;
 
-        f32 updateTimer;
-        f32 deleteTextTimer;
+        f32 debugTime;
+        f32 debugTimer;
+
+        //Toast
+        Panel *toast;
+        Label *toastText;
+
+        bool toastBool;
+        f32 toastTime;
+        f32 toastTimer;
 
         /**
          * @brief Crea un boton 

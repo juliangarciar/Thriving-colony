@@ -82,13 +82,6 @@ class BuildingManager {
 		 * @brief Actualiza el manejador de edificios
 		 */
 		void updateBuildingManager();
-		/**
-		 * @brief Asigna, al edificio que se esta construyendo, el modelo 3D asociado
-		 * @param coordenadas donde colocar el modelo 3D
-		 * @param buildingType es el tipo de edificio que se construye
-		 * @param team es el equipo al que pertece el edificio
-		 */
-		void setTempBuildingModel(Vector3<f32>, Enumeration::BuildingType);
 		
 		/**
 		 * @brief Solicita el id de la colision

@@ -3,13 +3,12 @@
 #include "Human.h"
 #include "Game.h"
 
-Building::Building(SceneNode *parent, i32 id, const wchar_t *path, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::BuildingType t, Vector3<f32> p) : Entity(parent, id, path, team, breed) {
+Building::Building(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::BuildingType t) : Entity(id, team, breed) {
     buildTimer = 0;
+    layer = l;
     type = t;
 
     Init();
-
-    setPosition(p);
 }
 
 Building::~Building() {
@@ -20,6 +19,8 @@ void Building::Init() {
     f32 r = 0;
     f32 g = 0;
     f32 b = 0;
+    const wchar_t *path;
+    Vector3<f32> scale;
     switch (type) {
         case Enumeration::BuildingType::Barn:
             // Different color for diferent buildings
@@ -37,6 +38,9 @@ void Building::Init() {
             metalCost = Enumeration::BuildingCost::BarnMetalCost;
             crystalCost = Enumeration::BuildingCost::BarnCrystalCost;
             kCells = Enumeration::BuildingCells::BarnCells;
+
+            path = L"media/buildingModels/establo.obj";
+            scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::Barrack:
             // Different color for diferent buildings
@@ -54,6 +58,9 @@ void Building::Init() {
             metalCost = Enumeration::BuildingCost::BarrackMetalCost;
             crystalCost = Enumeration::BuildingCost::BarrackCrystalCost;
             kCells = Enumeration::BuildingCells::BarrackCells;
+
+            path = L"media/buildingModels/barraca.obj";
+            scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::Hospital:
             // Different color for diferent buildings
@@ -71,6 +78,9 @@ void Building::Init() {
             metalCost = Enumeration::BuildingCost::HospitalMetalCost;
             crystalCost = Enumeration::BuildingCost::HospitalCrystalCost;
             kCells = Enumeration::BuildingCells::HospitalCells;
+
+            path = L"media/buildingModels/hospital.obj";
+            scale = Vector3<f32>(64,64,64);
         break;
         case Enumeration::BuildingType::House:
             // Different color for diferent buildings
@@ -89,6 +99,9 @@ void Building::Init() {
             metalCost = Enumeration::BuildingCost::HomeMetalCost;
             crystalCost = Enumeration::BuildingCost::HomeCrystalCost;
             kCells = Enumeration::BuildingCells::HomeCells;
+
+            path = L"media/buildingModels/house.obj";
+            scale = Vector3<f32>(64,64,64);
         break;
         case Enumeration::BuildingType::MainBuilding:
             // Different color for diferent buildings
@@ -99,6 +112,9 @@ void Building::Init() {
             maxHP = 3000;
             currentHP = 3000;
             kCells = Enumeration::BuildingCells::MainCells;
+
+            path = L"media/buildingModels/command_center.obj";
+            scale = Vector3<f32>(48,48,48);
         break;
         case Enumeration::BuildingType::Market:
             // Different color for diferent buildings
@@ -116,6 +132,9 @@ void Building::Init() {
             metalCost = Enumeration::BuildingCost::MarketMetalCost;
             crystalCost = Enumeration::BuildingCost::MarketCrystalCost;
             kCells = Enumeration::BuildingCells::MarketCells;
+
+            path = L"media/buildingModels/mercado.obj";
+            scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::Quarry:
             // Different color for diferent buildings
@@ -133,6 +152,9 @@ void Building::Init() {
             metalCost = Enumeration::BuildingCost::QuarryMetalCost;
             crystalCost = Enumeration::BuildingCost::QuarryCrystalCost;
             kCells = Enumeration::BuildingCells::QuarryCells;
+
+            path = L"media/buildingModels/cantera.obj";
+            scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::Siderurgy:
             // Different color for diferent buildings
@@ -150,6 +172,9 @@ void Building::Init() {
             metalCost = Enumeration::BuildingCost::SiderurgyMetalCost;
             crystalCost = Enumeration::BuildingCost::SiderurgyCrystalCost;
             kCells = Enumeration::BuildingCells::SiderurgyCells;
+
+            path = L"media/buildingModels/escuela.obj";
+            scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::School:
             // Different color for diferent buildings
@@ -168,6 +193,9 @@ void Building::Init() {
             metalCost = Enumeration::BuildingCost::SchoolMetalCost;
             crystalCost = Enumeration::BuildingCost::SchoolCrystalCost;
             kCells = Enumeration::BuildingCells::SchoolCells;
+
+            path = L"media/buildingModels/siderurgia.obj";
+            scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::Tower:
             // Different color for diferent buildings
@@ -185,6 +213,9 @@ void Building::Init() {
             metalCost = Enumeration::BuildingCost::TowerMetalCost;
             crystalCost = Enumeration::BuildingCost::TowerCrystalCost;
             kCells = Enumeration::BuildingCells::TowerCells;
+
+            path = L"media/buildingModels/torre_vigilancia.obj";
+            scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::Wall:
             // Different color for diferent buildings
@@ -202,6 +233,9 @@ void Building::Init() {
             metalCost = Enumeration::BuildingCost::WallMetalCost;
             crystalCost = Enumeration::BuildingCost::WallCrystalCost;
             kCells = Enumeration::BuildingCells::WallCells;
+
+            path = L"media/buildingModels/muralla.obj";
+            scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::Workshop:
             // Different color for diferent buildings
@@ -219,9 +253,15 @@ void Building::Init() {
             metalCost = Enumeration::BuildingCost::WorkshopMetalCost;
             crystalCost = Enumeration::BuildingCost::WorkshopCrystalCost;
             kCells = Enumeration::BuildingCells::WorkshopCells;
+
+            path = L"media/buildingModels/taller_maquinas_de_asedio.obj";
+            scale = Vector3<f32>(25,25,25);
         break;
         default: break;
     }
+
+    setModel(layer, path);
+    model->setScale(scale);
 
     buildTimer = 0; //ToDo: sin tiempo de construcción
 

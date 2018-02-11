@@ -45,27 +45,6 @@ Game::~Game() {
 }
 
 void Game::Init() {
-    //Initialize the event system
-    //IA Events
-    events -> addEvent(Enumeration::EventType::RetractTroopsIA, []() {
-        IA::Instance()->getUnitManager()->retractAllTroops();
-    });
-    /*events -> addEvent(Enumeration::EventType::DeployAllTroopsIA, []() {
-        IA::Instance()->getUnitManager()->deployAllTroops();
-    });*/
-
-    //Human events
-    events -> addEvent(Enumeration::EventType::RetractTroopsHuman, []() {
-        Human::Instance()->getUnitManager()->retractAllTroops();
-    });
-    /*events -> addEvent(Enumeration::EventType::DeployAllTroopsHuman, []() {
-        Human::Instance()->getUnitManager()->deployAllTroops();
-    });*/
-
-    //Hud events
-    //events -> addEvent(Enumeration::EventType::EnableText, Hud::drawWarning);
-    //events -> addEvent(Enumeration::EventType::DisableText, Hud::deleteWarning);
-
     state -> Init();
 }
 
@@ -127,7 +106,7 @@ Mouse *Game::getMouse() {
     return cursor;
 }
 
-EventSystem *Game::getEvents() {
+EventSystem *Game::getEventManager() {
     return events;
 }
 

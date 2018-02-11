@@ -13,6 +13,35 @@ void GameState::Init() {
     IA::Instance() -> Init();
     Human::Instance() -> Init();
 
+    //Initialize the event system
+    //IA Events
+    Game::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::RetractTroopsIA, []() {
+        IA::Instance()->getUnitManager()->retractAllTroops();
+    });
+    Game::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::DeployTroopsIA, []() {
+        Vector3<f32> p = IA::Instance() -> getHallPosition();
+        p.x = p.x + 200;
+        IA::Instance() -> getUnitManager() -> deployAllTroops(p);
+    });
+
+    //Human events
+    Game::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::RetractTroopsHuman, []() {
+        Human::Instance()->getUnitManager()->retractAllTroops();
+    });
+    Game::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::DeployTroopsHuman, []() {
+        Vector3<f32> p = Human::Instance() -> getHallPosition();
+        p.x = p.x + 200;
+        Human::Instance()->getUnitManager()->deployAllTroops(p);
+    });
+
+    //Hud events
+    Game::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::showBuiltText, [&](){
+        hud->showToast("Se ha construido un edificio");
+    });
+    Game::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::showRecruitedText, [&](){
+        hud->showToast("Se ha reclutado una tropa");
+    });
+
     gamePaused = false;
 
     //ToDo: la luz, terreno, y quizas la camara deberian ir en una clase Map
@@ -61,12 +90,12 @@ void GameState::Init() {
 
 void GameState::Input() {
     if(gamePaused ==  false){
-        camera -> Move();
-        camera -> RotateAndInclinate();
-        camera -> Zoom();
-        camera -> CenterCamera();
-
         if (!hud->getPopUpOpen()){
+            camera -> Move();
+            camera -> RotateAndInclinate();
+            camera -> Zoom();
+            camera -> CenterCamera();
+
             Human::Instance() -> getBuildingManager() -> testRaycastCollisions();
             Human::Instance() -> getUnitManager() -> testRaycastCollisions();
 

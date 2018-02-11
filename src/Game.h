@@ -77,7 +77,7 @@ class Game {
 		 * @brief Devuelve el evento actual
          * @return Devuelve un objeto tipo EventSystem
 		 */
-        EventSystem *getEvents();
+        EventSystem *getEventManager();
         /**
 		 * @brief Devuelve el menu actual
          * @return Devuelve un objeto tipo MenuState

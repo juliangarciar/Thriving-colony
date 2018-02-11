@@ -17,14 +17,13 @@ class Building : public Entity {
 
         /**
          * @brief Constructor de Buiding
-         * @param parent es la capa padre
+         * @param layer
          * @param id del edificio
-         * @param path ruta del archivo del modelo
          * @param teamData es el equipo al que pertenece
+         * @param BreedType es el equipo al que pertenece
          * @param buildingType es el tipo del edificio
-         * @param vectorData es la posicion del edificio
          */
-        Building(SceneNode *, i32, const wchar_t *, Enumeration::Team, Enumeration::BreedType, Enumeration::BuildingType, Vector3<f32>);
+        Building(SceneNode *, i32, Enumeration::Team, Enumeration::BreedType, Enumeration::BuildingType);
         /**
          * @brief Destructor
          */
@@ -71,6 +70,9 @@ class Building : public Entity {
          * @brief Inicializa Building
          */
         void Init();
+
+        //Scene Node
+        SceneNode *layer;
 
         //Building type
         Enumeration::BuildingType type;

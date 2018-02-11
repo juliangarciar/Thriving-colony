@@ -1,16 +1,13 @@
 #include "Entity.h"
 #include "Game.h"
 
-Entity::Entity(SceneNode *layer, i32 id, const wchar_t *path, Enumeration::Team t, Enumeration::BreedType b) {
+Entity::Entity(i32 id, Enumeration::Team t, Enumeration::BreedType b) {
     ID = id;
-    model = new Model(layer, id, path);
-    hitbox = new Box3D<f32>();
-    position = new Vector3<f32>();
+
     team = t;
     breed = b;
 
     baseColor = video::SColor(255, 0, 0, 0); //ToDo: cambiar por material
-    setColor(baseColor);
 
     tookDamageTimer = 0.1;
     tookDamageCountdown = tookDamageTimer;
@@ -37,7 +34,7 @@ void Entity::takeDamage(i32 dmg) {
     currentHP = currentHP-dmg;
     tookDamageCountdown = tookDamageTimer;
     // Tint the model red
-    setColor(video::SColor(255, 125, 125, 0)); //ToDo: fachada
+    setColor(video::SColor(255, 125, 125, 0)); //ToDo: sustituir por material
     if (currentHP <= 0) {
         currentHP = 0;
     }
@@ -61,6 +58,13 @@ void Entity::returnToOriginalColor() {
 }
 
 //SETTERS
+void Entity::setModel(SceneNode *layer, const wchar_t *path) {
+    model = new Model(layer, ID, path);
+    hitbox = new Box3D<f32>();
+    position = new Vector3<f32>();
+    setColor(baseColor);
+}
+
 void Entity::setPosition(Vector3<f32> vectorData) {
     position -> set(vectorData);
     model -> setPosition(vectorData);

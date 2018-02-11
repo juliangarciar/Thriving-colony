@@ -3,11 +3,10 @@
 #include "Human.h"
 #include "IA.h"
 
-Unit::Unit(SceneNode *layer, i32 id, const wchar_t *path, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t, Vector3<f32> p) : Entity(layer, id, path, team, breed) {
+Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t) : Entity(id, team, breed) {
     // Race type and unit type
     type = t;
-    // Defining model position
-    model -> setPosition(p);
+    layer = l;
 
     // Actions of the units
     finished = false;
@@ -44,7 +43,7 @@ Unit::~Unit() {
 }
 
 void Unit::Init() {
-    std::cout << (int)type << std::endl;
+    const wchar_t *path;
     // Basic stats of each unit are here
     switch (type) {
         // Basic melee soldier
@@ -65,6 +64,7 @@ void Unit::Init() {
                 selectEvent = "event:/UnitSelect/Drorania_melee_S";
                 metalCost = Enumeration::UnitCost::MeleeFootmenMetalCost;
                 crystalCost = Enumeration::UnitCost::MeleeFootmenCrystalCost;
+                path = L"media/unitModels/Soldado_Melee_Drorania.obj";
             } else if (breed == Enumeration::BreedType::Kaonov) {
                 moveSpeed = 420;
                 attackDamage = 15;
@@ -81,6 +81,7 @@ void Unit::Init() {
                 selectEvent = "event:/UnitSelect/Kaonov_melee_S";
                 metalCost = Enumeration::UnitCost::MeleeFootmenMetalCost;
                 crystalCost = Enumeration::UnitCost::MeleeFootmenCrystalCost;
+                path = L"media/unitModels/Soldado_Melee_Drorania.obj";
             }
         break;
         //Advanced melee soldier (mounted)
@@ -101,6 +102,7 @@ void Unit::Init() {
                 selectEvent = "event:/UnitSelect/Drorania_melee_A";
                 metalCost = Enumeration::UnitCost::MountedMeleeMetalCost;
                 crystalCost = Enumeration::UnitCost::MountedMeleeCrystalCost;
+                path = L"media/unitModels/criatura_drorania.obj";
             } else if (breed == Enumeration::BreedType::Kaonov) {
                 //This should be changed
                 moveSpeed = 530;
@@ -118,6 +120,7 @@ void Unit::Init() {
                 selectEvent = "event:/UnitSelect/Kaonov_melee_A";
                 metalCost = Enumeration::UnitCost::MountedMeleeMetalCost;
                 crystalCost = Enumeration::UnitCost::MountedMeleeCrystalCost;
+                path = L"media/unitModels/criatura_drorania.obj";
             }
         break;
         //Standard ranged unit
@@ -138,6 +141,7 @@ void Unit::Init() {
                 selectEvent = "event:/UnitSelect/Drorania_ranged_S";
                 metalCost = Enumeration::UnitCost::RangedFootmenMetalCost;
                 crystalCost = Enumeration::UnitCost::RangedFootmenCrystalCost;
+                path = L"media/unitModels/Soldado_Rango_Drorania.obj";
             } else if (breed == Enumeration::BreedType::Kaonov) {
                 moveSpeed = 350;
                 attackDamage = 13;
@@ -154,6 +158,7 @@ void Unit::Init() {
                 selectEvent = "event:/UnitSelect/Kaonov_ranged_S";
                 metalCost = Enumeration::UnitCost::RangedFootmenMetalCost;
                 crystalCost = Enumeration::UnitCost::RangedFootmenCrystalCost;
+                path = L"media/unitModels/Soldado_Rango_Drorania.obj";
             }   
         break;
         //Advanced ranged soldier (mounted)
@@ -174,6 +179,7 @@ void Unit::Init() {
                 selectEvent = "event:/UnitSelect/Drorania_ranged_A";
                 metalCost = Enumeration::UnitCost::MountedRangedMetalCost;
                 crystalCost = Enumeration::UnitCost::MountedRangedCrystalCost;
+                path = L"media/unitModels/criatura_drorania.obj";
             } else if (breed == Enumeration::BreedType::Kaonov) {
                 moveSpeed = 530;
                 attackDamage = 18;
@@ -190,6 +196,7 @@ void Unit::Init() {
                 selectEvent = "event:/UnitSelect/Kaonov_ranged_A";
                 metalCost = Enumeration::UnitCost::MountedRangedMetalCost;
                 crystalCost = Enumeration::UnitCost::MountedRangedCrystalCost;
+                path = L"media/unitModels/criatura_drorania.obj";
             }
         break;
         //Idol (to be defined)
@@ -211,6 +218,7 @@ void Unit::Init() {
                 selectEvent = "event:/UnitSelect/Drorania_melee_A";
                 metalCost = Enumeration::UnitCost::CreatureMetalCost;
                 crystalCost = Enumeration::UnitCost::CreatureCrystalCost;
+                path = L"media/unitModels/Ente_Drorania.obj";
             } else if (breed == Enumeration::BreedType::Kaonov) {
                 moveSpeed = 250;
                 attackDamage = 27;
@@ -228,6 +236,7 @@ void Unit::Init() {
                 selectEvent = "event:/UnitSelect/Kaonov_melee_A";
                 metalCost = Enumeration::UnitCost::CreatureMetalCost;
                 crystalCost = Enumeration::UnitCost::CreatureCrystalCost;
+                path = L"media/unitModels/Ente_Drorania.obj";
             }
         break;
         //Rock launcher
@@ -249,6 +258,7 @@ void Unit::Init() {
                 selectEvent = "event:/UnitSelect/Drorania_ranged_S";
                 metalCost = Enumeration::UnitCost::CatapultMetalCost;
                 crystalCost = Enumeration::UnitCost::CatapultCrystalCost;
+                path = L"media/unitModels/canon_drorania.obj";
             } else if (breed == Enumeration::BreedType::Kaonov) {
                 moveSpeed = 250;
                 attackDamage = 27;
@@ -266,6 +276,7 @@ void Unit::Init() {
                 selectEvent = "event:/UnitSelect/Kaonov_ranged_S";
                 metalCost = Enumeration::UnitCost::CatapultMetalCost;
                 crystalCost = Enumeration::UnitCost::CatapultCrystalCost;
+                path = L"media/unitModels/canon_drorania.obj";
             }
         break;
         //Wall desintegrator
@@ -287,6 +298,7 @@ void Unit::Init() {
                 selectEvent = "event:/UnitSelect/Drorania_ranged_A";
                 metalCost = Enumeration::UnitCost::RamMetalCost;
                 crystalCost = Enumeration::UnitCost::RamCrystalCost;
+                path = L"media/unitModels/desintegrador_de_Drorania.obj";
             } else if (breed == Enumeration::BreedType::Kaonov) {
                 moveSpeed = 250;
                 attackDamage = 41;
@@ -304,10 +316,13 @@ void Unit::Init() {
                 selectEvent = "event:/UnitSelect/Kaonov_ranged_A";
                 metalCost = Enumeration::UnitCost::RamMetalCost;
                 crystalCost = Enumeration::UnitCost::RamCrystalCost;
+                path = L"media/unitModels/desintegrador_de_Drorania.obj";
             }
         break;
         default: break;
     }
+
+    setModel(layer, path);
 }
 
 void Unit::update() {

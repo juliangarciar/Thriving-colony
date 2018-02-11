@@ -38,9 +38,6 @@ class UnitManager{
         bool isDeployingTroop();
         bool areTroopsDeployed();
 
-        //SETTER
-        Unit* setNewUnitModel(Enumeration::UnitType);
-
         //GETTERS
 		i32 getCollisionID();
         i32 getTroopAmount(Enumeration::UnitType);
