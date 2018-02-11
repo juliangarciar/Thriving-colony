@@ -1,7 +1,6 @@
 #include "UnitManager.h"
 #include "Game.h"
-#include "IA.h"
-#include "Human.h"
+
 //Constructor
 UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
     gridAlignment = 20;
@@ -74,8 +73,8 @@ bool UnitManager::createTroop(Enumeration::UnitType type) {
 
             //Añadir al HUD
             if (team == Enumeration::Team::Human){
-                Game::Instance()->getGameState()->getHud()->removeTroopFromQueue(u->getID());
-                Game::Instance()->getGameState()->getHud()->addTroopToHall(u->getID(), u->getType());
+                Hud::Instance()->removeTroopFromQueue(u->getID());
+                Hud::Instance()->addTroopToHall(u->getID(), u->getType());
 
                 //Mostrar texto de reclutamiento
                 Game::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showRecruitedText);  
@@ -92,14 +91,14 @@ bool UnitManager::createTroop(Enumeration::UnitType type) {
 
             //Añadir al HUD
             if (team == Enumeration::Team::Human){
-                Game::Instance()->getGameState()->getHud()->addTroopToHall(u->getID(), u->getType());
+                Hud::Instance()->addTroopToHall(u->getID(), u->getType());
             }
         });
 
         std::cout << "Se ha empezado a reclutar la unidad " << newUnit->getID() << std::endl;
         inQueueTroops -> insert(std::pair<i32, Unit*>(newUnit->getID(), newUnit));
         if (team == Enumeration::Team::Human){
-            Game::Instance()->getGameState()->getHud()->addTroopToQueue(newUnit->getID(), newUnit->getType());
+            Hud::Instance()->addTroopToQueue(newUnit->getID(), newUnit->getType());
         }
 
         troopsAmount[type]++;
@@ -183,7 +182,7 @@ void UnitManager::deploySelectedTroop(Vector3<f32> p) {
         temp -> getModel() -> setActive(true);
 
         if (team == Enumeration::Team::Human){
-            Game::Instance()->getGameState()->getHud()->removeTroopFromHall(temp->getID());
+            Hud::Instance()->removeTroopFromHall(temp->getID());
         }
         std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
 
@@ -209,7 +208,7 @@ void UnitManager::deployAllTroops(Vector3<f32> p){
         temp -> getModel() -> setActive(true);
         
         if (team == Enumeration::Team::Human){
-            Game::Instance()->getGameState()->getHud()->removeTroopFromHall(temp->getID());
+            Hud::Instance()->removeTroopFromHall(temp->getID());
         }
         std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
     }
@@ -256,16 +255,16 @@ void UnitManager::unSelectTroop() {
 void UnitManager::moveOrder() {
     Game *g = Game::Instance();
     if (selectedTroop != NULL) {
-        selectedTroop -> setTroopDestination(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
+        selectedTroop -> setTroopDestination(Map::Instance() -> getTerrain() -> getPointCollision(g -> getMouse()));
         if (Game::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
         // ToDo by Julian -> change attack iddle to pathfinding mode
             selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
 
-            selectedTroop->setPathToTarget(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
+            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(g -> getMouse()));
         } else {
             selectedTroop -> switchState(Enumeration::UnitState::Move);
 
-            selectedTroop->setPathToTarget(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
+            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(g -> getMouse()));
         }
         //MOVEMENT VOICE
         //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());

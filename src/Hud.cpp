@@ -1,14 +1,14 @@
 #include "Hud.h"
 #include "Game.h"
-#include "Human.h"
-#include "IA.h"
-#include "Enumeration.h"
-#include "GraphicEngine/Window.h"
 
-#include <string>
-#include <sstream>
+Hud* Hud::pinstance = 0;
 
-using namespace irr;
+Hud* Hud::Instance() {
+    if (pinstance == 0) {
+        pinstance = new Hud();
+    }
+    return pinstance;
+}
 
 Hud::Hud() {
     debugTime = 0.5;
@@ -22,8 +22,7 @@ Hud::Hud() {
 }
 
 Hud::~Hud() {
-    delete buildingsPanel;
-    delete tabContainer;
+    //Al cleanUp
 }
 
 void Hud::Init(){
@@ -430,6 +429,12 @@ void Hud::Update() {
     }
 }
 
+void Hud::CleanUp(){
+    delete buildingsPanel;
+    delete tabContainer;
+    //ToDo: incompleto
+}
+
 void Hud::enableTab(Enumeration::BuildingType t){
     switch (t){
         case Enumeration::BuildingType::Barrack:
@@ -649,8 +654,6 @@ void Hud::updatePositions() {
     buttonOpenPanel -> setPosition(Vector2<i32>(100,20).getFixed());
 
     buildingsPanel->setPosition(Vector2<i32>(20, 640).getFixed());
-
-    warningText->setPosition(Vector2<i32>(1000,650).getFixed());
 
     tabContainer->center();
 }

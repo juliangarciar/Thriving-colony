@@ -1,9 +1,7 @@
 #include "BuildingManager.h"
 #include "Game.h"
-#include "Human.h"
-#include "IA.h"
+
 #include "WorldGeometry/CellSpacePartition.h"
-using namespace irr;
 
 BuildingManager::BuildingManager(Enumeration::Team t, Enumeration::BreedType b) {
 	team = t;
@@ -58,7 +56,7 @@ void BuildingManager::drawBuilding() {
         // tambien se cree una caja en las coordenadas actuales del cursor del raton.
 
 		//Get position where the cursor is pointing to the terrain
-        Vector3<f32> xyzPointCollision = g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse());
+        Vector3<f32> xyzPointCollision = Map::Instance() -> getTerrain() -> getPointCollision(g -> getMouse());
 
 		Vector3<f32> f = Box3D<f32>(tempBuilding -> getModel() -> getModel() -> getTransformedBoundingBox()).getSize(); //ToDo: fachada
 	// Change gridAligment -> by Julian
@@ -69,7 +67,7 @@ void BuildingManager::drawBuilding() {
 		bool collision = false;
 		Vector3<f32> dummy = CellSpacePartition::Instance() -> correctPosition(xyzPointCollision, tempBuilding, collision);
 		//std::cout << "Position: " << dummy.x << "," << dummy.y << "," << dummy.z << "\n";
-		dummy.y = g -> getGameState() -> getTerrain() -> getY(dummy.x, dummy.z);
+		dummy.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.z);
 		tempBuilding -> setPosition (dummy);
 
 		//Pressing the right mouse button cancels the building
@@ -126,13 +124,13 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 			if (buildingAmounts[(i32)b->getType()] == 1){
 				switch (b->getType()){
 					case Enumeration::BuildingType::Barrack:
-						Game::Instance() -> getGameState() -> getHud() -> enableTab(b->getType());
+						Hud::Instance() -> enableTab(b->getType());
 					break;
 					case Enumeration::BuildingType::Barn:
-						Game::Instance() -> getGameState() -> getHud() -> enableTab(b->getType());
+						Hud::Instance() -> enableTab(b->getType());
 					break;
 					case Enumeration::BuildingType::Workshop:
-						Game::Instance() -> getGameState() -> getHud() -> enableTab(b->getType());
+						Hud::Instance() -> enableTab(b->getType());
 					break;
 					default: break;
 				}

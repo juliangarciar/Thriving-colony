@@ -1,8 +1,6 @@
 #include "DefeatMenu.h"
 #include "Game.h"
 
-#include <string>
-
 DefeatMenu::DefeatMenu() {
     buttonQuit = new Button("Quit");
     buttonQuit -> setPosition(Vector2<int>(600, 400));
@@ -11,6 +9,7 @@ DefeatMenu::DefeatMenu() {
     buttonStart -> setPosition(Vector2<int>(600, 300));
 
     winText = new Label("Defeat");
+    Window::Instance() -> setGUI();
 }
 
 DefeatMenu::~DefeatMenu() {

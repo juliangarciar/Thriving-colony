@@ -14,7 +14,6 @@ Game::Game() {
 
     menu = new MenuState();
     game = new GameState();
-    //pause = new PauseState();
     win = new WinState();
     defeat = new DefeatState();
 
@@ -26,22 +25,20 @@ Game::Game() {
 
     events = new EventSystem();
 
-    Window::Instance() -> setGUI();
-// Added by Julian
-    Graph::Instance();
-    //cellSpace = new CellSpacePartition(10240, 10240, 128, 128, 4);
-    cellSpace = CellSpacePartition::Instance();
     soundSystem = SoundSystem::Instance();
 }
 
 Game::~Game() {
     delete menu;
     delete game;
-    //delete pause;
+    delete win;
+    delete defeat;
+
     delete cursor;
+    delete keyboard;
+    
     delete events;
     delete soundSystem;
-    delete keyboard;
 }
 
 void Game::Init() {
@@ -116,8 +113,4 @@ MenuState *Game::getMenuState() {
 
 GameState *Game::getGameState() {
 	return game;
-}
-
-CellSpacePartition *Game::getCellSpace(){
-    return cellSpace;
 }

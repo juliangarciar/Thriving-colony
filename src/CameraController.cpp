@@ -12,7 +12,7 @@ CameraController::CameraController() {
 	// Initial position of the target
 	i32 targetX = Enumeration::HumanCityHall::human_x;
 	i32 targetZ = Enumeration::HumanCityHall::human_z;
-	i32 targetY = g -> getGameState() -> getTerrain() -> getY(targetX, targetZ);
+	i32 targetY = Map::Instance() -> getTerrain() -> getY(targetX, targetZ);
 
 	// Helper initializations
 	recipsqrt2 = camera -> getReciprocalSquareroot();
@@ -65,12 +65,10 @@ CameraController::~CameraController() {
 }
 
 void CameraController::Update(f32 deltaTime) {
-	Game *g = Game::Instance();
-
 	tarPos.set(camera -> getTargetPosition());
 	camPos.set(camera -> getCameraPosition());
 
-	i32 camHeight = g -> getGameState() -> getTerrain() -> getY(camPos.x, camPos.z);
+	i32 camHeight = Map::Instance() -> getTerrain() -> getY(camPos.x, camPos.z);
 
 	if (movementMode) {
     	Vector3<f32> camIncr;
@@ -167,7 +165,7 @@ void CameraController::Update(f32 deltaTime) {
 	}
 
     if (movementMode || rotationOrInclinationMode || zoomMode || centerCameraMode){
-		i32 heightvariance = g -> getGameState() -> getTerrain() -> getY(camPos.x, camPos.z) - camHeight;
+		i32 heightvariance = Map::Instance() -> getTerrain() -> getY(camPos.x, camPos.z) - camHeight;
 		camPos.y = camPos.y + heightvariance;
 
 		camera -> setTargetPosition(tarPos.getVectorF());

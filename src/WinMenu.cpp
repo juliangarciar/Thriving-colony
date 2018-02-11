@@ -1,8 +1,6 @@
 #include "WinMenu.h"
 #include "Game.h"
 
-#include <string>
-
 WinMenu::WinMenu() {
     buttonQuit = new Button("Quit");
     buttonQuit -> setPosition(Vector2<int>(600, 400));
@@ -11,6 +9,7 @@ WinMenu::WinMenu() {
     buttonStart -> setPosition(Vector2<int>(600, 300));
 
     winText = new Label("Victory");
+    Window::Instance() -> setGUI();
 }
 
 WinMenu::~WinMenu() {

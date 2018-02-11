@@ -1,8 +1,6 @@
 #include "PauseMenu.h"
 #include "Game.h"
 
-#include <string>
-
 PauseMenu::PauseMenu() {
     buttonQuit = new Button("Quit");
     buttonQuit -> setPosition(Vector2<i32>(600, 400));
@@ -12,6 +10,7 @@ PauseMenu::PauseMenu() {
 
     buttonMenu = new Button("Main menu");
     buttonMenu -> setPosition(Vector2<i32>(600, 300));
+    Window::Instance() -> setGUI();
 }
 
 PauseMenu::~PauseMenu() {

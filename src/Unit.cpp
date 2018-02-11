@@ -1,7 +1,5 @@
 #include "Unit.h"
 #include "Game.h"
-#include "Human.h"
-#include "IA.h"
 
 Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t) : Entity(id, team, breed) {
     // Race type and unit type
@@ -393,7 +391,7 @@ void Unit::recruitingState(){
     if (recruitingTimer > 0.0f){
         recruitingTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
         if (team == Enumeration::Team::Human){
-            Game::Instance()->getGameState()->getHud()->modifyTroopFromQueue(ID, recruitingTimer/recruitingTime);
+            Hud::Instance()->modifyTroopFromQueue(ID, recruitingTimer/recruitingTime);
         }
     } else {
         recruitedCallback(this);
@@ -472,7 +470,7 @@ void Unit::moveTroop() {
             }
             else{
                 Vector2<f32> dummy = this->pathFollow.front();
-                Vector3<f32> newDest(dummy.x, Game::Instance() -> getGameState() -> getTerrain() -> getY(dummy.x, dummy.y), dummy.y);
+                Vector3<f32> newDest(dummy.x, Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y), dummy.y);
                 pathFollow.pop_front();
                 setTroopDestination(newDest);
             }
@@ -482,7 +480,7 @@ void Unit::moveTroop() {
             //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
             //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
             Vector3<f32> newPos = vectorPos + move;
-            newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
+            newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
             setTroopPosition(newPos);
             steps = 0;
         } 
@@ -492,7 +490,7 @@ void Unit::moveTroop() {
             //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime();
             //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime();
             Vector3<f32> newPos = vectorPos + move;
-            newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
+            newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
             setTroopPosition(newPos);
             steps--;
         }
@@ -558,7 +556,7 @@ void Unit::chaseTarget() {
             switchState(Enumeration::UnitState::Attack);
         } else { //If i am too far away to attack, then move closer.
             Vector3<f32> newPos = vectorPos + vectorMov;
-            newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
+            newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
             setTroopPosition(newPos);
         }
     }
@@ -653,7 +651,7 @@ void Unit::setPathToTarget(Vector3<f32> vectorData){
         Vector2<f32> dummy = this->pathFollow.front();
         Vector3<f32> newDest;
         newDest.x = dummy.x;
-        newDest.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(dummy.x, dummy.y);
+        newDest.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y);
         newDest.z = dummy.y;
         this->setTroopDestination(newDest);
         this->pathFollow.pop_front();

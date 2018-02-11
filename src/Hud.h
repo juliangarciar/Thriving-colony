@@ -1,7 +1,8 @@
 #ifndef HUD_H
 #define HUD_H
 
-#include <irrlicht.h>
+#include <Types.h>
+#include <Enumeration.h>
 #include <GraphicEngine/Vector2.h>
 #include <GraphicEngine/Vector3.h>
 #include <GUIEngine/Rect2D.h>
@@ -17,11 +18,9 @@
 #include <GUIEngine/ProgressBar.h>
 #include <IOEngine/Keyboard.h>
 #include <IOEngine/Mouse.h>
-#include <Types.h>
 
-using namespace irr;
-       
-static TextBox *warningText = 0;
+#include <string>
+#include <sstream>
 
 /**
  * @class Hud
@@ -30,13 +29,9 @@ static TextBox *warningText = 0;
 class Hud {
     public:
         /**
-         * @brief Constructor
-         */
-        Hud();
-        /**
-         * @brief Destructor
-         */
-        ~Hud();
+		 * @brief Crea una Instancia de Game
+		 */
+        static Hud* Instance();
 
         /**
          * @brief Inicializa el HUD
@@ -46,6 +41,10 @@ class Hud {
          * @brief Actualiza el HUD
          */
         void Update();
+        /**
+         * @brief Limpia el HUD
+         */
+        void CleanUp();
 
         /**
          * @brief Activa una pestaña
@@ -129,7 +128,18 @@ class Hud {
          * @return pop
          */
         bool getPopUpOpen();
+    protected:
+        /**
+         * @brief Constructor
+         */
+        Hud();
+        /**
+         * @brief Destructor
+         */
+        ~Hud();
     private:
+        static Hud* pinstance;
+
         //Stuff
         bool popUpOpen;
     
