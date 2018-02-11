@@ -20,11 +20,10 @@ class Entity {
 		 * @brief Constructor
          * @param layer sera la capa en la que se encuentra la entidad
          * @param id de la entidad
-         * @param path con la ruta del archivo del modelo 3D
          * @param team
          * @param breed
 		 */
-        Entity(SceneNode *, i32, const wchar_t *, Enumeration::Team, Enumeration::BreedType);
+        Entity(i32, Enumeration::Team, Enumeration::BreedType);
         /**
 		 * @brief Destructor
 		 */
@@ -50,6 +49,13 @@ class Entity {
 		 */
         void returnToOriginalColor();
 
+        /**
+         * @brief 
+         * 
+         * @param path 
+         */
+        void setModel(SceneNode *, const wchar_t *);
+        
         /**
 		 * @brief Establece la posicion de la entidad
          * @param vertorData es las nuevas coordenadas de la posicion

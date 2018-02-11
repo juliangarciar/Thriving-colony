@@ -1,9 +1,7 @@
 #include "BuildingManager.h"
 #include "Game.h"
-#include "Human.h"
-#include "IA.h"
+
 #include "WorldGeometry/CellSpacePartition.h"
-using namespace irr;
 
 BuildingManager::BuildingManager(Enumeration::Team t, Enumeration::BreedType b) {
 	team = t;
@@ -43,7 +41,7 @@ bool BuildingManager::setBuildingMode(Enumeration::BuildingType type) {
 	if (checkCanPay(type)) {
 		if (!buildingMode) {
 			buildingMode = true;
-			setTempBuildingModel(Vector3<f32>(0, 0, 0), type);
+			tempBuilding = new Building(buildingLayer, 0, team, breed, type);
 			recalculateHitbox(); //ToDo: quizas algo guarro pero menos que lo otro
 			return true;
 		}
@@ -58,7 +56,7 @@ void BuildingManager::drawBuilding() {
         // tambien se cree una caja en las coordenadas actuales del cursor del raton.
 
 		//Get position where the cursor is pointing to the terrain
-        Vector3<f32> xyzPointCollision = g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse());
+        Vector3<f32> xyzPointCollision = Map::Instance() -> getTerrain() -> getPointCollision(g -> getMouse());
 
 		Vector3<f32> f = Box3D<f32>(tempBuilding -> getModel() -> getModel() -> getTransformedBoundingBox()).getSize(); //ToDo: fachada
 	// Change gridAligment -> by Julian
@@ -69,7 +67,7 @@ void BuildingManager::drawBuilding() {
 		bool collision = false;
 		Vector3<f32> dummy = CellSpacePartition::Instance() -> correctPosition(xyzPointCollision, tempBuilding, collision);
 		//std::cout << "Position: " << dummy.x << "," << dummy.y << "," << dummy.z << "\n";
-		dummy.y = g -> getGameState() -> getTerrain() -> getY(dummy.x, dummy.z);
+		dummy.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.z);
 		tempBuilding -> setPosition (dummy);
 
 		//Pressing the right mouse button cancels the building
@@ -103,7 +101,7 @@ void BuildingManager::drawBuilding() {
 
 void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType _type, bool instabuild) {
 	if (team == Enumeration::Team::IA || tempBuilding == NULL) {
-		setTempBuildingModel(pos, _type);
+		tempBuilding = new Building(buildingLayer, 0, team, breed, _type);
 		tempBuilding -> setPosition(pos);
 	}
 
@@ -126,20 +124,18 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 			if (buildingAmounts[(i32)b->getType()] == 1){
 				switch (b->getType()){
 					case Enumeration::BuildingType::Barrack:
-						Game::Instance() -> getGameState() -> getHud() -> enableTab(b->getType());
+						Hud::Instance() -> enableTab(b->getType());
 					break;
 					case Enumeration::BuildingType::Barn:
-						Game::Instance() -> getGameState() -> getHud() -> enableTab(b->getType());
+						Hud::Instance() -> enableTab(b->getType());
 					break;
 					case Enumeration::BuildingType::Workshop:
-						Game::Instance() -> getGameState() -> getHud() -> enableTab(b->getType());
+						Hud::Instance() -> enableTab(b->getType());
 					break;
 					default: break;
 				}
 			}
-            // Increase stuff when the human ends the building, but do so for the AI
-            // when it places the building. is it fair? i dunno
-			//Game::Instance() -> getEvents() -> triggerEvent(Enumeration::EventType::EnableText);    
+    		if (!instabuild) Game::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showBuiltText);  
 		}
 	});
 
@@ -153,60 +149,6 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 	CellSpacePartition::Instance() -> updateCell(tempBuilding);
 	tempBuilding = NULL;
 	nextBuildingId++;
-}
-
-void BuildingManager::setTempBuildingModel(Vector3<f32> pos, Enumeration::BuildingType _type) {
-	switch (_type){
-		case Enumeration::BuildingType::Barn:
-			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/establo.obj", team, breed, _type, pos);
-			tempBuilding -> getModel() -> setScale(Vector3<f32>(25,25,25));
-		break;
-		case Enumeration::BuildingType::Barrack:
-			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/barraca.obj", team, breed, _type, pos);
-			tempBuilding -> getModel() -> setScale(Vector3<f32>(25,25,25));
-		break;
-		case Enumeration::BuildingType::Hospital:
-			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/hospital.obj", team, breed, _type, pos);
-			tempBuilding -> getModel() -> setScale(Vector3<f32>(64,64,64));
-		break;
-		case Enumeration::BuildingType::House:
-			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/house.obj", team, breed, _type, pos);
-			tempBuilding -> getModel() -> setScale(Vector3<f32>(64,64,64));
-		break;
-		case Enumeration::BuildingType::MainBuilding:
-			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/command_center.obj", team, breed, _type, pos);
-			tempBuilding -> getModel() -> setScale(Vector3<f32>(48,48,48));
-		break;
-		case Enumeration::BuildingType::Market:
-			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/mercado.obj", team, breed, _type, pos);
-			tempBuilding -> getModel() -> setScale(Vector3<f32>(25,25,25));
-		break;
-		case Enumeration::BuildingType::Quarry:
-			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/cantera.obj", team, breed, _type, pos);
-			tempBuilding -> getModel() -> setScale(Vector3<f32>(25,25,25));
-		break;
-		case Enumeration::BuildingType::School:
-			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/escuela.obj", team, breed, _type, pos);
-			tempBuilding -> getModel() -> setScale(Vector3<f32>(25,25,25));
-		break;
-		case Enumeration::BuildingType::Siderurgy:
-			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/siderurgia.obj", team, breed, _type, pos);
-			tempBuilding -> getModel() -> setScale(Vector3<f32>(25,25,25));
-		break;
-		case Enumeration::BuildingType::Tower:
-			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/torre_vigilancia.obj", team, breed, _type, pos);
-			tempBuilding -> getModel() -> setScale(Vector3<f32>(25,25,25));
-		break;
-		case Enumeration::BuildingType::Wall:
-			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/muralla.obj", team, breed, _type, pos);
-			tempBuilding -> getModel() -> setScale(Vector3<f32>(25,25,25));
-		break;
-		case Enumeration::BuildingType::Workshop:
-			tempBuilding = new Building(buildingLayer, 0, L"media/buildingModels/taller_maquinas_de_asedio.obj", team, breed, _type, pos);
-			tempBuilding -> getModel() -> setScale(Vector3<f32>(25,25,25));
-		break;
-		default: break;
-	}
 }
 
 //Checks if the player, either the human or the AI can afford to build a specific building 

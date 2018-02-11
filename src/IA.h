@@ -13,14 +13,6 @@
 class IA : public Player {
     public:
         /**
-         * @brief Constructor
-         */
-        IA();
-        /**
-         * @brief Destructor
-         */
-        virtual ~IA();
-        /**
          * @brief Solicita la instancia IA
          * @return Devuelve un puntero al objeto IA
          */
@@ -84,6 +76,15 @@ class IA : public Player {
          * @return behaviourTree sera el arbol devuelto
          */
         BehaviourTree* getTree();
+    protected:
+        /**
+         * @brief Constructor
+         */
+        IA();
+        /**
+         * @brief Destructor
+         */
+        virtual ~IA();
     private:
         static IA* instance;
 

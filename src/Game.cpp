@@ -14,7 +14,6 @@ Game::Game() {
 
     menu = new MenuState();
     game = new GameState();
-    //pause = new PauseState();
     win = new WinState();
     defeat = new DefeatState();
 
@@ -26,46 +25,23 @@ Game::Game() {
 
     events = new EventSystem();
 
-    Window::Instance() -> setGUI();
-// Added by Julian
-    Graph::Instance();
-    //cellSpace = new CellSpacePartition(10240, 10240, 128, 128, 4);
-    cellSpace = CellSpacePartition::Instance();
     soundSystem = SoundSystem::Instance();
 }
 
 Game::~Game() {
     delete menu;
     delete game;
-    //delete pause;
+    delete win;
+    delete defeat;
+
     delete cursor;
+    delete keyboard;
+    
     delete events;
     delete soundSystem;
-    delete keyboard;
 }
 
 void Game::Init() {
-    //Initialize the event system
-    //IA Events
-    events -> addEvent(Enumeration::EventType::RetractTroopsIA, []() {
-        IA::Instance()->getUnitManager()->retractAllTroops();
-    });
-    /*events -> addEvent(Enumeration::EventType::DeployAllTroopsIA, []() {
-        IA::Instance()->getUnitManager()->deployAllTroops();
-    });*/
-
-    //Human events
-    events -> addEvent(Enumeration::EventType::RetractTroopsHuman, []() {
-        Human::Instance()->getUnitManager()->retractAllTroops();
-    });
-    /*events -> addEvent(Enumeration::EventType::DeployAllTroopsHuman, []() {
-        Human::Instance()->getUnitManager()->deployAllTroops();
-    });*/
-
-    //Hud events
-    //events -> addEvent(Enumeration::EventType::EnableText, Hud::drawWarning);
-    //events -> addEvent(Enumeration::EventType::DisableText, Hud::deleteWarning);
-
     state -> Init();
 }
 
@@ -127,7 +103,7 @@ Mouse *Game::getMouse() {
     return cursor;
 }
 
-EventSystem *Game::getEvents() {
+EventSystem *Game::getEventManager() {
     return events;
 }
 
@@ -137,8 +113,4 @@ MenuState *Game::getMenuState() {
 
 GameState *Game::getGameState() {
 	return game;
-}
-
-CellSpacePartition *Game::getCellSpace(){
-    return cellSpace;
 }

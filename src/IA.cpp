@@ -1,6 +1,5 @@
 #include "IA.h"
 #include "Game.h"
-#include "Human.h"
 
 IA* IA::instance = 0;
 
@@ -87,7 +86,7 @@ Vector3<f32> IA::determinatePositionBuilding() {
         f32 startingX = 2000;
         f32 startingZ = 2000;
         v.set(startingX, 0, startingZ);
-        v.y = Game::Instance() -> getGameState()  -> getTerrain() -> getY(v.x, v.z);
+        v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.z);
     } else {
 
         //When there are some buildings
@@ -143,7 +142,7 @@ Vector3<f32> IA::determinatePositionBuilding() {
                 }
             }
         }
-        v.y = Game::Instance() -> getGameState()  -> getTerrain() -> getY(v.x, v.z);
+        v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.z);
     }
     return v;
 }

@@ -1,7 +1,6 @@
 #include "UnitManager.h"
 #include "Game.h"
-#include "IA.h"
-#include "Human.h"
+
 //Constructor
 UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
     gridAlignment = 20;
@@ -54,9 +53,9 @@ UnitManager::~UnitManager() {
 
 //Create a new troops
 //In order to add a new unit, you must specify which one
-bool UnitManager::createTroop(Enumeration::UnitType unitData) {
-    if (checkCanPay(unitData)) {
-        Unit *newUnit = setNewUnitModel(unitData);
+bool UnitManager::createTroop(Enumeration::UnitType type) {
+    if (checkCanPay(type)) {
+        Unit *newUnit = new Unit(unitLayer, nextTroopId, team, breed, type);
         if (newUnit == NULL) {
             return false;
         }
@@ -74,8 +73,11 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
 
             //Añadir al HUD
             if (team == Enumeration::Team::Human){
-                Game::Instance()->getGameState()->getHud()->removeTroopFromQueue(u->getID());
-                Game::Instance()->getGameState()->getHud()->addTroopToHall(u->getID(), u->getType());
+                Hud::Instance()->removeTroopFromQueue(u->getID());
+                Hud::Instance()->addTroopToHall(u->getID(), u->getType());
+
+                //Mostrar texto de reclutamiento
+                Game::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showRecruitedText);  
             }
         });
         newUnit -> setRetractedCallback([&] (Unit *u){
@@ -89,17 +91,17 @@ bool UnitManager::createTroop(Enumeration::UnitType unitData) {
 
             //Añadir al HUD
             if (team == Enumeration::Team::Human){
-                Game::Instance()->getGameState()->getHud()->addTroopToHall(u->getID(), u->getType());
+                Hud::Instance()->addTroopToHall(u->getID(), u->getType());
             }
         });
 
         std::cout << "Se ha empezado a reclutar la unidad " << newUnit->getID() << std::endl;
         inQueueTroops -> insert(std::pair<i32, Unit*>(newUnit->getID(), newUnit));
         if (team == Enumeration::Team::Human){
-            Game::Instance()->getGameState()->getHud()->addTroopToQueue(newUnit->getID(), newUnit->getType());
+            Hud::Instance()->addTroopToQueue(newUnit->getID(), newUnit->getType());
         }
 
-        troopsAmount[unitData]++;
+        troopsAmount[type]++;
         nextTroopId++;
         return true;
     }
@@ -180,7 +182,7 @@ void UnitManager::deploySelectedTroop(Vector3<f32> p) {
         temp -> getModel() -> setActive(true);
 
         if (team == Enumeration::Team::Human){
-            Game::Instance()->getGameState()->getHud()->removeTroopFromHall(temp->getID());
+            Hud::Instance()->removeTroopFromHall(temp->getID());
         }
         std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
 
@@ -206,7 +208,7 @@ void UnitManager::deployAllTroops(Vector3<f32> p){
         temp -> getModel() -> setActive(true);
         
         if (team == Enumeration::Team::Human){
-            Game::Instance()->getGameState()->getHud()->removeTroopFromHall(temp->getID());
+            Hud::Instance()->removeTroopFromHall(temp->getID());
         }
         std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
     }
@@ -253,16 +255,16 @@ void UnitManager::unSelectTroop() {
 void UnitManager::moveOrder() {
     Game *g = Game::Instance();
     if (selectedTroop != NULL) {
-        selectedTroop -> setTroopDestination(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
+        selectedTroop -> setTroopDestination(Map::Instance() -> getTerrain() -> getPointCollision(g -> getMouse()));
         if (Game::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
         // ToDo by Julian -> change attack iddle to pathfinding mode
             selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
 
-            selectedTroop->setPathToTarget(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
+            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(g -> getMouse()));
         } else {
             selectedTroop -> switchState(Enumeration::UnitState::Move);
 
-            selectedTroop->setPathToTarget(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
+            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(g -> getMouse()));
         }
         //MOVEMENT VOICE
         //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
@@ -386,42 +388,6 @@ Unit* UnitManager::getSelectedTroop() {
 
 i32 UnitManager::getTroopAmount(Enumeration::UnitType t){
     return troopsAmount[(i32)t];
-}
-
-Unit* UnitManager::setNewUnitModel(Enumeration::UnitType unitType) {
-    // Hacer que sean razas diferentes?
-    switch (unitType) {
-        case Enumeration::UnitType::StandardM:
-            return new Unit(unitLayer, std::rand(), L"media/unitModels/Soldado_Melee_Drorania.obj", team, breed, unitType, Vector3<f32>());
-        break;
-
-        case Enumeration::UnitType::StandardR:
-            return new Unit(unitLayer, std::rand(), L"media/unitModels/Soldado_Rango_Drorania.obj", team, breed, unitType, Vector3<f32>());
-        break;
-
-        case Enumeration::UnitType::AdvancedM:
-            return new Unit(unitLayer, std::rand(), L"media/unitModels/criatura_drorania.obj", team, breed, unitType, Vector3<f32>());
-        break;
-
-        case Enumeration::UnitType::AdvancedR:
-            return new Unit(unitLayer, std::rand(), L"media/unitModels/criatura_drorania.obj", team, breed, unitType, Vector3<f32>());
-        break;
-
-        case Enumeration::UnitType::Idol:
-            return new Unit(unitLayer, std::rand(), L"media/unitModels/Ente_Drorania.obj", team, breed, unitType, Vector3<f32>());
-        break;
-
-        case Enumeration::UnitType::Launcher:
-            return new Unit(unitLayer, std::rand(), L"media/unitModels/canon_drorania.obj", team, breed, unitType, Vector3<f32>());
-        break;
-
-        case Enumeration::UnitType::Desintegrator:
-            return new Unit(unitLayer, std::rand(), L"media/unitModels/desintegrador_de_Drorania.obj", team, breed, unitType, Vector3<f32>());
-        break;
-        default:
-            return NULL;
-        break;
-    }
 }
 
 bool UnitManager::areTroopsDeployed(){

@@ -6,10 +6,7 @@
 #include "GameState.h"
 #include "WinState.h"
 #include "DefeatState.h"
-#include "Enumeration.h"
-#include <Types.h>
 
-#include <IOEngine/EventSystem.h>
 #include <IOEngine/Mouse.h>
 #include <IOEngine/Keyboard.h>
 #include <IOEngine/EventSystem.h>
@@ -17,10 +14,10 @@
 #include <GraphicEngine/Window.h>
 
 #include <SoundEngine/SoundSystem.h>
-// Added by Julian
-#include <PathPlanner/Graph.h>
-#include <WorldGeometry/CellSpacePartition.h>
-class CellSpacePartition;
+
+#include <Enumeration.h>
+#include <Types.h>
+
 /**
  * @class Game
  * @brief Crea un objeto singleton tipo Game
@@ -77,7 +74,7 @@ class Game {
 		 * @brief Devuelve el evento actual
          * @return Devuelve un objeto tipo EventSystem
 		 */
-        EventSystem *getEvents();
+        EventSystem *getEventManager();
         /**
 		 * @brief Devuelve el menu actual
          * @return Devuelve un objeto tipo MenuState
@@ -88,9 +85,6 @@ class Game {
          * @return Devuelve un objeto tipo GameState
 		 */
 		GameState *getGameState();
-        
-        // Added by Julian
-        CellSpacePartition *getCellSpace();
     protected:
         /**
 		 * @brief Constructor de Game.
@@ -130,8 +124,6 @@ class Game {
         EventSystem *events;
         
         SoundSystem *soundSystem;
-        //Added by Julian
-        CellSpacePartition *cellSpace;
 };
 
 #endif

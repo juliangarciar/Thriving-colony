@@ -1,22 +1,15 @@
 #ifndef GAMESTATE_H
 #define GAMESTATE_H
 
-#include <sstream>
 #include "State.h"
-#include "CameraController.h"
+
 #include "Hud.h"
 #include "PauseMenu.h"
-#include "IA.h"
 #include "Human.h"
-#include "BuildingManager.h"
+#include "IA.h"
+#include "Map.h"
 #include "BattleManager.h"
 
-#include <IAEngine/RootNode.h>
-
-#include <SoundEngine/SoundSystem.h>
-
-#include <GraphicEngine/Terrain.h>
-#include <GraphicEngine/Light.h>
 #include <Types.h>
 
 /**
@@ -24,7 +17,6 @@
  * @brief Tiene herencia publica de State y crea un objeto tipo GameState
  */
 class GameState : public State {
-    
     public:
         /**
 		 * @brief Constructor de GameState
@@ -55,36 +47,33 @@ class GameState : public State {
 		 * @brief Constructor
 		 */
         void CleanUp();
-        /**
-        * @brief Devuelve el mapa
-        * @return objeto de tipo Terrain
-        */
-        Terrain* getTerrain();
-         /**
-        * @brief Devuelve la interfaz
-        * @return objeto de tipo Hud
-        */
-        Hud* getHud();
+        
          /**
         * @brief Devuelve el manejador de batalla
         * @return objeto de tipo BattleManager
         */
         BattleManager* getBattleManager();
 
+        /**
+         * @brief 
+         * 
+         */
         void cleanGamePaused();
-        
     private:
-        Light *light;
-        CameraController *camera;
-        Terrain *map;
-        Hud * hud;
+        //Singletons
+        Human *human;
+        IA *ia;
+        Map *map;
+        Hud *hud;
+
+        //Pause
+        PauseMenu *pauseMenu;
+        
+        //Battles
         BattleManager *battleManager;
 
-        // This is for pausing, in a future it will be a gamestate different?
+        // This is for pausing
         bool gamePaused;
-        PauseMenu *pauseMenu;
-
-        i32 prevWindowWidth, prevWindowHeight;
 };
 
 #endif

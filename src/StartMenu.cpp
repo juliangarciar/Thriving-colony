@@ -1,14 +1,13 @@
 #include "StartMenu.h"
 #include "Game.h"
 
-#include <string>
-
 StartMenu::StartMenu() {
     buttonQuit = new Button("Quit");
     buttonQuit -> setPosition(Vector2<i32>(600, 400));
 
     buttonStart = new Button("Play");
-    buttonStart -> setPosition(Vector2<i32>(600, 300));    
+    buttonStart -> setPosition(Vector2<i32>(600, 300)); 
+    Window::Instance() -> setGUI();   
 }
 
 StartMenu::~StartMenu() {

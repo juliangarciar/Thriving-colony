@@ -53,7 +53,7 @@ class CellSpacePartition{
     // Add entities to the proper cell
         void addEntity(Entity* ent);
     // Removes a entity from a cell
-        void removeEntity(Entity* ent, Vector2<f32> position);
+        void removeEntity(Entity* ent, Vector2<f32> position.);
     // Calculate neighbors and add them in the neighbor vector
         void calculateNeighbors(Vector2<f32> targetPos, f32 radious);
     // Updates a entity's cell, calling this from the entity update method

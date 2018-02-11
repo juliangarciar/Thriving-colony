@@ -1,7 +1,8 @@
 #ifndef HUD_H
 #define HUD_H
 
-#include <irrlicht.h>
+#include <Types.h>
+#include <Enumeration.h>
 #include <GraphicEngine/Vector2.h>
 #include <GraphicEngine/Vector3.h>
 #include <GUIEngine/Rect2D.h>
@@ -17,11 +18,9 @@
 #include <GUIEngine/ProgressBar.h>
 #include <IOEngine/Keyboard.h>
 #include <IOEngine/Mouse.h>
-#include <Types.h>
 
-using namespace irr;
-       
-static TextBox *warningText = 0;
+#include <string>
+#include <sstream>
 
 /**
  * @class Hud
@@ -30,13 +29,9 @@ static TextBox *warningText = 0;
 class Hud {
     public:
         /**
-         * @brief Constructor
-         */
-        Hud();
-        /**
-         * @brief Destructor
-         */
-        ~Hud();
+		 * @brief Crea una Instancia de Game
+		 */
+        static Hud* Instance();
 
         /**
          * @brief Inicializa el HUD
@@ -46,6 +41,10 @@ class Hud {
          * @brief Actualiza el HUD
          */
         void Update();
+        /**
+         * @brief Limpia el HUD
+         */
+        void CleanUp();
 
         /**
          * @brief Activa una pestaña
@@ -108,11 +107,40 @@ class Hud {
         void removeTroopFromQueue(i32);
 
         /**
+         * @brief 
+         * @param text
+         */
+        void showToast(std::string);
+
+        /**
+         * @brief 
+         */
+        void hideToast();
+
+        /**
+         * @brief 
+         * @param std::string 
+         */
+        void debug();
+
+        /**
          * @brief Devuelve cosas
          * @return pop
          */
         bool getPopUpOpen();
+    protected:
+        /**
+         * @brief Constructor
+         */
+        Hud();
+        /**
+         * @brief Destructor
+         */
+        ~Hud();
     private:
+        static Hud* pinstance;
+
+        //Stuff
         bool popUpOpen;
     
         std::vector<i32> troopsInHallIDs;
@@ -143,7 +171,7 @@ class Hud {
 
         ComboBox *hallTroopList;
         
-        //Text
+        //Debug
         Panel *playerResources;
         Label *playerMetalAmount;
         Label *playerCrystalAmount;
@@ -168,8 +196,16 @@ class Hud {
         Label *iaNextChoice;
         Label *iaBehaviour;
 
-        f32 updateTimer;
-        f32 deleteTextTimer;
+        f32 debugTime;
+        f32 debugTimer;
+
+        //Toast
+        Panel *toast;
+        Label *toastText;
+
+        bool toastBool;
+        f32 toastTime;
+        f32 toastTimer;
 
         /**
          * @brief Crea un boton 
