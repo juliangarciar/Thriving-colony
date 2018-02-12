@@ -1,13 +1,24 @@
 #include "TNode.h"
 
-TNode::TNode(TNode *p){
-    parent = p;
+TNode::TNode(){
     entity = NULL;
+    parent = NULL;
+}
+
+TNode::TNode(TEntity *t){
+    entity = t;
+    parent = NULL;
+}
+
+TNode::TNode(TEntity *t, TNode *p){
+    entity = t;
+    parent = p;
+    parent->addChild(this);
 }
 
 TNode::~TNode(){
-    delete entity;
-    delete parent;
+    if (entity != NULL) delete entity;
+    if (parent != NULL) delete parent;
     for (int i = 0; i < children.size(); i++){
         delete children[i];
     }
@@ -30,7 +41,7 @@ void TNode::draw(){
 }
 
 void TNode::setEntity(TEntity *e){
-    entity = e;
+    if (e != NULL) entity = e;
 }
 
 TEntity *TNode::getEntity(){
