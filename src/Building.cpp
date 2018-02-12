@@ -13,8 +13,9 @@ Building::Building(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::Br
 }
 
 Building::~Building() {
-    Clear();
+    
 }
+
 void Building::Clear(){
     // Clears the cells where the building is
     CellSpacePartition *cells = CellSpacePartition::Instance();
@@ -38,6 +39,7 @@ void Building::Clear(){
     }
     // End clear cells
 }
+
 void Building::Init() {
     f32 r = 0;
     f32 g = 0;

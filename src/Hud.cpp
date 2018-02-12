@@ -432,6 +432,8 @@ void Hud::Update() {
 void Hud::CleanUp(){
     delete buildingsPanel;
     delete tabContainer;
+    delete playerResources;
+    delete iaResources;
     //ToDo: incompleto
 }
 
