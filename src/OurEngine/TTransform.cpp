@@ -56,11 +56,3 @@ void TTransform::rotate(f32 rX, f32 rY, f32 rZ, f32 angle) {
 void TTransform::scale(f32 sX, f32 sY, f32 sZ) {
     matrix = glm::scale(matrix, glm::vec3(sX, sY, sZ));
 }
-
-void beginDraw() {
-
-}
-
-void endDraw() {
-
-}
