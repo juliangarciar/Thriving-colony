@@ -1,7 +1,7 @@
 #ifndef TERRAIN_H
 #define TERRAIN_H
 
-#include <irrlicht.h>
+#include <irrlicht/irrlicht.h>
 #include <Types.h>
 #include <IOEngine/Mouse.h>
 #include <GraphicEngine/Texture.h>

@@ -1,7 +1,7 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <irrlicht.h>
+#include <irrlicht/irrlicht.h>
 #include <GLFW/glfw3.h>
 #include <nanogui/nanogui.h>
 

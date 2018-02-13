@@ -1,7 +1,7 @@
 #ifndef LIGHT_H
 #define LIGHT_H
 
-#include <irrlicht.h>
+#include <irrlicht/irrlicht.h>
 #include <Types.h>
 #include <MathEngine/Vector3.h>
 

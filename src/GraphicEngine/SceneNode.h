@@ -1,7 +1,7 @@
 #ifndef SCENE_NODE_H
 #define SCENE_NODE_H
 
-#include <irrlicht.h>
+#include <irrlicht/irrlicht.h>
 #include <Types.h>
 #include <MathEngine/Vector3.h>
 #include <IOEngine/Mouse.h>

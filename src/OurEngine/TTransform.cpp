@@ -1,11 +1,19 @@
 #include "TTransform.h"
 
-TTransform::TTransform() {
+TTransform::TTransform() : TEntity() {
     matrix = glm::mat4();
 }
 
 TTransform::~TTransform() {
     delete matrix;
+}
+
+void TTransform::beginDraw(){
+
+}
+
+void TTransform::endDraw(){
+
 }
 
 void TTransform::identity() {
