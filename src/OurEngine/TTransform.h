@@ -32,7 +32,7 @@ class TTransform : public TEntity {
         void rotate(f32, f32, f32, f32);
         void scale(f32, f32, f32);
         // TBA
-
+        glm::mat4 getMatrix();
     private:
 
         glm::mat4 matrix;

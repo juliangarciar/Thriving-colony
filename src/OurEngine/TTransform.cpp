@@ -13,6 +13,7 @@ void TTransform::beginDraw(){
 }
 
 void TTransform::endDraw(){
+    matrix = matrixStack.top();
     matrixStack.pop();
 }
 
@@ -57,10 +58,6 @@ void TTransform::scale(f32 sX, f32 sY, f32 sZ) {
     matrix = glm::scale(matrix, glm::vec3(sX, sY, sZ));
 }
 
-void beginDraw() {
-
-}
-
-void endDraw() {
-
+glm::mat4 TTransform::getMatrix() {
+    return matrix;
 }
