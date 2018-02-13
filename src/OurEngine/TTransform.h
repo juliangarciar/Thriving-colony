@@ -3,6 +3,7 @@
 
 #include "TEntity.h"
 #include <Types.h>
+#include <stack>  
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
 #include <glm/gtc/matrix_transformation.hpp>
@@ -18,7 +19,7 @@ class TTransform : public TEntity {
         // Matrix operations
         
         void identity();
-        void load(TMatrix4x4);
+        void load(glm::mat4);
         void transpose();
         void invert();
         void multiply(f32);

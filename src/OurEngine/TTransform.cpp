@@ -9,18 +9,18 @@ TTransform::~TTransform() {
 }
 
 void TTransform::beginDraw(){
-
+    matrixStack.push(matrix);
 }
 
 void TTransform::endDraw(){
-
+    matrixStack.pop();
 }
 
 void TTransform::identity() {
     matrix = glm::mat4();
 }
 
-void TTransform::load(TMatrix4x4 newMatrix) {
+void TTransform::load(glm::mat4 newMatrix) {
     matrix = newMatrix;
 }
 
