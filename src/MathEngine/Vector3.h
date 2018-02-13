@@ -1,9 +1,8 @@
 #ifndef VECTOR3_H
 #define VECTOR3_H
 
-//#include <iostream>
-//#include <irrlicht/irrlicht.h>
 #include "Vector2.h"
+#include <irrlicht/irrlicht.h>
 #include <Types.h>
 
 #define PI 3.14159265

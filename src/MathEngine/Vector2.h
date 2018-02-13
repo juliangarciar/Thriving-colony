@@ -1,7 +1,6 @@
 #ifndef VECTOR2_H
 #define VECTOR2_H
 
-#include <iostream>
 #include <irrlicht/irrlicht.h>
 #include <Types.h>
 #define PI 3.14159265

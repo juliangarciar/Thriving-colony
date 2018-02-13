@@ -1,8 +1,7 @@
 #include "AttackNode.h"
 #include "MoveTroopsNode.h"
 #include "RetractTroopsNode.h"
-#include "../IA.h"
-//#include "../Game.h"
+#include <IA.h>
 
 
 AttackNode::AttackNode(Node *fatherPnt) : Node() {

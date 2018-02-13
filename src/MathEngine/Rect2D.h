@@ -1,7 +1,6 @@
 #ifndef RECT_H
 #define RECT_H
 
-#include <iostream>
 #include <irrlicht/irrlicht.h>
 #include <Types.h>
 

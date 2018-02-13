@@ -4,7 +4,7 @@
 #include "WorkshopNode.h"
 #include "WallNode.h"
 #include "TowerNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 BuildingNode::BuildingNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

@@ -2,7 +2,7 @@
 #include "SchoolNode.h"
 #include "HospitalNode.h"
 #include "MarketNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 ServiceNode::ServiceNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

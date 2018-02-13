@@ -1,7 +1,5 @@
 #include "EventSystem.h"
 
-#include <iostream>
-
 EventSystem::EventSystem() {
     Events = new std::map<Enumeration::EventType, std::function<void()>>();
 }
@@ -12,7 +10,7 @@ EventSystem::~EventSystem() {
 
 /*
 * Save a pair of an event and a function on the hash map Events
-* The event must be a type of EventType declared on the ../Enumeration.h file
+* The event must be a type of EventType declared on the Enumeration.h file
 * The function must be static, void and without parameters
 */
 void EventSystem::addEvent(Enumeration::EventType event, std::function<void()> function) {
@@ -21,7 +19,7 @@ void EventSystem::addEvent(Enumeration::EventType event, std::function<void()> f
 
 /*
 * Search an event on the hash map Events and call the function related with the event
-* The event must be a type of EventType declared on the ../Enumeration.h file.
+* The event must be a type of EventType declared on the Enumeration.h file.
 */
 void EventSystem::triggerEvent(Enumeration::EventType event) {
     auto function = Events -> find(event);

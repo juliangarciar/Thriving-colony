@@ -4,7 +4,6 @@
 #ifndef SoundSystem_h
 #define SoundSystem_h
 
-#include <iostream>
 #include <map>
 #include <string>
 #include <fmod/fmod.hpp>
