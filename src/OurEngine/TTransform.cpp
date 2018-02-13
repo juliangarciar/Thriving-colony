@@ -5,7 +5,7 @@ TTransform::TTransform() : TEntity() {
 }
 
 TTransform::~TTransform() {
-    delete matrix;
+    
 }
 
 void TTransform::beginDraw(){
@@ -24,7 +24,7 @@ void TTransform::load(glm::mat4 newMatrix) {
     matrix = newMatrix;
 }
 
-void TTrasform::transpose(); {
+void TTransform::transpose() {
     matrix = glm::transpose(matrix);
 }
 
@@ -37,10 +37,10 @@ void TTransform::multiply(f32 mFactor) {
 }
 
 void TTransform::multiply(glm::vec3 mVector) {
-    matrix = matrix * mVector;
+    //matrix = matrix * mVector; //ToDo: esto no se puede hacer
 }
 
-void TTransform::multiply(glm::mat4 matrix) {
+void TTransform::multiply(glm::mat4 mMatrix) {
     matrix = matrix * mMatrix;
 }
 
