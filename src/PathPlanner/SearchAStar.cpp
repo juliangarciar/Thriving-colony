@@ -1,4 +1,6 @@
 #include "SearchAStar.h"
+#include "../WorldGeometry/CellSpacePartition.h"
+
 SearchAStar::~SearchAStar(){
     this->m_shortestPathTree.clear();
     this->m_searchFrontier.clear();
@@ -23,13 +25,17 @@ void SearchAStar::Search(){
 
         // Fix this iterator
         // iterator of edges, given a node index
-        std::list<Edge, std::allocator<Edge> > dummy = m_Graph.getEdgeListVector().at(NextClosestNode);
-        std::list<Edge>::iterator edgeIterator(dummy.begin());
-
+        std::list<Edge> dummy = m_Graph.getEdgeListVector().at(NextClosestNode);
+        std::cout << dummy.size() << "\n";
+        std::list<Edge>::iterator edgeIterator = dummy.begin();
+        std::cout << "Que coño pasa \n";
         for( Edge* pE = &(*edgeIterator);
             edgeIterator != dummy.end();
             edgeIterator++)
         {
+            std::cout << "Colisiones comprobando \n";
+            //CellSpacePartition::Instance() -> checkCollisions(m_Graph.getNode(NextClosestNode).getPosition(), m_Graph.getNode(pE -> getTo()).getPosition());
+            std::cout << "Colisiones comprobadas \n";
             double HCost = Calculate(m_iTarget, pE->getTo());
 
             double GCost = m_GCosts[NextClosestNode] + pE->getCost();

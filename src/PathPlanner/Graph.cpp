@@ -16,12 +16,16 @@ Graph::Graph(){
     i32 nWaypointsX, nWaypointsY;
     nWaypointsX = K / GRID;
     nWaypointsY = K / GRID;
+    this->m_Nodes.reserve(nWaypointsX * nWaypointsY);
+    this->m_Edges.reserve(nWaypointsX * nWaypointsY);
     for(i32 y = 0; y < nWaypointsY; y++){
         for(i32 x = 0; x < nWaypointsX; x++){
             f32 dX = x * GRID + GRID / 2;
             f32 dY = y * GRID + GRID / 2;
             LWayPoint dummy = LWayPoint(Vector2<f32>(dX, dY));
-            this->addNode(dummy);
+            i32 reservedIndex = addNode(dummy);
+            dummy.setIndex(reservedIndex);
+            std::cout << "Creando waypoint en indice; " << reservedIndex << "\n";
             if(y == 0){
                 if(x == 0){
                     Edge a = Edge();
@@ -203,15 +207,16 @@ i32 Graph::getNextIndex(){
 // Maybe this will explode, check later
 i32 Graph::addNode(LWayPoint node){
     i32 actual = nextNode;
-    if(node.getIndex() != INVALID_WP)
-        node.setIndex(nextNode);
+    //if(node.getIndex() != INVALID_WP)
+    node.setIndex(actual);
 
-    positionMap.insert(std::pair<i32, Vector2<f32> >(nextNode, node.getPosition()));
+    positionMap.insert(std::pair<i32, Vector2<f32> >(actual, node.getPosition()));
 
-    m_Edges.resize(nextNode + 1);
-    m_Edges.at(nextNode) = std::list<Edge>();
-    this->m_Nodes.push_back(node);
-    this->nextNode++;
+    //m_Edges.resize(nextNode + 1);
+    std::cout << "Palmas bastante loco \n";
+    //m_Edges.at(nextNode) = std::list<Edge>(9);
+    m_Nodes.push_back(node);
+    nextNode++;
     return actual;
 }
 // Maybe check if the edge is viable
@@ -221,10 +226,24 @@ void Graph::removeNode(i32 node){
 // Maybe check if the edge is viable
 void Graph::addEdge(Edge edge){
     if(edge.getFrom() != -1){
-        Vector2<f32> a = getNode(edge.getFrom()).getPosition();
-        Vector2<f32> b = getNode(edge.getTo()).getPosition();
-        edge.setCost(calculateDistance(a, b));
-        this->m_Edges.at(edge.getFrom()).push_back(edge);
+        std::cout << "Metiendo edge en indice: "<< edge.getFrom() << "\n";
+        std::cout << "Evaluando datos NODO: " << getNode(edge.getFrom()).getIndex() << "\n";
+        Vector2<f32> dummy = getNode(edge.getFrom()).getPosition();
+        std::cout << "Evaluando datos POSICION X: " << dummy.x << "\n";
+        std::cout << "Evaluando datos POSICION Y: " << dummy.y << "\n";
+
+        //Vector2<f32> a = getNode(edge.getFrom()).getPosition();
+        // Esto falla primo -> MODIFICAR EL METODO DE METER EDGES
+        //Vector2<f32> b = getNode(edge.getTo()).getPosition();
+        std::cout << "Insertando 1\n";
+        //edge.setCost(calculateDistance(a, b));
+        std::cout << "Insertando 2\n";
+        //m_Edges.at(edge.getFrom()).insert(edge);
+        //m_Edges.at(edge.getFrom()).push_back(edge);
+        std::cout << "Insertado \n";
+    }
+    else{
+        std::cout << "Como palmas tio \n";
     }
 }
 // Maybe check if from and to are available

@@ -55,7 +55,7 @@ class CellSpacePartition{
     // Removes a entity from a cell
         void removeEntity(Entity* ent, Vector2<f32> position);
     // Calculate neighbors and add them in the neighbor vector
-        void calculateNeighbors(Vector2<f32> targetPos, f32 radious);
+        void calculateNeighbors(Vector2<f32> targetPos);
     // Updates a entity's cell, calling this from the entity update method
         void updateEntity(Entity* ent, Vector2<f32> oldPos);
     // Updates a cell
@@ -64,8 +64,10 @@ class CellSpacePartition{
         void clearCells();
     // Returns the correct position where the building is built
         Vector3<f32> correctPosition(Vector3<f32> targetPos, Entity *object, bool &collision);
+    // Check collisions between an agent and a position
+        bool checkCollisions(Vector2<f32> origin, Vector2<f32> targetPosition);
     // Checks if the cell is blocked
-        bool isBlocked(Vector3<f32> targetPos);
+        bool isBlocked(Vector2<f32> targetPos);
     // Returns a reference to the entity of the neighbor vector
         Entity* begin();
     // Used to iterate trought the neighbor vector

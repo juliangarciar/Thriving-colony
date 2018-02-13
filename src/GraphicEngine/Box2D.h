@@ -19,16 +19,22 @@ class Box2D
     private:
     // Top-left point
         Vector2<f32>  m_vTopLeft;
-    // Top-right point
+    // Bottom-right point
         Vector2<f32>  m_vBottomRight;
     // Center point
         Vector2<f32>  m_vCenter;
+    // Top-right point
+        Vector2<f32> m_vTopRight;
+    // Bottom-left point
+        Vector2<f32> m_vBottomLeft;
     public:
     // Constructor
         Box2D(Vector2<f32> tl,
                         Vector2<f32> br):m_vTopLeft(tl),
                                         m_vBottomRight(br),
-                                        m_vCenter((tl+br)/2.0)
+                                        m_vCenter((tl+br)/2.0),
+                                        m_vTopRight(Vector2<f32>(br.x, tl.y)),
+                                        m_vBottomLeft(Vector2<f32>(tl.x, br.y))
         {}
     // Returns true if overlaps with another Box2D
         bool isOverlappedWith( Box2D& other)
@@ -46,6 +52,15 @@ class Box2D
         Vector2<f32> BottomRight(){
             return m_vBottomRight;
         }
+        Vector2<f32> Center(){
+            return m_vCenter;
+        }
+        Vector2<f32> TopRight(){
+            return m_vTopRight;
+        }
+        Vector2<f32> BottomLeft(){
+            return m_vBottomLeft;
+        }
         double    Top(){
             return m_vTopLeft.y;
         }
@@ -58,9 +73,7 @@ class Box2D
         double    Right(){
             return m_vBottomRight.x;
         }
-        Vector2<f32> Center(){
-            return m_vCenter;
-        }
+        
 };
   
 #endif /* BOX2D_H */

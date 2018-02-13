@@ -1,6 +1,8 @@
 #include "CellSpacePartition.h"
 #define MAX_MAP 10240
 #define TOTAL 80
+#define RADIOUS 64
+
 Cell::~Cell(){
     this->entities.clear();
     //delete cube;
@@ -17,7 +19,7 @@ CellSpacePartition* CellSpacePartition::Instance() {
 CellSpacePartition::CellSpacePartition()
 {
     mCells.reserve(TOTAL * TOTAL);
-    //mNeighbors.resize(4);
+    mNeighbors.reserve(9);
     //calculate bounds of each cell
     cellSizeX = MAX_MAP / TOTAL;
     cellSizeY = MAX_MAP / TOTAL;
@@ -39,6 +41,7 @@ CellSpacePartition::CellSpacePartition()
 }
 
 CellSpacePartition::~CellSpacePartition(){
+    clearCells();
     this->mNeighbors.clear();
     this->mCells.clear();
 }
@@ -62,29 +65,56 @@ void CellSpacePartition::removeEntity(Entity* ent, Vector2<f32> position){
         for (it = mCells.at(idx).entities.begin(); it != mCells.at(idx).entities.end(); it++){
             if(*it == ent){
                 mCells.at(idx).entities.erase(it);
+                break;
             }
         }
     }
 }
 
-void CellSpacePartition::calculateNeighbors(Vector2<f32> targetPos, f32 radious){
-    std::vector< Entity* >::iterator itNeighbor = mNeighbors.begin();
-
-    Box2D queryBox(targetPos - Vector2<f32>(radious, radious), targetPos + Vector2<f32>(radious, radious));
-    std::vector< Cell >::iterator itCell;
-    for(itCell = mCells.begin(); itCell != mCells.end(); itCell++){
-        if(itCell->BBox.isOverlappedWith(queryBox) && !itCell->entities.empty()){
-            // Call the method begin instead
-            std::list< Entity* >::iterator it; 
-            for(it = itCell->entities.begin(); it != itCell->entities.end(); it++){
-                // Complete this method
-                if((*it)->getPosition()->toVector2().calculateDistance(targetPos) < (radious * radious)){
-                    *itNeighbor++ = *it;
+void CellSpacePartition::calculateNeighbors(Vector2<f32> targetPos){
+    //std::vector< Entity* >::iterator itNeighbor = mNeighbors.begin();
+    //Box2D queryBox(targetPos - Vector2<f32>(radious, radious), targetPos + Vector2<f32>(radious, radious));
+    //std::vector< Cell >::iterator itCell;
+    //for(itCell = mCells.begin(); itCell != mCells.end(); itCell++){
+    //    if(itCell->BBox.isOverlappedWith(queryBox) && !itCell->entities.empty()){
+    //        // Call the method begin instead
+    //        std::list< Entity* >::iterator it; 
+    //        for(it = itCell->entities.begin(); it != itCell->entities.end(); it++){
+    //            // Complete this method
+    //            if((*it)->getPosition()->toVector2().calculateDistance(targetPos) < (radious * radious)){
+    //                *itNeighbor++ = *it;
+    //            }
+    //        }
+    //    }
+    //}
+    //*itNeighbor = 0;
+    Vector2<f32> dummy = targetPos + Vector2<f32>(-cellSizeX, cellSizeY);
+    Vector2<f32> magical;
+    i32 idx = -1;
+    begin();
+    std::list< Entity* >::iterator it; 
+    for(i32 i = 0; i < 3; i++){
+        for(i32 j = 0; j < 3; j++){
+            magical.x = dummy.x + cellSizeX * i;
+            magical.y = dummy.y + cellSizeY * j;
+            idx = positionToIndex(magical);
+            if(idx != -1){
+                if(mCells.at(idx).entities.empty()){
+                    std::cout << "Ninguna entidad cercana \n";
                 }
+                else{
+                    std::cout << "Existen entidades cercanas \n";
+                }
+                it = mCells.at(idx).entities.begin();
+                *mCurNeighbor = *it;
+                next();
+            }
+            else{
+                std::cout << "Wrong index \n";
             }
         }
     }
-    *itNeighbor = 0;
+    *mCurNeighbor = 0;
 }
 
 void CellSpacePartition::updateEntity(Entity* ent, Vector2<f32> OldPos)
@@ -125,6 +155,7 @@ void CellSpacePartition::updateCell(Entity *object){
         }
     }
 }
+
 void CellSpacePartition::clearCells()
 {
     std::vector< Cell >::iterator it; 
@@ -136,10 +167,15 @@ void CellSpacePartition::clearCells()
 }
 i32 CellSpacePartition::positionToIndex(Vector2<f32> pos)
 {
-    i32 idx = (i32)(TOTAL * pos.x / MAX_MAP) + 
+    int dummy = (i32)(TOTAL * pos.x / MAX_MAP) + 
                 ((i32)((TOTAL) * pos.y / MAX_MAP) * TOTAL);
+    if(dummy < 0 || dummy > mCells.size()){
+        return -1;
+    }
+    i32 idx = dummy;
 
-    if (idx > mCells.size() - 1) 
+    // Maybe this explode
+    if (idx == mCells.size()) 
         idx = mCells.size() - 1;
 
     return idx;
@@ -177,8 +213,49 @@ Vector3<f32> CellSpacePartition::correctPosition(Vector3<f32> targetPos, Entity 
     }
     return correctOne;
 }
+bool CellSpacePartition::checkCollisions(Vector2<f32> origin, Vector2<f32> targetPosition){
+    //Vector2<f32> dummy = origin;
+    //Box2D box = Box2D(dummy - Vector2<f32>(RADIOUS, 0), dummy + Vector2<f32>(0, RADIOUS));
+    //dummy = targetPosition - box.Center();
+    //dummy = dummy / 2;
+    //if(!mCells.at(positionToIndex(box.TopLeft() + dummy)).entities.empty())
+    //    return true;
+    //
+    //else if(!mCells.at(positionToIndex(box.BottomRight() + dummy)).entities.empty())
+    //    return true;
 
-bool CellSpacePartition::isBlocked(Vector3<f32> targetPos){
-    Cell dummy = mCells.at(positionToIndex(targetPos.toVector2()));
-    return dummy.blocked;
+    //else if(!mCells.at(positionToIndex(box.TopRight() + dummy)).entities.empty())
+    //    return true;
+
+    //else if(!mCells.at(positionToIndex(box.BottomLeft() + dummy)).entities.empty())
+    //    return true;
+
+    //return false;
+    calculateNeighbors(origin);
+    begin();
+    while(!end()){
+        std::cout << "Posible colision encontrada \n";
+        next();
+    }
+    std::cout << "Pepe \n";
+    return false;
+}
+bool CellSpacePartition::isBlocked(Vector2<f32> targetPos){
+    Cell dummy = mCells.at(positionToIndex(targetPos));
+    if(dummy.entities.empty())
+        return false;
+    
+    else
+        return true;
+}
+Entity* CellSpacePartition::begin(){
+    mCurNeighbor = mNeighbors.begin();
+    return *mCurNeighbor;
+}
+Entity* CellSpacePartition::next(){
+    mCurNeighbor++; 
+    return *mCurNeighbor;
+}
+bool CellSpacePartition::end(){
+    return (mCurNeighbor == mNeighbors.end()) || (*mCurNeighbor == 0);
 }
