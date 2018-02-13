@@ -308,8 +308,10 @@ void CameraController::CenterCamera(){
 		if(Human::Instance() -> getUnitManager() -> getSelectedTroop() != NULL) {
 			userPos.x = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> x;
 			userPos.z = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> z;
+			userPos.y = Map::Instance() -> getTerrain() -> getY(userPos.x, userPos.z);
 		} else {
 			userPos.x = Human::Instance() -> getHallPosition().x;
+			userPos.y = Human::Instance() -> getHallPosition().y;
 			userPos.z = Human::Instance() -> getHallPosition().z;
 		}
 		centerCameraMode = true;

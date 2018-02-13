@@ -57,12 +57,14 @@ void CellSpacePartition::addEntity(Entity* ent)
     mCells[idx].entities.push_back(ent);
 }
 // Edit
+// Maybe this need to be deleted, not doing anything good
 void CellSpacePartition::removeEntity(Entity* ent, Vector2<f32> position){
     i32 idx = positionToIndex(position);
-    if(idx < mCells.size())
-    {
+    if(idx < mCells.size() && idx != -1)
+    {   
         std::list< Entity* >::iterator it;
         for (it = mCells.at(idx).entities.begin(); it != mCells.at(idx).entities.end(); it++){
+            std::cout << "Petas \n";
             if(*it == ent){
                 mCells.at(idx).entities.erase(it);
                 break;
@@ -72,22 +74,6 @@ void CellSpacePartition::removeEntity(Entity* ent, Vector2<f32> position){
 }
 
 void CellSpacePartition::calculateNeighbors(Vector2<f32> targetPos){
-    //std::vector< Entity* >::iterator itNeighbor = mNeighbors.begin();
-    //Box2D queryBox(targetPos - Vector2<f32>(radious, radious), targetPos + Vector2<f32>(radious, radious));
-    //std::vector< Cell >::iterator itCell;
-    //for(itCell = mCells.begin(); itCell != mCells.end(); itCell++){
-    //    if(itCell->BBox.isOverlappedWith(queryBox) && !itCell->entities.empty()){
-    //        // Call the method begin instead
-    //        std::list< Entity* >::iterator it; 
-    //        for(it = itCell->entities.begin(); it != itCell->entities.end(); it++){
-    //            // Complete this method
-    //            if((*it)->getPosition()->toVector2().calculateDistance(targetPos) < (radious * radious)){
-    //                *itNeighbor++ = *it;
-    //            }
-    //        }
-    //    }
-    //}
-    //*itNeighbor = 0;
     Vector2<f32> dummy = targetPos + Vector2<f32>(-cellSizeX, cellSizeY);
     Vector2<f32> magical;
     i32 idx = -1;
