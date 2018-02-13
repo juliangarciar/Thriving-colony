@@ -1,7 +1,7 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-#include <irrlicht.h>
+#include <irrlicht/irrlicht.h>
 #include "Texture.h"
 #include <Types.h>
 

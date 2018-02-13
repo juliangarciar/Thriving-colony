@@ -2,7 +2,7 @@
 #define BOX_3D_H
 
 #include <iostream>
-#include <irrlicht.h>
+#include <irrlicht/irrlicht.h>
 #include "Vector3.h"
 #include <Types.h>
 

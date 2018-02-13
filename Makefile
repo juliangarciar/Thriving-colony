@@ -18,11 +18,11 @@ CXX = clang++
 # FLAGS
 ####
 # Include paths
-CPPFLAGS = -I/usr/include -I/usr/local/include  -I/usr/include/eigen3 -I/usr/local/include/irrlicht -I/usr/local/include/fmod -I/usr/local/include/nanovg -I./$(SOURCEPATH)
+CPPFLAGS = -I/usr/include -I./include -I/usr/include/eigen3 -I./include/nanovg -I./$(SOURCEPATH)
 # Compiler params
-CPPFLAGS += -O3 -ffast-math -g -Wall -std=c++11 -m64 -pthread -DGL_GLEXT_PROTOTYPES
+CPPFLAGS += -O3 -ffast-math -g -Wall -Wno-macro-redefined -std=c++11 -m64 -pthread -DGL_GLEXT_PROTOTYPES
 # Lib paths
-LDFLAGS = -L/usr/lib -L/usr/local/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11
+LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L./lib
 # Libs
 LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lXrandr -lXinerama -lXi -lpthread -ldl -lrt -lglfw -lIrrlicht -lnanogui -lfmod -lfmodstudio
 ###-lfmodex_vc.lib -lfmod -lfmodasdL

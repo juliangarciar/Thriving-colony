@@ -2,7 +2,7 @@
 #define RECT_H
 
 #include <iostream>
-#include <irrlicht.h>
+#include <irrlicht/irrlicht.h>
 #include <Types.h>
 
 using namespace irr;
