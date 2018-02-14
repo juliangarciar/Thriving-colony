@@ -173,13 +173,15 @@ void UnitManager::deploySelectedTroop(Vector3<f32> p) {
         inMapTroops -> insert(std::pair<i32, Unit*>(temp -> getModel() -> getID(), temp));
 
         temp -> switchState(Enumeration::UnitState::AttackMove); // ToDo: why attack move?
+        //Vector3<f32> dummy = Vector3<f32>(0, 0, 0);
         if (team == Enumeration::Team::IA){
+
             temp -> setTroopPosition(IA::Instance()->getHallPosition());
         } else {
             temp -> setTroopPosition(Human::Instance()->getHallPosition());
         }
-        //temp -> setPathToTarget(p);
-        temp -> setPosition(p);
+        temp -> setPathToTarget(p);
+        //temp -> setPosition(p);
         temp -> getModel() -> setActive(true);
 
         if (team == Enumeration::Team::Human){

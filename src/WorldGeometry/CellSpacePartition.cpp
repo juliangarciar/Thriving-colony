@@ -41,7 +41,6 @@ CellSpacePartition::CellSpacePartition()
 }
 
 CellSpacePartition::~CellSpacePartition(){
-    clearCells();
     this->mNeighbors.clear();
     this->mCells.clear();
 }
@@ -90,19 +89,19 @@ std::vector< Entity* > CellSpacePartition::calculateNeighbors(Vector2<f32> targe
             if(idx != -1 && idx < mCells.size()){
                 if(!mCells.at(idx).entities.empty()){
                     done = false;
-                    if(objects.empty()){
+                    //if(objects.empty()){
                         objects.push_back(mCells.at(idx).entities.back());
-                    }
-                    else{
-                        for(i32 z = 0; z < objects.size() && done == false; z++){
-                            if(objects.at(z) == mCells.at(idx).entities.back()){
-                                done = true;
-                            }
-                        }
-                        if(!done){
-                            objects.push_back(mCells.at(idx).entities.back());
-                        }
-                    }
+                    //}
+                    //else{
+                        //for(i32 z = 0; z < objects.size() && done == false; z++){
+                        //    if(objects.at(z) == mCells.at(idx).entities.back()){
+                        //        done = true;
+                        //    }
+                        //}
+                        //if(!done){
+                        //    objects.push_back(mCells.at(idx).entities.back());
+                        //}
+                   // }
                 }
             }
         }
@@ -149,15 +148,6 @@ void CellSpacePartition::updateCell(Entity *object){
     }
 }
 
-void CellSpacePartition::clearCells()
-{
-    std::vector< Cell >::iterator it; 
-
-    for (it = mCells.begin(); it != mCells.end(); it++)
-    {
-        it->entities.clear();
-    }
-}
 i32 CellSpacePartition::positionToIndex(Vector2<f32> pos)
 {
     int dummy = (i32)(TOTAL * pos.x / MAX_MAP) + 
@@ -245,17 +235,4 @@ bool CellSpacePartition::isBlocked(Vector2<f32> targetPos){
     else
         return true;
 }
-Entity* CellSpacePartition::begin(){
-    mCurNeighbor = mNeighbors.begin();
-    return *mCurNeighbor;
-}
-Entity* CellSpacePartition::next(){
-    mCurNeighbor++; 
-    return *mCurNeighbor;
-}
-bool CellSpacePartition::end(){
-    if(mCurNeighbor == mNeighbors.end())
-        return true;
-    else
-        return false;
-}
+

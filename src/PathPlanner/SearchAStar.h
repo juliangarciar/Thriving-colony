@@ -18,7 +18,6 @@ class SearchAStar{
 
         std::vector< Edge* > m_shortestPathTree;
         std::vector< Edge* > m_searchFrontier;
-        std::vector<i32>  m_Route;
 
         i32 m_iSource;
         i32 m_iTarget;

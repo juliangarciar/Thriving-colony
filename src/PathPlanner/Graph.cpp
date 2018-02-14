@@ -303,9 +303,9 @@ std::list< Edge > Graph::getEdgeListVector(i32 index){
     std::list< Edge >::iterator it;
     CellSpacePartition *cells = CellSpacePartition::Instance();
     for(it = m_Edges.at(index).begin(); it != m_Edges.at(index).end(); it++){
-        if(!cells -> isBlocked(m_Nodes.at(it -> getTo()).getPosition())){
+        //if(!cells -> isBlocked(m_Nodes.at(it -> getTo()).getPosition())){
             dummy.push_back(*it);
-        }
+        //}
     }
     return dummy;
     //return m_Edges;

@@ -31,9 +31,6 @@ class CellSpacePartition{
         //f32 spaceWidth;
         //f32 spaceHeight;
     // Number of cells the space is going to be divided into
-        //i32 cellsX;
-        //i32 cellsY;
-    
         f32 cellSizeX;
         f32 cellSizeY;
     // Required number of cells
@@ -68,12 +65,6 @@ class CellSpacePartition{
         bool checkCollisions(Vector2<f32> origin, Vector2<f32> targetPosition);
     // Checks if the cell is blocked
         bool isBlocked(Vector2<f32> targetPos);
-    // Returns a reference to the entity of the neighbor vector
-        Entity* begin();
-    // Used to iterate trought the neighbor vector
-        Entity* next();
-    // Returns true if the iterator reach the end of the vector
-        bool end();
     
 };
 #endif /* CELLSPACEPARTITION_H */
