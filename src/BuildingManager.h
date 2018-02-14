@@ -2,16 +2,13 @@
 #define BUILDING_MANAGER_H
 
 #include <map>
-#include <irrlicht.h>
-#include <GraphicEngine/SceneNode.h>
-#include <GraphicEngine/Box3D.h>
-#include <GraphicEngine/Terrain.h>
-#include <GraphicEngine/Model.h>
+#include <Types.h>
 #include <Enumeration.h>
 #include <Building.h>
-#include <Types.h>
-
-using namespace irr;
+#include <MathEngine/Box3D.h>
+#include <GraphicEngine/SceneNode.h>
+#include <GraphicEngine/Terrain.h>
+#include <GraphicEngine/Model.h>
 
 /**
  * @class BuildingManager

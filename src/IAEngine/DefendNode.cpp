@@ -2,7 +2,7 @@
 #include "DeployTroopsNode.h"
 #include "MeleeFootmenNode.h"
 #include "BarrackNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 DefendNode::DefendNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

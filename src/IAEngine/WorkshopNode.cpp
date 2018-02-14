@@ -1,5 +1,5 @@
 #include "WorkshopNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 WorkshopNode::WorkshopNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

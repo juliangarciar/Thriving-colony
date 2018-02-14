@@ -1,6 +1,6 @@
 #include "CreatureNode.h"
 #include "BarnNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 CreatureNode::CreatureNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

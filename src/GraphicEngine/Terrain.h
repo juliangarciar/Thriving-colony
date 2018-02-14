@@ -1,12 +1,11 @@
 #ifndef TERRAIN_H
 #define TERRAIN_H
 
-#include <iostream>
-#include <irrlicht.h>
-#include <IOEngine/Mouse.h>
-#include "Texture.h"
-#include "Vector3.h"
+#include <irrlicht/irrlicht.h>
 #include <Types.h>
+#include <IOEngine/Mouse.h>
+#include <GraphicEngine/Texture.h>
+#include <MathEngine/Vector3.h>
 
 using namespace irr;
 

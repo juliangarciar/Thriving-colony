@@ -1,12 +1,11 @@
 #ifndef CELLSPACEPARTITION_H
 #define CELLSPACEPARTITION_H
-#include "../Entity.h"
-#include "../GraphicEngine/Vector2.h"
-#include "../GraphicEngine/Box2D.h"
-#include <irrlicht.h>
 #include <vector>
 #include <list>
+#include <Entity.h>
 #include <Types.h>
+#include <MathEngine/Vector2.h>
+#include <MathEngine/Box2D.h>
 
 class CellSpacePartition;
 struct Cell{

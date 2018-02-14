@@ -2,8 +2,6 @@
 #include <GraphicEngine/Window.h>
 #include <Game.h>
 
-using namespace irr;
-
 Mouse::Mouse(){
     visible = true;
     currentCursor = CURSOR_NORMAL;

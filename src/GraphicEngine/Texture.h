@@ -1,7 +1,7 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-#include <irrlicht.h>
+#include <irrlicht/irrlicht.h>
 #include <Types.h>
 
 using namespace irr;

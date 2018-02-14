@@ -2,9 +2,7 @@
 #include "MeleeNode.h"
 #include "RangeNode.h"
 #include "SiegeNode.h"
-#include "../IA.h"
-
-#include <iostream>
+#include <IA.h>
 
 UnitNode::UnitNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

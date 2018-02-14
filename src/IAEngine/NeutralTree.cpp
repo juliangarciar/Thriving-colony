@@ -3,7 +3,7 @@
 #include "ResourceNode.h"
 #include "HomeNode.h"
 #include "ArmyNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 NeutralTree::NeutralTree(Node *fatherPnt) : BehaviourTree() {
     happinessThreshold = 80;

@@ -1,5 +1,5 @@
 #include "BehaviourTree.h"
-#include "../IA.h"
+#include <IA.h>
 
 BehaviourTree::BehaviourTree() {
     requireBarrack = false;
