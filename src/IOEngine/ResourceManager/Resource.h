@@ -3,12 +3,14 @@
 
 class Resource {
     public:
-        void load(const char *path) = 0;
+        virtual void load(const char *path) = 0;
 
-        void setIdentifier(const char *) = 0;
-        const char *getIdentifier() = 0;
-    private:
+        virtual void setIdentifier(const char *) = 0;
+        virtual const char *getIdentifier() = 0;
+    protected:
         const char *identifier;
-}
+    private:
+        
+};
 
 #endif
