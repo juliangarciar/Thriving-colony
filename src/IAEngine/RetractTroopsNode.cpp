@@ -1,6 +1,6 @@
 #include "RetractTroopsNode.h"
-#include "../Game.h"
-#include "../IA.h"
+#include <Game.h>
+#include <IA.h>
 
 RetractTroopsNode::RetractTroopsNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

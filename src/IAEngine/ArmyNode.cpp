@@ -1,7 +1,7 @@
 #include "ArmyNode.h"
 #include "UnitNode.h"
 #include "BuildingNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 ArmyNode::ArmyNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

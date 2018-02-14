@@ -1,13 +1,12 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-#include <GraphicEngine/Vector3.h>
-#include <GraphicEngine/Box3D.h>
+#include <Types.h>
+#include <Enumeration.h>
+#include <MathEngine/Vector3.h>
+#include <MathEngine/Box3D.h>
 #include <GraphicEngine/Model.h>
 #include <GraphicEngine/SceneNode.h>
-#include "Enumeration.h"
-//#include "Battle.h"
-#include <Types.h>
 
 /**
  * @class Entity

@@ -1,9 +1,9 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include <irrlicht.h>
-#include "Vector3.h"
+#include <irrlicht/irrlicht.h>
 #include <Types.h>
+#include <MathEngine/Vector3.h>
 
 using namespace irr;
 

@@ -2,8 +2,8 @@
 #define GUIELEMENT_H
 
 #include <nanogui/nanogui.h>
-#include <GraphicEngine/Vector2.h>
 #include <Types.h>
+#include <MathEngine/Vector2.h>
 
 class GUIElement {
     public:

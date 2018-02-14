@@ -6,9 +6,7 @@
 #include "NeutralTree.h"
 #include "UnhappyTree.h"
 #include "VeryUnhappyTree.h"
-#include "../IA.h"
-
-#include <iostream>
+#include <IA.h>
 
 RootNode::RootNode() : Node() {
     father = 0;

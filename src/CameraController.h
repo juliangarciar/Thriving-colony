@@ -1,14 +1,14 @@
 #ifndef CAMERACONTROLLER_H
 #define CAMERACONTROLLER_H
 
+#include <Types.h>
+#include <Enumeration.h>
+#include <MathEngine/Vector2.h>
+#include <MathEngine/Vector3.h>
 #include <GraphicEngine/Camera.h>
-#include <GraphicEngine/Vector2.h>
-#include <GraphicEngine/Vector3.h>
 #include <GraphicEngine/Terrain.h>
 #include <IOEngine/Keyboard.h>
 #include <IOEngine/Mouse.h>
-#include "Enumeration.h"
-#include <Types.h>
 
 /**
  * @class CameraController

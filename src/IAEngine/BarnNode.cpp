@@ -1,5 +1,5 @@
 #include "BarnNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 BarnNode::BarnNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

@@ -1,8 +1,8 @@
 #ifndef WAYPOINT_H
 #define WAYPOINT_H
 
-#include "../GraphicEngine/Vector2.h"
 #include <Types.h>
+#include <MathEngine/Vector2.h>
 
 #define INVALID_WP -1
 
