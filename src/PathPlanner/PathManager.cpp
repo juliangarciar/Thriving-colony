@@ -59,7 +59,7 @@ bool PathManager::createPathTo(Vector2<f32> targetPos){
         // Add the actual target position to the end of the path
         //path.push_back(targetPos);
         unit->setPath(path);
-        std::cout << path.size() << "\n";
+        std::cout << "Tamanyo del camino a seguir " << path.size() << "\n";
         return true;
     }
     // No path found

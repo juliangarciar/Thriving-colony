@@ -7,7 +7,7 @@
 #include <vector>
 #include <map>
 #include <Types.h>
-
+#include <iostream>
 class Graph{
     public:
     // Vector containing all the nodes from the graph
@@ -21,9 +21,11 @@ class Graph{
     private:
     // Graph instance
         static Graph* pinstance;
+    // Init edges cost
+        void initCost();
     // The nodes that form the graph
-        nodeVector m_Nodes;
-        edgeListVector m_Edges;
+        std::vector< LWayPoint > m_Nodes;
+        std::vector< std::list< Edge > > m_Edges;
     // The edge list 
     // Indicates the next free position 
         i32 nextNode;
@@ -32,6 +34,7 @@ class Graph{
     // Iteratos
         std::list< Edge* >::iterator edgeIterator;
         std::vector< LWayPoint* >::iterator nodeIterator;
+        
     public:
     // Constructor
         static Graph* Instance();
@@ -64,7 +67,7 @@ class Graph{
         void Clear();
     // Getters
         nodeVector getNodeVector();
-        edgeListVector getEdgeListVector();
+        std::list< Edge > getEdgeListVector(i32 index);
         Vector2<f32> getPositionFrom(i32 index);
     // Extra functions to load data 
         // To do

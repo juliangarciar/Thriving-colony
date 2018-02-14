@@ -1,4 +1,5 @@
 #include "Graph.h"
+#include "../WorldGeometry/CellSpacePartition.h"
 #define GRID 128
 #define K 10240
 Graph* Graph::pinstance = 0;
@@ -16,8 +17,15 @@ Graph::Graph(){
     i32 nWaypointsX, nWaypointsY;
     nWaypointsX = K / GRID;
     nWaypointsY = K / GRID;
-    this->m_Nodes.reserve(nWaypointsX * nWaypointsY);
-    this->m_Edges.reserve(nWaypointsX * nWaypointsY);
+    //this->m_Nodes.reserve(nWaypointsX * nWaypointsY);
+    //this->m_Edges.reserve(nWaypointsX * nWaypointsY);
+    //m_Nodes = std::vector< LWayPoint >(nWaypointsX * nWaypointsY);
+    //m_Edges = std::vector< std::list< Edge > >(nWaypointsX * nWaypointsY);ç
+    m_Edges = std::vector< std::list < Edge > >(nWaypointsX * nWaypointsY);
+    for(i32 z = 0; z < nWaypointsX * nWaypointsY; z++){
+        std::list< Edge > tmp;
+        m_Edges.at(z) = tmp;
+    }
     for(i32 y = 0; y < nWaypointsY; y++){
         for(i32 x = 0; x < nWaypointsX; x++){
             f32 dX = x * GRID + GRID / 2;
@@ -172,7 +180,18 @@ Graph::Graph(){
             }
         }
     }
+    initCost();
     std::cout << "Nwaypoints = " << m_Nodes.size() << std::endl;
+}
+void Graph::initCost(){
+    std::list< Edge >::iterator it;
+    for(i32 i = 0; i < m_Edges.size(); i++){
+        for(it = m_Edges.at(i).begin(); it != m_Edges.at(i).end(); it++){
+            Vector2<f32> a = getNode(it->getFrom()).getPosition();
+            Vector2<f32> b = getNode(it->getTo()).getPosition();
+            it->setCost(calculateDistance(a, b));
+        }
+    }
 }
 Graph::~Graph(){
     
@@ -225,25 +244,8 @@ void Graph::removeNode(i32 node){
 }
 // Maybe check if the edge is viable
 void Graph::addEdge(Edge edge){
-    if(edge.getFrom() != -1){
-        std::cout << "Metiendo edge en indice: "<< edge.getFrom() << "\n";
-        std::cout << "Evaluando datos NODO: " << getNode(edge.getFrom()).getIndex() << "\n";
-        Vector2<f32> dummy = getNode(edge.getFrom()).getPosition();
-        std::cout << "Evaluando datos POSICION X: " << dummy.x << "\n";
-        std::cout << "Evaluando datos POSICION Y: " << dummy.y << "\n";
-
-        //Vector2<f32> a = getNode(edge.getFrom()).getPosition();
-        // Esto falla primo -> MODIFICAR EL METODO DE METER EDGES
-        //Vector2<f32> b = getNode(edge.getTo()).getPosition();
-        std::cout << "Insertando 1\n";
-        //edge.setCost(calculateDistance(a, b));
-        std::cout << "Insertando 2\n";
-        //m_Edges.at(edge.getFrom()).insert(edge);
-        //m_Edges.at(edge.getFrom()).push_back(edge);
-        std::cout << "Insertado \n";
-    }
-    else{
-        std::cout << "Como palmas tio \n";
+    if(edge.getFrom() != -1 && edge.getTo() != -1){
+        m_Edges.at(edge.getFrom()).push_front(edge);
     }
 }
 // Maybe check if from and to are available
@@ -296,8 +298,17 @@ void Graph::Clear(){
 Graph::nodeVector Graph::getNodeVector(){
     return m_Nodes;
 }
-Graph::edgeListVector Graph::getEdgeListVector(){
-    return m_Edges;
+std::list< Edge > Graph::getEdgeListVector(i32 index){
+    std::list< Edge > dummy;
+    std::list< Edge >::iterator it;
+    CellSpacePartition *cells = CellSpacePartition::Instance();
+    for(it = m_Edges.at(index).begin(); it != m_Edges.at(index).end(); it++){
+        if(!cells -> isBlocked(m_Nodes.at(it -> getTo()).getPosition())){
+            dummy.push_back(*it);
+        }
+    }
+    return dummy;
+    //return m_Edges;
 }
 Vector2<f32> Graph::getPositionFrom(i32 index){
     return this->positionMap.find(index)->second;

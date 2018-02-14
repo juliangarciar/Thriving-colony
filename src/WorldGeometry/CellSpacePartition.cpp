@@ -19,7 +19,7 @@ CellSpacePartition* CellSpacePartition::Instance() {
 CellSpacePartition::CellSpacePartition()
 {
     mCells.reserve(TOTAL * TOTAL);
-    mNeighbors.reserve(9);
+    //mNeighbors.reserve(9);
     //calculate bounds of each cell
     cellSizeX = MAX_MAP / TOTAL;
     cellSizeY = MAX_MAP / TOTAL;
@@ -73,34 +73,41 @@ void CellSpacePartition::removeEntity(Entity* ent, Vector2<f32> position){
     }
 }
 
-void CellSpacePartition::calculateNeighbors(Vector2<f32> targetPos){
-    Vector2<f32> dummy = targetPos + Vector2<f32>(-cellSizeX, cellSizeY);
+std::vector< Entity* > CellSpacePartition::calculateNeighbors(Vector2<f32> targetPos){
+    Vector2<f32> dummy;
+    std::vector< Entity* > objects;
+    dummy.x = targetPos.x - cellSizeX;
+    dummy.y = targetPos.y + cellSizeY;
     Vector2<f32> magical;
     i32 idx = -1;
-    begin();
-    std::list< Entity* >::iterator it; 
+    bool done = false;
     for(i32 i = 0; i < 3; i++){
         for(i32 j = 0; j < 3; j++){
             magical.x = dummy.x + cellSizeX * i;
             magical.y = dummy.y + cellSizeY * j;
             idx = positionToIndex(magical);
-            if(idx != -1){
-                if(mCells.at(idx).entities.empty()){
-                    std::cout << "Ninguna entidad cercana \n";
+            // Fix this shit
+            if(idx != -1 && idx < mCells.size()){
+                if(!mCells.at(idx).entities.empty()){
+                    done = false;
+                    if(objects.empty()){
+                        objects.push_back(mCells.at(idx).entities.back());
+                    }
+                    else{
+                        for(i32 z = 0; z < objects.size() && done == false; z++){
+                            if(objects.at(z) == mCells.at(idx).entities.back()){
+                                done = true;
+                            }
+                        }
+                        if(!done){
+                            objects.push_back(mCells.at(idx).entities.back());
+                        }
+                    }
                 }
-                else{
-                    std::cout << "Existen entidades cercanas \n";
-                }
-                it = mCells.at(idx).entities.begin();
-                *mCurNeighbor = *it;
-                next();
-            }
-            else{
-                std::cout << "Wrong index \n";
             }
         }
     }
-    *mCurNeighbor = 0;
+    return objects;
 }
 
 void CellSpacePartition::updateEntity(Entity* ent, Vector2<f32> OldPos)
@@ -217,20 +224,24 @@ bool CellSpacePartition::checkCollisions(Vector2<f32> origin, Vector2<f32> targe
     //    return true;
 
     //return false;
-    calculateNeighbors(origin);
-    begin();
-    while(!end()){
-        std::cout << "Posible colision encontrada \n";
-        next();
+    std::vector< Entity* > totalNeighbors;
+    i32 idx = positionToIndex(targetPosition);
+    if(idx != -1 && mCells.at(idx).entities.empty()){
+        
+        return false;
     }
-    std::cout << "Pepe \n";
-    return false;
+    else{
+        totalNeighbors = calculateNeighbors(origin);
+        if(!totalNeighbors.empty()){
+            std::cout << "Existen: " << totalNeighbors.size() << " entidades cercanas.\n";
+        }
+        return true;
+    }
 }
 bool CellSpacePartition::isBlocked(Vector2<f32> targetPos){
     Cell dummy = mCells.at(positionToIndex(targetPos));
     if(dummy.entities.empty())
         return false;
-    
     else
         return true;
 }
@@ -243,5 +254,8 @@ Entity* CellSpacePartition::next(){
     return *mCurNeighbor;
 }
 bool CellSpacePartition::end(){
-    return (mCurNeighbor == mNeighbors.end()) || (*mCurNeighbor == 0);
+    if(mCurNeighbor == mNeighbors.end())
+        return true;
+    else
+        return false;
 }

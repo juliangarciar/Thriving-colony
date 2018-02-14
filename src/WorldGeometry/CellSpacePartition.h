@@ -55,7 +55,7 @@ class CellSpacePartition{
     // Removes a entity from a cell
         void removeEntity(Entity* ent, Vector2<f32> position);
     // Calculate neighbors and add them in the neighbor vector
-        void calculateNeighbors(Vector2<f32> targetPos);
+        std::vector< Entity* > calculateNeighbors(Vector2<f32> targetPos);
     // Updates a entity's cell, calling this from the entity update method
         void updateEntity(Entity* ent, Vector2<f32> oldPos);
     // Updates a cell

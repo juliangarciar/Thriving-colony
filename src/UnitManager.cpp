@@ -178,7 +178,8 @@ void UnitManager::deploySelectedTroop(Vector3<f32> p) {
         } else {
             temp -> setTroopPosition(Human::Instance()->getHallPosition());
         }
-        temp -> setPathToTarget(p);
+        //temp -> setPathToTarget(p);
+        temp -> setPosition(p);
         temp -> getModel() -> setActive(true);
 
         if (team == Enumeration::Team::Human){
