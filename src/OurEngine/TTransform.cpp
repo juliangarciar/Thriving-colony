@@ -9,11 +9,13 @@ TTransform::~TTransform() {
 }
 
 void TTransform::beginDraw(){
+    // Estoy casi convencido de que es asi. No tiene sentido como pone en el pdf
+    multiply(matrixStack.top());
     matrixStack.push(matrix);
 }
 
 void TTransform::endDraw(){
-    matrix = matrixStack.top();
+    load(matrixStack.top());
     matrixStack.pop();
 }
 
@@ -38,7 +40,8 @@ void TTransform::multiply(f32 mFactor) {
 }
 
 void TTransform::multiply(glm::vec3 mVector) {
-    //matrix = matrix * mVector; //ToDo: esto no se puede hacer
+    glm::vec4 result = glm::vec4( mVector, 1.0 );
+    result = matrix * result;
 }
 
 void TTransform::multiply(glm::mat4 mMatrix) {
@@ -56,8 +59,4 @@ void TTransform::rotate(f32 rX, f32 rY, f32 rZ, f32 angle) {
 
 void TTransform::scale(f32 sX, f32 sY, f32 sZ) {
     matrix = glm::scale(matrix, glm::vec3(sX, sY, sZ));
-}
-
-glm::mat4 TTransform::getMatrix() {
-    return matrix;
 }

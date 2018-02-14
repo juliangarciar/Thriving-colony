@@ -88,6 +88,13 @@ class TCamera : public TEntity {
          * 
          * @param f32 
          */
+        void setFov(f32);
+        
+        /**
+         * @brief 
+         * 
+         * @param f32 
+         */
         void setTop(f32);
 
         /**
@@ -137,6 +144,13 @@ class TCamera : public TEntity {
          * 
          * @return f32 
          */
+        f32 getFov();
+
+        /**
+         * @brief 
+         * 
+         * @return f32 
+         */
         f32 getTop();
 
         /**
@@ -161,8 +175,11 @@ class TCamera : public TEntity {
         f32 getRight();
     private:
         //ToDo: proyeccion GLM
+        glm::mat4 projectionMatrix;
+        glm::mat4 paralelMatrix;
+
         TEnums::CameraProjection projection;
-        float near, far, top, bottom, left, right;
+        f32 near, far, fov, top, bottom, left, right;
 };
 
 #endif
