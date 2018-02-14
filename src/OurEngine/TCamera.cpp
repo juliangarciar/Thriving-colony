@@ -23,7 +23,7 @@ void TCamera::setPerspective(f32 n, f32 f, f32 t, f32 b, f32 l, f32 r){
     f32 width = r - l;
     f32 height = b - t;
     //f32 fov = 90; // Expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.
-    projectionMatrix = glm::perspective(fov, width / height, n, f)
+    //projectionMatrix = glm::perspective(fov, width / height, n, f);
     //ToDo: glm
 }
 
