@@ -1,11 +1,12 @@
 #ifndef SEARCHASTAR_H
 #define SEARCHASTAR_H
 
-#include "Graph.h"
-#include "../GraphicEngine/Vector2.h"
 #include <queue>
 #include <iterator>
+
 #include <Types.h>
+#include <MathEngine/Vector2.h>
+#include "Graph.h"
 
 class SearchAStar{
     private:

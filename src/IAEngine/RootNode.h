@@ -2,7 +2,7 @@
 #define ROOT_NODE_H
 
 #include "Node.h"
-#include "../Enumeration.h"
+#include <Enumeration.h>
 #include <Types.h>
 
 class RootNode : public Node {

@@ -1,7 +1,7 @@
 #include "SiegeNode.h"
 #include "RamNode.h"
 #include "CatapultNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 SiegeNode::SiegeNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

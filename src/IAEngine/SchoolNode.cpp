@@ -1,5 +1,5 @@
 #include "SchoolNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 SchoolNode::SchoolNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

@@ -2,7 +2,7 @@
 #define PATHMANAGER_H
 
 #include "Graph.h"
-#include "../Unit.h"
+#include <Unit.h>
 #include <vector>
 #include <queue>
 #include <Types.h>

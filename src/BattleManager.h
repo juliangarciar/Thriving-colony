@@ -2,12 +2,11 @@
 #define BATTLE_MANAGER_H
 
 #include <vector>
-#include "GraphicEngine/Vector2.h"
-#include "Enumeration.h"
-//#include "Entity.h"
-#include "Unit.h"
-#include "Building.h"
+#include <Enumeration.h>
+#include <Unit.h>
+#include <Building.h>
 #include <Types.h>
+#include <MathEngine/Vector2.h>
 
 /**
  * @class BattleManager

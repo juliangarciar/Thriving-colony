@@ -1,7 +1,4 @@
-#include <iostream>
 #include "Game.h"
-
-using namespace std;
 
 i32 main() {
     Game *game = Game::Instance();

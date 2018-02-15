@@ -1,6 +1,6 @@
 #include "MountedRangeNode.h"
 #include "BarnNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 MountedRangeNode::MountedRangeNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

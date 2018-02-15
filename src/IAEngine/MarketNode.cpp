@@ -1,5 +1,5 @@
 #include "MarketNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 MarketNode::MarketNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

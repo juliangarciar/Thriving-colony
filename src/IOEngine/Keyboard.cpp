@@ -3,8 +3,6 @@
 #include <GraphicEngine/Window.h>
 #include <Game.h>
 
-using namespace irr;
-
 /// ==============================
 /// Keyboard
 /// ==============================

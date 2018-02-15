@@ -56,14 +56,21 @@ void CellSpacePartition::addEntity(Entity* ent)
 // Edit
 void CellSpacePartition::removeEntity(Entity* ent, Vector2<f32> position){
     i32 idx = positionToIndex(position);
-    if(idx < mCells.size())
-    {
+    if(idx < mCells.size() && idx != -1)
+    {   
         std::list< Entity* >::iterator it;
         for (it = mCells.at(idx).entities.begin(); it != mCells.at(idx).entities.end(); it++){
+            std::cout << "Petas \n";
             if(*it == ent){
                 mCells.at(idx).entities.erase(it);
+                std::cout << "No petas \n";
+                
+            }
+            if(mCells.at(idx).entities.empty() || it == mCells.at(idx).entities.end()){
+                break;
             }
         }
+        std::cout << "Estas petando tu? \n";        
     }
 }
 

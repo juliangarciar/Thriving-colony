@@ -1,14 +1,12 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#include <irrlicht/irrlicht.h>
 #include <GLFW/glfw3.h>
-
-#include <irrlicht.h>
 #include <nanogui/nanogui.h>
-#include <GraphicEngine/Vector2.h>
-#include <Types.h>
 
-#include <iostream>
+#include <Types.h>
+#include <MathEngine/Vector2.h>
 
 using namespace irr;
 

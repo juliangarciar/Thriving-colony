@@ -2,9 +2,9 @@
 #define SCROLLPANEL_H
 
 #include <nanogui/nanogui.h>
-#include "Rect2D.h"
-#include "GUIElement.h"
 #include <Types.h>
+#include <MathEngine/Vector2.h>
+#include <GUIEngine/GUIElement.h>
 
 class ScrollPanel : public GUIElement {
     public:

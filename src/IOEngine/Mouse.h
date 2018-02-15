@@ -2,9 +2,9 @@
 #define MOUSE_H
 
 #include <GLFW/glfw3.h>
-#include <GraphicEngine/Vector2.h>
-#include <Enumeration.h>
 #include <Types.h>
+#include <Enumeration.h>
+#include <MathEngine/Vector2.h>
 
 #define CURSOR_NORMAL GLFW_ARROW_CURSOR
 #define CURSOR_IBEAM GLFW_IBEAM_CURSOR

@@ -3,9 +3,8 @@
 
 #include <Types.h>
 #include <Enumeration.h>
-#include <GraphicEngine/Vector2.h>
-#include <GraphicEngine/Vector3.h>
-#include <GUIEngine/Rect2D.h>
+#include <MathEngine/Vector2.h>
+#include <MathEngine/Vector3.h>
 #include <GUIEngine/TextBox.h>
 #include <GUIEngine/Button.h>
 #include <GUIEngine/TabPanel.h>
