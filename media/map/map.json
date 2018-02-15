@@ -17,11 +17,11 @@
 	"light":[
 		{
 			"position": {
-				"x": 10,
-				"y": 10,
-				"z": 10
+				"x": 4000,
+				"y": 6000,
+				"z": 4000
 			},
-			"intensity": 10000
+			"intensity": 100000
 		}
 	],
 	"player":[
