@@ -47,6 +47,7 @@ void Map::Init() {
     terrain = new Terrain(j["map"]["heightmap"].get<std::string>().c_str());
     //Set map texture
     terrain -> setTexture(new Texture(j["map"]["texture"].get<std::string>().c_str()), new Texture(j["map"]["detail_texture"].get<std::string>().c_str()));
+    terrain -> setSize(Vector3<f32>(j["map"]["size"]["x"].get<int>(), j["map"]["size"]["y"].get<int>(), j["map"]["size"]["z"].get<int>()));
 
     //Init camera controller
     camera = new CameraController();

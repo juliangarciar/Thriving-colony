@@ -39,8 +39,8 @@ CameraController::CameraController() {
 	minInclination = 200.f;
 	maxInclination = 260.f;
 
-	delta.x = 0.f;
-	delta.y = 230.f;
+	rotateDegrees.x = 0.f;
+	rotateDegrees.y = 230.f;
     rotationOrInclinationMode = false;
 
 	//Center
@@ -51,7 +51,7 @@ CameraController::CameraController() {
 
 	//Set camera and target positions
 	tarPos = Vector3<f32>(targetX, targetY, targetZ);
-	camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, delta.x, delta.y);
+	camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
 
     camera -> setTargetPosition(tarPos);
 	camera -> setCameraPosition(camPos);
@@ -72,7 +72,7 @@ void CameraController::Update(f32 deltaTime) {
 
 	if (movementMode) {
     	Vector3<f32> camIncr;
-		i32 d = delta.x; 
+		i32 d = rotateDegrees.x; 
 		switch (direction) {
 			// up stands for update (delta)
 			case 1: //arriba
@@ -156,13 +156,13 @@ void CameraController::Update(f32 deltaTime) {
 	}
 
     if (rotationOrInclinationMode || zoomMode) {
-		camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, delta.x, delta.y);
+		camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
     }
 
 	if (centerCameraMode){
 		std::cout << userPos << std::endl;
 		tarPos = userPos;
-		camPos = userPos.rotateFromPoint(zoomDistanceFromTarget, delta.x, delta.y);
+		camPos = userPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
 	}
 
     if (movementMode || rotationOrInclinationMode || zoomMode || centerCameraMode){
@@ -273,25 +273,25 @@ void CameraController::RotateAndInclinate(){
 
 		//Increase or decease rotation angle
 		if (cursorPosCurrent.x < screenCenter.x - centerMargin) {
-			delta.x += rotSpeed;
+			rotateDegrees.x += rotSpeed;
 		} else if (cursorPosCurrent.x > screenCenter.x + centerMargin) {
-			delta.x -= rotSpeed;
+			rotateDegrees.x -= rotSpeed;
 		}
 
 		//Increase or decease inclination angle
 		if (cursorPosCurrent.y < screenCenter.y - centerMargin) {
-			delta.y += inclSpeed;
+			rotateDegrees.y += inclSpeed;
 		} else if (cursorPosCurrent.y > screenCenter.y + centerMargin) {
-			delta.y -= inclSpeed;
+			rotateDegrees.y -= inclSpeed;
 		}
 
         // fix if they are offlimits
-        delta.x = (delta.x < 0) ? 360+delta.x : delta.x;
-        delta.x = (delta.x > 360) ? delta.x-360 : delta.x;
+        rotateDegrees.x = (rotateDegrees.x < 0) ? 360+rotateDegrees.x : rotateDegrees.x;
+        rotateDegrees.x = (rotateDegrees.x > 360) ? rotateDegrees.x-360 : rotateDegrees.x;
 
         // fix if they are offlimits
-        delta.y = (delta.y < minInclination) ? minInclination : delta.y;
-        delta.y = (delta.y > maxInclination) ? maxInclination : delta.y;
+        rotateDegrees.y = (rotateDegrees.y < minInclination) ? minInclination : rotateDegrees.y;
+        rotateDegrees.y = (rotateDegrees.y > maxInclination) ? maxInclination : rotateDegrees.y;
 
         // reset cursor position to center
         g -> getMouse() -> setPosition(screenCenter.getVectorF()); 

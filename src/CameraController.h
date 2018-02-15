@@ -78,7 +78,7 @@ class CameraController {
         f32 rotSpeed;
         f32 inclSpeed;
         f32 minInclination, maxInclination;
-        Vector2<f32> delta;
+        Vector2<f32> rotateDegrees;
         Vector3<f32> distanceToTarget;
 
         //Camera zoom variables

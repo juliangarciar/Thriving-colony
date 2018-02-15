@@ -4,9 +4,9 @@
 		"texture": "media/map/map-texture.jpg",
 		"detail_texture": "media/map/map-detail-texture.jpg",
 		"size":{
-			"x": 1,
-			"y": 1,
-			"z": 1
+			"x": 40,
+			"y": 20,
+			"z": 40
 		}
 	},
 	"camera":{
@@ -20,7 +20,8 @@
 				"x": 10,
 				"y": 10,
 				"z": 10
-			}
+			},
+			"intensity": 10000
 		}
 	],
 	"player":[
