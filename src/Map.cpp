@@ -55,14 +55,32 @@ void Map::Init() {
     Human::Instance()->setCrystalAmount(j["player"]["initial_crystal"].get<i32>());
     Human::Instance()->setSiderurgyProductivity(j["player"]["siderurgy_productivity"].get<i32>());
     Human::Instance()->setQuarryProductivity(j["player"]["quarry_productivity"].get<i32>());
-
-    humanStartPos.x = Enumeration::HumanCityHall::human_x;
-    humanStartPos.z = Enumeration::HumanCityHall::human_z; 
-    humanStartPos.y = terrain -> getY(humanStartPos.x, humanStartPos.z);
     
+    for (auto& element : j["player"]["buildings"]){
+        if(element["type"].get<std::string>()=="MainBuilding"){
+            Vector3<f32> v(element["position"]["x"], element["position"]["y"], element["position"]["z"]);
+            Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, true);
+            Human::Instance() -> setHallPosition(v);
+            humanStartPos = v;
+        }
+        else if(element["type"].get<std::string>()=="Siderurgy"){
+            Vector3<f32> v(element["position"]["x"], element["position"]["y"], element["position"]["z"]);
+            Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
+        }
+    }  
+    /*  
     iaStartPos.x = Enumeration::IACityHall::ia_x;
     iaStartPos.z = Enumeration::IACityHall::ia_z; 
     iaStartPos.y = terrain -> getY(iaStartPos.x, iaStartPos.z);
+    // Build the main building of IA
+    Vector3<float> v = ia -> determinatePositionBuilding();
+    ia -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, true);
+    ia -> setHallPosition(v);
+
+    //Build the first siderurgy of IA
+    v = ia -> determinatePositionBuilding();
+    ia -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
+    */
 }
 
 void Map::Input() {
