@@ -1,6 +1,15 @@
 #include "Map.h"
 #include "Game.h"
 
+//Para cargar el json:
+//desde aqui
+#include <iostream>
+#include <fstream>
+#include <json/json.hpp>
+
+using json = nlohmann::json;
+//hasta aqui
+
 Map* Map::pinstance = 0;
 
 Map* Map::Instance() {
@@ -17,13 +26,27 @@ Map::~Map() {
 }
 
 void Map::Init() {
+    //Cargar json
+    json j;
+
+    try{
+        std::ifstream i;
+        i.open("media/map/map.json");
+        i >> j;
+        i.close();
+    }
+    catch(std::ifstream::failure e){
+        std::cout<<"ACHO LA'S LIAO"<<std::endl;
+        exit(0);
+    }
+
     //Luz
     light = new Light(Vector3<float>(8000, 4000, 8000), 10000);
 
     //Create map
-    terrain = new Terrain("media/mapa3-256x256.bmp");
+    terrain = new Terrain(j["map"]["heightmap"].get<std::string>().c_str());
     //Set map texture
-    terrain -> setTexture(new Texture("media/map-texture.jpg"), new Texture("media/map-detail-texture.jpg"));
+    terrain -> setTexture(new Texture(j["map"]["texture"].get<std::string>().c_str()), new Texture(j["map"]["detail_texture"].get<std::string>().c_str()));
 
     //Init camera controller
     camera = new CameraController();
