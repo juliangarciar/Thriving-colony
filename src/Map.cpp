@@ -59,7 +59,16 @@ void Map::Init() {
     humanStartPos.x = Enumeration::HumanCityHall::human_x;
     humanStartPos.z = Enumeration::HumanCityHall::human_z; 
     humanStartPos.y = terrain -> getY(humanStartPos.x, humanStartPos.z);
+
+    IA::Instance()->setMetalAmount(j["IA"]["initial_metal"].get<i32>());
+    IA::Instance()->setCrystalAmount(j["IA"]["initial_crystal"].get<i32>());
+    IA::Instance()->setSiderurgyProductivity(j["IA"]["siderurgy_productivity"].get<i32>());
+    IA::Instance()->setQuarryProductivity(j["IA"]["quarry_productivity"].get<i32>());
     
+    for(auto& element : j["IA"]["buildings"]){
+        std::cout << element << '\n';
+    }
+
     iaStartPos.x = Enumeration::IACityHall::ia_x;
     iaStartPos.z = Enumeration::IACityHall::ia_z; 
     iaStartPos.y = terrain -> getY(iaStartPos.x, iaStartPos.z);

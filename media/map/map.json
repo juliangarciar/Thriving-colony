@@ -71,8 +71,8 @@
 	},
 	"IA":
 	{
-		"initial_crystal": 5,
 		"initial_metal": 10,
+		"initial_crystal": 5,
 		"siderurgy_productivity": 15,
 		"quarry_productivity": 10,
 		"buildings":[
