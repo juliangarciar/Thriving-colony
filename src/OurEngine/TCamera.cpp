@@ -1,7 +1,17 @@
 #include "TCamera.h"
 
-TCamera::TCamera(TEnums::CameraProjection, f32, f32, f32, f32, f32, f32) : TEntity(){
 
+TCamera::TCamera(TEnums::CameraProjection projectionMode, f32 n, f32 f, f32 t, f32 b, f32 l, f32 r) : TEntity(){
+    setNear(n);
+    setFar(f);
+    setProjection(projectionMode);
+
+    setTop(t);
+    setBottom(b);
+    setLeft(l);
+    setRight(r);
+
+    projectionMatrix = glm::mat4(1.0f);
 }
 
 TCamera::~TCamera(){
@@ -19,16 +29,20 @@ void TCamera::endDraw(){
 void TCamera::setPerspective(f32 n, f32 f, f32 t, f32 b, f32 l, f32 r){
     setNear(n);
     setFar(f);
-    projection = TEnums::CameraProjection::ProjectionPerspective;
+    setProjection(TEnums::CameraProjection::ProjectionPerspective);
+
+    setTop(t);
+    setBottom(b);
+    setRight(r);
+    setLeft(l);
+    // Calculate aspect ratio
     f32 width = r - l;
     f32 height = b - t;
-    //f32 fov = 90; // Expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.
-    projectionMatrix = glm::perspective(fov, width / height, n, f)
-    //ToDo: glm
+    projectionMatrix = glm::perspective(fov, width / height, n, f);
 }
 
 void TCamera::setParallel(f32, f32, f32, f32, f32, f32){
-
+    //ToDo: Angela
 }
 
 void TCamera::setProjection(TEnums::CameraProjection cp){

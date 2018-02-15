@@ -1,7 +1,7 @@
 #include "TTransform.h"
 
 TTransform::TTransform() : TEntity() {
-    matrix = glm::mat4();
+    matrix = glm::mat4(1.0f);
 }
 
 TTransform::~TTransform() {
@@ -20,7 +20,7 @@ void TTransform::endDraw(){
 }
 
 void TTransform::identity() {
-    matrix = glm::mat4();
+    matrix = glm::mat4(1.0f);
 }
 
 void TTransform::load(glm::mat4 newMatrix) {
@@ -40,7 +40,7 @@ void TTransform::multiply(f32 mFactor) {
 }
 
 void TTransform::multiply(glm::vec3 mVector) {
-    glm::vec4 result = glm::vec4( mVector, 1.0 );
+    glm::vec4 result = glm::vec4(mVector, 1.0 );
     result = matrix * result;
 }
 
