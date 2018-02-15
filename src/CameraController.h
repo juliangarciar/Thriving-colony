@@ -55,6 +55,23 @@ class CameraController {
 	 */
         Camera *getCamera();
         
+        /**
+         * @brief 
+         * 
+         * @param i32 
+         */
+        void setZoomDistanceFromTarget(i32);
+        
+        /**
+         * @brief 
+         * 
+         * @param i32 
+         * @param i32 
+         */
+        void setRotateDegrees(i32, i32);
+
+       
+        
     private:
         //Camera
         Camera *camera;

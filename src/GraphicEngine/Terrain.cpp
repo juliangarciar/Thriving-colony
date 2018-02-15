@@ -36,7 +36,11 @@ void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture) {
 }
 
 void Terrain::setSize(Vector3<f32> s){
+	Window *sc = Window::Instance();
 	terrain -> setScale(s.getVectorF());
+	selector = sc -> getSceneManager() -> createTerrainTriangleSelector(terrain);
+    terrain -> setTriangleSelector(selector);
+    collisionManager = sc -> getSceneManager() -> getSceneCollisionManager();
 }
 
 Vector3<f32> Terrain::getPointCollision(Mouse *cursor){

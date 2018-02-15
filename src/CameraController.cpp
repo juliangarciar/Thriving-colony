@@ -322,3 +322,12 @@ void CameraController::CenterCamera(){
 Camera *CameraController::getCamera() {
 	return camera;
 }
+
+void CameraController::setZoomDistanceFromTarget(i32 zoom){
+	zoomDistanceFromTarget = zoom;
+}
+
+void CameraController::setRotateDegrees(i32 x, i32 y){
+	rotateDegrees.x = x;
+	rotateDegrees.y = y; 
+}

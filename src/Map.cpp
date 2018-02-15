@@ -41,6 +41,8 @@ void Map::Init() {
 
     //Init camera controller
     camera = new CameraController();
+    camera -> setZoomDistanceFromTarget(j["camera"]["zoomDistanceFromTarget"].get<int>());
+    camera -> setRotateDegrees(j["camera"]["delta_x"].get<int>(), j["camera"]["delta_y"].get<int>());
 
     // Added by Julian
     Graph::Instance();
