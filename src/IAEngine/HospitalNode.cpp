@@ -1,5 +1,5 @@
 #include "HospitalNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 HospitalNode::HospitalNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

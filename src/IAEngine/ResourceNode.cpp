@@ -1,7 +1,7 @@
 #include "ResourceNode.h"
 #include "SiderurgyNode.h"
 #include "QuarryNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 ResourceNode::ResourceNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

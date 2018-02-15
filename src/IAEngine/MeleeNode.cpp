@@ -2,7 +2,7 @@
 #include "CreatureNode.h"
 #include "MountedMeleeNode.h"
 #include "MeleeFootmenNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 MeleeNode::MeleeNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

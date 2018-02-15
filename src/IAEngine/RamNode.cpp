@@ -1,6 +1,6 @@
 #include "RamNode.h"
 #include "WorkshopNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 RamNode::RamNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

@@ -1,7 +1,6 @@
 #ifndef BOX_3D_H
 #define BOX_3D_H
 
-#include <iostream>
 #include <irrlicht/irrlicht.h>
 #include "Vector3.h"
 #include <Types.h>

@@ -1,6 +1,6 @@
 #include "RangeFootmenNode.h"
 #include "BarrackNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 RangeFootmenNode::RangeFootmenNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

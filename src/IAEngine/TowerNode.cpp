@@ -1,5 +1,5 @@
 #include "TowerNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 TowerNode::TowerNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

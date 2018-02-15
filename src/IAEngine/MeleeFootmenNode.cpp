@@ -1,6 +1,6 @@
 #include "MeleeFootmenNode.h"
 #include "BarrackNode.h"
-#include "../IA.h"
+#include <IA.h>
 
 MeleeFootmenNode::MeleeFootmenNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

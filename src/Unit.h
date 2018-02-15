@@ -1,7 +1,6 @@
 #ifndef UNIT_H
 #define UNIT_H
 
-#include <iostream>
 #include <functional>
 #include <cmath>
 #include <string>

@@ -1,5 +1,5 @@
 #include "Node.h"
-#include "../IA.h"
+#include <IA.h>
 
 Node::Node() {
 
