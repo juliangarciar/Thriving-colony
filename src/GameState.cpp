@@ -6,17 +6,19 @@ GameState::GameState() : State() {
     ia = IA::Instance();
     map = Map::Instance();
     hud = Hud::Instance();
+
+    gamePaused = false;
 }
 
 GameState::~GameState() {
-}
+} 
 
 void GameState::Init() {
     Game* g = Game::Instance();
 
-    gamePaused = false;
-
-    human -> Init();
+    g -> getResourceManager()->loadResource("media/map/map.json");
+ 
+    human -> Init(); 
     ia -> Init();
 
     map -> Init();

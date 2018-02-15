@@ -1,6 +1,6 @@
 #include "ResourceJSON.h"
 
-ResourceJSON::ResourceJSON(){
+ResourceJSON::ResourceJSON() : Resource(){
 
 }
 

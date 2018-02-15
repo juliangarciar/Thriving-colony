@@ -26,19 +26,9 @@ Map::~Map() {
 }
 
 void Map::Init() {
-    //Cargar json
-    json j;
+    ResourceJSON *r = (ResourceJSON*)Game::Instance() -> getResourceManager() -> getResource("media/map/map.json");
 
-    try{
-        std::ifstream i;
-        i.open("media/map/map.json");
-        i >> j;
-        i.close();
-    }
-    catch(std::ifstream::failure e){
-        std::cout<<"ACHO LA'S LIAO"<<std::endl;
-        exit(0);
-    }
+    json j = *r -> getJSON();
 
     //Luz
     light = new Light(Vector3<float>(8000, 4000, 8000), 10000);

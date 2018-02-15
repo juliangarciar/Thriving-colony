@@ -60,7 +60,7 @@ void ResourceManager::push(std::string path){
     }
 }
 
-void ResourceManager::loadResource(std::string path, bool sync = true){
+void ResourceManager::loadResource(std::string path, bool sync){
     if (sync){
         load(path);
     } else {
