@@ -31,14 +31,18 @@ void Map::Init() {
 
     json j = *r -> getJSON();
 
-    //Luz
-    light = new Light(Vector3<float>(j["light"][0]["position"]["x"].get<int>(), j["light"][0]["position"]["y"].get<int>(), j["light"][0]["position"]["z"].get<int>()), j["light"][0]["intensity"].get<int>()); 
-
     //Create map
     terrain = new Terrain(j["map"]["heightmap"].get<std::string>().c_str());
     //Set map texture
     terrain -> setTexture(new Texture(j["map"]["texture"].get<std::string>().c_str()), new Texture(j["map"]["detail_texture"].get<std::string>().c_str()));
     terrain -> setSize(Vector3<f32>(j["map"]["size"]["x"].get<int>(), j["map"]["size"]["y"].get<int>(), j["map"]["size"]["z"].get<int>()));
+    
+    //Luz
+    Vector3<f32> lp;
+    lp.x = j["light"][0]["position"]["x"].get<int>();
+    lp.z = j["light"][0]["position"]["z"].get<int>();
+    lp.y = terrain -> getY(lp.x, lp.z) + j["light"][0]["height"].get<int>();
+    light = new Light(lp, j["light"][0]["intensity"].get<int>()); 
 
     //Init camera controller
     camera = new CameraController();
@@ -56,9 +60,18 @@ void Map::Init() {
     Human::Instance()->setSiderurgyProductivity(j["player"]["siderurgy_productivity"].get<i32>());
     Human::Instance()->setQuarryProductivity(j["player"]["quarry_productivity"].get<i32>());
 
-    humanStartPos.x = Enumeration::HumanCityHall::human_x;
-    humanStartPos.z = Enumeration::HumanCityHall::human_z; 
-    humanStartPos.y = terrain -> getY(humanStartPos.x, humanStartPos.z);
+    for (auto& element : j["player"]["buildings"]){
+        if(element["type"].get<std::string>()=="MainBuilding"){
+            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, true);
+            Human::Instance() -> setHallPosition(v);
+            humanStartPos = v;
+        }
+        else if(element["type"].get<std::string>()=="Siderurgy"){
+            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
+        }
+    }
 
     IA::Instance()->setMetalAmount(j["IA"]["initial_metal"].get<i32>());
     IA::Instance()->setCrystalAmount(j["IA"]["initial_crystal"].get<i32>());
@@ -66,12 +79,17 @@ void Map::Init() {
     IA::Instance()->setQuarryProductivity(j["IA"]["quarry_productivity"].get<i32>());
     
     for(auto& element : j["IA"]["buildings"]){
-        std::cout << element << '\n';
+        if(element["type"].get<std::string>()=="MainBuilding"){
+            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, true);
+            IA::Instance() -> setHallPosition(v);
+            iaStartPos = v;
+        }
+        else if(element["type"].get<std::string>()=="Siderurgy"){
+            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
+        }
     }
-
-    iaStartPos.x = Enumeration::IACityHall::ia_x;
-    iaStartPos.z = Enumeration::IACityHall::ia_z; 
-    iaStartPos.y = terrain -> getY(iaStartPos.x, iaStartPos.z);
 }
 
 void Map::Input() {

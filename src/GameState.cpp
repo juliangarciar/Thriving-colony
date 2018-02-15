@@ -60,25 +60,6 @@ void GameState::Init() {
 
     //Init SoundSystem
     SoundSystem::Instance() -> initSystem();
-
-    // Build the main building of IA
-    Vector3<float> v = ia -> determinatePositionBuilding();
-    ia -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, true);
-    ia -> setHallPosition(v);
-
-    //Build the first siderurgy of IA
-    v = ia -> determinatePositionBuilding();
-    ia -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
-
-    // Build the main building of Human
-    v = map -> getHumanStartPosition();
-    human -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, true);
-    human -> setHallPosition(v);
-    
-    //Build the first siderurgy of Human
-    v = map -> getHumanStartPosition();
-    v.x = v.x + 200;
-    human -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
 }
 
 void GameState::Input() {

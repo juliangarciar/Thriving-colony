@@ -18,9 +18,9 @@
 		{
 			"position": {
 				"x": 4000,
-				"y": 6000,
 				"z": 4000
 			},
+			"height": 2000,
 			"intensity": 100000
 		}
 	],
@@ -35,7 +35,6 @@
 				"type": "MainBuilding", 
 				"position": {
 					"x": 8000,
-					"y": 0,
 					"z": 8000
 				},
 				"scale": {
@@ -52,9 +51,8 @@
 			{
 				"type": "Siderurgy", 
 				"position": {
-					"x": 2000,
-					"y": 0,
-					"z": 2000
+					"x": 8000,
+					"z": 8300
 				},
 				"scale": {
 					"x": 0,
@@ -80,7 +78,6 @@
 				"type": "MainBuilding", 
 				"position": {
 					"x": 2000,
-					"y": 0,
 					"z": 2000
 				},
 				"scale": {
@@ -98,8 +95,7 @@
 				"type": "Siderurgy", 
 				"position": {
 					"x": 2000,
-					"y": 0,
-					"z": 2000
+					"z": 2300
 				},
 				"scale": {
 					"x": 0,
