@@ -5,14 +5,14 @@
 #include <json/json.hpp>
 #include "Resource.h"
 #include <Types.h>
-
+ 
 using json = nlohmann::json; 
 
 class ResourceJSON : public Resource {
     public:
         ResourceJSON();
         ~ResourceJSON();
-
+ 
         void load(const char *path);
 
         void setIdentifier(const char *);

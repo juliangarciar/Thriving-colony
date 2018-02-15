@@ -6,7 +6,7 @@ ResourceJSON::ResourceJSON(){
 
 ResourceJSON::~ResourceJSON(){
     
-}
+} 
 
 void ResourceJSON::load(const char *path){
     setIdentifier(path);
