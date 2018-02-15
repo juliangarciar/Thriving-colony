@@ -88,6 +88,22 @@ void Player::setHallPosition(Vector3<f32> p){
     hallPosition = p;
 }
 
+void Player::setMetalAmount(i32 metal){
+    metalAmount = metal;
+}
+
+void Player::setCrystalAmount(i32 crystal){
+    crystalAmount = crystal;
+}
+
+void Player::setSiderurgyProductivity(i32 prod){
+    siderurgyProductivity = prod;
+}
+
+void Player::setQuarryProductivity(i32 prod){
+    quarryProductivity = prod;
+}
+
 //==========
 // Getters
 //==========
@@ -116,11 +132,11 @@ i32 Player::getCrystalAmount() {
 }
 
 i32 Player::getMetalProduction() {
-    return buildings->getAmount(Enumeration::BuildingType::Siderurgy) * RESOURCEPRODUCTION;
+    return buildings->getAmount(Enumeration::BuildingType::Siderurgy) * siderurgyProductivity;
 }
 
 i32 Player::getCrystalProduction() {
-    return buildings->getAmount(Enumeration::BuildingType::Quarry) * RESOURCEPRODUCTION;
+    return buildings->getAmount(Enumeration::BuildingType::Quarry) * quarryProductivity;
 }
 
 i32 Player::getArmyLevel() {
