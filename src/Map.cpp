@@ -38,11 +38,14 @@ void Map::Init() {
     terrain -> setSize(Vector3<f32>(j["map"]["size"]["x"].get<int>(), j["map"]["size"]["y"].get<int>(), j["map"]["size"]["z"].get<int>()));
     
     //Luz
-    Vector3<f32> lp;
-    lp.x = j["light"][0]["position"]["x"].get<int>();
-    lp.z = j["light"][0]["position"]["z"].get<int>();
-    lp.y = terrain -> getY(lp.x, lp.z) + j["light"][0]["height"].get<int>();
-    light = new Light(lp, j["light"][0]["intensity"].get<int>()); 
+    for (auto& element : j["lights"]){
+        Vector3<f32> lp;
+        lp.x = element["position"]["x"].get<int>();
+        lp.z = element["position"]["z"].get<int>();
+        lp.y = terrain -> getY(lp.x, lp.z) + element["height"].get<int>();
+        Light *light = new Light(lp, element["intensity"].get<int>()); 
+        lights.push_back(light);
+    }
 
     //Init camera controller
     camera = new CameraController();
@@ -111,7 +114,10 @@ void Map::Render() {
 }
 
 void Map::CleanUp() {
-    delete light;
+    for(int i=0; i<lights.size(); i++){
+        delete lights[i];
+    }
+    lights.clear();
     delete terrain;
     delete camera;
 }

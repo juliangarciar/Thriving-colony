@@ -14,7 +14,7 @@
 		"delta_x": 10,
 		"delta_y": 200
 	},
-	"light":[
+	"lights":[
 		{
 			"position": {
 				"x": 4000,

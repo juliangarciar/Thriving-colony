@@ -89,7 +89,7 @@ class Map {
 
         //Stuff
         CameraController *camera;
-        Light *light;
+        std::vector<Light*> lights;
         Terrain *terrain;
 
         //Start Positions
