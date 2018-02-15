@@ -37,6 +37,10 @@ void ResourceManager::load(std::string path){
         /*Resource *r = new ResourceOBJ();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));*/
+    } else if (extension == "json") {
+        Resource *r = new ResourceJSON();
+        r -> load(path.c_str());
+        resources.insert(std::pair<std::string, Resource*>(path, r));
     } else {
         std::cout << "Error: formato no soportado" << std::endl;
         exit(0);

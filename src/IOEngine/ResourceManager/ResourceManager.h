@@ -6,6 +6,7 @@
 #include <vector>
 #include <thread>
 #include "ResourceOBJ.h"
+#include "ResourceJSON.h"
 #include <Types.h>
 
 class ResourceManager {
