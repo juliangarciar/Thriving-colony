@@ -1,0 +1,244 @@
+{
+	"map": {
+		"heightmap": "media/map/mapa3-256x256.bmp",
+		"texture": "media/map/map-texture.jpg",
+		"detail_texture": "media/map/map-detail-texture.jpg",
+		"size":{
+			"x": 1,
+			"y": 1,
+			"z": 1
+		}
+	},
+	"camera":{
+		"zoomDistanceFromTarget": 600,
+		"delta_x": 10,
+		"delta_y": 200
+	},
+	"light":[
+		{
+			"position": {
+				"x": 10,
+				"y": 10,
+				"z": 10
+			}
+		}
+	],
+	"player":[
+		{
+			"initial_crystal": 15,
+			"initial_metal": 20,
+			"siderurgy_productivity": 10,
+			"quarry_productivity": 5,
+			"buildings":[
+				{
+					"type": "MainBuilding", 
+					"position": {
+						"x": 8000,
+						"y": 0,
+						"z": 8000
+					},
+					"scale": {
+						"x": 0,
+						"y": 0,
+						"z": 0
+					},
+					"rotation": {
+						"x": 0,
+						"y": 0,
+						"z": 0
+					}
+				},
+				{
+					"type": "Siderurgy", 
+					"position": {
+						"x": 2000,
+						"y": 0,
+						"z": 2000
+					},
+					"scale": {
+						"x": 0,
+						"y": 0,
+						"z": 0
+					},
+					"rotation": {
+						"x": 0,
+						"y": 0,
+						"z": 0
+					}
+				}
+			]
+		}
+	],
+	"IA":[
+		{
+			"initial_crystal": 5,
+			"initial_metal": 10,
+			"siderurgy_productivity": 15,
+			"quarry_productivity": 10,
+			"buildings":[
+				{
+					"type": "MainBuilding", 
+					"position": {
+						"x": 2000,
+						"y": 0,
+						"z": 2000
+					},
+					"scale": {
+						"x": 0,
+						"y": 0,
+						"z": 0
+					},
+					"rotation": {
+						"x": 0,
+						"y": 0,
+						"z": 0
+					}
+				},
+				{
+					"type": "Siderurgy", 
+					"position": {
+						"x": 2000,
+						"y": 0,
+						"z": 2000
+					},
+					"scale": {
+						"x": 0,
+						"y": 0,
+						"z": 0
+					},
+					"rotation": {
+						"x": 0,
+						"y": 0,
+						"z": 0
+					},
+					"productivity": {
+						"tax": 1	
+					}
+				}
+			]
+			
+		}
+	],
+	"trees": [
+		{
+  			"model": "media/trees/tree_model1.3ds",
+			"texture": "media/trees/tree_texture1.png",
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"scale": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"rotation": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		},
+		{
+  			"model": "media/trees/tree_model2.3ds",
+			"texture": "media/trees/tree_texture2.png",
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"scale": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"rotation": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		}
+	],
+	"rocks": [
+		{
+			"model": "media/rocks/rock_model1.3ds",
+			"texture": "media/rocks/rock_texture1.3ds",
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"scale": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"rotation": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		},
+		{
+			"model": "media/rocks/rock_model2.3ds",
+			"texture": "media/rocks/rock_texture2.3ds",
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"scale": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"rotation": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		}
+	],
+	"crystals": [
+		{
+			"model": "media/crystals/crystal_model1.3ds",
+			"texture": "media/crystals/crystal_texture1.3ds",
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"scale": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"rotation": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		}
+	],
+	"waypoints": [
+		{
+			"idx": 1,
+			"edge": [1, 2, 3],
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			}
+		}
+	]
+}
+	
+
+	
+	
+  
+    
+	
+
+
+
+
