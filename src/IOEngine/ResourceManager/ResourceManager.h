@@ -16,7 +16,7 @@ class ResourceManager {
 
         void Update();
 
-        void loadResource(std::string, bool);
+        void loadResource(std::string, bool = true);
 
         Resource *getResource(std::string);
     private:

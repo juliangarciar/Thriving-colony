@@ -10,6 +10,7 @@
 #include <IOEngine/Mouse.h>
 #include <IOEngine/Keyboard.h>
 #include <IOEngine/EventSystem.h>
+#include <IOEngine/ResourceManager/ResourceManager.h>
 
 #include <GraphicEngine/Window.h>
 
@@ -85,6 +86,12 @@ class Game {
          * @return Devuelve un objeto tipo GameState
 		 */
 		GameState *getGameState();
+        /**
+         * @brief 
+         * 
+         * @return ResourceManager* 
+         */
+        ResourceManager *getResourceManager();
     protected:
         /**
 		 * @brief Constructor de Game.
@@ -124,6 +131,8 @@ class Game {
         EventSystem *events;
         
         SoundSystem *soundSystem;
+
+        ResourceManager *resourceManager;
 };
 
 #endif

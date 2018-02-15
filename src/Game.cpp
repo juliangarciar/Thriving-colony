@@ -25,7 +25,9 @@ Game::Game() {
 
     events = new EventSystem();
 
-    soundSystem = SoundSystem::Instance();
+    soundSystem = SoundSystem::Instance(); 
+
+    resourceManager = new ResourceManager();
 }
 
 Game::~Game() {
@@ -113,4 +115,8 @@ MenuState *Game::getMenuState() {
 
 GameState *Game::getGameState() {
 	return game;
+}
+
+ResourceManager *Game::getResourceManager(){
+    return resourceManager;
 }
