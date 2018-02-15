@@ -142,7 +142,7 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 	buildings -> insert(std::pair<i32,Building*>(nextBuildingId, tempBuilding));
 	
 	// Tax the player when placing the building
-	tempBuilding -> preTaxPlayer();
+	if (!instabuild) tempBuilding -> preTaxPlayer();
 
 	if (instabuild) tempBuilding -> triggerFinishedCallback();    
 	// Added by Julian

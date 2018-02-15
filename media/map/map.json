@@ -24,102 +24,100 @@
 			"intensity": 10000
 		}
 	],
-	"player":[
-		{
-			"initial_crystal": 15,
-			"initial_metal": 20,
-			"siderurgy_productivity": 10,
-			"quarry_productivity": 5,
-			"buildings":[
-				{
-					"type": "MainBuilding", 
-					"position": {
-						"x": 8000,
-						"y": 0,
-						"z": 8000
-					},
-					"scale": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					}
+	"player":
+	{
+		"initial_metal": 1200,
+		"initial_crystal": 0,
+		"siderurgy_productivity": 10,
+		"quarry_productivity": 5,
+		"buildings":[
+			{
+				"type": "MainBuilding", 
+				"position": {
+					"x": 8000,
+					"y": 0,
+					"z": 8000
 				},
-				{
-					"type": "Siderurgy", 
-					"position": {
-						"x": 2000,
-						"y": 0,
-						"z": 2000
-					},
-					"scale": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					}
-				}
-			]
-		}
-	],
-	"IA":[
-		{
-			"initial_crystal": 5,
-			"initial_metal": 10,
-			"siderurgy_productivity": 15,
-			"quarry_productivity": 10,
-			"buildings":[
-				{
-					"type": "MainBuilding", 
-					"position": {
-						"x": 2000,
-						"y": 0,
-						"z": 2000
-					},
-					"scale": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					}
+				"scale": {
+					"x": 0,
+					"y": 0,
+					"z": 0
 				},
-				{
-					"type": "Siderurgy", 
-					"position": {
-						"x": 2000,
-						"y": 0,
-						"z": 2000
-					},
-					"scale": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"rotation": {
-						"x": 0,
-						"y": 0,
-						"z": 0
-					},
-					"productivity": {
-						"tax": 1	
-					}
+				"rotation": {
+					"x": 0,
+					"y": 0,
+					"z": 0
 				}
-			]
-			
-		}
-	],
+			},
+			{
+				"type": "Siderurgy", 
+				"position": {
+					"x": 2000,
+					"y": 0,
+					"z": 2000
+				},
+				"scale": {
+					"x": 0,
+					"y": 0,
+					"z": 0
+				},
+				"rotation": {
+					"x": 0,
+					"y": 0,
+					"z": 0
+				}
+			}
+		]
+	},
+	"IA":
+	{
+		"initial_crystal": 5,
+		"initial_metal": 10,
+		"siderurgy_productivity": 15,
+		"quarry_productivity": 10,
+		"buildings":[
+			{
+				"type": "MainBuilding", 
+				"position": {
+					"x": 2000,
+					"y": 0,
+					"z": 2000
+				},
+				"scale": {
+					"x": 0,
+					"y": 0,
+					"z": 0
+				},
+				"rotation": {
+					"x": 0,
+					"y": 0,
+					"z": 0
+				}
+			},
+			{
+				"type": "Siderurgy", 
+				"position": {
+					"x": 2000,
+					"y": 0,
+					"z": 2000
+				},
+				"scale": {
+					"x": 0,
+					"y": 0,
+					"z": 0
+				},
+				"rotation": {
+					"x": 0,
+					"y": 0,
+					"z": 0
+				},
+				"productivity": {
+					"tax": 1	
+				}
+			}
+		]
+		
+	},
 	"trees": [
 		{
   			"model": "media/trees/tree_model1.3ds",

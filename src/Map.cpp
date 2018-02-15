@@ -1,6 +1,7 @@
 #include "Map.h"
 #include "Game.h"
 
+
 //Para cargar el json:
 //desde aqui
 #include <iostream>
@@ -50,6 +51,11 @@ void Map::Init() {
     //cellSpace = new CellSpacePartition(10240, 10240, 128, 128, 4);
 
     //ToDo: extraer de JSON
+    Human::Instance()->setMetalAmount(j["player"]["initial_metal"].get<i32>());
+    Human::Instance()->setCrystalAmount(j["player"]["initial_crystal"].get<i32>());
+    Human::Instance()->setSiderurgyProductivity(j["player"]["siderurgy_productivity"].get<i32>());
+    Human::Instance()->setQuarryProductivity(j["player"]["quarry_productivity"].get<i32>());
+
     humanStartPos.x = Enumeration::HumanCityHall::human_x;
     humanStartPos.z = Enumeration::HumanCityHall::human_z; 
     humanStartPos.y = terrain -> getY(humanStartPos.x, humanStartPos.z);
