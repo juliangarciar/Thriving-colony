@@ -21,6 +21,7 @@ Entity::Entity(i32 id, Enumeration::Team t, Enumeration::BreedType b) {
     happiness = 0;
     citizens = 0;
     cityLevel = 0;
+    armyLevel = 0;
 }
 
 Entity::~Entity() {
@@ -134,4 +135,8 @@ irr::video::SColor Entity::getCurrentColor() {
 }
 i32 Entity::getCells(){
     return kCells;
+}
+
+i32 Entity::getArmyLevel() {
+    return armyLevel;
 }

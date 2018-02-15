@@ -129,6 +129,9 @@ class Entity {
         irr::video::SColor getCurrentColor(); //ToDo: cambiar por material
         // Added by Julian
         i32 getCells();
+
+        i32 getArmyLevel();
+
     protected:
         Model* model;
         Vector3<f32> *position;
@@ -158,6 +161,7 @@ class Entity {
         i32 citizens;
         // For IA and info
         i32 cityLevel;
+        i32 armyLevel;
 
         // Added by Julian
         i32 kCells;

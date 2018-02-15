@@ -15,8 +15,8 @@ i32 PathManager::getClosestNodeToPosition(Vector2<f32> pos){
     // This is not working properly for some reason
     i32 idx = (i32)(total * pos.x / spaceWidth) + 
                 ((i32)((total) * pos.y / spaceWidth) * total);
-    std::cout << idx << "\n";
-    std::cout << navGraph->getNumNodes() << std::endl;
+    /*std::cout << idx << "\n";
+    std::cout << navGraph->getNumNodes() << std::endl;*/
     if (idx > navGraph->getNumNodes() - 1) 
         idx = navGraph->getNumNodes() - 1;
 
@@ -59,7 +59,7 @@ bool PathManager::createPathTo(Vector2<f32> targetPos){
         // Add the actual target position to the end of the path
         //path.push_back(targetPos);
         unit->setPath(path);
-        std::cout << path.size() << "\n";
+        //std::cout << path.size() << "\n";
         return true;
     }
     // No path found

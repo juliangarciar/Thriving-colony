@@ -38,6 +38,7 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
 
 Unit::~Unit() {
     delete pathManager;
+    hostile.clear();
 }
 
 void Unit::Init() {
@@ -57,6 +58,7 @@ void Unit::Init() {
                 recruitingTime = 5;
                 happiness = -10;
                 citizens = -10;
+                armyLevel = Enumeration::ArmyLevel::Footmen;
                 attackEvent = "event:/UnitAttack/Drorania_melee_S";
                 moveEvent = "event:/UnitMovement/Drorania_melee_S";
                 selectEvent = "event:/UnitSelect/Drorania_melee_S";
@@ -74,6 +76,7 @@ void Unit::Init() {
                 recruitingTime = 5;
                 happiness = -10;
                 citizens = -10;
+                armyLevel = Enumeration::ArmyLevel::Footmen;
                 attackEvent = "event:/UnitAttack/Kaonov_melee_S";
                 moveEvent = "event:/UnitMovement/Kaonov_melee_S";
                 selectEvent = "event:/UnitSelect/Kaonov_melee_S";
@@ -95,6 +98,7 @@ void Unit::Init() {
                 recruitingTime = 10;
                 happiness = -10;
                 citizens = -10;
+                armyLevel = Enumeration::ArmyLevel::Mounted;
                 attackEvent = "event:/UnitAttack/Drorania_melee_A";
                 moveEvent = "event:/UnitMovement/Drorania_melee_A";
                 selectEvent = "event:/UnitSelect/Drorania_melee_A";
@@ -113,6 +117,7 @@ void Unit::Init() {
                 recruitingTime = 10;
                 happiness = -10;
                 citizens = -10;
+                armyLevel = Enumeration::ArmyLevel::Mounted;
                 attackEvent = "event:/UnitAttack/Kaonov_melee_A";
                 moveEvent = "event:/UnitMovement/Kaonov_melee_A";
                 selectEvent = "event:/UnitSelect/Kaonov_melee_A";
@@ -134,6 +139,7 @@ void Unit::Init() {
                 recruitingTime = 5;
                 happiness = -10;
                 citizens = -10;
+                armyLevel = Enumeration::ArmyLevel::Footmen;
                 attackEvent = "event:/UnitAttack/Drorania_ranged_S";
                 moveEvent = "event:/UnitMovement/Drorania_ranged_S";
                 selectEvent = "event:/UnitSelect/Drorania_ranged_S";
@@ -151,6 +157,7 @@ void Unit::Init() {
                 recruitingTime = 5;
                 happiness = -10;
                 citizens = -10;
+                armyLevel = Enumeration::ArmyLevel::Footmen;
                 attackEvent = "event:/UnitAttack/Kaonov_ranged_S";
                 moveEvent = "event:/UnitMovement/Kaonov_ranged_S";
                 selectEvent = "event:/UnitSelect/Kaonov_ranged_S";
@@ -172,6 +179,7 @@ void Unit::Init() {
                 recruitingTime = 10;
                 happiness = -10;
                 citizens = -10;
+                armyLevel = Enumeration::ArmyLevel::Mounted;
                 attackEvent = "event:/UnitAttack/Drorania_ranged_A";
                 moveEvent = "event:/UnitMovement/Drorania_ranged_A";
                 selectEvent = "event:/UnitSelect/Drorania_ranged_A";
@@ -189,6 +197,7 @@ void Unit::Init() {
                 recruitingTime = 10;
                 happiness = -10;
                 citizens = -10;
+                armyLevel = Enumeration::ArmyLevel::Mounted;
                 attackEvent = "event:/UnitAttack/Kaonov_ranged_A";
                 moveEvent = "event:/UnitMovement/Kaonov_ranged_A";
                 selectEvent = "event:/UnitSelect/Kaonov_ranged_A";
@@ -210,6 +219,7 @@ void Unit::Init() {
                 recruitingTime = 20;
                 happiness = -10;
                 citizens = -10;
+                armyLevel = Enumeration::ArmyLevel::Creatures;
                 //ToDo: CHANGE
                 attackEvent = "event:/UnitAttack/Drorania_melee_A";
                 moveEvent = "event:/UnitMovement/Drorania_melee_A";
@@ -228,6 +238,7 @@ void Unit::Init() {
                 recruitingTime = 20;
                 happiness = -10;
                 citizens = -10;
+                armyLevel = Enumeration::ArmyLevel::Creatures;
                 //ToDo: CHANGE
                 attackEvent = "event:/UnitAttack/Kaonov_melee_A";
                 moveEvent = "event:/UnitMovement/Kaonov_melee_A";
@@ -250,6 +261,7 @@ void Unit::Init() {
                 recruitingTime = 15;
                 happiness = -10;
                 citizens = -10;
+                armyLevel = Enumeration::ArmyLevel::Siege;
                 //ToDo: CHANGE
                 attackEvent = "event:/UnitAttack/Drorania_ranged_S";
                 moveEvent = "event:/UnitMovement/Drorania_ranged_S";
@@ -268,6 +280,7 @@ void Unit::Init() {
                 recruitingTime = 15;
                 happiness = -10;
                 citizens = -10;
+                armyLevel = Enumeration::ArmyLevel::Siege;
                 //ToDo: CHANGE
                 attackEvent = "event:/UnitAttack/Kaonov_ranged_S";
                 moveEvent = "event:/UnitMovement/Kaonov_ranged_S";
@@ -290,6 +303,7 @@ void Unit::Init() {
                 recruitingTime = 20;
                 happiness = -10;
                 citizens = -10;
+                armyLevel = Enumeration::ArmyLevel::Siege;
                 //ToDo: CHANGE
                 attackEvent = "event:/UnitAttack/Drorania_ranged_A";
                 moveEvent = "event:/UnitMovement/Drorania_ranged_A";
@@ -308,6 +322,7 @@ void Unit::Init() {
                 recruitingTime = 20;
                 happiness = -10;
                 citizens = -10;
+                armyLevel = Enumeration::ArmyLevel::Siege;
                 //ToDo: CHANGE
                 attackEvent = "event:/UnitAttack/Kaonov_ranged_A";
                 moveEvent = "event:/UnitMovement/Kaonov_ranged_A";
@@ -319,7 +334,6 @@ void Unit::Init() {
         break;
         default: break;
     }
-
     setModel(layer, path);
 }
 
@@ -367,10 +381,12 @@ void Unit::preTaxPlayer() {
         Human::Instance() -> spendResources(metalCost, crystalCost);
         Human::Instance() -> increaseHappiness(happiness);
         Human::Instance() -> increaseCitizens(citizens);
+        Human::Instance() -> increaseArmyLevel(armyLevel);
     } else {
         IA::Instance() -> spendResources(metalCost, crystalCost);
         IA::Instance() -> increaseHappiness(happiness);
         IA::Instance() -> increaseCitizens(citizens);
+        IA::Instance() -> increaseArmyLevel(armyLevel);
     }
 }
 
@@ -635,9 +651,9 @@ void Unit::setTroopDestination(Vector3<f32> vectorData) {
     vectorMov.z = (desp.z / distance) * (moveSpeed / 100);
     f32 movDistance = std::sqrt(std::pow(vectorMov.x, 2) + std::pow(vectorMov.z, 2));
     steps = (distance / movDistance);
-    std::cout << "Distance: " << distance << "\n";
+    /*std::cout << "Distance: " << distance << "\n";
     std::cout << "Mov distance " << movDistance << "\n"; 
-    std::cout << "Steps: " << steps << "\n";
+    std::cout << "Steps: " << steps << "\n";*/
     moving = true;
 }
 
@@ -689,4 +705,21 @@ std::list< Vector2<f32> > Unit::getPath(){
 
 Enumeration::UnitType Unit::getType(){
     return type;
+}
+
+std::vector<Unit*> Unit::getHostile() {
+    return hostile;
+}
+
+void Unit::addHostile(Unit* newHostileUnit) {
+    hostile.push_back(newHostileUnit);
+}
+
+void Unit::removeHostile(Unit* oldHostileUnit) {
+    bool done = false;
+    for (i32 i = 0; i < hostile.size() && done != true; i++) {
+        if (hostile.at(i) == oldHostileUnit) {
+            hostile.erase(hostile.begin() + i);
+        }
+    }
 }

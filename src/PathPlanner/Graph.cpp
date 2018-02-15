@@ -168,7 +168,7 @@ Graph::Graph(){
             }
         }
     }
-    std::cout << "Nwaypoints = " << m_Nodes.size() << std::endl;
+    //std::cout << "Nwaypoints = " << m_Nodes.size() << std::endl;
 }
 Graph::~Graph(){
     

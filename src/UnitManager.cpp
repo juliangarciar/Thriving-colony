@@ -344,6 +344,11 @@ bool UnitManager::isDeployingTroop(){
 }
 
 void UnitManager::deleteUnit(i32 id) {
+    if (inMapTroops -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
+        Human::Instance() -> decreaseArmyLevel(inMapTroops -> find(id) -> second -> getArmyLevel());
+    } else {
+        IA::Instance() -> decreaseArmyLevel(inMapTroops -> find(id) -> second -> getArmyLevel());
+    }
     delete inMapTroops -> find(id) -> second;
     inMapTroops -> erase(id);
 }

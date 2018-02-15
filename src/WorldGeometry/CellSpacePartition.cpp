@@ -35,7 +35,7 @@ CellSpacePartition::CellSpacePartition()
             mCells.push_back(Cell(Vector2<f32>(left, top), Vector2<f32>(right, bot)));
         }
     }
-    std::cout << "Number of cells " << mCells.size() << "\n";
+    //std::cout << "Number of cells " << mCells.size() << "\n";
 }
 
 CellSpacePartition::~CellSpacePartition(){
@@ -120,7 +120,7 @@ void CellSpacePartition::updateCell(Entity *object){
         for(i32 i = 0; i < object -> getCells(); i++){
             for(i32 j = 0; j < object->getCells(); j++){
                 mCells.at(positionToIndex(Vector2<f32>(storage.x + cellSizeX * i, storage.y + cellSizeY * j))).entities.push_back(object);
-                std::cout << "Colision creada en: " << i << "," << j << "\n";
+                //std::cout << "Colision creada en: " << i << "," << j << "\n";
             }
         }
     }

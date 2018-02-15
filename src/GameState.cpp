@@ -196,14 +196,6 @@ void GameState::Update(){
     if (gamePaused == false) {
         Game *g = Game::Instance();
 
-        //Win/Lose
-        if (ia -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
-            g -> changeState(Enumeration::State::WinState);
-        }
-        if (human -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
-            g -> changeState(Enumeration::State::DefeatState);
-        }
-
         //Update map
         map -> Update();
         
@@ -225,6 +217,14 @@ void GameState::Update(){
         /*if (g -> getWindow() -> getRealWindowWidth() != prevWindowWidth || g -> getWindow() -> getRealWindowHeight() != prevWindowHeight) {
             hud -> updatePositions();
         }*/
+
+        //Win/Lose
+        if (ia -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
+            g -> changeState(Enumeration::State::WinState);
+        }
+        if (human -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
+            g -> changeState(Enumeration::State::DefeatState);
+        }
     }
 }
 

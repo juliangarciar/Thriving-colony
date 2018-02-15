@@ -30,6 +30,8 @@ class Player {
         void increaseBuildableRange();
         bool losingBattle(); //ToDo: battle manager mejor no?
         void decreaseBuildings(Enumeration::BuildingType);
+        void increaseArmyLevel(i32);
+        void decreaseArmyLevel(i32);
 
         // Setters
         void setHallPosition(Vector3<f32>);
@@ -43,6 +45,7 @@ class Player {
         i32 getCrystalAmount();
         i32 getMetalProduction();
         i32 getCrystalProduction();
+        i32 getArmyLevel();
         BuildingManager* getBuildingManager();
         UnitManager* getUnitManager();
         Vector3<f32> getHallPosition();
@@ -51,10 +54,12 @@ class Player {
         void receiveMetal();
         void receiveCrystal();
         void receiveCitizens();
+
     protected:
         // Resources
         i32 happiness;
         i32 cityLevel;
+        i32 armyLevel;
         i32 metalAmount;
         i32 crystalAmount;
         i32 citizens;

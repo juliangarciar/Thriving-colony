@@ -15,6 +15,7 @@ Player::~Player() {
 void Player::Init() {
     happiness = 0;
     cityLevel = 10;
+    armyLevel = 0;
     citizens = 20;
 
     metalAmount = 1200;
@@ -71,8 +72,16 @@ void Player::increaseBuildableRange() {
 bool Player::losingBattle() {
     // ToDo: Es necesario? por ahora si
     // ToDo: calcular si estas perdiendo tu la  batalla
-    // ToDo: no deberia ir en el battle manager?
+    // ToDo: no deberia ir en el battle manager? no se, es probable
     return false;
+}
+
+void Player::increaseArmyLevel(i32 alincrement) {
+    armyLevel = armyLevel + alincrement;
+}
+
+void Player::decreaseArmyLevel(i32 aldecrement) {
+    armyLevel = armyLevel - aldecrement;
 }
 
 void Player::setHallPosition(Vector3<f32> p){
@@ -112,6 +121,10 @@ i32 Player::getMetalProduction() {
 
 i32 Player::getCrystalProduction() {
     return buildings->getAmount(Enumeration::BuildingType::Quarry) * RESOURCEPRODUCTION;
+}
+
+i32 Player::getArmyLevel() {
+    return armyLevel;
 }
 
 BuildingManager* Player::getBuildingManager() {
