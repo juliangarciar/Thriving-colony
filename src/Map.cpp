@@ -32,7 +32,7 @@ void Map::Init() {
     json j = *r -> getJSON();
 
     //Luz
-    light = new Light(Vector3<float>(8000, 4000, 8000), 10000);
+    light = new Light(Vector3<float>(j["light"][0]["position"]["x"].get<int>(), j["light"][0]["position"]["y"].get<int>(), j["light"][0]["position"]["z"].get<int>()), j["light"][0]["intensity"].get<int>()); 
 
     //Create map
     terrain = new Terrain(j["map"]["heightmap"].get<std::string>().c_str());
