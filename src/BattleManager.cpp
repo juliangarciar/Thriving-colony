@@ -33,6 +33,7 @@ void BattleManager::askForTarget(Entity* requester) {
                 if (dist <= requesterRange && dist < minDistance) {
                     minDistance = dist;
                     target = it -> second;
+                    target -> addHostile(requester);
                 }
             }
         }
@@ -48,6 +49,7 @@ void BattleManager::askForTarget(Entity* requester) {
                     if (dist <= requesterRange && dist < minDistance) {
                         minDistance = dist;
                         target = it -> second;
+                        target -> addHostile(requester);
                     }
                 }
             }
@@ -68,6 +70,7 @@ void BattleManager::askForTarget(Entity* requester) {
                 if (dist <= requesterRange && dist < minDistance) {
                     minDistance = dist;
                     target = it -> second;
+                    target -> addHostile(requester);
                 }
             }
         }
@@ -85,6 +88,7 @@ void BattleManager::askForTarget(Entity* requester) {
                     if (dist <= requesterRange && dist < minDistance) {
                         minDistance = dist;
                         target = it -> second;
+                        target -> addHostile(requester);
                     }
                 }
             }

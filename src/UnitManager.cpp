@@ -30,13 +30,13 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
 //Destroyer
 UnitManager::~UnitManager() {
     for (std::map<i32, Unit*>::iterator it = inQueueTroops -> begin(); it != inQueueTroops -> end(); ++it){
-        delete it->second;
+        delete it -> second;
     }
     inQueueTroops -> clear();
     delete inQueueTroops;
 
     for (std::map<i32, Unit*>::iterator it = inHallTroops -> begin(); it != inHallTroops -> end(); ++it){
-        delete it->second;
+        delete it -> second;
     }
     inHallTroops -> clear();
     delete inHallTroops;
@@ -349,6 +349,7 @@ void UnitManager::deleteUnit(i32 id) {
     } else {
         IA::Instance() -> decreaseArmyLevel(inMapTroops -> find(id) -> second -> getArmyLevel());
     }
+    inMapTroops -> find(id) -> second -> putHostileTargetsToNull();
     delete inMapTroops -> find(id) -> second;
     inMapTroops -> erase(id);
 }

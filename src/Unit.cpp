@@ -17,6 +17,8 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
     //Default state
     state = Enumeration::UnitState::Recruiting;
 
+    entityType = Enumeration::EntityType::Unit;
+
     //Iniciar
     Init();
 
@@ -38,7 +40,6 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
 
 Unit::~Unit() {
     delete pathManager;
-    hostile.clear();
 }
 
 void Unit::Init() {
@@ -420,7 +421,7 @@ void Unit::inHomeState() {
 }
 
 void Unit::idleState() {
-    if (refreshTarget()) { // i got one
+    if (refreshTarget()) { // if got one
         switchState(Enumeration::UnitState::Chase);
     }
 }
@@ -432,7 +433,7 @@ void Unit::moveState() {
 void Unit::attackMoveState() {
     attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
     // Scan for targets
-    if (refreshTarget()) { // i got one
+    if (refreshTarget()) { // if got one
         switchState(Enumeration::UnitState::Chase);
     } else {
         switchState(Enumeration::UnitState::AttackMove);
@@ -544,6 +545,9 @@ void Unit::attack() {
             target -> takeDamage(attackDamage);
             attackCountdown = attackSpeed;
             if (target -> getHP() <= 0) {
+                if (target -> getTarget() != NULL) {
+                    target -> getTarget() -> removeHostile(target);
+                }
                 if (team == Enumeration::Team::Human) {
                     if (target -> getEntityType() == Enumeration::EntityType::Unit) {
                         IA::Instance() -> getUnitManager() -> deleteUnit(target -> getID());
@@ -705,21 +709,4 @@ std::list< Vector2<f32> > Unit::getPath(){
 
 Enumeration::UnitType Unit::getType(){
     return type;
-}
-
-std::vector<Unit*> Unit::getHostile() {
-    return hostile;
-}
-
-void Unit::addHostile(Unit* newHostileUnit) {
-    hostile.push_back(newHostileUnit);
-}
-
-void Unit::removeHostile(Unit* oldHostileUnit) {
-    bool done = false;
-    for (i32 i = 0; i < hostile.size() && done != true; i++) {
-        if (hostile.at(i) == oldHostileUnit) {
-            hostile.erase(hostile.begin() + i);
-        }
-    }
 }
