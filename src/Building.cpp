@@ -8,6 +8,7 @@ Building::Building(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::Br
     buildTimer = 0;
     layer = l;
     type = t;
+    entityType = Enumeration::EntityType::Building;
 
     Init();
 }

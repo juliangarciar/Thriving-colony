@@ -64,9 +64,6 @@ class Unit : public Entity {
         std::list< Vector2<f32> > getPath();
         Enumeration::UnitType getType();
 
-        std::vector<Unit*> getHostile();
-        void addHostile(Unit*);
-        void removeHostile(Unit*);
     private:
         /**
          * @brief inicia
@@ -123,7 +120,6 @@ class Unit : public Entity {
         std::string moveEvent;
         std::string selectEvent;
 
-        std::vector<Unit*> hostile;
 };
 
 #endif

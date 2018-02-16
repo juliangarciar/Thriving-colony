@@ -28,6 +28,7 @@ Entity::~Entity() {
     delete position;
     delete hitbox;
     delete model;
+    hostile.clear();
 }
 
 //METHODS
@@ -139,4 +140,36 @@ i32 Entity::getCells(){
 
 i32 Entity::getArmyLevel() {
     return armyLevel;
+}
+
+std::vector<Entity*> Entity::getHostile() {
+    return hostile;
+}
+
+void Entity::addHostile(Entity* newHostileUnit) {
+    hostile.push_back(newHostileUnit);
+}
+
+void Entity::removeHostile(Entity* oldHostileUnit) {
+    bool done = false;
+    for (i32 i = 0; i < hostile.size() && done == false; i++) {
+        if (hostile.at(i) == oldHostileUnit) {
+            hostile.erase(hostile.begin() + i);
+            done = true;
+        }
+    }
+}
+
+void Entity::setTarget(Entity* newTarget) {
+    target = newTarget;
+}
+
+Entity* Entity::getTarget() {
+    return target;
+}
+
+void Entity::putHostileTargetsToNull() {
+    for (i32 i = 0; i < hostile.size(); i++) {
+        hostile.at(i) -> setTarget(NULL);
+    }
 }

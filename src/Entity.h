@@ -1,6 +1,7 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+#include <vector>
 #include <Types.h>
 #include <Enumeration.h>
 #include <MathEngine/Vector3.h>
@@ -71,6 +72,9 @@ class Entity {
          */
         void setID(i32);
 
+        void setTarget(Entity*);
+        Entity* getTarget();
+
         /**
 		 * @brief Solicita el rango de ataque de la entidad
          * @return AttackRange de tipo entero
@@ -131,6 +135,11 @@ class Entity {
 
         i32 getArmyLevel();
 
+        std::vector<Entity*> getHostile();
+        void addHostile(Entity*);
+        void removeHostile(Entity*);
+        void putHostileTargetsToNull();
+
     protected:
         Model* model;
         Vector3<f32> *position;
@@ -161,6 +170,8 @@ class Entity {
         // For IA and info
         i32 cityLevel;
         i32 armyLevel;
+
+        std::vector<Entity*> hostile;
 
         // Added by Julian
         i32 kCells;
