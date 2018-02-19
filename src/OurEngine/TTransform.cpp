@@ -9,14 +9,13 @@ TTransform::~TTransform() {
 }
 
 void TTransform::beginDraw(){
-    // Estoy casi convencido de que es asi. No tiene sentido como pone en el pdf
-    multiply(matrixStack.top());
     matrixStack.push(matrix);
+    modelMatrix *= matrix;
 }
 
-void TTransform::endDraw(){
-    load(matrixStack.top());
+void TTransform::endDraw() {
     matrixStack.pop();
+    modelMatrix /= matrix;
 }
 
 void TTransform::identity() {
