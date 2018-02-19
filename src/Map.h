@@ -6,8 +6,7 @@
 #include <GraphicEngine/Terrain.h>
 #include <GraphicEngine/Light.h>
 
-#include <PathPlanner/Graph.h>
-#include <WorldGeometry/CellSpacePartition.h>
+#include <WorldGeometry/MapMaster.h>
 
 #include <Types.h>
 
@@ -69,9 +68,7 @@ class Map {
          * @return Vector2<f32> 
          */
         Vector3<f32> getMouseCollitionPoint();
-        
-        // Added by Julian
-        CellSpacePartition *getCellSpace();
+
 
     protected:
         /**
@@ -99,8 +96,7 @@ class Map {
         Vector3<f32> collisionPoint;
 
         //Added by Julian
-        CellSpacePartition *cellSpace;
-        Graph *navGraph;
+        MapMaster* mapMaster;
 };
 
 #endif

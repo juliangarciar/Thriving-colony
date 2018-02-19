@@ -13,10 +13,11 @@ MapMaster* MapMaster::Instance(){
 MapMaster::MapMaster(){
     navGraph = new Graph(MAPX, MAPY, SPACEX, SPACEY);
     geometryMap = new CellSpacePartition(MAPX, MAPY, SPACEX, SPACEY);
-    // Extra functions
+    // Extra functions -> graph + geometry fusion
 }
 MapMaster::~MapMaster(){
-
+    delete navGraph;
+    delete geometryMap;
 }
 Graph* MapMaster::getGraph(){
     return navGraph;

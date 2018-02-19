@@ -1,7 +1,7 @@
 #ifndef PATHMANAGER_H
 #define PATHMANAGER_H
 
-#include "MapMaster.h"
+#include <WorldGeometry/MapMaster.h>
 #include <Unit.h>
 #include <vector>
 #include <queue>
@@ -12,8 +12,8 @@ class PathManager{
     // A pointer to the owned of this class 
     // this won't be neccesary
         class Unit* unit;
-    // A local reference to the navgraph
-        Graph* navGraph;
+    // A local reference to the mapMaster
+        MapMaster* mapMaster;
     // Position the unit wants to plan a path
         Vector2<f32> vDestination;
     public:

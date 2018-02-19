@@ -1,7 +1,7 @@
 #include "BuildingManager.h"
 #include "Game.h"
 
-#include "WorldGeometry/CellSpacePartition.h"
+#include <WorldGeometry/MapMaster.h>
 
 BuildingManager::BuildingManager(Enumeration::Team t, Enumeration::BreedType b) {
 	team = t;
@@ -65,7 +65,7 @@ void BuildingManager::drawBuilding() {
         //f32 z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
 	// Change 2nd parameter
 		bool collision = false;
-		Vector3<f32> dummy = CellSpacePartition::Instance() -> correctPosition(xyzPointCollision, tempBuilding, collision);
+		Vector3<f32> dummy = MapMaster::Instance()->getGeometry()->correctBuildingPosition(xyzPointCollision, tempBuilding, collision);
 		//std::cout << "Position: " << dummy.x << "," << dummy.y << "," << dummy.z << "\n";
 		dummy.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.z);
 		tempBuilding -> setPosition (dummy);
@@ -146,7 +146,7 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 
 	if (instabuild) tempBuilding -> triggerFinishedCallback();    
 	// Added by Julian
-	CellSpacePartition::Instance() -> updateCell(tempBuilding);
+	MapMaster::Instance()->getGeometry()->updateBuildingCell(tempBuilding);
 	tempBuilding = NULL;
 	nextBuildingId++;
 }

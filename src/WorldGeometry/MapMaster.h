@@ -1,7 +1,7 @@
 #ifndef MAPMASTER_H
 #define MAPMASTER_H
-#include "Graph.h"
-#include <WorldGeometry/CellSpacePartition.h>
+#include <PathPlanner/Graph.h>
+#include "CellSpacePartition.h"
 class MapMaster{
     private:
         static MapMaster* pinstance;

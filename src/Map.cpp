@@ -29,8 +29,7 @@ void Map::Init() {
     camera = new CameraController();
 
     // Added by Julian
-    navGraph = Graph::Instance();
-    cellSpace = CellSpacePartition::Instance();
+    mapMaster = MapMaster::Instance();
     //cellSpace = new CellSpacePartition(10240, 10240, 128, 128, 4);
 
     //ToDo: extraer de JSON
@@ -65,8 +64,7 @@ void Map::CleanUp() {
     delete light;
     delete terrain;
     delete camera;
-    delete navGraph;
-    delete cellSpace;
+    delete mapMaster;
 }
 
 Vector3<f32> Map::getHumanStartPosition(){
@@ -83,8 +81,4 @@ Vector3<f32> Map::getMouseCollitionPoint() {
 
 Terrain* Map::getTerrain() {
     return terrain;
-}
-
-CellSpacePartition *Map::getCellSpace(){
-    return cellSpace;
 }

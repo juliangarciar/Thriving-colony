@@ -5,26 +5,26 @@
 #define total 80
 PathManager::PathManager(class Unit* actor){
     // Creates the graph
-    navGraph = Graph::Instance();
+    mapMaster = MapMaster::Instance();
     unit = actor;
 }
 PathManager::~PathManager(){
     //delete unit;
-    //delete navGraph;
+    //delete mapMaster->getGraph();
 }
 // Change this method
 i32 PathManager::getClosestNodeToPosition(Vector2<f32> pos){
     // This is not working properly for some reason
     i32 idx = (i32)(total * pos.x / spaceWidth) + 
                 ((i32)((total) * pos.y / spaceWidth) * total);
-    if (idx > navGraph->getNumNodes() - 1) 
-        idx = navGraph->getNumNodes() - 1;
+    if (idx > mapMaster->getGraph()->getNumNodes() - 1) 
+        idx = mapMaster->getGraph()->getNumNodes() - 1;
     return idx;
 }
 i32 PathManager::getClosestValidNode(Vector2<f32> pos){
     i32 idx = getClosestNodeToPosition(pos);
-    SearchDijkstra dijkstra(navGraph, idx);
-    idx = dijkstra.getTarget();
+    //SearchDijkstra dijkstra(mapMaster->getGraph(), idx);
+    //idx = dijkstra.getTarget();
     return idx;
 }
 bool PathManager::createPathTo(Vector2<f32> targetPos){
@@ -47,7 +47,7 @@ bool PathManager::createPathTo(Vector2<f32> targetPos){
     if(closestNodeToTarget == no_closest_node_found)
         return false;
 
-    SearchAStar aStar(*navGraph, closestNodeToUnit, closestNodeToTarget);
+    SearchAStar aStar(*mapMaster->getGraph(), closestNodeToUnit, closestNodeToTarget);
 
     // Complete getPathToTarget
     std::list<i32> dummy = aStar.getPathToTarget();
@@ -55,7 +55,7 @@ bool PathManager::createPathTo(Vector2<f32> targetPos){
     if(!dummy.empty()){
         //path.clear();
         while(!dummy.empty()){
-            path.push_back(navGraph->getPositionFrom(dummy.front()));
+            path.push_back(mapMaster->getGraph()->getNodeVector().at(dummy.front()).getPosition());
             dummy.pop_front();
         }
         // Complete this method

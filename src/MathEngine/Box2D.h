@@ -29,51 +29,19 @@ class Box2D
         Vector2<f32> m_vBottomLeft;
     public:
     // Constructor
-        Box2D(Vector2<f32> tl,
-                        Vector2<f32> br):m_vTopLeft(tl),
-                                        m_vBottomRight(br),
-                                        m_vCenter((tl+br)/2.0),
-                                        m_vTopRight(Vector2<f32>(br.x, tl.y)),
-                                        m_vBottomLeft(Vector2<f32>(tl.x, br.y))
-        {}
+        Box2D(Vector2<f32> tl, Vector2<f32> br);
     // Returns true if overlaps with another Box2D
-        bool isOverlappedWith( Box2D& other)
-        {
-            return !((other.Top() > this->Bottom()) ||
-                (other.Bottom() < this->Top()) ||
-                (other.Left() > this->Right()) ||
-                (other.Right() < this->Left()));
-        }
-
+        bool isOverlappedWith( Box2D& other);
     // Getters
-        Vector2<f32> TopLeft(){
-            return m_vTopLeft;
-        }
-        Vector2<f32> BottomRight(){
-            return m_vBottomRight;
-        }
-        Vector2<f32> Center(){
-            return m_vCenter;
-        }
-        Vector2<f32> TopRight(){
-            return m_vTopRight;
-        }
-        Vector2<f32> BottomLeft(){
-            return m_vBottomLeft;
-        }
-        double    Top(){
-            return m_vTopLeft.y;
-        }
-        double    Left(){
-            return m_vTopLeft.x;
-        }
-        double    Bottom(){
-            return m_vBottomRight.y;
-        }
-        double    Right(){
-            return m_vBottomRight.x;
-        }
-        
+        Vector2<f32> TopLeft();
+        Vector2<f32> BottomRight();
+        Vector2<f32> Center();
+        Vector2<f32> TopRight();
+        Vector2<f32> BottomLeft();
+        double    Top();
+        double    Left();
+        double    Bottom();
+        double    Right();
 };
   
 #endif /* BOX2D_H */

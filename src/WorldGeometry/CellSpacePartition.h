@@ -2,8 +2,7 @@
 #define CELLSPACEPARTITION_H
 #include <vector>
 #include <list>
-#include <Unit.h>
-#include <Building.h>
+#include <Entity.h>
 #include <Types.h>
 #include <MathEngine/Vector2.h>
 #include <MathEngine/Box2D.h>
@@ -11,9 +10,9 @@
 class CellSpacePartition;
 class Cell{
     private:
-        Building* inhabitingBuilding;
-        std::vector< Unit* > inhabitingUnits;
-        std::list< Cell* > nearNeighbors;
+        Entity* inhabitingBuilding;
+        std::vector< Entity* > inhabitingUnits;
+        std::vector< Cell* > nearNeighbors;
     // Cell bounding box
         Box2D BBox;
     // Cell index
@@ -29,20 +28,21 @@ class Cell{
     // Setters
         void setBlocked(bool data);
         void setMainRoad(bool data);
-        void setInhabitingBuilding(Building* building);
-        void setInhabitingUnit(Unit* unit);
+        void setInhabitingBuilding(Entity* building);
+        void setInhabitingUnit(Entity* unit);
         void setNearNeighbor(Cell* neighbor);
         void setIndex(i32 index);
         void clearBuilding();
-        void clearUnit(Unit* unit);
+        void clearUnit(Entity* unit);
+        void Clear();
     // Getters
         bool isBlocked();
         bool isMainRoad();
         bool canBuild();
         Box2D getHitBox();
-        Building* getInhabitingBuilding();
-        std::vector< Unit* > getInhabitingUnits();
-        std::list< Cell* > getNearNeighbors();
+        Entity* getInhabitingBuilding();
+        std::vector< Entity* > getInhabitingUnits();
+        std::vector< Cell* > getNearNeighbors();
         i32 getIndex();
 };
 class CellSpacePartition{
@@ -57,16 +57,10 @@ class CellSpacePartition{
         CellSpacePartition(i32 width, i32 height, i32 spaceX, i32 spaceY);
     // Destructor
         ~CellSpacePartition();
-    // Add entities to the proper cell
-        void addBuilding(Building* building);
-        void addUnit(Unit* unit);
-    // Removes a entity from a cell
-        void removeBuilding(Building* ent);
-        void removeUnit(Unit* unit)
     // Updates a entity's cell, calling this from the entity update method
-        void updateEntity(Entity* ent, Vector2<f32> oldPos);
+        void updateUnitCell(Entity* unit, Vector2<f32> oldPos);
     // Updates a cell
-        void updateCell(Entity *object);
+        void updateBuildingCell(Entity *object);
     // Clears the cells
         void clearCells();
     // Returns the correct position where the building is built

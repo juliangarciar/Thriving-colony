@@ -7,7 +7,7 @@ Cell::Cell(Vector2<f32> topLeft, Vector2<f32> botRight){
 }
 Cell::~Cell(){
     inhabitingUnits.clear();
-    nearNeighbours.clear();
+    nearNeighbors.clear();
 }
 void Cell::setBlocked(bool data){
     blocked = data;
@@ -15,15 +15,15 @@ void Cell::setBlocked(bool data){
 void Cell::setMainRoad(bool data){
     mainRoad = data;
 }
-void Cell::setInhabitingBuilding(Building* building){
+void Cell::setInhabitingBuilding(Entity* building){
     inhabitingBuilding = building;
     blocked = false;
 }
-void Cell::setInhabitingUnit(Unit* unit){
+void Cell::setInhabitingUnit(Entity* unit){
     inhabitingUnits.push_back(unit);
 }
 void Cell::setNearNeighbor(Cell* neighbor){
-    nearNeighbours.push_back(neighbor);
+    nearNeighbors.push_back(neighbor);
 }
 void Cell::setIndex(i32 data){
     index = data;
@@ -39,6 +39,12 @@ void Cell::clearUnit(Entity* unit){
         }
     }
 }
+void Cell::Clear(){
+    inhabitingBuilding = 0;
+    inhabitingUnits.clear();
+    //blocked = true;
+    mainRoad = false;
+}
 bool Cell::isBlocked(){
     return blocked;
 }
@@ -46,7 +52,7 @@ bool Cell::isMainRoad(){
     return mainRoad;
 }
 bool Cell::canBuild(){
-    if(!blocked && !mainRoad && inhabitingBuilding.empty())
+    if(!blocked && !mainRoad && inhabitingBuilding == 0)
         return false;
     else
         return true;
@@ -54,13 +60,13 @@ bool Cell::canBuild(){
 Box2D Cell::getHitBox(){
     return BBox;
 }
-Building* Cell::getInhabitingBuilding(){
+Entity* Cell::getInhabitingBuilding(){
     return inhabitingBuilding;
 }
-std::vector< Unit* > Cell::getInhabitingUnits(){
+std::vector< Entity* > Cell::getInhabitingUnits(){
     return inhabitingUnits;
 }
-std::list< Cell* > Cell::getNearNeighbors(){
+std::vector< Cell* > Cell::getNearNeighbors(){
     return nearNeighbors;
 }
 i32 Cell::getIndex(){
@@ -166,48 +172,17 @@ CellSpacePartition::~CellSpacePartition(){
     this->mNeighbors.clear();
     this->mCells.clear();
 }
-void CellSpacePartition::addEntity(Entity* ent)
-{ 
-    Vector2<f32> dummy = ent->getPosition()->toVector2();
-    Cell* idx = positionToCell(dummy);
-    if(idx != 0)
-        idx->push_back(ent);
-}
-// Edit
-// Maybe this need to be deleted, not doing anything good
-void CellSpacePartition::removeEntity(Entity* ent, Vector2<f32> position){
-    i32 idx = positionToCell(position);
-    if(idx < mCells.size() && idx != -1)
-    {   
-        std::list< Entity* >::iterator it;
-        for (it = mCells.at(idx).entities.begin(); it != mCells.at(idx).entities.end(); it++){
-            std::cout << "Petas \n";
-            if(*it == ent){
-                mCells.at(idx).entities.erase(it);
-                break;
-            }
-        }
-    }
-}
 
-void CellSpacePartition::updateEntity(Entity* ent, Vector2<f32> OldPos)
+void CellSpacePartition::updateUnitCell(Entity* unit, Vector2<f32> oldPos)
 {
-    //if the index for the old pos and the new pos are not equal then
-    //the T has moved to another cell.
-    i32 OldIdx = positionToCell(OldPos);
-    i32 NewIdx = positionToCell(ent->getPosition()->toVector2());
+    Vector2<f32> newPos = unit->getPosition()->toVector2();
+    if (sameCell(oldPos, newPos)) return;
 
-    if (NewIdx == OldIdx) return;
-
-    //the T has moved into another cell so delete from current cell
-    //and add to new one
-    // Edit this shit
-    removeEntity(ent, OldPos);
-    //mCells[OldIdx].entities.remove(ent);
-    mCells[NewIdx].entities.push_back(ent);
+    positionToCell(oldPos)->clearUnit(unit);
+    positionToCell(newPos)->setInhabitingUnit(unit);
 }
 
-void CellSpacePartition::updateCell(Entity *object){
+void CellSpacePartition::updateBuildingCell(Entity *object){
     if(object != NULL){
         Vector2<f32> storage = object -> getPosition() -> toVector2();
         if(object -> getCells() % 2 == 0){
@@ -222,20 +197,24 @@ void CellSpacePartition::updateCell(Entity *object){
         }
         for(i32 i = 0; i < object -> getCells(); i++){
             for(i32 j = 0; j < object->getCells(); j++){
-                mCells.at(positionToCell(Vector2<f32>(storage.x + cellX * i, storage.y + cellY * j))).entities.push_back(object);
+                positionToCell(Vector2<f32>(storage.x + cellX * i, storage.y + cellY * j))->setInhabitingBuilding(object);
                 std::cout << "Colision creada en: " << i << "," << j << "\n";
             }
         }
     }
 }
-
+void CellSpacePartition::clearCells(){
+    for(i32 i = 0; i < mCells.size(); i++){
+        mCells.at(i)->Clear();
+    }
+}
 Vector3<f32> CellSpacePartition::correctBuildingPosition(Vector3<f32> targetPos, Entity *object, bool &collision){
     Vector3<f32> correctOne = Vector3<f32>();
     if(object != NULL){
-        Cell* dummy = mCells.at(positionToCell(targetPos.toVector2()));
+        Cell* dummy = positionToCell(targetPos.toVector2());
         Vector2<f32> storage;
         if(object -> getCells() % 2 == 0){
-            storage = dummy->getHitBox.TopLeft();
+            storage = dummy->getHitBox().TopLeft();
             correctOne.x = storage.x;
             correctOne.z = storage.y;
             storage.x -= cellX / 2;
@@ -244,7 +223,7 @@ Vector3<f32> CellSpacePartition::correctBuildingPosition(Vector3<f32> targetPos,
             storage.y -= (object -> getCells() / 2) * (cellY / 2);
         }
         else{
-            storage = dummy->getHitBox.Center();
+            storage = dummy->getHitBox().Center();
             correctOne.x = storage.x;
             correctOne.z = storage.y;
             storage.x -= (object -> getCells() - 1) * (cellX / 2);
@@ -252,7 +231,7 @@ Vector3<f32> CellSpacePartition::correctBuildingPosition(Vector3<f32> targetPos,
         }
         for(i32 i = 0; i < object -> getCells() && collision == false; i++){
             for(i32 j = 0; j < object->getCells() && collision == false; j++){
-                if(positionToCell(Vector2<f32>(storage.x + cellX * i, storage.y + cellY * j)).getInhabitingBuilding == NULL){
+                if(positionToCell(Vector2<f32>(storage.x + cellX * i, storage.y + cellY * j))->getInhabitingBuilding() == NULL){
                     collision = true;
                     std::cout << "Colision \n";
                 }
@@ -264,20 +243,23 @@ Vector3<f32> CellSpacePartition::correctBuildingPosition(Vector3<f32> targetPos,
 bool CellSpacePartition::checkCollisions(Vector2<f32> origin, Vector2<f32> targetPosition){
 
     std::vector< Entity* > totalNeighbors;
-    i32 idx = positionToCell(targetPosition);
-    if(idx != -1 && mCells.at(idx).entities.empty()){
+    Cell* idx = positionToCell(targetPosition);
+    std::vector< Cell* > neighbors = idx->getNearNeighbors();
+    if(idx != NULL && idx->isBlocked()){
         return false;
     }
     else{
-        totalNeighbors = calculateNeighbors(origin);
-        if(!totalNeighbors.empty()){
-            std::cout << "Existen: " << totalNeighbors.size() << " entidades cercanas.\n";
+        for(i32 i = 0; i < neighbors.size(); i++){
+            if(neighbors.at(i)->getInhabitingBuilding() != 0){
+                //totalNeighbors.push_back(neighbors.at(i).getInhabitingBuilding);
+                std::cout << "Existen entidades cercanas.\n";
+            }
         }
         return true;
     }
 }
 bool CellSpacePartition::isBlocked(Vector2<f32> targetPos){
-    Cell* dummy = mCells.at(positionToCell(targetPos));
+    Cell* dummy = positionToCell(targetPos);
     if(dummy != NULL)
         return dummy->isBlocked();
     else
@@ -292,8 +274,8 @@ bool CellSpacePartition::sameCell(Vector2<f32> oldPos, Vector2<f32> newPos){
         return false;
 }
 Cell* CellSpacePartition::positionToCell(Vector2<f32> pos){
-    int dummy = (i32)(TOTAL * pos.x / MAX_MAP) + 
-                ((i32)((TOTAL) * pos.y / MAX_MAP) * TOTAL);
+    int dummy = (i32)(nCellsX * pos.x / mapX) + 
+                ((i32)((nCellsY) * pos.y / mapY) * nCellsY);
     if(dummy < 0 || dummy > mCells.size()){
         return NULL;
     }

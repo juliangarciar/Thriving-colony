@@ -1,17 +1,4 @@
 #include "WayPoint.h"
-#define MAX_MAP 10240
-#define TOTAL 80
-// NavNode methods
-NavNode::~NavNode(){
-
-}
-i32 NavNode::getIndex(){
-    return this->m_index;
-}
-
-void NavNode::setIndex(i32 newIndex){
-    this->m_index = newIndex;
-}
 
 LWayPoint::LWayPoint(Vector2<f32> position){
     m_vPosition = position;

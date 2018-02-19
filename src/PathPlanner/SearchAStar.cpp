@@ -1,5 +1,5 @@
 #include "SearchAStar.h"
-#include "../WorldGeometry/CellSpacePartition.h"
+#include <WorldGeometry/MapMaster.h>
 #include "PriorityQueue.h"
 
 SearchAStar::~SearchAStar(){
@@ -41,7 +41,7 @@ void SearchAStar::Search(){
             stack -> setFrom((*it).getFrom());
             stack -> setTo((*it).getTo());
             stack -> setCost((*it).getCost());
-            CellSpacePartition::Instance() -> checkCollisions(m_Graph.getNode(NextClosestNode).getPosition(), m_Graph.getNode(stack -> getTo()).getPosition());
+            MapMaster::Instance()->getGeometry()->checkCollisions(m_Graph.getNode(NextClosestNode).getPosition(), m_Graph.getNode(stack -> getTo()).getPosition());
 
                 float HCost = Calculate(m_iTarget, stack -> getTo());
                 float GCost = m_GCosts[NextClosestNode] + stack -> getCost();
