@@ -37,8 +37,13 @@ void Human::Update() {
 }
 
 void Human::CleanUp() {
+// Add a call to clean the cells the buildings inhabit
+    std::cout << "Deleting human building \n";
     delete buildings;
+    std::cout << "Human buildings deleted \n";
+    std::cout << "Deleting human troops \n";
     delete units;
+    std::cout << "Human troops deleted \n";
 }
 
 bool Human::getUnderAttack() {

@@ -7,9 +7,6 @@ SearchAStar::~SearchAStar(){
     m_searchFrontier.clear();
 }
 f32 SearchAStar::Calculate(i32 a, i32 b){
-    std::cout << "Posicion A: " << m_Graph.getNode(a).getPosition().x << "," << m_Graph.getNode(a).getPosition().y << "\n";
-    std::cout << "Posicion B: " << m_Graph.getNode(b).getPosition().x << "," << m_Graph.getNode(b).getPosition().y << "\n";
-
     f32 dX = m_Graph.getNode(a).getPosition().x - m_Graph.getNode(b).getPosition().x;
     f32 dY = m_Graph.getNode(a).getPosition().y - m_Graph.getNode(b).getPosition().y;
     f32 distance = std::sqrt(std::pow(dX, 2) + std::pow(dY, 2));
@@ -36,7 +33,7 @@ void SearchAStar::Search(){
         std::list<Edge> dummy = m_Graph.getEdgeListVector(NextClosestNode);
         std::list<Edge>::iterator it;
 
-        std::cout << "Tengo que ir al nodo " << m_iTarget << "\n";
+        //std::cout << "Tengo que ir al nodo " << m_iTarget << "\n";
 
         for(it = dummy.begin(); it != dummy.end(); it++){
             //Edge *stack = new Edge((*it).getFrom(), (*it).getTo(), (*it).getCost());
@@ -44,11 +41,12 @@ void SearchAStar::Search(){
             stack -> setFrom((*it).getFrom());
             stack -> setTo((*it).getTo());
             stack -> setCost((*it).getCost());
-            //if(!CellSpacePartition::Instance() -> checkCollisions(m_Graph.getNode(NextClosestNode).getPosition(), m_Graph.getNode(stack -> -> getTo()).getPosition())){
+            CellSpacePartition::Instance() -> checkCollisions(m_Graph.getNode(NextClosestNode).getPosition(), m_Graph.getNode(stack -> getTo()).getPosition());
+
                 float HCost = Calculate(m_iTarget, stack -> getTo());
                 float GCost = m_GCosts[NextClosestNode] + stack -> getCost();
-                 std::cout << "Distancia H: " << HCost << "\n";
-                 std::cout << "Distancia G: " << GCost << "\n";
+                //std::cout << "Distancia H: " << HCost << "\n";
+                //std::cout << "Distancia G: " << GCost << "\n";
                 if(m_searchFrontier[stack -> getTo()] == NULL){
                     m_FCosts[stack -> getTo()] = GCost + HCost;
                     m_GCosts[stack -> getTo()] = GCost;
@@ -63,7 +61,6 @@ void SearchAStar::Search(){
 
                     m_searchFrontier[stack -> getTo()] = stack;
                 }
-            //}
         }
     }
 }

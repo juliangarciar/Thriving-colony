@@ -19,6 +19,7 @@ IA::~IA() {
     delete nodeRootIA;
     delete buildings;
     delete units;
+    std::cout << "IA units deleted \n";
     choices -> clear();
     delete choices;
 }
@@ -56,6 +57,7 @@ void IA::Update() {
 void IA::CleanUp() {
     delete tree;
     delete nodeRootIA;
+    // Add a method to clean the cells the buildings inahbit
     delete buildings;
     delete units;
     choices -> clear();

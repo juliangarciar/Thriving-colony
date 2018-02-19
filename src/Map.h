@@ -100,6 +100,7 @@ class Map {
 
         //Added by Julian
         CellSpacePartition *cellSpace;
+        Graph *navGraph;
 };
 
 #endif

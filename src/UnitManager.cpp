@@ -175,10 +175,11 @@ void UnitManager::deploySelectedTroop(Vector3<f32> p) {
         temp -> switchState(Enumeration::UnitState::AttackMove); // ToDo: why attack move?
         //Vector3<f32> dummy = Vector3<f32>(0, 0, 0);
         if (team == Enumeration::Team::IA){
-
-            temp -> setTroopPosition(IA::Instance()->getHallPosition());
+            Vector3<f32> correctPosition = Vector3<f32>(-384.f, 0, 0);
+            temp -> setTroopPosition(IA::Instance()->getHallPosition() + correctPosition);
         } else {
-            temp -> setTroopPosition(Human::Instance()->getHallPosition());
+            Vector3<f32> correctPosition = Vector3<f32>(-384.f, 0, 0);
+            temp -> setTroopPosition(Human::Instance()->getHallPosition() + correctPosition);
         }
         temp -> setPathToTarget(p);
         //temp -> setPosition(p);

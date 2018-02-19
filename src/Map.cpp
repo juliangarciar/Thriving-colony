@@ -29,7 +29,7 @@ void Map::Init() {
     camera = new CameraController();
 
     // Added by Julian
-    Graph::Instance();
+    navGraph = Graph::Instance();
     cellSpace = CellSpacePartition::Instance();
     //cellSpace = new CellSpacePartition(10240, 10240, 128, 128, 4);
 
@@ -65,6 +65,8 @@ void Map::CleanUp() {
     delete light;
     delete terrain;
     delete camera;
+    delete navGraph;
+    delete cellSpace;
 }
 
 Vector3<f32> Map::getHumanStartPosition(){

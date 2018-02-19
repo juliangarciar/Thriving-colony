@@ -37,7 +37,10 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
 }
 
 Unit::~Unit() {
+    std::cout << "Deleting troop \n";
     delete pathManager;
+    delete layer;
+    std::cout << "Done \n";
 }
 
 void Unit::Init() {

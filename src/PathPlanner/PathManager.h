@@ -1,12 +1,11 @@
 #ifndef PATHMANAGER_H
 #define PATHMANAGER_H
 
-#include "Graph.h"
+#include "MapMaster.h"
 #include <Unit.h>
 #include <vector>
 #include <queue>
 #include <Types.h>
-
 class PathManager{
     private:
         enum {no_closest_node_found = -1};
@@ -17,7 +16,6 @@ class PathManager{
         Graph* navGraph;
     // Position the unit wants to plan a path
         Vector2<f32> vDestination;
-    
     public:
     // Constructor
         PathManager(Unit* actor);
@@ -25,6 +23,7 @@ class PathManager{
         virtual ~PathManager();
     // Closest node to the unit maybe this is not needed
         i32 getClosestNodeToPosition(Vector2<f32> pos);
+        i32 getClosestValidNode(Vector2<f32> pos);
     // Finds the least cost path between unit's position and the target
     // returns true and a list full of waypoints if successful.
     // Returns false if else.
