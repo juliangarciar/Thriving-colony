@@ -17,7 +17,6 @@
 
 #include <Enumeration.h>
 #include <Types.h>
-
 /**
  * @class Game
  * @brief Crea un objeto singleton tipo Game
@@ -124,6 +123,7 @@ class Game {
         EventSystem *events;
         
         SoundSystem *soundSystem;
+        
 };
 
 #endif

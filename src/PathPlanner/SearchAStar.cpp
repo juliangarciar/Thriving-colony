@@ -30,7 +30,10 @@ void SearchAStar::Search(){
 
         // Fix this iterator
         // iterator of edges, given a node index
-        std::list<Edge> dummy = m_Graph.getEdgeListVector(NextClosestNode);
+
+        // Change this
+        //std::list<Edge> dummy = m_Graph.getEdgeListVector(NextClosestNode);
+        std::list<Edge> dummy = MapMaster::Instance()->getValidatedEdges(NextClosestNode);
         std::list<Edge>::iterator it;
 
         //std::cout << "Tengo que ir al nodo " << m_iTarget << "\n";
@@ -41,8 +44,9 @@ void SearchAStar::Search(){
             stack -> setFrom((*it).getFrom());
             stack -> setTo((*it).getTo());
             stack -> setCost((*it).getCost());
-            MapMaster::Instance()->getGeometry()->checkCollisions(m_Graph.getNode(NextClosestNode).getPosition(), m_Graph.getNode(stack -> getTo()).getPosition());
-
+            // Change this
+            //MapMaster::Instance()->getGeometry()->checkCollisions(m_Graph.getNode(NextClosestNode).getPosition(), m_Graph.getNode(stack -> getTo()).getPosition());
+            //MapMaster::Instance()->checkCollisions(NextClosestNode)
                 float HCost = Calculate(m_iTarget, stack -> getTo());
                 float GCost = m_GCosts[NextClosestNode] + stack -> getCost();
                 //std::cout << "Distancia H: " << HCost << "\n";

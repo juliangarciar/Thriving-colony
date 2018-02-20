@@ -28,8 +28,6 @@ void Map::Init() {
     //Init camera controller
     camera = new CameraController();
 
-    // Added by Julian
-    mapMaster = MapMaster::Instance();
     //cellSpace = new CellSpacePartition(10240, 10240, 128, 128, 4);
 
     //ToDo: extraer de JSON
@@ -40,6 +38,8 @@ void Map::Init() {
     iaStartPos.x = Enumeration::IACityHall::ia_x;
     iaStartPos.z = Enumeration::IACityHall::ia_z; 
     iaStartPos.y = terrain -> getY(iaStartPos.x, iaStartPos.z);
+    mapMaster = MapMaster::Instance();
+
 }
 
 void Map::Input() {
@@ -64,7 +64,6 @@ void Map::CleanUp() {
     delete light;
     delete terrain;
     delete camera;
-    delete mapMaster;
 }
 
 Vector3<f32> Map::getHumanStartPosition(){

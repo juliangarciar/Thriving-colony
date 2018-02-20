@@ -11,9 +11,14 @@ MapMaster* MapMaster::Instance(){
     return pinstance;
 }
 MapMaster::MapMaster(){
-    navGraph = new Graph(MAPX, MAPY, SPACEX, SPACEY);
     geometryMap = new CellSpacePartition(MAPX, MAPY, SPACEX, SPACEY);
-    // Extra functions -> graph + geometry fusion
+    navGraph = new Graph(MAPX, MAPY, SPACEX, SPACEY);
+    //std::vector< Cell* > cells = geometryMap->get
+    for(i32 i = 0; i < navGraph->getNumNodes(); i++){
+        Cell* tmp = geometryMap->positionToCell(navGraph->getNode(i).getPosition());
+        tmp->setBlocked(false);
+        validationMap[i] = tmp;
+    }
 }
 MapMaster::~MapMaster(){
     delete navGraph;
@@ -25,3 +30,32 @@ Graph* MapMaster::getGraph(){
 CellSpacePartition* MapMaster::getGeometry(){
     return geometryMap;
 }
+std::list< Edge > MapMaster::getValidatedEdges(i32 index){
+    std::list< Edge > tmp = navGraph->getEdgeListVector(index);
+    std::list< Edge > dummy;
+    // Cambiar estas cositas
+    std::list< Edge >::iterator it;
+    for(it = tmp.begin(); it != tmp.end(); it++){
+        if(!geometryMap -> positionToCell(navGraph->getNode(it->getTo()).getPosition())->isBlocked()){
+            dummy.push_back(*it);
+        }
+    }
+    return dummy;
+}
+//bool MasterMap::checkCollisions(Vector2<f32> origin, Vector2<f32> targetPosition){
+//    std::vector< Entity* > totalNeighbors;
+//    Cell* idx = positionToCell(origin);
+//    std::vector< Cell* > neighbors = idx->getNearNeighbors();
+//    if(idx != NULL && idx->isBlocked()){
+//        return false;
+//    }
+//    else{
+//        for(i32 i = 0; i < neighbors.size(); i++){
+//            if(neighbors.at(i)->getInhabitingBuilding() != 0){
+//                //totalNeighbors.push_back(neighbors.at(i).getInhabitingBuilding);
+//                std::cout << "Existen entidades cercanas.\n";
+//            }
+//        }
+//        return true;
+//    }
+//}

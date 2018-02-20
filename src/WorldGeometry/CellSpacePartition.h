@@ -66,7 +66,7 @@ class CellSpacePartition{
     // Returns the correct position where the building is built
         Vector3<f32> correctBuildingPosition(Vector3<f32> targetPos, Entity *object, bool &collision);
     // Check collisions between an agent and a position
-        bool checkCollisions(Vector2<f32> origin, Vector2<f32> targetPosition);
+        //bool checkCollisions(Vector2<f32> origin, Vector2<f32> targetPosition);
     // Checks if the cell is blocked
         bool isBlocked(Vector2<f32> targetPos);
         bool sameCell(Vector2<f32> oldPos, Vector2<f32> newPos);

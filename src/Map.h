@@ -6,9 +6,8 @@
 #include <GraphicEngine/Terrain.h>
 #include <GraphicEngine/Light.h>
 
-#include <WorldGeometry/MapMaster.h>
-
 #include <Types.h>
+#include <WorldGeometry/MapMaster.h>
 
 /**
  * @class Map
@@ -94,8 +93,6 @@ class Map {
 
         //For raycast
         Vector3<f32> collisionPoint;
-
-        //Added by Julian
         MapMaster* mapMaster;
 };
 

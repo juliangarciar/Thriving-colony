@@ -17,7 +17,7 @@ void Cell::setMainRoad(bool data){
 }
 void Cell::setInhabitingBuilding(Entity* building){
     inhabitingBuilding = building;
-    blocked = false;
+    blocked = true;
 }
 void Cell::setInhabitingUnit(Entity* unit){
     inhabitingUnits.push_back(unit);
@@ -52,10 +52,10 @@ bool Cell::isMainRoad(){
     return mainRoad;
 }
 bool Cell::canBuild(){
-    if(!blocked && !mainRoad && inhabitingBuilding == 0)
-        return false;
-    else
+    if(!blocked && !mainRoad)
         return true;
+    else
+        return false;
 }
 Box2D Cell::getHitBox(){
     return BBox;
@@ -82,6 +82,7 @@ CellSpacePartition::CellSpacePartition(i32 width, i32 height, i32 spaceX, i32 sp
     nCellsX = mapX / cellX;
     nCellsY = mapY / cellY;
     //create the cells
+    std::cout << "Inicializando celulas \n";
     for (i32 y = 0; y < nCellsY; y++)
     {
         for (i32 x = 0; x < nCellsX; x++)
@@ -231,7 +232,7 @@ Vector3<f32> CellSpacePartition::correctBuildingPosition(Vector3<f32> targetPos,
         }
         for(i32 i = 0; i < object -> getCells() && collision == false; i++){
             for(i32 j = 0; j < object->getCells() && collision == false; j++){
-                if(positionToCell(Vector2<f32>(storage.x + cellX * i, storage.y + cellY * j))->getInhabitingBuilding() == NULL){
+                if(!positionToCell(Vector2<f32>(storage.x + cellX * i, storage.y + cellY * j))->canBuild()){
                     collision = true;
                     std::cout << "Colision \n";
                 }
@@ -240,24 +241,24 @@ Vector3<f32> CellSpacePartition::correctBuildingPosition(Vector3<f32> targetPos,
     }
     return correctOne;
 }
-bool CellSpacePartition::checkCollisions(Vector2<f32> origin, Vector2<f32> targetPosition){
-
-    std::vector< Entity* > totalNeighbors;
-    Cell* idx = positionToCell(targetPosition);
-    std::vector< Cell* > neighbors = idx->getNearNeighbors();
-    if(idx != NULL && idx->isBlocked()){
-        return false;
-    }
-    else{
-        for(i32 i = 0; i < neighbors.size(); i++){
-            if(neighbors.at(i)->getInhabitingBuilding() != 0){
-                //totalNeighbors.push_back(neighbors.at(i).getInhabitingBuilding);
-                std::cout << "Existen entidades cercanas.\n";
-            }
-        }
-        return true;
-    }
-}
+//bool CellSpacePartition::checkCollisions(Vector2<f32> origin, Vector2<f32> targetPosition){
+//
+//    std::vector< Entity* > totalNeighbors;
+//    Cell* idx = positionToCell(targetPosition);
+//    std::vector< Cell* > neighbors = idx->getNearNeighbors();
+//    if(idx != NULL && idx->isBlocked()){
+//        return false;
+//    }
+//    else{
+//        for(i32 i = 0; i < neighbors.size(); i++){
+//            if(neighbors.at(i)->getInhabitingBuilding() != 0){
+//                //totalNeighbors.push_back(neighbors.at(i).getInhabitingBuilding);
+//                std::cout << "Existen entidades cercanas.\n";
+//            }
+//        }
+//        return true;
+//    }
+//}
 bool CellSpacePartition::isBlocked(Vector2<f32> targetPos){
     Cell* dummy = positionToCell(targetPos);
     if(dummy != NULL)

@@ -1,26 +1,30 @@
 #include "Graph.h"
 
 Graph::Graph(i32 width, i32 height, i32 spaceX, i32 spaceY){
+    //mapGeometry = geometry;
     nextNode = 0;
     nodeX = spaceX;
     nodeY = spaceY;
     mapX = width;
     mapY = height;
-    nWaypointsX = mapX / spaceX;
-    nWaypointsY = mapY / spaceY;
-    m_Nodes = std::vector< LWayPoint >(nWaypointsX * nWaypointsY);
+    nWaypointsX = mapX / nodeX;
+    nWaypointsY = mapY / nodeY;
+    //m_Nodes = std::vector< WayPoint >(nWaypointsX * nWaypointsY);
     m_Edges = std::vector< std::list < Edge > >(nWaypointsX * nWaypointsY);
     //loadData();
+    std::cout << "Inicializando waypoints \n";
     for(i32 z = 0; z < nWaypointsX * nWaypointsY; z++){
         std::list< Edge > tmp;
         m_Edges.at(z) = tmp;
     }
     for(i32 y = 0; y < nWaypointsY; y++){
         for(i32 x = 0; x < nWaypointsX; x++){
-            f32 dX = x * mapX + mapX / 2;
-            f32 dY = y * mapY + mapY / 2;
-            LWayPoint dummy = LWayPoint(Vector2<f32>(dX, dY));
+            std::cout << "Waypoint n: " << (y * nWaypointsY + x) << "\n";
+            f32 dX = x * nodeX + nodeX / 2;
+            f32 dY = y * nodeY + nodeY / 2;
+            WayPoint dummy = WayPoint(Vector2<f32>(dX, dY));
             i32 reservedIndex = addNode(dummy);
+            dummy.setIndex(reservedIndex);
             if(y == 0){
                 if(x == 0){
                     Edge a = Edge();
@@ -167,8 +171,8 @@ Graph::Graph(i32 width, i32 height, i32 spaceX, i32 spaceY){
             }
         }
     }
-    initCost();
     std::cout << "Nwaypoints = " << m_Nodes.size() << std::endl;
+    initCost();
 }
 void Graph::initCost(){
     std::list< Edge >::iterator it;
@@ -212,7 +216,7 @@ void Graph::removeEdge(i32 from, i32 to){
     m_Edges.at(to).erase(it);
 }
 // Maybe is check if the index is present
-LWayPoint& Graph::getNode(i32 idx){
+WayPoint& Graph::getNode(i32 idx){
     return m_Nodes.at(idx);
 }
 Edge& Graph::getEdge(i32 from, i32 to){
@@ -227,8 +231,9 @@ i32 Graph::getNextIndex(){
     return nextNode;
 }
 // Maybe this will explode, check later
-i32 Graph::addNode(LWayPoint node){
+i32 Graph::addNode(WayPoint node){
     i32 actual = nextNode;
+    std::cout << actual << "\n";
     node.setIndex(actual);
     m_Nodes.push_back(node);
     nextNode++;
@@ -264,182 +269,13 @@ void Graph::Clear(){
     m_Edges.clear();
     nextNode = 0;
 }
-std::vector< LWayPoint > Graph::getNodeVector(){
+std::vector< WayPoint > Graph::getNodeVector(){
     return m_Nodes;
 }
 std::list< Edge > Graph::getEdgeListVector(i32 index){
     std::list< Edge > dummy;
-    //std::list< Edge >::iterator it;
-    //CellSpacePartition *cells = CellSpacePartition::Instance();
-    //for(it = m_Edges.at(index).begin(); it != m_Edges.at(index).end(); it++){
-    //    if(!cells -> isBlocked(m_Nodes.at(it -> getTo()).getPosition())){
-    //        dummy.push_back(*it);
-    //    }
-    //}
+    if(index > -1 && index < getNumNodes())
+        dummy = m_Edges.at(index);
+
     return dummy;
 }
-std::list< Edge > Graph::getEdgeList(i32 index){
-    std::list< Edge > tmp;
-    if(index > -1 && index < getNumNodes()){
-        tmp = m_Edges.at(index);
-    }
-    return tmp;
-}
-//void loadData(){
-//    for(i32 z = 0; z < nWaypointsX * nWaypointsY; z++){
-//        std::list< Edge > tmp;
-//        m_Edges.at(z) = tmp;
-//    }
-//    for(i32 y = 0; y < nWaypointsY; y++){
-//        for(i32 x = 0; x < nWaypointsX; x++){
-//            f32 dX = x * mapX + mapX / 2;
-//            f32 dY = y * mapY + mapY / 2;
-//            LWayPoint dummy = LWayPoint(Vector2<f32>(dX, dY));
-//            i32 reservedIndex = addNode(dummy);
-//            if(y == 0){
-//                if(x == 0){
-//                    Edge a = Edge();
-//                    Edge b = Edge();
-//                    Edge c = Edge();
-//                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() + 1);
-//                    b.setFrom(dummy.getIndex()), b.setTo(nWaypointsX);
-//                    c.setFrom(dummy.getIndex()), c.setTo(nWaypointsX + 1);
-//                    addEdge(a);
-//                    addEdge(b);
-//                    addEdge(c);
-//                }
-//                else if(x == nWaypointsX - 1){
-//                    Edge a = Edge();
-//                    Edge b = Edge();
-//                    Edge c = Edge();
-//                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() - 1);
-//                    b.setFrom(dummy.getIndex()), b.setTo(2 * dummy.getIndex() - 1);
-//                    c.setFrom(dummy.getIndex()), c.setTo(2 * dummy.getIndex());
-//                    addEdge(a);
-//                    addEdge(b);
-//                    addEdge(c);
-//                }
-//                else{
-//                    Edge a = Edge();
-//                    Edge b = Edge();
-//                    Edge c = Edge();
-//                    Edge d = Edge();
-//                    Edge e = Edge();
-//                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() - 1);
-//                    b.setFrom(dummy.getIndex()), b.setTo(dummy.getIndex() + 1);
-//                    c.setFrom(dummy.getIndex()), c.setTo(2 * dummy.getIndex() - 1);
-//                    d.setFrom(dummy.getIndex()), d.setTo(2 * dummy.getIndex());
-//                    e.setFrom(dummy.getIndex()), e.setTo(2 * dummy.getIndex() + 1);
-//                    addEdge(a);
-//                    addEdge(b);
-//                    addEdge(c);
-//                    addEdge(d);
-//                    addEdge(e);
-//                }
-//            }
-//            else if(y == nWaypointsY - 1){
-//                if(x == 0){
-//                    Edge a = Edge();
-//                    Edge b = Edge();
-//                    Edge c = Edge();
-//                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() + 1);
-//                    b.setFrom(dummy.getIndex()), b.setTo(dummy.getIndex() - nWaypointsX);
-//                    c.setFrom(dummy.getIndex()), c.setTo(dummy.getIndex() - nWaypointsX + 1);
-//                    addEdge(a);
-//                    addEdge(b);
-//                    addEdge(c);
-//                }
-//                else if(x == nWaypointsX - 1){
-//                    Edge a = Edge();
-//                    Edge b = Edge();
-//                    Edge c = Edge();
-//                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() - 1);
-//                    b.setFrom(dummy.getIndex()), b.setTo(dummy.getIndex() - nWaypointsX);
-//                    c.setFrom(dummy.getIndex()), c.setTo(dummy.getIndex() - nWaypointsX - 1);
-//                    addEdge(a);
-//                    addEdge(b);
-//                    addEdge(c);
-//                }
-//                else{
-//                    Edge a = Edge();
-//                    Edge b = Edge();
-//                    Edge c = Edge();
-//                    Edge d = Edge();
-//                    Edge e = Edge();
-//                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() - 1);
-//                    b.setFrom(dummy.getIndex()), b.setTo(dummy.getIndex() + 1);
-//                    c.setFrom(dummy.getIndex()), c.setTo(dummy.getIndex() - nWaypointsX - 1);
-//                    d.setFrom(dummy.getIndex()), d.setTo(dummy.getIndex() - nWaypointsX);
-//                    e.setFrom(dummy.getIndex()), e.setTo(dummy.getIndex() - nWaypointsX + 1);
-//                    addEdge(a);
-//                    addEdge(b);
-//                    addEdge(c);
-//                    addEdge(d);
-//                    addEdge(e);
-//                }
-//            }
-//            else{
-//                if(x == 0){
-//                    Edge a = Edge();
-//                    Edge b = Edge();
-//                    Edge c = Edge();
-//                    Edge d = Edge();
-//                    Edge e = Edge();
-//                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() - nWaypointsX);
-//                    b.setFrom(dummy.getIndex()), b.setTo(dummy.getIndex() - nWaypointsX + 1);
-//                    c.setFrom(dummy.getIndex()), c.setTo(dummy.getIndex() + 1);
-//                    d.setFrom(dummy.getIndex()), d.setTo(dummy.getIndex() + nWaypointsX);
-//                    e.setFrom(dummy.getIndex()), e.setTo(dummy.getIndex() + nWaypointsX + 1);
-//                    addEdge(a);
-//                    addEdge(b);
-//                    addEdge(c);
-//                    addEdge(d);
-//                    addEdge(e);
-//                }
-//                else if(x == nWaypointsX - 1){
-//                    Edge a = Edge();
-//                    Edge b = Edge();
-//                    Edge c = Edge();
-//                    Edge d = Edge();
-//                    Edge e = Edge();
-//                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() - nWaypointsX - 1);
-//                    b.setFrom(dummy.getIndex()), b.setTo(dummy.getIndex() - nWaypointsX);
-//                    c.setFrom(dummy.getIndex()), c.setTo(dummy.getIndex() - 1);
-//                    d.setFrom(dummy.getIndex()), d.setTo(dummy.getIndex() + nWaypointsX - 1);
-//                    e.setFrom(dummy.getIndex()), e.setTo(dummy.getIndex() + nWaypointsX);
-//                    addEdge(a);
-//                    addEdge(b);
-//                    addEdge(c);
-//                    addEdge(d);
-//                    addEdge(e);
-//                }
-//                else{
-//                    Edge a = Edge();
-//                    Edge b = Edge();
-//                    Edge c = Edge();
-//                    Edge d = Edge();
-//                    Edge e = Edge();
-//                    Edge f = Edge();
-//                    Edge g = Edge();
-//                    Edge h = Edge();
-//                    a.setFrom(dummy.getIndex()), a.setTo(dummy.getIndex() - nWaypointsX - 1);
-//                    b.setFrom(dummy.getIndex()), b.setTo(dummy.getIndex() - nWaypointsX);
-//                    c.setFrom(dummy.getIndex()), c.setTo(dummy.getIndex() - nWaypointsX + 1);
-//                    d.setFrom(dummy.getIndex()), d.setTo(dummy.getIndex() - 1);
-//                    e.setFrom(dummy.getIndex()), e.setTo(dummy.getIndex() + 1);
-//                    f.setFrom(dummy.getIndex()), f.setTo(dummy.getIndex() + nWaypointsX - 1);
-//                    g.setFrom(dummy.getIndex()), g.setTo(dummy.getIndex() + nWaypointsX);
-//                    h.setFrom(dummy.getIndex()), h.setTo(dummy.getIndex() + nWaypointsX + 1);
-//                    addEdge(a);
-//                    addEdge(b);
-//                    addEdge(c);
-//                    addEdge(d);
-//                    addEdge(e);
-//                    addEdge(f);
-//                    addEdge(g);
-//                    addEdge(h);
-//                }
-//            }
-//        }
-//    }
-//}

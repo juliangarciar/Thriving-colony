@@ -28,6 +28,7 @@ class Box2D
     // Bottom-left point
         Vector2<f32> m_vBottomLeft;
     public:
+        Box2D();
     // Constructor
         Box2D(Vector2<f32> tl, Vector2<f32> br);
     // Returns true if overlaps with another Box2D

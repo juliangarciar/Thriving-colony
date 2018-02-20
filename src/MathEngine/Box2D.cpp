@@ -1,4 +1,7 @@
 #include "Box2D.h"
+Box2D::Box2D(){
+    
+}
 Box2D::Box2D(Vector2<f32> tl, Vector2<f32> br){
     m_vTopLeft = tl;
     m_vBottomRight = br;
