@@ -47,11 +47,6 @@ void Map::Init() {
         lights.push_back(light);
     }
 
-    //Init camera controller
-    camera = new CameraController();
-    camera -> setZoomDistanceFromTarget(j["camera"]["zoomDistanceFromTarget"].get<int>());
-    camera -> setRotateDegrees(j["camera"]["delta_x"].get<int>(), j["camera"]["delta_y"].get<int>());
-
     // Added by Julian
     Graph::Instance();
     cellSpace = CellSpacePartition::Instance();
@@ -93,6 +88,12 @@ void Map::Init() {
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
         }
     }
+
+    //Init camera controller
+    camera = new CameraController();
+    camera -> setZoomDistanceFromTarget(j["camera"]["zoomDistanceFromTarget"].get<int>());
+    camera -> setRotateDegrees(j["camera"]["delta_x"].get<int>(), j["camera"]["delta_y"].get<int>());
+    camera -> Init();
 }
 
 void Map::Input() {

@@ -9,11 +9,6 @@ CameraController::CameraController() {
     camera = new Camera();
     camera -> setShadowDistance(42000.f);
 
-	// Initial position of the target
-	i32 targetX = Enumeration::HumanCityHall::human_x;
-	i32 targetZ = Enumeration::HumanCityHall::human_z;
-	i32 targetY = Map::Instance() -> getTerrain() -> getY(targetX, targetZ);
-
 	// Helper initializations
 	recipsqrt2 = camera -> getReciprocalSquareroot();
 	centerMargin = 20;
@@ -48,9 +43,15 @@ CameraController::CameraController() {
 
 	//ToDo: deberia actualizarse al redimensionar la pantalla
     screenCenter = Vector2<i32>(w->getInitialWindowWidth()/2, w->getInitialWindowHeight()/2);
+}
 
+CameraController::~CameraController() {
+	delete camera;
+}
+
+void CameraController::Init(){
 	//Set camera and target positions
-	tarPos = Vector3<f32>(targetX, targetY, targetZ);
+	tarPos = Human::Instance() -> getHallPosition();
 	camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
 
     camera -> setTargetPosition(tarPos);
@@ -60,114 +61,92 @@ CameraController::CameraController() {
 	distanceToTarget = camPos.getDistanceTo(tarPos);
 }
 
-CameraController::~CameraController() {
-	delete camera;
-}
-
 void CameraController::Update(f32 deltaTime) {
 	tarPos.set(camera -> getTargetPosition());
 	camPos.set(camera -> getCameraPosition());
 
-	i32 camHeight = Map::Instance() -> getTerrain() -> getY(camPos.x, camPos.z);
-
 	if (movementMode) {
-    	Vector3<f32> camIncr;
+    	Vector3<f32> tarIncr;
 		i32 d = rotateDegrees.x; 
 		switch (direction) {
 			// up stands for update (delta)
 			case 1: //arriba
-				camIncr.x = (f32)1;
-				camIncr.z = (f32)1;
+				tarIncr.x = (f32)1;
+				tarIncr.z = (f32)1;
 				d += 0;
 			break;
 			case 8: //derecha
-				camIncr.x = (f32)1;
-				camIncr.z = (f32)-1;
+				tarIncr.x = (f32)1;
+				tarIncr.z = (f32)-1;
 				d += 90;
 			break;
 			case 4: //abajo
-				camIncr.x = (f32)-1;
-				camIncr.z = (f32)-1;
+				tarIncr.x = (f32)-1;
+				tarIncr.z = (f32)-1;
 				d += 180;
 			break;
 			case 2: // izquierda
-				camIncr.x = (f32)-1;
-				camIncr.z = (f32)1;
+				tarIncr.x = (f32)-1;
+				tarIncr.z = (f32)1;
 				d += 270;
 			break;
 			case 9: // arriba derecha
-				camIncr.x = (f32)1 * recipsqrt2;
-				camIncr.z = (f32)1 * recipsqrt2;
+				tarIncr.x = (f32)1 * recipsqrt2;
+				tarIncr.z = (f32)1 * recipsqrt2;
 				d+= 45;
 			break;
 			case 12: //abajo derecha
-				camIncr.x = (f32)1 * recipsqrt2;
-				camIncr.z = (f32)-1 * recipsqrt2;
+				tarIncr.x = (f32)1 * recipsqrt2;
+				tarIncr.z = (f32)-1 * recipsqrt2;
 				d += 135;
 			break;
 			case 6: //abajo izquierda
-				camIncr.x = (f32)-1 * recipsqrt2;
-				camIncr.z = (f32)1 * recipsqrt2;
+				tarIncr.x = (f32)-1 * recipsqrt2;
+				tarIncr.z = (f32)1 * recipsqrt2;
 				d += 225;
 			break;
 			case 3: // arriba izquierda
-				camIncr.x = (f32)1 * recipsqrt2;
-				camIncr.z = (f32)1 * recipsqrt2;
+				tarIncr.x = (f32)1 * recipsqrt2;
+				tarIncr.z = (f32)1 * recipsqrt2;
 				d += 315;
 			break;
 		}
 
-		camIncr = Vector3<f32>().rotateFromPoint(
-			sqrtf(powf(camIncr.x, 2) + powf(camIncr.z, 2)), 
+		tarIncr = Vector3<f32>().rotateFromPoint(
+			sqrtf(powf(tarIncr.x, 2) + powf(tarIncr.z, 2)), 
 			d,
 			0
 		) * camSpeed * deltaTime;
 
 		// border collision + apply update
-		if (camPos.x < Enumeration::MapMargins::mapMarginTop) {
-			if (camIncr.x > 0) {
-				camPos.x += camIncr.x;
-				tarPos.x += camIncr.x;
-			}
-		} else if (camPos.x > Enumeration::MapMargins::mapMarginRight) {
-			if (camIncr.x < 0) {
-				camPos.x += camIncr.x;
-				tarPos.x += camIncr.x;
-			}
+		if (tarPos.x < Enumeration::MapMargins::mapMarginTop) {
+			if (tarIncr.x > 0) tarPos.x += tarIncr.x;
+		} else if (tarPos.x > Enumeration::MapMargins::mapMarginRight) {
+			if (tarIncr.x < 0) tarPos.x += tarIncr.x;
 		} else {
-			camPos.x += camIncr.x;
-			tarPos.x += camIncr.x;
+			tarPos.x += tarIncr.x;
 		}
 
-		if (camPos.z < Enumeration::MapMargins::mapMarginTop) {
-			if (camIncr.z > 0) {
-				camPos.z += camIncr.z;
-				tarPos.z += camIncr.z;
-			}
-		} else if (camPos.z > Enumeration::MapMargins::mapMarginBottom) {
-			if (camIncr.z < 0) {
-				camPos.z += camIncr.z;
-				tarPos.z += camIncr.z;
-			}
+		if (tarPos.z < Enumeration::MapMargins::mapMarginTop) {
+			if (tarIncr.z > 0) tarPos.z += tarIncr.z;
+		} else if (tarPos.z > Enumeration::MapMargins::mapMarginBottom) {
+			if (tarIncr.z < 0) tarPos.z += tarIncr.z;
 		} else {
-			camPos.z += camIncr.z;
-			tarPos.z += camIncr.z;
+			tarPos.z += tarIncr.z;
 		}
 	}
 
-    if (rotationOrInclinationMode || zoomMode) {
-		camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
-    }
-
 	if (centerCameraMode){
-		std::cout << userPos << std::endl;
 		tarPos = userPos;
-		camPos = userPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
 	}
 
     if (movementMode || rotationOrInclinationMode || zoomMode || centerCameraMode){
-		i32 heightvariance = Map::Instance() -> getTerrain() -> getY(camPos.x, camPos.z) - camHeight;
-		camPos.y = camPos.y + heightvariance;
+		camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
+
+		i32 camHeight = camPos.y - tarPos.y;
+		i32 mapHeight = Map::Instance() -> getTerrain() -> getY(camPos.x, camPos.z);
+
+		camPos.y = mapHeight + camHeight;
 
 		camera -> setTargetPosition(tarPos.getVectorF());
 		camera -> setCameraPosition(camPos.getVectorF());

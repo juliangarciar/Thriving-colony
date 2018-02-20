@@ -27,6 +27,12 @@ class CameraController {
         ~CameraController();
 
         /**
+         * @brief Inicia el sistema de camara
+         * 
+         */
+        void Init();
+
+        /**
 	* @brief Actualiza CameraController
         * @param deltaTime para la interpolacion
 	*/
