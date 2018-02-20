@@ -69,7 +69,7 @@
 	},
 	"IA":
 	{
-		"initial_metal": 10,
+		"initial_metal": 1200,
 		"initial_crystal": 5,
 		"siderurgy_productivity": 15,
 		"quarry_productivity": 10,
