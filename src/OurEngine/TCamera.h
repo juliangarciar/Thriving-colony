@@ -72,6 +72,13 @@ class TCamera : public TEntity {
         void setProjection(TEnums::CameraProjection);
 
         /**
+         * @brief set the camera to active or inactive
+         * 
+         * @param bool new camera active state
+         */
+        void setActive(bool);
+
+        /**
          * @brief sets the distance from the camera at which sits the near plane.
          * 
          * @param f32 distance.
@@ -128,6 +135,14 @@ class TCamera : public TEntity {
         TEnums::CameraProjection getProjection();
 
         /**
+         * @brief returns wether or not the camera is active
+         * 
+         * @return true if the camera is active
+         * @return false otherwise
+         */
+        bool getActive();
+
+        /**
          * @brief return the distance at which sits the near plane of the camera.
          * 
          * @return f32 distance between the camera and the near plane.
@@ -170,18 +185,29 @@ class TCamera : public TEntity {
         f32 getLeft();
 
         /**
-         * @brief return the right border.
+         * @brief returns the right border.
          * 
          * @return f32 right border.
          */
         f32 getRight();
+
+        /**
+         * @brief returns the view matrix. 
+         * 
+         */
+        glm::mat4 getViewMatrix();
+
     private:
         //ToDo: proyeccion GLM
         glm::mat4 projectionMatrix;
+        // View matrix ToDo: Aqui?
+        glm::mat4 viewMatrix;
 
         TEnums::CameraProjection projection;
         // Field of view (fov) is expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.
         f32 near, far, fov, top, bottom, left, right;
+
+        bool active;
 };
 
 #endif

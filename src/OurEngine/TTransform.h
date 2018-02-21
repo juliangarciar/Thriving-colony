@@ -8,7 +8,7 @@
 #include <glm/vec3.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
-static glm::mat4 modelMatrix = glm::mat4(1.0f);
+
 
 class TTransform : public TEntity {
     public:

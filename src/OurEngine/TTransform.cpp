@@ -10,12 +10,14 @@ TTransform::~TTransform() {
 
 void TTransform::beginDraw(){
     matrixStack.push(matrix);
-    modelMatrix *= matrix;
+    // Por la derecha
+    modelMatrix = modelMatrix * matrix;
 }
 
 void TTransform::endDraw() {
     matrixStack.pop();
-    modelMatrix /= matrix;
+    // Por la inversa por la izquierda
+    modelMatrix = glm::inverse(matrix) * modelMatrix;
 }
 
 void TTransform::identity() {

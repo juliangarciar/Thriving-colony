@@ -19,7 +19,9 @@ TCamera::~TCamera(){
 }
 
 void TCamera::beginDraw(){
-
+    if (active) {
+        viewMatrix = glm::inverse(modelMatrix);
+    }
 }
 
 void TCamera::endDraw(){
@@ -47,6 +49,10 @@ void TCamera::setParallel(f32, f32, f32, f32, f32, f32){
 
 void TCamera::setProjection(TEnums::CameraProjection cp){
     projection = cp;
+}
+
+void TCamera::setActive(bool _active) {
+    active = _active;
 }
 
 void TCamera::setNear(f32 n){
@@ -79,6 +85,10 @@ void TCamera::setRight(f32 r){
 
 TEnums::CameraProjection TCamera::getProjection(){
     return projection;
+}
+
+bool TCamera::getActive() {
+    return active;
 }
 
 f32 TCamera::getNear(){
