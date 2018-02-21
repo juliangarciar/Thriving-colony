@@ -17,6 +17,6 @@ void HomeNode::question() {
     if (IA::Instance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost)) {
         IA::Instance() -> getTree() -> setRequireCitizens(false);
         Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
-        IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::House, true);
+        IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::House, false);
     }
 }

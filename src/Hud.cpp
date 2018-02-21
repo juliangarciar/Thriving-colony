@@ -153,6 +153,7 @@ void Hud::Init(){
     ///// DEBUG /////
     playerResources = new Panel("Player Resources");
     playerResources ->setVerticalLayout();
+    playerResources -> setSize(Vector2<i32> (200, 230));
     i32 melees = 
         Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
         Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
@@ -194,6 +195,7 @@ void Hud::Init(){
     iaResources = new Panel("IA Resources");
     iaResources -> setVerticalLayout();
     iaResources -> setPosition(Vector2<i32>(1100, 0));
+    iaResources -> setSize(Vector2<i32> (200, 270));
     melees = 
         IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
         IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
