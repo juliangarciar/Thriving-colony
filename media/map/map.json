@@ -10,9 +10,9 @@
 		}
 	},
 	"camera":{
-		"zoomDistanceFromTarget": 600,
-		"delta_x": 10,
-		"delta_y": 200
+		"zoomDistanceFromTarget": 750,
+		"delta_x": 0,
+		"delta_y": 230
 	},
 	"lights":[
 		{
