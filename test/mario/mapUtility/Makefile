@@ -2,11 +2,11 @@
 # Created by Mario Gonzalez and Julian Garcia
 
 # Name of the executable created
-TARGET = ThrivingColony
+TARGET = test
 # Project root
 PROJECTROOT = ../../..
 # Path for the executable
-BINPATH = $(PROJECTROOT)/bin
+BINPATH = .
 # Path for the .o files
 BUILDPATH = $(PROJECTROOT)/obj
 # Path for the source files

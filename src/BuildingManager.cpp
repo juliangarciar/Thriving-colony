@@ -12,9 +12,9 @@ BuildingManager::BuildingManager(Enumeration::Team t, Enumeration::BreedType b) 
     buildingMode = false;
 
 	buildingLayer = new SceneNode();
-	currentCollision = NULL;
+	currentCollision = nullptr;
 	buildings = new std::map<i32, Building*>();
-	tempBuilding = NULL;
+	tempBuilding = nullptr;
 
 	for (i32 i = 0; i < Enumeration::BuildingType::BuildingsSize; i++){
 		buildingAmounts[i] = 0;
@@ -50,8 +50,7 @@ bool BuildingManager::setBuildingMode(Enumeration::BuildingType type) {
 }
 
 void BuildingManager::drawBuilding() {
-    Game *g = Game::Instance();
-    if (buildingMode && tempBuilding != NULL) {
+    if (buildingMode && tempBuilding != nullptr) {
         // ToDo: Aqui tenemos que hacer que cuando se haya apretado el boton de nueva ventana,
         // tambien se cree una caja en las coordenadas actuales del cursor del raton.
 
@@ -74,7 +73,7 @@ void BuildingManager::drawBuilding() {
 		if (IO::Instance() -> getMouse() -> rightMouseDown()){
 			buildingMode = false;
 			delete tempBuilding;		
-			tempBuilding = NULL;
+			tempBuilding = nullptr;
 			return;
 		}
 
@@ -100,7 +99,7 @@ void BuildingManager::drawBuilding() {
 }
 
 void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType _type, bool instabuild) {
-	if (team == Enumeration::Team::IA || tempBuilding == NULL) {
+	if (team == Enumeration::Team::IA || tempBuilding == nullptr) {
 		tempBuilding = new Building(buildingLayer, 0, team, breed, _type);
 		tempBuilding -> setPosition(pos);
 	}
@@ -147,7 +146,7 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 	if (instabuild) tempBuilding -> triggerFinishedCallback();    
 	// Added by Julian
 	CellSpacePartition::Instance() -> updateCell(tempBuilding);
-	tempBuilding = NULL;
+	tempBuilding = nullptr;
 	nextBuildingId++;
 }
 
@@ -238,17 +237,17 @@ i32 BuildingManager::getAmount(Enumeration::BuildingType t){
 }
 
 i32 BuildingManager::getCollisionID() {
-	if (currentCollision != NULL && currentCollision -> getSceneNode() != NULL) {
+	if (currentCollision != nullptr && currentCollision -> getSceneNode() != nullptr) {
 		return currentCollision -> getSceneNode() -> getID();
 	}
 	return -1;
 }
 
 std::string BuildingManager::getCollisionName() {
-	if (currentCollision != NULL && currentCollision -> getSceneNode() != NULL) {
+	if (currentCollision != nullptr && currentCollision -> getSceneNode() != nullptr) {
 		return currentCollision -> getSceneNode() -> getName();
 	}
-	return NULL;
+	return nullptr;
 }
 
 std::map<i32, Building*>* BuildingManager::getBuildings() {
@@ -276,5 +275,5 @@ Building *BuildingManager::getBuilding(i32 id){
   	if (it != buildings->end())
 		return it->second;
 	else 
-		return NULL;
+		return nullptr;
 }

@@ -46,7 +46,7 @@ Mouse::Mouse(){
 
 Mouse::~Mouse(){
     glfwDestroyCursor(cursor);
-    cursor = NULL;
+    cursor = nullptr;
 }
 
 void Mouse::refreshStates(){

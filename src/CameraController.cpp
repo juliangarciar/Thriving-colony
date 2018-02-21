@@ -2,7 +2,6 @@
 #include "Game.h"
   
 CameraController::CameraController() {
-	Game *g = Game::Instance();
 	Window *w = Window::Instance();
 
 	//Camera 
@@ -154,7 +153,6 @@ void CameraController::Update(f32 deltaTime) {
 }
 
 void CameraController::Move() {
-	Game *g = Game::Instance();
 	Window *w = Window::Instance();
 
     /*direction = (receiver -> keyDown(KEY_KEY_W) << 0) | (receiver -> keyDown(KEY_KEY_A) << 1)
@@ -202,8 +200,6 @@ void CameraController::Move() {
 }
 
 void CameraController::Zoom(){
-	Game *g = Game::Instance();
-
 	zoomMode = false;
 
 	if (IO::Instance() -> getMouse() -> getWheelY() > 0.0f) {
@@ -228,8 +224,6 @@ void CameraController::Zoom(){
 }
 
 void CameraController::RotateAndInclinate(){
-	Game *g = Game::Instance();
-
     // If mouse button pressed
     if (IO::Instance() -> getMouse() -> middleMousePressed()) {
 		// get cursor data
@@ -281,11 +275,9 @@ void CameraController::RotateAndInclinate(){
 }
 
 void CameraController::CenterCamera(){
-	Game *g = Game::Instance();
-
 	centerCameraMode = false;
 	if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_SPACE)) { //ToDo: fachada
-		if(Human::Instance() -> getUnitManager() -> getSelectedTroop() != NULL) {
+		if(Human::Instance() -> getUnitManager() -> getSelectedTroop() != nullptr) {
 			userPos.x = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> x;
 			userPos.z = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> z;
 			userPos.y = Map::Instance() -> getTerrain() -> getY(userPos.x, userPos.z);

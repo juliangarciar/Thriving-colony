@@ -9,7 +9,7 @@ Camera::Camera() {
 
 Camera::~Camera() {
     //ToDo: borrar camara
-    //camera = NULL;
+    //camera = nullptr;
 }
 
 //Posicion de la camara

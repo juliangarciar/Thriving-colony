@@ -53,7 +53,7 @@ bool Human::getUnderAttack() {
         std::map<i32, Unit*> *inMapTroops = IA::Instance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map
         for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
-            if (it  -> second != NULL) {
+            if (it  -> second != nullptr) {
             // Calculate distance between troop requesting target and posible targets
                 xaux = it -> second -> getPosition() -> x - pos -> x;
                 yaux = it -> second -> getPosition() -> y - pos -> y;

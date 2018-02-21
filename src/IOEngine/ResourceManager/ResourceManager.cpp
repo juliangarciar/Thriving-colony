@@ -75,6 +75,6 @@ Resource *ResourceManager::getResource(std::string path){
         return it -> second;
     } else {
         loadResource(path, false);
-        return NULL;
+        return nullptr;
     }
 }

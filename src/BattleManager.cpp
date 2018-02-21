@@ -12,7 +12,7 @@ BattleManager::~BattleManager() {
 void BattleManager::askForTarget(Entity* requester) {
     Vector3<f32> *requesterPos = requester -> getPosition();
     i32 requesterRange = requester -> getViewRadius();
-    Entity* target = NULL;
+    Entity* target = nullptr;
     f32 minDistance = FLT_MAX; // Maximum value of f32
     
     f32 xaux = 0;
@@ -24,7 +24,7 @@ void BattleManager::askForTarget(Entity* requester) {
         std::map<i32, Unit*> *inMapTroops = IA::Instance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map
         for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
-            if (it  -> second != NULL) {
+            if (it  -> second != nullptr) {
             // Calculate distance between troop requesting target and posible targets
                 xaux = it -> second -> getPosition() -> x - requesterPos -> x;
                 yaux = it -> second -> getPosition() -> y - requesterPos -> y;
@@ -37,10 +37,10 @@ void BattleManager::askForTarget(Entity* requester) {
                 }
             }
         }
-        if (target == NULL) { // No target unit found, search buildings
+        if (target == nullptr) { // No target unit found, search buildings
             std::map<i32, Building*> *buildings = IA::Instance() -> getBuildingManager() -> getBuildings();
             for (std::map<i32,Building*>::iterator it = buildings -> begin(); it != buildings -> end(); ++it) {
-                if (it  -> second != NULL) {
+                if (it  -> second != nullptr) {
                 // Calculate distance between troop requesting target and posible targets
                     xaux = it -> second -> getPosition() -> x - (requesterPos -> x);
                     yaux = it -> second -> getPosition() -> y - (requesterPos -> y);
@@ -61,7 +61,7 @@ void BattleManager::askForTarget(Entity* requester) {
         std::map<i32, Unit*> *inMapTroops = Human::Instance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map
         for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
-            if (it  -> second != NULL) {
+            if (it  -> second != nullptr) {
             // Calculate distance between troop requesting target and posible targets
                 xaux = it -> second -> getPosition() -> x - requesterPos -> x;
                 yaux = it -> second -> getPosition() -> y - requesterPos -> y;
@@ -75,11 +75,11 @@ void BattleManager::askForTarget(Entity* requester) {
             }
         }
         
-        if (target == NULL) { // No target unit found, search buildings
+        if (target == nullptr) { // No target unit found, search buildings
             
             std::map<i32, Building*> *buildings = Human::Instance() -> getBuildingManager() -> getBuildings();
             for (std::map<i32,Building*>::iterator it = buildings -> begin(); it != buildings -> end(); ++it) {
-                if (it  -> second != NULL) {
+                if (it  -> second != nullptr) {
                 // Calculate distance between troop requesting target and posible targets
                     xaux = it -> second -> getPosition() -> x - requesterPos -> x;
                     yaux = it -> second -> getPosition() -> y - requesterPos -> y;

@@ -14,8 +14,6 @@ GameState::~GameState() {
 } 
 
 void GameState::Init() {
-    Game* g = Game::Instance();
-
     IO::Instance() -> getResourceManager()->loadResource("media/map/map.json");
  
     human -> Init(); 
@@ -64,7 +62,6 @@ void GameState::Init() {
 
 void GameState::Input() {
     if(gamePaused ==  false){
-        Game *g = Game::Instance();
         if (!hud->getPopUpOpen()){
             map -> Input();
 
@@ -84,7 +81,7 @@ void GameState::Input() {
                 
                 if (IO::Instance() -> getMouse() -> leftMousePressed()) {
                     Building *b = human->getBuildingManager()->getBuilding(idBuilding);
-                    if (b != NULL){
+                    if (b != nullptr){
                         if (human -> getBuildingManager() -> checkFinished(idBuilding)) {
                             hud -> showPopup(b->getType());
                         }

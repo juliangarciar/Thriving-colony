@@ -112,7 +112,7 @@ void CellSpacePartition::updateEntity(Entity* ent, Vector2<f32> OldPos)
 }
 
 void CellSpacePartition::updateCell(Entity *object){
-    if(object != NULL){
+    if(object != nullptr){
         Vector2<f32> storage = object -> getPosition() -> toVector2();
         if(object -> getCells() % 2 == 0){
             storage.x -= cellSizeX / 2;
@@ -154,7 +154,7 @@ i32 CellSpacePartition::positionToIndex(Vector2<f32> pos)
 
 Vector3<f32> CellSpacePartition::correctPosition(Vector3<f32> targetPos, Entity *object, bool &collision){
     Vector3<f32> correctOne = Vector3<f32>();
-    if(object != NULL){
+    if(object != nullptr){
         Cell dummy = mCells.at(positionToIndex(targetPos.toVector2()));
         Vector2<f32> storage;
         if(object -> getCells() % 2 == 0){

@@ -170,6 +170,6 @@ Entity* Entity::getTarget() {
 
 void Entity::putHostileTargetsToNull() {
     for (i32 i = 0; i < hostile.size(); i++) {
-        hostile.at(i) -> setTarget(NULL);
+        hostile.at(i) -> setTarget(nullptr);
     }
 }
