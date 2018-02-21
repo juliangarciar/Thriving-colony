@@ -21,7 +21,7 @@ PauseMenu::~PauseMenu() {
 
 void PauseMenu::setHUDEvents(){
     buttonQuit -> setCallback([]{
-        Game::Instance() -> getWindow() -> close();
+        Window::Instance() -> close();
     });
 
     buttonResume -> setCallback([]{

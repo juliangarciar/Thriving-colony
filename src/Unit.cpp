@@ -340,7 +340,7 @@ void Unit::Init() {
 
 void Unit::update() {
     returnToOriginalColor(); //ToDo: ¿?
-    attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
+    attackCountdown -= Window::Instance() -> getDeltaTime();
     //State machine, color changes according to state
     switch (state) {
         case Enumeration::UnitState::Recruiting:
@@ -406,7 +406,7 @@ void Unit::switchState(Enumeration::UnitState newState) {
 
 void Unit::recruitingState(){
     if (recruitingTimer > 0.0f){
-        recruitingTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
+        recruitingTimer -= Window::Instance() -> getDeltaTime();
         if (team == Enumeration::Team::Human){
             Hud::Instance()->modifyTroopFromQueue(ID, recruitingTimer/recruitingTime);
         }
@@ -431,7 +431,7 @@ void Unit::moveState() {
 }
 
 void Unit::attackMoveState() {
-    attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
+    attackCountdown -= Window::Instance() -> getDeltaTime();
     // Scan for targets
     if (refreshTarget()) { // if got one
         switchState(Enumeration::UnitState::Chase);
@@ -442,7 +442,7 @@ void Unit::attackMoveState() {
 }
 
 void Unit::attackState() {
-    attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
+    attackCountdown -= Window::Instance() -> getDeltaTime();
     if(inRangeOfAttack()) {
         attack();
     } else {
@@ -603,7 +603,7 @@ bool Unit::refreshTarget() {
         Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
         lookForTargetCountdown = lookForTargetTimer;
     } else {
-        lookForTargetCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
+        lookForTargetCountdown -= Window::Instance() -> getDeltaTime();
     }
     
     // return wether or not it got updated

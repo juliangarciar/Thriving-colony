@@ -49,7 +49,7 @@ void IA::Update() {
         nodeRootIA -> question();
         updateTimer = 1.0;
     } else {
-        updateTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
+        updateTimer -= Window::Instance() -> getDeltaTime();
     }
 }
 

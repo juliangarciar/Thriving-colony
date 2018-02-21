@@ -88,10 +88,6 @@ void Game::changeState(Enumeration::State data) {
     stateData = data;
 }
 
-Window *Game::getWindow(){
-    return window;
-}
-
 MenuState *Game::getMenuState() {
 	return menu;
 }

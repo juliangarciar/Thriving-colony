@@ -77,7 +77,7 @@ bool UnitManager::createTroop(Enumeration::UnitType type) {
                 Hud::Instance()->addTroopToHall(u->getID(), u->getType());
 
                 //Mostrar texto de reclutamiento
-                Game::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showRecruitedText);  
+                IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showRecruitedText);  
             }
         });
         newUnit -> setRetractedCallback([&] (Unit *u){
@@ -112,7 +112,7 @@ bool UnitManager::createTroop(Enumeration::UnitType type) {
 void UnitManager::updateUnitManager() {
     // Retractear una sola unidad
     if (selectedTroop != NULL) {
-        if (Game::Instance() -> getKeyboard() -> keyPressed(82)) { //82 = R, R de retracted
+        if (IO::Instance() -> getKeyboard() -> keyPressed(82)) { //82 = R, R de retracted
             if (team == Enumeration::Team::Human){
                 selectedTroop -> setTroopDestination(Human::Instance()->getHallPosition());
             }
@@ -144,7 +144,7 @@ void UnitManager::updateUnitManager() {
 
 void UnitManager::testRaycastCollisions() {
 	if (!deployingTroop) {
-		currentCollision = unitLayer -> getNodeCollision(Game::Instance() -> getMouse());
+		currentCollision = unitLayer -> getNodeCollision(IO::Instance() -> getMouse());
 	}
 } 
 
@@ -243,11 +243,10 @@ void UnitManager::selectTroop(i32 troopID) {
 }
 
 //Select a troop
-void UnitManager::unSelectTroop() { 
-    Game *g = Game::Instance();
+void UnitManager::unSelectTroop() {
     if (selectedTroop != NULL){
         selectedTroop = NULL;
-        g -> getMouse() -> changeIcon(CURSOR_NORMAL);
+        IO::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);
     }
 }
 
@@ -255,16 +254,16 @@ void UnitManager::unSelectTroop() {
 void UnitManager::moveOrder() {
     Game *g = Game::Instance();
     if (selectedTroop != NULL) {
-        selectedTroop -> setTroopDestination(Map::Instance() -> getTerrain() -> getPointCollision(g -> getMouse()));
-        if (Game::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
+        selectedTroop -> setTroopDestination(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
+        if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
         // ToDo by Julian -> change attack iddle to pathfinding mode
             selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
 
-            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(g -> getMouse()));
+            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
         } else {
             selectedTroop -> switchState(Enumeration::UnitState::Move);
 
-            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(g -> getMouse()));
+            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
         }
         //MOVEMENT VOICE
         //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());

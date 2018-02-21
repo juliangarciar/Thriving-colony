@@ -283,7 +283,7 @@ void Building::update() {
             callback(this);
         } else {
             // This update is called once every second
-            buildTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
+            buildTimer -= Window::Instance() -> getDeltaTime();
         }
     }
 }

@@ -3,7 +3,7 @@
   
 CameraController::CameraController() {
 	Game *g = Game::Instance();
-	Window *w = g->getWindow();
+	Window *w = Window::Instance();
 
 	//Camera 
     camera = new Camera();
@@ -155,7 +155,7 @@ void CameraController::Update(f32 deltaTime) {
 
 void CameraController::Move() {
 	Game *g = Game::Instance();
-	Window *w = g->getWindow();
+	Window *w = Window::Instance();
 
     /*direction = (receiver -> keyDown(KEY_KEY_W) << 0) | (receiver -> keyDown(KEY_KEY_A) << 1)
 		| receiver -> keyDown(KEY_KEY_S) << 2 | receiver -> keyDown(KEY_KEY_D) << 3;*/
@@ -163,7 +163,7 @@ void CameraController::Move() {
 	direction = 0;
 	movementMode = false;
 
-	Vector2<i32> cursorPosCurrent = g -> getMouse() -> getPosition();
+	Vector2<i32> cursorPosCurrent = IO::Instance() -> getMouse() -> getPosition();
 
 	bool cursorOffLimits = false;
 	if (cursorPosCurrent.x <= 0) {
@@ -182,7 +182,7 @@ void CameraController::Move() {
 		cursorOffLimits = true;
 	}
 
-	if (cursorOffLimits) g -> getMouse() -> setPosition(cursorPosCurrent);
+	if (cursorOffLimits) IO::Instance() -> getMouse() -> setPosition(cursorPosCurrent);
 	
 	if (cursorPosCurrent.y < screenMarginV) {
 		direction |= 1 << 0;
@@ -206,7 +206,7 @@ void CameraController::Zoom(){
 
 	zoomMode = false;
 
-	if (g -> getMouse() -> getWheelY() > 0.0f) {
+	if (IO::Instance() -> getMouse() -> getWheelY() > 0.0f) {
 		if (zoomDistanceFromTarget > minZoom) {
 			Vector3<f32> incr = distanceToTarget / zoomLevels;
 			zoomDistanceFromTarget -= incr.y;
@@ -215,7 +215,7 @@ void CameraController::Zoom(){
 
 			zoomMode = true;
 		}
-	} else if (g -> getMouse() -> getWheelY() < 0.0f) {
+	} else if (IO::Instance() -> getMouse() -> getWheelY() < 0.0f) {
 		if (zoomDistanceFromTarget < maxZoom) {
 			Vector3<f32> incr = distanceToTarget / zoomLevels;
 			zoomDistanceFromTarget += incr.y;
@@ -231,24 +231,24 @@ void CameraController::RotateAndInclinate(){
 	Game *g = Game::Instance();
 
     // If mouse button pressed
-    if (g -> getMouse() -> middleMousePressed()) {
+    if (IO::Instance() -> getMouse() -> middleMousePressed()) {
 		// get cursor data
-        cursorPosSaved = g -> getMouse() -> getPosition();
-        g -> getMouse() -> setPosition(screenCenter);
+        cursorPosSaved = IO::Instance() -> getMouse() -> getPosition();
+        IO::Instance() -> getMouse() -> setPosition(screenCenter);
 
-		Game::Instance() -> getMouse() -> hide();
+		IO::Instance() -> getMouse() -> hide();
 
         rotationOrInclinationMode = true;
-    } else if (g -> getMouse() -> middleMouseReleased()) {
-        g -> getMouse() -> setPosition(cursorPosSaved);
+    } else if (IO::Instance() -> getMouse() -> middleMouseReleased()) {
+        IO::Instance() -> getMouse() -> setPosition(cursorPosSaved);
 		
-		Game::Instance() -> getMouse() -> show();
+		IO::Instance() -> getMouse() -> show();
 
         rotationOrInclinationMode = false;
     }
 
 	if (rotationOrInclinationMode) {
-		Vector2<i32> cursorPosCurrent = g -> getMouse() -> getPosition();
+		Vector2<i32> cursorPosCurrent = IO::Instance() -> getMouse() -> getPosition();
 
 		//Increase or decease rotation angle
 		if (cursorPosCurrent.x < screenCenter.x - centerMargin) {
@@ -273,7 +273,7 @@ void CameraController::RotateAndInclinate(){
         rotateDegrees.y = (rotateDegrees.y > maxInclination) ? maxInclination : rotateDegrees.y;
 
         // reset cursor position to center
-        g -> getMouse() -> setPosition(screenCenter.getVectorF()); 
+        IO::Instance() -> getMouse() -> setPosition(screenCenter.getVectorF()); 
 
 		// refresh distance to target
 		distanceToTarget = camPos.getDistanceTo(tarPos);
@@ -284,7 +284,7 @@ void CameraController::CenterCamera(){
 	Game *g = Game::Instance();
 
 	centerCameraMode = false;
-	if (g -> getKeyboard() -> keyPressed(GLFW_KEY_SPACE)) { //ToDo: fachada
+	if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_SPACE)) { //ToDo: fachada
 		if(Human::Instance() -> getUnitManager() -> getSelectedTroop() != NULL) {
 			userPos.x = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> x;
 			userPos.z = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> z;

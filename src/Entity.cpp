@@ -55,7 +55,7 @@ void Entity::returnToOriginalColor() {
     if (tookDamageCountdown <= 0.0) {
         setColor(baseColor); //ToDo: sustituir por material
     } else {
-        tookDamageCountdown -= Game::Instance() -> getWindow() -> getDeltaTime(); //ToDo: sustituir por timer real
+        tookDamageCountdown -= Window::Instance() -> getDeltaTime(); //ToDo: sustituir por timer real
     }
 }
 
@@ -76,7 +76,7 @@ void Entity::setPosition(Vector3<f32> vectorData) {
 void Entity::setColor(irr::video::SColor c){
     currentColor = c;
     //ToDo: reemplazar color por material
-    Game::Instance() -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
+    Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
         model -> getModel() -> getMesh(), c
     );
 }
