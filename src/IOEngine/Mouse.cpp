@@ -1,6 +1,6 @@
 #include "Mouse.h"
 #include <GraphicEngine/Window.h>
-#include <Game.h>
+#include <IOEngine/IO.h>
 
 Mouse::Mouse(){
     visible = true;
@@ -25,7 +25,7 @@ Mouse::Mouse(){
     glfwSetScrollCallback(window,
         [](GLFWwindow *w, double x, double y) {
             Window::Instance() -> getGUIEnvironment() -> scrollCallbackEvent(x, y);
-            Mouse *s = Game::Instance() -> getMouse();
+            Mouse *s = IO::Instance() -> getMouse();
             s -> wheel.x = x;
             s -> wheel.y = y;
        }
@@ -34,7 +34,7 @@ Mouse::Mouse(){
     glfwSetMouseButtonCallback(window,
         [](GLFWwindow *w, i32 button, i32 action, i32 modifiers) {
             Window::Instance() -> getGUIEnvironment() -> mouseButtonCallbackEvent(button, action, modifiers);
-            Mouse *s = Game::Instance() -> getMouse();
+            Mouse *s = IO::Instance() -> getMouse();
             if (action == GLFW_PRESS) {
                 s -> mouseButtonState[button] = Enumeration::PRESSED;
             } else if (action == GLFW_RELEASE) {

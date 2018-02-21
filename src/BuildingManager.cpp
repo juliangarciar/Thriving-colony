@@ -33,7 +33,7 @@ BuildingManager::~BuildingManager() {
 
 void BuildingManager::testRaycastCollisions() {
 	if (!buildingMode) {
-		currentCollision = buildingLayer -> getNodeCollision(Game::Instance() -> getMouse());
+		currentCollision = buildingLayer -> getNodeCollision(IO::Instance() -> getMouse());
 	}
 }
 
@@ -56,7 +56,7 @@ void BuildingManager::drawBuilding() {
         // tambien se cree una caja en las coordenadas actuales del cursor del raton.
 
 		//Get position where the cursor is pointing to the terrain
-        Vector3<f32> xyzPointCollision = Map::Instance() -> getTerrain() -> getPointCollision(g -> getMouse());
+        Vector3<f32> xyzPointCollision = Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse());
 
 		Vector3<f32> f = Box3D<f32>(tempBuilding -> getModel() -> getModel() -> getTransformedBoundingBox()).getSize(); //ToDo: fachada
 	// Change gridAligment -> by Julian
@@ -71,7 +71,7 @@ void BuildingManager::drawBuilding() {
 		tempBuilding -> setPosition (dummy);
 
 		//Pressing the right mouse button cancels the building
-		if (g -> getMouse() -> rightMouseDown()){
+		if (IO::Instance() -> getMouse() -> rightMouseDown()){
 			buildingMode = false;
 			delete tempBuilding;		
 			tempBuilding = NULL;
@@ -90,7 +90,7 @@ void BuildingManager::drawBuilding() {
 		} else {
 			tempBuilding->setColor(tempBuilding -> getBaseColor()); //ToDo: reemplazar color por material
 			//If there is no collision and the player press left button of the mouse, build the building
-			if (g -> getMouse() -> leftMouseDown()) {
+			if (IO::Instance() -> getMouse() -> leftMouseDown()) {
 				buildingMode = false;
 				buildBuilding(dummy, tempBuilding -> getType());
 				
@@ -135,7 +135,7 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 					default: break;
 				}
 			}
-    		if (!instabuild) Game::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showBuiltText);  
+    		if (!instabuild) IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showBuiltText);  
 		}
 	});
 
