@@ -102,7 +102,6 @@ void BuildingManager::drawBuilding() {
 void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType _type, bool instabuild) {
 	if (team == Enumeration::Team::IA || tempBuilding == NULL) {
 		tempBuilding = new Building(buildingLayer, 0, team, breed, _type);
-		tempBuilding -> preTaxPlayer();
 		tempBuilding -> setPosition(pos);
 	}
 
