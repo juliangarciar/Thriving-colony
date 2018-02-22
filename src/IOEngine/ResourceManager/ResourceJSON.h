@@ -17,8 +17,8 @@ class ResourceJSON : public Resource {
 
         void setIdentifier(const char *);
         const char *getIdentifier();
-        json *getJSON();
 
+        json *getJSON();
     private:
         json j;
 };
