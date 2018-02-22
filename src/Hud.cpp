@@ -280,7 +280,7 @@ void Hud::Init(){
             b = new Button(mainBuildingTab, "Retract all troops");
             b -> setTooltip("Retract your units back into your town hall");
             b -> setCallback([&]{
-                Game::Instance() -> getEventManager() -> triggerEvent(Enumeration::RetractTroopsHuman);
+                IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::RetractTroopsHuman);
             });
 
             mainBuildingTab->hide();
@@ -411,11 +411,11 @@ void Hud::Init(){
     toastText = new Label(toast, "");
     toast->hide();
 
-    Game::Instance() -> getWindow() -> setGUI();
+    Window::Instance() -> setGUI();
 }
 
 void Hud::Update() { 
-    f32 dt = Game::Instance()  -> getWindow() -> getDeltaTime();
+    f32 dt = Window::Instance() -> getDeltaTime();
     if (debugTimer <= 0) {
         debug();
         debugTimer = 0.5;

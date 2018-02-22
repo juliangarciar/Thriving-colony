@@ -12,7 +12,7 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
     attacking = false;
 
     // Default target
-    target = NULL;
+    target = nullptr;
 
     //Default state
     state = Enumeration::UnitState::Recruiting;
@@ -339,8 +339,8 @@ void Unit::Init() {
 }
 
 void Unit::update() {
-    returnToOriginalColor(); //ToDo: ¿?
-    attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
+    //returnToOriginalColor(); //ToDo: daba segfault aqui en el arbol very unhappy
+    attackCountdown -= Window::Instance() -> getDeltaTime();
     //State machine, color changes according to state
     switch (state) {
         case Enumeration::UnitState::Recruiting:
@@ -406,7 +406,7 @@ void Unit::switchState(Enumeration::UnitState newState) {
 
 void Unit::recruitingState(){
     if (recruitingTimer > 0.0f){
-        recruitingTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
+        recruitingTimer -= Window::Instance() -> getDeltaTime();
         if (team == Enumeration::Team::Human){
             Hud::Instance()->modifyTroopFromQueue(ID, recruitingTimer/recruitingTime);
         }
@@ -431,7 +431,7 @@ void Unit::moveState() {
 }
 
 void Unit::attackMoveState() {
-    attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
+    attackCountdown -= Window::Instance() -> getDeltaTime();
     // Scan for targets
     if (refreshTarget()) { // if got one
         switchState(Enumeration::UnitState::Chase);
@@ -442,7 +442,7 @@ void Unit::attackMoveState() {
 }
 
 void Unit::attackState() {
-    attackCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
+    attackCountdown -= Window::Instance() -> getDeltaTime();
     if(inRangeOfAttack()) {
         attack();
     } else {
@@ -453,7 +453,7 @@ void Unit::attackState() {
 /// Chasing the target
 void Unit::chaseState() {
     //If I have a target, then chase it
-    if (target != NULL) {
+    if (target != nullptr) {
         Vector3<f32> tpos = Vector3<f32>(0,0,0);
         tpos.x = target -> getPosition() -> x;
         tpos.y = target -> getPosition() -> y;
@@ -539,13 +539,13 @@ void Unit::moveTroop() {
 }*/
 
 void Unit::attack() {
-    if (target != NULL && target -> getTeam() != team) {
+    if (target != nullptr && target -> getTeam() != team) {
         setAttacking(true);
         if (attackCountdown <= 0) {
             target -> takeDamage(attackDamage);
             attackCountdown = attackSpeed;
             if (target -> getHP() <= 0) {
-                if (target -> getTarget() != NULL) {
+                if (target -> getTarget() != nullptr) {
                     target -> getTarget() -> removeHostile(target);
                 }
                 if (team == Enumeration::Team::Human) {
@@ -561,7 +561,7 @@ void Unit::attack() {
                         Human::Instance() -> getBuildingManager() -> deleteBuilding(target -> getID());
                     }
                 }
-                target = NULL;
+                target = nullptr;
                 this -> switchState(Enumeration::UnitState::AttackMove);
             }
         }
@@ -584,7 +584,7 @@ void Unit::chaseTarget() {
 
 bool Unit::inRangeOfAttack() {
     bool inRange = false;
-    if (target != NULL) {
+    if (target != nullptr) {
         f32 xaux = target -> getPosition() -> x - position -> x;
         f32 yaux = target -> getPosition() -> y - position -> y;
         f32 dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
@@ -603,11 +603,11 @@ bool Unit::refreshTarget() {
         Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
         lookForTargetCountdown = lookForTargetTimer;
     } else {
-        lookForTargetCountdown -= Game::Instance() -> getWindow() -> getDeltaTime();
+        lookForTargetCountdown -= Window::Instance() -> getDeltaTime();
     }
     
     // return wether or not it got updated
-    if (target != NULL) {
+    if (target != nullptr) {
         targetUpdated = true;
     } else {
         targetUpdated = false;
@@ -640,7 +640,7 @@ void Unit::setTroopPosition(Vector3<f32> vectorData) {
 // To do -> adjust units movement
 void Unit::setTroopDestination(Vector3<f32> vectorData) {
     if (state == Enumeration::UnitState::Move) {
-        target = NULL;
+        target = nullptr;
     }
 
     vectorDes.set(vectorData);

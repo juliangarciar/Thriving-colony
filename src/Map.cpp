@@ -27,7 +27,7 @@ Map::~Map() {
 }
 
 void Map::Init() {
-    ResourceJSON *r = (ResourceJSON*)Game::Instance() -> getResourceManager() -> getResource("media/map/map.json");
+    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/map/map.json");
 
     json j = *r -> getJSON();
 
@@ -173,7 +173,7 @@ void Map::Init() {
     camera = new CameraController();
     camera -> setZoomDistanceFromTarget(j["camera"]["zoomDistanceFromTarget"].get<int>());
     camera -> setRotateDegrees(j["camera"]["delta_x"].get<int>(), j["camera"]["delta_y"].get<int>());
-    camera -> Init();
+    camera -> Init(Human::Instance() -> getHallPosition());
 }
 
 void Map::Input() {
@@ -182,12 +182,12 @@ void Map::Input() {
     camera -> Zoom();
     camera -> CenterCamera();
 
-    collisionPoint = terrain->getPointCollision(Game::Instance()->getMouse());
+    collisionPoint = terrain->getPointCollision(IO::Instance()->getMouse());
 }
 
 void Map::Update(){
     //Update camera
-    camera -> Update(Game::Instance() -> getWindow() -> getDeltaTime());
+    camera -> Update(Window::Instance() -> getDeltaTime());
 }
 
 void Map::Render() {
