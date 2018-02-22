@@ -339,7 +339,7 @@ void Unit::Init() {
 }
 
 void Unit::update() {
-    returnToOriginalColor(); //ToDo: ¿?
+    //returnToOriginalColor(); //ToDo: daba segfault aqui en el arbol very unhappy
     attackCountdown -= Window::Instance() -> getDeltaTime();
     //State machine, color changes according to state
     switch (state) {

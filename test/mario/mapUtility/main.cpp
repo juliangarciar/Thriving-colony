@@ -5,10 +5,11 @@
 #include "CameraController.h"
 
 i32 main() {
+    std::vector<Light*> lights;
+    Vector3<f32> collisionPoint;
+
     Window *w = Window::Instance();
     IO *io = IO::Instance();
-
-    std::vector<Light*> lights;
 
     io -> getResourceManager() -> loadResource("map/map.json");
     
@@ -36,10 +37,18 @@ i32 main() {
     CameraController *camera = new CameraController();
     camera -> setZoomDistanceFromTarget(j["camera"]["zoomDistanceFromTarget"].get<int>());
     camera -> setRotateDegrees(j["camera"]["delta_x"].get<int>(), j["camera"]["delta_y"].get<int>());
-    camera -> Init(Vector3<float>(4000, 8000, 4000));
+    camera -> Init(Vector3<float>(4000, 800, 4000));
    
     while (w -> isOpen()){
+        camera -> Move();
+        camera -> RotateAndInclinate();
+        camera -> Zoom();
+
+        collisionPoint = terrain->getPointCollision(IO::Instance()->getMouse());
+        
         io->getMouse()->refreshStates();
+
+        camera -> Update(Window::Instance() -> getDeltaTime(), terrain);
 
         w -> beginScene();
         w -> endScene();
