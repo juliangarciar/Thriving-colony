@@ -1,7 +1,6 @@
 #ifndef SEARCHDIJKSTRA_H
 #define SEARCHDIJKSTRA_H
-#include <queue>
-#include <iterator>
+
 #include <MathEngine/Vector2.h>
 #include "Graph.h"
 
