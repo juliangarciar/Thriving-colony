@@ -173,7 +173,7 @@ void Map::Init() {
     camera = new CameraController();
     camera -> setZoomDistanceFromTarget(j["camera"]["zoomDistanceFromTarget"].get<int>());
     camera -> setRotateDegrees(j["camera"]["delta_x"].get<int>(), j["camera"]["delta_y"].get<int>());
-    camera -> Init();
+    camera -> Init(Human::Instance() -> getHallPosition());
 }
 
 void Map::Input() {

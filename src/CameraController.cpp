@@ -48,9 +48,9 @@ CameraController::~CameraController() {
 	delete camera;
 }
 
-void CameraController::Init(){
+void CameraController::Init(Vector3<float> v){
 	//Set camera and target positions
-	tarPos = Human::Instance() -> getHallPosition();
+	tarPos = v;
 	camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
 
     camera -> setTargetPosition(tarPos);
