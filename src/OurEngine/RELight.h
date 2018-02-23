@@ -28,20 +28,23 @@ class RELight {
         /**
          * @brief 
          * 
+         * @param tX 
+         * @param tY 
+         * @param tZ 
          */
-        void rotate();
+        void rotate(f32 rX, f32 rY, f32 rZ, f32 angle);
 
         /**
          * @brief 
          * 
          */
-        void scale();
+        void scale(f32 sX, f32 sY, f32 sZ);
 
         /**
          * @brief 
          * 
          */
-        void translate();
+        void translate(f32 tX, f32 tY, f32 tZ);
 
     private:
 
