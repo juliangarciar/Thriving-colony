@@ -63,10 +63,10 @@ class RamaEngine {
          * 
          * @return TNode* 
          */
-        TNode* getSceneNode();
+        TNode* getRootNode();
 
     private:
-        TNode* sceneNode;
+        TNode* rootNode;
 };
 
 #endif

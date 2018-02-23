@@ -5,6 +5,7 @@
 
 #include "Resource.h"
 #include <OurEngine/TResourceMesh.h>
+#include <OurEngine/TMaterial.h>
 #include <MathEngine/Vector2.h>
 #include <MathEngine/Vector3.h>
 

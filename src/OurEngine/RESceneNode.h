@@ -1,31 +1,31 @@
-#ifndef REANIMATION_H
-#define REANIMATION_H
+#ifndef RESCENENODE_H
+#define RESCENENODE_H
 
 #include <vector>
 #include <algorithm>
 #include <Types.h>
 #include "TNode.h"
-#include "TAnimation.h"
+#include "REMesh.h"
 #include "TTransform.h"
 
 
 
-class REAnimation {
+class RESceneNode {
     public:
         /**
          * @brief 
          * 
          * @param parent 
          */
-        REAnimation(TNode* parent);
+        RESceneNode(TNode* parent);
 
         /**
          * @brief 
          * 
          */
-        ~REAnimation();
+        ~RESceneNode();
 
-        /**
+                /**
          * @brief 
          * 
          */
@@ -43,10 +43,10 @@ class REAnimation {
          */
         void translate();
 
-    private:
-
-        TNode* animationNode, rotationNode, translationNode, scaleNode;
         
+
+    private:
+        TNode* sceneNode, rotationNode, translationNode, scaleNode;
 };
 
 #endif

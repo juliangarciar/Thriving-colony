@@ -6,6 +6,8 @@
 #include <Types.h>
 #include "TNode.h"
 #include "TLight.h"
+#include "TTransform.h"
+
 
 
 class RELight {
@@ -13,9 +15,9 @@ class RELight {
         /**
          * @brief 
          * 
-         * @param sceneNode 
+         * @param parent 
          */
-        RELight(TNode* sceneNode);
+        RELight(TNode* parent);
 
         /**
          * @brief 
@@ -23,7 +25,27 @@ class RELight {
          */
         ~RELight();
 
+        /**
+         * @brief 
+         * 
+         */
+        void rotate();
+
+        /**
+         * @brief 
+         * 
+         */
+        void scale();
+
+        /**
+         * @brief 
+         * 
+         */
+        void translate();
+
     private:
+
+        TNode* lightNode, rotationNode, translationNode, scaleNode;
         
 };
 
