@@ -16,6 +16,6 @@ void SiderurgyNode::question() {
     //std::cout << "Construyo una siderurgia" << std::endl;
     if (IA::Instance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::SiderurgyMetalCost, Enumeration::BuildingCost::SiderurgyCrystalCost)) {
         Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
-        IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
+        IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, false);
     }
 }

@@ -27,6 +27,12 @@ class CameraController {
         ~CameraController();
 
         /**
+         * @brief Inicia el sistema de camara
+         * 
+         */
+        void Init(Vector3<float>);
+
+        /**
 	* @brief Actualiza CameraController
         * @param deltaTime para la interpolacion
 	*/
@@ -55,6 +61,23 @@ class CameraController {
 	 */
         Camera *getCamera();
         
+        /**
+         * @brief 
+         * 
+         * @param i32 
+         */
+        void setZoomDistanceFromTarget(i32);
+        
+        /**
+         * @brief 
+         * 
+         * @param i32 
+         * @param i32 
+         */
+        void setRotateDegrees(i32, i32);
+
+       
+        
     private:
         //Camera
         Camera *camera;
@@ -78,7 +101,7 @@ class CameraController {
         f32 rotSpeed;
         f32 inclSpeed;
         f32 minInclination, maxInclination;
-        Vector2<f32> delta;
+        Vector2<f32> rotateDegrees;
         Vector3<f32> distanceToTarget;
 
         //Camera zoom variables

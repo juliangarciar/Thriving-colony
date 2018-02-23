@@ -16,6 +16,6 @@ void SchoolNode::question() {
     //std::cout << "Contruyo una escuela" << std::endl;
     if (IA::Instance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::SchoolMetalCost, Enumeration::BuildingCost::SchoolCrystalCost)) {
         Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
-        IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::School, true);
+        IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::School, false);
     }
 }

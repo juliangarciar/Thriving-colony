@@ -37,6 +37,10 @@ void ResourceManager::load(std::string path){
         /*Resource *r = new ResourceOBJ();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));*/
+    } else if (extension == "json") {
+        Resource *r = new ResourceJSON();
+        r -> load(path.c_str());
+        resources.insert(std::pair<std::string, Resource*>(path, r));
     } else {
         std::cout << "Error: formato no soportado" << std::endl;
         exit(0);
@@ -46,7 +50,7 @@ void ResourceManager::load(std::string path){
 void ResourceManager::push(std::string path){
     std::size_t found = path.find_last_of(".");
     std::string extension = path.substr(found+1);
-    if (extension == "obj" | extension == "fbx" | extension == "jpg" | extension == "png" | extension == "bmp"){
+    if (extension == "obj" | extension == "fbx" | extension == "jpg" | extension == "png" | extension == "bmp" | extension == "json"){
         threads.push(std::thread([=](){
             load(path);
         }));
@@ -56,7 +60,7 @@ void ResourceManager::push(std::string path){
     }
 }
 
-void ResourceManager::loadResource(std::string path, bool sync = true){
+void ResourceManager::loadResource(std::string path, bool sync){
     if (sync){
         load(path);
     } else {
@@ -71,6 +75,6 @@ Resource *ResourceManager::getResource(std::string path){
         return it -> second;
     } else {
         loadResource(path, false);
-        return NULL;
+        return nullptr;
     }
 }

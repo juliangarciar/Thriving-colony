@@ -16,6 +16,8 @@ class Terrain{
 
         void setTexture(Texture* terrainTexture, Texture* detailTexture);
 
+        void setSize(Vector3<f32>);
+
         Vector3<f32> getPointCollision(Mouse *cursor);
 
         scene::ITerrainSceneNode* getTerrain();

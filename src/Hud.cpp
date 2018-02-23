@@ -153,6 +153,7 @@ void Hud::Init(){
     ///// DEBUG /////
     playerResources = new Panel("Player Resources");
     playerResources ->setVerticalLayout();
+    playerResources -> setSize(Vector2<i32> (200, 230));
     i32 melees = 
         Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
         Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
@@ -194,6 +195,7 @@ void Hud::Init(){
     iaResources = new Panel("IA Resources");
     iaResources -> setVerticalLayout();
     iaResources -> setPosition(Vector2<i32>(1100, 0));
+    iaResources -> setSize(Vector2<i32> (200, 270));
     melees = 
         IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
         IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
@@ -278,7 +280,7 @@ void Hud::Init(){
             b = new Button(mainBuildingTab, "Retract all troops");
             b -> setTooltip("Retract your units back into your town hall");
             b -> setCallback([&]{
-                Game::Instance() -> getEventManager() -> triggerEvent(Enumeration::RetractTroopsHuman);
+                IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::RetractTroopsHuman);
             });
 
             mainBuildingTab->hide();
@@ -409,11 +411,11 @@ void Hud::Init(){
     toastText = new Label(toast, "");
     toast->hide();
 
-    Game::Instance() -> getWindow() -> setGUI();
+    Window::Instance() -> setGUI();
 }
 
 void Hud::Update() { 
-    f32 dt = Game::Instance()  -> getWindow() -> getDeltaTime();
+    f32 dt = Window::Instance() -> getDeltaTime();
     if (debugTimer <= 0) {
         debug();
         debugTimer = 0.5;
@@ -432,6 +434,8 @@ void Hud::Update() {
 void Hud::CleanUp(){
     delete buildingsPanel;
     delete tabContainer;
+    delete playerResources;
+    delete iaResources;
     //ToDo: incompleto
 }
 

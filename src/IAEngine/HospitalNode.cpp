@@ -19,7 +19,7 @@ void HospitalNode::question() {
         //std::cout << "Contruyo un hospital" << std::endl;
         if (IA::Instance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::HospitalMetalCost, Enumeration::BuildingCost::HospitalCrystalCost)) {
             Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
-            IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Hospital, true);
+            IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Hospital, false);
         }
     }
 }

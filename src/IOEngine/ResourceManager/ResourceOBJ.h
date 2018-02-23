@@ -2,6 +2,8 @@
 #define RESOURCEOBJ_H
 
 #include "Resource.h"
+#include <objloader/OBJ_Loader.h>
+#include <OurEngine/TResourceMesh.h>
 
 class ResourceOBJ : public Resource {
     public:
@@ -12,8 +14,10 @@ class ResourceOBJ : public Resource {
 
         void setIdentifier(const char *);
         const char *getIdentifier();
+
+        std::vector<TResourceMesh*> *getOBJMesh();
     private:
-        void *buffer;
+        std::vector<TResourceMesh*> *objMesh;
 };
 
 #endif
