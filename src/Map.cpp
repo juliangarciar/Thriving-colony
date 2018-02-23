@@ -1,6 +1,6 @@
 #include "Map.h"
 #include "Game.h"
-
+#include <WorldEngine/WorldGeometry.h>
 Map* Map::pinstance = 0;
 
 Map* Map::Instance() {
@@ -39,7 +39,7 @@ void Map::Init() {
     iaStartPos.z = Enumeration::IACityHall::ia_z; 
     iaStartPos.y = terrain -> getY(iaStartPos.x, iaStartPos.z);
     mapMaster = MapMaster::Instance();
-
+    WorldGeometry::Instance();
 }
 
 void Map::Input() {
