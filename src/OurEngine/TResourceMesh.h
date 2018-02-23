@@ -16,14 +16,14 @@ class TResourceMesh {
 
         void setMaterial(TMaterial *);
 
-        std::vector<TVertex*> *getVertices();
+        std::vector<TVertex*> getVertices();
         std::vector<u32> getIndices();
         TMaterial *getMaterial();
     private:
         std::string name;
         TMaterial *material;
-        std::vector<TVertex*> *vertices;
-        std::vector<u32> *indices;
+        std::vector<TVertex*> vertices;
+        std::vector<u32> indices;
 };
 
 #endif

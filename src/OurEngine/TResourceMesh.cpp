@@ -1,34 +1,33 @@
 #include "TResourceMesh.h"
 
 TResourceMesh::TResourceMesh(std::string) {
-    vertices = new std::vector<TVertex*>();
-    indices = new std::vector<u32>();
+    
 }
 
 TResourceMesh::~TResourceMesh() {
 
 }
 
-void addVertex(TVertex *v){
+void TResourceMesh::addVertex(TVertex *v){
     vertices.push_back(v);
 }
 
-void addIndex(u32 i){
+void TResourceMesh::addIndex(u32 i){
     indices.push_back(i);
 }
 
-void setMaterial(TMaterial *m){
+void TResourceMesh::setMaterial(TMaterial *m){
     material = m;
 }
 
-std::vector<TVertex*> *getVertices(){
+std::vector<TVertex*> TResourceMesh::getVertices(){
     return vertices;
 }
 
-std::vector<u32> getIndices(){
+std::vector<u32> TResourceMesh::getIndices(){
     return indices;
 }
 
-TMaterial *getMaterial(){
+TMaterial *TResourceMesh::getMaterial(){
     return material;
 }
