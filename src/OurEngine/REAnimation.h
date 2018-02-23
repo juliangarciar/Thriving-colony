@@ -48,7 +48,10 @@ class REAnimation {
 
     private:
 
-        TNode* animationNode, rotationNode, translationNode, scaleNode;
+        TNode* animationNode;
+        TNode* rotationNode;
+        TNode* translationNode;
+        TNode* scaleNode;
         
 };
 

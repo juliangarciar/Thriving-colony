@@ -48,7 +48,10 @@ class RELight {
 
     private:
 
-        TNode* lightNode, rotationNode, translationNode, scaleNode;
+        TNode* lightNode;
+        TNode* rotationNode;
+        TNode* translationNode;
+        TNode* scaleNode;
         
 };
 

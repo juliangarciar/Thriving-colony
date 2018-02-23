@@ -48,7 +48,10 @@ class REMesh {
 
     private:
 
-        TNode* meshNode, rotationNode, translationNode, scaleNode;
+        TNode* meshNode;
+        TNode* rotationNode;
+        TNode* translationNode;
+        TNode* scaleNode;
         
 };
 

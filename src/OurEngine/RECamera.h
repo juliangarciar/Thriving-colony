@@ -50,7 +50,10 @@ class RECamera {
 
     private:
 
-        TNode* cameraNode, rotationNode, translationNode, scaleNode;
+        TNode* cameraNode;
+        TNode* rotationNode;
+        TNode* translationNode;
+        TNode* scaleNode;
         
 };
 

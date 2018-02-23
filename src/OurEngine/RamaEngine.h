@@ -9,6 +9,7 @@
 #include "RECamera.h"
 #include "RELight.h"
 #include "REMesh.h"
+#include "RESceneNode.h"
 
 class RamaEngine {
     public:
@@ -55,6 +56,13 @@ class RamaEngine {
         /**
          * @brief 
          * 
+         * @return RESceneNode* 
+         */
+        RESceneNode* createRESceneNode();
+
+        /**
+         * @brief 
+         * 
          */
         void draw();
 
@@ -65,8 +73,15 @@ class RamaEngine {
          */
         TNode* getRootNode();
 
+        /**
+         * @brief 
+         * 
+         */
+        RESceneNode* getDefaultLayer();
+
     private:
         TNode* rootNode;
+        RESceneNode* defaultLayer;
 };
 
 #endif
