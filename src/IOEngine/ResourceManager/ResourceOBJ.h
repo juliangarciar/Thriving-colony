@@ -4,6 +4,7 @@
 #include "Resource.h"
 #include <objloader/OBJ_Loader.h>
 #include <OurEngine/TResourceMesh.h>
+#include <OurEngine/TMaterial.h>
 
 class ResourceOBJ : public Resource {
     public:
