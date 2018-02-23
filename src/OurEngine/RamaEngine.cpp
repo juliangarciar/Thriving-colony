@@ -1,33 +1,33 @@
 #include "RamaEngine.h"
 
 RamaEngine::RamaEngine() {
-    sceneNode = new TNode();
+    rootNode = new TNode();
 }
 
 RamaEngine::~RamaEngine() {
-    delete sceneNode;
+    delete rootNode;
 }
 
 RELight* RamaEngine::createRELight() {
-    return new RELight(sceneNode);
+    return new RELight(rootNode);
 }
 
 RECamera* RamaEngine::createRECamera() {
-    return new RECamera(sceneNode);
+    return new RECamera(rootNode);
 }
 
 REMesh* RamaEngine::createREMesh() {
-    return new REMesh(sceneNode);
+    return new REMesh(rootNode);
 }
 
 REAnimation* RamaEngine::createREAnimation() {
-    return new REAnimation(sceneNode);
+    return new REAnimation(rootNode);
 }
 
 void RamaEngine::draw() {
-    sceneNode -> draw();
+    rootNode -> draw();
 }
 
-TNode* RamaEngine::getSceneNode() {
-    return sceneNode;
+TNode* RamaEngine::getRootNode() {
+    return rootNode;
 }

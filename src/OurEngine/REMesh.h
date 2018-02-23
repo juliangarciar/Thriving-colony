@@ -6,6 +6,8 @@
 #include <Types.h>
 #include "TNode.h"
 #include "TMesh.h"
+#include "TTransform.h"
+
 
 
 class REMesh {
@@ -13,9 +15,9 @@ class REMesh {
         /**
          * @brief 
          * 
-         * @param sceneNode 
+         * @param parent 
          */
-        REMesh(TNode* sceneNode);
+        REMesh(TNode* parent);
 
         /**
          * @brief 
@@ -23,7 +25,27 @@ class REMesh {
          */
         ~REMesh();
 
+        /**
+         * @brief 
+         * 
+         */
+        void rotate();
+
+        /**
+         * @brief 
+         * 
+         */
+        void scale();
+
+        /**
+         * @brief 
+         * 
+         */
+        void translate();
+
     private:
+
+        TNode* meshNode, rotationNode, translationNode, scaleNode;
         
 };
 
