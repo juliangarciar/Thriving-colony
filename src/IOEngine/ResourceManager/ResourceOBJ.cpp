@@ -17,9 +17,9 @@ void ResourceOBJ::load(const char *path){
         exit(0);
     }
 
-    for (int i = 0; i < Loader.LoadedMeshes.size(); i++) {
+    for (int i = 0; i < loader.LoadedMeshes.size(); i++) {
         // Copy one of the loaded meshes to be our current mesh
-        objl::Mesh curMesh = Loader.LoadedMeshes[i];
+        objl::Mesh curMesh = loader.LoadedMeshes[i];
 
         TResourceMesh *tempMesh = new TResourceMesh(curMesh.MeshName);
 
@@ -27,11 +27,11 @@ void ResourceOBJ::load(const char *path){
             Vector3<float> position(curMesh.Vertices[j].Position.X, curMesh.Vertices[j].Position.Y, curMesh.Vertices[j].Position.Z);
 			Vector3<float> normal(curMesh.Vertices[j].Normal.X, curMesh.Vertices[j].Normal.Y, curMesh.Vertices[j].Normal.Z);
 			Vector2<float> textureCoordinate(curMesh.Vertices[j].TextureCoordinate.X, curMesh.Vertices[j].TextureCoordinate.Y);
-            tempMesh.addVertex(new Vertex(position, normal, textureCoordinate));
+            tempMesh -> addVertex(new TVertex(position, normal, textureCoordinate));
         }
 
         for (int j = 0; j < curMesh.Indices.size(); j++) {
-            tempMesh.addIndex(curMesh.Indices[j]);
+            tempMesh -> addIndex(curMesh.Indices[j]);
         }
         
         file << "Material: " << curMesh.MeshMaterial.name << "\n";
