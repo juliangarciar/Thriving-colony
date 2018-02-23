@@ -148,27 +148,26 @@ Vector3<f32> IA::determinatePositionBuilding() {
 }
 
 bool IA::getUnderAttack() {
-    if(underAttack == false){
-        Vector3<f32> *pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
-        i32 requesterRange = 1000;
-        
-        f32 xaux = 0;
-        f32 yaux = 0;
-        f32 dist = 0;
+    underAttack = false;
+    Vector3<f32> *pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
+    i32 requesterRange = 1000;
+    
+    f32 xaux = 0;
+    f32 yaux = 0;
+    f32 dist = 0;
 
-        // Get units in the map of the opposing team
-        std::map<i32, Unit*> *inMapTroops = Human::Instance() -> getUnitManager() -> getInMapTroops();
-        // Iterate through the map
-        for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
-            if (it -> second != NULL) {
-            // Calculate distance between troop requesting target and posible targets
-                xaux = it -> second -> getPosition() -> x - pos -> x;
-                yaux = it -> second -> getPosition() -> y - pos -> y;
-                dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
+    // Get units in the map of the opposing team
+    std::map<i32, Unit*> *inMapTroops = Human::Instance() -> getUnitManager() -> getInMapTroops();
+    // Iterate through the map
+    for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
+        if (it -> second != NULL) {
+        // Calculate distance between troop requesting target and posible targets
+            xaux = it -> second -> getPosition() -> x - pos -> x;
+            yaux = it -> second -> getPosition() -> y - pos -> y;
+            dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
 
-                if (dist <= requesterRange) {
-                    underAttack = true;
-                }
+            if (dist <= requesterRange) {
+                underAttack = true;
             }
         }
     }

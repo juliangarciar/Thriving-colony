@@ -134,7 +134,7 @@ bool BehaviourTree::evaluateWallNeed() {
 }
 
 bool BehaviourTree::readyToAttack() {
-    return false;
+    return (IA::Instance() -> getArmyLevel() >= attackThreshold);
 }
 
 /**

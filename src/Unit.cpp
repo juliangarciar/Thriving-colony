@@ -68,7 +68,7 @@ void Unit::Init() {
                 path = L"media/unitModels/Soldado_Melee_Drorania.obj";
             } else if (breed == Enumeration::BreedType::Kaonov) {
                 moveSpeed = 420;
-                attackDamage = 15;
+                attackDamage = 1000;
                 attackRange = 100;
                 attackSpeed = 1;
                 viewRadius = 450;
@@ -336,6 +336,7 @@ void Unit::Init() {
         default: break;
     }
     setModel(layer, path);
+    preTaxPlayer();
 }
 
 void Unit::update() {

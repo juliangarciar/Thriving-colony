@@ -169,7 +169,7 @@ void GameState::Input() {
             }
         } else {
             g -> getMouse() -> changeIcon(CURSOR_NORMAL);
-        }  
+        }
     } else {
         pauseMenu -> update();
     }
