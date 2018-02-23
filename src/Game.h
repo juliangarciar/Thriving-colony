@@ -7,11 +7,9 @@
 #include "WinState.h"
 #include "DefeatState.h"
 
-#include <IOEngine/Mouse.h>
-#include <IOEngine/Keyboard.h>
-#include <IOEngine/EventSystem.h>
-
 #include <GraphicEngine/Window.h>
+
+#include <IOEngine/IO.h>
 
 #include <SoundEngine/SoundSystem.h>
 
@@ -56,26 +54,6 @@ class Game {
         void changeState(Enumeration::State);
 
         /**
-		 * @brief Devuelve la ventana actual
-         * @return Devuelve un objeto tipo Window
-		 */
-        Window *getWindow();
-         /**
-		 * @brief Devuelve la tecla actual
-         * @return Devuelve un objeto tipo Keyboard
-		 */
-        Keyboard *getKeyboard();
-         /**
-		 * @brief Devuelve las coordenadas del raton
-         * @return Devuelve un objeto tipo getCursor
-		 */
-        Mouse *getMouse();
-         /**
-		 * @brief Devuelve el evento actual
-         * @return Devuelve un objeto tipo EventSystem
-		 */
-        EventSystem *getEventManager();
-        /**
 		 * @brief Devuelve el menu actual
          * @return Devuelve un objeto tipo MenuState
 		 */
@@ -117,11 +95,7 @@ class Game {
         DefeatState *defeat;
         
         Window *window;
-
-        Mouse *cursor;
-        Keyboard *keyboard;
-
-        EventSystem *events;
+        IO *io;
         
         SoundSystem *soundSystem;
 };

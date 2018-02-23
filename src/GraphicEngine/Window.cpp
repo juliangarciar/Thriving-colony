@@ -38,7 +38,10 @@ Window::Window(i32 width, i32 height) {
     params.IgnoreInput = true;
     params.WindowSize = core::dimension2du(windowWidth, windowHeight);
     device = createDeviceEx(params);
-    if (!device) exit(0); 
+    if (!device) {
+        std::cout << "Failed to initialize Irrlicht" << std::endl;
+        exit(0); 
+    }
 
     // create video driver
 	driver = device -> getVideoDriver();
@@ -76,7 +79,7 @@ Window::Window(i32 width, i32 height) {
 
 Window::~Window() {
     //ToDo: borrar device
-    //device = NULL; 
+    //device = nullptr; 
 }
 
 void Window::setGUI(){ 

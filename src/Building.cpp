@@ -1,16 +1,19 @@
 #include "Building.h"
 #include "Game.h"
+#include "WorldGeometry/CellSpacePartition.h"
+#define MAX_MAP 10240
+#define TOTAL 80
 
 Building::Building(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::BuildingType t) : Entity(id, team, breed) {
     buildTimer = 0;
     layer = l;
     type = t;
+    entityType = Enumeration::EntityType::Building;
 
     Init();
 }
 
 Building::~Building() {
-    
 }
 
 void Building::Init() {
@@ -171,7 +174,7 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::SiderurgyCrystalCost;
             kCells = Enumeration::BuildingCells::SiderurgyCells;
 
-            path = L"media/buildingModels/escuela.obj";
+            path = L"media/buildingModels/siderurgia.obj";
             scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::School:
@@ -192,7 +195,7 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::SchoolCrystalCost;
             kCells = Enumeration::BuildingCells::SchoolCells;
 
-            path = L"media/buildingModels/siderurgia.obj";
+            path = L"media/buildingModels/escuela.obj";
             scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::Tower:
@@ -280,7 +283,7 @@ void Building::update() {
             callback(this);
         } else {
             // This update is called once every second
-            buildTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
+            buildTimer -= Window::Instance() -> getDeltaTime();
         }
     }
 }

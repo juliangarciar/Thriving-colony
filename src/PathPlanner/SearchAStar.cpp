@@ -34,7 +34,7 @@ void SearchAStar::Search(){
 
             double GCost = m_GCosts[NextClosestNode] + pE->getCost();
 
-            if(m_searchFrontier[pE->getTo()] == NULL){
+            if(m_searchFrontier[pE->getTo()] == nullptr){
                 m_FCosts[pE->getTo()] = GCost + HCost;
                 m_GCosts[pE->getTo()] = GCost;
 
@@ -42,7 +42,7 @@ void SearchAStar::Search(){
 
                 m_searchFrontier[pE->getTo()] = pE;
             }
-            else if((GCost < m_GCosts[pE->getTo()]) && (m_shortestPathTree[pE->getTo()] == NULL)){
+            else if((GCost < m_GCosts[pE->getTo()]) && (m_shortestPathTree[pE->getTo()] == nullptr)){
                 m_FCosts[pE->getTo()] = GCost + HCost;
                 m_GCosts[pE->getTo()] = GCost;
 

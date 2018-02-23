@@ -66,6 +66,9 @@ void NeutralTree::question() {
  * Determines wheter or not you are ready to attack
  */
 bool NeutralTree::readyToAttack() {
-    //ToDo: Determinar cuando se esta listo
-    return false;
+    if (IA::Instance() -> getArmyLevel() > IA::Instance() -> getTree() -> getAttackThreshold()) {
+        return true;
+    } else{
+        return false;
+    }
 }

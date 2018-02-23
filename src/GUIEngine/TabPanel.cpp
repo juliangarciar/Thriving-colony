@@ -39,7 +39,7 @@ Tab *TabPanel::createTab(std::string title){
 } 
 
 Tab *TabPanel::getTab(i32 index){
-    if (index < 0 || index > tabs.size()) return NULL; 
+    if (index < 0 || index > tabs.size()) return nullptr; 
     else return tabs.at(index);
 }
 

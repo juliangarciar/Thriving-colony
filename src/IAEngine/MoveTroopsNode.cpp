@@ -14,5 +14,5 @@ MoveTroopsNode::~MoveTroopsNode(){
 void MoveTroopsNode::question() {
     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::Attacking);
     //ToDo: Fijar centro de mando como objetivo
-    Game::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::DeployTroopsIA);
+    IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::DeployTroopsIA);
 }

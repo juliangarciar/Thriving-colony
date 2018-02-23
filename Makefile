@@ -3,12 +3,14 @@
 
 # Name of the executable created
 TARGET = ThrivingColony
+# Project root
+PROJECTROOT = .
 # Path for the executable
-BINPATH = bin
+BINPATH = $(PROJECTROOT)/bin
 # Path for the .o files
-BUILDPATH = obj
+BUILDPATH = $(PROJECTROOT)/obj
 # Path for the source files
-SOURCEPATH = src
+SOURCEPATH = $(PROJECTROOT)/src
 #Directories
 SOURCE_DIRS = . MathEngine GraphicEngine GUIEngine IOEngine SoundEngine IAEngine OurEngine PathPlanner WorldGeometry IOEngine/ResourceManager
 #C++ compiler
@@ -18,11 +20,11 @@ CXX = clang++
 # FLAGS
 ####
 # Include paths
-CPPFLAGS = -I/usr/include -I./include -I/usr/include/eigen3 -I./include/nanovg -I./$(SOURCEPATH)
+CPPFLAGS = -I/usr/include -I/usr/include/eigen3 -I$(PROJECTROOT)/include -I$(PROJECTROOT)/include/nanovg -I$(SOURCEPATH)
 # Compiler params
-CPPFLAGS += -O3 -ffast-math -g -Wall -Wno-macro-redefined -std=c++11 -m64 -pthread -DGL_GLEXT_PROTOTYPES
+CPPFLAGS += -O3 -ffast-math -g -Wall -Wno-macro-redefined -Wno-unsequenced -std=c++11 -m64 -pthread -DGL_GLEXT_PROTOTYPES
 # Lib paths
-LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L./lib
+LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L$(PROJECTROOT)/lib
 # Libs
 LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lXrandr -lXinerama -lXi -lpthread -ldl -lrt -lglfw -lIrrlicht -lnanogui -lfmod -lfmodstudio
 ###-lfmodex_vc.lib -lfmod -lfmodasdL

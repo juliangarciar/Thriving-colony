@@ -17,6 +17,6 @@ void QuarryNode::question() {
     if (IA::Instance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::QuarryMetalCost, Enumeration::BuildingCost::QuarryCrystalCost)) {
         IA::Instance() -> getTree() -> setRequireCrystal(false);
         Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
-        IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Quarry, true);
+        IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Quarry, false);
     }
 }

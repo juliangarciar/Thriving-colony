@@ -1,6 +1,5 @@
 #include "Terrain.h"
 #include "Window.h"
-#define SCALE 40
 using namespace irr;
 
 Terrain::Terrain(const char* heightMap) {
@@ -11,9 +10,9 @@ Terrain::Terrain(const char* heightMap) {
 		-1,										// node id
 		core::vector3df(0.f, 0.f, 0.f),			// position
 		core::vector3df(0.f, 0.f, 0.f),			// rotation
-		core::vector3df(SCALE, SCALE / 2, SCALE),		// scale
+		core::vector3df(0, 0, 0),				// scale
 		video::SColor ( 255, 255, 255, 255 ), 	// vertexColor
-		5,										// maxLOD
+		2,										// maxLOD
 		scene::ETPS_9,							// patchSize
 		4										// smoothFactor
     );
@@ -34,6 +33,14 @@ void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture) {
 	terrain -> setMaterialTexture(1, detailTexture -> getTexture());
 	terrain -> setMaterialType(video::EMT_DETAIL_MAP);
     terrain -> scaleTexture(1.0f, 20.0f);
+}
+
+void Terrain::setSize(Vector3<f32> s){
+	Window *sc = Window::Instance();
+	terrain -> setScale(s.getVectorF());
+	selector = sc -> getSceneManager() -> createTerrainTriangleSelector(terrain);
+    terrain -> setTriangleSelector(selector);
+    collisionManager = sc -> getSceneManager() -> getSceneCollisionManager();
 }
 
 Vector3<f32> Terrain::getPointCollision(Mouse *cursor){

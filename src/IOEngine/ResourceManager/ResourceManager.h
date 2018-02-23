@@ -6,6 +6,7 @@
 #include <vector>
 #include <thread>
 #include "ResourceOBJ.h"
+#include "ResourceJSON.h"
 #include <Types.h>
 
 class ResourceManager {
@@ -15,7 +16,7 @@ class ResourceManager {
 
         void Update();
 
-        void loadResource(std::string, bool);
+        void loadResource(std::string, bool = true);
 
         Resource *getResource(std::string);
     private:
