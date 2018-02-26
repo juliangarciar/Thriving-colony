@@ -1,5 +1,7 @@
 #include "ResourceOBJ.h"
 
+#include <objloader/OBJ_Loader.h>
+
 ResourceOBJ::ResourceOBJ(){
     objMesh = new std::vector<TResourceMesh*>();
 }
