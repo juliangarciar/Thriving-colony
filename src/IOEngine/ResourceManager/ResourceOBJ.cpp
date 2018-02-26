@@ -36,9 +36,9 @@ void ResourceOBJ::load(const char *path){
 
         TMaterial *tempMat = new TMaterial();
         tempMat -> setName(curMesh.MeshMaterial.name);
-        tempMat -> setAmbientColor(curMesh.MeshMaterial.Ka);
-        tempMat -> setDiffuseColor(curMesh.MeshMaterial.Kd);
-        tempMat -> setSpecularColor(curMesh.MeshMaterial.Ks);
+        tempMat -> setAmbientColor(Vector3<f32>(curMesh.MeshMaterial.Ka.X, curMesh.MeshMaterial.Ka.Y, curMesh.MeshMaterial.Ka.Z));
+        tempMat -> setDiffuseColor(Vector3<f32>(curMesh.MeshMaterial.Kd.X, curMesh.MeshMaterial.Kd.Y, curMesh.MeshMaterial.Kd.Z));
+        tempMat -> setSpecularColor(Vector3<f32>(curMesh.MeshMaterial.Ks.X, curMesh.MeshMaterial.Ks.Y, curMesh.MeshMaterial.Ks.Z));
         tempMat -> setSpecularExponent(curMesh.MeshMaterial.Ns);
         tempMat -> setOpticalDensity(curMesh.MeshMaterial.Ni);
         tempMat -> setDissolve(curMesh.MeshMaterial.d);

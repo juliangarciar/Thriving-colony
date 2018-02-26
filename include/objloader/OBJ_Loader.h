@@ -1,6 +1,5 @@
-// OBJ_Loader.h - A Single Header OBJ Model Loader
-
-#pragma once
+#ifndef OBJLOADER_H
+#define OBJLOADER_H
 
 // Iostream - STD I/O Library
 #include <iostream>
@@ -1131,3 +1130,5 @@ namespace objl
 		}
 	};
 }
+
+#endif
