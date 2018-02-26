@@ -27,26 +27,29 @@ void ResourceOBJ::load(const char *path){
             Vector3<float> position(curMesh.Vertices[j].Position.X, curMesh.Vertices[j].Position.Y, curMesh.Vertices[j].Position.Z);
 			Vector3<float> normal(curMesh.Vertices[j].Normal.X, curMesh.Vertices[j].Normal.Y, curMesh.Vertices[j].Normal.Z);
 			Vector2<float> textureCoordinate(curMesh.Vertices[j].TextureCoordinate.X, curMesh.Vertices[j].TextureCoordinate.Y);
-            tempMesh -> addVertex(new TVertex(position, normal, textureCoordinate));
+            tempMesh -> addVertex(new TVertex(position.getVec3(), normal.getVec3(), textureCoordinate.getVec2()));
         }
 
         for (int j = 0; j < curMesh.Indices.size(); j++) {
             tempMesh -> addIndex(curMesh.Indices[j]);
         }
-        
-        file << "Material: " << curMesh.MeshMaterial.name << "\n";
-        file << "Ambient Color: " << curMesh.MeshMaterial.Ka.X << ", " << curMesh.MeshMaterial.Ka.Y << ", " << curMesh.MeshMaterial.Ka.Z << "\n";
-        file << "Diffuse Color: " << curMesh.MeshMaterial.Kd.X << ", " << curMesh.MeshMaterial.Kd.Y << ", " << curMesh.MeshMaterial.Kd.Z << "\n";
-        file << "Specular Color: " << curMesh.MeshMaterial.Ks.X << ", " << curMesh.MeshMaterial.Ks.Y << ", " << curMesh.MeshMaterial.Ks.Z << "\n";
-        file << "Specular Exponent: " << curMesh.MeshMaterial.Ns << "\n";
-        file << "Optical Density: " << curMesh.MeshMaterial.Ni << "\n";
-        file << "Dissolve: " << curMesh.MeshMaterial.d << "\n";
-        file << "Illumination: " << curMesh.MeshMaterial.illum << "\n";
-        file << "Ambient Texture Map: " << curMesh.MeshMaterial.map_Ka << "\n";
-        file << "Diffuse Texture Map: " << curMesh.MeshMaterial.map_Kd << "\n";
-        file << "Specular Texture Map: " << curMesh.MeshMaterial.map_Ks << "\n";
-        file << "Alpha Texture Map: " << curMesh.MeshMaterial.map_d << "\n";
-        file << "Bump Map: " << curMesh.MeshMaterial.map_bump << "\n";
+
+        TMaterial *tempMat = new TMaterial();
+        tempMat -> setName(curMesh.MeshMaterial.name);
+        tempMat -> setAmbientColor(Vector3<f32>(curMesh.MeshMaterial.Ka.X, curMesh.MeshMaterial.Ka.Y, curMesh.MeshMaterial.Ka.Z));
+        tempMat -> setDiffuseColor(Vector3<f32>(curMesh.MeshMaterial.Kd.X, curMesh.MeshMaterial.Kd.Y, curMesh.MeshMaterial.Kd.Z));
+        tempMat -> setSpecularColor(Vector3<f32>(curMesh.MeshMaterial.Ks.X, curMesh.MeshMaterial.Ks.Y, curMesh.MeshMaterial.Ks.Z));
+        tempMat -> setSpecularExponent(curMesh.MeshMaterial.Ns);
+        tempMat -> setOpticalDensity(curMesh.MeshMaterial.Ni);
+        tempMat -> setDissolve(curMesh.MeshMaterial.d);
+        tempMat -> setIllumination(curMesh.MeshMaterial.illum);
+        tempMat -> setAmbientTextureMap(curMesh.MeshMaterial.map_Ka);
+        tempMat -> setDiffuseTextureMap(curMesh.MeshMaterial.map_Kd);
+        tempMat -> setSpecularTextureMap(curMesh.MeshMaterial.map_Ks);
+        tempMat -> setAlphaTextureMap(curMesh.MeshMaterial.map_d);
+        tempMat -> setBumpMap(curMesh.MeshMaterial.map_bump);
+
+        tempMesh ->setMaterial(tempMat);
     }
 }
 

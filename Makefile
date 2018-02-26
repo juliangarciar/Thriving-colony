@@ -22,7 +22,7 @@ CXX = clang++
 # Include paths
 CPPFLAGS = -I/usr/include -I/usr/include/eigen3 -I$(PROJECTROOT)/include -I$(PROJECTROOT)/include/nanovg -I$(SOURCEPATH)
 # Compiler params
-CPPFLAGS += -O3 -ffast-math -g -Wall -Wno-macro-redefined -Wno-unsequenced -std=c++11 -m64 -pthread -DGL_GLEXT_PROTOTYPES
+CPPFLAGS += -O3 -ffast-math -g -Wall -Wno-macro-redefined -Wno-unsequenced -Wno-unused-value -std=c++11 -m64 -pthread -DGL_GLEXT_PROTOTYPES
 # Lib paths
 LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L$(PROJECTROOT)/lib
 # Libs
@@ -40,7 +40,7 @@ OBJ := $(patsubst $(SOURCEPATH)/%.cpp, $(BUILDPATH)/%.o, $(SRC))
 
 all: prepare $(OBJ)
 	$(warning Creando el ejecutable $(Target)...)
-	$(CXX) $(CPPFLAGS) $(OBJ) -o $(EXECUTABLE) $(LDFLAGS) $(LIBS)
+	$(CXX) -v $(CPPFLAGS) $(OBJ) -o $(EXECUTABLE) $(LDFLAGS) $(LIBS)
     
 $(BUILDPATH)/%.o: $(SOURCEPATH)/%.cpp
 	$(warning Creando el binario $@...)

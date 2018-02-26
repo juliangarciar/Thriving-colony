@@ -4,6 +4,7 @@
 #include "TEntity.h"
 #include "TFile.h"
 #include "TResourceMesh.h"
+#include <IOEngine/IO.h>
 
 class TMesh : public TEntity {
     public:
@@ -25,7 +26,7 @@ class TMesh : public TEntity {
          * 
          * @param TFile 
          */
-        void loadMesh(TFile *);
+        void loadMesh(std::string);
 
 
         /**

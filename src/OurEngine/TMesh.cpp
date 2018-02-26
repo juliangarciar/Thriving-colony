@@ -8,8 +8,8 @@ TMesh::~TMesh() {
 
 }
 
-void TMesh::loadMesh(TFile *path) {
-
+void TMesh::loadMesh(std::string path) {
+    IO::Instance()->getResourceManager()->getResource(path);
 }
 
 void TMesh::beginDraw() {

@@ -1,6 +1,6 @@
 #include "TVertex.h"
 
-TVertex::TVertex(Vector3<f32> p, Vector3<f32> n, Vector2<f32> t) {
+TVertex::TVertex(glm::vec3 p, glm::vec3 n, glm::vec2 t) {
     position = p;
     normal = n;
     textureCoordinate = t;
@@ -10,14 +10,14 @@ TVertex::~TVertex() {
 
 }
 
-Vector3<f32> TVertex::getPosition(){
+glm::vec3 TVertex::getPosition(){
     return position;
 }
 
-Vector3<f32> TVertex::getNormal(){
+glm::vec3 TVertex::getNormal(){
     return normal;
 }
 
-Vector2<f32> TVertex::getTextureCoordinate(){
+glm::vec2 TVertex::getTextureCoordinate(){
     return textureCoordinate;
 }
