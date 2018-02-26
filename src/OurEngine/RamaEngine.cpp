@@ -24,10 +24,18 @@ REAnimation* RamaEngine::createREAnimation() {
     return new REAnimation(rootNode);
 }
 
+RESceneNode* RamaEngine::createRESceneNode() {
+    return new RESceneNode(rootNode);
+}
+
 void RamaEngine::draw() {
     rootNode -> draw();
 }
 
 TNode* RamaEngine::getRootNode() {
     return rootNode;
+}
+
+RESceneNode* RamaEngine::getDefaultLayer() {
+    return defaultLayer;
 }

@@ -15,15 +15,17 @@ RECamera::~RECamera() {
     delete cameraNode;
 }
 
-//ToDo: arreglar el casteo
 void RECamera::rotate(f32 rX, f32 rY, f32 rZ, f32 angle) {
-    //rotationNode -> (TTransform)getEntity() -> rotate(rX, rY, rZ, angle);
+    TTransform* t = (TTransform*) rotationNode -> getEntity();
+    t -> rotate(rX, rY, rZ, angle);
 }
 
 void RECamera::scale(f32 sX, f32 sY, f32 sZ) {
-    //scaleNode -> (TTransform)getEntity() -> scale(sX, sY, sZ);
+    TTransform* t = (TTransform*) scaleNode -> getEntity();
+    t -> scale(sX, sY, sZ);
 }
 
 void RECamera::translate(f32 tX, f32 tY, f32 tZ) {
-    //translationNode -> (TTransform)getEntity() -> translate(tX, tY, tZ);
+    TTransform* t = (TTransform*) translationNode -> getEntity();
+    t -> translate(tX, tY, tZ);
 }
