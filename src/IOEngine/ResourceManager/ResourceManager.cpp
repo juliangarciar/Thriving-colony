@@ -68,13 +68,14 @@ void ResourceManager::loadResource(std::string path, bool sync){
     }
 }
 
-Resource *ResourceManager::getResource(std::string path){
+Resource *ResourceManager::getResource(std::string path, bool sync){
     std::map<std::string, Resource*>::iterator it;
     it = resources.find(path);
     if (it != resources.end()){
         return it -> second;
     } else {
-        loadResource(path, false);
-        return nullptr;
+        loadResource(path, sync);
+        if (sync) return getResource(path);
+        else return nullptr;
     }
 }

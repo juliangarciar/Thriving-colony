@@ -1,8 +1,6 @@
 #ifndef RESOURCEOBJ_H
 #define RESOURCEOBJ_H
 
-#include <objloader/OBJ_Loader.h>
-
 #include "Resource.h"
 #include <OurEngine/TResourceMesh.h>
 #include <OurEngine/TMaterial.h>
@@ -21,7 +19,7 @@ class ResourceOBJ : public Resource {
 
         std::vector<TResourceMesh*> *getOBJMesh();
     private:
-        std::vector<TResourceMesh*> *objMesh;
+        std::vector<TResourceMesh*> objMesh;
 };
 
 #endif

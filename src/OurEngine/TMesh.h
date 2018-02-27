@@ -42,7 +42,7 @@ class TMesh : public TEntity {
         virtual void endDraw();
 
     private:
-        TResourceMesh *mesh;
+        std::vector<TResourceMesh*> mesh;
 };
 
 #endif
