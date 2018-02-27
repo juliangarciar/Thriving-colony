@@ -26,10 +26,10 @@ void ResourceOBJ::load(const char *path){
         TResourceMesh *tempMesh = new TResourceMesh(curMesh.MeshName);
 
         for (int j = 0; j < curMesh.Vertices.size(); j++) {
-            Vector3<float> position(curMesh.Vertices[j].Position.X, curMesh.Vertices[j].Position.Y, curMesh.Vertices[j].Position.Z);
-			Vector3<float> normal(curMesh.Vertices[j].Normal.X, curMesh.Vertices[j].Normal.Y, curMesh.Vertices[j].Normal.Z);
-			Vector2<float> textureCoordinate(curMesh.Vertices[j].TextureCoordinate.X, curMesh.Vertices[j].TextureCoordinate.Y);
-            tempMesh -> addVertex(new TVertex(position.getVec3(), normal.getVec3(), textureCoordinate.getVec2()));
+            glm::vec3 position(curMesh.Vertices[j].Position.X, curMesh.Vertices[j].Position.Y, curMesh.Vertices[j].Position.Z);
+			glm::vec3 normal(curMesh.Vertices[j].Normal.X, curMesh.Vertices[j].Normal.Y, curMesh.Vertices[j].Normal.Z);
+			glm::vec2 textureCoordinate(curMesh.Vertices[j].TextureCoordinate.X, curMesh.Vertices[j].TextureCoordinate.Y);
+            tempMesh -> addVertex(TVertex(position.getVec3(), normal.getVec3(), textureCoordinate.getVec2()));
         }
 
         for (int j = 0; j < curMesh.Indices.size(); j++) {
@@ -53,6 +53,14 @@ void ResourceOBJ::load(const char *path){
 
         tempMesh ->setMaterial(tempMat);
     }
+}
+
+void ResourceOBJ::release(){
+    for (int i=0; i < objMesh->size(); i++){
+        delete objMesh->at(i);
+    }
+    objMesh->clear();
+    delete objMesh;
 }
 
 void ResourceOBJ::setIdentifier(const char *i){

@@ -13,6 +13,7 @@ class ResourceOBJ : public Resource {
         ~ResourceOBJ();
 
         void load(const char *path);
+        void release();
 
         void setIdentifier(const char *);
         const char *getIdentifier();

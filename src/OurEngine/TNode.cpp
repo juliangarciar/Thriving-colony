@@ -18,7 +18,7 @@ TNode::TNode(TEntity *t, TNode *p){
 
 TNode::~TNode(){
     if (entity != nullptr) delete entity;
-    if (parent != nullptr) delete parent;
+    if (parent != nullptr) parent->removeChild(this);
     for (int i = 0; i < children.size(); i++){
         delete children[i];
     }

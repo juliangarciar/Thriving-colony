@@ -3,10 +3,9 @@
 
 #include <map>
 #include <queue>
-#include <vector>
 #include <thread>
-#include "ResourceOBJ.h"
-#include "ResourceJSON.h"
+
+#include "Resource.h"
 #include <Types.h>
 
 class ResourceManager {

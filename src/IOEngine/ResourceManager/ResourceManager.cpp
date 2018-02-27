@@ -1,5 +1,9 @@
 #include "ResourceManager.h"
 
+#include "ResourceOBJ.h"
+#include "ResourceJSON.h"
+#include "ResourceGLSL.h"
+
 ResourceManager::ResourceManager(){
     
 }
@@ -21,26 +25,30 @@ void ResourceManager::load(std::string path){
         Resource *r = new ResourceOBJ();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
-    } else if (extension == "fbx"){
-    /* Resource *r = new ResourceOBJ();
-        r -> load(path.c_str());
-        resources.insert(std::pair<std::string, Resource*>(path, r));*/
-    } else if (extension == "jpg"){
-        /*Resource *r = new ResourceOBJ();
-        r -> load(path.c_str());
-        resources.insert(std::pair<std::string, Resource*>(path, r));*/
-    } else if (extension == "png"){
-        /*Resource *r = new ResourceOBJ();
-        r -> load(path.c_str());
-        resources.insert(std::pair<std::string, Resource*>(path, r));*/
-    } else if (extension == "bmp"){
-        /*Resource *r = new ResourceOBJ();
-        r -> load(path.c_str());
-        resources.insert(std::pair<std::string, Resource*>(path, r));*/
     } else if (extension == "json") {
         Resource *r = new ResourceJSON();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
+    } else if (extension == "glsl") {
+        Resource *r = new ResourceGLSL();
+        r -> load(path.c_str());
+        resources.insert(std::pair<std::string, Resource*>(path, r));
+    } else if (extension == "fbx"){
+        //Resource *r = new ResourceFBX();
+        //r -> load(path.c_str());
+        //resources.insert(std::pair<std::string, Resource*>(path, r));
+    } else if (extension == "jpg"){
+        //Resource *r = new ResourceOBJ();
+        //r -> load(path.c_str());
+        //resources.insert(std::pair<std::string, Resource*>(path, r));
+    } else if (extension == "png"){
+        //Resource *r = new ResourceOBJ();
+        //r -> load(path.c_str());
+        //resources.insert(std::pair<std::string, Resource*>(path, r));
+    } else if (extension == "bmp"){
+        //Resource *r = new ResourceOBJ();
+        //r -> load(path.c_str());
+        //resources.insert(std::pair<std::string, Resource*>(path, r));
     } else {
         std::cout << "Error: formato no soportado" << std::endl;
         exit(0);
