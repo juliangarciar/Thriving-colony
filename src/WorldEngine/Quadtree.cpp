@@ -2,28 +2,48 @@
 #include "Cell.h"
 #include <MathEngine/Vector2.h>
 #include <MathEngine/Box2D.h>
-Quadtree::Quadtree(Vector2<f32>& position, i32 length, i32 width, i32 deepValue){
-    Vector2<f32> topLeft;
-    topLeft.x = position.x - width / 2;
-    topLeft.y = position.y - length / 2;
-    Vector2<f32> botRight;
-    botRight.x = position.x + width / 2;
-    botRight.y = position.y + length / 2;
-    hitBox = Box2D(topLeft, botRight);
+#include <Building.h>
+Quadtree::Quadtree(Vector2<f32> positionData, Box2D hitboxData, i32 deepValue){
+    position = positionData;
+    hitBox = hitboxData;
     deep = deepValue;
+    //std::cout << "I'm a Quadtree, and my deep is: " << deepValue <<  " and m y position is: " << positionData.x << "," << positionData.y << "\n";      
+    //std::cout << "My hitbox is: " << hitboxData.Left() << "," << hitboxData.Top() << ":" << hitboxData.Right() << "," << hitboxData.Bottom() << "\n";                                                           
+/* Initilize the innerCells */
     innerCells = std::vector<Cell*>();
+/* If is not the last layer, create another one */
     if(deep != 0){
         innerTrees = std::vector<Quadtree*>(4);
-        f32 halfSizeX = width / 2;
-        f32 halfSizeY = length / 2;
-        for(i32 i = 0; i < 2; i++){
-            for(i32 j = 0; j < 2; j++){
-                Vector2<f32> tmp;
-                tmp.x = (i * halfSizeX) + (halfSizeX / 2); 
-                tmp.y = (j * halfSizeY) + (halfSizeY / 2);
-                innerTrees[i] = new Quadtree(&tmp, halfSizeX, halfSizeY, deep--);
-            }
-        }
+        Vector2<f32> newTopLeft;
+        Vector2<f32> newBottomRight;
+        Vector2<f32> newCenter;
+        Box2D newHitbox;
+        f32 halfSize = (hitBox.Right() - hitBox.Left()) / 2; 
+        i32 newDeep = deep - 1;
+    /* Quad tree nº0 */
+        newCenter = (hitBox.Center() + hitBox.TopLeft()) / 2;
+        newTopLeft = hitBox.TopLeft();
+        newBottomRight = hitBox.Center();
+        newHitbox = Box2D(newTopLeft, newBottomRight);
+        innerTrees[0] = new Quadtree(newCenter, newHitbox, newDeep);
+    /* Quad tree nº1 */
+        newCenter = (hitBox.TopRight() - hitBox.Center()) / 2;
+        newTopLeft.x += halfSize;
+        newBottomRight.x += halfSize;
+        newHitbox = Box2D(newTopLeft, newBottomRight);
+        innerTrees[1] = new Quadtree(newCenter, newHitbox, newDeep);
+    /* Quad tree nº2 */
+        newCenter = (hitBox.Center() - hitBox.BottomLeft()) / 2;
+        newTopLeft.y += halfSize;
+        newBottomRight.y += halfSize;
+        newHitbox = Box2D(newTopLeft, newBottomRight);
+        innerTrees[2] = new Quadtree(newCenter, newHitbox, newDeep);
+    /* Quad tree nº3 */
+        newCenter = (hitBox.BottomRight() - hitBox.Center()) / 2;
+        newTopLeft.x -= halfSize;
+        newBottomRight.x -= halfSize;
+        newHitbox = Box2D(newTopLeft, newBottomRight);
+        innerTrees[3] = new Quadtree(newCenter, newHitbox, newDeep);
     }
 }
 Quadtree::~Quadtree(){
@@ -41,41 +61,84 @@ void Quadtree::Clear(){
     if(!innerCells.empty())
         innerCells.clear();
 }
-bool Quadtree::insertCell(Cell* cellPtr){
+void Quadtree::insertCell(Cell* cellPtr){
     if(this->deep == 0){
         innerCells.push_back(cellPtr);
     }
     else{
         for(i32 i = 0; i < 4; i++){
-            if(innerTrees[i]->getHitbox().isOverlappedWith(cellPtr->getHitBox())){
+            if(innerTrees[i]->getHitbox().isOverlappedWith(cellPtr->getHitbox())){
                 innerTrees[i]->insertCell(cellPtr);
                 break;
             }
         }
     }
 }
-bool Quadtree::canBuild(Box2D& otherHitbox){
-    bool tmp = true;
+void Quadtree::insertBuilding(Building* buildingPtr){
+    if(this->deep == 0){
+        //std::cout << "Asignando edificio a quadtree \n";
+        for(i32 i = 0; i < innerCells.size(); i++){
+            if(innerCells[i]->getHitbox().isOverlappedWith(buildingPtr->getHit()) && innerCells[i]->getInhabitingBuilding() == NULL){
+                innerCells[i]->setInhabitingBuilding(buildingPtr);
+                //std::cout << "Asignando edificio a celula \n";
+            }
+        }
+    }
+    else{
+        for(i32 i = 0; i < 4; i++){
+            if(innerTrees[i]->getHitbox().isOverlappedWith(buildingPtr->getHit())){
+                innerTrees[i]->insertBuilding(buildingPtr);
+            }
+        }
+    }
+}
+void Quadtree::assignNeighbors(Cell* cellPtr){
     if(this->deep == 0){
         for(i32 i = 0; i < innerCells.size(); i++){
-            if(innerCells[i].getHitbox().isOverlappedWith(otherHitbox)){
-                tmp = false;
-                return tmp;
+            if(innerCells[i]->getHitbox().isOverlappedWith(cellPtr->getHitbox().getAmplifiedBox(5.f))){
+                if(innerCells[i] != cellPtr)
+                    cellPtr->setNeighbor(innerCells[i]);
+            }
+        }
+        //std::cout << "K vecinos = " << cellPtr->getNeighbors().size() << "\n";
+    }
+    else{
+        for(i32 i = 0; i < 4; i++){
+            if(innerTrees[i]->getHitbox().isOverlappedWith(cellPtr->getHitbox().getAmplifiedBox(5.f))){
+                innerTrees[i]->assignNeighbors(cellPtr);
+            }
+        }
+    }
+}
+bool Quadtree::canBuild(Box2D otherHitbox){
+    bool newCenter = false;
+    
+    if(this->deep == 0){
+        for(i32 i = 0; i < innerCells.size(); i++){
+            if(innerCells[i]->getHitbox().isOverlappedWith(otherHitbox) && innerCells[i]->getInhabitingBuilding() != NULL){
+                newCenter = true;
+                return newCenter;
             }
         }
     }
     else{
         for(i32 i = 0; i < 4; i++){
             if(innerTrees[i]->getHitbox().isOverlappedWith(otherHitbox)){
-                tmp = innerTrees[i]->canBuild(otherHitbox);
-                if(!tmp){
-                    return tmp;
+                if(deep == 1){
+                    std::cout << "Estas en el Quadtree: " << i << "\n";
+                }
+                newCenter = innerTrees[i]->canBuild(otherHitbox);
+                if(newCenter){
+                    return newCenter;
                 }
             }
         }
     }
-    return tmp;
+    return newCenter;
 }
-Box2D& Quadtree::getHitbox(){
+Box2D Quadtree::getHitbox(){
     return hitBox;
+}
+Vector2<f32> Quadtree::getPosition(){
+    return position;
 }

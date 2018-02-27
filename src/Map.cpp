@@ -38,8 +38,7 @@ void Map::Init() {
     iaStartPos.x = Enumeration::IACityHall::ia_x;
     iaStartPos.z = Enumeration::IACityHall::ia_z; 
     iaStartPos.y = terrain -> getY(iaStartPos.x, iaStartPos.z);
-    mapMaster = MapMaster::Instance();
-    WorldGeometry::Instance();
+    WorldGeometry* newSystem = WorldGeometry::Instance();
 }
 
 void Map::Input() {

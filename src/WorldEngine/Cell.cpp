@@ -3,16 +3,10 @@
 #include <MathEngine/Vector2.h>
 #include <Building.h>
 #include <Unit.h>
-Cell::Cell(Vector2<f32>& vectorPosition, i32 idx, i32 halfsize){
-    this->position = vectorPosition;
-    this->index = idx;
-    Vector2<f32> topLeft;
-    topLeft.x = vectorPosition.x - halfsize;
-    topLeft.y = vectorPosition.y - halfsize;
-    Vector2<f32> botRight;
-    botRight.x = vectorPosition.x + halfsize;
-    botRight.y = vectorPosition.y + halfsize;
-    hitBox = Box2D(topLeft, botRight);
+Cell::Cell(Vector2<f32> vectorPosition, Box2D hitboxData, i32 idx){
+    position = vectorPosition;
+    hitBox = hitboxData;
+    index = idx;
     inhabitingBuilding = NULL;
     inhabitingUnits = std::vector<Unit*>();
     neighbors = std::vector<Cell*>();
@@ -51,19 +45,19 @@ void Cell::Clear(){
     inhabitingUnits.clear();
     neighbors.clear();
 }
-Box2D& Cell::getHitBox(){
+Box2D Cell::getHitbox(){
     return hitBox;
 }
-Vector2<f32>& Cell::getPosition(){
+Vector2<f32> Cell::getPosition(){
     return position;
 }
 Building* Cell::getInhabitingBuilding(){
     return inhabitingBuilding;
 }
-std::vector<Unit*> Cell::getInhabitingUnits(){
+const std::vector<Unit*>& Cell::getInhabitingUnits(){
     return inhabitingUnits;
 }
-std::vector<Cell*> Cell::getNeighbors(){
+const std::vector<Cell*>& Cell::getNeighbors(){
     return neighbors;
 }
 i32 Cell::getIndex(){

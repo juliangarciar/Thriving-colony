@@ -7,8 +7,6 @@
 #include <GraphicEngine/Light.h>
 
 #include <Types.h>
-#include <WorldGeometry/MapMaster.h>
-
 /**
  * @class Map
  * @brief Singleton del mapa
@@ -93,7 +91,6 @@ class Map {
 
         //For raycast
         Vector3<f32> collisionPoint;
-        MapMaster* mapMaster;
 };
 
 #endif

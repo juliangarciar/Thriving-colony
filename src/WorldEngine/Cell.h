@@ -1,31 +1,31 @@
-#ifndef CELL2_H
-#define CELL2_H
+#ifndef CELL_H
+#define CELL_H
+
 #include <vector>
 #include <Types.h>
-class Box2D;
+#include <MathEngine/Vector2.h>
+#include <MathEngine/Box2D.h>
+
 class Building;
 class Unit;
-class Vector2;
 class Cell{
     private:
-        Box2D& hitBox;
-        Vector2<f32>& position;
+        Vector2<f32> position;
+        Box2D hitBox;
+        i32 index;
         Building* inhabitingBuilding;
         std::vector<Unit*> inhabitingUnits;
         std::vector<Cell*> neighbors;
-        i32 index;
         bool blocked;
     public:
         /**
          * @brief Constructs a cell that represents a portion of the map that knows who's inhabitating him
          * 
-         * @param vectorPosition Position of the map where the cell is allocated
-         * 
-         * @param idx The index of the cell (only called from the WorldGeometry)
-         * 
-         * @param halfisze Halfisze of the total size of a cell (only called from the WorldGeometry)
+         * @param vectorPosition The position where the cell is consctructed around
+         * @param hitboxData The hitbos that represents the cell collision
+         * @param idx Index given by the worldGeometry array in order to fast acces 
          */
-        Cell(Vector2<f32>& vectorPosition, i32 idx, i32 halfsize);
+        Cell(Vector2<f32> vectorPosition, Box2D hitboxData, i32 idx);
         /**
          * @brief Standard destructor
          * 
@@ -63,12 +63,12 @@ class Cell{
         /**
          * @brief Set if the cell is transversable or not
          * 
-         * @param data 
+         * @param data True if represents a blocked portion of the map, false else
          */
         void setBlocked(bool data);
         /**
          * @brief Prepares the cell for a new instance of the game, clearing
-         * what's inside the cell
+         * what's inside this
          */
         void Clear();
         /**
@@ -76,13 +76,13 @@ class Cell{
          * 
          * @return Box2D& 
          */
-        Box2D& getHitBox();
+        Box2D getHitbox();
         /**
          * @brief Gives information about this cell's position
          * 
-         * @return Vector2<f32>& 
+         * @return Vector2<f32> 
          */
-        Vector2<f32>& getPosition();
+        Vector2<f32> getPosition();
         /**
          * @brief Gives information about the building inhabiting this cell (0 if none)
          * 
@@ -92,15 +92,15 @@ class Cell{
         /**
          * @brief Gives information about the units ihabiting this cell (size == 0 if none)
          * 
-         * @return std::vector<Unit*> 
+         * @return std::vector<Unit*>&
          */
-        std::vector<Unit*> getInhabitingUnits();
+        const std::vector<Unit*>& getInhabitingUnits();
         /**
          * @brief Gives information about the cells surrounding this cell (3 at least)
          * 
-         * @return std::vector<Cell*> 
+         * @return std::vector<Cell*>& 
          */
-        std::vector<Cell*> getNeighbors();
+        const std::vector<Cell*>& getNeighbors();
         /**
          * @brief Returns the index of the cell (only called from WorldGeometry)
          * 

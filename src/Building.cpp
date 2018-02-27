@@ -1,6 +1,5 @@
 #include "Building.h"
 #include "Game.h"
-#include "WorldGeometry/CellSpacePartition.h"
 #define MAX_MAP 10240
 #define TOTAL 80
 
@@ -38,7 +37,7 @@ void Building::Init() {
             metalCost = Enumeration::BuildingCost::BarnMetalCost;
             crystalCost = Enumeration::BuildingCost::BarnCrystalCost;
             kCells = Enumeration::BuildingCells::BarnCells;
-
+            
             path = L"media/buildingModels/establo.obj";
             scale = Vector3<f32>(25,25,25);
         break;

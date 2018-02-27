@@ -21,6 +21,9 @@ Entity::Entity(i32 id, Enumeration::Team t, Enumeration::BreedType b) {
     happiness = 0;
     citizens = 0;
     cityLevel = 0;
+
+    /* Added by Julian */
+    hitBox = Box2D();
 }
 
 Entity::~Entity() {
@@ -69,6 +72,15 @@ void Entity::setPosition(Vector3<f32> vectorData) {
     position -> set(vectorData);
     model -> setPosition(vectorData);
     hitbox -> set(model -> getBoundingBox());
+    /* Added by Julian */
+    /* Create the hitbox in another place */
+    Vector2<f32> topLeft;
+    Vector2<f32> bottomRight;
+    topLeft.x = vectorData.x - 120.f;
+    topLeft.y = vectorData.z - 120.f;
+    bottomRight.x = vectorData.x + 120.f;
+    bottomRight.y = vectorData.z + 120.f;
+    hitBox = Box2D(topLeft, bottomRight);
 }
 
 void Entity::setColor(irr::video::SColor c){
@@ -134,4 +146,7 @@ irr::video::SColor Entity::getCurrentColor() {
 }
 i32 Entity::getCells(){
     return kCells;
+}
+Box2D Entity::getHit(){
+    return hitBox;
 }

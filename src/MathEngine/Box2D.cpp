@@ -1,6 +1,6 @@
 #include "Box2D.h"
 Box2D::Box2D(){
-    
+
 }
 Box2D::Box2D(Vector2<f32> tl, Vector2<f32> br){
     m_vTopLeft = tl;
@@ -10,14 +10,9 @@ Box2D::Box2D(Vector2<f32> tl, Vector2<f32> br){
     m_vTopRight.y = tl.y;
     m_vBottomLeft.x = tl.x;
     m_vBottomLeft.y = br.y;
-    //m_vTopLeft(tl),
-    //m_vBottomRight(br),
-    //m_vCenter((tl+br)/2.0),
-    //m_vTopRight(Vector2<f32>(br.x, tl.y)),
-    //m_vBottomLeft(Vector2<f32>(tl.x, br.y))
-
 }
-bool Box2D::isOverlappedWith(Box2D& other){
+/* TODO: Check this method, maybe is missfunctional */
+bool Box2D::isOverlappedWith(Box2D other){
     return !((other.Top() > this->Bottom()) ||
         (other.Bottom() < this->Top()) ||
         (other.Left() > this->Right()) ||
@@ -38,15 +33,22 @@ Vector2<f32> Box2D::TopRight(){
 Vector2<f32> Box2D::BottomLeft(){
     return m_vBottomLeft;
 }
-double    Box2D::Top(){
+f32 Box2D::Top(){
     return m_vTopLeft.y;
 }
-double    Box2D::Left(){
+f32 Box2D::Left(){
     return m_vTopLeft.x;
 }
-double    Box2D::Bottom(){
+f32 Box2D::Bottom(){
     return m_vBottomRight.y;
 }
-double    Box2D::Right(){
+f32 Box2D::Right(){
     return m_vBottomRight.x;
+}
+Box2D Box2D::getAmplifiedBox(f32 distance){
+    Vector2<f32> amp = Vector2<f32>(distance, distance);
+    Vector2<f32> tL = m_vTopLeft - amp;
+    Vector2<f32> bR = m_vBottomRight + amp;
+    Box2D dummy = Box2D(tL, bR);
+    return dummy;
 }

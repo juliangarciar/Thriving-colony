@@ -1,7 +1,6 @@
 #include "BuildingManager.h"
 #include "Game.h"
-
-#include <WorldGeometry/MapMaster.h>
+#include <WorldEngine/WorldGeometry.h>
 
 BuildingManager::BuildingManager(Enumeration::Team t, Enumeration::BreedType b) {
 	team = t;
@@ -65,10 +64,13 @@ void BuildingManager::drawBuilding() {
         //f32 z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
 	// Change 2nd parameter
 		bool collision = false;
-		Vector3<f32> dummy = MapMaster::Instance()->getGeometry()->correctBuildingPosition(xyzPointCollision, tempBuilding, collision);
+		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(xyzPointCollision.toVector2(), tempBuilding, collision);
 		//std::cout << "Position: " << dummy.x << "," << dummy.y << "," << dummy.z << "\n";
-		dummy.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.z);
-		tempBuilding -> setPosition (dummy);
+		Vector3<f32> dummy2;
+		dummy2.x = dummy.x;
+		dummy2.z = dummy.y;
+		dummy2.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y);
+		tempBuilding -> setPosition (dummy2);
 
 		//Pressing the right mouse button cancels the building
 		if (g -> getMouse() -> rightMouseDown()){
@@ -92,7 +94,7 @@ void BuildingManager::drawBuilding() {
 			//If there is no collision and the player press left button of the mouse, build the building
 			if (g -> getMouse() -> leftMouseDown()) {
 				buildingMode = false;
-				buildBuilding(dummy, tempBuilding -> getType());
+				buildBuilding(dummy2, tempBuilding -> getType());
 				
 			}
 		}
@@ -146,7 +148,7 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 
 	if (instabuild) tempBuilding -> triggerFinishedCallback();    
 	// Added by Julian
-	MapMaster::Instance()->getGeometry()->updateBuildingCell(tempBuilding);
+	WorldGeometry::Instance()->build(tempBuilding);
 	tempBuilding = NULL;
 	nextBuildingId++;
 }

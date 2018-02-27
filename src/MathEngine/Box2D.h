@@ -13,7 +13,7 @@
 //-----------------------------------------------------------------------------
 
 #include "Vector2.h"
-
+#include <Types.h>
 class Box2D
 {
     private:
@@ -32,17 +32,18 @@ class Box2D
     // Constructor
         Box2D(Vector2<f32> tl, Vector2<f32> br);
     // Returns true if overlaps with another Box2D
-        bool isOverlappedWith( Box2D& other);
+        bool isOverlappedWith( Box2D other);
     // Getters
         Vector2<f32> TopLeft();
         Vector2<f32> BottomRight();
         Vector2<f32> Center();
         Vector2<f32> TopRight();
         Vector2<f32> BottomLeft();
-        double    Top();
-        double    Left();
-        double    Bottom();
-        double    Right();
+        f32 Top();
+        f32 Left();
+        f32 Bottom();
+        f32 Right();
+        Box2D getAmplifiedBox(f32 distance);
 };
   
 #endif /* BOX2D_H */
