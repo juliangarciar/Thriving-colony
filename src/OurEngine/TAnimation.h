@@ -2,6 +2,7 @@
 #define TANIMATION_H
 
 #include "TEntity.h"
+#include "TMesh.h"
 
 class TAnimation : public TEntity {
     public:
@@ -15,9 +16,29 @@ class TAnimation : public TEntity {
          * @brief Destructor for an animation entity.
          * 
          */
-        ~TAnimation();
+        virtual ~TAnimation();
+
+        /**
+         * @brief 
+         * 
+         */
+        void beginDraw();
+        
+        /**
+         * @brief 
+         * 
+         */
+        void endDraw();
+
+        /**
+         * @brief 
+         * 
+         */
+        void setAnimation(TMesh);
+
 
     private:
+        std::vector<TMesh> animation;
 
 };
 
