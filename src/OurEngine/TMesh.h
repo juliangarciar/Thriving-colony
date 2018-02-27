@@ -2,7 +2,6 @@
 #define TMESH_H
 
 #include "TEntity.h"
-#include "TFile.h"
 #include "TResourceMesh.h"
 #include <IOEngine/IO.h>
 
