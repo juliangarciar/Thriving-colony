@@ -4,7 +4,7 @@
 #include <string>
 #include "TColor.h"
 #include <Types.h>
-#include "../MathEngine/Vector3.h"
+#include <glm/glm.hpp>
 
 class TMaterial {
     public:
@@ -14,14 +14,14 @@ class TMaterial {
         void setName(std::string newName);
         std::string getName();
 
-        void setAmbientColor(Vector3<f32> aC);
-        Vector3<f32> getAmbientColor();
+        void setAmbientColor(glm::vec3 aC);
+        glm::vec3 getAmbientColor();
 
-        void setDiffuseColor(Vector3<f32> dC);
-        Vector3<f32> getDiffuseColor();
+        void setDiffuseColor(glm::vec3 dC);
+        glm::vec3 getDiffuseColor();
 
-        void setSpecularColor(Vector3<f32> sC);
-        Vector3<f32> getSpecularColor();
+        void setSpecularColor(glm::vec3 sC);
+        glm::vec3 getSpecularColor();
 
         void setSpecularExponent(f32 sE);
         f32 getSpecularExponent();
@@ -52,9 +52,9 @@ class TMaterial {
 
     private:
         std::string materialName;
-        Vector3<f32> ambientColor;
-        Vector3<f32> diffuseColor;
-        Vector3<f32> specularColor;
+        glm::vec3 ambientColor;
+        glm::vec3 diffuseColor;
+        glm::vec3 specularColor;
         f32 specularExponent;
         f32 opticalDensity;
         f32 dissolve;

@@ -8,6 +8,7 @@ RamaEngine::RamaEngine() {
     sceneNodes = new std::vector<TNode*>();
     // Create default layer
     createRESceneNode();
+    initializeOPenGL();
 }
 
 RamaEngine::~RamaEngine() {
@@ -19,6 +20,13 @@ RamaEngine::~RamaEngine() {
     delete lights;
     sceneNodes -> clear();
     delete sceneNodes;
+}
+
+void RamaEngine::initializeOPenGL() {
+    if (glewInit() != GLEW_OK) {
+        std::cout << "Failed to initialize GLEW" << std:endl;
+        return -1;
+    }
 }
 
 RELight* RamaEngine::createRELight() {

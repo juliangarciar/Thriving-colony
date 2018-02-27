@@ -1,6 +1,7 @@
 #ifndef RAMAENGINE_H
 #define RAMAENGINE_H
 
+#include <GL/glew.h>
 #include <vector>
 #include <algorithm>
 #include <Types.h>
@@ -25,6 +26,12 @@ class RamaEngine {
          * 
          */
         ~RamaEngine();
+
+        /**
+         * @brief 
+         * 
+         */
+        void initializeOPenGL();
 
         /**
          * @brief 
@@ -135,8 +142,6 @@ class RamaEngine {
         static RamaEngine* instance;
 
         TNode* rootNode;
-        // Aqui o en el registro?
-        RESceneNode* defaultLayer;
 
         // Punteros?
         std::vector<TNode*> *cameras;
