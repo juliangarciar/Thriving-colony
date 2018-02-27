@@ -121,3 +121,7 @@ f32 TCamera::getLeft(){
 f32 TCamera::getRight(){
     return right;
 }
+
+glm::mat4 TCamera::getViewMatrix() {
+    return viewMatrix;
+}
