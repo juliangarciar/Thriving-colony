@@ -395,7 +395,11 @@ i32 UnitManager::getTroopAmount(Enumeration::UnitType t){
 }
 
 bool UnitManager::areTroopsDeployed(){
-    return (inHallTroops->size() == 0);
+    return (inHallTroops -> size() == 0);
+}
+
+bool UnitManager::areTroopsInMap(){
+    return (inMapTroops -> size() != 0);
 }
 
 //Returns the amount of troops

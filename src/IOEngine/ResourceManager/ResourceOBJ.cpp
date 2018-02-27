@@ -1,5 +1,7 @@
 #include "ResourceOBJ.h"
 
+#include <objloader/OBJ_Loader.h>
+
 ResourceOBJ::ResourceOBJ(){
     objMesh = new std::vector<TResourceMesh*>();
 }
@@ -27,11 +29,11 @@ void ResourceOBJ::load(const char *path){
             Vector3<float> position(curMesh.Vertices[j].Position.X, curMesh.Vertices[j].Position.Y, curMesh.Vertices[j].Position.Z);
 			Vector3<float> normal(curMesh.Vertices[j].Normal.X, curMesh.Vertices[j].Normal.Y, curMesh.Vertices[j].Normal.Z);
 			Vector2<float> textureCoordinate(curMesh.Vertices[j].TextureCoordinate.X, curMesh.Vertices[j].TextureCoordinate.Y);
-            tempMesh->addVertex(new TVertex(position.getVec3(), normal.getVec3(), textureCoordinate.getVec2()));
+            tempMesh -> addVertex(new TVertex(position.getVec3(), normal.getVec3(), textureCoordinate.getVec2()));
         }
 
         for (int j = 0; j < curMesh.Indices.size(); j++) {
-            tempMesh->addIndex(curMesh.Indices[j]);
+            tempMesh -> addIndex(curMesh.Indices[j]);
         }
 
         TMaterial *tempMat = new TMaterial();

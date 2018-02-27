@@ -3,6 +3,7 @@
 #include "ResourceNode.h"
 #include "HomeNode.h"
 #include "ArmyNode.h"
+#include "RetractTroopsNode.h"
 #include <IA.h>
 
 HappyTree::HappyTree(Node *fatherPnt) : BehaviourTree() {
@@ -24,11 +25,12 @@ HappyTree::HappyTree(Node *fatherPnt) : BehaviourTree() {
     siegeThreshold = 0.05;
 
     father = fatherPnt;
-    children = new Node*[4];
-    children[0] = new HomeNode(this);
-    children[1] = new ServiceNode(this);
-    children[2] = new ResourceNode(this);
-    children[3] = new ArmyNode(this);
+    children = new Node*[5];
+    children[0] = new RetractTroopsNode(this);
+    children[1] = new HomeNode(this);
+    children[2] = new ServiceNode(this);
+    children[3] = new ResourceNode(this);
+    children[4] = new ArmyNode(this);
 }
  
 HappyTree::~HappyTree() {
@@ -37,25 +39,29 @@ HappyTree::~HappyTree() {
 }
 
 void HappyTree::question() {
-    //First branch: Homes
-    if (IA::Instance() -> getTree() -> calculateCitizensRate() < IA::Instance() -> getTree() -> getCitizensThreshold()) {
+    if (IA::Instance() -> getUnitManager() -> areTroopsInMap() == true) {
         children[0] -> question();
-    } else{
-        //Second branch: Services
-        if (IA::Instance() -> getHappiness() < IA::Instance() -> getTree() -> getHappinessThreshold()) {
+    } else {
+        //First branch: Homes
+        if (IA::Instance() -> getTree() -> calculateCitizensRate() < IA::Instance() -> getTree() -> getCitizensThreshold()) {
             children[1] -> question();
-        } else {
-            //Third branch: Resources
-            if (IA::Instance() -> getTree() -> needResourcesInvestment()) {
+        } else{
+            //Second branch: Services
+            if (IA::Instance() -> getHappiness() < IA::Instance() -> getTree() -> getHappinessThreshold()) {
                 children[2] -> question();
             } else {
-                //Fourth branch: Army
-                if (IA::Instance() -> getTree() -> needArmyInvestment()) {
+                //Third branch: Resources
+                if (IA::Instance() -> getTree() -> needResourcesInvestment()) {
                     children[3] -> question();
                 } else {
-                    //std::cout << "No hago nada" << std::endl;
-                    // Ultima oportunidad
-                    children[0] -> question();
+                    //Fourth branch: Army
+                    if (IA::Instance() -> getTree() -> needArmyInvestment()) {
+                        children[4] -> question();
+                    } else {
+                        //std::cout << "No hago nada" << std::endl;
+                        // Ultima oportunidad
+                        children[1] -> question();
+                    }
                 }
             }
         }
