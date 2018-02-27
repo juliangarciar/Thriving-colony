@@ -35,11 +35,15 @@ class AStar{
          */
         ~AStar();
         /**
-         * @brief Search for a path to the constructor's targetCell
+         * @brief Calculates the shortes path from sourceCell to targetCell
          * 
-         * @return std::vector<Cell*> Returns a vector of cells that indicates the path to follow
          */
         void Search();
+        /**
+         * @brief returns the calculated path
+         * 
+         * @return std::vector<Cell*> 
+         */
         std::vector<Cell*> getPath();
 };
 #endif /* ASTAR_H */

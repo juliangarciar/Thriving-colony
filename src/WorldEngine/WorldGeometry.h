@@ -65,6 +65,13 @@ class WorldGeometry{
          */
         Cell* positionToCell(Vector2<f32> position);
         /**
+         * @brief Returns a cell from an index
+         * 
+         * @param index The index in the cell's vector
+         * @return Cell* The indexed cell
+         */
+        Cell* indexToCell(i32 index);
+        /**
          * @brief Calculates the distance between two given points, it doesn't matter the order
          * 
          * @param a Point 1

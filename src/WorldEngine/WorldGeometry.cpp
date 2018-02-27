@@ -194,6 +194,9 @@ Cell* WorldGeometry::positionToCell(Vector2<f32> position){
 
     return mCells.at(idx);
 }
+Cell* WorldGeometry::indexToCell(i32 index){
+    return mCells[index];
+}
 f32 WorldGeometry::calculateDistance(Vector2<f32> a, Vector2<f32> b){
     f32 dX = b.x - a.x;
     f32 dY = b.y - a.y;

@@ -31,12 +31,13 @@ void AStar::Search(){
     while(!pq.empty()){
         i32 closestIndex = pq.Pop();
     /* Adds the cell to the path vector */
-        shortestPath[NextClosestNode] = searchFrontier[NextClosestNode];
+        shortestPath[closestIndex] = searchFrontier[closestIndex];
 
     /* Stop condition, research about a system of conditions */
         if(closestIndex == targetIndex) {
             /* Do more things, like making the path of vectors */
-            return shortestPath;
+            std::cout << "Path finded. \n";
+            return ;
         }
     /* Get neighbors of the chosen cell */
         std::vector<Cell*> neighbors = worldGeometry->getNeighbors(closestIndex);
@@ -52,15 +53,14 @@ void AStar::Search(){
                     GCosts[potentialNode] = GCost;
 
                     pq.insert(potentialNode);
-                    searchFrontier[potentialNode] = neighbors[i];
+                    searchFrontier[potentialNode] = worldGeometry->indexToCell(closestIndex);
                 }
             /* Fix this method, isn't working properly */
-                else if((GCost < GCosts[potentialNode]) && (searchedCells[potentialNode] == 0)){
-                //else if((GCost < GCosts[potentialNode])){
+                else if((GCost < GCosts[potentialNode]) && (shortestPath[potentialNode] == 0)){
                     FCosts[potentialNode] = GCost + HCost;
                     GCosts[potentialNode] = GCost;
 
-                    searchFrontier[potentialNode] = neighbors[i];
+                    searchFrontier[potentialNode] = worldGeometry->indexToCell(closestIndex);
                 }    
             }
         }
@@ -72,14 +72,14 @@ std::vector< Vector2<f32> > AStar::getPath(){
     if (targetIndex < 0)  return path;    
 
     i32 nd = targetIndex;
-    pathDummy.push_front(nd);
+    pathDummy.push_front(targetCell->getPosition());
 
     while ((nd != sourceIndex) && ( searchFrontier[nd] != 0))
     {
         nd =  shortestPath[nd]->getIndex();
 
-        path.push_front(nd);
+        pathDummy.push_front(worldGeometry->indexToCell(nd)->getPosition());
     }
-    path.push_front(sourceIndex);
+    pathDummy.push_front(sourceCell->getPosition());
     return dummyPath;
 }
