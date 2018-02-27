@@ -1,10 +1,13 @@
 #ifndef RESOURCEOBJ_H
 #define RESOURCEOBJ_H
 
-#include "Resource.h"
 #include <objloader/OBJ_Loader.h>
+
+#include "Resource.h"
 #include <OurEngine/TResourceMesh.h>
 #include <OurEngine/TMaterial.h>
+#include <MathEngine/Vector2.h>
+#include <MathEngine/Vector3.h>
 
 class ResourceOBJ : public Resource {
     public:

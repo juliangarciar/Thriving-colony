@@ -1,6 +1,5 @@
-// OBJ_Loader.h - A Single Header OBJ Model Loader
-
-#pragma once
+#ifndef OBJLOADER_H
+#define OBJLOADER_H
 
 // Iostream - STD I/O Library
 #include <iostream>
@@ -271,7 +270,7 @@ namespace objl
 			float a = 1 - y - b;
 
 			// Projected point
-			Vector3  p = (a * tri1) + (b * tri2) + (y * tri3);
+			//Vector3  p = (a * tri1) + (b * tri2) + (y * tri3);
 
 			if (a >= 0 && a <= 1
 				&& b >= 0 && b <= 1
@@ -1131,3 +1130,5 @@ namespace objl
 		}
 	};
 }
+
+#endif

@@ -17,9 +17,9 @@ void ResourceOBJ::load(const char *path){
         exit(0);
     }
 
-    for (int i = 0; i < Loader.LoadedMeshes.size(); i++) {
+    for (int i = 0; i < loader.LoadedMeshes.size(); i++) {
         // Copy one of the loaded meshes to be our current mesh
-        objl::Mesh curMesh = Loader.LoadedMeshes[i];
+        objl::Mesh curMesh = loader.LoadedMeshes[i];
 
         TResourceMesh *tempMesh = new TResourceMesh(curMesh.MeshName);
 
@@ -27,17 +27,18 @@ void ResourceOBJ::load(const char *path){
             Vector3<float> position(curMesh.Vertices[j].Position.X, curMesh.Vertices[j].Position.Y, curMesh.Vertices[j].Position.Z);
 			Vector3<float> normal(curMesh.Vertices[j].Normal.X, curMesh.Vertices[j].Normal.Y, curMesh.Vertices[j].Normal.Z);
 			Vector2<float> textureCoordinate(curMesh.Vertices[j].TextureCoordinate.X, curMesh.Vertices[j].TextureCoordinate.Y);
-            tempMesh.addVertex(new Vertex(position, normal, textureCoordinate));
+            tempMesh->addVertex(new TVertex(position.getVec3(), normal.getVec3(), textureCoordinate.getVec2()));
         }
 
         for (int j = 0; j < curMesh.Indices.size(); j++) {
-            tempMesh.addIndex(curMesh.Indices[j]);
+            tempMesh->addIndex(curMesh.Indices[j]);
         }
-        TMaterial * tempMat = new TMaterial();
+
+        TMaterial *tempMat = new TMaterial();
         tempMat -> setName(curMesh.MeshMaterial.name);
-        tempMat -> setAmbientColor(curMesh.MeshMaterial.Ka);
-        tempMat -> setDiffuseColor(curMesh.MeshMaterial.Kd);
-        tempMat -> setSpecularColor(curMesh.MeshMaterial.Ks);
+        tempMat -> setAmbientColor(Vector3<f32>(curMesh.MeshMaterial.Ka.X, curMesh.MeshMaterial.Ka.Y, curMesh.MeshMaterial.Ka.Z));
+        tempMat -> setDiffuseColor(Vector3<f32>(curMesh.MeshMaterial.Kd.X, curMesh.MeshMaterial.Kd.Y, curMesh.MeshMaterial.Kd.Z));
+        tempMat -> setSpecularColor(Vector3<f32>(curMesh.MeshMaterial.Ks.X, curMesh.MeshMaterial.Ks.Y, curMesh.MeshMaterial.Ks.Z));
         tempMat -> setSpecularExponent(curMesh.MeshMaterial.Ns);
         tempMat -> setOpticalDensity(curMesh.MeshMaterial.Ni);
         tempMat -> setDissolve(curMesh.MeshMaterial.d);
