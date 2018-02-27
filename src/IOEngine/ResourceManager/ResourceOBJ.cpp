@@ -33,7 +33,7 @@ void ResourceOBJ::load(const char *path){
         }
 
         for (int j = 0; j < curMesh.Indices.size(); j++) {
-            tempMesh->addIndex(curMesh.Indices[j]);
+            tempMesh -> addIndex(curMesh.Indices[j]);
         }
 
         TMaterial *tempMat = new TMaterial();

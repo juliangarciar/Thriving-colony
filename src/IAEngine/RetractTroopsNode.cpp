@@ -12,7 +12,6 @@ RetractTroopsNode::~RetractTroopsNode() {
 }
 
 void RetractTroopsNode::question() {
-
     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::RetractingTroops);
     //std::cout << "Me retiro" << std::endl;
     IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::RetractTroopsIA);

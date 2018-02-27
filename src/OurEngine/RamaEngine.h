@@ -1,6 +1,7 @@
 #ifndef RAMAENGINE_H
 #define RAMAENGINE_H
 
+#include <GL/glew.h>
 #include <vector>
 #include <algorithm>
 #include <Types.h>
@@ -13,6 +14,7 @@
 
 class RamaEngine {
     public:
+    
         /**
          * @brief 
          * 
@@ -24,6 +26,12 @@ class RamaEngine {
          * 
          */
         ~RamaEngine();
+
+        /**
+         * @brief 
+         * 
+         */
+        void initializeOPenGL();
 
         /**
          * @brief 
@@ -60,6 +68,35 @@ class RamaEngine {
          */
         RESceneNode* createRESceneNode();
 
+        
+        /**
+         * @brief 
+         * 
+         * @return RELight* 
+         */
+        RELight* createRELight(RESceneNode* layer);
+
+        /**
+         * @brief 
+         * 
+         * @return RECamera* 
+         */
+        RECamera* createRECamera(RESceneNode* layer);
+        
+        /**
+         * @brief 
+         * 
+         * @return REMesh* 
+         */
+        REMesh* createREMesh(RESceneNode* layer);
+        
+        /**
+         * @brief 
+         * 
+         * @return REAnimation* 
+         */
+        REAnimation* createREAnimation(RESceneNode* layer);
+
         /**
          * @brief 
          * 
@@ -79,9 +116,37 @@ class RamaEngine {
          */
         RESceneNode* getDefaultLayer();
 
+        /**
+         * @brief 
+         * 
+         * @param cameraNode 
+         */
+        void registerCamera(TNode* cameraNode);
+
+        /**
+         * @brief 
+         * 
+         * @param lightNode 
+         */
+        void registerLight(TNode* lightNode);
+
+        /**
+         * @brief 
+         * 
+         * @param sceneNode 
+         */
+        void registerSceneNode(TNode* sceneNode);
+
+
     private:
+        static RamaEngine* instance;
+
         TNode* rootNode;
-        RESceneNode* defaultLayer;
+
+        // Punteros?
+        std::vector<TNode*> *cameras;
+        std::vector<TNode*> *lights;
+        std::vector<TNode*> *sceneNodes;
 };
 
 #endif

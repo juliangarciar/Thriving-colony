@@ -18,7 +18,6 @@ DefendNode::~DefendNode() {
 }
 
 void DefendNode::question() {
-    //ToDo: defend
     if (IA::Instance() -> getUnitManager() -> areTroopsDeployed() == false) {
         children[0] -> question();
     } else {

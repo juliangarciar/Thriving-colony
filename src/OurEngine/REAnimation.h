@@ -46,6 +46,7 @@ class REAnimation {
          */
         void translate(f32 tX, f32 tY, f32 tZ);
 
+
     private:
 
         TNode* animationNode;

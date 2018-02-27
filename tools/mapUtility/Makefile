@@ -4,7 +4,7 @@
 # Name of the executable created
 TARGET = test
 # Project root
-PROJECTROOT = ../../..
+PROJECTROOT = ../..
 # Path for the executable
 BINPATH = .
 # Path for the .o files
@@ -12,7 +12,7 @@ BUILDPATH = $(PROJECTROOT)/obj
 # Path for the source files
 SOURCEPATH = $(PROJECTROOT)/src
 #Directories
-SOURCE_DIRS = ../test/mario/mapUtility MathEngine GraphicEngine GUIEngine IOEngine OurEngine IOEngine/ResourceManager
+SOURCE_DIRS = ../tools/mapUtility MathEngine GraphicEngine GUIEngine IOEngine OurEngine IOEngine/ResourceManager
 #C++ compiler
 CXX = clang++
 

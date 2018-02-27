@@ -46,7 +46,12 @@ class RESceneNode {
          */
         void translate(f32 tX, f32 tY, f32 tZ);
 
-        
+        /**
+         * @brief 
+         * 
+         * @return TNode* 
+         */
+        TNode* getSceneNode();
 
     private:
         TNode* sceneNode;
