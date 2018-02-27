@@ -11,7 +11,7 @@ TLight::~TLight(){
 void TLight::beginDraw(){
     if (active) {
         lightPosition = glm::vec4(0,0,0,1) * modelMatrix;//Posicion a partir de la matriz luz
-        //Pasarselo a OpenGL no va aqui?
+        //Pasarselo a OpenGL no va aqui no?
     }
 }
 
