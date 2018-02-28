@@ -15,24 +15,24 @@ std::string TMaterial::getName(){
     return materialName;
 }
 
-void TMaterial::setAmbientColor(Vector3<f32> aC){
+void TMaterial::setAmbientColor(glm::vec3 aC){
     ambientColor = aC;
 }
-Vector3<f32> TMaterial::getAmbientColor(){
+glm::vec3 TMaterial::getAmbientColor(){
     return ambientColor;
 }   
 
-void TMaterial::setDiffuseColor(Vector3<f32> dC){
+void TMaterial::setDiffuseColor(glm::vec3 dC){
     diffuseColor = dC;
 }
-Vector3<f32> TMaterial::getDiffuseColor(){
+glm::vec3 TMaterial::getDiffuseColor(){
     return diffuseColor;
 }
 
-void TMaterial::setSpecularColor(Vector3<f32> sC){
+void TMaterial::setSpecularColor(glm::vec3 sC){
     specularColor = sC;
 }
-Vector3<f32> TMaterial::getSpecularColor(){
+glm::vec3 TMaterial::getSpecularColor(){
     return specularColor;
 }
 

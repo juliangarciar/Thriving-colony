@@ -14,6 +14,7 @@ class ResourceJSON : public Resource {
         ~ResourceJSON();
  
         void load(const char *path);
+        void release();
 
         void setIdentifier(const char *);
         const char *getIdentifier();

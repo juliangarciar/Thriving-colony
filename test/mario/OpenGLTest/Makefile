@@ -2,17 +2,17 @@
 # Created by Mario Gonzalez and Julian Garcia
 
 # Name of the executable created
-TARGET = ThrivingColony
+TARGET = OpenGLTest
 # Project root
-PROJECTROOT = .
+PROJECTROOT = ../../..
 # Path for the executable
-BINPATH = $(PROJECTROOT)/bin
+BINPATH = .
 # Path for the .o files
-BUILDPATH = $(PROJECTROOT)/obj
+BUILDPATH = ./obj
 # Path for the source files
 SOURCEPATH = $(PROJECTROOT)/src
 #Directories
-SOURCE_DIRS = . MathEngine GraphicEngine GUIEngine IOEngine SoundEngine IAEngine OurEngine PathPlanner WorldGeometry IOEngine/ResourceManager
+SOURCE_DIRS = ../test/mario/OpenGLTest IOEngine/ResourceManager OurEngine
 #C++ compiler
 CXX = clang++
 
@@ -22,7 +22,7 @@ CXX = clang++
 # Include paths
 CPPFLAGS = -I/usr/include -I/usr/include/eigen3 -I$(PROJECTROOT)/include -I$(PROJECTROOT)/include/nanovg -I$(SOURCEPATH)
 # Compiler params
-CPPFLAGS += -O3 -ffast-math -g -Wall -Wno-macro-redefined -Wno-unsequenced -Wno-unused-value -std=c++11 -m64 -pthread -DGL_GLEXT_PROTOTYPES
+CPPFLAGS += -O3 -ffast-math -g -Wall -Wno-macro-redefined -std=c++11 -m64 -pthread -DGL_GLEXT_PROTOTYPES
 # Lib paths
 LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L$(PROJECTROOT)/lib
 # Libs

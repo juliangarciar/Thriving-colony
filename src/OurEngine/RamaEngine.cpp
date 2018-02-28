@@ -2,27 +2,27 @@
 
 RamaEngine::RamaEngine() {
     rootNode = new TNode();
-    // Registers
-    cameras = new std::vector<TNode*>();
-    lights = new std::vector<TNode*>();
-    sceneNodes = new std::vector<TNode*>();
     // Create default layer
-    createRESceneNode();
+    defaultSceneNode = createRESceneNode();
+    initializeOpenGL();
 }
 
 RamaEngine::~RamaEngine() {
     delete rootNode;
-    delete defaultLayer;
-    cameras -> clear();
-    delete cameras;
-    lights -> clear();
-    delete lights;
-    sceneNodes -> clear();
-    delete sceneNodes;
+    cameras . clear();
+    lights . clear();
+    sceneNodes . clear();
+}
+
+void RamaEngine::initializeOpenGL() {
+    if (glewInit() != GLEW_OK) {
+        std::cout << "Failed to initialize GLEW" << std::endl;
+        exit(0);
+    }
 }
 
 RELight* RamaEngine::createRELight() {
-    RELight* rel = new RELight(sceneNodes ->at(0));
+    RELight* rel = new RELight(sceneNodes . at(0));
     registerLight(rel -> getLightNode());
     return rel;
 }
@@ -34,7 +34,7 @@ RELight* RamaEngine::createRELight(RESceneNode* layer) {
 }
 
 RECamera* RamaEngine::createRECamera() {
-    RECamera* rec = new RECamera(sceneNodes ->at(0));
+    RECamera* rec = new RECamera(sceneNodes . at(0));
     registerCamera(rec -> getCameraNode());
     return rec;
 }
@@ -76,17 +76,17 @@ TNode* RamaEngine::getRootNode() {
 }
 
 RESceneNode* RamaEngine::getDefaultLayer() {
-    return defaultLayer;
+    return defaultSceneNode;
 }
 
 void RamaEngine::registerCamera(TNode* cameraNode) {
-    cameras -> push_back(cameraNode);
+    cameras . push_back(cameraNode);
 }
 
 void RamaEngine::registerLight(TNode* lightNode) {
-    lights -> push_back(lightNode);
+    lights . push_back(lightNode);
 }
 
 void RamaEngine::registerSceneNode(TNode* sceneNode) {
-    sceneNodes -> push_back(sceneNode);
+    sceneNodes . push_back(sceneNode);
 }

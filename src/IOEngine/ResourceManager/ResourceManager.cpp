@@ -1,5 +1,9 @@
 #include "ResourceManager.h"
 
+#include "ResourceOBJ.h"
+#include "ResourceJSON.h"
+#include "ResourceGLSL.h"
+
 ResourceManager::ResourceManager(){
     
 }
@@ -21,26 +25,30 @@ void ResourceManager::load(std::string path){
         Resource *r = new ResourceOBJ();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
-    } else if (extension == "fbx"){
-    /* Resource *r = new ResourceOBJ();
-        r -> load(path.c_str());
-        resources.insert(std::pair<std::string, Resource*>(path, r));*/
-    } else if (extension == "jpg"){
-        /*Resource *r = new ResourceOBJ();
-        r -> load(path.c_str());
-        resources.insert(std::pair<std::string, Resource*>(path, r));*/
-    } else if (extension == "png"){
-        /*Resource *r = new ResourceOBJ();
-        r -> load(path.c_str());
-        resources.insert(std::pair<std::string, Resource*>(path, r));*/
-    } else if (extension == "bmp"){
-        /*Resource *r = new ResourceOBJ();
-        r -> load(path.c_str());
-        resources.insert(std::pair<std::string, Resource*>(path, r));*/
     } else if (extension == "json") {
         Resource *r = new ResourceJSON();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
+    } else if (extension == "glsl") {
+        Resource *r = new ResourceGLSL();
+        r -> load(path.c_str());
+        resources.insert(std::pair<std::string, Resource*>(path, r));
+    } else if (extension == "fbx"){
+        //Resource *r = new ResourceFBX();
+        //r -> load(path.c_str());
+        //resources.insert(std::pair<std::string, Resource*>(path, r));
+    } else if (extension == "jpg"){
+        //Resource *r = new ResourceOBJ();
+        //r -> load(path.c_str());
+        //resources.insert(std::pair<std::string, Resource*>(path, r));
+    } else if (extension == "png"){
+        //Resource *r = new ResourceOBJ();
+        //r -> load(path.c_str());
+        //resources.insert(std::pair<std::string, Resource*>(path, r));
+    } else if (extension == "bmp"){
+        //Resource *r = new ResourceOBJ();
+        //r -> load(path.c_str());
+        //resources.insert(std::pair<std::string, Resource*>(path, r));
     } else {
         std::cout << "Error: formato no soportado" << std::endl;
         exit(0);
@@ -50,7 +58,7 @@ void ResourceManager::load(std::string path){
 void ResourceManager::push(std::string path){
     std::size_t found = path.find_last_of(".");
     std::string extension = path.substr(found+1);
-    if (extension == "obj" | extension == "fbx" | extension == "jpg" | extension == "png" | extension == "bmp" | extension == "json"){
+    if (extension == "obj" | extension == "fbx" | extension == "glsl" | extension == "json" | extension == "jpg" | extension == "png" | extension == "bmp"){
         threads.push(std::thread([=](){
             load(path);
         }));
@@ -68,13 +76,14 @@ void ResourceManager::loadResource(std::string path, bool sync){
     }
 }
 
-Resource *ResourceManager::getResource(std::string path){
+Resource *ResourceManager::getResource(std::string path, bool sync){
     std::map<std::string, Resource*>::iterator it;
     it = resources.find(path);
     if (it != resources.end()){
         return it -> second;
     } else {
-        loadResource(path, false);
-        return nullptr;
+        loadResource(path, sync);
+        if (sync) return getResource(path);
+        else return nullptr;
     }
 }

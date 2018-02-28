@@ -21,6 +21,10 @@ void ResourceJSON::load(const char *path){
     }
 }
 
+void ResourceJSON::release(){
+    //Release json?
+}
+
 void ResourceJSON::setIdentifier(const char *i){
     identifier = i;
 }
