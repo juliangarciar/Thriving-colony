@@ -250,6 +250,13 @@ class Enumeration {
             Creatures = 15
         };
 
+        enum BehaviourState {
+            Invalid,
+            Success,
+            Failure,
+            Running
+        };
+
     private:
         
         //Old buttons
