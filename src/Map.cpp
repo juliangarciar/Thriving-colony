@@ -1,15 +1,7 @@
 #include "Map.h"
-#include "Game.h"
 
-
-//Para cargar el json:
-//desde aqui
-#include <iostream>
-#include <fstream>
-#include <json/json.hpp>
-
-using json = nlohmann::json;
-//hasta aqui
+#include <Game.h>
+#include <IOEngine/ResourceManager/ResourceJSON.h>
 
 Map* Map::pinstance = 0;
 

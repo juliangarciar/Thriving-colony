@@ -31,7 +31,7 @@ class RamaEngine {
          * @brief 
          * 
          */
-        void initializeOPenGL();
+        void initializeOpenGL();
 
         /**
          * @brief 
@@ -143,10 +143,12 @@ class RamaEngine {
 
         TNode* rootNode;
 
+        RESceneNode *defaultSceneNode;
+
         // Punteros?
-        std::vector<TNode*> *cameras;
-        std::vector<TNode*> *lights;
-        std::vector<TNode*> *sceneNodes;
+        std::vector<TNode*> cameras;
+        std::vector<TNode*> lights;
+        std::vector<TNode*> sceneNodes;
 };
 
 #endif

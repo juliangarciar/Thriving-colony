@@ -27,7 +27,7 @@ void ResourceGLSL::load(const char *path){
             VertexShaderStream.close();
         } else {
             std::cout << "Impossible to open " << file_path << ". Are you in the right directory?" << std::endl;
-            return;
+            exit(0);
         }
 
         GLint vertexResult = GL_FALSE;
@@ -46,7 +46,7 @@ void ResourceGLSL::load(const char *path){
             std::vector<char> VertexShaderErrorMessage(vertexInfoLogLength+1);
             glGetShaderInfoLog(shaderID, vertexInfoLogLength, NULL, &VertexShaderErrorMessage[0]);
             std::cout << &VertexShaderErrorMessage[0] << std::endl;
-            return;
+            exit(0);
         }
 
         type = ShaderType::VERTEX;
@@ -62,7 +62,7 @@ void ResourceGLSL::load(const char *path){
             FragmentShaderStream.close();
         } else {
             std::cout << "Impossible to open " << file_path << ". Are you in the right directory?" << std::endl;
-            return;
+            exit(0);
         }
 
         GLint fragmentResult = GL_FALSE;
@@ -81,12 +81,13 @@ void ResourceGLSL::load(const char *path){
             std::vector<char> FragmentShaderErrorMessage(fragmentInfoLogLength+1);
             glGetShaderInfoLog(shaderID, fragmentInfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
             std::cout << &FragmentShaderErrorMessage[0] << std::endl;
-            return;
+            exit(0);
         }
         
         type = ShaderType::FRAGMENT;
     } else {
         std::cout << "Error, unknown shader type." << std::endl;
+        exit(0);
     }
 }
 

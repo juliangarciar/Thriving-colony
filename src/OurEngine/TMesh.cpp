@@ -10,8 +10,8 @@ TMesh::~TMesh() {
 }
 
 void TMesh::loadMesh(std::string path) {
-    ResourceOBJ *o = (ResourceOBJ*)IO::Instance()->getResourceManager()->getResource(path);
-    mesh = *o->getOBJMesh();
+    //ResourceOBJ *o = (ResourceOBJ*)IO::Instance()->getResourceManager()->getResource(path);
+    //mesh = *o->getOBJMesh();
 }
 
 void TMesh::beginDraw() {

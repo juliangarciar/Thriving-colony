@@ -58,7 +58,7 @@ void ResourceManager::load(std::string path){
 void ResourceManager::push(std::string path){
     std::size_t found = path.find_last_of(".");
     std::string extension = path.substr(found+1);
-    if (extension == "obj" | extension == "fbx" | extension == "jpg" | extension == "png" | extension == "bmp" | extension == "json"){
+    if (extension == "obj" | extension == "fbx" | extension == "glsl" | extension == "json" | extension == "jpg" | extension == "png" | extension == "bmp"){
         threads.push(std::thread([=](){
             load(path);
         }));

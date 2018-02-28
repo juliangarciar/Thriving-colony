@@ -12,7 +12,7 @@ BUILDPATH = ./obj
 # Path for the source files
 SOURCEPATH = $(PROJECTROOT)/src
 #Directories
-SOURCE_DIRS = ../test/mario/OpenGLTest IOEngine/ResourceManager 
+SOURCE_DIRS = ../test/mario/OpenGLTest IOEngine/ResourceManager OurEngine
 #C++ compiler
 CXX = clang++
 
