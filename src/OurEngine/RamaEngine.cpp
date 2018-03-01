@@ -17,7 +17,7 @@ RamaEngine::~RamaEngine() {
     sceneNodes . clear();
 }
 
-void RamaEngine::initializeOpenGL() {
+void RamaEngine::Init(ResourceGLSL*, ResourceGLSL*) {
     // Resource Manager
     ResourceManager *r = new ResourceManager();
 

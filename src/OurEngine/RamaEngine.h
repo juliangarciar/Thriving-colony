@@ -31,7 +31,7 @@ class RamaEngine {
          * @brief 
          * 
          */
-        void initializeOpenGL();
+        void Init(ResourceGLSL*, ResourceGLSL*);
 
         /**
          * @brief 
