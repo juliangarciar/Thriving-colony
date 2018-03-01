@@ -13,7 +13,7 @@ class Sequence : Composite {
         /**
          * @brief Constructor de Sequence
          */
-        Sequence();
+        Sequence(std::vector<Behaviour*>);
         /**
          * @brief Destructor de Sequence
          */
