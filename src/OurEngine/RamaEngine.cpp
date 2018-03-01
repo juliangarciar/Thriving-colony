@@ -1,5 +1,8 @@
 #include "RamaEngine.h"
 
+#include <IOEngine/ResourceManager/ResourceManager.h>
+#include <IOEngine/ResourceManager/ResourceGLSL.h>
+
 RamaEngine::RamaEngine() {
     rootNode = new TNode();
     // Create default layer
@@ -15,10 +18,40 @@ RamaEngine::~RamaEngine() {
 }
 
 void RamaEngine::initializeOpenGL() {
+    // Resource Manager
+    ResourceManager *r = new ResourceManager();
+
     if (glewInit() != GLEW_OK) {
         std::cout << "Failed to initialize GLEW" << std::endl;
         exit(0);
     }
+
+	// Black background
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); //ToDo: configurable?
+
+    // Enable depth test
+    glEnable(GL_DEPTH_TEST);
+
+    // Accept fragment if it closer to the camera than the former one
+    glDepthFunc(GL_LESS);
+
+	// Cull triangles which normal is not towards the camera
+	glEnable(GL_CULL_FACE);
+
+    // Create vertexArray
+	glGenVertexArrays(1, &VertexArrayID);
+	glBindVertexArray(VertexArrayID);
+    
+	// Create and compile our GLSL program from the shaders
+    ResourceGLSL *s = (ResourceGLSL*)r->getResource("vertexShader.glsl", true);
+    ResourceGLSL *s2 = (ResourceGLSL*)r->getResource("fragmentShader.glsl", true);
+
+    // Link the program
+	GLuint programID = glCreateProgram();
+	glAttachShader(programID, s->getShaderID());
+	glAttachShader(programID, s2->getShaderID());
+	glLinkProgram(programID);
+
 }
 
 RELight* RamaEngine::createRELight() {

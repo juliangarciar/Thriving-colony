@@ -149,6 +149,9 @@ class RamaEngine {
         std::vector<TNode*> cameras;
         std::vector<TNode*> lights;
         std::vector<TNode*> sceneNodes;
+
+        // OpenGL
+	    GLuint VertexArrayID;
 };
 
 #endif
