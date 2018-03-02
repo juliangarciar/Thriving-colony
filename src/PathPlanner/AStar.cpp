@@ -69,17 +69,19 @@ void AStar::Search(){
 std::vector< Vector2<f32> > AStar::getPath(){
     std::vector< Vector2<f32> > dummyPath;
     //just return an empty path if no target or no path found
-    if (targetIndex < 0)  return path;    
+    if (targetIndex < 0)  return dummyPath;    
 
     i32 nd = targetIndex;
-    pathDummy.push_front(targetCell->getPosition());
+    
+    dummyPath.push_back(targetCell->getPosition());
 
     while ((nd != sourceIndex) && ( searchFrontier[nd] != 0))
     {
         nd =  shortestPath[nd]->getIndex();
 
-        pathDummy.push_front(worldGeometry->indexToCell(nd)->getPosition());
+        dummyPath.push_back(worldGeometry->indexToCell(nd)->getPosition());
     }
-    pathDummy.push_front(sourceCell->getPosition());
+    dummyPath.push_back(sourceCell->getPosition());
+    
     return dummyPath;
 }

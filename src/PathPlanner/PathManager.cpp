@@ -57,10 +57,13 @@ bool PathManager::createPathTo(Vector2<f32> targetPos){
     // Complete getPathToTarget
     //std::list<i32> dummy = aStar.getPathToTarget();
     std::list< Vector2<f32> > path;
-    std::vector<Cell*> pathCell = astar->Search();
-    std::cout <<"Me muerto "<< pathCell.size() << "\n";
+    std::vector< Vector2<f32> > pathCell;
+    astar->Search();
+    pathCell = astar->getPath();
+    
+    std::cout <<"Me muerto "<< path.size() << "\n";
     for(i32 i = 0; i < pathCell.size(); i++){
-        path.push_back(pathCell[i]->getPosition());
+        path.push_back(pathCell[i]);
     }
     //std::cout <<"Me muerto \n";
     //path.push_back(targetPos);

@@ -29,7 +29,7 @@ class AStar{
          * @param target The target cell where the unit pretend to go
          */
         AStar(Cell* source, Cell* target);
-        /**
+        /**potentialNode
          * @brief Default destructor
          * 
          */
@@ -40,10 +40,10 @@ class AStar{
          */
         void Search();
         /**
-         * @brief returns the calculated path
+         * @brief returns the calculated pathjj
          * 
          * @return std::vector<Cell*> 
          */
-        std::vector<Cell*> getPath();
+        std::vector< Vector2<f32> > getPath();
 };
 #endif /* ASTAR_H */
