@@ -988,6 +988,7 @@ namespace objl
 			std::string curline;
 			while (std::getline(file, curline))
 			{
+				std::cout << "E" << std::endl;
 				// new material and material name
 				if (algorithm::firstToken(curline) == "newmtl")
 				{

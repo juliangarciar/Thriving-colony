@@ -15,13 +15,16 @@ ResourceOBJ::~ResourceOBJ(){
 void ResourceOBJ::load(const char *path){
     setIdentifier(path);
     objl::Loader loader;
+        std::cout << "Os" << std::endl;
     bool loadout = loader.LoadFile(path);
     if (!loadout) {
         std::cout << "Error al abrir el fichero " << path << std::endl;
         exit(0);
     }
+        std::cout << "Osd" << std::endl;
 
     for (int i = 0; i < loader.LoadedMeshes.size(); i++) {
+        std::cout << "OE" << std::endl;
         // Copy one of the loaded meshes to be our current mesh
         objl::Mesh curMesh = loader.LoadedMeshes[i];
 
@@ -37,6 +40,8 @@ void ResourceOBJ::load(const char *path){
         for (int j = 0; j < curMesh.Indices.size(); j++) {
             tempMesh -> addIndex(curMesh.Indices[j]);
         }
+
+        std::cout << "I" << std::endl;
 
         TMaterial *tempMat = new TMaterial();
         tempMat -> setName(curMesh.MeshMaterial.name);
@@ -54,6 +59,7 @@ void ResourceOBJ::load(const char *path){
         tempMat -> setBumpMap(curMesh.MeshMaterial.map_bump);
 
         tempMesh ->setMaterial(tempMat);
+        std::cout << "U" << std::endl;
     }
 }
 
@@ -72,6 +78,6 @@ const char *ResourceOBJ::getIdentifier(){
     return identifier;
 }
 
-std::vector<TResourceMesh*> *ResourceOBJ::getOBJMesh(){
+std::vector<TResourceMesh*> *ResourceOBJ::getResource(){
     return &objMesh;
 }

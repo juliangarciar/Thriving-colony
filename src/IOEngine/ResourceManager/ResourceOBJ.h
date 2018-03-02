@@ -15,7 +15,7 @@ class ResourceOBJ : public Resource {
         void setIdentifier(const char *);
         const char *getIdentifier();
 
-        std::vector<TResourceMesh*> *getOBJMesh();
+        std::vector<TResourceMesh*> *getResource();
     private:
         std::vector<TResourceMesh*> objMesh;
 };
