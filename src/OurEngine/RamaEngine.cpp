@@ -88,13 +88,13 @@ RELight* RamaEngine::createRELight(RESceneNode* layer) {
 
 RECamera* RamaEngine::createRECamera() {
     RECamera* rec = new RECamera(sceneNodes . at(0));
-    registerCamera(rec -> getCameraNode());
+    registerCamera(rec);
     return rec;
 }
 
 RECamera* RamaEngine::createRECamera(RESceneNode* layer) {
     RECamera* rec = new RECamera(layer -> getSceneNode());
-    registerCamera(rec -> getCameraNode());
+    registerCamera(rec);
     return rec;
 }
 
@@ -139,8 +139,8 @@ RESceneNode* RamaEngine::getDefaultLayer() {
     return defaultSceneNode;
 }
 
-void RamaEngine::registerCamera(TNode* cameraNode) {
-    cameras . push_back(cameraNode);
+void RamaEngine::registerCamera(RECamera* rec) {
+    cameras . push_back(rec);
 }
 
 void RamaEngine::registerLight(TNode* lightNode) {

@@ -118,6 +118,13 @@ class TTransform : public TEntity {
          * @param f32 z component of the scale.
          */
         void scale(f32, f32, f32);
+
+        /**
+         * @brief 
+         * 
+         * @return glm::mat4 
+         */
+        glm::mat4 getMatrix();
         
     private:
 
