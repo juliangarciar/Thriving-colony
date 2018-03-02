@@ -76,6 +76,11 @@ void RECamera::setFov(f32 fov){
     c -> setFov(fov);
 }
 
+void RECamera::setTargetPosition(f32 tX, f32 tY, f32 tZ) {
+    TCamera* c = (TCamera*) cameraNode -> getEntity();
+    c -> setTargetPosition(tX, tY, tZ);
+}
+
 bool RECamera::getActive() {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     return c -> getActive();

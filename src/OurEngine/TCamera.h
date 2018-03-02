@@ -128,6 +128,15 @@ class TCamera : public TEntity {
         void setRight(f32);
 
         /**
+         * @brief 
+         * 
+         * @param tX 
+         * @param tY 
+         * @param tZ 
+         */
+        void setTargetPosition(f32 tX, f32 tY, f32 tZ);
+
+        /**
          * @brief Return the current projection mode.
          * 
          * @return TEnums::CameraProjection current projection mode.
@@ -197,11 +206,26 @@ class TCamera : public TEntity {
          */
         glm::mat4 getViewMatrix();
 
+        /**
+         * @brief 
+         * 
+         * @return glm::mat4 
+         */
+        glm::mat4 getProjectionMatrix();
+
+        /**
+         * @brief 
+         * 
+         * @return glm::vec3 
+         */
+        glm::vec3 getTargetPosition();
+
     private:
         //ToDo: proyeccion GLM
         glm::mat4 projectionMatrix;
         // View matrix ToDo: Aqui?
         glm::mat4 viewMatrix;
+        glm::vec3 targetPosition;
 
         TEnums::CameraProjection projection;
         // Field of view (fov) is expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.

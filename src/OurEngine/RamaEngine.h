@@ -5,12 +5,14 @@
 #include <vector>
 #include <algorithm>
 #include <Types.h>
+#include "../IOEngine/ResourceManager/ResourceGLSL.h"
 #include "TNode.h"
 #include "REAnimation.h"
 #include "RECamera.h"
 #include "RELight.h"
 #include "REMesh.h"
 #include "RESceneNode.h"
+
 
 class RamaEngine {
     public:
@@ -32,6 +34,12 @@ class RamaEngine {
          * 
          */
         void Init(ResourceGLSL*, ResourceGLSL*);
+
+        /**
+         * @brief 
+         * 
+         */
+        void update();
 
         /**
          * @brief 

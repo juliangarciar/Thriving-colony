@@ -47,7 +47,7 @@ void TCamera::setPerspective(f32 n, f32 f, f32 t, f32 b, f32 l, f32 r){
 }
 
 void TCamera::setParallel(f32, f32, f32, f32, f32, f32){
-    //ToDo: Angela
+    //ToDo: tito juli
 }
 
 void TCamera::setProjection(TEnums::CameraProjection cp){
@@ -80,6 +80,10 @@ void TCamera::setBottom(f32 b){
 
 void TCamera::setLeft(f32 l){
     left = l;
+}
+
+void TCamera::setTargetPosition(f32 tX, f32 tY, f32 tZ) {
+    targetPosition = glm::vec3(tX, tY, tZ);
 }
 
 void TCamera::setRight(f32 r){
@@ -124,4 +128,12 @@ f32 TCamera::getRight(){
 
 glm::mat4 TCamera::getViewMatrix() {
     return viewMatrix;
+}
+
+glm::mat4 TCamera::getProjectionMatrix() {
+    return projectionMatrix;
+}
+
+glm::vec3 TCamera::getTargetPosition() {
+    return targetPosition;
 }

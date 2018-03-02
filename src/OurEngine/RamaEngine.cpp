@@ -7,7 +7,6 @@ RamaEngine::RamaEngine() {
     rootNode = new TNode();
     // Create default layer
     defaultSceneNode = createRESceneNode();
-    initializeOpenGL();
 }
 
 RamaEngine::~RamaEngine() {
@@ -52,6 +51,45 @@ void RamaEngine::Init(ResourceGLSL*, ResourceGLSL*) {
 	glAttachShader(programID, s2->getShaderID());
 	glLinkProgram(programID);
 
+}
+
+void RamaEngine::update() {
+    // Camera
+    glm::mat4 projection;
+    glm::mat4 view;
+    bool foundActive = false;
+    for (int i = 0; i < cameras.size() && !foundActive; i++) {
+        foundActive = true;
+        TCamera* c = (TCamera*) cameras.at(i) -> getEntity();
+        if (c -> getActive()) {
+            // Este nodo
+            projection = c -> getProjectionMatrix();
+            // Coger y guardarse todas las transformaciones de los nodos padre de la camera hasta llegar a uno sin entidad (nodo raiz)
+            TNode* nodeToLook = cameras.at(i);
+            std::vector<TTransform*> transforms;
+            while (nodeToLook -> getEntity() != NULL) { //null o nullptr?
+                nodeToLook = nodeToLook -> getParent();
+                TTransform* t = (TTransform*) nodeToLook -> getEntity();
+                transforms.push_back(t);
+            }
+            // Sacar matriz camera
+            glm::mat4 cameraMatrix = glm::mat4(1.0f);
+            for (int j = transforms.size(); j >= 0; j++) {
+                cameraMatrix *= transforms.at(j) -> getMatrix();
+            }
+            //Sacar posicion de la camara
+            glm::vec4 v = glm::vec4(0,0,0,1) * cameraMatrix;
+            glm::vec3 cameraPos = glm::vec3(v);
+            // Posicion del objetivo
+            glm::vec3 tarPos = c-> getTargetPosition();
+            glm::mat4 view = glm::lookAt(
+                cameraPos,  
+                tarPos, 
+                glm::vec3(0,1,0) 
+            );
+        }
+    }
+    // Luces
 }
 
 RELight* RamaEngine::createRELight() {

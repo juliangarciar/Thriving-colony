@@ -3,6 +3,7 @@
 
 #include <vector>
 #include <algorithm>
+#include "../MathEngine/Vector3.h"
 #include <Types.h>
 #include "TNode.h"
 #include "TCamera.h"
@@ -115,6 +116,15 @@ class RECamera {
          * @param fov 
          */
         void setFov(f32 fov);
+
+        /**
+          * @brief 
+          * 
+          * @param tX 
+          * @param tY 
+          * @param tZ 
+          */
+        void setTargetPosition(f32 tX, f32 tY, f32 tZ);
 
         // En realidad no se si se necesitan getters pero los pongo por si acaso
 
