@@ -19,7 +19,7 @@ class Behaviour {
          */
         virtual ~Behaviour();
 
-        Enumeration::BehaviourState Update();
+        Enumeration::BehaviourState virtual Update() = 0;
         Enumeration::BehaviourState getState();
 
     private:

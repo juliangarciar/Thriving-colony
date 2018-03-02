@@ -21,6 +21,7 @@ IA::~IA() {
     delete units;
     choices -> clear();
     delete choices;
+    delete rootNode;
 }
 
 void IA::Init() {
@@ -32,6 +33,8 @@ void IA::Init() {
     tree -> init(behaviour);
     nodeRootIA = new RootNode();
     nodeRootIA -> init(behaviour);
+
+    rootNode = new ActiveSelector(NULL);
 
     buildings = new BuildingManager(Enumeration::Team::IA, Enumeration::BreedType::Drorania);
     units = new UnitManager(Enumeration::Team::IA, Enumeration::BreedType::Kaonov);
@@ -208,6 +211,10 @@ void IA::setChoiceIndex(i32 newIndex) {
 
 std::string IA::getChosenBehaviour() {
     return chosenBehaviour;
+}
+
+ActiveSelector* IA::getRootNode() {
+    return rootNode;
 }
 
 // Down here so it doesn't clutter the constructor

@@ -8,10 +8,6 @@ Behaviour::~Behaviour() {
 
 }
 
-Enumeration::BehaviourState Behaviour::Update() {
-
-}
-
 Enumeration::BehaviourState Behaviour::getState() {
     return state;
 }

@@ -20,9 +20,10 @@ class Composite : Behaviour {
          */
         virtual ~Composite();
 
+        Enumeration::BehaviourState virtual Update() = 0;
+
     private:
         std::vector<Behaviour*> children;
-
 };
 
 #endif

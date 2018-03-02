@@ -2,6 +2,7 @@
 #define ACTIVESELECTOR_H
 
 #include "Selector.h"
+#include "Behaviour.h"
 
 /**
  * @class ActiveSelector
@@ -19,7 +20,11 @@ class ActiveSelector : Selector {
          */
         virtual ~ActiveSelector();
 
+        Enumeration::BehaviourState Update();
+        void setPriority(Behaviour*);
+
     private:
+        Behaviour *priority;
 
 };
 

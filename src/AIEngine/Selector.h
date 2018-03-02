@@ -2,6 +2,7 @@
 #define SELECTOR_H
 
 #include "Composite.h"
+#include <Types.h>
 
 /**
  * @class Selector
@@ -18,6 +19,8 @@ class Selector : Composite {
          * @brief Destructor de Selector
          */
         virtual ~Selector();
+
+        Enumeration::BehaviourState Update();
 
     private:
 

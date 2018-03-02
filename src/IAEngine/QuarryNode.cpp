@@ -11,7 +11,6 @@ QuarryNode::~QuarryNode() {
 }
 
 void QuarryNode::question() {
-
     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildQuarry);
     //std::cout << "Construyo una cantera" << std::endl;
     if (IA::Instance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::QuarryMetalCost, Enumeration::BuildingCost::QuarryCrystalCost)) {

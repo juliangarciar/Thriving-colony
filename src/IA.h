@@ -4,6 +4,7 @@
 #include "Player.h"
 #include "IAEngine/BehaviourTree.h"
 #include "IAEngine/RootNode.h"
+#include "AIEngine/ActiveSelector.h"
 #include <Types.h>
 
 /**
@@ -76,6 +77,9 @@ class IA : public Player {
          * @return behaviourTree sera el arbol devuelto
          */
         BehaviourTree* getTree();
+
+        ActiveSelector* getRootNode();
+        
     protected:
         /**
          * @brief Constructor
@@ -90,6 +94,8 @@ class IA : public Player {
 
         BehaviourTree* tree;
         RootNode *nodeRootIA;
+
+        ActiveSelector *rootNode;
 
         Enumeration::IABehaviour behaviour;
         std::string chosenBehaviour;
