@@ -43,14 +43,9 @@ class TCamera : public TEntity {
         /**
          * @brief fills the projection matrix with a perspective one based on the parameters.
          * 
-         * @param f32 near.
-         * @param f32 far.
-         * @param f32 top.
-         * @param f32 bottom.
-         * @param f32 left.
-         * @param f32 right.
+         * 
          */
-        void setPerspective(f32, f32, f32, f32, f32, f32);
+        void setPerspective();
 
         /**
          * @brief 

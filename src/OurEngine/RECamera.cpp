@@ -129,3 +129,29 @@ f32 RECamera::getFov() {
 TNode* RECamera::getCameraNode() {
     return cameraNode;
 }
+
+glm::mat4 RECamera::calculateViewMatrix() {
+    // Sacar matriz camera
+    TTransform* rt = (TTransform*) rotationNode -> getEntity();
+    TTransform* tt = (TTransform*) translationNode -> getEntity();
+    TTransform* st = (TTransform*) scaleNode -> getEntity();
+    glm::mat4 cameraMatrix = rt ->getMatrix() * tt -> getMatrix() * st -> getMatrix();
+    //Sacar posicion de la camara
+    glm::vec4 v = glm::vec4(0,0,0,1) * cameraMatrix;
+    glm::vec3 cameraPos = glm::vec3(v);
+    // Posicion del objetivo
+    TCamera* c = (TCamera*) cameraNode -> getEntity();
+    glm::vec3 tarPos = c -> getTargetPosition();
+    
+    glm::mat4 view = glm::lookAt(
+        cameraPos,  
+        tarPos, 
+        glm::vec3(0,1,0) 
+    );
+    return view;
+}
+
+glm::mat4 RECamera::getProjectionMatrix() {
+    TCamera* c = (TCamera*) cameraNode -> getEntity();
+    return c -> getProjectionMatrix();
+}

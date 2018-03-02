@@ -38,12 +38,6 @@ class RamaEngine {
         /**
          * @brief 
          * 
-         */
-        void update();
-
-        /**
-         * @brief 
-         * 
          * @return RELight* 
          */
         RELight* createRELight();
@@ -127,9 +121,9 @@ class RamaEngine {
         /**
          * @brief 
          * 
-         * @param cameraNode 
+         * @param rec 
          */
-        void registerCamera(TNode* cameraNode);
+        void registerCamera(RECamera* rec);
 
         /**
          * @brief 
@@ -154,7 +148,7 @@ class RamaEngine {
         RESceneNode *defaultSceneNode;
 
         // Punteros?
-        std::vector<TNode*> cameras;
+        std::vector<RECamera*> cameras;
         std::vector<TNode*> lights;
         std::vector<TNode*> sceneNodes;
 

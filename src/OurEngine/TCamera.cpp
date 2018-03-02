@@ -28,22 +28,12 @@ void TCamera::endDraw(){
 
 }
 
-void TCamera::setPerspective(f32 n, f32 f, f32 t, f32 b, f32 l, f32 r){
-    setNear(n);
-    setFar(f);
+void TCamera::setPerspective(){
     setProjection(TEnums::CameraProjection::ProjectionPerspective);
-
-    setTop(t);
-    setBottom(b);
-    setRight(r);
-    setLeft(l);
     // Calculate aspect ratio
-    f32 width = r - l;
-    f32 height = b - t;
-    projectionMatrix = glm::perspective(fov, width / height, n, f);
-    //f32 fov = 90; // Expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.
-    //projectionMatrix = glm::perspective(fov, width / height, n, f);
-    //ToDo: glm
+    f32 width = right - left;
+    f32 height = bottom - top;
+    projectionMatrix = glm::perspective(fov, width / height, near, far);
 }
 
 void TCamera::setParallel(f32, f32, f32, f32, f32, f32){
