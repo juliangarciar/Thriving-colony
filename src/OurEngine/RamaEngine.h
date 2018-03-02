@@ -5,6 +5,7 @@
 #include <vector>
 #include <algorithm>
 #include <Types.h>
+#include <IOEngine/ResourceManager/ResourceGLSL.h>
 #include "TNode.h"
 #include "REAnimation.h"
 #include "RECamera.h"
@@ -152,6 +153,8 @@ class RamaEngine {
 
         // OpenGL
 	    GLuint VertexArrayID;
+        GLuint programID;
+        GLuint MVPID;
 };
 
 #endif

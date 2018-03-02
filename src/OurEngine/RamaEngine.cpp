@@ -7,7 +7,6 @@ RamaEngine::RamaEngine() {
     rootNode = new TNode();
     // Create default layer
     defaultSceneNode = createRESceneNode();
-    initializeOpenGL();
 }
 
 RamaEngine::~RamaEngine() {
@@ -15,6 +14,8 @@ RamaEngine::~RamaEngine() {
     cameras . clear();
     lights . clear();
     sceneNodes . clear();
+    
+	glDeleteProgram(programID);
 }
 
 void RamaEngine::Init(ResourceGLSL*, ResourceGLSL*) {
@@ -47,11 +48,30 @@ void RamaEngine::Init(ResourceGLSL*, ResourceGLSL*) {
     ResourceGLSL *s2 = (ResourceGLSL*)r->getResource("fragmentShader.glsl", true);
 
     // Link the program
-	GLuint programID = glCreateProgram();
+	programID = glCreateProgram();
 	glAttachShader(programID, s->getShaderID());
 	glAttachShader(programID, s2->getShaderID());
 	glLinkProgram(programID);
 
+	// Check the program
+    GLint Result = GL_FALSE;
+    int InfoLogLength;
+	glGetProgramiv(programID, GL_LINK_STATUS, &Result);
+	glGetProgramiv(programID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+	if (InfoLogLength > 0){
+		std::vector<char> ProgramErrorMessage(InfoLogLength+1);
+		glGetProgramInfoLog(programID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
+		std::cout << &ProgramErrorMessage[0] << std::endl;
+	}
+
+	glDetachShader(programID, s->getShaderID());
+	glDetachShader(programID, s2->getShaderID());
+	
+	glDeleteShader(s->getShaderID());
+	glDeleteShader(s2->getShaderID());
+
+	// Get a handle for our "MVP" uniform
+	MVPID = glGetUniformLocation(programID, "MVP");
 }
 
 RELight* RamaEngine::createRELight() {
@@ -101,6 +121,13 @@ RESceneNode* RamaEngine::createRESceneNode() {
 }
 
 void RamaEngine::draw() {
+    // Clear the screen
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Use our shader
+    glUseProgram(programID);
+
+    // Draw our tree
     rootNode -> draw();
 }
 

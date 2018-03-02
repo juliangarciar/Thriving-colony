@@ -2,6 +2,7 @@
 #define TMESH_H
 
 #include "TEntity.h"
+#include <GL/glew.h>
 #include "TResourceMesh.h"
 #include <IOEngine/IO.h>
 
@@ -19,14 +20,11 @@ class TMesh : public TEntity {
          */
         virtual ~TMesh();
 
-
         /**
          * @brief 
-         * 
-         * @param TFile 
+         * @param 
          */
-        void loadMesh(std::string);
-
+        void loadMesh(TResourceMesh *);
 
         /**
          * @brief 
@@ -41,7 +39,12 @@ class TMesh : public TEntity {
         virtual void endDraw();
 
     private:
-        std::vector<TResourceMesh*> mesh;
+        TResourceMesh* mesh;
+
+        GLuint vertexbuffer;
+        GLuint normalbuffer;
+        GLuint uvbuffer;
+	    GLuint elementbuffer;
 };
 
 #endif

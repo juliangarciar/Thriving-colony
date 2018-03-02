@@ -8,8 +8,6 @@
 #include "TAnimation.h"
 #include "TTransform.h"
 
-
-
 class REAnimation {
     public:
         /**
