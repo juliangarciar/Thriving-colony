@@ -23,8 +23,7 @@ AStar::~AStar(){
     GCosts.clear();
     FCosts.clear();
 }
-/* I'm sure this isn't working properly */
-/* Delete searchedCells and the system to recover the path */
+
 void AStar::Search(){
     IndexedPriorityQLow<float> pq(FCosts, MAX);
     pq.insert(sourceIndex);
@@ -44,7 +43,7 @@ void AStar::Search(){
         std::cout << "Checking neighbors \n";
     /* Calculate the cost for each neighbor to the targetCell */
         for(i32 i = 0; i < neighbors.size(); i++){
-            if(neighbors[i]->getInhabitingBuilding() == NULL && !neighbors[i]->isBlocked()){
+            if(!neighbors[i]->isBlocked()){
                 i32 potentialNode = neighbors[i]->getIndex();
                 f32 HCost = worldGeometry->calculateDistance(neighbors[i]->getPosition(), targetCell->getPosition());
                 f32 GCost = GCosts[closestIndex] + worldGeometry->getCost(closestIndex, i);
@@ -84,7 +83,6 @@ std::list< Vector2<f32> > AStar::getPath(){
 
         dummyPath.push_front(worldGeometry->indexToCell(nd)->getPosition());
     }
-    dummyPath.push_front(sourceCell->getPosition());
 
     return dummyPath;
 }

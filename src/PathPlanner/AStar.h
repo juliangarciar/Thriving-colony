@@ -5,6 +5,7 @@
 #include <Types.h>
 #include <MathEngine/Vector2.h>
 
+
 class WorldGeometry;
 class Cell;
 class AStar{
