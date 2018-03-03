@@ -24,12 +24,14 @@ Entity::Entity(i32 id, Enumeration::Team t, Enumeration::BreedType b) {
 
     /* Added by Julian */
     hitBox = Box2D();
+    armyLevel = 0;
 }
 
 Entity::~Entity() {
     delete position;
     delete hitbox;
     delete model;
+    hostile.clear();
 }
 
 //METHODS
@@ -56,7 +58,7 @@ void Entity::returnToOriginalColor() {
     if (tookDamageCountdown <= 0.0) {
         setColor(baseColor); //ToDo: sustituir por material
     } else {
-        tookDamageCountdown -= Game::Instance() -> getWindow() -> getDeltaTime(); //ToDo: sustituir por timer real
+        tookDamageCountdown -= Window::Instance() -> getDeltaTime(); //ToDo: sustituir por timer real
     }
 }
 
@@ -86,7 +88,7 @@ void Entity::setPosition(Vector3<f32> vectorData) {
 void Entity::setColor(irr::video::SColor c){
     currentColor = c;
     //ToDo: reemplazar color por material
-    Game::Instance() -> getWindow() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
+    Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
         model -> getModel() -> getMesh(), c
     );
 }
@@ -149,4 +151,39 @@ i32 Entity::getCells(){
 }
 Box2D Entity::getHit(){
     return hitBox;
+
+i32 Entity::getArmyLevel() {
+    return armyLevel;
+}
+
+std::vector<Entity*> Entity::getHostile() {
+    return hostile;
+}
+
+void Entity::addHostile(Entity* newHostileUnit) {
+    hostile.push_back(newHostileUnit);
+}
+
+void Entity::removeHostile(Entity* oldHostileUnit) {
+    bool done = false;
+    for (i32 i = 0; i < hostile.size() && done == false; i++) {
+        if (hostile.at(i) == oldHostileUnit) {
+            hostile.erase(hostile.begin() + i);
+            done = true;
+        }
+    }
+}
+
+void Entity::setTarget(Entity* newTarget) {
+    target = newTarget;
+}
+
+Entity* Entity::getTarget() {
+    return target;
+}
+
+void Entity::putHostileTargetsToNull() {
+    for (i32 i = 0; i < hostile.size(); i++) {
+        hostile.at(i) -> setTarget(nullptr);
+    }
 }

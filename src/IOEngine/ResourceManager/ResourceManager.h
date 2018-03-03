@@ -3,9 +3,9 @@
 
 #include <map>
 #include <queue>
-#include <vector>
 #include <thread>
-#include "ResourceOBJ.h"
+
+#include "Resource.h"
 #include <Types.h>
 
 class ResourceManager {
@@ -15,9 +15,9 @@ class ResourceManager {
 
         void Update();
 
-        void loadResource(std::string, bool);
+        void loadResource(std::string, bool = true);
 
-        Resource *getResource(std::string);
+        Resource *getResource(std::string, bool = false);
     private:
         void load(std::string);
         void push(std::string);

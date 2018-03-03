@@ -8,7 +8,7 @@ SceneNode::SceneNode() {
 	node = w -> addEmptySceneNode(w -> getRootSceneNode());
 	collisionManager = w -> getSceneCollisionManager();
 
-	collisionNode = NULL;
+	collisionNode = nullptr;
 }
 
 SceneNode::SceneNode(SceneNode *parent) {
@@ -16,7 +16,7 @@ SceneNode::SceneNode(SceneNode *parent) {
 	node = w -> addEmptySceneNode(parent -> getSceneNode()); 
 	collisionManager = w -> getSceneCollisionManager();
 
-	collisionNode = NULL;
+	collisionNode = nullptr;
 }
 
 SceneNode::SceneNode(scene::ISceneNode *n){ 
@@ -25,8 +25,8 @@ SceneNode::SceneNode(scene::ISceneNode *n){
 
 SceneNode::~SceneNode() {
 	//ToDo: borrar node y collisionNode
-	//node = NULL;
-	//collisionNode = NULL;
+	//node = nullptr;
+	//collisionNode = nullptr;
 }
  
 SceneNode *SceneNode::getNodeCollision(Mouse *cursor){
@@ -38,7 +38,7 @@ SceneNode *SceneNode::getNodeCollision(Mouse *cursor){
 
 	if (!collisionNode) {
 		delete collisionNode;
-		collisionNode = NULL;
+		collisionNode = nullptr;
 	}
 
 	scene::ISceneNode *n = collisionManager -> getSceneNodeAndCollisionPointFromRay(ray, point, triangle, 0, node);
@@ -48,7 +48,7 @@ SceneNode *SceneNode::getNodeCollision(Mouse *cursor){
 		return collisionNode;
 	}
 
-	return NULL;
+	return nullptr;
 }
 
 scene::ISceneNode *SceneNode::getSceneNode(){

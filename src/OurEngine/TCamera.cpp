@@ -1,7 +1,22 @@
 #include "TCamera.h"
 
+<<<<<<< HEAD
 TCamera::TCamera(TEnums::CameraProjection, f32, f32, f32, f32, f32, f32) : TEntity(){
 
+=======
+
+TCamera::TCamera(TEnums::CameraProjection projectionMode, f32 n, f32 f, f32 t, f32 b, f32 l, f32 r) : TEntity(){
+    setNear(n);
+    setFar(f);
+    setProjection(projectionMode);
+
+    setTop(t);
+    setBottom(b);
+    setLeft(l);
+    setRight(r);
+
+    projectionMatrix = glm::mat4(1.0f);
+>>>>>>> master
 }
 
 TCamera::~TCamera(){
@@ -9,7 +24,13 @@ TCamera::~TCamera(){
 }
 
 void TCamera::beginDraw(){
+<<<<<<< HEAD
 
+=======
+    if (active) {
+        viewMatrix = glm::inverse(modelMatrix);
+    }
+>>>>>>> master
 }
 
 void TCamera::endDraw(){
@@ -19,22 +40,46 @@ void TCamera::endDraw(){
 void TCamera::setPerspective(f32 n, f32 f, f32 t, f32 b, f32 l, f32 r){
     setNear(n);
     setFar(f);
+<<<<<<< HEAD
     projection = TEnums::CameraProjection::ProjectionPerspective;
     f32 width = r - l;
     f32 height = b - t;
+=======
+    setProjection(TEnums::CameraProjection::ProjectionPerspective);
+
+    setTop(t);
+    setBottom(b);
+    setRight(r);
+    setLeft(l);
+    // Calculate aspect ratio
+    f32 width = r - l;
+    f32 height = b - t;
+    projectionMatrix = glm::perspective(fov, width / height, n, f);
+>>>>>>> master
     //f32 fov = 90; // Expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.
     //projectionMatrix = glm::perspective(fov, width / height, n, f);
     //ToDo: glm
 }
 
 void TCamera::setParallel(f32, f32, f32, f32, f32, f32){
+<<<<<<< HEAD
 
+=======
+    //ToDo: Angela
+>>>>>>> master
 }
 
 void TCamera::setProjection(TEnums::CameraProjection cp){
     projection = cp;
 }
 
+<<<<<<< HEAD
+=======
+void TCamera::setActive(bool _active) {
+    active = _active;
+}
+
+>>>>>>> master
 void TCamera::setNear(f32 n){
     near = n;
 }
@@ -67,6 +112,13 @@ TEnums::CameraProjection TCamera::getProjection(){
     return projection;
 }
 
+<<<<<<< HEAD
+=======
+bool TCamera::getActive() {
+    return active;
+}
+
+>>>>>>> master
 f32 TCamera::getNear(){
     return near;
 }
@@ -93,4 +145,11 @@ f32 TCamera::getLeft(){
 
 f32 TCamera::getRight(){
     return right;
+<<<<<<< HEAD
+=======
+}
+
+glm::mat4 TCamera::getViewMatrix() {
+    return viewMatrix;
+>>>>>>> master
 }

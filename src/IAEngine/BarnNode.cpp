@@ -19,7 +19,7 @@ void BarnNode::question() {
         if (IA::Instance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost)) {
             IA::Instance() -> getTree() -> setRequireBarn(false);
             Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
-            IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barn, true);
+            IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barn, false);
         }
     }
 }

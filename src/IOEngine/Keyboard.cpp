@@ -1,7 +1,7 @@
 #include "Keyboard.h"
 
 #include <GraphicEngine/Window.h>
-#include <Game.h>
+#include <IOEngine/IO.h>
 
 /// ==============================
 /// Keyboard
@@ -16,7 +16,7 @@ Keyboard::Keyboard() {
     glfwSetKeyCallback(window,
         [](GLFWwindow *w, i32 key, i32 scancode, i32 action, i32 mods) {
             Window::Instance() -> getGUIEnvironment() -> keyCallbackEvent(key, scancode, action, mods);
-            Keyboard *s = Game::Instance() -> getKeyboard();
+            Keyboard *s = IO::Instance() -> getKeyboard();
             // Key actions
             if (action == GLFW_PRESS) {
                 s -> keyState[key] = Enumeration::PRESSED;

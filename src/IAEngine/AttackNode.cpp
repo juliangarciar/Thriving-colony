@@ -18,9 +18,8 @@ AttackNode::~AttackNode() {
 }
 
 void AttackNode::question() {
-    //std::cout << "Voy a atacar" << std::endl;
     //To Do: Attack the enemy
-    if (IA::Instance() -> getUnitManager() -> areTroopsDeployed()) {
+    if (IA::Instance() -> getUnitManager() -> areTroopsDeployed() == false) {
         children[0] -> question();
     } else {
         if (IA::Instance() -> losingBattle()) {

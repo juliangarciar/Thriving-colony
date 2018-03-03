@@ -19,7 +19,7 @@ DefeatMenu::~DefeatMenu() {
 
 void DefeatMenu::setHUDEvents(){
     buttonQuit -> setCallback([]{
-        Game::Instance() -> getWindow() -> close();
+        Window::Instance() -> close();
     });
 
     buttonStart -> setCallback([]{

@@ -7,6 +7,8 @@
 #include <stack>
 
 static std::stack<glm::mat4> matrixStack;
+// Model matrix/ Camera matrix/ Light matrix
+static glm::mat4 modelMatrix = glm::mat4(1.0f);
 
 class TEntity {
     public:

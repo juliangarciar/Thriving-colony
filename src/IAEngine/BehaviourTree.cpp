@@ -134,7 +134,7 @@ bool BehaviourTree::evaluateWallNeed() {
 }
 
 bool BehaviourTree::readyToAttack() {
-    return false;
+    return (IA::Instance() -> getArmyLevel() >= attackThreshold);
 }
 
 /**
@@ -162,6 +162,10 @@ i32 BehaviourTree::getCreatureMilestone() {
 
 i32 BehaviourTree::getHappinessThreshold() {
     return happinessThreshold;
+}
+
+i32 BehaviourTree::getAttackThreshold() {
+    return attackThreshold;
 }
 
 f32 BehaviourTree::getMeleeThreshold() {
@@ -257,29 +261,6 @@ void BehaviourTree::setRequireCitizens(bool requirementStatus) {
 bool BehaviourTree::getRequireCitizens() {
     return requireCitizens;
 }
-/**
- * DEBUG
- */
-void BehaviourTree::debugMessage() {
-    std::cout << std::endl;
-    std::cout << "////////////////////////////////////////////////////////" << std::endl;
-    std::cout << "La FELICIDAD de mi ciudad es de " << IA::Instance() -> getHappiness() << std::endl;
-    std::cout << "El NIVEL de mi ciudad es de " << IA::Instance() -> getCityLevel() << std::endl;
-    std::cout << "La cantidad de CIUDADANOS de mi ciudad es de " << IA::Instance() -> getCitizens() << std::endl;
-
-    std::cout << "La generacion de RECURSOS de mi ciudad es: " << std::endl;
-    std::cout << IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Siderurgy) << " siderurgias que generan " << IA::Instance() -> getMetalProduction() << "metal."<< std::endl;
-    std::cout << IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Quarry) << " canteras que generan " << IA::Instance() -> getCrystalProduction() << "cristal." << std::endl;
-
-    std::cout << "Mi EJERCITO es de " << IA::Instance() -> getArmySize() << " unidades, de las cuales tengo: " << std::endl;
-    /*std::cout << IA::Instance() -> getMeleeAmount() << " melees" << std::endl;
-    std::cout << IA::Instance() -> getRangeAmount() << " rangos" << std::endl;
-    std::cout << IA::Instance() -> getSiegeAmount() << " asedios" << std::endl;
-    std::cout << "Tengo tambien: " << std::endl;
-    std::cout << IA::Instance() -> getMeleeAmount() << " murallas" << std::endl;
-    std::cout << IA::Instance() -> getRangeAmount() << " torres" << std::endl;*/
-    std::cout << "////////////////////////////////////////////////////////" << std::endl;
-}
 
 // Down here so it doesnt clutter the top
 void BehaviourTree::init(i32 behaviour) {
@@ -288,6 +269,7 @@ void BehaviourTree::init(i32 behaviour) {
         case Enumeration::IABehaviour::VeryHappy:
             // Happiness thresholds
             happinessThreshold = 50;
+            attackThreshold = 100;
             // Service milestones
             marketMilestone = 150;
             hospitalMilestone = 450;
@@ -314,6 +296,7 @@ void BehaviourTree::init(i32 behaviour) {
         case Enumeration::IABehaviour::Happy: 
             // Happiness thresholds
             happinessThreshold = 25;
+            attackThreshold = 100;
             // Service milestones
             marketMilestone = 150;
             hospitalMilestone = 450;
@@ -340,6 +323,7 @@ void BehaviourTree::init(i32 behaviour) {
         case Enumeration::IABehaviour::Neutral:
             // Happiness thresholds
             happinessThreshold = 0;
+            attackThreshold = 100;
             // Service milestones
             marketMilestone = 150;
             hospitalMilestone = 450;
@@ -366,6 +350,7 @@ void BehaviourTree::init(i32 behaviour) {
         case Enumeration::IABehaviour::Unhappy: 
             // Happiness thresholds
             happinessThreshold = -25;
+            attackThreshold = 100;
             // Service milestones
             marketMilestone = 150;
             hospitalMilestone = 450;
@@ -392,6 +377,7 @@ void BehaviourTree::init(i32 behaviour) {
         case Enumeration::IABehaviour::VeryUnhappy: 
             // Happiness thresholds
             happinessThreshold = -50;
+            attackThreshold = 100;
             // Service milestones
             marketMilestone = 150;
             hospitalMilestone = 450;

@@ -15,20 +15,6 @@ Vector3<T>::Vector3(T x, T y, T z) {
 }
 
 template <class T>
-Vector3<T>::Vector3(core::vector3di v) {
-    this -> x = v.X;
-    this -> y = v.Y;
-    this -> z = v.Z;
-}
-
-template <class T>
-Vector3<T>::Vector3(core::vector3df v) {
-    this -> x = v.X;
-    this -> y = v.Y;
-    this -> z = v.Z;
-}
-
-template <class T>
 Vector3<T>::~Vector3() {
     
 }
@@ -41,34 +27,10 @@ void Vector3<T>::set(T x, T y, T z) {
 }
 
 template <class T>
-void Vector3<T>::set(core::vector3di v) {
-    this -> x = v.X;
-    this -> y = v.Y;
-    this -> z = v.Z;
-}
-
-template <class T>
-void Vector3<T>::set(core::vector3df v) {
-    this -> x = v.X;
-    this -> y = v.Y;
-    this -> z = v.Z;
-}
-
-template <class T>
 void Vector3<T>::set(Vector3<T> v) {
     this -> x = v.x;
     this -> y = v.y;
     this -> z = v.z;
-}
-
-template <class T>
-core::vector3di Vector3<T>::getVectorI() {
-    return core::vector3di(x, y, z);
-}
-
-template <class T>
-core::vector3df Vector3<T>::getVectorF() {
-    return core::vector3df(x, y, z);
 }
 
 template <class T>
@@ -164,6 +126,67 @@ template <class T>
 Vector3<T> Vector3<T>::operator / (const f32 &p) const {
     return Vector3<T>(this -> x/p, this -> y/p, this -> z/p);
 }
+
+/////////////////////////////////////IRRLICHT//////////////////////////////////////
+template <class T>
+Vector3<T>::Vector3(irr::core::vector3di v) {
+    this -> x = v.X;
+    this -> y = v.Y;
+    this -> z = v.Z;
+}
+
+template <class T>
+Vector3<T>::Vector3(irr::core::vector3df v) {
+    this -> x = v.X;
+    this -> y = v.Y;
+    this -> z = v.Z;
+}
+
+template <class T>
+void Vector3<T>::set(irr::core::vector3di v) {
+    this -> x = v.X;
+    this -> y = v.Y;
+    this -> z = v.Z;
+}
+
+template <class T>
+void Vector3<T>::set(irr::core::vector3df v) {
+    this -> x = v.X;
+    this -> y = v.Y;
+    this -> z = v.Z;
+}
+
+template <class T>
+irr::core::vector3di Vector3<T>::getVectorI() {
+    return irr::core::vector3di(x, y, z);
+}
+
+template <class T>
+irr::core::vector3df Vector3<T>::getVectorF() {
+    return irr::core::vector3df(x, y, z);
+}
+//////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////GLM//////////////////////////////////////
+template <class T>
+Vector3<T>::Vector3(glm::vec3 v) {
+    this -> x = v.x;
+    this -> y = v.y;
+    this -> z = v.z;
+}
+
+template <class T>
+void Vector3<T>::set(glm::vec3 v) {
+    this -> x = v.x;
+    this -> y = v.y;
+    this -> z = v.z;
+}
+
+template <class T>
+glm::vec3 Vector3<T>::getVec3() {
+    return glm::vec3(x, y, z);
+}
+//////////////////////////////////////////////////////////////////////////////////
 
 template class Vector3<i32>;
 template class Vector3<f32>; 

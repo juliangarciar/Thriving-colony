@@ -3,6 +3,7 @@
 #include "ResourceNode.h"
 #include "HomeNode.h"
 #include "ArmyNode.h"
+#include "RetractTroopsNode.h"
 #include <IA.h>
 
 NeutralTree::NeutralTree(Node *fatherPnt) : BehaviourTree() {
@@ -24,11 +25,12 @@ NeutralTree::NeutralTree(Node *fatherPnt) : BehaviourTree() {
     siegeThreshold = 0.05;
 
     father = fatherPnt;
-    children = new Node*[4];
-    children[0] = new ResourceNode(this);
-    children[1] = new HomeNode(this);
-    children[2] = new ServiceNode(this);
-    children[3] = new ArmyNode(this);
+    children = new Node*[5];
+    children[0] = new RetractTroopsNode(this);
+    children[1] = new ResourceNode(this);
+    children[2] = new HomeNode(this);
+    children[3] = new ServiceNode(this);
+    children[4] = new ArmyNode(this);
 }
 
 NeutralTree::~NeutralTree() {
@@ -37,25 +39,29 @@ NeutralTree::~NeutralTree() {
 }
 
 void NeutralTree::question() {
-    //First branch: Resources
-    if (IA::Instance() -> getTree() -> needResourcesInvestment()) {
+    if (IA::Instance() -> getUnitManager() -> areTroopsInMap() == true) {
         children[0] -> question();
     } else {
-        //Second branch: Homes
-        if (IA::Instance() -> getTree() -> calculateCitizensRate() < IA::Instance() -> getTree() -> getCitizensThreshold()) {
+        //First branch: Resources
+        if (IA::Instance() -> getTree() -> needResourcesInvestment()) {
             children[1] -> question();
         } else {
-            //Third branch: Services
-            if (IA::Instance() -> getHappiness() < IA::Instance() -> getTree() -> getHappinessThreshold()) {
+            //Second branch: Homes
+            if (IA::Instance() -> getTree() -> calculateCitizensRate() < IA::Instance() -> getTree() -> getCitizensThreshold()) {
                 children[2] -> question();
             } else {
-                //Fourth branch: Army
-                if (IA::Instance() -> getTree() -> needArmyInvestment()) {
+                //Third branch: Services
+                if (IA::Instance() -> getHappiness() < IA::Instance() -> getTree() -> getHappinessThreshold()) {
                     children[3] -> question();
                 } else {
-                    //std::cout << "No hago nada" << std::endl;
-                    // Ultima oportunidad
-                    children[1] -> question();
+                    //Fourth branch: Army
+                    if (IA::Instance() -> getTree() -> needArmyInvestment()) {
+                        children[4] -> question();
+                    } else {
+                        //std::cout << "No hago nada" << std::endl;
+                        // Ultima oportunidad
+                        children[2] -> question();
+                    }
                 }
             }
         }
@@ -66,6 +72,9 @@ void NeutralTree::question() {
  * Determines wheter or not you are ready to attack
  */
 bool NeutralTree::readyToAttack() {
-    //ToDo: Determinar cuando se esta listo
-    return false;
+    if (IA::Instance() -> getArmyLevel() > IA::Instance() -> getTree() -> getAttackThreshold()) {
+        return true;
+    } else{
+        return false;
+    }
 }

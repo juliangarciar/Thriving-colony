@@ -1,11 +1,18 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
+<<<<<<< HEAD
+=======
+#include <vector>
+>>>>>>> master
 #include <Types.h>
 #include <Enumeration.h>
 #include <MathEngine/Vector3.h>
 #include <MathEngine/Box3D.h>
+<<<<<<< HEAD
 #include <MathEngine/Box2D.h>
+=======
+>>>>>>> master
 #include <GraphicEngine/Model.h>
 #include <GraphicEngine/SceneNode.h>
 
@@ -72,6 +79,9 @@ class Entity {
          */
         void setID(i32);
 
+        void setTarget(Entity*);
+        Entity* getTarget();
+
         /**
 		 * @brief Solicita el rango de ataque de la entidad
          * @return AttackRange de tipo entero
@@ -130,6 +140,14 @@ class Entity {
         // Added by Julian
         i32 getCells();
         Box2D getHit();
+
+        i32 getArmyLevel();
+
+        std::vector<Entity*> getHostile();
+        void addHostile(Entity*);
+        void removeHostile(Entity*);
+        void putHostileTargetsToNull();
+
     protected:
         Model* model;
         Vector3<f32> *position;
@@ -160,6 +178,9 @@ class Entity {
         i32 citizens;
         // For IA and info
         i32 cityLevel;
+        i32 armyLevel;
+
+        std::vector<Entity*> hostile;
 
         // Added by Julian
         i32 kCells;

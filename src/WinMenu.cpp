@@ -19,7 +19,7 @@ WinMenu::~WinMenu() {
 
 void WinMenu::setHUDEvents(){
     buttonQuit -> setCallback([]{
-        Game::Instance() -> getWindow() -> close();
+        Window::Instance() -> close();
     });
 
     buttonStart -> setCallback([]{

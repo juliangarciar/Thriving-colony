@@ -36,6 +36,7 @@ class UnitManager{
         bool checkCanPay(Enumeration::UnitType);
         bool isDeployingTroop();
         bool areTroopsDeployed();
+        bool areTroopsInMap();
 
         //GETTERS
 		i32 getCollisionID();

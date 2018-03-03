@@ -2,8 +2,8 @@
 #define TMESH_H
 
 #include "TEntity.h"
-#include "TFile.h"
 #include "TResourceMesh.h"
+#include <IOEngine/IO.h>
 
 class TMesh : public TEntity {
     public:
@@ -25,7 +25,7 @@ class TMesh : public TEntity {
          * 
          * @param TFile 
          */
-        void loadMesh(TFile *);
+        void loadMesh(std::string);
 
 
         /**
@@ -41,7 +41,7 @@ class TMesh : public TEntity {
         virtual void endDraw();
 
     private:
-        TResourceMesh *mesh;
+        std::vector<TResourceMesh*> mesh;
 };
 
 #endif

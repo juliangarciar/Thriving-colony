@@ -20,7 +20,7 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
     deployingTroop = false;
     currentDeployingTroop = -1;
 
-    selectedTroop = NULL;
+    selectedTroop = nullptr;
 
 	for (i32 i = 0; i < Enumeration::UnitType::TroopsSize; i++){
 		troopsAmount[i] = 0;
@@ -30,13 +30,13 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
 //Destroyer
 UnitManager::~UnitManager() {
     for (std::map<i32, Unit*>::iterator it = inQueueTroops -> begin(); it != inQueueTroops -> end(); ++it){
-        delete it->second;
+        delete it -> second;
     }
     inQueueTroops -> clear();
     delete inQueueTroops;
 
     for (std::map<i32, Unit*>::iterator it = inHallTroops -> begin(); it != inHallTroops -> end(); ++it){
-        delete it->second;
+        delete it -> second;
     }
     inHallTroops -> clear();
     delete inHallTroops;
@@ -48,7 +48,7 @@ UnitManager::~UnitManager() {
     delete inMapTroops;
 
     delete unitLayer;
-    if (selectedTroop != NULL) delete selectedTroop;
+    if (selectedTroop != nullptr) delete selectedTroop;
 }
 
 //Create a new troops
@@ -56,7 +56,7 @@ UnitManager::~UnitManager() {
 bool UnitManager::createTroop(Enumeration::UnitType type) {
     if (checkCanPay(type)) {
         Unit *newUnit = new Unit(unitLayer, nextTroopId, team, breed, type);
-        if (newUnit == NULL) {
+        if (newUnit == nullptr) {
             return false;
         }
         newUnit -> setID(nextTroopId);
@@ -77,7 +77,7 @@ bool UnitManager::createTroop(Enumeration::UnitType type) {
                 Hud::Instance()->addTroopToHall(u->getID(), u->getType());
 
                 //Mostrar texto de reclutamiento
-                Game::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showRecruitedText);  
+                IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showRecruitedText);  
             }
         });
         newUnit -> setRetractedCallback([&] (Unit *u){
@@ -111,8 +111,8 @@ bool UnitManager::createTroop(Enumeration::UnitType type) {
 //Update all troops
 void UnitManager::updateUnitManager() {
     // Retractear una sola unidad
-    if (selectedTroop != NULL) {
-        if (Game::Instance() -> getKeyboard() -> keyPressed(82)) { //82 = R, R de retracted
+    if (selectedTroop != nullptr) {
+        if (IO::Instance() -> getKeyboard() -> keyPressed(82)) { //82 = R, R de retracted
             if (team == Enumeration::Team::Human){
                 selectedTroop -> setTroopDestination(Human::Instance()->getHallPosition());
             }
@@ -121,21 +121,21 @@ void UnitManager::updateUnitManager() {
     }
     int i = 0;
     for (std::map<i32,Unit*>::iterator it = inQueueTroops -> begin(); it != inQueueTroops -> end() && i < inQueueTroops->size(); ++it) {
-        if (it -> second != NULL) {
+        if (it -> second != nullptr) {
             it -> second -> update();
         }
         i++;
     }
     i = 0;
     for (std::map<i32,Unit*>::iterator it = inHallTroops -> begin(); it != inHallTroops -> end() && i < inHallTroops->size(); ++it) {
-        if (it -> second != NULL) {
+        if (it -> second != nullptr) {
             it -> second -> update();
         }
         i++;
     }
     i = 0;
     for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && i < inMapTroops->size(); ++it) {
-        if (it -> second != NULL) {
+        if (it -> second != nullptr) {
             it -> second -> update();
         }
         i++;
@@ -144,7 +144,7 @@ void UnitManager::updateUnitManager() {
 
 void UnitManager::testRaycastCollisions() {
 	if (!deployingTroop) {
-		currentCollision = unitLayer -> getNodeCollision(Game::Instance() -> getMouse());
+		currentCollision = unitLayer -> getNodeCollision(IO::Instance() -> getMouse());
 	}
 } 
 
@@ -247,28 +247,26 @@ void UnitManager::selectTroop(i32 troopID) {
 }
 
 //Select a troop
-void UnitManager::unSelectTroop() { 
-    Game *g = Game::Instance();
-    if (selectedTroop != NULL){
-        selectedTroop = NULL;
-        g -> getMouse() -> changeIcon(CURSOR_NORMAL);
+void UnitManager::unSelectTroop() {
+    if (selectedTroop != nullptr){
+        selectedTroop = nullptr;
+        IO::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);
     }
 }
 
 //Pass the order to the selected unit
 void UnitManager::moveOrder() {
-    Game *g = Game::Instance();
-    if (selectedTroop != NULL) {
-        selectedTroop -> setTroopDestination(Map::Instance() -> getTerrain() -> getPointCollision(g -> getMouse()));
-        if (Game::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
+    if (selectedTroop != nullptr) {
+        selectedTroop -> setTroopDestination(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
+        if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
         // ToDo by Julian -> change attack iddle to pathfinding mode
             selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
 
-            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(g -> getMouse()));
+            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
         } else {
             selectedTroop -> switchState(Enumeration::UnitState::Move);
 
-            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(g -> getMouse()));
+            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
         }
         //MOVEMENT VOICE
         //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
@@ -339,7 +337,7 @@ bool UnitManager::checkCanPay(Enumeration::UnitType type) {
 }
 
 bool UnitManager::isTroopSelected() {
-    if (selectedTroop != NULL) return true;
+    if (selectedTroop != nullptr) return true;
     else return false;
 }
 
@@ -348,22 +346,28 @@ bool UnitManager::isDeployingTroop(){
 }
 
 void UnitManager::deleteUnit(i32 id) {
+    if (inMapTroops -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
+        Human::Instance() -> decreaseArmyLevel(inMapTroops -> find(id) -> second -> getArmyLevel());
+    } else {
+        IA::Instance() -> decreaseArmyLevel(inMapTroops -> find(id) -> second -> getArmyLevel());
+    }
+    inMapTroops -> find(id) -> second -> putHostileTargetsToNull();
     delete inMapTroops -> find(id) -> second;
     inMapTroops -> erase(id);
 }
 
 i32 UnitManager::getCollisionID() {
-	if (currentCollision != NULL) {
+	if (currentCollision != nullptr) {
 		return currentCollision -> getSceneNode() -> getID();
 	}
 	return -1;
 }
 
 std::string UnitManager::getCollisionName() {
-	if (currentCollision != NULL) {
+	if (currentCollision != nullptr) {
 		return currentCollision -> getSceneNode() -> getName();
 	}
-	return NULL;
+	return nullptr;
 }
 
 i32 UnitManager::getDeployingTroopID(){
@@ -395,7 +399,11 @@ i32 UnitManager::getTroopAmount(Enumeration::UnitType t){
 }
 
 bool UnitManager::areTroopsDeployed(){
-    return (inHallTroops->size() == 0);
+    return (inHallTroops -> size() == 0);
+}
+
+bool UnitManager::areTroopsInMap(){
+    return (inMapTroops -> size() != 0);
 }
 
 //Returns the amount of troops

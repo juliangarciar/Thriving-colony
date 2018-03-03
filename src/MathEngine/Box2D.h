@@ -13,37 +13,54 @@
 //-----------------------------------------------------------------------------
 
 #include "Vector2.h"
-#include <Types.h>
+
 class Box2D
 {
     private:
     // Top-left point
         Vector2<f32>  m_vTopLeft;
-    // Bottom-right point
+    // Top-right point
         Vector2<f32>  m_vBottomRight;
     // Center point
         Vector2<f32>  m_vCenter;
-    // Top-right point
-        Vector2<f32> m_vTopRight;
-    // Bottom-left point
-        Vector2<f32> m_vBottomLeft;
     public:
-        Box2D();
     // Constructor
-        Box2D(Vector2<f32> tl, Vector2<f32> br);
+        Box2D(Vector2<f32> tl,
+                        Vector2<f32> br):m_vTopLeft(tl),
+                                        m_vBottomRight(br),
+                                        m_vCenter((tl+br)/2.0)
+        {}
     // Returns true if overlaps with another Box2D
-        bool isOverlappedWith( Box2D other);
+        bool isOverlappedWith( Box2D& other)
+        {
+            return !((other.Top() > this->Bottom()) ||
+                (other.Bottom() < this->Top()) ||
+                (other.Left() > this->Right()) ||
+                (other.Right() < this->Left()));
+        }
+
     // Getters
-        Vector2<f32> TopLeft();
-        Vector2<f32> BottomRight();
-        Vector2<f32> Center();
-        Vector2<f32> TopRight();
-        Vector2<f32> BottomLeft();
-        f32 Top();
-        f32 Left();
-        f32 Bottom();
-        f32 Right();
-        Box2D getAmplifiedBox(f32 distance);
+        Vector2<f32> TopLeft(){
+            return m_vTopLeft;
+        }
+        Vector2<f32> BottomRight(){
+            return m_vBottomRight;
+        }
+        double    Top(){
+            return m_vTopLeft.y;
+        }
+        double    Left(){
+            return m_vTopLeft.x;
+        }
+        double    Bottom(){
+            return m_vBottomRight.y;
+        }
+        double    Right(){
+            return m_vBottomRight.x;
+        }
+        Vector2<f32> Center(){
+            return m_vCenter;
+        }
 };
   
 #endif /* BOX2D_H */

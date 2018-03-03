@@ -2,6 +2,7 @@
 #define MAP_H
 
 #include "CameraController.h"
+#include "Player.h"
 
 #include <GraphicEngine/Terrain.h>
 #include <GraphicEngine/Light.h>
@@ -82,7 +83,7 @@ class Map {
 
         //Stuff
         CameraController *camera;
-        Light *light;
+        std::vector<Light*> lights;
         Terrain *terrain;
 
         //Start Positions

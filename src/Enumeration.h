@@ -268,6 +268,13 @@ class Enumeration {
             mapMarginRight = 8500
         };
 
+        enum ArmyLevel {
+            Footmen = 5,
+            Mounted = 10,
+            Siege = 7,
+            Creatures = 15
+        };
+
     private:
         
         //Old buttons

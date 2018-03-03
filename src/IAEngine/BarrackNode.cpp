@@ -18,6 +18,6 @@ void BarrackNode::question() {
     if (IA::Instance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost)) {
         IA::Instance() -> getTree() -> setRequireBarrack(false);
         Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
-        IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barrack, true);
+        IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barrack, false);
     }
 }

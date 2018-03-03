@@ -63,6 +63,7 @@ class Unit : public Entity {
         Vector3<f32> getDestination();
         std::list< Vector2<f32> > getPath();
         Enumeration::UnitType getType();
+
     private:
         /**
          * @brief inicia
@@ -118,6 +119,7 @@ class Unit : public Entity {
         std::string attackEvent;
         std::string moveEvent;
         std::string selectEvent;
+
 };
 
 #endif

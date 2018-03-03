@@ -39,6 +39,7 @@ class BehaviourTree {
         i32 getMountedCreatureMilestone();
 
         i32 getHappinessThreshold();
+        i32 getAttackThreshold();
 
         f32 getMeleeThreshold();
         f32 getRangeThreshold();
@@ -57,8 +58,6 @@ class BehaviourTree {
         bool getNeedTower();
         
         bool getUnderAttack();
-        
-        void debugMessage();
 
         //Goal oriented
         bool getRequireBarrack();
@@ -78,8 +77,8 @@ class BehaviourTree {
         void init(i32);
 
     protected:
-
         i32 happinessThreshold;
+        i32 attackThreshold;
         i32 quarryMilestone;
         i32 mountedCreatureMilestone;
         i32 wallMilestone;

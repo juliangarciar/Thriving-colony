@@ -50,7 +50,7 @@ void IA::Update() {
         nodeRootIA -> question();
         updateTimer = 1.0;
     } else {
-        updateTimer -= Game::Instance() -> getWindow() -> getDeltaTime();
+        updateTimer -= Window::Instance() -> getDeltaTime();
     }
 }
 
@@ -150,27 +150,26 @@ Vector3<f32> IA::determinatePositionBuilding() {
 }
 
 bool IA::getUnderAttack() {
-    if(underAttack == false){
-        Vector3<f32> *pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
-        i32 requesterRange = 1000;
-        
-        f32 xaux = 0;
-        f32 yaux = 0;
-        f32 dist = 0;
+    underAttack = false;
+    Vector3<f32> *pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
+    i32 requesterRange = 1000;
+    
+    f32 xaux = 0;
+    f32 yaux = 0;
+    f32 dist = 0;
 
         // Get units in the map of the opposing team
         std::map<i32, Unit*> *inMapTroops = Human::Instance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map
         for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
-            if (it -> second != NULL) {
+            if (it -> second != nullptr) {
             // Calculate distance between troop requesting target and posible targets
                 xaux = it -> second -> getPosition() -> x - pos -> x;
                 yaux = it -> second -> getPosition() -> y - pos -> y;
                 dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
 
-                if (dist <= requesterRange) {
-                    underAttack = true;
-                }
+            if (dist <= requesterRange) {
+                underAttack = true;
             }
         }
     }
@@ -179,7 +178,7 @@ bool IA::getUnderAttack() {
 
 void IA::chooseBehaviour() {
     // RAndomize the seed
-    srand(time(NULL));
+    srand(time(nullptr));
     // Determine a number between 0 and 4, the number of possible behaviours for the AI to choose
     behaviour = (Enumeration::IABehaviour)(rand()%(4-0 + 1) + 0);
     switch (behaviour) {

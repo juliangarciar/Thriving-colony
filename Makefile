@@ -3,14 +3,20 @@
 
 # Name of the executable created
 TARGET = ThrivingColony
+# Project root
+PROJECTROOT = .
 # Path for the executable
-BINPATH = bin
+BINPATH = $(PROJECTROOT)/bin
 # Path for the .o files
-BUILDPATH = obj
+BUILDPATH = $(PROJECTROOT)/obj
 # Path for the source files
-SOURCEPATH = src
+SOURCEPATH = $(PROJECTROOT)/src
 #Directories
+<<<<<<< HEAD
 SOURCE_DIRS = . MathEngine GraphicEngine GUIEngine IOEngine SoundEngine IAEngine OurEngine PathPlanner WorldGeometry WorldEngine IOEngine/ResourceManager
+=======
+SOURCE_DIRS = . MathEngine GraphicEngine GUIEngine IOEngine SoundEngine IAEngine OurEngine PathPlanner WorldGeometry IOEngine/ResourceManager
+>>>>>>> master
 #C++ compiler
 CXX = clang++
 
@@ -18,13 +24,21 @@ CXX = clang++
 # FLAGS
 ####
 # Include paths
+<<<<<<< HEAD
 CPPFLAGS = -I/usr/include -I./include -I/usr/include/eigen3 -I./include/nanovg -I./$(SOURCEPATH)
 # Compiler params
 CPPFLAGS += -O3 -ffast-math -g -Wall -Wno-macro-redefined -std=c++11 -m64 -pthread -DGL_GLEXT_PROTOTYPES
 # Lib paths
 LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L./lib
+=======
+CPPFLAGS = -I/usr/include -I/usr/include/eigen3 -I$(PROJECTROOT)/include -I$(PROJECTROOT)/include/nanovg -I$(SOURCEPATH)
+# Compiler params
+CPPFLAGS += -O3 -ffast-math -g -Wall -Wno-macro-redefined -Wno-unsequenced -Wno-unused-value -std=c++11 -m64 -pthread -DGL_GLEXT_PROTOTYPES
+# Lib paths
+LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L$(PROJECTROOT)/lib
+>>>>>>> master
 # Libs
-LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lXrandr -lXinerama -lXi -lpthread -ldl -lrt -lglfw -lIrrlicht -lnanogui -lfmod -lfmodstudio
+LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lXrandr -lXinerama -lXi -lpthread -ldl -lrt -lglfw -lGLEW -lIrrlicht -lnanogui -lfmod -lfmodstudio
 ###-lfmodex_vc.lib -lfmod -lfmodasdL
 
 ######## DON'T EDIT ANYTHING BELOW THIS LINE
@@ -38,7 +52,7 @@ OBJ := $(patsubst $(SOURCEPATH)/%.cpp, $(BUILDPATH)/%.o, $(SRC))
 
 all: prepare $(OBJ)
 	$(warning Creando el ejecutable $(Target)...)
-	$(CXX) $(CPPFLAGS) $(OBJ) -o $(EXECUTABLE) $(LDFLAGS) $(LIBS)
+	$(CXX) -v $(CPPFLAGS) $(OBJ) -o $(EXECUTABLE) $(LDFLAGS) $(LIBS)
     
 $(BUILDPATH)/%.o: $(SOURCEPATH)/%.cpp
 	$(warning Creando el binario $@...)
