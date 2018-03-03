@@ -23,6 +23,7 @@ WorldGeometry::WorldGeometry(){
 }
 WorldGeometry::~WorldGeometry(){
     mCells.clear();
+    cellsDistance.clear();
     delete quadTree;
 }
 void WorldGeometry::Init(){
@@ -145,11 +146,16 @@ void WorldGeometry::Init(){
         cellsDistance[j] = std::vector<f32>(size);
         for(i32 k = 0; k < size; k++){
             cellsDistance[j][k] = calculateDistance(mCells[j]->getPosition(), neighbors[k]->getPosition());
+            if(cellsDistance[j][k] == 0){
+                std::cout << "Weird stuff happens at init at: " << j << "," << k << "\n";
+            }
         }
     }
 }
 void WorldGeometry::Clear(){
-    
+    mCells.clear();
+    cellsDistance.clear();
+    delete quadTree;
 }
 void WorldGeometry::build(Building* buildingPtr){
     quadTree->insertBuilding(buildingPtr);
@@ -200,10 +206,11 @@ Cell* WorldGeometry::indexToCell(i32 index){
 f32 WorldGeometry::calculateDistance(Vector2<f32> a, Vector2<f32> b){
     f32 dX = b.x - a.x;
     f32 dY = b.y - a.y;
-    f32 distance = std::sqrt(std::pow(dX, 2) + std::pow(dY,2));
-    return distance;
+    return std::sqrt(std::pow(dX, 2) + std::pow(dY,2));
 }
 f32 WorldGeometry::getCost(i32 indexA, i32 indexB){
+    if(cellsDistance[indexA][indexB] == 0)
+        std::cout << "Weird stuff happens \n";
     return cellsDistance[indexA][indexB];
 }
 const std::vector<Cell*>& WorldGeometry::getNeighbors(i32 index){

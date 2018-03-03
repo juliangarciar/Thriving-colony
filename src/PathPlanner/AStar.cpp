@@ -11,11 +11,11 @@ AStar::AStar(Cell* source, Cell* target){
     sourceIndex = source->getIndex();
     targetIndex = target->getIndex();
     
-    GCosts = std::vector<f32>(MAX, 0.0);
-    FCosts = std::vector<f32>(MAX, 0.0);
+    GCosts = std::vector<f32>(MAX, 0);
+    FCosts = std::vector<f32>(MAX, 0);
 
-    shortestPath = std::vector<Cell*>(MAX);
-    searchFrontier = std::vector<Cell*>(MAX);
+    shortestPath = std::vector<Cell*>(MAX, NULL);
+    searchFrontier = std::vector<Cell*>(MAX, NULL);
 }
 AStar::~AStar(){
     shortestPath.clear();
@@ -30,24 +30,26 @@ void AStar::Search(){
     pq.insert(sourceIndex);
     while(!pq.empty()){
         i32 closestIndex = pq.Pop();
+        std::cout << "Selected index: " << closestIndex << "\n";
     /* Adds the cell to the path vector */
         shortestPath[closestIndex] = searchFrontier[closestIndex];
 
     /* Stop condition, research about a system of conditions */
         if(closestIndex == targetIndex) {
-            /* Do more things, like making the path of vectors */
             std::cout << "Path finded. \n";
             return ;
         }
     /* Get neighbors of the chosen cell */
         std::vector<Cell*> neighbors = worldGeometry->getNeighbors(closestIndex);
+        std::cout << "Checking neighbors \n";
     /* Calculate the cost for each neighbor to the targetCell */
         for(i32 i = 0; i < neighbors.size(); i++){
             if(neighbors[i]->getInhabitingBuilding() == NULL && !neighbors[i]->isBlocked()){
                 i32 potentialNode = neighbors[i]->getIndex();
                 f32 HCost = worldGeometry->calculateDistance(neighbors[i]->getPosition(), targetCell->getPosition());
-                f32 GCost = GCosts[closestIndex] + worldGeometry->getCost(closestIndex, potentialNode);
-
+                f32 GCost = GCosts[closestIndex] + worldGeometry->getCost(closestIndex, i);
+                std::cout << "Distancia H: " << HCost << "\n";
+                std::cout << "Distancia G: " << GCost << "\n";
                 if(searchFrontier[potentialNode] == NULL){
                     FCosts[potentialNode] = GCost + HCost;
                     GCosts[potentialNode] = GCost;
@@ -56,7 +58,7 @@ void AStar::Search(){
                     searchFrontier[potentialNode] = worldGeometry->indexToCell(closestIndex);
                 }
             /* Fix this method, isn't working properly */
-                else if((GCost < GCosts[potentialNode]) && (shortestPath[potentialNode] == 0)){
+                else if((GCost < GCosts[potentialNode]) && (shortestPath[potentialNode] == NULL)){
                     FCosts[potentialNode] = GCost + HCost;
                     GCosts[potentialNode] = GCost;
 
@@ -66,22 +68,23 @@ void AStar::Search(){
         }
     }
 }
-std::vector< Vector2<f32> > AStar::getPath(){
-    std::vector< Vector2<f32> > dummyPath;
-    //just return an empty path if no target or no path found
+std::list< Vector2<f32> > AStar::getPath(){
+    std::list< Vector2<f32> > dummyPath;
+/* Maybe there's no need to include this if */
     if (targetIndex < 0)  return dummyPath;    
 
     i32 nd = targetIndex;
-    
-    dummyPath.push_back(targetCell->getPosition());
+    std::cout << "The path is: " << nd << "\n";
+    dummyPath.push_front(targetCell->getPosition());
 
     while ((nd != sourceIndex) && ( searchFrontier[nd] != 0))
     {
         nd =  shortestPath[nd]->getIndex();
+        std::cout << "The path is: " << nd << "\n";
 
-        dummyPath.push_back(worldGeometry->indexToCell(nd)->getPosition());
+        dummyPath.push_front(worldGeometry->indexToCell(nd)->getPosition());
     }
-    dummyPath.push_back(sourceCell->getPosition());
-    
+    dummyPath.push_front(sourceCell->getPosition());
+
     return dummyPath;
 }

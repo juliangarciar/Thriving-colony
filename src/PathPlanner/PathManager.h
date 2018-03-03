@@ -1,13 +1,13 @@
 #ifndef PATHMANAGER_H
 #define PATHMANAGER_H
 
+/* Check needed includes */
 #include <vector>
 #include <queue>
 #include <Types.h>
 #include <MathEngine/Vector2.h>
 
 class Unit;
-class WorldGeometry;
 class PathManager{
     private:
         Unit* propietary;

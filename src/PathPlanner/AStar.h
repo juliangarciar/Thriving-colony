@@ -1,6 +1,7 @@
 #ifndef ASTAR_H
 #define ASTAR_H
 #include <vector>
+#include <list>
 #include <Types.h>
 #include <MathEngine/Vector2.h>
 
@@ -44,6 +45,6 @@ class AStar{
          * 
          * @return std::vector<Cell*> 
          */
-        std::vector< Vector2<f32> > getPath();
+        std::list< Vector2<f32> > getPath();
 };
 #endif /* ASTAR_H */
