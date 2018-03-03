@@ -42,6 +42,7 @@ class Box2D
         f32    Bottom();
         f32    Right();
         Box2D getAmplifiedBox(f32 distance);
+        bool isOverlappedWith(Box2D other);
 };
   
 #endif /* BOX2D_H */
