@@ -151,7 +151,7 @@ i32 Entity::getCells(){
 }
 Box2D Entity::getHit(){
     return hitBox;
-
+}
 i32 Entity::getArmyLevel() {
     return armyLevel;
 }
