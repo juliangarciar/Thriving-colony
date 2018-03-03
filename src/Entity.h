@@ -1,18 +1,12 @@
 #ifndef ENTITY_H
 #define ENTITY_H
 
-<<<<<<< HEAD
-=======
 #include <vector>
->>>>>>> master
 #include <Types.h>
 #include <Enumeration.h>
 #include <MathEngine/Vector3.h>
 #include <MathEngine/Box3D.h>
-<<<<<<< HEAD
 #include <MathEngine/Box2D.h>
-=======
->>>>>>> master
 #include <GraphicEngine/Model.h>
 #include <GraphicEngine/SceneNode.h>
 
