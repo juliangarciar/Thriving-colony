@@ -9,8 +9,11 @@ class TBillboard : public TEntity {
 
         ~TBillboard();
 
+        void beginDraw();
+
     private:
-        glm::vec4 worldPosition;
+        glm::vec3 worldPosition;
+        GLuint vertexbuffer;
 };
 
 #endif
