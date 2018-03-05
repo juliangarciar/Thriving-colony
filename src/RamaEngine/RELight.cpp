@@ -1,6 +1,5 @@
 #include "RELight.h"
 
-
 RELight::RELight(TNode* parent) {
     rotationNode = new TNode(new TTransform(), parent);
     translationNode = new TNode(new TTransform(), rotationNode);

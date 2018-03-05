@@ -29,7 +29,7 @@ class RamaEngine {
          * @brief 
          * 
          */
-        void Init(ResourceGLSL*, ResourceGLSL*);
+        void Init();
 
         /**
          * @brief 

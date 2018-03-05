@@ -2,7 +2,7 @@
 #define TENTITY_H
 
 #include "../RETypes.h"
-#include "TEnums.h"
+#include "../REEnums.h"
 
 static std::stack<glm::mat4> matrixStack;
 // Model matrix/ Camera matrix/ Light matrix

@@ -5,7 +5,7 @@ RECamera::RECamera(TNode* parent) {
     rotationNode = new TNode(new TTransform(), parent);
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
-    cameraNode = new TNode(new TCamera(TEnums::CameraProjection::ProjectionPerspective, 0.3, 1000, 0, 480, 0, 640), scaleNode);
+    cameraNode = new TNode(new TCamera(REEnums::CameraProjection::ProjectionPerspective, 0.3, 1000, 0, 480, 0, 640), scaleNode);
     // o esto o getcameraNode
 }
 
@@ -66,7 +66,7 @@ void RECamera::setBottom(f32 b) {
     c -> setBottom(b);
 }
 
-void RECamera::setProjectionMode(TEnums::CameraProjection proj) {
+void RECamera::setProjectionMode(REEnums::CameraProjection proj) {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     c -> setProjection(proj);
 }
@@ -116,7 +116,7 @@ f32 RECamera::getBottom() {
     return c -> getBottom();
 }
 
-TEnums::CameraProjection RECamera::getProjectionMode() {
+REEnums::CameraProjection RECamera::getProjectionMode() {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     return c -> getProjection();
 }

@@ -2,7 +2,7 @@
 #define RECAMERA_H
 
 #include "RETypes.h"
-#include "Graphics/TEnums.h"
+#include "REEnums.h"
 #include "Graphics/TNode.h"
 #include "Graphics/TTransform.h"
 #include "Graphics/TCamera.h"
@@ -103,7 +103,7 @@ class RECamera {
          * 
          * @param proj 
          */
-        void setProjectionMode(TEnums::CameraProjection proj);
+        void setProjectionMode(REEnums::CameraProjection proj);
 
         /**
          * @brief 
@@ -174,9 +174,9 @@ class RECamera {
         /**
          * @brief 
          * 
-         * @return TEnums::CameraProjection 
+         * @return REEnums::CameraProjection 
          */
-        TEnums::CameraProjection getProjectionMode();
+        REEnums::CameraProjection getProjectionMode();
 
         /**
          * @brief 
