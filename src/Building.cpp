@@ -22,17 +22,11 @@ Building::~Building() {
 }
 
 void Building::Init() {
-    f32 r = 0;
-    f32 g = 0;
-    f32 b = 0;
+
     const wchar_t *path;
     Vector3<f32> scale;
     switch (type) {
         case Enumeration::BuildingType::Barn:
-            // Different color for diferent buildings
-            r = 255;
-            g = 0;
-            b = 0;
 
             maxHP = 1100;
             currentHP = 1100;
@@ -49,10 +43,6 @@ void Building::Init() {
             scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::Barrack:
-            // Different color for diferent buildings
-            r = 255;
-            g = 0;
-            b = 0;
 
             maxHP = 720;
             currentHP = 720;
@@ -69,10 +59,6 @@ void Building::Init() {
             scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::Hospital:
-            // Different color for diferent buildings
-            r = 0;
-            g = 255;
-            b = 0;
 
             maxHP = 750;
             currentHP = 750;
@@ -89,10 +75,6 @@ void Building::Init() {
             scale = Vector3<f32>(64,64,64);
         break;
         case Enumeration::BuildingType::House:
-            // Different color for diferent buildings
-            r = 0;
-            g = 255;
-            b = 255;
 
             maxHP = 150;
             currentHP = 150;
@@ -110,10 +92,6 @@ void Building::Init() {
             scale = Vector3<f32>(64,64,64);
         break;
         case Enumeration::BuildingType::MainBuilding:
-            // Different color for diferent buildings
-            r = 255;
-            g = 255;
-            b = 255;
  
             maxHP = 3000;
             currentHP = 3000;
@@ -123,10 +101,6 @@ void Building::Init() {
             scale = Vector3<f32>(48,48,48);
         break;
         case Enumeration::BuildingType::Market:
-            // Different color for diferent buildings
-            r = 2;
-            g = 255;
-            b = 0;
 
             maxHP = 600;
             currentHP = 600;
@@ -143,10 +117,6 @@ void Building::Init() {
             scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::Quarry:
-            // Different color for diferent buildings
-            r = 0;
-            g = 0;
-            b = 255;
 
             maxHP = 1000;
             currentHP = 1000;
@@ -163,10 +133,6 @@ void Building::Init() {
             scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::Siderurgy:
-            // Different color for diferent buildings
-            r = 0;
-            g = 0;
-            b = 255;
 
             maxHP = 1000;
             currentHP = 1000;
@@ -183,10 +149,6 @@ void Building::Init() {
             scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::School:
-            // Different color for diferent buildings
-            r = 0;
-            g = 255;
-            b = 0;
 
             this -> buildTimer = 35;
             maxHP = 550;
@@ -204,10 +166,6 @@ void Building::Init() {
             scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::Tower:
-            // Different color for diferent buildings
-            r = 255;
-            g = 0;
-            b = 0;
 
             maxHP = 500;
             currentHP = 500;
@@ -224,10 +182,6 @@ void Building::Init() {
             scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::Wall:
-            // Different color for diferent buildings
-            r = 255;
-            g = 0;
-            b = 0;
 
             maxHP = 200;
             currentHP = 200;
@@ -244,10 +198,6 @@ void Building::Init() {
             scale = Vector3<f32>(25,25,25);
         break;
         case Enumeration::BuildingType::Workshop:
-            // Different color for diferent buildings
-            r = 255;
-            g = 0;
-            b = 0;
 
             maxHP = 800;
             currentHP = 800;
@@ -272,13 +222,13 @@ void Building::Init() {
     buildTimer = 0; //ToDo: sin tiempo de construcción
 
     //Establece el color base del edificio
-    baseColor = video::SColor(255, r, g, b); //ToDo: reemplazar color por material
+    baseColor = video::SColor(255, 255, 255, 255); //ToDo: reemplazar color por material
 
     finished = false;
     
-    //Texture *tex = new Texture("./media/blanco.bmp");
-    //Material *m = new Material(tex);
-    //this->model->setMaterial(m);
+    Texture *tex = new Texture("./media/textures/placeholder.bmp");
+    Material *m = new Material(tex);
+    this->model->setMaterial(m);
 }
 
 void Building::update() {
