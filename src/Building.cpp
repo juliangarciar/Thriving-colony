@@ -268,13 +268,13 @@ void Building::Init() {
     buildTimer = 0; //ToDo: sin tiempo de construcción
 
     //Establece el color base del edificio
-    baseColor = video::SColor(255, r, g, b); //ToDo: reemplazar color por material
+    baseColor = video::SColor(255, 255, 255, 255); //ToDo: reemplazar color por material
 
     finished = false;
     
-    //Texture *tex = new Texture("./media/blanco.bmp");
-    //Material *m = new Material(tex);
-    //this->model->setMaterial(m);
+    Texture *tex = new Texture("./media/textures/placeholder.bmp");
+    Material *m = new Material(tex);
+    this->model->setMaterial(m);
 }
 
 void Building::update() {
