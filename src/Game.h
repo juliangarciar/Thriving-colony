@@ -1,20 +1,20 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "State.h"
-#include "MenuState.h"
-#include "GameState.h"
-#include "WinState.h"
-#include "DefeatState.h"
+#include <IOEngine/IO.h>
 
 #include <GraphicEngine/Window.h>
-
-#include <IOEngine/IO.h>
 
 #include <SoundEngine/SoundSystem.h>
 
 #include <Enumeration.h>
 #include <Types.h>
+
+#include "State.h"
+#include "MenuState.h"
+#include "GameState.h"
+#include "WinState.h"
+#include "DefeatState.h"
 
 /**
  * @class Game

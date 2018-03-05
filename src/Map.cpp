@@ -1,7 +1,9 @@
-#include "Map.h"
+#include "Human.h"
+#include "IA.h"
+#include "IOEngine/IO.h"
+#include "GraphicEngine/Window.h"
 
-#include <Game.h>
-#include <IOEngine/ResourceManager/ResourceJSON.h>
+#include "Map.h"
 
 Map* Map::pinstance = 0;
 

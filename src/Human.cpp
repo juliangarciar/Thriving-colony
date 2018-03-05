@@ -1,5 +1,7 @@
 #include "Human.h"
-#include "Game.h"
+
+#include "IA.h"
+#include "GraphicEngine/Window.h"
 
 Human* Human::instance = 0;
 

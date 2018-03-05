@@ -1,6 +1,11 @@
 #include "CameraController.h"
-#include "Game.h"
-  
+
+#include "Human.h"
+#include "IA.h"
+#include "Map.h"
+#include "IOEngine/IO.h"
+#include "GraphicEngine/Window.h"
+
 CameraController::CameraController() {
 	Window *w = Window::Instance();
 

@@ -1,5 +1,10 @@
 #include "UnitManager.h"
-#include "Game.h"
+
+#include "Human.h"
+#include "IA.h"
+#include "Map.h"
+#include "Hud.h"
+#include "IOEngine/IO.h"
 
 //Constructor
 UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {

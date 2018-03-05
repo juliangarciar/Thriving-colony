@@ -1,5 +1,11 @@
 #include "Unit.h"
+
 #include "Game.h"
+#include "Human.h"
+#include "IA.h"
+#include "Map.h"
+#include "Hud.h"
+#include "GraphicEngine/Window.h"
 
 Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t) : Entity(id, team, breed) {
     // Race type and unit type
@@ -601,7 +607,7 @@ bool Unit::refreshTarget() {
 
     // Ask for a new target
     if (lookForTargetCountdown <= 0) {
-        Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
+        Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this); //ToDo: Puff, mas corto mejor no?
         lookForTargetCountdown = lookForTargetTimer;
     } else {
         lookForTargetCountdown -= Window::Instance() -> getDeltaTime();

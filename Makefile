@@ -12,7 +12,7 @@ BUILDPATH = $(PROJECTROOT)/obj
 # Path for the source files
 SOURCEPATH = $(PROJECTROOT)/src
 #Directories
-SOURCE_DIRS = . MathEngine GraphicEngine GUIEngine IOEngine SoundEngine IAEngine OurEngine PathPlanner WorldGeometry IOEngine/ResourceManager
+SOURCE_DIRS = . MathEngine GraphicEngine GUIEngine IOEngine SoundEngine IAEngine PathPlanner WorldGeometry RamaEngine RamaEngine/ResourceManager RamaEngine/Graphics
 #C++ compiler
 CXX = clang++
 

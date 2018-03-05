@@ -1,6 +1,7 @@
 #include "DeployTroopsNode.h"
-#include <Game.h>
+
 #include <IA.h>
+#include <IOEngine/IO.h>
 
 DeployTroopsNode::DeployTroopsNode(Node *fatherPnt) : Node() {
     father = fatherPnt;

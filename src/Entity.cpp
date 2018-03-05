@@ -1,5 +1,5 @@
 #include "Entity.h"
-#include "Game.h"
+#include "GraphicEngine/Window.h"
 
 Entity::Entity(i32 id, Enumeration::Team t, Enumeration::BreedType b) {
     ID = id;

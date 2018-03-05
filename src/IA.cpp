@@ -1,5 +1,8 @@
 #include "IA.h"
-#include "Game.h"
+
+#include "GraphicEngine/Window.h"
+#include "Human.h"
+#include "Map.h"
 
 IA* IA::instance = 0;
 

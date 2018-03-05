@@ -1,5 +1,4 @@
 #include "Player.h"
-#include "Game.h"
 
 //ToDo: seria ideal que todo fuera parametrizable y todo estuviera en el mismo sitio
 

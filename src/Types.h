@@ -1,6 +1,8 @@
 #ifndef TYPES_H
 #define TYPES_H
 
+#include <string>
+
 #include <cstdint>
 #include <iostream>
 

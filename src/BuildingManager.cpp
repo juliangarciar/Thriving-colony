@@ -1,5 +1,9 @@
 #include "BuildingManager.h"
-#include "Game.h"
+#include "Human.h"
+#include "IA.h"
+#include "Map.h"
+#include "Hud.h"
+#include "IOEngine/IO.h"
 
 #include "WorldGeometry/CellSpacePartition.h"
 
