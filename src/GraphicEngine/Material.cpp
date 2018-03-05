@@ -4,6 +4,7 @@
 using namespace irr;
 
 Material::Material(Texture *tex) { 
+    material = new video::SMaterial();
     material->setTexture(0, tex->getTexture());
     material->Lighting = true;
     material->NormalizeNormals = true;
