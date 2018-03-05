@@ -38,6 +38,9 @@ void RamaEngine::Init(ResourceGLSL*, ResourceGLSL*) {
 
 	// Cull triangles which normal is not towards the camera
 	glEnable(GL_CULL_FACE);
+    //Back face culling
+    glCullFace(GL_BACK);
+    glPolygonMode(GL_FRONT, GL_FILL);
 
     // Create vertexArray
 	glGenVertexArrays(1, &VertexArrayID);
