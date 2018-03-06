@@ -5,7 +5,7 @@ RECamera::RECamera(TNode* parent) {
     rotationNode = new TNode(new TTransform(), parent);
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
-    cameraNode = new TNode(new TCamera(TEnums::CameraProjection::ProjectionPerspective, 0.3, 1000, 0, 480, 0, 640), scaleNode);
+    cameraNode = new TNode(new TCamera(REEnums::CameraProjection::ProjectionPerspective, 0.3, 1000, 0, 480, 0, 640), scaleNode);
     // o esto o getcameraNode
 }
 
@@ -86,7 +86,7 @@ f32 RECamera::getFar() {
     return c -> getFar();
 }
 
-TEnums::CameraProjection RECamera::getProjectionMode() {
+REEnums::CameraProjection RECamera::getProjectionMode() {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     return c -> getProjection();
 }

@@ -1,15 +1,19 @@
-#ifndef TENUMS_H
-#define TENUMS_H
+#ifndef REENUMS_H
+#define REENUMS_H
 
 /**
- * @class TEnums
+ * @class REEnums
  * @brief Declara las enumeraciones que van a ser necesarias
  */
-class TEnums {
+class REEnums {
     public:
         enum CameraProjection {
             ProjectionPerspective,
             ProjectionOrtographic
+        };
+        enum ShaderType {
+            VERTEX,
+            FRAGMENT
         };
 };
 

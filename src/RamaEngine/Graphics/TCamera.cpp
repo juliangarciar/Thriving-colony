@@ -1,6 +1,6 @@
 #include "TCamera.h"
 
-TCamera::TCamera(TEnums::CameraProjection projectionMode, f32 n, f32 f, f32 t, f32 b, f32 l, f32 r) : TEntity(){
+TCamera::TCamera(REEnums::CameraProjection projectionMode, f32 n, f32 f, f32 t, f32 b, f32 l, f32 r) : TEntity(){
     setNear(n);
     setFar(f);
     setProjection(projectionMode);
@@ -34,7 +34,7 @@ void TCamera::endDraw(){
 }
 
 void TCamera::setPerspective(){
-    setProjection(TEnums::CameraProjection::ProjectionPerspective);
+    setProjection(REEnums::CameraProjection::ProjectionPerspective);
     // Calculate aspect ratio
     f32 width = right - left;
     f32 height = bottom - top;
@@ -94,7 +94,7 @@ void TCamera::setFar(f32 f){
 }
 ///////////////////////
 
-void TCamera::setProjection(TEnums::CameraProjection cp){
+void TCamera::setProjection(REEnums::CameraProjection cp){
     projection = cp;
 }
 
@@ -114,7 +114,7 @@ void TCamera::setRight(f32 r){
     right = r;
 }
 
-TEnums::CameraProjection TCamera::getProjection(){
+REEnums::CameraProjection TCamera::getProjection(){
     return projection;
 }
 

@@ -2,7 +2,7 @@
 #define RECAMERA_H
 
 #include "RETypes.h"
-#include "Graphics/TEnums.h"
+#include "REEnums.h"
 #include "Graphics/TNode.h"
 #include "Graphics/TTransform.h"
 #include "Graphics/TCamera.h"
@@ -134,7 +134,7 @@ class RECamera {
          * 
          * @return TEnums::CameraProjection 
          */
-        TEnums::CameraProjection getProjectionMode();
+        REEnums::CameraProjection getProjectionMode();
 
         /**
          * @brief 
@@ -143,25 +143,6 @@ class RECamera {
          */
         f32 getFov();
 
-        /**
-         * @brief 
-         * 
-         * @return TNode* 
-         */
-        TNode* getCameraNode();
-
-        /**
-         * @brief 
-         * 
-         */
-        glm::mat4 calculateViewMatrix();
-
-        /**
-         * @brief 
-         * 
-         * @return glm::mat4 
-         */
-        glm::mat4 getProjectionMatrix();
 
         /**
          * @brief 
