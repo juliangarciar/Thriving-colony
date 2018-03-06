@@ -49,7 +49,7 @@ void IA::Update() {
     units -> updateUnitManager();
     Vector3<f32> tarPos = Map::Instance() -> getCamera() -> getTarPos();
     Vector3<f32> *IAPos = buildings -> getBuilding(0) -> getPosition();
-    bool fast = false;
+    fast = false;
     if (((IAPos -> x + 2000 > tarPos.x && IAPos -> x - 2000 < tarPos.x) && (IAPos -> y + 2000 > tarPos.y && IAPos -> y - 2000 < tarPos.y)) || underAttack) {
         fast = true;
     }
@@ -233,6 +233,10 @@ void IA::setChoiceIndex(i32 newIndex) {
 
 std::string IA::getChosenBehaviour() {
     return chosenBehaviour;
+}
+
+bool IA::getFast() {
+    return fast;
 }
 
 // Down here so it doesn't clutter the constructor
