@@ -5,7 +5,7 @@ RECamera::RECamera(TNode* parent) {
     rotationNode = new TNode(new TTransform(), parent);
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
-    cameraNode = new TNode(new TCamera(TEnums::CameraProjection::ProjectionPerspective, 0.3, 1000, 0, 480, 0, 640), scaleNode);
+    cameraNode = new TNode(new TCamera(REEnums::CameraProjection::ProjectionPerspective, 0.3, 1000, 0, 480, 0, 640), scaleNode);
     // o esto o getcameraNode
 }
 
@@ -41,34 +41,19 @@ void RECamera::setNear(f32 n) {
     c -> setNear(n);
 }
 
-void RECamera::setFar(f32 f) {
+void RECamera::setPerspectiveProjection() {
+    TCamera* c = (TCamera*) cameraNode -> getEntity();
+    c -> setPerspective();
+}
+
+void RECamera::setParallelProjection() {
+    TCamera* c = (TCamera*) cameraNode -> getEntity();
+    c -> setParallel();
+}
+
+void RECamera::setFarValue(f32 f) {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     c -> setFar(f);
-}
-
-void RECamera::setRight(f32 r) {
-    TCamera* c = (TCamera*) cameraNode -> getEntity();
-    c -> setRight(r);
-}
-
-void RECamera::setLeft(f32 l) {
-    TCamera* c = (TCamera*) cameraNode -> getEntity();
-    c -> setLeft(l);
-}
-
-void RECamera::setTop(f32 t) {
-    TCamera* c = (TCamera*) cameraNode -> getEntity();
-    c -> setTop(t);
-}
-
-void RECamera::setBottom(f32 b) {
-    TCamera* c = (TCamera*) cameraNode -> getEntity();
-    c -> setBottom(b);
-}
-
-void RECamera::setProjectionMode(TEnums::CameraProjection proj) {
-    TCamera* c = (TCamera*) cameraNode -> getEntity();
-    c -> setProjection(proj);
 }
 
 void RECamera::setFov(f32 fov){
@@ -76,9 +61,14 @@ void RECamera::setFov(f32 fov){
     c -> setFov(fov);
 }
 
-void RECamera::setTargetPosition(f32 tX, f32 tY, f32 tZ) {
+void RECamera::setTarget(glm::vec3 p) {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
-    c -> setTargetPosition(tX, tY, tZ);
+    c -> setTargetPosition(p);
+}
+
+void RECamera::setPosition(glm::vec3 p) {
+    TCamera* c = (TCamera*) cameraNode -> getEntity();
+    c -> setCameraPosition(p);
 }
 
 bool RECamera::getActive() {
@@ -96,27 +86,7 @@ f32 RECamera::getFar() {
     return c -> getFar();
 }
 
-f32 RECamera::getRight() {
-    TCamera* c = (TCamera*) cameraNode -> getEntity();
-    return c -> getRight();
-}
-
-f32 RECamera::getLeft() {
-    TCamera* c = (TCamera*) cameraNode -> getEntity();
-    return c -> getLeft();
-}
-
-f32 RECamera::getTop() {
-    TCamera* c = (TCamera*) cameraNode -> getEntity();
-    return c -> getTop();
-}
-
-f32 RECamera::getBottom() {
-    TCamera* c = (TCamera*) cameraNode -> getEntity();
-    return c -> getBottom();
-}
-
-TEnums::CameraProjection RECamera::getProjectionMode() {
+REEnums::CameraProjection RECamera::getProjectionMode() {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     return c -> getProjection();
 }
@@ -126,32 +96,12 @@ f32 RECamera::getFov() {
     return c -> getFov();
 }
 
-TNode* RECamera::getCameraNode() {
-    return cameraNode;
+glm::vec3 RECamera::getPosition() {
+    TCamera* c = (TCamera*) cameraNode -> getEntity();
+    return c -> getCameraPosition();
 }
 
-glm::mat4 RECamera::calculateViewMatrix() {
-    // Sacar matriz camera
-    TTransform* rt = (TTransform*) rotationNode -> getEntity();
-    TTransform* tt = (TTransform*) translationNode -> getEntity();
-    TTransform* st = (TTransform*) scaleNode -> getEntity();
-    glm::mat4 cameraMatrix = rt ->getMatrix() * tt -> getMatrix() * st -> getMatrix();
-    //Sacar posicion de la camara
-    glm::vec4 v = glm::vec4(0,0,0,1) * cameraMatrix;
-    glm::vec3 cameraPos = glm::vec3(v);
-    // Posicion del objetivo
+glm::vec3 RECamera::getTarget() {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
-    glm::vec3 tarPos = c -> getTargetPosition();
-    
-    glm::mat4 view = glm::lookAt(
-        cameraPos,  
-        tarPos, 
-        glm::vec3(0,1,0) 
-    );
-    return view;
-}
-
-glm::mat4 RECamera::getProjectionMatrix() {
-    TCamera* c = (TCamera*) cameraNode -> getEntity();
-    return c -> getProjectionMatrix();
+    return c -> getTargetPosition();
 }

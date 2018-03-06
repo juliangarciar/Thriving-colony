@@ -2,7 +2,7 @@
 #define RECAMERA_H
 
 #include "RETypes.h"
-#include "Graphics/TEnums.h"
+#include "REEnums.h"
 #include "Graphics/TNode.h"
 #include "Graphics/TTransform.h"
 #include "Graphics/TCamera.h"
@@ -68,42 +68,19 @@ class RECamera {
          * 
          * @param f 
          */
-        void setFar(f32 f);
+        void setFarValue(f32 f);
 
         /**
          * @brief 
          * 
-         * @param r 
          */
-        void setRight(f32 r);
+        void setPerspectiveProjection();
 
         /**
          * @brief 
          * 
-         * @param l 
          */
-        void setLeft(f32 l);
-
-        /**
-         * @brief 
-         * 
-         * @param t 
-         */
-        void setTop(f32 t);
-
-        /**
-         * @brief 
-         * 
-         * @param b 
-         */
-        void setBottom(f32 b);
-
-        /**
-         * @brief 
-         * 
-         * @param proj 
-         */
-        void setProjectionMode(TEnums::CameraProjection proj);
+        void setParallelProjection();
 
         /**
          * @brief 
@@ -119,7 +96,16 @@ class RECamera {
           * @param tY 
           * @param tZ 
           */
-        void setTargetPosition(f32 tX, f32 tY, f32 tZ);
+        void setTarget(glm::vec3 p);
+
+        /**
+          * @brief 
+          * 
+          * @param tX 
+          * @param tY 
+          * @param tZ 
+          */
+        void setPosition(glm::vec3 p);
 
         // En realidad no se si se necesitan getters pero los pongo por si acaso
 
@@ -146,37 +132,9 @@ class RECamera {
         /**
          * @brief 
          * 
-         * @return f32 
-         */
-        f32 getRight();
-
-        /**
-         * @brief 
-         * 
-         * @return f32 
-         */
-        f32 getLeft();
-
-        /**
-         * @brief 
-         * 
-         * @return f32 
-         */
-        f32 getTop();
-
-        /**
-         * @brief 
-         * 
-         * @return f32 
-         */
-        f32 getBottom();
-
-        /**
-         * @brief 
-         * 
          * @return TEnums::CameraProjection 
          */
-        TEnums::CameraProjection getProjectionMode();
+        REEnums::CameraProjection getProjectionMode();
 
         /**
          * @brief 
@@ -185,25 +143,20 @@ class RECamera {
          */
         f32 getFov();
 
-        /**
-         * @brief 
-         * 
-         * @return TNode* 
-         */
-        TNode* getCameraNode();
 
         /**
          * @brief 
          * 
+         * @return glm::vec3 
          */
-        glm::mat4 calculateViewMatrix();
+        glm::vec3 getPosition();
 
         /**
          * @brief 
          * 
-         * @return glm::mat4 
+         * @return glm::vec3 
          */
-        glm::mat4 getProjectionMatrix();
+        glm::vec3 getTarget();
         
 
     private:

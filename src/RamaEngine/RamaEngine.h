@@ -1,7 +1,7 @@
 #ifndef RAMAENGINE_H
 #define RAMAENGINE_H
 
-#include "GL/glew.h"
+#include <GL/glew.h>
 #include "RETypes.h"
 #include "REAnimation.h"
 #include "RECamera.h"
@@ -29,7 +29,7 @@ class RamaEngine {
          * @brief 
          * 
          */
-        void Init(ResourceGLSL*, ResourceGLSL*);
+        void Init();
 
         /**
          * @brief 
@@ -126,7 +126,7 @@ class RamaEngine {
          * 
          * @param lightNode 
          */
-        void registerLight(TNode* lightNode);
+        void registerLight(RELight* rel);
 
         /**
          * @brief 
@@ -137,15 +137,13 @@ class RamaEngine {
 
 
     private:
-        static RamaEngine* instance;
-
         TNode* rootNode;
 
         RESceneNode *defaultSceneNode;
 
         // Punteros?
         std::vector<RECamera*> cameras;
-        std::vector<TNode*> lights;
+        std::vector<RELight*> lights;
         std::vector<TNode*> sceneNodes;
 
         // OpenGL

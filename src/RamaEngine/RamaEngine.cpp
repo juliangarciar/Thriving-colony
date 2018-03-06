@@ -18,7 +18,7 @@ RamaEngine::~RamaEngine() {
 	glDeleteProgram(programID);
 }
 
-void RamaEngine::Init(ResourceGLSL*, ResourceGLSL*) {
+void RamaEngine::Init() {
     // Resource Manager
     ResourceManager *r = new ResourceManager();
 
@@ -45,15 +45,15 @@ void RamaEngine::Init(ResourceGLSL*, ResourceGLSL*) {
     // Create vertexArray
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
-    
-	// Create and compile our GLSL program from the shaders
-    ResourceGLSL *s = (ResourceGLSL*)r->getResource("vertexShader.glsl", true);
-    ResourceGLSL *s2 = (ResourceGLSL*)r->getResource("fragmentShader.glsl", true);
 
+	// Get a handle for our "MVP" uniform
+	MVPID = glGetUniformLocation(programID, "MVP");
+    
+    /*
+	// Create and compile our GLSL program from the shaders
+    ResourceGLSL *s = (ResourceGLSL*)r->getResource(path, true);
     // Link the program
-	programID = glCreateProgram();
-	glAttachShader(programID, s->getShaderID());
-	glAttachShader(programID, s2->getShaderID());
+	GLuint programID = glCreateProgram();
 	glLinkProgram(programID);
 
 	// Check the program
@@ -65,27 +65,18 @@ void RamaEngine::Init(ResourceGLSL*, ResourceGLSL*) {
 		std::vector<char> ProgramErrorMessage(InfoLogLength+1);
 		glGetProgramInfoLog(programID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
 		std::cout << &ProgramErrorMessage[0] << std::endl;
-	}
-
-	glDetachShader(programID, s->getShaderID());
-	glDetachShader(programID, s2->getShaderID());
-	
-	glDeleteShader(s->getShaderID());
-	glDeleteShader(s2->getShaderID());
-
-	// Get a handle for our "MVP" uniform
-	MVPID = glGetUniformLocation(programID, "MVP");
+	}*/
 }
 
 RELight* RamaEngine::createRELight() {
     RELight* rel = new RELight(sceneNodes . at(0));
-    registerLight(rel -> getLightNode());
+    registerLight(rel);
     return rel;
 }
 
 RELight* RamaEngine::createRELight(RESceneNode* layer) {
     RELight* rel = new RELight(layer -> getSceneNode());
-    registerLight(rel -> getLightNode());
+    registerLight(rel);
     return rel;
 }
 
@@ -146,8 +137,8 @@ void RamaEngine::registerCamera(RECamera* rec) {
     cameras . push_back(rec);
 }
 
-void RamaEngine::registerLight(TNode* lightNode) {
-    lights . push_back(lightNode);
+void RamaEngine::registerLight(RELight* rel) {
+    lights . push_back(rel);
 }
 
 void RamaEngine::registerSceneNode(TNode* sceneNode) {

@@ -2,6 +2,7 @@
 #define RESOURCE_H
 
 #include "../RETypes.h"
+#include "../REEnums.h"
 
 class Resource {
     public:

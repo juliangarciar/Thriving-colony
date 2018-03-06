@@ -35,6 +35,10 @@ bool TLight::getActive() {
     return active;
 }
 
-glm::vec4 TLight::getPosition() {
+void TLight::setLightPosition(glm::vec3 p) {
+    lightPosition = p;
+}
+
+glm::vec3 TLight::getPosition() {
     return lightPosition;
 }

@@ -3,11 +3,6 @@
 
 #include "Resource.h"
 
-enum ShaderType {
-    VERTEX,
-    FRAGMENT
-};
-
 class ResourceGLSL : public Resource {
     public:
         ResourceGLSL();
@@ -19,11 +14,11 @@ class ResourceGLSL : public Resource {
         void setIdentifier(const char *);
         const char *getIdentifier();
 
-        GLuint getShaderID();
+        std::string getShaderCode();
+        REEnums::ShaderType getShaderType();
     private:
-
-        GLuint shaderID;
-        ShaderType type;
+        std::string shaderCode;
+        REEnums::ShaderType type;
 };
 
 #endif

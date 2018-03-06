@@ -2,13 +2,14 @@
 #define TCAMERA_H
 
 #include "TEntity.h"
+#include "../../MathEngine/Vector3.h"
 
 class TCamera : public TEntity {
     public:
         /**
          * @brief constructs a new camera entity to be used on a node.
          * 
-         * @param TEnums::CameraProjection projection mode.
+         * @param REEnums::CameraProjection projection mode.
          * @param f32 near.
          * @param f32 far.
          * @param f32 top.
@@ -16,7 +17,7 @@ class TCamera : public TEntity {
          * @param f32 left.
          * @param f32 right.
          */
-        TCamera(TEnums::CameraProjection, f32, f32, f32, f32, f32, f32);
+        TCamera(REEnums::CameraProjection, f32, f32, f32, f32, f32, f32);
 
         /**
          * @brief Destructor for a camera entity.
@@ -48,21 +49,15 @@ class TCamera : public TEntity {
         /**
          * @brief 
          * 
-         * @param f32 
-         * @param f32 
-         * @param f32 
-         * @param f32 
-         * @param f32 
-         * @param f32 
          */
-        void setParallel(f32, f32, f32, f32, f32, f32);
+        void setParallel();
 
         /**
          * @brief sets the current projection mode to the one specified as parameter.
          * 
-         * @param TEnums::CameraProjection new projection mode.
+         * @param REEnums::CameraProjection new projection mode.
          */
-        void setProjection(TEnums::CameraProjection);
+        void setProjection(REEnums::CameraProjection);
 
         /**
          * @brief set the camera to active or inactive
@@ -127,14 +122,23 @@ class TCamera : public TEntity {
          * @param tY 
          * @param tZ 
          */
-        void setTargetPosition(f32 tX, f32 tY, f32 tZ);
+        void setTargetPosition(glm::vec3 p);
+
+        /**
+         * @brief 
+         * 
+         * @param tX 
+         * @param tY 
+         * @param tZ 
+         */
+        void setCameraPosition(glm::vec3 p);
 
         /**
          * @brief Return the current projection mode.
          * 
-         * @return TEnums::CameraProjection current projection mode.
+         * @return REEnums::CameraProjection current projection mode.
          */
-        TEnums::CameraProjection getProjection();
+        REEnums::CameraProjection getProjection();
 
         /**
          * @brief returns wether or not the camera is active
@@ -194,33 +198,24 @@ class TCamera : public TEntity {
         f32 getRight();
 
         /**
-         * @brief returns the view matrix. 
-         * 
-         */
-        glm::mat4 getViewMatrix();
-
-        /**
-         * @brief 
-         * 
-         * @return glm::mat4 
-         */
-        glm::mat4 getProjectionMatrix();
-
-        /**
          * @brief 
          * 
          * @return glm::vec3 
          */
         glm::vec3 getTargetPosition();
 
-    private:
-        //ToDo: proyeccion GLM
-        glm::mat4 projectionMatrix;
-        // View matrix ToDo: Aqui?
-        glm::mat4 viewMatrix;
-        glm::vec3 targetPosition;
+        /**
+         * @brief 
+         * 
+         * @return glm::vec3 
+         */
+        glm::vec3 getCameraPosition();
 
-        TEnums::CameraProjection projection;
+    private:
+        glm::vec3 targetPosition;
+        glm::vec3 cameraPosition;
+
+        REEnums::CameraProjection projection;
         // Field of view (fov) is expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.
         f32 near, far, fov, top, bottom, left, right;
 
