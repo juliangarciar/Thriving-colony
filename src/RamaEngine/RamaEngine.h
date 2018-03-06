@@ -1,7 +1,7 @@
 #ifndef RAMAENGINE_H
 #define RAMAENGINE_H
 
-#include "GL/glew.h"
+#include <GL/glew.h>
 #include "RETypes.h"
 #include "REAnimation.h"
 #include "RECamera.h"

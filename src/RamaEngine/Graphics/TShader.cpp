@@ -35,6 +35,6 @@ void TShader::setShader(ResourceGLSL *s){
     }
 }
 
-GLuint TShader::getShader(){
+GLuint TShader::getShaderID(){
     return shaderID;
 }

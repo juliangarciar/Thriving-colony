@@ -1,6 +1,7 @@
 #ifndef RESHADER_H
 #define RESHADER_H
 
+#include <GL/glew.h>
 #include "RETypes.h"
 #include "REEnums.h"
 
@@ -12,7 +13,7 @@ class REShader {
          * @brief 
          * @param path ruta
          */
-        REShader(std::string);
+        REShader(ResourceGLSL*, GLuint);
 
         /**
          * @brief 
@@ -22,6 +23,7 @@ class REShader {
 
         TShader *loadShader();
     private:
+        GLuint pid;
         TShader *shader;
 };
 

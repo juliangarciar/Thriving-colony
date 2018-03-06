@@ -11,7 +11,7 @@ class TShader {
 
         void setShader(ResourceGLSL *);
         
-        GLuint getShader();
+        GLuint getShaderID();
     private:
         GLuint shaderID;
 };
