@@ -126,7 +126,7 @@ class RamaEngine {
          * 
          * @param lightNode 
          */
-        void registerLight(TNode* lightNode);
+        void registerLight(RELight* rel);
 
         /**
          * @brief 
@@ -137,15 +137,13 @@ class RamaEngine {
 
 
     private:
-        static RamaEngine* instance;
-
         TNode* rootNode;
 
         RESceneNode *defaultSceneNode;
 
         // Punteros?
         std::vector<RECamera*> cameras;
-        std::vector<TNode*> lights;
+        std::vector<RELight*> lights;
         std::vector<TNode*> sceneNodes;
 
         // OpenGL

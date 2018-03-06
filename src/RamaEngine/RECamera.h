@@ -73,37 +73,14 @@ class RECamera {
         /**
          * @brief 
          * 
-         * @param r 
          */
-        void setRight(f32 r);
+        void setPerspectiveProjection();
 
         /**
          * @brief 
          * 
-         * @param l 
          */
-        void setLeft(f32 l);
-
-        /**
-         * @brief 
-         * 
-         * @param t 
-         */
-        void setTop(f32 t);
-
-        /**
-         * @brief 
-         * 
-         * @param b 
-         */
-        void setBottom(f32 b);
-
-        /**
-         * @brief 
-         * 
-         * @param proj 
-         */
-        void setProjectionMode(TEnums::CameraProjection proj);
+        void setParallelProjection();
 
         /**
          * @brief 
@@ -119,7 +96,16 @@ class RECamera {
           * @param tY 
           * @param tZ 
           */
-        void setTargetPosition(f32 tX, f32 tY, f32 tZ);
+        void setTargetPosition(glm::vec3 p);
+
+        /**
+          * @brief 
+          * 
+          * @param tX 
+          * @param tY 
+          * @param tZ 
+          */
+        void setCameraPosition(glm::vec3 p);
 
         // En realidad no se si se necesitan getters pero los pongo por si acaso
 
@@ -142,34 +128,6 @@ class RECamera {
          * @return f32 
          */
         f32 getFar();
-
-        /**
-         * @brief 
-         * 
-         * @return f32 
-         */
-        f32 getRight();
-
-        /**
-         * @brief 
-         * 
-         * @return f32 
-         */
-        f32 getLeft();
-
-        /**
-         * @brief 
-         * 
-         * @return f32 
-         */
-        f32 getTop();
-
-        /**
-         * @brief 
-         * 
-         * @return f32 
-         */
-        f32 getBottom();
 
         /**
          * @brief 
@@ -204,6 +162,20 @@ class RECamera {
          * @return glm::mat4 
          */
         glm::mat4 getProjectionMatrix();
+
+        /**
+         * @brief 
+         * 
+         * @return glm::vec3 
+         */
+        glm::vec3 getCameraPosition();
+
+        /**
+         * @brief 
+         * 
+         * @return glm::vec3 
+         */
+        glm::vec3 getTargetPosition();
         
 
     private:

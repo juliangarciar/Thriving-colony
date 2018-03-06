@@ -2,6 +2,7 @@
 #define TCAMERA_H
 
 #include "TEntity.h"
+#include "../../MathEngine/Vector3.h"
 
 class TCamera : public TEntity {
     public:
@@ -48,14 +49,8 @@ class TCamera : public TEntity {
         /**
          * @brief 
          * 
-         * @param f32 
-         * @param f32 
-         * @param f32 
-         * @param f32 
-         * @param f32 
-         * @param f32 
          */
-        void setParallel(f32, f32, f32, f32, f32, f32);
+        void setParallel();
 
         /**
          * @brief sets the current projection mode to the one specified as parameter.
@@ -127,7 +122,16 @@ class TCamera : public TEntity {
          * @param tY 
          * @param tZ 
          */
-        void setTargetPosition(f32 tX, f32 tY, f32 tZ);
+        void setTargetPosition(glm::vec3 p);
+
+        /**
+         * @brief 
+         * 
+         * @param tX 
+         * @param tY 
+         * @param tZ 
+         */
+        void setCameraPosition(glm::vec3 p);
 
         /**
          * @brief Return the current projection mode.
@@ -194,31 +198,22 @@ class TCamera : public TEntity {
         f32 getRight();
 
         /**
-         * @brief returns the view matrix. 
-         * 
-         */
-        glm::mat4 getViewMatrix();
-
-        /**
-         * @brief 
-         * 
-         * @return glm::mat4 
-         */
-        glm::mat4 getProjectionMatrix();
-
-        /**
          * @brief 
          * 
          * @return glm::vec3 
          */
         glm::vec3 getTargetPosition();
 
+        /**
+         * @brief 
+         * 
+         * @return glm::vec3 
+         */
+        glm::vec3 getCameraPosition();
+
     private:
-        //ToDo: proyeccion GLM
-        glm::mat4 projectionMatrix;
-        // View matrix ToDo: Aqui?
-        glm::mat4 viewMatrix;
         glm::vec3 targetPosition;
+        glm::vec3 cameraPosition;
 
         TEnums::CameraProjection projection;
         // Field of view (fov) is expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.

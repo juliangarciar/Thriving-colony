@@ -79,13 +79,13 @@ void RamaEngine::Init(ResourceGLSL*, ResourceGLSL*) {
 
 RELight* RamaEngine::createRELight() {
     RELight* rel = new RELight(sceneNodes . at(0));
-    registerLight(rel -> getLightNode());
+    registerLight(rel);
     return rel;
 }
 
 RELight* RamaEngine::createRELight(RESceneNode* layer) {
     RELight* rel = new RELight(layer -> getSceneNode());
-    registerLight(rel -> getLightNode());
+    registerLight(rel);
     return rel;
 }
 
@@ -146,8 +146,8 @@ void RamaEngine::registerCamera(RECamera* rec) {
     cameras . push_back(rec);
 }
 
-void RamaEngine::registerLight(TNode* lightNode) {
-    lights . push_back(lightNode);
+void RamaEngine::registerLight(RELight* rel) {
+    lights . push_back(rel);
 }
 
 void RamaEngine::registerSceneNode(TNode* sceneNode) {

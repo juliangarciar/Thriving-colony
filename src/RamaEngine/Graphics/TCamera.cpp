@@ -19,7 +19,13 @@ TCamera::~TCamera(){
 
 void TCamera::beginDraw(){
     if (active) {
-        viewMatrix = glm::inverse(modelMatrix);
+        glm::vec3 cameraPos = glm::vec3(cameraPosition.x, cameraPosition.y, cameraPosition.z);
+        glm::vec3 tarPos = glm::vec3(targetPosition.x, targetPosition.y, targetPosition.z);
+        viewMatrix = glm::lookAt(
+            cameraPos,  
+            tarPos, 
+            glm::vec3(0,1,0) 
+        );
     }
 }
 
@@ -35,28 +41,61 @@ void TCamera::setPerspective(){
     projectionMatrix = glm::perspective(fov, width / height, near, far);
 }
 
-void TCamera::setParallel(f32, f32, f32, f32, f32, f32){
+void TCamera::setParallel(){
     //ToDo: tito juli
 }
 
-void TCamera::setProjection(TEnums::CameraProjection cp){
-    projection = cp;
+void TCamera::setTargetPosition(glm::vec3 p) {
+    targetPosition = p;
+}
+
+glm::vec3 TCamera::getTargetPosition() {
+    return targetPosition;
+}
+
+void TCamera::setCameraPosition(glm::vec3 p) {
+    cameraPosition = p;
+}
+
+glm::vec3 TCamera::getCameraPosition() {
+    return cameraPosition;
+}
+
+bool TCamera::getActive() {
+    return active;
 }
 
 void TCamera::setActive(bool _active) {
     active = _active;
 }
 
+f32 TCamera::getFov() {
+    return fov;
+}
+
+void TCamera::setFov(f32 f) {
+    fov = f;
+}
+
+f32 TCamera::getNear(){
+    return near;
+}
+
 void TCamera::setNear(f32 n){
     near = n;
+}
+
+f32 TCamera::getFar(){
+    return far;
 }
 
 void TCamera::setFar(f32 f){
     far = f;
 }
+///////////////////////
 
-void TCamera::setFov(f32 f) {
-    fov = f;
+void TCamera::setProjection(TEnums::CameraProjection cp){
+    projection = cp;
 }
 
 void TCamera::setTop(f32 t){
@@ -71,32 +110,12 @@ void TCamera::setLeft(f32 l){
     left = l;
 }
 
-void TCamera::setTargetPosition(f32 tX, f32 tY, f32 tZ) {
-    targetPosition = glm::vec3(tX, tY, tZ);
-}
-
 void TCamera::setRight(f32 r){
     right = r;
 }
 
 TEnums::CameraProjection TCamera::getProjection(){
     return projection;
-}
-
-bool TCamera::getActive() {
-    return active;
-}
-
-f32 TCamera::getNear(){
-    return near;
-}
-
-f32 TCamera::getFar(){
-    return far;
-}
-
-f32 TCamera::getFov() {
-    return fov;
 }
 
 f32 TCamera::getTop(){
@@ -113,16 +132,4 @@ f32 TCamera::getLeft(){
 
 f32 TCamera::getRight(){
     return right;
-}
-
-glm::mat4 TCamera::getViewMatrix() {
-    return viewMatrix;
-}
-
-glm::mat4 TCamera::getProjectionMatrix() {
-    return projectionMatrix;
-}
-
-glm::vec3 TCamera::getTargetPosition() {
-    return targetPosition;
 }
