@@ -766,6 +766,13 @@ void Hud::debug(){
     iaos << "Behaviour: " << IA::Instance() -> getChosenBehaviour();
     iaBehaviour -> setLabel(iaos.str());
     iaos = std::stringstream();
+    if (IA::Instance() -> getFast() == true) {
+        iaos << "Timer: Fast";
+    } else {
+        iaos << "Timer: Slow";
+    }
+    iaBehaviour -> setLabel(iaos.str());
+    iaos = std::stringstream();
 }
 
 bool Hud::getPopUpOpen() {
