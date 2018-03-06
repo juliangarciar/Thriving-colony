@@ -73,6 +73,8 @@ class Player {
         bool underAttack;
         
         f32 updateTimer;
+        f32 updateFastTimer;
+        f32 updateSlowTimer;
         //Buildings
         f32 buildableRange;
         

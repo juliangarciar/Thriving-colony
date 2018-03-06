@@ -23,6 +23,8 @@ void Player::Init() {
     underAttack = false;
 
     updateTimer = 1.00;
+    updateFastTimer = 1.00;
+    updateSlowTimer = 3.00;
 }
 
 /**
