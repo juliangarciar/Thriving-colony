@@ -18,7 +18,7 @@ RamaEngine::~RamaEngine() {
 	glDeleteProgram(programID);
 }
 
-void RamaEngine::Init(ResourceGLSL*, ResourceGLSL*) {
+void RamaEngine::Init() {
     // Resource Manager
     ResourceManager *r = new ResourceManager();
 
