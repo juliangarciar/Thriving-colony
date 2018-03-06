@@ -52,9 +52,14 @@ bool RELight::getActive() {
     return l -> getActive();
 }
 
-glm::vec4 RELight::getPosition() {
+glm::vec3 RELight::getLightPosition() {
     TLight* l = (TLight*) lightNode -> getEntity();
     return l -> getPosition();
+}
+
+void RELight::setLightPosition(glm::vec3 p) {
+    TLight* l = (TLight*) lightNode -> getEntity();
+    l -> setLightPosition(p);
 }
 
 TNode* RELight::getLightNode() {

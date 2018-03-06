@@ -81,7 +81,14 @@ class RELight {
          * @brief returns the position of this light
          * 
          */
-        glm::vec4 getPosition();
+        glm::vec3 getLightPosition();
+
+        /**
+         * @brief 
+         * 
+         * @param p 
+         */
+        void setLightPosition(glm::vec3 p);
         
         /**
          * @brief 

@@ -51,7 +51,7 @@ void RECamera::setParallelProjection() {
     c -> setParallel();
 }
 
-void RECamera::setFar(f32 f) {
+void RECamera::setFarValue(f32 f) {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     c -> setFar(f);
 }
@@ -61,12 +61,12 @@ void RECamera::setFov(f32 fov){
     c -> setFov(fov);
 }
 
-void RECamera::setTargetPosition(glm::vec3 p) {
+void RECamera::setTarget(glm::vec3 p) {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     c -> setTargetPosition(p);
 }
 
-void RECamera::setCameraPosition(glm::vec3 p) {
+void RECamera::setPosition(glm::vec3 p) {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     c -> setCameraPosition(p);
 }
@@ -96,12 +96,12 @@ f32 RECamera::getFov() {
     return c -> getFov();
 }
 
-glm::vec3 RECamera::getCameraPosition() {
+glm::vec3 RECamera::getPosition() {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     return c -> getCameraPosition();
 }
 
-glm::vec3 RECamera::getTargetPosition() {
+glm::vec3 RECamera::getTarget() {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     return c -> getTargetPosition();
 }

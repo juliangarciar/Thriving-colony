@@ -68,7 +68,7 @@ class RECamera {
          * 
          * @param f 
          */
-        void setFar(f32 f);
+        void setFarValue(f32 f);
 
         /**
          * @brief 
@@ -96,7 +96,7 @@ class RECamera {
           * @param tY 
           * @param tZ 
           */
-        void setTargetPosition(glm::vec3 p);
+        void setTarget(glm::vec3 p);
 
         /**
           * @brief 
@@ -105,7 +105,7 @@ class RECamera {
           * @param tY 
           * @param tZ 
           */
-        void setCameraPosition(glm::vec3 p);
+        void setPosition(glm::vec3 p);
 
         // En realidad no se si se necesitan getters pero los pongo por si acaso
 
@@ -149,14 +149,14 @@ class RECamera {
          * 
          * @return glm::vec3 
          */
-        glm::vec3 getCameraPosition();
+        glm::vec3 getPosition();
 
         /**
          * @brief 
          * 
          * @return glm::vec3 
          */
-        glm::vec3 getTargetPosition();
+        glm::vec3 getTarget();
         
 
     private:
