@@ -7,6 +7,8 @@
 #include <vector>
 #include <Types.h>
 
+#include "IOEngine/Timer.h"
+
 class Player {
     public:
         Player();
@@ -84,6 +86,7 @@ class Player {
 
         //City Hall
         Vector3<f32> hallPosition;
+
     private:
         
 };
