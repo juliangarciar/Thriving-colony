@@ -12,6 +12,7 @@ Player::~Player() {
 }
 
 void Player::Init() {
+    testTimer = new Timer(1.00);
     happiness = 0;
     cityLevel = 10;
     armyLevel = 0;
@@ -23,6 +24,8 @@ void Player::Init() {
     underAttack = false;
 
     updateTimer = 1.00;
+    updateFastTimer = 1.00;
+    updateSlowTimer = 3.00;
 }
 
 /**

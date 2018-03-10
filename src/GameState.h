@@ -59,6 +59,7 @@ class GameState : public State {
          * 
          */
         void cleanGamePaused();
+
     private:
         //Singletons
         Human *human;

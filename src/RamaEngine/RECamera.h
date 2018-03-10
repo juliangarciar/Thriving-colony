@@ -96,7 +96,7 @@ class RECamera {
           * @param tY 
           * @param tZ 
           */
-        void setTarget(glm::vec3 p);
+        void setTargetPosition(glm::vec3 p);
 
         /**
           * @brief 
@@ -105,7 +105,7 @@ class RECamera {
           * @param tY 
           * @param tZ 
           */
-        void setPosition(glm::vec3 p);
+        void setCameraPosition(glm::vec3 p);
 
         // En realidad no se si se necesitan getters pero los pongo por si acaso
 
@@ -132,6 +132,13 @@ class RECamera {
         /**
          * @brief 
          * 
+         * @return f32 
+         */
+        f32 getFov();
+
+        /**
+         * @brief 
+         * 
          * @return TEnums::CameraProjection 
          */
         REEnums::CameraProjection getProjectionMode();
@@ -139,33 +146,35 @@ class RECamera {
         /**
          * @brief 
          * 
-         * @return f32 
+         * @return glm::vec3 
          */
-        f32 getFov();
-
+        glm::vec3 getCameraPosition();
 
         /**
          * @brief 
          * 
          * @return glm::vec3 
          */
-        glm::vec3 getPosition();
-
-        /**
-         * @brief 
-         * 
-         * @return glm::vec3 
-         */
-        glm::vec3 getTarget();
+        glm::vec3 getTargetPosition();
         
+        /**
+         * @brief 
+         * 
+         * @return TNode* 
+         */
+        TNode* getCameraNode();
 
+        /**
+         * @brief 
+         * 
+         * @return TCamera* 
+         */
+        TCamera* getCameraEntity();
     private:
-
         TNode* cameraNode;
         TNode* rotationNode;
         TNode* translationNode;
         TNode* scaleNode;
-        
 };
 
 #endif

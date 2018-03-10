@@ -10,7 +10,7 @@ class TLight : public TEntity {
          * @brief 
          * 
          */
-        TLight();
+        TLight(bool = true);
         /**
          * @brief 
          * 

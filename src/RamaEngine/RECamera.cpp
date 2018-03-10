@@ -61,12 +61,12 @@ void RECamera::setFov(f32 fov){
     c -> setFov(fov);
 }
 
-void RECamera::setTarget(glm::vec3 p) {
+void RECamera::setTargetPosition(glm::vec3 p) {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     c -> setTargetPosition(p);
 }
 
-void RECamera::setPosition(glm::vec3 p) {
+void RECamera::setCameraPosition(glm::vec3 p) {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     c -> setCameraPosition(p);
 }
@@ -96,12 +96,20 @@ f32 RECamera::getFov() {
     return c -> getFov();
 }
 
-glm::vec3 RECamera::getPosition() {
+glm::vec3 RECamera::getCameraPosition() {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     return c -> getCameraPosition();
 }
 
-glm::vec3 RECamera::getTarget() {
+glm::vec3 RECamera::getTargetPosition() {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     return c -> getTargetPosition();
+}
+
+TNode* RECamera::getCameraNode(){
+    return rotationNode;
+}
+
+TCamera* RECamera::getCameraEntity(){
+    return (TCamera*) cameraNode -> getEntity();
 }

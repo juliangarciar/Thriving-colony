@@ -1,12 +1,17 @@
 #include "RELight.h"
 
+RELight::RELight() {
+    rotationNode = new TNode(new TTransform());
+    translationNode = new TNode(new TTransform(), rotationNode);
+    scaleNode = new TNode(new TTransform(), translationNode);
+    lightNode = new TNode(new TLight(), scaleNode);
+}
+
 RELight::RELight(TNode* parent) {
     rotationNode = new TNode(new TTransform(), parent);
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
-    lightNode = new TNode(new TLight());
-    // o esto o getcameraNode
-    //RamaEngine::Instance() -> registerLight(lightNode);
+    lightNode = new TNode(new TLight(), scaleNode);
 }
 
 RELight::~RELight() {
@@ -63,5 +68,9 @@ void RELight::setLightPosition(glm::vec3 p) {
 }
 
 TNode* RELight::getLightNode() {
-    return lightNode;
+    return rotationNode;
+}
+
+TLight* RELight::getLightEntity() {
+    return (TLight*) lightNode -> getEntity();
 }

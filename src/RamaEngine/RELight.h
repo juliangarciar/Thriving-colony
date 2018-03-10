@@ -11,6 +11,11 @@ class RELight {
     public:
         /**
          * @brief 
+         */
+        RELight();
+
+        /**
+         * @brief 
          * 
          * @param parent 
          */
@@ -96,14 +101,19 @@ class RELight {
          * @return TNode* 
          */
         TNode* getLightNode();
+        
+        /**
+         * @brief 
+         * 
+         * @return TLight* 
+         */
+        TLight* getLightEntity();
 
     private:
-
         TNode* lightNode;
         TNode* rotationNode;
         TNode* translationNode;
         TNode* scaleNode;
-        
 };
 
 #endif

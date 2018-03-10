@@ -2,7 +2,6 @@
 #define TCAMERA_H
 
 #include "TEntity.h"
-#include "../../MathEngine/Vector3.h"
 
 class TCamera : public TEntity {
     public:
@@ -16,8 +15,9 @@ class TCamera : public TEntity {
          * @param f32 bottom.
          * @param f32 left.
          * @param f32 right.
+         * @param bool
          */
-        TCamera(REEnums::CameraProjection, f32, f32, f32, f32, f32, f32);
+        TCamera(REEnums::CameraProjection, f32, f32, f32, f32, f32, f32, bool = true);
 
         /**
          * @brief Destructor for a camera entity.

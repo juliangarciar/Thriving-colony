@@ -216,3 +216,7 @@ Terrain* Map::getTerrain() {
 CellSpacePartition *Map::getCellSpace(){
     return cellSpace;
 }
+
+CameraController* Map::getCamera() {
+    return camera;
+}

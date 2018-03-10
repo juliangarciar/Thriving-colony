@@ -74,6 +74,8 @@ class Map {
         // Added by Julian
         CellSpacePartition *getCellSpace();
 
+        CameraController* getCamera();
+
     protected:
         /**
 		 * @brief Constructor de Map

@@ -1,6 +1,6 @@
 #include "TCamera.h"
 
-TCamera::TCamera(REEnums::CameraProjection projectionMode, f32 n, f32 f, f32 t, f32 b, f32 l, f32 r) : TEntity(){
+TCamera::TCamera(REEnums::CameraProjection projectionMode, f32 n, f32 f, f32 t, f32 b, f32 l, f32 r, bool a) : TEntity(){
     setNear(n);
     setFar(f);
     setProjection(projectionMode);
@@ -9,6 +9,8 @@ TCamera::TCamera(REEnums::CameraProjection projectionMode, f32 n, f32 f, f32 t, 
     setBottom(b);
     setLeft(l);
     setRight(r);
+
+    active = a;
 
     projectionMatrix = glm::mat4(1.0f);
 }
@@ -132,4 +134,14 @@ f32 TCamera::getLeft(){
 
 f32 TCamera::getRight(){
     return right;
+}
+
+//ToDo
+glm::vec3 getTargetPosition(){
+    return glm::vec3();
+}
+
+//ToDo
+glm::vec3 getCameraPosition(){
+    return glm::vec3();
 }
