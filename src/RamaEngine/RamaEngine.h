@@ -44,20 +44,6 @@ class RamaEngine {
          * @return RECamera* 
          */
         RECamera* createRECamera();
-        
-        /**
-         * @brief 
-         * 
-         * @return REMesh* 
-         */
-        REMesh* createREMesh();
-        
-        /**
-         * @brief 
-         * 
-         * @return REAnimation* 
-         */
-        REAnimation* createREAnimation();
 
         /**
          * @brief 
@@ -66,20 +52,19 @@ class RamaEngine {
          */
         RESceneNode* createRESceneNode();
 
+        /**
+         * @brief 
+         * 
+         * @return RESceneNode* 
+         */
+        RESceneNode* createRESceneNode(RESceneNode* layer);
         
         /**
          * @brief 
          * 
-         * @return RELight* 
+         * @return REMesh* 
          */
-        RELight* createRELight(RESceneNode* layer);
-
-        /**
-         * @brief 
-         * 
-         * @return RECamera* 
-         */
-        RECamera* createRECamera(RESceneNode* layer);
+        REMesh* createREMesh();
         
         /**
          * @brief 
@@ -93,7 +78,28 @@ class RamaEngine {
          * 
          * @return REAnimation* 
          */
+        REAnimation* createREAnimation();
+        
+        /**
+         * @brief 
+         * 
+         * @return REAnimation* 
+         */
         REAnimation* createREAnimation(RESceneNode* layer);
+
+        /**
+         * @brief 
+         * 
+         * @param rec 
+         */
+        void registerCamera(RECamera* rec);
+
+        /**
+         * @brief 
+         * 
+         * @param lightNode 
+         */
+        void registerLight(RELight* lightNode);
 
         /**
          * @brief 
@@ -114,27 +120,6 @@ class RamaEngine {
          */
         RESceneNode* getDefaultLayer();
 
-        /**
-         * @brief 
-         * 
-         * @param rec 
-         */
-        void registerCamera(RECamera* rec);
-
-        /**
-         * @brief 
-         * 
-         * @param lightNode 
-         */
-        void registerLight(TNode* lightNode);
-
-        /**
-         * @brief 
-         * 
-         * @param sceneNode 
-         */
-        void registerSceneNode(TNode* sceneNode);
-
 
     private:
         static RamaEngine* instance;
@@ -145,13 +130,18 @@ class RamaEngine {
 
         // Punteros?
         std::vector<RECamera*> cameras;
-        std::vector<TNode*> lights;
-        std::vector<TNode*> sceneNodes;
+        std::vector<RELight*> lights;
 
         // OpenGL
-	    GLuint VertexArrayID;
+	    GLuint vertexArrayID;
         GLuint programID;
+
         GLuint MVPID;
+        GLuint projectionMatrixID;
+        GLuint viewMatrixID;
+        GLuint modelMatrixID;
+
+        GLuint textureID;
 };
 
 #endif

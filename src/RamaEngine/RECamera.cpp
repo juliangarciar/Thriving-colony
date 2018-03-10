@@ -126,10 +126,6 @@ f32 RECamera::getFov() {
     return c -> getFov();
 }
 
-TNode* RECamera::getCameraNode() {
-    return cameraNode;
-}
-
 glm::mat4 RECamera::calculateViewMatrix() {
     // Sacar matriz camera
     TTransform* rt = (TTransform*) rotationNode -> getEntity();
@@ -154,4 +150,12 @@ glm::mat4 RECamera::calculateViewMatrix() {
 glm::mat4 RECamera::getProjectionMatrix() {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     return c -> getProjectionMatrix();
+}
+
+TNode* RECamera::getCameraNode() {
+    return rotationNode;
+}
+
+TCamera* RECamera::getCameraEntity() {
+    return (TCamera*) cameraNode -> getEntity();
 }

@@ -11,7 +11,7 @@ class Timer {
          * 
          * @param maxD 
          */
-        Timer(f32 maxD);
+        Timer(f32, bool = true);
 
         /**
          * @brief 
@@ -41,6 +41,8 @@ class Timer {
         void changeDuration(f32 d);
 
     private:
+        bool loop;
+
         f32 maxDuration;
         f32 elapsedTime;
         

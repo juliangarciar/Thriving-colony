@@ -188,13 +188,6 @@ class RECamera {
         /**
          * @brief 
          * 
-         * @return TNode* 
-         */
-        TNode* getCameraNode();
-
-        /**
-         * @brief 
-         * 
          */
         glm::mat4 calculateViewMatrix();
 
@@ -204,15 +197,25 @@ class RECamera {
          * @return glm::mat4 
          */
         glm::mat4 getProjectionMatrix();
-        
 
+        /**
+         * @brief 
+         * 
+         * @return TNode* 
+         */
+        TNode* getCameraNode();
+
+        /**
+         * @brief 
+         * 
+         * @return TCamera* 
+         */
+        TCamera* getCameraEntity();
     private:
-
         TNode* cameraNode;
         TNode* rotationNode;
         TNode* translationNode;
         TNode* scaleNode;
-        
 };
 
 #endif

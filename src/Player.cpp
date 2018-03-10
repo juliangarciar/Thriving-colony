@@ -12,7 +12,7 @@ Player::~Player() {
 }
 
 void Player::Init() {
-    this -> testTimer = new Timer(1.00);
+    testTimer = new Timer(1.00);
     happiness = 0;
     cityLevel = 10;
     armyLevel = 0;

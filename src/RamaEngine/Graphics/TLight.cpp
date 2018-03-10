@@ -1,7 +1,7 @@
 #include "TLight.h"
 
-TLight::TLight() : TEntity(){
-
+TLight::TLight(bool a) : TEntity(){
+    active = a;
 }
 
 TLight::~TLight(){

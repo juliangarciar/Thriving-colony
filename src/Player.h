@@ -87,6 +87,8 @@ class Player {
         //City Hall
         Vector3<f32> hallPosition;
 
+        Timer *testTimer;
+
     private:
         
 };
