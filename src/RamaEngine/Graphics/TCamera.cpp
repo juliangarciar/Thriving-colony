@@ -3,16 +3,21 @@
 TCamera::TCamera(REEnums::CameraProjection projectionMode, f32 n, f32 f, f32 t, f32 b, f32 l, f32 r, bool a) : TEntity(){
     setNear(n);
     setFar(f);
-    setProjection(projectionMode);
-
+    
     setTop(t);
     setBottom(b);
     setLeft(l);
     setRight(r);
-
+    
+    if (projectionMode == REEnums::CameraProjection::ProjectionPerspective) {
+        setPerspective();
+    } else {
+        setParallel();
+    }
+    beginDraw();
     active = a;
 
-    projectionMatrix = glm::mat4(1.0f);
+    
 }
 
 TCamera::~TCamera(){
@@ -21,13 +26,7 @@ TCamera::~TCamera(){
 
 void TCamera::beginDraw(){
     if (active) {
-        glm::vec3 cameraPos = glm::vec3(cameraPosition.x, cameraPosition.y, cameraPosition.z);
-        glm::vec3 tarPos = glm::vec3(targetPosition.x, targetPosition.y, targetPosition.z);
-        viewMatrix = glm::lookAt(
-            cameraPos,  
-            tarPos, 
-            glm::vec3(0,1,0) 
-        );
+        assignViewMatrix();
     }
 }
 
@@ -46,9 +45,10 @@ void TCamera::setPerspective(){
 void TCamera::setParallel(){
     //ToDo: tito juli
 }
-
+//AQUI
 void TCamera::setTargetPosition(glm::vec3 p) {
     targetPosition = p;
+    calculateViewMatrix();
 }
 
 glm::vec3 TCamera::getTargetPosition() {
@@ -57,6 +57,7 @@ glm::vec3 TCamera::getTargetPosition() {
 
 void TCamera::setCameraPosition(glm::vec3 p) {
     cameraPosition = p;
+    calculateViewMatrix();
 }
 
 glm::vec3 TCamera::getCameraPosition() {
@@ -134,6 +135,18 @@ f32 TCamera::getLeft(){
 
 f32 TCamera::getRight(){
     return right;
+}
+
+void TCamera::calculateViewMatrix() {
+    vMat = glm::lookAt(
+        cameraPosition,  
+        targetPosition, 
+        glm::vec3(0,1,0) 
+    );
+}
+
+void TCamera::assignViewMatrix() {
+    viewMatrix = vMat;
 }
 
 //ToDo

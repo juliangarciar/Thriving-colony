@@ -211,9 +211,23 @@ class TCamera : public TEntity {
          */
         glm::vec3 getCameraPosition();
 
+        /**
+         * @brief 
+         * 
+         */
+        void calculateViewMatrix();
+
+        /**
+         * @brief 
+         * 
+         */
+        void assignViewMatrix();
+
     private:
         glm::vec3 targetPosition;
         glm::vec3 cameraPosition;
+        // View matrix
+        glm::mat4 vMat;
 
         REEnums::CameraProjection projection;
         // Field of view (fov) is expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.
