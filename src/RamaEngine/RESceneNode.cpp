@@ -4,7 +4,16 @@ RESceneNode::RESceneNode(TNode* parent) {
     rotationNode = new TNode(new TTransform(), parent);
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
-    sceneNode = new TNode();
+    sceneNode = scaleNode;
+    // o esto o getcameraNode
+    //RamaEngine::Instance() -> registerSceneNode(sceneNode);
+}
+
+RESceneNode::RESceneNode(RESceneNode* parent) {
+    rotationNode = new TNode(new TTransform(), parent->getSceneNode());
+    translationNode = new TNode(new TTransform(), rotationNode);
+    scaleNode = new TNode(new TTransform(), translationNode);
+    sceneNode = scaleNode;
     // o esto o getcameraNode
     //RamaEngine::Instance() -> registerSceneNode(sceneNode);
 }
@@ -13,7 +22,6 @@ RESceneNode::~RESceneNode() {
     delete rotationNode;
     delete translationNode;
     delete scaleNode;
-    delete sceneNode;
 }
 
 void RESceneNode::rotate(f32 rX, f32 rY, f32 rZ, f32 angle) {

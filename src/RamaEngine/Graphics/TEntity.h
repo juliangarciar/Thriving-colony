@@ -5,18 +5,21 @@
 #include "../REEnums.h"
 
 static std::stack<glm::mat4> matrixStack;
-// Model matrix/ Camera matrix/ Light matrix
-//ToDo O AQUI O EN EL RAMAENGINE
-static glm::mat4 modelMatrix = glm::mat4(1.0f);
-static glm::mat4 viewMatrix = glm::mat4(1.0f);
-static glm::mat4 projectionMatrix = glm::mat4(1.0f);
+
+static GLuint MVPID;
+static GLuint projectionMatrixID;
+static GLuint viewMatrixID;
+static GLuint modelMatrixID;
+static GLuint textureID;
+
+static glm::mat4 modelMatrix;
+static glm::mat4 viewMatrix;
+static glm::mat4 projectionMatrix;
 
 class TEntity {
     public:
         virtual void beginDraw() = 0;
         virtual void endDraw() = 0;
-
-    private:
 };
 
 #endif

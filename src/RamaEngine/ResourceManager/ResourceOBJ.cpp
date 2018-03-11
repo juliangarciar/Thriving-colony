@@ -32,13 +32,12 @@ void ResourceOBJ::load(const char *path){
             glm::vec3 position(curMesh.Vertices[j].Position.X, curMesh.Vertices[j].Position.Y, curMesh.Vertices[j].Position.Z);
 			glm::vec3 normal(curMesh.Vertices[j].Normal.X, curMesh.Vertices[j].Normal.Y, curMesh.Vertices[j].Normal.Z);
 			glm::vec2 textureCoordinate(curMesh.Vertices[j].TextureCoordinate.X, curMesh.Vertices[j].TextureCoordinate.Y);
-            tempMesh->addVertex(position, normal, textureCoordinate);
+            tempMesh -> addVertex(position, normal, textureCoordinate);
         }
 
         for (int j = 0; j < curMesh.Indices.size(); j++) {
             tempMesh -> addIndex(curMesh.Indices[j]);
         }
-
 
         TMaterial *tempMat = new TMaterial();
         tempMat -> setName(curMesh.MeshMaterial.name);
@@ -55,7 +54,7 @@ void ResourceOBJ::load(const char *path){
         tempMat -> setAlphaTextureMap(curMesh.MeshMaterial.map_d);
         tempMat -> setBumpMap(curMesh.MeshMaterial.map_bump);
 
-        tempMesh ->setMaterial(tempMat);
+        tempMesh -> setMaterial(tempMat);
 
         objMesh.push_back(tempMesh);
     }

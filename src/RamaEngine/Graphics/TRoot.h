@@ -1,24 +1,22 @@
-#ifndef TMESH_H
-#define TMESH_H
+#ifndef TROOT_H
+#define TROOT_H
 
 #include <GL/gl.h>
-
 #include "TEntity.h"
-#include "TResourceMesh.h"
 
-class TMesh : public TEntity {
+class TRoot : public TEntity {
     public:
         /**
          * @brief 
          * 
          */
-        TMesh(TResourceMesh *);
+        TRoot(GLuint programID);
 
         /**
          * @brief 
          * 
          */
-        virtual ~TMesh();
+        virtual ~TRoot();
 
         /**
          * @brief 
@@ -31,14 +29,12 @@ class TMesh : public TEntity {
          * 
          */
         virtual void endDraw();
-
     private:
-        TResourceMesh* mesh;
-
-        GLuint vertexbuffer;
-        GLuint normalbuffer;
-        GLuint uvbuffer;
-	    GLuint elementbuffer;
+        GLuint myMVP;
+        GLuint myProjection;
+        GLuint myView;
+        GLuint myModel;
+        GLuint myTexture;
 };
 
 #endif

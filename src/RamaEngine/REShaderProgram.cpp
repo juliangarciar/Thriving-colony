@@ -1,10 +1,8 @@
 #include "REShaderProgram.h"
 
 REShaderProgram::REShaderProgram(ResourceGLSL* vs, ResourceGLSL* fs){
-	vertexShader = new TShader();
-	vertexShader->setShader(vs);
-	fragmentShader = new TShader();
-	fragmentShader->setShader(fs);
+	vertexShader = new TShader(vs);
+	fragmentShader = new TShader(fs);
 
 	pid = glCreateProgram();
 	glAttachShader(pid, vertexShader->getShaderID());
@@ -22,6 +20,8 @@ REShaderProgram::REShaderProgram(ResourceGLSL* vs, ResourceGLSL* fs){
 		glGetProgramInfoLog(pid, InfoLogLength, NULL, &ProgramErrorMessage[0]);
 		std::cout << &ProgramErrorMessage[0] << std::endl;
 	}
+
+	rootEntity = new TRoot(pid);
 }
 
 REShaderProgram::~REShaderProgram(){
@@ -29,6 +29,10 @@ REShaderProgram::~REShaderProgram(){
 	glDeleteShader(vertexShader->getShaderID());
 	glDetachShader(pid, fragmentShader->getShaderID());
 	glDeleteShader(fragmentShader->getShaderID());
+}
+    
+TRoot *REShaderProgram::getRootEntity(){
+	return rootEntity;
 }
     
 GLuint REShaderProgram::getShaderProgram(){

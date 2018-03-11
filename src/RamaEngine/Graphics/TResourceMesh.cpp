@@ -1,7 +1,7 @@
 #include "TResourceMesh.h"
 
-TResourceMesh::TResourceMesh(std::string) {
-    
+TResourceMesh::TResourceMesh(std::string n) {
+    name = n;
 }
 
 TResourceMesh::~TResourceMesh() {

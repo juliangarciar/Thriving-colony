@@ -1,8 +1,12 @@
 #include "REMesh.h"
 
-
-REMesh::REMesh(TNode* parent) {
-
+REMesh::REMesh(RESceneNode* parent, ResourceOBJ *obj) {
+    rotationNode = new TNode(new TTransform(), parent->getSceneNode());
+    translationNode = new TNode(new TTransform(), rotationNode);
+    scaleNode = new TNode(new TTransform(), translationNode);
+    //ToDo: vector?
+    std::vector<TResourceMesh *> submeshes = *obj->getResource();
+    meshNode = new TNode(new TMesh(submeshes.at(0)), scaleNode);
 }
 
 REMesh::~REMesh() {

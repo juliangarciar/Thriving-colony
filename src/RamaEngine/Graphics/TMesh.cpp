@@ -1,19 +1,9 @@
 #include "TMesh.h"
+
 #include "../ResourceManager/ResourceOBJ.h"
 
-TMesh::TMesh() : TEntity() {
-
-}
-
-TMesh::~TMesh() {
-	glDeleteBuffers(1, &vertexbuffer);
-	glDeleteBuffers(1, &uvbuffer);
-	glDeleteBuffers(1, &normalbuffer);
-	glDeleteBuffers(1, &elementbuffer);
-}
-
-void TMesh::loadMesh(TResourceMesh *r) {
-    mesh = r;
+TMesh::TMesh(TResourceMesh *r) : TEntity() {
+	mesh = r;
 
 	glGenBuffers(1, &vertexbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
@@ -33,7 +23,21 @@ void TMesh::loadMesh(TResourceMesh *r) {
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndices().size() * sizeof(unsigned short), &mesh->getIndices()[0] , GL_STATIC_DRAW);
 }
 
+TMesh::~TMesh() {
+	glDeleteBuffers(1, &vertexbuffer);
+	glDeleteBuffers(1, &uvbuffer);
+	glDeleteBuffers(1, &normalbuffer);
+	glDeleteBuffers(1, &elementbuffer);
+}
+
 void TMesh::beginDraw() {
+	// Matrices
+	glm::mat4 MVP = projectionMatrix * viewMatrix * modelMatrix;
+	glUniformMatrix4fv(MVPID, 1, GL_FALSE, &MVP[0][0]);
+	glUniformMatrix4fv(modelMatrixID, 1, GL_FALSE, &modelMatrix[0][0]);
+	glUniformMatrix4fv(viewMatrixID, 1, GL_FALSE, &viewMatrix[0][0]);
+	glUniformMatrix4fv(projectionMatrixID, 1, GL_FALSE, &projectionMatrix[0][0]);
+
 	// 1rst attribute buffer : vertices
 	glEnableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);

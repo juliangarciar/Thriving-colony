@@ -1,7 +1,7 @@
 #include "REAnimation.h"
 
 
-REAnimation::REAnimation(TNode* parent) {
+REAnimation::REAnimation(RESceneNode* parent) {
 }
 
 REAnimation::~REAnimation() {
