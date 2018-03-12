@@ -32,7 +32,7 @@ EXECUTABLE := $(BINPATH)/$(TARGET)
 rwildcard = $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
 
 SRC_DIRS := $(foreach DIR,$(SOURCEPATHS),$(shell find $(DIR) -type d))
-OBJ_DIRS := $(foreach DIR,$(SOURCEPATHS),$(patsubst %, $(BUILDPATH)/%,$(shell find $(DIR) -type d)))
+OBJ_DIRS := $(foreach DIR,$(SOURCEPATHS),$(patsubst %, $(BUILDPATH)/%,$(shell find $(DIR) -type d ! -path .)))
 
 SRC_FILES := $(foreach DIR,$(SRC_DIRS),$(wildcard $(DIR)/*.cpp))
 OBJ_FILES := $(foreach FILE,$(SRC_FILES),$(patsubst %.cpp, $(BUILDPATH)/%.o, $(FILE)))
@@ -41,7 +41,7 @@ INCLUDE_DIRS := $(foreach DIR,$(SOURCEPATHS),$(patsubst %, -I%, $(DIR)))
 CPPFLAGS += $(INCLUDE_DIRS)
 
 #MAKE OPTIONS
-.PHONY: all clean cleanfolder
+.PHONY: all run clean cleanfolder
 
 all: $(BUILDPATH) $(OBJ_FILES)
 	$(info =================================)
@@ -65,6 +65,7 @@ clean:
 	$(info Limpiando todo el proyecto...)
 	$(info =================================)
 	@$(RM) $(EXECUTABLE)
+	@$(RM) -r $(OBJ_DIRS)
 	@$(RM) -r $(BUILDPATH)
 
 cleanfolder:
@@ -73,3 +74,9 @@ cleanfolder:
 	$(info =================================)
 	@$(RM) $(EXECUTABLE)
 	@$(RM) -r $(BUILDPATH)/$(FOLDER)
+
+run: all
+	$(info =================================)
+	$(info Ejecutando...)
+	$(info =================================)
+	@$(EXECUTABLE)

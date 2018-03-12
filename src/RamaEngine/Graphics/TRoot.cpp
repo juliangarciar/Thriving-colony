@@ -16,11 +16,12 @@ TRoot::~TRoot() {
 }
 
 void TRoot::beginDraw(){
-	MVPID = myMVP;
-	projectionMatrixID = myProjection;
-	viewMatrixID = myView;
-	modelMatrixID = myModel;
-	textureID = myTexture;
+    TMatrixCache *cache = TMatrixCache::Instance();
+	cache->setMatrixID(REEnums::Matrices::MATRIX_MVP, myMVP);
+	cache->setMatrixID(REEnums::Matrices::MATRIX_MVP, myProjection);
+	cache->setMatrixID(REEnums::Matrices::MATRIX_MVP, myView);
+	cache->setMatrixID(REEnums::Matrices::MATRIX_MVP, myModel);
+	cache->setMatrixID(REEnums::Matrices::MATRIX_MVP, myTexture);
 }
 
 void TRoot::endDraw(){

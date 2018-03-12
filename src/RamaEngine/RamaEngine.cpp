@@ -14,6 +14,9 @@ RamaEngine::RamaEngine() {
 
     // Resource Manager
     REManager = new ResourceManager();
+
+    // Cache
+    matrixCache = TMatrixCache::Instance();
 }
 
 RamaEngine::~RamaEngine() {

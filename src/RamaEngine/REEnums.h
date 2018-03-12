@@ -15,6 +15,14 @@ class REEnums {
             VERTEX,
             FRAGMENT
         };
+        enum Matrices{
+            MATRIX_PROJECTION = 0,
+            MATRIX_VIEW,
+            MATRIX_MODEL,
+            MATRIX_TEXTURE,
+            MATRIX_MVP,
+            MATRICES
+        };
 };
 
 #endif

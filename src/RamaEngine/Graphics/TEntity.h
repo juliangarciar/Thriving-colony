@@ -3,18 +3,9 @@
 
 #include "../RETypes.h"
 #include "../REEnums.h"
+#include "TMatrixCache.h"
 
 static std::stack<glm::mat4> matrixStack;
-
-static GLuint MVPID;
-static GLuint projectionMatrixID;
-static GLuint viewMatrixID;
-static GLuint modelMatrixID;
-static GLuint textureID;
-
-static glm::mat4 modelMatrix;
-static glm::mat4 viewMatrix;
-static glm::mat4 projectionMatrix;
 
 class TEntity {
     public:

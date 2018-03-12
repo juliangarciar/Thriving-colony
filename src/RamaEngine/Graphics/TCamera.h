@@ -224,12 +224,17 @@ class TCamera : public TEntity {
         void assignViewMatrix();
 
     private:
+        // Positions
         glm::vec3 targetPosition;
         glm::vec3 cameraPosition;
-        // View matrix
+
+        // Matrices
+        glm::mat4 pMat;
         glm::mat4 vMat;
 
+        //Projection Type
         REEnums::CameraProjection projection;
+        
         // Field of view (fov) is expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.
         f32 near, far, fov, top, bottom, left, right;
 
