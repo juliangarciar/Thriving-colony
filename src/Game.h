@@ -1,20 +1,24 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <IOEngine/IO.h>
+
+#include <GraphicEngine/Window.h>
+
+#include <SoundEngine/SoundSystem.h>
+
+#include <Enumeration.h>
+#include <Types.h>
+<<<<<<< HEAD
+=======
+
 #include "State.h"
 #include "MenuState.h"
 #include "GameState.h"
 #include "WinState.h"
 #include "DefeatState.h"
 
-#include <GraphicEngine/Window.h>
-
-#include <IOEngine/IO.h>
-
-#include <SoundEngine/SoundSystem.h>
-
-#include <Enumeration.h>
-#include <Types.h>
+>>>>>>> 9f7e3a8c8c602d3fd25c7e853e9a9b54c8fb50c2
 /**
  * @class Game
  * @brief Crea un objeto singleton tipo Game

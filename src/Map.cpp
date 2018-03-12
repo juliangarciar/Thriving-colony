@@ -1,7 +1,16 @@
+<<<<<<< HEAD
 #include "Map.h"
 #include "Game.h"
 #include <WorldEngine/WorldGeometry.h>
 #include <IOEngine/ResourceManager/ResourceJSON.h>
+=======
+#include "Human.h"
+#include "IA.h"
+#include "IOEngine/IO.h"
+#include "GraphicEngine/Window.h"
+
+#include "Map.h"
+>>>>>>> 9f7e3a8c8c602d3fd25c7e853e9a9b54c8fb50c2
 
 Map* Map::pinstance = 0;
 
@@ -209,3 +218,14 @@ Vector3<f32> Map::getMouseCollitionPoint() {
 Terrain* Map::getTerrain() {
     return terrain;
 }
+<<<<<<< HEAD
+=======
+
+CellSpacePartition *Map::getCellSpace(){
+    return cellSpace;
+}
+
+CameraController* Map::getCamera() {
+    return camera;
+}
+>>>>>>> 9f7e3a8c8c602d3fd25c7e853e9a9b54c8fb50c2

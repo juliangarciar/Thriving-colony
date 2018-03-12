@@ -10,9 +10,13 @@ BINPATH = $(PROJECTROOT)/bin
 # Path for the .o files
 BUILDPATH = $(PROJECTROOT)/obj
 # Path for the source files
+<<<<<<< HEAD
 SOURCEPATH = $(PROJECTROOT)/src
 #Directories
 SOURCE_DIRS = . MathEngine GraphicEngine GUIEngine IOEngine SoundEngine IAEngine OurEngine PathPlanner WorldEngine IOEngine/ResourceManager
+=======
+SOURCEPATHS = $(PROJECTROOT)/src
+>>>>>>> 9f7e3a8c8c602d3fd25c7e853e9a9b54c8fb50c2
 #C++ compiler
 CXX = clang++
 
@@ -20,44 +24,58 @@ CXX = clang++
 # FLAGS
 ####
 # Include paths
-CPPFLAGS = -I/usr/include -I/usr/include/eigen3 -I$(PROJECTROOT)/include -I$(PROJECTROOT)/include/nanovg -I$(SOURCEPATH)
+CPPFLAGS = -I/usr/include -I/usr/include/eigen3 -I$(PROJECTROOT)/include -I$(PROJECTROOT)/include/nanovg
 # Compiler params
 CPPFLAGS += -O3 -ffast-math -g -Wall -Wno-macro-redefined -Wno-unsequenced -Wno-unused-value -std=c++11 -m64 -pthread -DGL_GLEXT_PROTOTYPES
 # Lib paths
 LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L$(PROJECTROOT)/lib
 # Libs
 LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lXrandr -lXinerama -lXi -lpthread -ldl -lrt -lglfw -lGLEW -lIrrlicht -lnanogui -lfmod -lfmodstudio
-###-lfmodex_vc.lib -lfmod -lfmodasdL
 
 ######## DON'T EDIT ANYTHING BELOW THIS LINE
 EXECUTABLE := $(BINPATH)/$(TARGET)
-SRC := $(foreach DIR,$(SOURCE_DIRS),$(wildcard $(SOURCEPATH)/$(DIR)/*.cpp))
-OBJ_DIRS := $(foreach DIR,$(SOURCE_DIRS),$(patsubst %, $(BUILDPATH)/%, $(DIR)))
-OBJ := $(patsubst $(SOURCEPATH)/%.cpp, $(BUILDPATH)/%.o, $(SRC))
+
+rwildcard = $(foreach d,$(wildcard $1*),$(call rwildcard,$d/,$2) $(filter $(subst *,%,$2),$d))
+
+SRC_DIRS := $(foreach DIR,$(SOURCEPATHS),$(shell find $(DIR) -type d))
+OBJ_DIRS := $(foreach DIR,$(SOURCEPATHS),$(patsubst %, $(BUILDPATH)/%,$(shell find $(DIR) -type d)))
+
+SRC_FILES := $(foreach DIR,$(SRC_DIRS),$(wildcard $(DIR)/*.cpp))
+OBJ_FILES := $(foreach FILE,$(SRC_FILES),$(patsubst %.cpp, $(BUILDPATH)/%.o, $(FILE)))
+
+INCLUDE_DIRS := $(foreach DIR,$(SOURCEPATHS),$(patsubst %, -I%, $(DIR)))
+CPPFLAGS += $(INCLUDE_DIRS)
 
 #MAKE OPTIONS
 .PHONY: all clean cleanfolder
 
-all: prepare $(OBJ)
-	$(warning Creando el ejecutable $(Target)...)
-	$(CXX) -v $(CPPFLAGS) $(OBJ) -o $(EXECUTABLE) $(LDFLAGS) $(LIBS)
+all: $(BUILDPATH) $(OBJ_FILES)
+	$(info =================================)
+	$(info Creando el ejecutable $(Target)...)
+	$(info =================================)
+	@$(CXX) $(CPPFLAGS) $(OBJ_FILES) -o $(EXECUTABLE) $(LDFLAGS) $(LIBS)
     
-$(BUILDPATH)/%.o: $(SOURCEPATH)/%.cpp
-	$(warning Creando el binario $@...)
-	$(CXX) $(CPPFLAGS) -c $< -o $@
+$(BUILDPATH)/%.o: %.cpp
+	$(info Creando el binario para el archivo $<...)
+	@$(CXX) $(CPPFLAGS) -c $< -o $@
 
-prepare:
-	$(warning Creando la estructura de carpetas)
-	mkdir -p $(BINPATH)
-	mkdir -p $(BUILDPATH)
-	mkdir -p $(OBJ_DIRS)
+$(BUILDPATH):
+	$(info =================================)
+	$(info Creando la estructura de carpetas...)
+	$(info =================================)
+	@mkdir -p $(OBJ_DIRS)
+	@mkdir -p $(BINPATH)
 
 clean:
-	$(warning Cleaning...)
+	$(info =================================)
+	$(info Limpiando todo el proyecto...)
+	$(info =================================)
 	@$(RM) $(EXECUTABLE)
-	@$(RM) $(OBJ)
+	@$(RM) -r $(BUILDPATH)
 
 cleanfolder:
-	$(warning Cleaning $(FOLDER)...)
+	$(info =================================)
+	$(info Limpiando la carpeta $(FOLDER)...)
+	$(info =================================)
 	@$(RM) $(EXECUTABLE)
-	@$(RM) $(BUILDPATH)/$(FOLDER)/*.o
+	@$(RM) -r $(BUILDPATH)/$(FOLDER)

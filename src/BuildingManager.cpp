@@ -113,7 +113,7 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 			//Cell* tmp = WorldGeometry::getValidCell();
 		}
 	}
-	/* Establece su color original */
+	/* Establece su color original */8
 	tempBuilding->setColor(tempBuilding -> getBaseColor());
 	/* Estable su posicion */
 	tempBuilding -> setPosition(pos);

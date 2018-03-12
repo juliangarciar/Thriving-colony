@@ -1,5 +1,6 @@
 #include "BattleManager.h"
-#include "Game.h"
+#include "Human.h"
+#include "IA.h"
 
 BattleManager::BattleManager() {
     

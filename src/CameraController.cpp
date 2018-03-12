@@ -1,6 +1,11 @@
 #include "CameraController.h"
-#include "Game.h"
-  
+
+#include "Human.h"
+#include "IA.h"
+#include "Map.h"
+#include "IOEngine/IO.h"
+#include "GraphicEngine/Window.h"
+
 CameraController::CameraController() {
 	Window *w = Window::Instance();
 
@@ -302,4 +307,8 @@ void CameraController::setZoomDistanceFromTarget(i32 zoom){
 void CameraController::setRotateDegrees(i32 x, i32 y){
 	rotateDegrees.x = x;
 	rotateDegrees.y = y; 
+}
+
+Vector3<f32> CameraController::getTarPos() {
+	return tarPos;
 }

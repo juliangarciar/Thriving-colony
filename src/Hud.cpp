@@ -1,5 +1,9 @@
 #include "Hud.h"
-#include "Game.h"
+
+#include "Human.h"
+#include "IA.h"
+#include "IOEngine/IO.h"
+#include "GraphicEngine/Window.h"
 
 Hud* Hud::pinstance = 0;
 
@@ -760,6 +764,13 @@ void Hud::debug(){
     iaNextChoice -> setLabel(iaos.str());
     iaos = std::stringstream();
     iaos << "Behaviour: " << IA::Instance() -> getChosenBehaviour();
+    iaBehaviour -> setLabel(iaos.str());
+    iaos = std::stringstream();
+    if (IA::Instance() -> getFast() == true) {
+        iaos << "Timer: Fast";
+    } else {
+        iaos << "Timer: Slow";
+    }
     iaBehaviour -> setLabel(iaos.str());
     iaos = std::stringstream();
 }

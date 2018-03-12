@@ -68,6 +68,8 @@ class Map {
         Vector3<f32> getMouseCollitionPoint();
 
 
+        CameraController* getCamera();
+
     protected:
         /**
 		 * @brief Constructor de Map

@@ -1,5 +1,7 @@
 #include "Human.h"
-#include "Game.h"
+
+#include "IA.h"
+#include "GraphicEngine/Window.h"
 
 Human* Human::instance = 0;
 
@@ -11,7 +13,6 @@ Human* Human::Instance() {
 }
 
 Human::Human() : Player() {
-    
 }
 
 Human::~Human() {
@@ -23,6 +24,7 @@ void Human::Init() {
     Player::Init();
     buildings = new BuildingManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
     units = new UnitManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
+    
 }
 
 void Human::Update() {

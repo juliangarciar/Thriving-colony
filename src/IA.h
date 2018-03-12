@@ -76,6 +76,8 @@ class IA : public Player {
          * @return behaviourTree sera el arbol devuelto
          */
         BehaviourTree* getTree();
+
+        bool getFast();
     protected:
         /**
          * @brief Constructor
@@ -95,6 +97,8 @@ class IA : public Player {
         std::string chosenBehaviour;
         std::vector<std::string> *choices;
         i32 choiceIndex;
+
+        bool fast;
 };
 
 #endif

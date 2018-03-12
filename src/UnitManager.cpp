@@ -2,7 +2,13 @@
 #include "Game.h"
 #include <WorldEngine/WorldGeometry.h>
 #include <WorldEngine/Cell.h>
-#include <Map.h>
+
+#include "Human.h"
+#include "IA.h"
+#include "Map.h"
+#include "Hud.h"
+#include "IOEngine/IO.h"
+
 //Constructor
 UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
     gridAlignment = 20;

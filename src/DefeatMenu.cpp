@@ -1,4 +1,5 @@
 #include "DefeatMenu.h"
+
 #include "Game.h"
 
 DefeatMenu::DefeatMenu() {
