@@ -17,6 +17,10 @@ Building::~Building() {
 }
 
 void Building::Init() {
+    /* Box2D parameters */
+    Vector2<f32> topLeft;
+    Vector2<f32> bottomRight;
+
     f32 r = 0;
     f32 g = 0;
     f32 b = 0;
@@ -39,9 +43,9 @@ void Building::Init() {
             metalCost = Enumeration::BuildingCost::BarnMetalCost;
             crystalCost = Enumeration::BuildingCost::BarnCrystalCost;
             kCells = Enumeration::BuildingCells::BarnCells;
-            
+
             path = L"media/buildingModels/establo.obj";
-            scale = Vector3<f32>(25,25,25);
+            scale = Vector3<f32>(40,40,40);
         break;
         case Enumeration::BuildingType::Barrack:
             // Different color for diferent buildings
@@ -61,7 +65,7 @@ void Building::Init() {
             kCells = Enumeration::BuildingCells::BarrackCells;
 
             path = L"media/buildingModels/barraca.obj";
-            scale = Vector3<f32>(25,25,25);
+            scale = Vector3<f32>(40,40,40);
         break;
         case Enumeration::BuildingType::Hospital:
             // Different color for diferent buildings
@@ -81,7 +85,7 @@ void Building::Init() {
             kCells = Enumeration::BuildingCells::HospitalCells;
 
             path = L"media/buildingModels/hospital.obj";
-            scale = Vector3<f32>(64,64,64);
+            scale = Vector3<f32>(40,40,40);
         break;
         case Enumeration::BuildingType::House:
             // Different color for diferent buildings
@@ -102,7 +106,7 @@ void Building::Init() {
             kCells = Enumeration::BuildingCells::HomeCells;
 
             path = L"media/buildingModels/house.obj";
-            scale = Vector3<f32>(64,64,64);
+            scale = Vector3<f32>(40,40,40);
         break;
         case Enumeration::BuildingType::MainBuilding:
             // Different color for diferent buildings
@@ -115,7 +119,7 @@ void Building::Init() {
             kCells = Enumeration::BuildingCells::MainCells;
 
             path = L"media/buildingModels/command_center.obj";
-            scale = Vector3<f32>(48,48,48);
+            scale = Vector3<f32>(40,40,40);
         break;
         case Enumeration::BuildingType::Market:
             // Different color for diferent buildings
@@ -135,7 +139,7 @@ void Building::Init() {
             kCells = Enumeration::BuildingCells::MarketCells;
 
             path = L"media/buildingModels/mercado.obj";
-            scale = Vector3<f32>(25,25,25);
+            scale = Vector3<f32>(40,40,40);
         break;
         case Enumeration::BuildingType::Quarry:
             // Different color for diferent buildings
@@ -155,7 +159,7 @@ void Building::Init() {
             kCells = Enumeration::BuildingCells::QuarryCells;
 
             path = L"media/buildingModels/cantera.obj";
-            scale = Vector3<f32>(25,25,25);
+            scale = Vector3<f32>(40,40,40);
         break;
         case Enumeration::BuildingType::Siderurgy:
             // Different color for diferent buildings
@@ -175,7 +179,7 @@ void Building::Init() {
             kCells = Enumeration::BuildingCells::SiderurgyCells;
 
             path = L"media/buildingModels/siderurgia.obj";
-            scale = Vector3<f32>(25,25,25);
+            scale = Vector3<f32>(40,40,40);
         break;
         case Enumeration::BuildingType::School:
             // Different color for diferent buildings
@@ -196,7 +200,7 @@ void Building::Init() {
             kCells = Enumeration::BuildingCells::SchoolCells;
 
             path = L"media/buildingModels/escuela.obj";
-            scale = Vector3<f32>(25,25,25);
+            scale = Vector3<f32>(40,40,40);
         break;
         case Enumeration::BuildingType::Tower:
             // Different color for diferent buildings
@@ -216,7 +220,7 @@ void Building::Init() {
             kCells = Enumeration::BuildingCells::TowerCells;
 
             path = L"media/buildingModels/torre_vigilancia.obj";
-            scale = Vector3<f32>(25,25,25);
+            scale = Vector3<f32>(40,40,40);
         break;
         case Enumeration::BuildingType::Wall:
             // Different color for diferent buildings
@@ -236,7 +240,7 @@ void Building::Init() {
             kCells = Enumeration::BuildingCells::WallCells;
 
             path = L"media/buildingModels/muralla.obj";
-            scale = Vector3<f32>(25,25,25);
+            scale = Vector3<f32>(40,40,40);
         break;
         case Enumeration::BuildingType::Workshop:
             // Different color for diferent buildings
@@ -256,10 +260,16 @@ void Building::Init() {
             kCells = Enumeration::BuildingCells::WorkshopCells;
 
             path = L"media/buildingModels/taller_maquinas_de_asedio.obj";
-            scale = Vector3<f32>(25,25,25);
+            scale = Vector3<f32>(40,40,40);
         break;
         default: break;
     }
+    /* Set the 2D hitbox */
+    topLeft.x = (kCells / 2.0) * (-80.f) + 1;
+    topLeft.y = (kCells / 2.0) * (-80.f) + 1;
+    bottomRight.x = (kCells / 2.0) * (80.f) - 1;
+    bottomRight.y = (kCells / 2.0) * (80.f) - 1;
+    hitBox = Box2D(topLeft, bottomRight); 
 
     setModel(layer, path);
     model->setScale(scale);

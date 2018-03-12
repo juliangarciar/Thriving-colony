@@ -2,8 +2,11 @@
 #include "Cell.h"
 #include "Quadtree.h"
 #include <MathEngine/Vector2.h>
+#include <MathEngine/Vector3.h>
+#include <Map.h>
 #include <MathEngine/Box2D.h>
 #include <Building.h>
+#include <MathEngine/PriorityQueue.h>
 #define MAP 10240
 #define CELL 80
 WorldGeometry* WorldGeometry::pinstance = 0;
@@ -146,6 +149,7 @@ void WorldGeometry::Init(){
         cellsDistance[j] = std::vector<f32>(size);
         for(i32 k = 0; k < size; k++){
             cellsDistance[j][k] = calculateDistance(mCells[j]->getPosition(), neighbors[k]->getPosition());
+            /* Debug intended */
             if(cellsDistance[j][k] == 0){
                 std::cout << "Weird stuff happens at init at: " << j << "," << k << "\n";
             }
@@ -160,7 +164,11 @@ void WorldGeometry::Clear(){
 void WorldGeometry::build(Building* buildingPtr){
     quadTree->insertBuilding(buildingPtr);
 }
-Vector2<f32> WorldGeometry::correctBuildingPosition(Vector2<f32> targetPos, Building *buildingPtr, bool &collision){
+bool WorldGeometry::checkBuildingSpace(Building* buildingPtr){
+    Box2D dummy = buildingPtr->getHit().getAmplifiedBox(79.f);
+    return quadTree->canBuild(dummy);
+}
+Vector2<f32> WorldGeometry::correctBuildingPosition(Vector2<f32> targetPos, Building *buildingPtr){
     Vector2<f32> correctOne = Vector2<f32>();
     if(buildingPtr != NULL){
         Cell* dummy = positionToCell(targetPos);
@@ -181,11 +189,76 @@ Vector2<f32> WorldGeometry::correctBuildingPosition(Vector2<f32> targetPos, Buil
             storage.x -= (buildingPtr -> getCells() - 1) * (CELL / 2);
             storage.y -= (buildingPtr -> getCells() - 1) * (CELL / 2);
         }
-        if(quadTree->canBuild(buildingPtr->getHit())){
-            collision = true;
-        }
     }
     return correctOne;
+}
+/* !! */
+/* NEEDS A HARD CLEAN !!! */
+Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin, Building* buildingPtr){
+    /* The wanted Cell */
+    Cell* validCell = NULL;
+    /* Intended swap */
+    Cell* sourceCell = referenceTarget;
+    Cell* targetCell = referenceOrigin;
+    i32 sourceIndex = sourceCell->getIndex();
+    i32 targetIndex = targetCell->getIndex();
+    /* Check what's needed and what's not */
+    i32 MAX = 16384;
+    std::vector<f32> GCosts = std::vector<f32>(MAX, 0);
+    std::vector<f32> FCosts = std::vector<f32>(MAX, 0);
+
+    std::vector< Cell* > shortestPath = std::vector<Cell*>(MAX, NULL);
+    std::vector< Cell* > searchFrontier = std::vector<Cell*>(MAX, NULL);
+    /* Priority queue, that orders the weights of each iterated Cell */
+    IndexedPriorityQLow<float> pq(FCosts, MAX);
+    pq.insert(sourceIndex);
+    /* Algorithm start */ 
+    while(!pq.empty()){
+        i32 closestIndex = pq.Pop();
+    /* Adds the cell to the path vector */
+        shortestPath[closestIndex] = searchFrontier[closestIndex];
+    /* Stop condition, research about a system of conditions */
+        if(buildingPtr != NULL){
+            Vector2<f32> tmp = indexToCell(closestIndex)->getPosition();
+            Vector3<f32> dummy;
+            dummy.x = tmp.x;
+            dummy.z = tmp.y;
+            dummy.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.z);
+            buildingPtr->setPosition(dummy);
+            if(!checkBuildingSpace(buildingPtr)){
+                validCell = indexToCell(closestIndex);
+                return validCell;
+            }
+        }
+        else if(!indexToCell(closestIndex)->isBlocked()){
+            validCell = indexToCell(closestIndex);
+            return validCell; 
+        }
+    /* Get neighbors of the chosen cell */
+        std::vector<Cell*> neighbors = getNeighbors(closestIndex);
+    /* Calculate the cost for each neighbor to the targetCell */
+        for(i32 i = 0; i < neighbors.size(); i++){
+            i32 potentialNode = neighbors[i]->getIndex();
+            f32 HCost = calculateDistance(neighbors[i]->getPosition(), targetCell->getPosition());
+            f32 GCost = GCosts[closestIndex] + getCost(closestIndex, i);
+            //std::cout << "Distancia H: " << HCost << "\n";
+            //std::cout << "Distancia G: " << GCost << "\n";
+            if(searchFrontier[potentialNode] == NULL){
+                FCosts[potentialNode] = GCost + HCost;
+                GCosts[potentialNode] = GCost;
+
+                pq.insert(potentialNode);
+                searchFrontier[potentialNode] = indexToCell(closestIndex);
+            }
+        /* Fix this method, isn't working properly */
+            else if((GCost < GCosts[potentialNode]) && (shortestPath[potentialNode] == NULL)){
+                FCosts[potentialNode] = GCost + HCost;
+                GCosts[potentialNode] = GCost;
+
+                searchFrontier[potentialNode] = indexToCell(closestIndex);
+            }    
+        }
+    }
 }
 Cell* WorldGeometry::positionToCell(Vector2<f32> position){
     int dummy = (i32)((MAP / CELL) * position.x / MAP) + 

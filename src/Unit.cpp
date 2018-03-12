@@ -46,6 +46,10 @@ Unit::~Unit() {
 }
 
 void Unit::Init() {
+    /* Box2D parameters */
+    Vector2<f32> topLeft;
+    Vector2<f32> bottomRight;
+    
     const wchar_t *path;
     // Basic stats of each unit are here
     switch (type) {

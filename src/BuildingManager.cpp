@@ -47,7 +47,7 @@ bool BuildingManager::setBuildingMode(Enumeration::BuildingType type) {
 	}
 	return false;
 }
-
+/* ToDo: optimize, to much shit inside */
 void BuildingManager::drawBuilding() {
     if (buildingMode && tempBuilding != nullptr) {
         // ToDo: Aqui tenemos que hacer que cuando se haya apretado el boton de nueva ventana,
@@ -63,14 +63,14 @@ void BuildingManager::drawBuilding() {
         //f32 z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
 	// Change 2nd parameter
 		bool collision = false;
-		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(xyzPointCollision.toVector2(), tempBuilding, collision);
+		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(xyzPointCollision.toVector2(), tempBuilding);
 		//std::cout << "Position: " << dummy.x << "," << dummy.y << "," << dummy.z << "\n";
 		Vector3<f32> dummy2;
 		dummy2.x = dummy.x;
 		dummy2.z = dummy.y;
 		dummy2.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y);
 		tempBuilding -> setPosition (dummy2);
-
+		collision = WorldGeometry::Instance()->checkBuildingSpace(tempBuilding);
 		//Pressing the right mouse button cancels the building
 		if (IO::Instance() -> getMouse() -> rightMouseDown()){
 			buildingMode = false;
@@ -85,16 +85,17 @@ void BuildingManager::drawBuilding() {
 		//for (std::map<i32,Building*>::iterator it = buildings -> begin(); it != buildings -> end() && !collision; ++it) {
 		//	collision = it -> second -> getHitbox() -> intersects(*tempBuilding -> getHitbox());
 		//}
-
+		/* Swapped by Julian */
 		if (collision) {
-			tempBuilding->setColor(video::SColor(255,0,0,255)); //ToDo: reemplazar color por material
+			//tempBuilding->setColor(video::SColor(50,0,0,255)); //ToDo: reemplazar color por material
+			tempBuilding->setColor(video::SColor(20,255,0,0));
 		} else {
-			tempBuilding->setColor(tempBuilding -> getBaseColor()); //ToDo: reemplazar color por material
+			//tempBuilding->setColor(tempBuilding -> getBaseColor()); //ToDo: reemplazar color por material
+			tempBuilding->setColor(video::SColor(20, 0, 255, 0));
 			//If there is no collision and the player press left button of the mouse, build the building
 			if (IO::Instance() -> getMouse() -> leftMouseDown()) {
 				buildingMode = false;
 				buildBuilding(dummy2, tempBuilding -> getType());
-				
 			}
 		}
     }
@@ -104,8 +105,18 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 	if (team == Enumeration::Team::IA || tempBuilding == nullptr) {
 		tempBuilding = new Building(buildingLayer, 0, team, breed, _type);
 		tempBuilding -> setPosition(pos);
+		if(WorldGeometry::Instance()->checkBuildingSpace(tempBuilding)){
+			buildingMode = false;
+			delete tempBuilding;
+			tempBuilding = nullptr;
+			return;
+			//Cell* tmp = WorldGeometry::getValidCell();
+		}
 	}
-
+	/* Establece su color original */
+	tempBuilding->setColor(tempBuilding -> getBaseColor());
+	/* Estable su posicion */
+	tempBuilding -> setPosition(pos);
     //Establece la ID inicial del edificio
 	tempBuilding -> setID(nextBuildingId);
     //Establece el color inicial del edificio

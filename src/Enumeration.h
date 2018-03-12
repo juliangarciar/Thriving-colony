@@ -132,7 +132,7 @@ class Enumeration {
 
             HomeCells = 1,
 
-            BarrackCells = 2,
+            BarrackCells = 3,
 
             BarnCells = 2,
 

@@ -52,7 +52,7 @@
 				"type": "Siderurgy", 
 				"position": {
 					"x": 8000,
-					"z": 8300
+					"z": 8500
 				},
 				"scale": {
 					"x": 0,
@@ -95,7 +95,7 @@
 				"type": "Siderurgy", 
 				"position": {
 					"x": 2000,
-					"z": 2300
+					"z": 1500
 				},
 				"scale": {
 					"x": 0,

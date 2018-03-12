@@ -114,7 +114,7 @@ bool Quadtree::canBuild(Box2D otherHitbox){
     
     if(this->deep == 0){
         for(i32 i = 0; i < innerCells.size(); i++){
-            if(innerCells[i]->getHitbox().isOverlappedWith(otherHitbox) && innerCells[i]->getInhabitingBuilding() != NULL){
+            if(innerCells[i]->getHitbox().isOverlappedWith(otherHitbox) && (innerCells[i]->getInhabitingBuilding() != NULL || innerCells[i]->isBlocked())){
                 newCenter = true;
                 return newCenter;
             }

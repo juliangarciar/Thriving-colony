@@ -1,6 +1,6 @@
 #include "IA.h"
 #include "Game.h"
-
+#include <WorldEngine/WorldGeometry.h>
 IA* IA::instance = 0;
 
 IA* IA::Instance() {
@@ -90,7 +90,7 @@ Vector3<f32> IA::determinatePositionBuilding() {
         v.set(startingX, 0, startingZ);
         v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.z);
     } else {
-
+        
         //When there are some buildings
         Vector3<f32> *v2 = 0;
         Vector3<f32> *v3 = 0;

@@ -49,6 +49,16 @@ class WorldGeometry{
          */
         void build(Building* buildingPtr);
         /**
+         * @brief Check the terrain to build
+         * 
+         * @param other The building hitbox
+         * @return true 
+         * @return false 
+         */
+        bool checkBuildingSpace(Building* buildingPtr);
+        /* To implement */
+        //bool checkCollisions(Box2D& hitBox, Vector2<f32> originPosition, Vector2<f32> targetPosition);
+        /**
          * @brief Returns a correct position to construct in
          * 
          * @param targetPos The position where the mouse is clicked
@@ -56,7 +66,19 @@ class WorldGeometry{
          * @param collision Assigns true or false, depending if it collides with already built buildings
          * @return Vector2<f32> The correct position
          */
-        Vector2<f32> correctBuildingPosition(Vector2<f32> targetPos, Building* buildingPtr, bool &collision);
+        Vector2<f32> correctBuildingPosition(Vector2<f32> targetPos, Building* buildingPtr);
+        /**
+         * @brief Returns a valid cell, depending on the search mode
+         * Case buildingPtr == NULL -> searchs for the nearest cell to the reference target (non-blocked)
+         * Case else -> searchs for the nearest cell to the reference target where 
+         * the IA pretends to build HARDEST AS FUCK
+         * 
+         * @param referenceTarget The target cell where the search will be made
+         * @param referenceOrigin The origin reference 
+         * @param searchMode 0 || 1
+         * @return Cell* The wanted Cell 
+         */
+        Cell* getValidCell(Cell* referenceTarget, Cell* referenceOrigin, Building* buildingPtr);
         /**
          * @brief Transforms a position (Vector2) into the cell that collides with
          * 
