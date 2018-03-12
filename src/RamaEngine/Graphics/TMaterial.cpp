@@ -88,6 +88,7 @@ std::string TMaterial::getSpecularTextureMap(){
 void TMaterial::setAlphaTextureMap(std::string atm){
     alphaTextureMap = atm;
 }
+
 std::string TMaterial::getAlphaTextureMap(){
     return alphaTextureMap;
 }

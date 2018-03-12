@@ -45,7 +45,7 @@ void TCamera::setPerspective(){
 void TCamera::setParallel(){
     //ToDo: tito juli
 }
-//AQUI
+
 void TCamera::setTargetPosition(glm::vec3 p) {
     targetPosition = p;
     calculateViewMatrix();
