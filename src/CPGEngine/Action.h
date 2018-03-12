@@ -7,7 +7,7 @@
  * @class Action
  * @brief Crea un objeto tipo Action
  */
-class Action : Behaviour {
+class Action : public Behaviour {
     
     public:
         /**
@@ -22,7 +22,7 @@ class Action : Behaviour {
         Enumeration::BehaviourState virtual Update() = 0;
         void virtual execute() = 0;
 
-    private:
+    protected:
 };
 
 #endif

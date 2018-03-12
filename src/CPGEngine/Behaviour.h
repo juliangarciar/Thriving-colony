@@ -22,7 +22,7 @@ class Behaviour {
         Enumeration::BehaviourState virtual Update() = 0;
         Enumeration::BehaviourState getState();
 
-    private:
+    protected:
         Enumeration::BehaviourState state;
 
 };

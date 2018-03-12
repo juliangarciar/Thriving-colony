@@ -8,7 +8,7 @@
  * @class ActiveSelector
  * @brief Crea un objeto tipo ActiveSelector
  */
-class ActiveSelector : Selector {
+class ActiveSelector : public Selector {
     
     public:
         /**

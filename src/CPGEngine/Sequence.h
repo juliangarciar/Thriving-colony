@@ -7,7 +7,7 @@
  * @class Sequence
  * @brief Crea un objeto tipo Sequence
  */
-class Sequence : Composite {
+class Sequence : public Composite {
     
     public:
         /**

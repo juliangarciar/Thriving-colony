@@ -7,7 +7,7 @@
  * @class AAttack
  * @brief Crea un objeto tipo AAttack
  */
-class AAttack : Action {
+class AAttack : public Action {
     
     public:
         /**

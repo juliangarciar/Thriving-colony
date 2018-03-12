@@ -34,8 +34,6 @@ void IA::Init() {
     nodeRootIA = new RootNode();
     nodeRootIA -> init(behaviour);
 
-    rootNode = new ActiveSelector(NULL);
-
     buildings = new BuildingManager(Enumeration::Team::IA, Enumeration::BreedType::Drorania);
     units = new UnitManager(Enumeration::Team::IA, Enumeration::BreedType::Kaonov);
 

@@ -8,7 +8,7 @@
  * @class Selector
  * @brief Crea un objeto tipo Selector
  */
-class Selector : Composite {
+class Selector : public Composite {
     
     public:
         /**

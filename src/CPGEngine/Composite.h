@@ -8,7 +8,7 @@
  * @class Composite
  * @brief Crea un objeto tipo Composite
  */
-class Composite : Behaviour {
+class Composite : public Behaviour {
     
     public:
         /**
@@ -22,7 +22,7 @@ class Composite : Behaviour {
 
         Enumeration::BehaviourState virtual Update() = 0;
 
-    private:
+    protected:
         std::vector<Behaviour*> children;
 };
 

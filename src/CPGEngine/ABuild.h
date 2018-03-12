@@ -7,7 +7,7 @@
  * @class ABuild
  * @brief Crea un objeto tipo ABuild
  */
-class ABuild : Action {
+class ABuild : public Action {
     
     public:
         /**

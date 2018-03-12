@@ -7,7 +7,7 @@
  * @class ADeployTroops
  * @brief Crea un objeto tipo ADeployTroops
  */
-class ADeployTroops : Action {
+class ADeployTroops : public Action {
     
     public:
         /**

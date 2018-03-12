@@ -7,7 +7,7 @@
  * @class ARecruit
  * @brief Crea un objeto tipo ARecruit
  */
-class ARecruit : Action {
+class ARecruit : public Action {
     
     public:
         /**
