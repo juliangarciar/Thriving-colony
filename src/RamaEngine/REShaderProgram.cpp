@@ -19,6 +19,7 @@ REShaderProgram::REShaderProgram(ResourceGLSL* vs, ResourceGLSL* fs){
 		std::vector<char> ProgramErrorMessage(InfoLogLength+1);
 		glGetProgramInfoLog(pid, InfoLogLength, NULL, &ProgramErrorMessage[0]);
 		std::cout << &ProgramErrorMessage[0] << std::endl;
+		exit(0);
 	}
 
 	rootEntity = new TRoot(pid);

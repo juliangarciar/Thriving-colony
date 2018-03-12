@@ -26,11 +26,25 @@ TCamera::~TCamera(){
 
 void TCamera::beginDraw(){
     if (active) {
-        assignViewMatrix();
+        viewMatrix = vMat;
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                std::cout << viewMatrix[i][j] << " ";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << std::endl;
     }
 }
 
 void TCamera::endDraw(){
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                std::cout << viewMatrix[i][j] << " ";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << std::endl;
 
 }
 
@@ -145,9 +159,6 @@ void TCamera::calculateViewMatrix() {
     );
 }
 
-void TCamera::assignViewMatrix() {
-    viewMatrix = vMat;
-}
 
 //ToDo
 glm::vec3 getTargetPosition(){

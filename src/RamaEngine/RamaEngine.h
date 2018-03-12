@@ -166,6 +166,7 @@ class RamaEngine {
 
         TNode* rootNode;
 
+        RESceneNode *clSceneNode;
         RESceneNode *defaultSceneNode;
 
         REShaderProgram *currentProgram;
