@@ -1,14 +1,10 @@
 #include "Building.h"
-<<<<<<< HEAD
 #include "Game.h"
-=======
 
 #include "Human.h"
 #include "IA.h"
 #include "GraphicEngine/Window.h"
-#include "WorldGeometry/CellSpacePartition.h"
 
->>>>>>> 9f7e3a8c8c602d3fd25c7e853e9a9b54c8fb50c2
 #define MAX_MAP 10240
 #define TOTAL 80
 

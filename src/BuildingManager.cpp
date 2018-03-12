@@ -88,10 +88,10 @@ void BuildingManager::drawBuilding() {
 		/* Swapped by Julian */
 		if (collision) {
 			//tempBuilding->setColor(video::SColor(50,0,0,255)); //ToDo: reemplazar color por material
-			tempBuilding->setColor(video::SColor(20,255,0,0));
+			tempBuilding->setColor(video::SColor(20, 255, 0, 0));
 		} else {
 			//tempBuilding->setColor(tempBuilding -> getBaseColor()); //ToDo: reemplazar color por material
-			tempBuilding->setColor(video::SColor(20, 0, 255, 0));
+			tempBuilding->setColor(video::SColor(20, 0, 255, 125));
 			//If there is no collision and the player press left button of the mouse, build the building
 			if (IO::Instance() -> getMouse() -> leftMouseDown()) {
 				buildingMode = false;
@@ -113,7 +113,7 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 			//Cell* tmp = WorldGeometry::getValidCell();
 		}
 	}
-	/* Establece su color original */8
+	/* Establece su color original */
 	tempBuilding->setColor(tempBuilding -> getBaseColor());
 	/* Estable su posicion */
 	tempBuilding -> setPosition(pos);

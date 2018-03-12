@@ -9,8 +9,6 @@
 
 #include <Enumeration.h>
 #include <Types.h>
-<<<<<<< HEAD
-=======
 
 #include "State.h"
 #include "MenuState.h"
@@ -18,7 +16,6 @@
 #include "WinState.h"
 #include "DefeatState.h"
 
->>>>>>> 9f7e3a8c8c602d3fd25c7e853e9a9b54c8fb50c2
 /**
  * @class Game
  * @brief Crea un objeto singleton tipo Game
