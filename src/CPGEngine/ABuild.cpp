@@ -132,46 +132,38 @@ Enumeration::BehaviourState ABuild::Update() {
 }
 
 void ABuild::Execute() {
+    Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
     switch (type) {
         case Enumeration::BuildingType::Barn :
             IA::Instance() -> getTree() -> setRequireBarn(false);
-            Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barn, false);
         break;
         case Enumeration::BuildingType::Barrack :
             IA::Instance() -> getTree() -> setRequireBarrack(false);
-            Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barrack, false);
         break;
         case Enumeration::BuildingType::Hospital : 
-            Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Hospital, false);
         break;
         case Enumeration::BuildingType::House : 
             IA::Instance() -> getTree() -> setRequireCitizens(false);
-            Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::House, false);
         break;
         case Enumeration::BuildingType::Market : 
-            Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Market, false);
         break;
         case Enumeration::BuildingType::Quarry : 
             IA::Instance() -> getTree() -> setRequireCrystal(false);
-            Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Quarry, false);
         break;
         case Enumeration::BuildingType::School : 
-            Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::School, false);
         break;
         case Enumeration::BuildingType::Siderurgy : 
-            Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, false);
         break;
         case Enumeration::BuildingType::Workshop : 
             IA::Instance() -> getTree() -> setRequireBarrack(false);
-            Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Workshop, false);
         break;
     }

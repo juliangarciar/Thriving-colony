@@ -1,5 +1,5 @@
 #include "WinState.h"
-#include "Game.h"
+#include "GraphicEngine/Window.h"
 
 WinState::WinState() : State() {
 

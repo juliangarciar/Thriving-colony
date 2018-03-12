@@ -6,6 +6,7 @@
 #include <Enumeration.h>
 #include <MathEngine/Vector3.h>
 #include <MathEngine/Box3D.h>
+#include <MathEngine/Box2D.h>
 #include <GraphicEngine/Model.h>
 #include <GraphicEngine/SceneNode.h>
 
@@ -132,6 +133,7 @@ class Entity {
         irr::video::SColor getCurrentColor(); //ToDo: cambiar por material
         // Added by Julian
         i32 getCells();
+        Box2D getHit();
 
         i32 getArmyLevel();
 
@@ -144,6 +146,7 @@ class Entity {
         Model* model;
         Vector3<f32> *position;
         Box3D<f32>* hitbox;
+        Box2D hitBox;
         Enumeration::Team team;
         Enumeration::BreedType breed;
         Enumeration::EntityType entityType;

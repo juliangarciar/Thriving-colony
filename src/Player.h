@@ -7,6 +7,8 @@
 #include <vector>
 #include <Types.h>
 
+#include "IOEngine/Timer.h"
+
 class Player {
     public:
         Player();
@@ -73,6 +75,8 @@ class Player {
         bool underAttack;
         
         f32 updateTimer;
+        f32 updateFastTimer;
+        f32 updateSlowTimer;
         //Buildings
         f32 buildableRange;
         
@@ -82,6 +86,9 @@ class Player {
 
         //City Hall
         Vector3<f32> hallPosition;
+
+        Timer *testTimer;
+
     private:
         
 };

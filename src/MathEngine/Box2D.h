@@ -13,7 +13,7 @@
 //-----------------------------------------------------------------------------
 
 #include "Vector2.h"
-
+#include <Types.h>
 class Box2D
 {
     private:
@@ -23,44 +23,31 @@ class Box2D
         Vector2<f32>  m_vBottomRight;
     // Center point
         Vector2<f32>  m_vCenter;
-    public:
-    // Constructor
-        Box2D(Vector2<f32> tl,
-                        Vector2<f32> br):m_vTopLeft(tl),
-                                        m_vBottomRight(br),
-                                        m_vCenter((tl+br)/2.0)
-        {}
-    // Returns true if overlaps with another Box2D
-        bool isOverlappedWith( Box2D& other)
-        {
-            return !((other.Top() > this->Bottom()) ||
-                (other.Bottom() < this->Top()) ||
-                (other.Left() > this->Right()) ||
-                (other.Right() < this->Left()));
-        }
 
+        Vector2<f32> m_vTopRight;
+        Vector2<f32> m_vBottomLeft;
+        
+        f32 halfSizeX;
+        f32 halfSizeY;
+    public:
+        Box2D();
+        Box2D(f32 sizeX, f32 sizeY);
+    // Constructor
+        Box2D(Vector2<f32> tl, Vector2<f32> br);
+    /* Move hitbox */
+        void moveHitbox(f32 x, f32 y);
     // Getters
-        Vector2<f32> TopLeft(){
-            return m_vTopLeft;
-        }
-        Vector2<f32> BottomRight(){
-            return m_vBottomRight;
-        }
-        double    Top(){
-            return m_vTopLeft.y;
-        }
-        double    Left(){
-            return m_vTopLeft.x;
-        }
-        double    Bottom(){
-            return m_vBottomRight.y;
-        }
-        double    Right(){
-            return m_vBottomRight.x;
-        }
-        Vector2<f32> Center(){
-            return m_vCenter;
-        }
+        Vector2<f32> TopLeft();
+        Vector2<f32> BottomRight();
+        Vector2<f32> TopRight();
+        Vector2<f32> BottomLeft();
+        Vector2<f32> Center();
+        f32    Top();
+        f32    Left();
+        f32    Bottom();
+        f32    Right();
+        Box2D getAmplifiedBox(f32 distance);
+        bool isOverlappedWith(Box2D other);
 };
   
 #endif /* BOX2D_H */

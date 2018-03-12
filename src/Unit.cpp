@@ -1,5 +1,11 @@
 #include "Unit.h"
+
 #include "Game.h"
+#include "Human.h"
+#include "IA.h"
+#include "Map.h"
+#include "Hud.h"
+#include "GraphicEngine/Window.h"
 
 Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t) : Entity(id, team, breed) {
     // Race type and unit type
@@ -39,10 +45,17 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
 }
 
 Unit::~Unit() {
+    std::cout << "Deleting troop \n";
     delete pathManager;
+    delete layer;
+    std::cout << "Done \n";
 }
 
 void Unit::Init() {
+    /* Box2D parameters */
+    Vector2<f32> topLeft;
+    Vector2<f32> bottomRight;
+    
     const wchar_t *path;
     // Basic stats of each unit are here
     switch (type) {
@@ -601,7 +614,7 @@ bool Unit::refreshTarget() {
 
     // Ask for a new target
     if (lookForTargetCountdown <= 0) {
-        Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
+        Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this); //ToDo: Puff, mas corto mejor no?
         lookForTargetCountdown = lookForTargetTimer;
     } else {
         lookForTargetCountdown -= Window::Instance() -> getDeltaTime();

@@ -1,5 +1,5 @@
 #include "MenuState.h"
-#include "Game.h"
+#include "GraphicEngine/Window.h"
 
 MenuState::MenuState() : State() {
     prevWindowWidth = 1280;

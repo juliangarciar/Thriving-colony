@@ -1,15 +1,14 @@
 #include "Map.h"
 #include "Game.h"
+#include <WorldEngine/WorldGeometry.h>
+#include <RamaEngine/ResourceManager/ResourceJSON.h>
+#include "Human.h"
 
+#include "IA.h"
+#include "IOEngine/IO.h"
+#include "GraphicEngine/Window.h"
 
-//Para cargar el json:
-//desde aqui
-#include <iostream>
-#include <fstream>
-#include <json/json.hpp>
-
-using json = nlohmann::json;
-//hasta aqui
+#include "Map.h"
 
 Map* Map::pinstance = 0;
 
@@ -47,9 +46,6 @@ void Map::Init() {
         lights.push_back(light);
     }
 
-    // Added by Julian
-    Graph::Instance();
-    cellSpace = CellSpacePartition::Instance();
     //cellSpace = new CellSpacePartition(10240, 10240, 128, 128, 4);
 
     //ToDo: extraer de JSON
@@ -115,6 +111,8 @@ void Map::Init() {
     IA::Instance()->setCrystalAmount(j["IA"]["initial_crystal"].get<i32>());
     IA::Instance()->setSiderurgyProductivity(j["IA"]["siderurgy_productivity"].get<i32>());
     IA::Instance()->setQuarryProductivity(j["IA"]["quarry_productivity"].get<i32>());
+
+    WorldGeometry* newSystem = WorldGeometry::Instance();
     
     for(auto& element : j["IA"]["buildings"]){
         if(element["type"].get<std::string>()=="MainBuilding"){
@@ -219,6 +217,6 @@ Terrain* Map::getTerrain() {
     return terrain;
 }
 
-CellSpacePartition *Map::getCellSpace(){
-    return cellSpace;
+CameraController* Map::getCamera() {
+    return camera;
 }

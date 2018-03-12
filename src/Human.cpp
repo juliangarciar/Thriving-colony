@@ -1,5 +1,7 @@
 #include "Human.h"
-#include "Game.h"
+
+#include "IA.h"
+#include "GraphicEngine/Window.h"
 
 Human* Human::instance = 0;
 
@@ -11,7 +13,6 @@ Human* Human::Instance() {
 }
 
 Human::Human() : Player() {
-    
 }
 
 Human::~Human() {
@@ -23,6 +24,7 @@ void Human::Init() {
     Player::Init();
     buildings = new BuildingManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
     units = new UnitManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
+    
 }
 
 void Human::Update() {
@@ -37,8 +39,13 @@ void Human::Update() {
 }
 
 void Human::CleanUp() {
+// Add a call to clean the cells the buildings inhabit
+    std::cout << "Deleting human building \n";
     delete buildings;
+    std::cout << "Human buildings deleted \n";
+    std::cout << "Deleting human troops \n";
     delete units;
+    std::cout << "Human troops deleted \n";
 }
 
 bool Human::getUnderAttack() {

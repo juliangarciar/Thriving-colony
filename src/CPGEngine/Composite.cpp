@@ -1,14 +1,12 @@
 #include "Composite.h"
 
 Composite::Composite(std::vector<Behaviour*> newChildren) : Behaviour(){
-    if (newChildren != NULL) {
-        children = newChildren;
-    }
+    children = newChildren;
 }
 
 Composite::~Composite() {
     for (i32 i = 0; i < children.size(); i++) {
         delete children.at(i);
     }
-    children.clear;
+    children.clear();
 }

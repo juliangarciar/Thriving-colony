@@ -2,6 +2,8 @@
 #define BEHAVIOUR_H
 
 #include "../Enumeration.h"
+#include <stddef.h>
+#include <Types.h>
 
 /**
  * @class Behaviour

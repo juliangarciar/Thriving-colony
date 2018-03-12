@@ -7,11 +7,7 @@
 #include <GraphicEngine/Terrain.h>
 #include <GraphicEngine/Light.h>
 
-#include <PathPlanner/Graph.h>
-#include <WorldGeometry/CellSpacePartition.h>
-
 #include <Types.h>
-
 /**
  * @class Map
  * @brief Singleton del mapa
@@ -70,9 +66,9 @@ class Map {
          * @return Vector2<f32> 
          */
         Vector3<f32> getMouseCollitionPoint();
-        
-        // Added by Julian
-        CellSpacePartition *getCellSpace();
+
+
+        CameraController* getCamera();
 
     protected:
         /**
@@ -98,9 +94,6 @@ class Map {
 
         //For raycast
         Vector3<f32> collisionPoint;
-
-        //Added by Julian
-        CellSpacePartition *cellSpace;
 };
 
 #endif

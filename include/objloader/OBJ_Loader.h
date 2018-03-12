@@ -822,6 +822,8 @@ namespace objl
 			// Create a list of vertices
 			std::vector<Vertex> tVerts = iVerts;
 
+			int prevVertsNum = 0;
+
 			while (true)
 			{
 				// For every vertex
@@ -962,8 +964,10 @@ namespace objl
 					break;
 
 				// if no more vertices
-				if (tVerts.size() == 0)
+				if (tVerts.size() == 0 || tVerts.size() == prevVertsNum)
 					break;
+
+				prevVertsNum = tVerts.size();
 			}
 		}
 

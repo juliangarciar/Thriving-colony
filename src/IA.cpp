@@ -1,5 +1,10 @@
 #include "IA.h"
 #include "Game.h"
+#include <WorldEngine/WorldGeometry.h>
+
+#include "GraphicEngine/Window.h"
+#include "Human.h"
+#include "Map.h"
 
 IA* IA::instance = 0;
 
@@ -19,6 +24,7 @@ IA::~IA() {
     delete nodeRootIA;
     delete buildings;
     delete units;
+    std::cout << "IA units deleted \n";
     choices -> clear();
     delete choices;
     delete rootNode;
@@ -45,9 +51,31 @@ void IA::Init() {
 void IA::Update() {
     buildings -> updateBuildingManager();
     units -> updateUnitManager();
+    Vector3<f32> tarPos = Map::Instance() -> getCamera() -> getTarPos();
+    Vector3<f32> *IAPos = buildings -> getBuilding(0) -> getPosition();
+    fast = false;
+    if (((IAPos -> x + 2000 > tarPos.x && IAPos -> x - 2000 < tarPos.x) && (IAPos -> y + 2000 > tarPos.y && IAPos -> y - 2000 < tarPos.y)) || underAttack) {
+        fast = true;
+    }
+    if (fast == true) {
+        if (updateFastTimer <= 0.0) {
+            nodeRootIA -> question();
+            updateFastTimer = 1.0;
+            updateSlowTimer = 3.0;
+        } else {
+            updateFastTimer -= Window::Instance() -> getDeltaTime();
+        }
+    } else {
+        if (updateSlowTimer <= 0.0) {
+            nodeRootIA -> question();
+            updateFastTimer = 1.0;
+            updateSlowTimer = 3.0;
+        } else {
+            updateSlowTimer -= Window::Instance() -> getDeltaTime();
+        }
+    }
     if (updateTimer <= 0.0) {
         gainResources();
-        nodeRootIA -> question();
         updateTimer = 1.0;
     } else {
         updateTimer -= Window::Instance() -> getDeltaTime();
@@ -57,6 +85,7 @@ void IA::Update() {
 void IA::CleanUp() {
     delete tree;
     delete nodeRootIA;
+    // Add a method to clean the cells the buildings inahbit
     delete buildings;
     delete units;
     choices -> clear();
@@ -89,7 +118,7 @@ Vector3<f32> IA::determinatePositionBuilding() {
         v.set(startingX, 0, startingZ);
         v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.z);
     } else {
-
+        
         //When there are some buildings
         Vector3<f32> *v2 = 0;
         Vector3<f32> *v3 = 0;
@@ -213,6 +242,10 @@ std::string IA::getChosenBehaviour() {
 
 ActiveSelector* IA::getRootNode() {
     return rootNode;
+}
+
+bool IA::getFast() {
+    return fast;
 }
 
 // Down here so it doesn't clutter the constructor

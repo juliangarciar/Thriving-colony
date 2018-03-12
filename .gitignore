@@ -6,3 +6,7 @@ bin/*
 .vscode
 # Ignore Mac specific files
 .DS_Store
+# o files
+test/*
+# o files
+*.o

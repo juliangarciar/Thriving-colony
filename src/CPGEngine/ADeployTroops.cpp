@@ -1,5 +1,6 @@
 #include "ADeployTroops.h"
 #include "../IOEngine/IO.h"
+#include "../IA.h"
 
 ADeployTroops::ADeployTroops() : Action() {
 

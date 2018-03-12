@@ -80,6 +80,7 @@ class IA : public Player {
 
         ActiveSelector* getRootNode();
         
+        bool getFast();
     protected:
         /**
          * @brief Constructor
@@ -101,6 +102,8 @@ class IA : public Player {
         std::string chosenBehaviour;
         std::vector<std::string> *choices;
         i32 choiceIndex;
+
+        bool fast;
 };
 
 #endif

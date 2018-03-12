@@ -132,7 +132,7 @@ class Enumeration {
 
             HomeCells = 1,
 
-            BarrackCells = 2,
+            BarrackCells = 3,
 
             BarnCells = 2,
 
@@ -142,6 +142,31 @@ class Enumeration {
 
             TowerCells = 1
 
+        };
+        enum BuildingHalfsize{
+            MainHalfsize = 120,
+
+            SchoolHalfsize = 80,
+
+            MarketHalfsize = 80,
+
+            HospitalHalfsize = 120,
+
+            SiderurgyHalfsize = 120,
+
+            QuarryHalfsize = 120,
+
+            HomeHalfsize = 40,
+
+            BarrackHalfsize = 80,
+
+            BarnHalfsize = 80,
+
+            WorkshopHalfsize = 80,
+
+            WallHalfsize = 40,
+
+            TowerHalfsize = 40
         };
         enum UnitCost {
             MeleeFootmenMetalCost = 125,

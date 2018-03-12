@@ -1,5 +1,5 @@
 #include "DefeatState.h"
-#include "Game.h"
+#include "GraphicEngine/Window.h"
 
 DefeatState::DefeatState() : State() {
 

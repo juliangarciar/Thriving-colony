@@ -2,6 +2,7 @@
 #define VECTOR3_H
 
 #include "Vector2.h"
+#include <irrlicht/irrlicht.h>
 #include <Types.h>
 
 #include <irrlicht/irrlicht.h>
