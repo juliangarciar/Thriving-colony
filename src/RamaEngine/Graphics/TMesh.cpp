@@ -31,6 +31,13 @@ TMesh::~TMesh() {
 }
 
 void TMesh::beginDraw() {
+        for(int i = 0; i < 4; i++){
+            for(int j = 0; j < 4; j++){
+                std::cout << viewMatrix[i][j] << " ";
+            }
+            std::cout << std::endl;
+        }
+        std::cout << std::endl;
 	// Matrices
 	glm::mat4 MVP = projectionMatrix * viewMatrix * modelMatrix;
 	glUniformMatrix4fv(MVPID, 1, GL_FALSE, &MVP[0][0]);

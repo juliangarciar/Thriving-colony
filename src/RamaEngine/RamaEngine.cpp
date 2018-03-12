@@ -9,6 +9,7 @@ RamaEngine::RamaEngine() {
     rootNode = new TNode();
 
     // Create default layer
+    clSceneNode = new RESceneNode(rootNode);
     defaultSceneNode = new RESceneNode(rootNode);
 
     // Resource Manager
@@ -60,13 +61,13 @@ void RamaEngine::End(){
 }
 
 RELight* RamaEngine::createLight() {
-    RELight* lightNode = new RELight(rootNode);
+    RELight* lightNode = new RELight(clSceneNode->getSceneNode());
     lights . push_back(lightNode);
     return lightNode;
 }
 
 RECamera* RamaEngine::createCamera() {
-    RECamera* cameraNode = new RECamera(rootNode);
+    RECamera* cameraNode = new RECamera(clSceneNode->getSceneNode());
     cameras . push_back(cameraNode);
     return cameraNode;
 }
@@ -106,12 +107,12 @@ REShaderProgram *RamaEngine::createShaderProgram(std::string programName, std::s
 }
 
 void RamaEngine::registerLight(RELight* lightNode) {
-    rootNode -> addChild(lightNode -> getLightNode());
+    clSceneNode -> getSceneNode() -> addChild(lightNode -> getLightNode());
     lights . push_back(lightNode);
 }
 
 void RamaEngine::registerCamera(RECamera* cameraNode) {
-    rootNode -> addChild(cameraNode -> getCameraNode());
+    clSceneNode -> getSceneNode() -> addChild(cameraNode -> getCameraNode());
     cameras . push_back(cameraNode);
 }
 
