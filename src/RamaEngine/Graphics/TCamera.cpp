@@ -70,7 +70,7 @@ void TCamera::setProjection(REEnums::CameraProjection cp){
         f32 height = bottom - top;
         pMat = glm::perspective(/*fov*/glm::radians(45.0f), width / height, near, far);
     } else {
-        //Julian
+        projectionMatrix = glm::ortho(left, right, bottom, top, near, far);
     }
 }
 

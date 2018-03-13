@@ -9,7 +9,8 @@ class REEnums {
     public:
         enum CameraProjection {
             ProjectionPerspective,
-            ProjectionOrtographic
+            ProjectionOrtographic,
+            ProjectionParallel
         };
         enum ShaderType {
             VERTEX,

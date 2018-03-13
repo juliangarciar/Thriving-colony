@@ -106,6 +106,9 @@ void Player::setQuarryProductivity(i32 prod){
     quarryProductivity = prod;
 }
 
+void Player::setBuildingRadious(f32 radious){
+    buildingRadious = radious;
+}
 //==========
 // Getters
 //==========
@@ -143,6 +146,10 @@ i32 Player::getCrystalProduction() {
 
 i32 Player::getArmyLevel() {
     return armyLevel;
+}
+
+f32 Player::getBuildingRadious(){
+    return buildingRadious;
 }
 
 BuildingManager* Player::getBuildingManager() {
