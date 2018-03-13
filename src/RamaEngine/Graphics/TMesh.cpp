@@ -21,6 +21,9 @@ TMesh::TMesh(TResourceMesh *r) : TEntity() {
 	glGenBuffers(1, &elementbuffer);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndices().size() * sizeof(unsigned short), &mesh->getIndices()[0] , GL_STATIC_DRAW);
+
+	texture = new TTexture();
+	//texture -> setTexture();
 }
 
 TMesh::~TMesh() {
@@ -46,6 +49,10 @@ void TMesh::beginDraw() {
 	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_PROJECTION), 1, GL_FALSE, &pM[0][0]);
 	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_VIEWMODEL), 1, GL_FALSE, &MV[0][0]);
 	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_MVP), 1, GL_FALSE, &MVP[0][0]);
+
+	glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, );
+    glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE), 0);
 
 	// 1rst attribute buffer : vertices
 	glEnableVertexAttribArray(0);

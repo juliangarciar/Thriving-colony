@@ -4,9 +4,7 @@
 #include <stdio.h>
 #include "Resource.h"
 #include "../Graphics/TResourceMesh.h"
-#include <cimg/CImg.h>
-
-using namespace cimg_library;
+#include <SOIL/SOIL.h>
 
 class ResourceIMG : public Resource {
     public:
@@ -22,9 +20,10 @@ class ResourceIMG : public Resource {
         void *getResource();
         int getWidth();
         int getHeight();
+        int getChannels();
     private:
         void *resource;
-        int width, height;
+        int width, height, channels;
 };
 
 #endif

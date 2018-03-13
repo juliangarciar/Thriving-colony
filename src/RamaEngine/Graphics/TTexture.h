@@ -2,14 +2,14 @@
 #define TTEXTURE_H
 
 #include "../RETypes.h"
-#include "../ResourceManager/ResourceBMP.h"
+#include "../ResourceManager/ResourceIMG.h"
 
 class TTexture {
     public:
         TTexture();
         ~TTexture();
 
-        void setTexture(ResourceBMP *);
+        void setTexture(ResourceIMG *);
         GLuint getTexture();
 
     private:

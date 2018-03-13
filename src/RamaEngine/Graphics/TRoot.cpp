@@ -8,8 +8,7 @@ TRoot::TRoot(GLuint programID) : TEntity() {
 	myModel = glGetUniformLocation(programID, "M");
 	myViewModel = glGetUniformLocation(programID, "VM");
 	
-	// Get a handle for our "myTextureSampler" uniform
-	myTexture = glGetUniformLocation(programID, "texturePosition_modelspace");
+	myTexture = glGetUniformLocation(programID, "textureSampler");
     myLight = glGetUniformLocation(programID, "lightPosition_worldspace");
 }
 

@@ -5,6 +5,7 @@
 
 #include "TEntity.h"
 #include "TResourceMesh.h"
+#include "TTexture.h"
 
 class TMesh : public TEntity {
     public:
@@ -34,6 +35,7 @@ class TMesh : public TEntity {
 
     private:
         TResourceMesh* mesh;
+        TTexture* texture;
 
         GLuint vertexbuffer;
         GLuint normalbuffer;

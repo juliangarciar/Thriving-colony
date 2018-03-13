@@ -11,8 +11,11 @@ ResourceIMG::~ResourceIMG(){
 }
 
 void ResourceIMG::load(const char *path){
-    CImg<unsigned char> img(path);
-    resource = img.data();
+    resource = SOIL_load_image(
+        path,
+        &width, &height, &channels,
+        SOIL_LOAD_AUTO
+    );
 }
 
 void ResourceIMG::release(){
@@ -37,4 +40,8 @@ int ResourceIMG::getWidth(){
 
 int ResourceIMG::getHeight(){
     return height;
+}
+
+int ResourceIMG::getChannels(){
+    return channels;
 }
