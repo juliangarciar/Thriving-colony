@@ -8,7 +8,7 @@
 #include "ResourceOBJ.h"
 #include "ResourceJSON.h"
 #include "ResourceGLSL.h"
-#include "ResourceBMP.h"
+#include "ResourceIMG.h"
 
 class ResourceManager {
     public:

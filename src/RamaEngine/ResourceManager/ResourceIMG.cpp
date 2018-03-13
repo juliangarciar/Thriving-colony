@@ -29,3 +29,11 @@ const char *ResourceIMG::getIdentifier(){
 void *ResourceIMG::getResource(){
     return resource;
 }
+
+int ResourceIMG::getWidth(){ 
+    return width;
+}
+
+int ResourceIMG::getHeight(){
+    return height;
+}
