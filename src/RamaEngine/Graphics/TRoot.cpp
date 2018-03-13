@@ -6,6 +6,7 @@ TRoot::TRoot(GLuint programID) : TEntity() {
     myProjection = glGetUniformLocation(programID, "P");
 	myView = glGetUniformLocation(programID, "V");
 	myModel = glGetUniformLocation(programID, "M");
+	myViewModel = glGetUniformLocation(programID, "VM");
 	
 	// Get a handle for our "myTextureSampler" uniform
 	myTexture = glGetUniformLocation(programID, "Texture");
@@ -18,10 +19,11 @@ TRoot::~TRoot() {
 void TRoot::beginDraw(){
     TMatrixCache *cache = TMatrixCache::Instance();
 	cache->setMatrixID(REEnums::Matrices::MATRIX_MVP, myMVP);
-	cache->setMatrixID(REEnums::Matrices::MATRIX_MVP, myProjection);
-	cache->setMatrixID(REEnums::Matrices::MATRIX_MVP, myView);
-	cache->setMatrixID(REEnums::Matrices::MATRIX_MVP, myModel);
-	cache->setMatrixID(REEnums::Matrices::MATRIX_MVP, myTexture);
+	cache->setMatrixID(REEnums::Matrices::MATRIX_PROJECTION, myProjection);
+	cache->setMatrixID(REEnums::Matrices::MATRIX_VIEW, myView);
+	cache->setMatrixID(REEnums::Matrices::MATRIX_MODEL, myModel);
+	cache->setMatrixID(REEnums::Matrices::MATRIX_VIEWMODEL, myViewModel);
+	cache->setMatrixID(REEnums::Matrices::MATRIX_TEXTURE, myTexture);
 }
 
 void TRoot::endDraw(){

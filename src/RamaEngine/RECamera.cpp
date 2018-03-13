@@ -5,7 +5,7 @@ RECamera::RECamera(TNode* parent) {
     rotationNode = new TNode(new TTransform(), parent);
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
-    cameraNode = new TNode(new TCamera(REEnums::CameraProjection::ProjectionPerspective, 0.3, 1000, 0, 480, 0, 640), scaleNode);
+    cameraNode = new TNode(new TCamera(REEnums::CameraProjection::ProjectionPerspective, 0.1, 1000, 0, 480, 0, 640), scaleNode);
     // o esto o getcameraNode
 }
 
@@ -43,12 +43,12 @@ void RECamera::setNear(f32 n) {
 
 void RECamera::setPerspectiveProjection() {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
-    c -> setPerspective();
+    c -> setProjection(REEnums::CameraProjection::ProjectionPerspective);
 }
 
 void RECamera::setParallelProjection() {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
-    c -> setParallel();
+    c -> setProjection(REEnums::CameraProjection::ProjectionOrtographic);
 }
 
 void RECamera::setFarValue(f32 f) {

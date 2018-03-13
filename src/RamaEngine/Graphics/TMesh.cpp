@@ -33,25 +33,19 @@ TMesh::~TMesh() {
 void TMesh::beginDraw() {    
     TMatrixCache *cache = TMatrixCache::Instance();
 
-		glm::mat4 v = *cache->getMatrix(REEnums::Matrices::MATRIX_MODEL);
-        for(int i = 0; i < 4; i++){
-            for(int j = 0; j < 4; j++){
-                std::cout << v[i][j] << " ";
-            }
-            std::cout << std::endl;
-        }
-        std::cout << std::endl;
-
 	glm::mat4 pM = *cache->getMatrix(REEnums::Matrices::MATRIX_PROJECTION);
 	glm::mat4 vM = *cache->getMatrix(REEnums::Matrices::MATRIX_VIEW);
 	glm::mat4 mM = *cache->getMatrix(REEnums::Matrices::MATRIX_MODEL);
+	mM = glm::mat4(1.0f);
 
 	// Matrices
+	glm::mat4 MV = vM * mM;
 	glm::mat4 MVP = pM * vM * mM;
-	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_MVP), 1, GL_FALSE, &MVP[0][0]);
 	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_MODEL), 1, GL_FALSE, &mM[0][0]);
 	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_VIEW), 1, GL_FALSE, &vM[0][0]);
 	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_PROJECTION), 1, GL_FALSE, &pM[0][0]);
+	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_VIEWMODEL), 1, GL_FALSE, &MV[0][0]);
+	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_MVP), 1, GL_FALSE, &MVP[0][0]);
 
 	// 1rst attribute buffer : vertices
 	glEnableVertexAttribArray(0);

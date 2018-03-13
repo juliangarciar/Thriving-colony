@@ -10,12 +10,8 @@ TCamera::TCamera(REEnums::CameraProjection projectionMode, f32 n, f32 f, f32 t, 
     setBottom(b);
     setLeft(l);
     setRight(r);
-    
-    if (projectionMode == REEnums::CameraProjection::ProjectionPerspective) {
-        setPerspective();
-    } else {
-        setParallel();
-    }
+
+    setProjection(projectionMode);
 
     calculateViewMatrix();
 

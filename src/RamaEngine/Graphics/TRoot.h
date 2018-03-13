@@ -34,6 +34,7 @@ class TRoot : public TEntity {
         GLuint myProjection;
         GLuint myView;
         GLuint myModel;
+        GLuint myViewModel;
         GLuint myTexture;
 };
 

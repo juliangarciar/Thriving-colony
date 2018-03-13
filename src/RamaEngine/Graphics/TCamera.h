@@ -38,19 +38,12 @@ class TCamera : public TEntity {
          */
         void endDraw();
 
-
-        /**
-         * @brief fills the projection matrix with a perspective one based on the parameters.
-         * 
-         * 
-         */
-        void setPerspective();
-
         /**
          * @brief 
          * 
          */
-        void setParallel();
+        void calculateViewMatrix();
+
 
         /**
          * @brief sets the current projection mode to the one specified as parameter.
@@ -132,6 +125,7 @@ class TCamera : public TEntity {
          * @param tZ 
          */
         void setCameraPosition(glm::vec3 p);
+        
 
         /**
          * @brief Return the current projection mode.
@@ -210,18 +204,6 @@ class TCamera : public TEntity {
          * @return glm::vec3 
          */
         glm::vec3 getCameraPosition();
-
-        /**
-         * @brief 
-         * 
-         */
-        void calculateViewMatrix();
-
-        /**
-         * @brief 
-         * 
-         */
-        void assignViewMatrix();
 
     private:
         // Positions

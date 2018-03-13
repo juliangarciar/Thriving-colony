@@ -8,14 +8,20 @@ TResourceMesh::~TResourceMesh() {
 
 }
 
-void TResourceMesh::addVertex(glm::vec3 v, glm::vec3 n, glm::vec2 t){
-    vertices.push_back(v);
-    normals.push_back(n);
-    textureCoordinates.push_back(t);
+void TResourceMesh::setVertices(std::vector<glm::vec3> v){
+    vertices = v;
 }
 
-void TResourceMesh::addIndex(u32 i){
-    indices.push_back(i);
+void TResourceMesh::setNormals(std::vector<glm::vec3> v){
+    normals = v;
+}
+
+void TResourceMesh::setTextureCoordinates(std::vector<glm::vec2> v){
+    textureCoordinates = v;
+}
+
+void TResourceMesh::setIndices(std::vector<s32> v){
+    indices = v;
 }
 
 void TResourceMesh::setMaterial(TMaterial *m){
@@ -34,7 +40,7 @@ std::vector<glm::vec2> TResourceMesh::getTextureCoordinates(){
     return textureCoordinates;
 }
 
-std::vector<u32> TResourceMesh::getIndices(){
+std::vector<s32> TResourceMesh::getIndices(){
     return indices;
 }
 
