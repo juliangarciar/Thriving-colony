@@ -20,16 +20,14 @@ RamaEngine::RamaEngine() {
 }
 
 RamaEngine::~RamaEngine() {
-    delete rootNode;
-
-    // defaultSceneNode
-    // REManager
-
     //ToDo: recorrer vaciando
     cameras . clear();
     lights . clear();
-    
-	glDeleteProgram(programID);
+
+    // delete defaultSceneNode
+    // delete REManager
+
+    delete rootNode;
 }
 
 void RamaEngine::Init() {
@@ -55,16 +53,15 @@ void RamaEngine::Init() {
 
     // Create vertexArray
 	glGenVertexArrays(1, &vertexArrayID);
-	glBindVertexArray(vertexArrayID);
+	glBindVertexArray(vertexArrayID);	
 }
 
 void RamaEngine::End(){
-	glDeleteProgram(programID);
 	glDeleteVertexArrays(1, &vertexArrayID);
 }
 
-RELight* RamaEngine::createLight() {
-    RELight* lightNode = new RELight(clSceneNode->getSceneNode());
+RELight* RamaEngine::createLight(REColor color, u32 intensity) {
+    RELight* lightNode = new RELight(clSceneNode->getSceneNode(), color, intensity);
     lights . push_back(lightNode);
     return lightNode;
 }

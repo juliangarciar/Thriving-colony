@@ -22,6 +22,7 @@ class REEnums {
             MATRIX_TEXTURE,
             MATRIX_MVP,
             MATRIX_VIEWMODEL,
+            MATRIX_LIGHT,
             MATRICES
         };
 };

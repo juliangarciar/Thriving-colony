@@ -9,7 +9,8 @@ TRoot::TRoot(GLuint programID) : TEntity() {
 	myViewModel = glGetUniformLocation(programID, "VM");
 	
 	// Get a handle for our "myTextureSampler" uniform
-	myTexture = glGetUniformLocation(programID, "Texture");
+	myTexture = glGetUniformLocation(programID, "texturePosition_modelspace");
+    myLight = glGetUniformLocation(programID, "lightPosition_worldspace");
 }
 
 TRoot::~TRoot() {
@@ -24,6 +25,7 @@ void TRoot::beginDraw(){
 	cache->setMatrixID(REEnums::Matrices::MATRIX_MODEL, myModel);
 	cache->setMatrixID(REEnums::Matrices::MATRIX_VIEWMODEL, myViewModel);
 	cache->setMatrixID(REEnums::Matrices::MATRIX_TEXTURE, myTexture);
+	cache->setMatrixID(REEnums::Matrices::MATRIX_LIGHT, myLight);
 }
 
 void TRoot::endDraw(){

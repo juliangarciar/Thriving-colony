@@ -47,7 +47,7 @@ class RamaEngine {
          * 
          * @return RELight* 
          */
-        RELight* createLight();
+        RELight* createLight(REColor color, u32 intensity);
 
         /**
          * @brief 

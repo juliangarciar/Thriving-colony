@@ -5,8 +5,8 @@ RECamera::RECamera(TNode* parent) {
     rotationNode = new TNode(new TTransform(), parent);
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
-    cameraNode = new TNode(new TCamera(REEnums::CameraProjection::ProjectionPerspective, 0.1, 1000, 0, 480, 0, 640), scaleNode);
-    // o esto o getcameraNode
+    cameraNode = new TNode(new TCamera(REEnums::CameraProjection::ProjectionPerspective, 0.1, 1000, 0, 480, 0, 640), scaleNode); 
+    //ToDo: esos parametros no deberian estar aqui
 }
 
 RECamera::~RECamera() {
