@@ -20,7 +20,7 @@ void TResourceMesh::setTextureCoordinates(std::vector<glm::vec2> v){
     textureCoordinates = v;
 }
 
-void TResourceMesh::setIndices(std::vector<s32> v){
+void TResourceMesh::setIndices(std::vector<us32> v){
     indices = v;
 }
 
@@ -40,7 +40,7 @@ std::vector<glm::vec2> TResourceMesh::getTextureCoordinates(){
     return textureCoordinates;
 }
 
-std::vector<s32> TResourceMesh::getIndices(){
+std::vector<us32> TResourceMesh::getIndices(){
     return indices;
 }
 

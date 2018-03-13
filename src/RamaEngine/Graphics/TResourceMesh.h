@@ -12,14 +12,14 @@ class TResourceMesh {
         void setVertices(std::vector<glm::vec3>);
         void setNormals(std::vector<glm::vec3>);
         void setTextureCoordinates(std::vector<glm::vec2>);
-        void setIndices(std::vector<s32>);
+        void setIndices(std::vector<us32>);
 
         void setMaterial(TMaterial *);
 
         std::vector<glm::vec3> getVertices();
         std::vector<glm::vec3> getNormals();
         std::vector<glm::vec2> getTextureCoordinates();
-        std::vector<s32> getIndices();
+        std::vector<us32> getIndices();
 
         TMaterial *getMaterial();
     private:
@@ -29,7 +29,7 @@ class TResourceMesh {
         std::vector<glm::vec3> vertices;
         std::vector<glm::vec3> normals;
         std::vector<glm::vec2> textureCoordinates;
-        std::vector<s32> indices;
+        std::vector<us32> indices;
 };
 
 #endif

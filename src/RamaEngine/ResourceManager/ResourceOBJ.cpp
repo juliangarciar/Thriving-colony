@@ -32,7 +32,7 @@ void ResourceOBJ::load(const char *path){
         std::vector<glm::vec3> vertices;
         std::vector<glm::vec3> normals;
         std::vector<glm::vec2> uvs;
-        std::vector<s32> indices;
+        std::vector<us32> indices;
         std::vector<glm::vec3> indexed_vertices;
         std::vector<glm::vec2> indexed_uvs;
         std::vector<glm::vec3> indexed_normals;
