@@ -1,7 +1,8 @@
 #include "ResourceManager.h"
 
 ResourceManager::ResourceManager(){
-    
+    std::string temp[8] = {"obj","json","glsl","fbx","bmp","jpg","jpeg","png"};
+    supportedFormats.insert(supportedFormats.end(),temp,std::end(temp));
 }
 
 ResourceManager::~ResourceManager(){
@@ -33,16 +34,8 @@ void ResourceManager::load(std::string path){
         //Resource *r = new ResourceFBX();
         //r -> load(path.c_str());
         //resources.insert(std::pair<std::string, Resource*>(path, r));
-    } else if (extension == "jpg"){
-        //Resource *r = new ResourceOBJ();
-        //r -> load(path.c_str());
-        //resources.insert(std::pair<std::string, Resource*>(path, r));
-    } else if (extension == "png"){
-        //Resource *r = new ResourceOBJ();
-        //r -> load(path.c_str());
-        //resources.insert(std::pair<std::string, Resource*>(path, r));
-    } else if (extension == "bmp"){
-        Resource *r = new ResourceBMP();
+    } else if (extension == "bmp" || extension == "jpg" || extension == "jpeg" || extension == "png"){
+        Resource *r = new ResourceIMG();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
     } else {
@@ -54,7 +47,9 @@ void ResourceManager::load(std::string path){
 void ResourceManager::push(std::string path){
     std::size_t found = path.find_last_of(".");
     std::string extension = path.substr(found+1);
-    if (extension == "obj" | extension == "fbx" | extension == "glsl" | extension == "json" | extension == "jpg" | extension == "png" | extension == "bmp"){
+    std::vector<std::string>::iterator it;
+    it = find(supportedFormats.begin(),supportedFormats.end(),extension);
+    if (it != supportedFormats.end()){
         threads.push(std::thread([=](){
             load(path);
         }));

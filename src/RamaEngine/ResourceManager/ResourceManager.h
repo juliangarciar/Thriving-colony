@@ -48,6 +48,7 @@ class ResourceManager {
 
         std::map<std::string, Resource *> resources;
         std::queue<std::thread> threads;
+        std::vector<std::string> supportedFormats;
 };
 
 #endif
