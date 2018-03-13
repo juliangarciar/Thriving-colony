@@ -11,7 +11,8 @@ ResourceIMG::~ResourceIMG(){
 }
 
 void ResourceIMG::load(const char *path){
-    
+    CImg<unsigned char> img(path);
+    resource = img.data();
 }
 
 void ResourceIMG::release(){
