@@ -38,7 +38,7 @@ class Player {
         void setCrystalAmount(i32);
         void setSiderurgyProductivity(i32);
         void setQuarryProductivity(i32);
-
+        void setBuildingRadious(f32);
 
 
         // Getters
@@ -51,6 +51,7 @@ class Player {
         i32 getMetalProduction();
         i32 getCrystalProduction();
         i32 getArmyLevel();
+        f32 getBuildingRadious();
         BuildingManager* getBuildingManager();
         UnitManager* getUnitManager();
         Vector3<f32> getHallPosition();
@@ -70,7 +71,7 @@ class Player {
         i32 metalAmount;
         i32 crystalAmount;
         i32 citizens;
-
+        i32 buildingRadious;
         // Army
         bool underAttack;
         

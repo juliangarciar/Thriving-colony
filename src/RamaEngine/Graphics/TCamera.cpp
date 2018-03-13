@@ -44,7 +44,10 @@ void TCamera::setPerspective(){
 }
 
 void TCamera::setParallel(){
-    //ToDo: tito juli
+    /* I think is done */
+    setProjection(REEnums::CameraProjection::ProjectionParallel);
+    projectionMatrix = glm::ortho(left, right, bottom, top, near, far);
+
 }
 
 void TCamera::setTargetPosition(glm::vec3 p) {

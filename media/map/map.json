@@ -30,6 +30,7 @@
 		"initial_crystal": 0,
 		"siderurgy_productivity": 10,
 		"quarry_productivity": 5,
+		"building_radious": 2000,
 		"buildings":[
 			{
 				"type": "MainBuilding", 
@@ -73,6 +74,7 @@
 		"initial_crystal": 5,
 		"siderurgy_productivity": 15,
 		"quarry_productivity": 10,
+		"building_radious": 2000,
 		"buildings":[
 			{
 				"type": "MainBuilding", 

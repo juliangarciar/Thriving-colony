@@ -53,6 +53,7 @@ void Map::Init() {
     Human::Instance()->setCrystalAmount(j["player"]["initial_crystal"].get<i32>());
     Human::Instance()->setSiderurgyProductivity(j["player"]["siderurgy_productivity"].get<i32>());
     Human::Instance()->setQuarryProductivity(j["player"]["quarry_productivity"].get<i32>());
+    Human::Instance()->setBuildingRadious(j["player"]["building_radious"].get<f32>());
 
     for (auto& element : j["player"]["buildings"]){
         if(element["type"].get<std::string>()=="MainBuilding"){
@@ -111,6 +112,7 @@ void Map::Init() {
     IA::Instance()->setCrystalAmount(j["IA"]["initial_crystal"].get<i32>());
     IA::Instance()->setSiderurgyProductivity(j["IA"]["siderurgy_productivity"].get<i32>());
     IA::Instance()->setQuarryProductivity(j["IA"]["quarry_productivity"].get<i32>());
+    IA::Instance()->setBuildingRadious(j["IA"]["building_radious"].get<f32>());
 
     WorldGeometry* newSystem = WorldGeometry::Instance();
     

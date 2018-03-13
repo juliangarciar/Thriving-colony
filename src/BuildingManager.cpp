@@ -55,22 +55,26 @@ void BuildingManager::drawBuilding() {
 
 		//Get position where the cursor is pointing to the terrain
         Vector3<f32> xyzPointCollision = Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse());
-
 		Vector3<f32> f = Box3D<f32>(tempBuilding -> getModel() -> getModel() -> getTransformedBoundingBox()).getSize(); //ToDo: fachada
-	// Change gridAligment -> by Julian
-        //f32 x = roundf(xyzPointCollision.x / gridAlignment) * gridAlignment;
-        //f32 y = (roundf(xyzPointCollision.y / gridAlignment) * gridAlignment) + (f.y/2);
-        //f32 z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
 	// Change 2nd parameter
 		bool collision = false;
-		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(xyzPointCollision.toVector2(), tempBuilding);
-		//std::cout << "Position: " << dummy.x << "," << dummy.y << "," << dummy.z << "\n";
 		Vector3<f32> dummy2;
+		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(xyzPointCollision.toVector2(), tempBuilding);
 		dummy2.x = dummy.x;
 		dummy2.z = dummy.y;
 		dummy2.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y);
 		tempBuilding -> setPosition (dummy2);
-		collision = WorldGeometry::Instance()->checkBuildingSpace(tempBuilding);
+		if(team == Enumeration::Team::Human){
+			Vector2<f32> tmp = Human::Instance()->getHallPosition().toVector2();
+			f32 distance = std::sqrt(std::pow(tmp.x - dummy.x, 2) + std::pow(tmp.y - dummy.y, 2));
+			if(Human::Instance()->getBuildingRadious() < distance){
+				collision = true;
+			}
+			else{
+				collision = WorldGeometry::Instance()->checkBuildingSpace(tempBuilding);
+			}
+		}
+		//std::cout << "Position: " << dummy.x << "," << dummy.y << "," << dummy.z << "\n";
 		//Pressing the right mouse button cancels the building
 		if (IO::Instance() -> getMouse() -> rightMouseDown()){
 			buildingMode = false;
@@ -79,18 +83,10 @@ void BuildingManager::drawBuilding() {
 			return;
 		}
 
-		//Look if there is any other building built there
-		
-		// Make a collision mode with 
-		//for (std::map<i32,Building*>::iterator it = buildings -> begin(); it != buildings -> end() && !collision; ++it) {
-		//	collision = it -> second -> getHitbox() -> intersects(*tempBuilding -> getHitbox());
-		//}
 		/* Swapped by Julian */
 		if (collision) {
-			//tempBuilding->setColor(video::SColor(50,0,0,255)); //ToDo: reemplazar color por material
 			tempBuilding->setColor(video::SColor(20, 255, 0, 0));
 		} else {
-			//tempBuilding->setColor(tempBuilding -> getBaseColor()); //ToDo: reemplazar color por material
 			tempBuilding->setColor(video::SColor(20, 0, 255, 125));
 			//If there is no collision and the player press left button of the mouse, build the building
 			if (IO::Instance() -> getMouse() -> leftMouseDown()) {
