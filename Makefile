@@ -9,10 +9,7 @@ PROJECTROOT = .
 BINPATH = $(PROJECTROOT)/bin
 # Path for the .o files
 BUILDPATH = $(PROJECTROOT)/obj
-# Path for the source files
-SOURCEPATH = $(PROJECTROOT)/src
 #Directories
-SOURCE_DIRS = . MathEngine GraphicEngine GUIEngine IOEngine SoundEngine IAEngine OurEngine PathPlanner WorldEngine IOEngine/ResourceManager
 SOURCEPATHS = $(PROJECTROOT)/src
 #C++ compiler
 CXX = clang++

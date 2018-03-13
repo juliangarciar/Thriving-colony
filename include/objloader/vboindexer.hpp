@@ -1,5 +1,9 @@
-#ifndef VBOINDEXER_HPP
-#define VBOINDEXER_HPP
+#ifndef VBOINDEXER_H
+#define VBOINDEXER_H
+
+#ifdef __cplusplus
+   extern "C" {
+#endif
 
 void indexVBO(
 	std::vector<glm::vec3> & in_vertices,
@@ -27,5 +31,9 @@ void indexVBO_TBN(
 	std::vector<glm::vec3> & out_tangents,
 	std::vector<glm::vec3> & out_bitangents
 );
+
+#ifdef __cplusplus
+   }
+#endif
 
 #endif
