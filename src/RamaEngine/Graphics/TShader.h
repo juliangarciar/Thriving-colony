@@ -6,10 +6,8 @@
 
 class TShader {
     public:
-        TShader();
+        TShader(ResourceGLSL *s);
         ~TShader();
-
-        void setShader(ResourceGLSL *);
         
         GLuint getShaderID();
     private:

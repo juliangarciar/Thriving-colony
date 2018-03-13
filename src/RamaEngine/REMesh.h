@@ -2,6 +2,10 @@
 #define REMESH_H
 
 #include "RETypes.h"
+#include "RESceneNode.h"
+
+#include "ResourceManager/ResourceOBJ.h"
+
 #include "Graphics/TNode.h"
 #include "Graphics/TTransform.h"
 #include "Graphics/TMesh.h"
@@ -11,9 +15,10 @@ class REMesh {
         /**
          * @brief 
          * 
-         * @param parent 
+         * @param  
+         * @param  
          */
-        REMesh(TNode* parent);
+        REMesh(RESceneNode*, ResourceOBJ *);
 
         /**
          * @brief 
@@ -43,7 +48,6 @@ class REMesh {
         void translate(f32 tX, f32 tY, f32 tZ);
 
     private:
-
         TNode* meshNode;
         TNode* rotationNode;
         TNode* translationNode;

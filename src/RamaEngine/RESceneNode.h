@@ -2,7 +2,6 @@
 #define RESCENENODE_H
 
 #include "RETypes.h"
-#include "REMesh.h"
 #include "Graphics/TNode.h"
 #include "Graphics/TTransform.h"
 
@@ -13,7 +12,14 @@ class RESceneNode {
          * 
          * @param parent 
          */
-        RESceneNode(TNode* parent);
+        RESceneNode(TNode*);
+
+        /**
+         * @brief 
+         * 
+         * @param parent 
+         */
+        RESceneNode(RESceneNode*);
 
         /**
          * @brief 

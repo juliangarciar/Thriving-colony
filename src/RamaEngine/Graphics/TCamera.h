@@ -38,19 +38,12 @@ class TCamera : public TEntity {
          */
         void endDraw();
 
-
-        /**
-         * @brief fills the projection matrix with a perspective one based on the parameters.
-         * 
-         * 
-         */
-        void setPerspective();
-
         /**
          * @brief 
          * 
          */
-        void setParallel();
+        void calculateViewMatrix();
+
 
         /**
          * @brief sets the current projection mode to the one specified as parameter.
@@ -132,6 +125,7 @@ class TCamera : public TEntity {
          * @param tZ 
          */
         void setCameraPosition(glm::vec3 p);
+        
 
         /**
          * @brief Return the current projection mode.
@@ -212,10 +206,17 @@ class TCamera : public TEntity {
         glm::vec3 getCameraPosition();
 
     private:
+        // Positions
         glm::vec3 targetPosition;
         glm::vec3 cameraPosition;
 
+        // Matrices
+        glm::mat4 pMat;
+        glm::mat4 vMat;
+
+        //Projection Type
         REEnums::CameraProjection projection;
+        
         // Field of view (fov) is expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.
         f32 near, far, fov, top, bottom, left, right;
 

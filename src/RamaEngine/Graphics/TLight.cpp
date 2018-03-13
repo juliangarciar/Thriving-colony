@@ -1,6 +1,8 @@
 #include "TLight.h"
 
-TLight::TLight(bool a) : TEntity(){
+TLight::TLight(REColor c, u32 i, bool a) : TEntity(){
+    color = c;
+    intensity = i;
     active = a;
 }
 
@@ -10,7 +12,7 @@ TLight::~TLight(){
 
 void TLight::beginDraw(){
     if (active) {
-        lightPosition = glm::vec4(0,0,0,1) * modelMatrix;//Posicion a partir de la matriz luz
+        //lightPosition = glm::vec4(0,0,0,1) * modelMatrix;//Posicion a partir de la matriz luz
         //Pasarselo a OpenGL no va aqui no?
     }
 }
@@ -19,11 +21,19 @@ void TLight::endDraw(){
 
 }
 
-void TLight::setIntensity(TColor c){
+void TLight::setColor(REColor c){
+    color = c;
+}
+
+REColor TLight::getColor(){
+    return color;
+}
+
+void TLight::setIntensity(u32 c){
     intensity = c;
 }
 
-TColor TLight::getIntensity(){
+u32 TLight::getIntensity(){
     return intensity;
 }
 
@@ -33,12 +43,4 @@ void TLight::setActive(bool _active) {
 
 bool TLight::getActive() {
     return active;
-}
-
-void TLight::setLightPosition(glm::vec3 p) {
-    lightPosition = p;
-}
-
-glm::vec3 TLight::getPosition() {
-    return lightPosition;
 }
