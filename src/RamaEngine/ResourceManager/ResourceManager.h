@@ -8,7 +8,7 @@
 #include "ResourceOBJ.h"
 #include "ResourceJSON.h"
 #include "ResourceGLSL.h"
-#include "ResourceBMP.h"
+#include "ResourceIMG.h"
 
 class ResourceManager {
     public:
@@ -48,6 +48,7 @@ class ResourceManager {
 
         std::map<std::string, Resource *> resources;
         std::queue<std::thread> threads;
+        std::vector<std::string> supportedFormats;
 };
 
 #endif

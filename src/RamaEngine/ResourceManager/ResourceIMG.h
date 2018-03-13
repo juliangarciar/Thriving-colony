@@ -20,8 +20,11 @@ class ResourceIMG : public Resource {
         const char *getIdentifier();
 
         void *getResource();
+        int getWidth();
+        int getHeight();
     private:
         void *resource;
+        int width, height;
 };
 
 #endif
