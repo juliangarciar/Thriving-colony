@@ -11,13 +11,17 @@ TTransform::~TTransform() {
 void TTransform::beginDraw(){
     matrixStack.push(matrix);
     // Por la derecha
-    modelMatrix = modelMatrix * matrix;
+	glm::mat4 mM = *TMatrixCache::Instance()->getMatrix(REEnums::Matrices::MATRIX_MODEL);
+    mM = mM * matrix;
+    TMatrixCache::Instance()->setMatrix(REEnums::Matrices::MATRIX_MODEL, &mM);
 }
 
 void TTransform::endDraw() {
     matrixStack.pop();
     // Por la inversa por la izquierda
-    modelMatrix = glm::inverse(matrix) * modelMatrix;
+	glm::mat4 mM = *TMatrixCache::Instance()->getMatrix(REEnums::Matrices::MATRIX_MODEL);
+    mM = glm::inverse(matrix) * mM;
+    TMatrixCache::Instance()->setMatrix(REEnums::Matrices::MATRIX_MODEL, &mM);
 }
 
 void TTransform::identity() {

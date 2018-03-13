@@ -2,6 +2,7 @@
 #define REANIMATION_H
 
 #include "RETypes.h"
+#include "RESceneNode.h"
 #include "Graphics/TNode.h"
 #include "Graphics/TTransform.h"
 #include "Graphics/TAnimation.h"
@@ -13,7 +14,7 @@ class REAnimation {
          * 
          * @param parent 
          */
-        REAnimation(TNode* parent);
+        REAnimation(RESceneNode* parent);
 
         /**
          * @brief 

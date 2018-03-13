@@ -14,7 +14,7 @@ class ResourceGLSL : public Resource {
         void setIdentifier(const char *);
         const char *getIdentifier();
 
-        std::string getShaderCode();
+        std::string *getShaderCode();
         REEnums::ShaderType getShaderType();
     private:
         std::string shaderCode;

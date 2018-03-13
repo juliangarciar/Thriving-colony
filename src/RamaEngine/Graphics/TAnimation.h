@@ -1,7 +1,6 @@
 #ifndef TANIMATION_H
 #define TANIMATION_H
 
-#include "TEntity.h"
 #include "TMesh.h"
 
 class TAnimation : public TEntity {

@@ -1,6 +1,7 @@
 #include "ResourceOBJ.h"
 
 #include <objloader/OBJ_Loader.h>
+#include <objloader/vboindexer.hpp>
 #include <glm/glm.hpp>
 
 #include "../Graphics/TMaterial.h"
@@ -28,17 +29,30 @@ void ResourceOBJ::load(const char *path){
 
         TResourceMesh *tempMesh = new TResourceMesh(curMesh.MeshName);
 
+        std::vector<glm::vec3> vertices;
+        std::vector<glm::vec3> normals;
+        std::vector<glm::vec2> uvs;
+        std::vector<s32> indices;
+        std::vector<glm::vec3> indexed_vertices;
+        std::vector<glm::vec2> indexed_uvs;
+        std::vector<glm::vec3> indexed_normals;
+
         for (int j = 0; j < curMesh.Vertices.size(); j++) {
             glm::vec3 position(curMesh.Vertices[j].Position.X, curMesh.Vertices[j].Position.Y, curMesh.Vertices[j].Position.Z);
 			glm::vec3 normal(curMesh.Vertices[j].Normal.X, curMesh.Vertices[j].Normal.Y, curMesh.Vertices[j].Normal.Z);
 			glm::vec2 textureCoordinate(curMesh.Vertices[j].TextureCoordinate.X, curMesh.Vertices[j].TextureCoordinate.Y);
-            tempMesh->addVertex(position, normal, textureCoordinate);
+
+            vertices.push_back(position);
+            normals.push_back(normal);
+            uvs.push_back(textureCoordinate);
         }
 
-        for (int j = 0; j < curMesh.Indices.size(); j++) {
-            tempMesh -> addIndex(curMesh.Indices[j]);
-        }
+        indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
 
+        tempMesh->setVertices(indexed_vertices);
+        tempMesh->setNormals(indexed_normals);
+        tempMesh->setTextureCoordinates(indexed_uvs);
+        tempMesh->setIndices(indices);
 
         TMaterial *tempMat = new TMaterial();
         tempMat -> setName(curMesh.MeshMaterial.name);
@@ -55,7 +69,7 @@ void ResourceOBJ::load(const char *path){
         tempMat -> setAlphaTextureMap(curMesh.MeshMaterial.map_d);
         tempMat -> setBumpMap(curMesh.MeshMaterial.map_bump);
 
-        tempMesh ->setMaterial(tempMat);
+        tempMesh -> setMaterial(tempMat);
 
         objMesh.push_back(tempMesh);
     }
