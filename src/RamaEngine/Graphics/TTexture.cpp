@@ -1,20 +1,12 @@
 #include "TTexture.h"
+#include "../ResourceManager/ResourceIMG.h"
 
-TTexture::TTexture(){
+TTexture::TTexture(ResourceIMG *t){
+	texture = t;
 
-}
-
-TTexture::~TTexture(){
-
-}
-
-void TTexture::setTexture(ResourceIMG *texture){
-    glGenTextures(1, &textureID);
-	
-	// "Bind" the newly created texture : all future texture functions will modify this texture
+	glGenTextures(1, &textureID);
 	glBindTexture(GL_TEXTURE_2D, textureID);
-
-	// Give the image to OpenGL
+	
 	glTexImage2D(GL_TEXTURE_2D, 0,GL_RGB, texture->getWidth(), texture->getHeight(), 0, GL_BGR, GL_UNSIGNED_BYTE, texture->getResource());
 
 	// Poor filtering, or ...
@@ -30,6 +22,14 @@ void TTexture::setTexture(ResourceIMG *texture){
 	//glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-GLuint TTexture::getTexture(){
+TTexture::~TTexture(){
+
+}
+
+GLuint TTexture::getTextureID(){
     return textureID;
+}
+
+ResourceIMG *TTexture::getResourceIMG(){
+	return texture;
 }

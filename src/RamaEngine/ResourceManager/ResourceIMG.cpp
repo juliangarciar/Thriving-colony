@@ -2,15 +2,15 @@
 
 #include <glm/glm.hpp>
 
-ResourceIMG::ResourceIMG(){
-
+ResourceIMG::ResourceIMG(ResourceManager *rm){
+    loadedBy = rm;
 }
 
 ResourceIMG::~ResourceIMG(){
 	
 }
 
-void ResourceIMG::load(const char *path){
+void ResourceIMG::load(const char *path, bool sync){
     resource = SOIL_load_image(
         path,
         &width, &height, &channels,

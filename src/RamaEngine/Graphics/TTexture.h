@@ -2,18 +2,20 @@
 #define TTEXTURE_H
 
 #include "../RETypes.h"
-#include "../ResourceManager/ResourceIMG.h"
+
+class ResourceIMG;
 
 class TTexture {
     public:
-        TTexture();
+        TTexture(ResourceIMG *);
         ~TTexture();
 
-        void setTexture(ResourceIMG *);
-        GLuint getTexture();
-
+        GLuint getTextureID();
+        ResourceIMG *getResourceIMG();
     private:
         GLuint textureID;
+
+        ResourceIMG *texture;
 };
     
 #endif

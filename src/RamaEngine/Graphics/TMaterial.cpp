@@ -1,6 +1,11 @@
 #include "TMaterial.h"
 
 TMaterial::TMaterial() {
+    ambientTextureMap = nullptr;
+    diffuseTextureMap = nullptr;
+    specularTextureMap = nullptr;
+    alphaTextureMap = nullptr;
+    bumpMap = nullptr;
 
 }
 
@@ -64,38 +69,38 @@ i32 TMaterial::getIllumination(){
     return illumination;
 }
 
-void TMaterial::setAmbientTextureMap(std::string atm){
+void TMaterial::setAmbientTextureMap(std::string t, TTexture *atm){
     ambientTextureMap = atm;
 }
-std::string TMaterial::getAmbientTextureMap(){
+TTexture *TMaterial::getAmbientTextureMap(){
     return ambientTextureMap;
 }
 
-void TMaterial::setDiffuseTextureMap(std::string dtm){
+void TMaterial::setDiffuseTextureMap(std::string t, TTexture *dtm){
     diffuseTextureMap = dtm;
 }
-std::string TMaterial::getDiffuseTextureMap(){
+TTexture *TMaterial::getDiffuseTextureMap(){
     return diffuseTextureMap;
 }
 
-void TMaterial::setSpecularTextureMap(std::string stm){
+void TMaterial::setSpecularTextureMap(std::string t, TTexture *stm){
     specularTextureMap = stm;
 }
-std::string TMaterial::getSpecularTextureMap(){
+TTexture *TMaterial::getSpecularTextureMap(){
     return specularTextureMap;
 }
 
-void TMaterial::setAlphaTextureMap(std::string atm){
+void TMaterial::setAlphaTextureMap(std::string t, TTexture *atm){
     alphaTextureMap = atm;
 }
 
-std::string TMaterial::getAlphaTextureMap(){
+TTexture *TMaterial::getAlphaTextureMap(){
     return alphaTextureMap;
 }
 
-void TMaterial::setBumpMap(std::string bm){
+void TMaterial::setBumpMap(std::string t, TTexture *bm){
     bumpMap = bm;
 }
-std::string TMaterial::getBumpMap(){
+TTexture *TMaterial::getBumpMap(){
     return bumpMap;
 }

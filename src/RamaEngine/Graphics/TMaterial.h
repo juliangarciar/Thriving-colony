@@ -3,6 +3,7 @@
 
 #include "../RETypes.h"
 #include "../REColor.h"
+#include "TTexture.h"
 
 class TMaterial {
     public:
@@ -33,35 +34,37 @@ class TMaterial {
         void setIllumination(i32 i);
         i32 getIllumination();
 
-        void setAmbientTextureMap(std::string atm);
-        std::string getAmbientTextureMap();
+        void setAmbientTextureMap(std::string, TTexture *atm);
+        TTexture *getAmbientTextureMap();
 
-        void setDiffuseTextureMap(std::string dtm);
-        std::string getDiffuseTextureMap();
+        void setDiffuseTextureMap(std::string, TTexture *dtm);
+        TTexture *getDiffuseTextureMap();
 
-        void setSpecularTextureMap(std::string stm);
-        std::string getSpecularTextureMap();
+        void setSpecularTextureMap(std::string, TTexture *stm);
+        TTexture *getSpecularTextureMap();
 
-        void setAlphaTextureMap(std::string atm);
-        std::string getAlphaTextureMap();
+        void setAlphaTextureMap(std::string, TTexture *atm);
+        TTexture *getAlphaTextureMap();
 
-        void setBumpMap(std::string bm);
-        std::string getBumpMap();
+        void setBumpMap(std::string, TTexture *bm);
+        TTexture *getBumpMap();
 
     private:
         std::string materialName;
         glm::vec3 ambientColor;
         glm::vec3 diffuseColor;
         glm::vec3 specularColor;
+        
         f32 specularExponent;
         f32 opticalDensity;
         f32 dissolve;
         i32 illumination;
-        std::string ambientTextureMap;
-        std::string diffuseTextureMap;
-        std::string specularTextureMap;
-        std::string alphaTextureMap;
-        std::string bumpMap;
+
+        TTexture *ambientTextureMap;
+        TTexture *diffuseTextureMap;
+        TTexture *specularTextureMap;
+        TTexture *alphaTextureMap;
+        TTexture *bumpMap;
 };
 
 #endif

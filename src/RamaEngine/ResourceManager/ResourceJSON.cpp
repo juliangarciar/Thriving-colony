@@ -1,14 +1,14 @@
 #include "ResourceJSON.h"
 
-ResourceJSON::ResourceJSON() : Resource(){
-
+ResourceJSON::ResourceJSON(ResourceManager *rm){
+    loadedBy = rm;
 }
 
 ResourceJSON::~ResourceJSON(){
     
 } 
 
-void ResourceJSON::load(const char *path){
+void ResourceJSON::load(const char *path, bool sync){
     setIdentifier(path);
     try{
         std::ifstream i;

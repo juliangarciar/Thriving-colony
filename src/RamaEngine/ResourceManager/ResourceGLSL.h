@@ -2,13 +2,14 @@
 #define RESOURCEGLSL_H
 
 #include "Resource.h"
+#include "ResourceManager.h"
 
 class ResourceGLSL : public Resource {
     public:
-        ResourceGLSL();
+        ResourceGLSL(ResourceManager *);
         ~ResourceGLSL();
 
-        void load(const char *path);
+        void load(const char *path, bool sync);
         void release();
 
         void setIdentifier(const char *);
@@ -19,6 +20,7 @@ class ResourceGLSL : public Resource {
     private:
         std::string shaderCode;
         REEnums::ShaderType type;
+        ResourceManager *loadedBy;
 };
 
 #endif

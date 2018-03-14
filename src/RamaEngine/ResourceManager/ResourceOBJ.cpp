@@ -6,15 +6,15 @@
 
 #include "../Graphics/TMaterial.h"
 
-ResourceOBJ::ResourceOBJ(){
-    
+ResourceOBJ::ResourceOBJ(ResourceManager *rm){
+    loadedBy = rm;
 }
 
 ResourceOBJ::~ResourceOBJ(){
     
 }
 
-void ResourceOBJ::load(const char *path){
+void ResourceOBJ::load(const char *path, bool sync){
     setIdentifier(path);
     objl::Loader loader;
     bool loadout = loader.LoadFile(path);
@@ -63,12 +63,37 @@ void ResourceOBJ::load(const char *path){
         tempMat -> setOpticalDensity(curMesh.MeshMaterial.Ni);
         tempMat -> setDissolve(curMesh.MeshMaterial.d);
         tempMat -> setIllumination(curMesh.MeshMaterial.illum);
-        tempMat -> setAmbientTextureMap(curMesh.MeshMaterial.map_Ka);
-        tempMat -> setDiffuseTextureMap(curMesh.MeshMaterial.map_Kd);
-        tempMat -> setSpecularTextureMap(curMesh.MeshMaterial.map_Ks);
-        tempMat -> setAlphaTextureMap(curMesh.MeshMaterial.map_d);
-        tempMat -> setBumpMap(curMesh.MeshMaterial.map_bump);
 
+        if (curMesh.MeshMaterial.map_Ka != ""){
+            ResourceIMG *tempResourceIMG = (ResourceIMG*)loadedBy->getResource(curMesh.MeshMaterial.map_Ka, sync);
+            TTexture *tempTex = new TTexture(tempResourceIMG);
+            tempMat -> setAmbientTextureMap(curMesh.MeshMaterial.map_Ka, tempTex);
+        }
+
+        if (curMesh.MeshMaterial.map_Kd != ""){
+            ResourceIMG *tempResourceIMG = (ResourceIMG*)loadedBy->getResource(curMesh.MeshMaterial.map_Kd, sync);
+            TTexture *tempTex = new TTexture(tempResourceIMG);
+            tempMat -> setDiffuseTextureMap(curMesh.MeshMaterial.map_Kd, tempTex);
+        }
+
+        if (curMesh.MeshMaterial.map_Ks != ""){
+            ResourceIMG *tempResourceIMG = (ResourceIMG*)loadedBy->getResource(curMesh.MeshMaterial.map_Ks, sync);
+            TTexture *tempTex = new TTexture(tempResourceIMG);
+            tempMat -> setSpecularTextureMap(curMesh.MeshMaterial.map_Ks, tempTex);
+        }
+
+        if (curMesh.MeshMaterial.map_d != ""){
+            ResourceIMG *tempResourceIMG = (ResourceIMG*)loadedBy->getResource(curMesh.MeshMaterial.map_d, sync);
+            TTexture *tempTex = new TTexture(tempResourceIMG);
+            tempMat -> setAlphaTextureMap(curMesh.MeshMaterial.map_d, tempTex);
+        }
+
+        if (curMesh.MeshMaterial.map_bump != ""){
+            ResourceIMG *tempResourceIMG = (ResourceIMG*)loadedBy->getResource(curMesh.MeshMaterial.map_bump, sync);
+            TTexture *tempTex = new TTexture(tempResourceIMG);
+            tempMat -> setBumpMap(curMesh.MeshMaterial.map_bump, tempTex);
+        }
+       
         tempMesh -> setMaterial(tempMat);
 
         objMesh.push_back(tempMesh);
