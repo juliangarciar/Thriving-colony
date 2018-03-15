@@ -2,7 +2,7 @@
 #define TMATERIAL_H
 
 #include "../RETypes.h"
-#include "TColor.h"
+#include "../REColor.h"
 
 class TMaterial {
     public:

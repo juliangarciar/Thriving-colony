@@ -1,28 +1,36 @@
 #include "RamaEngine.h"
 
-#include "ResourceManager/ResourceManager.h"
+#include "Graphics/TRoot.h"
+
+#include "ResourceManager/ResourceOBJ.h"
 #include "ResourceManager/ResourceGLSL.h"
 
 RamaEngine::RamaEngine() {
     rootNode = new TNode();
+
     // Create default layer
-    defaultSceneNode = createRESceneNode();
+    clSceneNode = new RESceneNode(rootNode);
+    defaultSceneNode = new RESceneNode(rootNode);
+
+    // Resource Manager
+    REManager = new ResourceManager();
+
+    // Cache
+    matrixCache = TMatrixCache::Instance();
 }
 
 RamaEngine::~RamaEngine() {
-    delete rootNode;
-
     //ToDo: recorrer vaciando
     cameras . clear();
     lights . clear();
-    
-	glDeleteProgram(programID);
+
+    // delete defaultSceneNode
+    // delete REManager
+
+    delete rootNode;
 }
 
 void RamaEngine::Init() {
-    // Resource Manager
-    ResourceManager *r = new ResourceManager();
-
     if (glewInit() != GLEW_OK) {
         std::cout << "Failed to initialize GLEW" << std::endl;
         exit(0);
@@ -45,68 +53,85 @@ void RamaEngine::Init() {
 
     // Create vertexArray
 	glGenVertexArrays(1, &vertexArrayID);
-	glBindVertexArray(vertexArrayID);
-
-	// Get a handle for our "MVP" uniform
-	MVPID = glGetUniformLocation(programID, "MVP");
-    projectionMatrixID = glGetUniformLocation(programID, "P");
-	viewMatrixID = glGetUniformLocation(programID, "V");
-	modelMatrixID = glGetUniformLocation(programID, "M");
-	
-	// Get a handle for our "myTextureSampler" uniform
-	textureID = glGetUniformLocation(programID, "Texture");
-
-    // Use our shader
-    glUseProgram(programID);
+	glBindVertexArray(vertexArrayID);	
 }
 
-RELight* RamaEngine::createRELight() {
-    RELight* lightNode = new RELight(rootNode);
+void RamaEngine::End(){
+	glDeleteVertexArrays(1, &vertexArrayID);
+}
+
+RELight* RamaEngine::createLight(REColor color, u32 intensity) {
+    RELight* lightNode = new RELight(clSceneNode->getSceneNode(), color, intensity);
     lights . push_back(lightNode);
     return lightNode;
 }
 
-RECamera* RamaEngine::createRECamera() {
-    RECamera* cameraNode = new RECamera(rootNode);
+RECamera* RamaEngine::createCamera() {
+    RECamera* cameraNode = new RECamera(clSceneNode->getSceneNode());
     cameras . push_back(cameraNode);
     return cameraNode;
 }
 
-RESceneNode* RamaEngine::createRESceneNode() {
-    return new RESceneNode(rootNode);
+RESceneNode* RamaEngine::createSceneNode() {
+    return new RESceneNode(defaultSceneNode);
 }
 
-RESceneNode* RamaEngine::createRESceneNode(RESceneNode* layer) {
-    return new RESceneNode(layer -> getSceneNode());
+RESceneNode* RamaEngine::createSceneNode(RESceneNode* layer) {
+    return new RESceneNode(layer);
 }
 
-REMesh* RamaEngine::createREMesh() {
-    return new REMesh(defaultSceneNode->getSceneNode());
+REMesh* RamaEngine::createMesh(std::string mesh) {
+    return new REMesh(defaultSceneNode, (ResourceOBJ*)REManager->getResource(mesh, true));
 }
 
-REMesh* RamaEngine::createREMesh(RESceneNode* layer) {
-    return new REMesh(layer -> getSceneNode());
+REMesh* RamaEngine::createMesh(RESceneNode* layer, std::string mesh) {
+    return new REMesh(layer, (ResourceOBJ*)REManager->getResource(mesh, true));
 }
 
-REAnimation* RamaEngine::createREAnimation() {
-    return new REAnimation(defaultSceneNode->getSceneNode());
+REAnimation* RamaEngine::createAnimation(std::string anim) {
+    //ToDo
+    return new REAnimation(defaultSceneNode);
 }
 
-REAnimation* RamaEngine::createREAnimation(RESceneNode* layer) {
-    return new REAnimation(layer -> getSceneNode());
+REAnimation* RamaEngine::createAnimation(RESceneNode* layer, std::string anim) {
+    //ToDo
+    return new REAnimation(layer);
+}
+
+REShaderProgram *RamaEngine::createShaderProgram(std::string programName, std::string vs, std::string fs){
+	ResourceGLSL *s1 = (ResourceGLSL*)REManager->getResource(vs, true);
+	ResourceGLSL *s2 = (ResourceGLSL*)REManager->getResource(fs, true);
+	REShaderProgram *p = new REShaderProgram(s1, s2);
+    shaderPrograms . insert(std::pair<std::string, REShaderProgram*>(programName, p));
+    return p;
 }
 
 void RamaEngine::registerLight(RELight* lightNode) {
-    rootNode -> addChild(lightNode -> getLightNode());
+    clSceneNode -> getSceneNode() -> addChild(lightNode -> getLightNode());
     lights . push_back(lightNode);
 }
 
 void RamaEngine::registerCamera(RECamera* cameraNode) {
-    rootNode -> addChild(cameraNode -> getCameraNode());
+    clSceneNode -> getSceneNode() -> addChild(cameraNode -> getCameraNode());
     cameras . push_back(cameraNode);
 }
 
+void RamaEngine::registerShaderProgram(std::string programName, REShaderProgram *r){
+    shaderPrograms . insert(std::pair<std::string, REShaderProgram*>(programName, r));
+}
+
+void RamaEngine::setCurrentShaderProgram(std::string programName){
+    std::map<std::string, REShaderProgram*>::iterator it;
+    it = shaderPrograms.find(programName);
+    if (it != shaderPrograms.end()){
+        currentProgram = it->second;
+        rootNode -> setEntity(currentProgram->getRootEntity());
+    }
+}
+
 void RamaEngine::draw() {
+    glUseProgram(currentProgram->getShaderProgram());
+
     // Clear the screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

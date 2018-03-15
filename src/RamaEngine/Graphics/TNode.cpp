@@ -44,6 +44,10 @@ void TNode::setEntity(TEntity *e){
     if (e != nullptr) entity = e;
 }
 
+void TNode::removeEntity(){
+    if (entity != nullptr) delete entity;
+}
+
 TEntity *TNode::getEntity(){
     return entity;
 }

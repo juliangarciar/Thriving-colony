@@ -1,17 +1,17 @@
 #include "RELight.h"
 
-RELight::RELight() {
+RELight::RELight(REColor color, u32 intensity) {
     rotationNode = new TNode(new TTransform());
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
-    lightNode = new TNode(new TLight(), scaleNode);
+    lightNode = new TNode(new TLight(color, intensity), scaleNode);
 }
 
-RELight::RELight(TNode* parent) {
+RELight::RELight(TNode* parent, REColor color, u32 intensity) {
     rotationNode = new TNode(new TTransform(), parent);
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
-    lightNode = new TNode(new TLight(), scaleNode);
+    lightNode = new TNode(new TLight(color, intensity), scaleNode);
 }
 
 RELight::~RELight() {
@@ -36,13 +36,22 @@ void RELight::translate(f32 tX, f32 tY, f32 tZ) {
     t -> translate(tX, tY, tZ);
 }
 
+void RELight::setColor(REColor c) {
+    TLight* l = (TLight*) lightNode -> getEntity();
+    l -> setColor(c);
+}
 
-void RELight::setIntensity(TColor c) {
+REColor RELight::getColor() {
+    TLight* l = (TLight*) lightNode -> getEntity();
+    return l -> getColor();
+}
+
+void RELight::setIntensity(u32 c) {
     TLight* l = (TLight*) lightNode -> getEntity();
     l -> setIntensity(c);
 }
 
-TColor RELight::getIntensity() {
+u32 RELight::getIntensity() {
     TLight* l = (TLight*) lightNode -> getEntity();
     return l -> getIntensity();
 }
@@ -55,16 +64,6 @@ void RELight::setActive(bool active) {
 bool RELight::getActive() {
     TLight* l = (TLight*) lightNode -> getEntity();
     return l -> getActive();
-}
-
-glm::vec3 RELight::getLightPosition() {
-    TLight* l = (TLight*) lightNode -> getEntity();
-    return l -> getPosition();
-}
-
-void RELight::setLightPosition(glm::vec3 p) {
-    TLight* l = (TLight*) lightNode -> getEntity();
-    l -> setLightPosition(p);
 }
 
 TNode* RELight::getLightNode() {

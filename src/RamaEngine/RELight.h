@@ -2,7 +2,7 @@
 #define RELIGHT_H
 
 #include "RETypes.h"
-#include "Graphics/TColor.h"
+#include "REColor.h"
 #include "Graphics/TNode.h"
 #include "Graphics/TTransform.h"
 #include "Graphics/TLight.h"
@@ -12,14 +12,14 @@ class RELight {
         /**
          * @brief 
          */
-        RELight();
+        RELight(REColor color, u32 intensity);
 
         /**
          * @brief 
          * 
          * @param parent 
          */
-        RELight(TNode* parent);
+        RELight(TNode* parent, REColor color, u32 intensity);
 
         /**
          * @brief 
@@ -57,15 +57,30 @@ class RELight {
         /**
          * @brief 
          * 
-         * @param TColor 
+         * @param REColor 
          */
-        void setIntensity(TColor);
+        void setColor(REColor);
+        
         /**
          * @brief 
          * 
-         * @return TColor 
+         * @return REColor 
          */
-        TColor getIntensity();
+        REColor getColor();
+        
+        /**
+         * @brief 
+         * 
+         * @param REColor 
+         */
+        void setIntensity(u32);
+
+        /**
+         * @brief 
+         * 
+         * @return REColor 
+         */
+        u32 getIntensity();
 
         /**
          * @brief set the light to active or inactive
@@ -81,19 +96,6 @@ class RELight {
          * @return false otherwise
          */
         bool getActive();
-
-        /**
-         * @brief returns the position of this light
-         * 
-         */
-        glm::vec3 getLightPosition();
-
-        /**
-         * @brief 
-         * 
-         * @param p 
-         */
-        void setLightPosition(glm::vec3 p);
         
         /**
          * @brief 

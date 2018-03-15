@@ -47,8 +47,8 @@ const char *ResourceGLSL::getIdentifier(){
     return identifier;
 }
 
-std::string ResourceGLSL::getShaderCode(){
-    return shaderCode;
+std::string *ResourceGLSL::getShaderCode(){
+    return &shaderCode;
 }
 
 REEnums::ShaderType ResourceGLSL::getShaderType(){

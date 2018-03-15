@@ -61,6 +61,11 @@ class TNode {
 
         /**
          * @brief 
+         */
+        void removeEntity();
+
+        /**
+         * @brief 
          * 
          * @return TEntity* 
          */

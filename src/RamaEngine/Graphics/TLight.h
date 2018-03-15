@@ -2,7 +2,7 @@
 #define TLIGHT_H
 
 #include "TEntity.h"
-#include "TColor.h"
+#include "../REColor.h"
 
 class TLight : public TEntity {
     public:
@@ -10,7 +10,8 @@ class TLight : public TEntity {
          * @brief 
          * 
          */
-        TLight(bool = true);
+        TLight(REColor color, u32 intensity, bool = true);
+
         /**
          * @brief 
          * 
@@ -22,6 +23,7 @@ class TLight : public TEntity {
          * 
          */
         void beginDraw();
+
         /**
          * @brief 
          * 
@@ -32,15 +34,30 @@ class TLight : public TEntity {
         /**
          * @brief 
          * 
-         * @param TColor 
+         * @param REColor 
          */
-        void setIntensity(TColor);
+        void setColor(REColor);
+
         /**
          * @brief 
          * 
-         * @return TColor 
+         * @return REColor 
          */
-        TColor getIntensity();
+        REColor getColor();
+
+        /**
+         * @brief 
+         * 
+         * @param REColor 
+         */
+        void setIntensity(u32);
+
+        /**
+         * @brief 
+         * 
+         * @return REColor 
+         */
+        u32 getIntensity();
 
         /**
          * @brief set the light to active or inactive
@@ -56,22 +73,12 @@ class TLight : public TEntity {
          * @return false otherwise
          */
         bool getActive();
-
-        /**
-         * @brief 
-         * 
-         */
-        void setLightPosition(glm::vec3);
-
-        /**
-         * @brief returns the position of this light
-         * 
-         */
-        glm::vec3 getPosition();
     private:
-        glm::vec3 lightPosition;
+        REColor color;
 
-        TColor intensity;
+        u32 intensity;
+
+        glm::vec4 lightMatrix;
 
         bool active;
 };
