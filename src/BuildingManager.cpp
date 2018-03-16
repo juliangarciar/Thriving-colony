@@ -1,13 +1,14 @@
 #include "BuildingManager.h"
 #include "Game.h"
 #include <WorldEngine/WorldGeometry.h>
+#include "GraphicEngine/Window.h"
 
 BuildingManager::BuildingManager(Enumeration::Team t, Enumeration::BreedType b) {
 	team = t;
 	breed = b;
 
 	nextBuildingId = 0;
-    gridAlignment = 50;
+    gridAlignment =-100;
     buildingMode = false;
 
 	buildingLayer = new SceneNode();
@@ -63,6 +64,14 @@ void BuildingManager::drawBuilding() {
 		dummy2.x = dummy.x;
 		dummy2.z = dummy.y;
 		dummy2.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y);
+		//irr::core::matrix4 tmat;
+		//Window::Instance() -> getVideoDriver() -> setMaterial(irr::video::SMaterial());
+      	//indow::Instance() -> getVideoDriver() -> setTransform(irr::video::ETS_WORLD, irr::core::IdentityMatrix);
+		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7000, -100, 7000), irr::core::vector3df(7200, 500, 8000), irr::video::SColor(255,255,0,0));
+		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7005, -100, 7000), irr::core::vector3df(7205, 500, 8000), irr::video::SColor(255,255,0,0));
+		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7010, -100, 7000), irr::core::vector3df(7210, 500, 8000), irr::video::SColor(255,255,0,0));
+		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7015, -100, 7000), irr::core::vector3df(7215, 500, 8000), irr::video::SColor(255,255,0,0));
+		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7020, -100, 7000), irr::core::vector3df(7220, 500, 8000), irr::video::SColor(255,255,0,0));
 		tempBuilding -> setPosition (dummy2);
 		if(team == Enumeration::Team::Human){
 			Vector2<f32> tmp = Human::Instance()->getHallPosition().toVector2();
