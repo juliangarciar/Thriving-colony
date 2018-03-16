@@ -3,7 +3,9 @@
 
 #include <GUIEngine/Button.h>
 #include <Types.h>
-
+#include <GUIEngine/Panel.h>
+#include <GUIEngine/ComboBox.h>
+#include <GUIEngine/Label.h>
 /**
  * @class StartMenu
  * @brief Crea un objeto tipo StartMenu
@@ -31,8 +33,25 @@ class StartMenu {
         void update();
 
     private:
+        //MainMenu
         Button *buttonQuit;
+        Button *buttonOptions;
         Button *buttonStart;
+        Panel *bgMain;
+
+        //OptionsMenu
+        Panel *bgOptions;
+        Button *buttonAccept;
+        
+        //PlayMenu
+        Panel *bgPlay;
+        Label *racesP;
+        ComboBox *racesCb;
+        Label *mapsP;
+        ComboBox *mapsCb;
+        Button *buttonPlay;
+        Button *buttonBack;
+
 };
 
 #endif
