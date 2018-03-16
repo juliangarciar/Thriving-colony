@@ -11,11 +11,11 @@ ResourceIMG::~ResourceIMG(){
 }
 
 void ResourceIMG::load(const char *path, bool sync){
-    resource = SOIL_load_image(
+    /*resource = SOIL_load_image(
         path,
         &width, &height, &channels,
         SOIL_LOAD_AUTO
-    );
+    );*/
 }
 
 void ResourceIMG::release(){

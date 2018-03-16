@@ -5,7 +5,7 @@
 #include "ResourceManager.h"
 
 #include "../Graphics/TResourceMesh.h"
-#include <SOIL/SOIL.h>
+//#include <SOIL/SOIL.h>
 
 class ResourceIMG : public Resource {
     public:
