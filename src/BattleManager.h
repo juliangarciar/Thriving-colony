@@ -27,7 +27,7 @@ class BattleManager {
 
         /**
          * @brief Set an objetive for the entity passed by parameter. Search a troop or building from the enemy prioritizing enemy troops. 
-         * @param The entity passed by parametter is the one whose target will change to Unit, Building or NULL.
+         * @param The entity passed by parameter is the one whose target will change to Unit, Building or NULL.
          */
         void askForTarget(Entity*);
 

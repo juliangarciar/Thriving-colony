@@ -14,74 +14,78 @@ class Building : public Entity {
     public:
         /**
          * @brief Buiding constructor
-         * @param layer
-         * @param id del edificio
-         * @param teamData es el equipo al que pertenece
-         * @param BreedType es el equipo al que pertenece
-         * @param buildingType es el tipo del edificio
+         * @param The SceneNode is the layer where the building will be created
+         * @param The id32 is the id number that will identify the building
+         * @param The Enumeration::Team is the team to which belongs the building: Enumeration::Team::Human or Enumeration::Team::IA
+         * @param The Enumeration::BreedType is the civilization to which belongs the building: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov
+         * @param The Enumeration::BuildingType is the building type
          */
         Building(SceneNode *, i32, Enumeration::Team, Enumeration::BreedType, Enumeration::BuildingType);
+
         /**
-         * @brief Destructor
+         * @brief Building destructor
          */
         virtual ~Building();
 
         /**
-         * @brief cobra al jugador del equipo correspondiente, 
-         * el importe del edificio cuando se solicita su construccion
+         * @brief Subtract the metal and crystal cost of the building to the metal and crystal available of the player (Human or IA) and
+         * add the city level that provided by the building to the player's city level (Human or IA)
          */
         void preTaxPlayer();
+
         /**
-         * @brief cobra al jugador del equipo correspondiente, 
-         * el importe del edificio cuando se termina de construir
+         * @brief Add the happiness and citizens provided by the building to the player's happiness and citizens (Human or IA)
          */
         void posTaxPlayer();
+
         /**
-         * @brief actualiza el edificio
+         * @brief Update the building while it is not finished
          */
         void update();
+
         /**
-         * @brief finaliza el edificio
+         * @brief Finish the building
          */
         void triggerFinishedCallback();
 
         /**
-         * @brief
-         * @param
+         * @brief Set the callback variable as the function passed by parameter
+         * @param The std::function is the function to set as the callback variable of the building and have to be void and get a Building pointer as parameter
          */
         void setFinishedCallback(std::function<void(Building*)>);
         
         /**
-         * @brief solicita el tipo de edificio
-         * @return devuelve un entero con el tipo
+         * @brief Get the type variable of the building
+         * @return Value of the type variable
          */
         Enumeration::BuildingType getType();
+
         /**
-         * @brief Destructor
-         * @return true si esta terminado y false en caso contrario 
+         * @brief Get the finished variable of the building
+         * @return Value finished variable (true if the building is finished or false if it is not) 
          */
         bool getFinished();
         
     private:
         /**
-         * @brief Inicializa Building
+         * @brief Initialize the building
          */
         void Init();
 
-        //Scene Node
+        //Layer where the building was created
         SceneNode *layer;
 
         //Building type
         Enumeration::BuildingType type;
 
-        //Building timer
+        //Building timer used for the construction time
         f32 buildTimer;
 
         //Finish building callback
         std::function<void(Building*)> callback;
 
-        //is built
-        i32 finished;
+        //True if the building is finished and false if it is not
+        bool finished;
 };
 
 #endif
