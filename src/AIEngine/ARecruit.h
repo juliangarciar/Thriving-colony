@@ -13,17 +13,15 @@ class ARecruit : public Action {
         /**
          * @brief Constructor de ARecruit
          */
-        ARecruit(Enumeration::UnitType);
+        ARecruit();
         /**
          * @brief Destructor de ARecruit
          */
         virtual ~ARecruit();
 
-        Enumeration::BehaviourState Update();
-        void Execute();
+        Enumeration::BehaviourState Update(Enumeration::UnitType);
 
     private:
-        Enumeration::UnitType type;
 };
 
 #endif

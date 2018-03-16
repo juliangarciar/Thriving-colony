@@ -20,7 +20,8 @@ class Action : public Behaviour {
         virtual ~Action();
 
         Enumeration::BehaviourState virtual Update() = 0;
-        void virtual execute() = 0;
+        Enumeration::BehaviourState virtual Update(Enumeration::UnitType) = 0;
+        Enumeration::BehaviourState virtual Update(Enumeration::BuildingType) = 0;
 
     protected:
 };

@@ -13,17 +13,15 @@ class ABuild : public Action {
         /**
          * @brief Constructor de ABuild
          */
-        ABuild(Enumeration::BuildingType);
+        ABuild();
         /**
          * @brief Destructor de ABuild
          */
         virtual ~ABuild();
 
-        Enumeration::BehaviourState Update();
-        void Execute();
+        Enumeration::BehaviourState Update(Enumeration::BuildingType);
 
     private:
-        Enumeration::BuildingType type;
 };
 
 #endif

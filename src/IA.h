@@ -4,7 +4,7 @@
 #include "Player.h"
 #include "IAEngine/BehaviourTree.h"
 #include "IAEngine/RootNode.h"
-#include "CPGEngine/ActiveSelector.h"
+#include "AIEngine/ActiveSelector.h"
 #include <Types.h>
 
 /**
