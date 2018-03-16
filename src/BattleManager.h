@@ -10,22 +10,24 @@
 
 /**
  * @class BattleManager
- * @brief Crea un objeto tipo BattleManager
+ * @brief Create a BattleManager type object
  */
 class BattleManager {
     
     public:
         /**
-         * @brief Constructor de BattleManager
+         * @brief BattleManager constructor
          */
         BattleManager();
+
         /**
-         * @brief Destructor de BattleManager
+         * @brief BattleManager destructor
          */
         virtual ~BattleManager();
+
         /**
-         * @brief Solicita un objetivo para la entidad, analizando sus caracteristicas de ataque
-         * @param Entity sera la entidad que solicita un objetivo
+         * @brief Set an objetive for the entity passed by parameter. Search a troop or building from the enemy prioritizing enemy troops. 
+         * @param The entity passed by parametter is the one whose target will change to Unit, Building or NULL.
          */
         void askForTarget(Entity*);
 

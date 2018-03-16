@@ -7,16 +7,13 @@
 
 /**
  * @class Building
- * @brief Crea un objeto tipo Building
+ * @brief Create a Building type object
  */
 class Building : public Entity {
     
     public:
-        //Enum: Barn,Barrack,Hospital,House,MainBuilding,Market,Quarry,Siderurgy,School,Tower,Wall,Workshop
-        //teamData sepecifies the building team and vectorData the position
-
         /**
-         * @brief Constructor de Buiding
+         * @brief Buiding constructor
          * @param layer
          * @param id del edificio
          * @param teamData es el equipo al que pertenece

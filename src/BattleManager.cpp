@@ -55,9 +55,7 @@ void BattleManager::askForTarget(Entity* requester) {
                 }
             }
         }
-
     } else { // Requester is IA
-
         // Get units in the map of the opposing team
         std::map<i32, Unit*> *inMapTroops = Human::Instance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map
@@ -77,7 +75,6 @@ void BattleManager::askForTarget(Entity* requester) {
         }
         
         if (target == nullptr) { // No target unit found, search buildings
-            
             std::map<i32, Building*> *buildings = Human::Instance() -> getBuildingManager() -> getBuildings();
             for (std::map<i32,Building*>::iterator it = buildings -> begin(); it != buildings -> end(); ++it) {
                 if (it  -> second != nullptr) {
