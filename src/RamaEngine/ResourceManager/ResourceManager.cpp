@@ -1,7 +1,14 @@
 #include "ResourceManager.h"
 
+#include "ResourceOBJ.h"
+#include "ResourceMTL.h"
+#include "ResourceJSON.h"
+#include "ResourceGLSL.h"
+#include "ResourceIMG.h"
+
 ResourceManager::ResourceManager(){
-    
+    std::string temp[] = {"obj","mtl","json","glsl","fbx","bmp","jpg","jpeg","png"};
+    supportedFormats.insert(supportedFormats.end(),temp,std::end(temp));
 }
 
 ResourceManager::~ResourceManager(){
@@ -14,11 +21,15 @@ void ResourceManager::Update(){
     threads.pop();
 }
 
-void ResourceManager::load(std::string path){
+void ResourceManager::load(std::string path, bool sync){
     std::size_t found = path.find_last_of(".");
     std::string extension = path.substr(found+1);
     if (extension == "obj"){
         Resource *r = new ResourceOBJ();
+        r -> load(path.c_str());
+        resources.insert(std::pair<std::string, Resource*>(path, r));
+    } else if (extension == "mtl") {
+        Resource *r = new ResourceMTL();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
     } else if (extension == "json") {
@@ -33,20 +44,12 @@ void ResourceManager::load(std::string path){
         //Resource *r = new ResourceFBX();
         //r -> load(path.c_str());
         //resources.insert(std::pair<std::string, Resource*>(path, r));
-    } else if (extension == "jpg"){
-        //Resource *r = new ResourceOBJ();
-        //r -> load(path.c_str());
-        //resources.insert(std::pair<std::string, Resource*>(path, r));
-    } else if (extension == "png"){
-        //Resource *r = new ResourceOBJ();
-        //r -> load(path.c_str());
-        //resources.insert(std::pair<std::string, Resource*>(path, r));
-    } else if (extension == "bmp"){
-        Resource *r = new ResourceBMP();
+    } else if (extension == "bmp" || extension == "jpg" || extension == "jpeg" || extension == "png"){
+        Resource *r = new ResourceIMG();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
     } else {
-        std::cout << "Error: formato no soportado" << std::endl;
+        std::cout << "Error: formato no soportado (" << extension << ")." << std::endl;
         exit(0);
     }
 }
@@ -54,19 +57,21 @@ void ResourceManager::load(std::string path){
 void ResourceManager::push(std::string path){
     std::size_t found = path.find_last_of(".");
     std::string extension = path.substr(found+1);
-    if (extension == "obj" | extension == "fbx" | extension == "glsl" | extension == "json" | extension == "jpg" | extension == "png" | extension == "bmp"){
+    std::vector<std::string>::iterator it;
+    it = find(supportedFormats.begin(),supportedFormats.end(),extension);
+    if (it != supportedFormats.end()){
         threads.push(std::thread([=](){
-            load(path);
+            load(path, false);
         }));
     } else {
-        std::cout << "Error: formato no soportado" << std::endl;
+        std::cout << "Error: formato no soportado (" << extension << ")." << std::endl;
         exit(0);
     }
 }
 
 void ResourceManager::loadResource(std::string path, bool sync){
     if (sync){
-        load(path);
+        load(path, true);
     } else {
         push(path);
     }

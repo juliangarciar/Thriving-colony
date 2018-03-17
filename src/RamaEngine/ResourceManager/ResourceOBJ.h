@@ -2,7 +2,9 @@
 #define RESOURCEOBJ_H
 
 #include "Resource.h"
-#include "../Graphics/TResourceMesh.h"
+#include "ResourceManager.h"
+
+#include "Helpers/ResourceMesh.h"
 
 class ResourceOBJ : public Resource {
     public:
@@ -15,9 +17,12 @@ class ResourceOBJ : public Resource {
         void setIdentifier(const char *);
         const char *getIdentifier();
 
-        std::vector<TResourceMesh*> *getResource();
+        std::map<std::string, ResourceMesh*> *getResource();
+
+        std::string getDefaultMaterialPath();
     private:
-        std::vector<TResourceMesh*> objMesh;
+        std::map<std::string, ResourceMesh*> meshArray;
+        std::string defaultMaterialPath;
 };
 
 #endif

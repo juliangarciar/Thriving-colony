@@ -4,10 +4,8 @@
 #include <objloader/vboindexer.hpp>
 #include <glm/glm.hpp>
 
-#include "../Graphics/TMaterial.h"
-
 ResourceOBJ::ResourceOBJ(){
-    
+
 }
 
 ResourceOBJ::~ResourceOBJ(){
@@ -23,19 +21,17 @@ void ResourceOBJ::load(const char *path){
         exit(0);
     }
 
+    defaultMaterialPath = loader.pathToMaterial;
+
     for (int i = 0; i < loader.LoadedMeshes.size(); i++) {
         // Copy one of the loaded meshes to be our current mesh
         objl::Mesh curMesh = loader.LoadedMeshes[i];
 
-        TResourceMesh *tempMesh = new TResourceMesh(curMesh.MeshName);
+        ResourceMesh *tempMesh = new ResourceMesh(curMesh.MeshName);
 
         std::vector<glm::vec3> vertices;
         std::vector<glm::vec3> normals;
         std::vector<glm::vec2> uvs;
-        std::vector<us32> indices;
-        std::vector<glm::vec3> indexed_vertices;
-        std::vector<glm::vec2> indexed_uvs;
-        std::vector<glm::vec3> indexed_normals;
 
         for (int j = 0; j < curMesh.Vertices.size(); j++) {
             glm::vec3 position(curMesh.Vertices[j].Position.X, curMesh.Vertices[j].Position.Y, curMesh.Vertices[j].Position.Z);
@@ -47,39 +43,27 @@ void ResourceOBJ::load(const char *path){
             uvs.push_back(textureCoordinate);
         }
 
+        std::vector<glm::vec3> indexed_vertices;
+        std::vector<glm::vec3> indexed_normals;
+        std::vector<glm::vec2> indexed_uvs;
+        std::vector<us32> indices;
         indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
 
         tempMesh->setVertices(indexed_vertices);
         tempMesh->setNormals(indexed_normals);
-        tempMesh->setTextureCoordinates(indexed_uvs);
+        tempMesh->setUVs(indexed_uvs);
         tempMesh->setIndices(indices);
+        tempMesh->setDefaultMaterialName(curMesh.MeshMaterial.name);
 
-        TMaterial *tempMat = new TMaterial();
-        tempMat -> setName(curMesh.MeshMaterial.name);
-        tempMat -> setAmbientColor(glm::vec3(curMesh.MeshMaterial.Ka.X, curMesh.MeshMaterial.Ka.Y, curMesh.MeshMaterial.Ka.Z));
-        tempMat -> setDiffuseColor(glm::vec3(curMesh.MeshMaterial.Kd.X, curMesh.MeshMaterial.Kd.Y, curMesh.MeshMaterial.Kd.Z));
-        tempMat -> setSpecularColor(glm::vec3(curMesh.MeshMaterial.Ks.X, curMesh.MeshMaterial.Ks.Y, curMesh.MeshMaterial.Ks.Z));
-        tempMat -> setSpecularExponent(curMesh.MeshMaterial.Ns);
-        tempMat -> setOpticalDensity(curMesh.MeshMaterial.Ni);
-        tempMat -> setDissolve(curMesh.MeshMaterial.d);
-        tempMat -> setIllumination(curMesh.MeshMaterial.illum);
-        tempMat -> setAmbientTextureMap(curMesh.MeshMaterial.map_Ka);
-        tempMat -> setDiffuseTextureMap(curMesh.MeshMaterial.map_Kd);
-        tempMat -> setSpecularTextureMap(curMesh.MeshMaterial.map_Ks);
-        tempMat -> setAlphaTextureMap(curMesh.MeshMaterial.map_d);
-        tempMat -> setBumpMap(curMesh.MeshMaterial.map_bump);
-
-        tempMesh -> setMaterial(tempMat);
-
-        objMesh.push_back(tempMesh);
+        meshArray.insert(std::pair<std::string, ResourceMesh*>(curMesh.MeshName, tempMesh));
     }
 }
 
 void ResourceOBJ::release(){
-    for (int i=0; i < objMesh.size(); i++){
-        delete objMesh.at(i);
+    for (std::map<std::string, ResourceMesh*>::iterator it = meshArray.begin(); it != meshArray.end(); ++it){
+        delete it->second;
     }
-    objMesh.clear();
+    meshArray.clear();
 }
 
 void ResourceOBJ::setIdentifier(const char *i){
@@ -90,6 +74,10 @@ const char *ResourceOBJ::getIdentifier(){
     return identifier;
 }
 
-std::vector<TResourceMesh*> *ResourceOBJ::getResource(){
-    return &objMesh;
+std::map<std::string, ResourceMesh*> *ResourceOBJ::getResource(){
+    return &meshArray;
+}
+
+std::string ResourceOBJ::getDefaultMaterialPath(){
+    return defaultMaterialPath;
 }
