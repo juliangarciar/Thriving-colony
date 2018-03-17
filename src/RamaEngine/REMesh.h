@@ -5,6 +5,7 @@
 #include "RESceneNode.h"
 
 #include "ResourceManager/ResourceOBJ.h"
+#include "ResourceManager/ResourceMTL.h"
 
 #include "Graphics/TNode.h"
 #include "Graphics/TTransform.h"
@@ -16,9 +17,10 @@ class REMesh {
          * @brief 
          * 
          * @param  
-         * @param  
+         * @param 
+         * @param 
          */
-        REMesh(RESceneNode*, ResourceOBJ *);
+        REMesh(RESceneNode*, ResourceOBJ *, ResourceMTL *);
 
         /**
          * @brief 
@@ -53,6 +55,7 @@ class REMesh {
         TNode* translationNode;
         TNode* scaleNode;
         
+        std::vector<TMesh*> meshes;
 };
 
 #endif

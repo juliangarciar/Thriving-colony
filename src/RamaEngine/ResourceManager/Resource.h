@@ -6,7 +6,7 @@
 
 class Resource {
     public:
-        virtual void load(const char *path, bool sync) = 0;
+        virtual void load(const char *path) = 0;
         virtual void release() = 0;
 
         virtual void setIdentifier(const char *) = 0;

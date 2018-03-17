@@ -6,10 +6,10 @@
 
 class ResourceGLSL : public Resource {
     public:
-        ResourceGLSL(ResourceManager *);
+        ResourceGLSL();
         ~ResourceGLSL();
 
-        void load(const char *path, bool sync);
+        void load(const char *path);
         void release();
 
         void setIdentifier(const char *);
@@ -20,7 +20,7 @@ class ResourceGLSL : public Resource {
     private:
         std::string shaderCode;
         REEnums::ShaderType type;
-        ResourceManager *loadedBy;
+        
 };
 
 #endif

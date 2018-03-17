@@ -1,14 +1,14 @@
 #include "ResourceGLSL.h"
 
-ResourceGLSL::ResourceGLSL(ResourceManager *rm){
-    loadedBy = rm;
+ResourceGLSL::ResourceGLSL(){
+
 }
 
 ResourceGLSL::~ResourceGLSL(){
 	
 }
 
-void ResourceGLSL::load(const char *path, bool sync){
+void ResourceGLSL::load(const char *path){
     setIdentifier(path);
     std::string file_path(path);
     

@@ -81,11 +81,15 @@ RESceneNode* RamaEngine::createSceneNode(RESceneNode* layer) {
 }
 
 REMesh* RamaEngine::createMesh(std::string mesh) {
-    return new REMesh(defaultSceneNode, (ResourceOBJ*)REManager->getResource(mesh, true));
+    ResourceOBJ *obj = (ResourceOBJ*)REManager->getResource(mesh, true);
+    ResourceMTL *mtl = (ResourceMTL*)REManager->getResource(obj->getDefaultMaterialPath(), true);
+    return new REMesh(defaultSceneNode, obj, mtl);
 }
 
 REMesh* RamaEngine::createMesh(RESceneNode* layer, std::string mesh) {
-    return new REMesh(layer, (ResourceOBJ*)REManager->getResource(mesh, true));
+    ResourceOBJ *obj = (ResourceOBJ*)REManager->getResource(mesh, true);
+    ResourceMTL *mtl = (ResourceMTL*)REManager->getResource(obj->getDefaultMaterialPath(), true);
+    return new REMesh(layer, obj, mtl);
 }
 
 REAnimation* RamaEngine::createAnimation(std::string anim) {

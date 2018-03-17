@@ -16,7 +16,7 @@ class REEnums {
             VERTEX,
             FRAGMENT
         };
-        enum Matrices{
+        enum Matrices {
             MATRIX_PROJECTION = 0,
             MATRIX_VIEW,
             MATRIX_MODEL,
@@ -25,6 +25,13 @@ class REEnums {
             MATRIX_VIEWMODEL,
             MATRIX_LIGHT,
             MATRICES
+        };
+        enum TextureTypes {
+            TEXTURE_AMBIENT,
+            TEXTURE_DIFFUSE,
+            TEXTURE_SPECULAR,
+            TEXTURE_ALPHA,
+            TEXtURE_BUMP
         };
 };
 

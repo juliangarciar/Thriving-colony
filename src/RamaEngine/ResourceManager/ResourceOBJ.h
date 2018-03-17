@@ -4,23 +4,25 @@
 #include "Resource.h"
 #include "ResourceManager.h"
 
-#include "../Graphics/TResourceMesh.h"
+#include "Helpers/ResourceMesh.h"
 
 class ResourceOBJ : public Resource {
     public:
-        ResourceOBJ(ResourceManager *);
+        ResourceOBJ();
         ~ResourceOBJ();
 
-        void load(const char *path, bool sync);
+        void load(const char *path);
         void release();
 
         void setIdentifier(const char *);
         const char *getIdentifier();
 
-        std::vector<TResourceMesh*> *getResource();
+        std::map<std::string, ResourceMesh*> *getResource();
+
+        std::string getDefaultMaterialPath();
     private:
-        std::vector<TResourceMesh*> objMesh;
-        ResourceManager *loadedBy;
+        std::map<std::string, ResourceMesh*> meshArray;
+        std::string defaultMaterialPath;
 };
 
 #endif

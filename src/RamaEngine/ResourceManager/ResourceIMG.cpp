@@ -2,19 +2,19 @@
 
 #include <glm/glm.hpp>
 
-ResourceIMG::ResourceIMG(ResourceManager *rm){
-    loadedBy = rm;
+ResourceIMG::ResourceIMG(){
+
 }
 
 ResourceIMG::~ResourceIMG(){
 	
 }
 
-void ResourceIMG::load(const char *path, bool sync){
-    resource = SOIL_load_image(
+void ResourceIMG::load(const char *path){
+    resource = stbi_load(
         path,
         &width, &height, &channels,
-        SOIL_LOAD_AUTO
+        0
     );
 }
 
@@ -30,7 +30,7 @@ const char *ResourceIMG::getIdentifier(){
     return identifier;
 }
 
-void *ResourceIMG::getResource(){
+unsigned char *ResourceIMG::getResource(){
     return resource;
 }
 

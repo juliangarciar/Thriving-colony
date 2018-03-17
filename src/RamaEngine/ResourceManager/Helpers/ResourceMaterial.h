@@ -1,14 +1,13 @@
-#ifndef TMATERIAL_H
-#define TMATERIAL_H
+#ifndef RESOURCEMATERIAL_H
+#define RESOURCEMATERIAL_H
 
-#include "../RETypes.h"
-#include "../REColor.h"
-#include "TTexture.h"
+#include "../../RETypes.h"
+#include "../../REColor.h"
 
-class TMaterial {
+class ResourceMaterial {
     public:
-        TMaterial();
-        ~TMaterial();
+        ResourceMaterial();
+        ~ResourceMaterial();
 
         void setName(std::string newName);
         std::string getName();
@@ -34,21 +33,20 @@ class TMaterial {
         void setIllumination(i32 i);
         i32 getIllumination();
 
-        void setAmbientTextureMap(std::string, TTexture *atm);
-        TTexture *getAmbientTextureMap();
+        void setAmbientTextureMap(std::string);
+        std::string getAmbientTextureMap();
 
-        void setDiffuseTextureMap(std::string, TTexture *dtm);
-        TTexture *getDiffuseTextureMap();
+        void setDiffuseTextureMap(std::string);
+        std::string getDiffuseTextureMap();
 
-        void setSpecularTextureMap(std::string, TTexture *stm);
-        TTexture *getSpecularTextureMap();
+        void setSpecularTextureMap(std::string);
+        std::string getSpecularTextureMap();
 
-        void setAlphaTextureMap(std::string, TTexture *atm);
-        TTexture *getAlphaTextureMap();
+        void setAlphaTextureMap(std::string);
+        std::string getAlphaTextureMap();
 
-        void setBumpMap(std::string, TTexture *bm);
-        TTexture *getBumpMap();
-
+        void setBumpMap(std::string);
+        std::string getBumpMap();
     private:
         std::string materialName;
         glm::vec3 ambientColor;
@@ -60,11 +58,11 @@ class TMaterial {
         f32 dissolve;
         i32 illumination;
 
-        TTexture *ambientTextureMap;
-        TTexture *diffuseTextureMap;
-        TTexture *specularTextureMap;
-        TTexture *alphaTextureMap;
-        TTexture *bumpMap;
+        std::string ambientTextureMap;
+        std::string diffuseTextureMap;
+        std::string specularTextureMap;
+        std::string alphaTextureMap;
+        std::string bumpMap;
 };
 
 #endif

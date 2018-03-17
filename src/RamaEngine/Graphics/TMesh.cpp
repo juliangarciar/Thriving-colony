@@ -2,8 +2,9 @@
 
 #include "../ResourceManager/ResourceOBJ.h"
 
-TMesh::TMesh(TResourceMesh *r) : TEntity() {
+TMesh::TMesh(ResourceMesh *r, ResourceMaterial *m) : TEntity() {
 	mesh = r;
+	material = m;
 
 	glGenBuffers(1, &vertexbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
@@ -15,7 +16,7 @@ TMesh::TMesh(TResourceMesh *r) : TEntity() {
 
 	glGenBuffers(1, &uvbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
-	glBufferData(GL_ARRAY_BUFFER, mesh->getTextureCoordinates().size() * sizeof(glm::vec2), &mesh->getTextureCoordinates()[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, mesh->getUVs().size() * sizeof(glm::vec2), &mesh->getUVs()[0], GL_STATIC_DRAW);
 	
 	// Generate a buffer for the indices as well
 	glGenBuffers(1, &elementbuffer);
@@ -47,9 +48,9 @@ void TMesh::beginDraw() {
 	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_VIEWMODEL), 1, GL_FALSE, &MV[0][0]);
 	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_MVP), 1, GL_FALSE, &MVP[0][0]);
 
-	glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, mesh->getMaterial()->getDiffuseTextureMap()->getTextureID());
-    glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE), 0);
+	//glActiveTexture(GL_TEXTURE0);
+    //glBindTexture(GL_TEXTURE_2D, material->getDiffuseTextureMap()->getTextureID());
+    //glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE), 0);
 
 	// 1rst attribute buffer : vertices
 	glEnableVertexAttribArray(0);

@@ -2,4 +2,8 @@
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./lib
 sudo ldconfig
 
-make run
+if [ "$1" == "debug" ]; then
+    make debug
+else
+    make run
+fi

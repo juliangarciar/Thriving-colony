@@ -1,12 +1,33 @@
 #include "REMesh.h"
 
-REMesh::REMesh(RESceneNode* parent, ResourceOBJ *obj) {
+REMesh::REMesh(RESceneNode* parent, ResourceOBJ *obj, ResourceMTL *mtl) {
     rotationNode = new TNode(new TTransform(), parent->getSceneNode());
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
-    //ToDo: vector?
-    std::vector<TResourceMesh *> submeshes = *obj->getResource();
-    meshNode = new TNode(new TMesh(submeshes.at(0)), scaleNode);
+
+    std::map<std::string, ResourceMesh *> submeshes = *obj->getResource();
+    std::map<std::string, ResourceMaterial *> submats = *mtl->getResource();
+
+    for (std::map<std::string, ResourceMesh *>::iterator it=submeshes.begin(); it!=submeshes.end(); ++it) {
+        std::map<std::string, ResourceMaterial *>::iterator it2;
+        it2 = submats.find(it->second->getDefaultMaterialName());
+        if (it2 == submats.end()){
+            std::cout << "No existe material " << it->second->getDefaultMaterialName() << " para el mesh " << it->first << std::endl;
+            exit(0);
+        }
+
+        TMesh *tempMesh = new TMesh(it->second, it2->second);
+
+        meshes.push_back(tempMesh);
+
+        /*if (curMat.map_bump != ""){
+            ResourceIMG *tempResourceIMG = (ResourceIMG*)loadedBy->getResource(curMat.map_bump, sync);
+            TTexture *tempTex = new TTexture(tempResourceIMG);
+            tempMat -> setBumpMap(, tempTex);
+        }*/
+    }
+
+    meshNode = new TNode(meshes.at(0), scaleNode);
 }
 
 REMesh::~REMesh() {

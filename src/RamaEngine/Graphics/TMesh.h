@@ -4,7 +4,8 @@
 #include <GL/gl.h>
 
 #include "TEntity.h"
-#include "TResourceMesh.h"
+#include "../ResourceManager/Helpers/ResourceMesh.h"
+#include "../ResourceManager/Helpers/ResourceMaterial.h"
 #include "TTexture.h"
 
 class TMesh : public TEntity {
@@ -13,7 +14,7 @@ class TMesh : public TEntity {
          * @brief 
          * 
          */
-        TMesh(TResourceMesh *);
+        TMesh(ResourceMesh *, ResourceMaterial *);
 
         /**
          * @brief 
@@ -34,8 +35,9 @@ class TMesh : public TEntity {
         virtual void endDraw();
 
     private:
-        TResourceMesh* mesh;
-        TTexture* texture;
+        ResourceMesh* mesh;
+        ResourceMaterial* material;
+        std::map<REEnums::TextureTypes, TTexture*> textures;
 
         GLuint vertexbuffer;
         GLuint normalbuffer;

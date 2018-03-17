@@ -4,17 +4,15 @@
 #include <objloader/vboindexer.hpp>
 #include <glm/glm.hpp>
 
-#include "../Graphics/TMaterial.h"
+ResourceOBJ::ResourceOBJ(){
 
-ResourceOBJ::ResourceOBJ(ResourceManager *rm){
-    loadedBy = rm;
 }
 
 ResourceOBJ::~ResourceOBJ(){
     
 }
 
-void ResourceOBJ::load(const char *path, bool sync){
+void ResourceOBJ::load(const char *path){
     setIdentifier(path);
     objl::Loader loader;
     bool loadout = loader.LoadFile(path);
@@ -23,11 +21,13 @@ void ResourceOBJ::load(const char *path, bool sync){
         exit(0);
     }
 
+    defaultMaterialPath = loader.pathToMaterial;
+
     for (int i = 0; i < loader.LoadedMeshes.size(); i++) {
         // Copy one of the loaded meshes to be our current mesh
         objl::Mesh curMesh = loader.LoadedMeshes[i];
 
-        TResourceMesh *tempMesh = new TResourceMesh(curMesh.MeshName);
+        ResourceMesh *tempMesh = new ResourceMesh(curMesh.MeshName);
 
         std::vector<glm::vec3> vertices;
         std::vector<glm::vec3> normals;
@@ -51,60 +51,19 @@ void ResourceOBJ::load(const char *path, bool sync){
 
         tempMesh->setVertices(indexed_vertices);
         tempMesh->setNormals(indexed_normals);
-        tempMesh->setTextureCoordinates(indexed_uvs);
+        tempMesh->setUVs(indexed_uvs);
         tempMesh->setIndices(indices);
+        tempMesh->setDefaultMaterialName(curMesh.MeshMaterial.name);
 
-        TMaterial *tempMat = new TMaterial();
-        tempMat -> setName(curMesh.MeshMaterial.name);
-        tempMat -> setAmbientColor(glm::vec3(curMesh.MeshMaterial.Ka.X, curMesh.MeshMaterial.Ka.Y, curMesh.MeshMaterial.Ka.Z));
-        tempMat -> setDiffuseColor(glm::vec3(curMesh.MeshMaterial.Kd.X, curMesh.MeshMaterial.Kd.Y, curMesh.MeshMaterial.Kd.Z));
-        tempMat -> setSpecularColor(glm::vec3(curMesh.MeshMaterial.Ks.X, curMesh.MeshMaterial.Ks.Y, curMesh.MeshMaterial.Ks.Z));
-        tempMat -> setSpecularExponent(curMesh.MeshMaterial.Ns);
-        tempMat -> setOpticalDensity(curMesh.MeshMaterial.Ni);
-        tempMat -> setDissolve(curMesh.MeshMaterial.d);
-        tempMat -> setIllumination(curMesh.MeshMaterial.illum);
-
-        if (curMesh.MeshMaterial.map_Ka != ""){
-            ResourceIMG *tempResourceIMG = (ResourceIMG*)loadedBy->getResource(curMesh.MeshMaterial.map_Ka, sync);
-            TTexture *tempTex = new TTexture(tempResourceIMG);
-            tempMat -> setAmbientTextureMap(curMesh.MeshMaterial.map_Ka, tempTex);
-        }
-
-        if (curMesh.MeshMaterial.map_Kd != ""){
-            ResourceIMG *tempResourceIMG = (ResourceIMG*)loadedBy->getResource(curMesh.MeshMaterial.map_Kd, sync);
-            TTexture *tempTex = new TTexture(tempResourceIMG);
-            tempMat -> setDiffuseTextureMap(curMesh.MeshMaterial.map_Kd, tempTex);
-        }
-
-        if (curMesh.MeshMaterial.map_Ks != ""){
-            ResourceIMG *tempResourceIMG = (ResourceIMG*)loadedBy->getResource(curMesh.MeshMaterial.map_Ks, sync);
-            TTexture *tempTex = new TTexture(tempResourceIMG);
-            tempMat -> setSpecularTextureMap(curMesh.MeshMaterial.map_Ks, tempTex);
-        }
-
-        if (curMesh.MeshMaterial.map_d != ""){
-            ResourceIMG *tempResourceIMG = (ResourceIMG*)loadedBy->getResource(curMesh.MeshMaterial.map_d, sync);
-            TTexture *tempTex = new TTexture(tempResourceIMG);
-            tempMat -> setAlphaTextureMap(curMesh.MeshMaterial.map_d, tempTex);
-        }
-
-        if (curMesh.MeshMaterial.map_bump != ""){
-            ResourceIMG *tempResourceIMG = (ResourceIMG*)loadedBy->getResource(curMesh.MeshMaterial.map_bump, sync);
-            TTexture *tempTex = new TTexture(tempResourceIMG);
-            tempMat -> setBumpMap(curMesh.MeshMaterial.map_bump, tempTex);
-        }
-       
-        tempMesh -> setMaterial(tempMat);
-
-        objMesh.push_back(tempMesh);
+        meshArray.insert(std::pair<std::string, ResourceMesh*>(curMesh.MeshName, tempMesh));
     }
 }
 
 void ResourceOBJ::release(){
-    for (int i=0; i < objMesh.size(); i++){
-        delete objMesh.at(i);
+    for (std::map<std::string, ResourceMesh*>::iterator it = meshArray.begin(); it != meshArray.end(); ++it){
+        delete it->second;
     }
-    objMesh.clear();
+    meshArray.clear();
 }
 
 void ResourceOBJ::setIdentifier(const char *i){
@@ -115,6 +74,10 @@ const char *ResourceOBJ::getIdentifier(){
     return identifier;
 }
 
-std::vector<TResourceMesh*> *ResourceOBJ::getResource(){
-    return &objMesh;
+std::map<std::string, ResourceMesh*> *ResourceOBJ::getResource(){
+    return &meshArray;
+}
+
+std::string ResourceOBJ::getDefaultMaterialPath(){
+    return defaultMaterialPath;
 }

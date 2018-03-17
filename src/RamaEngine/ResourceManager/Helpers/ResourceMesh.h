@@ -1,35 +1,35 @@
-#ifndef TRESOURCEMESH_H
-#define TRESOURCEMESH_H
+#ifndef RESOURCEMESH_H
+#define RESOURCEMESH_H
 
-#include "../RETypes.h"
-#include "TMaterial.h"
+#include "../../RETypes.h"
 
-class TResourceMesh {
+class ResourceMesh {
     public:
-        TResourceMesh(std::string);
-        ~TResourceMesh();
+        ResourceMesh(std::string);
+        ~ResourceMesh();
 
         void setVertices(std::vector<glm::vec3>);
         void setNormals(std::vector<glm::vec3>);
-        void setTextureCoordinates(std::vector<glm::vec2>);
+        void setUVs(std::vector<glm::vec2>);
         void setIndices(std::vector<us32>);
 
-        void setMaterial(TMaterial *);
+        void setDefaultMaterialName(std::string);
 
         std::vector<glm::vec3> getVertices();
         std::vector<glm::vec3> getNormals();
-        std::vector<glm::vec2> getTextureCoordinates();
+        std::vector<glm::vec2> getUVs();
         std::vector<us32> getIndices();
 
-        TMaterial *getMaterial();
+        std::string getDefaultMaterialName();
     private:
         std::string name;
-        TMaterial *material;
 
         std::vector<glm::vec3> vertices;
         std::vector<glm::vec3> normals;
-        std::vector<glm::vec2> textureCoordinates;
+        std::vector<glm::vec2> uvs;
         std::vector<us32> indices;
+
+        std::string defaultMaterialName;
 };
 
 #endif

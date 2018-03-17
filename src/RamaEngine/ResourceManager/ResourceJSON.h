@@ -10,10 +10,10 @@ using json = nlohmann::json;
 
 class ResourceJSON : public Resource {
     public:
-        ResourceJSON(ResourceManager *);
+        ResourceJSON();
         ~ResourceJSON();
  
-        void load(const char *path, bool sync);
+        void load(const char *path);
         void release();
 
         void setIdentifier(const char *);
@@ -22,7 +22,7 @@ class ResourceJSON : public Resource {
         json *getJSON();
     private:
         json j;
-        ResourceManager *loadedBy;
+        
 };
 
 #endif
