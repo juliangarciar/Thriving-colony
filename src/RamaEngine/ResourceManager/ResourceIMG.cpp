@@ -1,6 +1,7 @@
 #include "ResourceIMG.h"
 
-#include <glm/glm.hpp>
+#define STB_IMAGE_IMPLEMENTATION
+#include <stb_image/stb_image.h>
 
 ResourceIMG::ResourceIMG(){
 
@@ -16,10 +17,14 @@ void ResourceIMG::load(const char *path){
         &width, &height, &channels,
         0
     );
+    if (!resource) {
+        std::cout << "Failed opening " << path << " image. Check the path." << std::endl;
+        exit(0);
+    } 
 }
 
 void ResourceIMG::release(){
-   
+    stbi_image_free(resource);
 }
 
 void ResourceIMG::setIdentifier(const char *i){

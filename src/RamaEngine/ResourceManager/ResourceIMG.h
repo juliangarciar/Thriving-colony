@@ -4,8 +4,6 @@
 #include "Resource.h"
 #include "ResourceManager.h"
 
-#include <stb_image/stb_image.h>
-
 class ResourceIMG : public Resource {
     public:
         ResourceIMG();

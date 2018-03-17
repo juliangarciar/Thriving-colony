@@ -53,23 +53,23 @@ void TMesh::beginDraw() {
 		if (it->first == REEnums::TextureTypes::TEXTURE_AMBIENT) {
 			glActiveTexture(GL_TEXTURE0 + texturesLoaded);
 			glBindTexture(GL_TEXTURE_2D, it->second->getTextureID());
-			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_AMBIENT), 0);
+			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_AMBIENT), texturesLoaded);
 		} else if (it->first == REEnums::TextureTypes::TEXTURE_DIFFUSE) {
 			glActiveTexture(GL_TEXTURE0 + texturesLoaded);
 			glBindTexture(GL_TEXTURE_2D, it->second->getTextureID());
-			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_DIFFUSE), 0);
+			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_DIFFUSE), texturesLoaded);
 		} else if (it->first == REEnums::TextureTypes::TEXTURE_SPECULAR) {
 			glActiveTexture(GL_TEXTURE0 + texturesLoaded);
 			glBindTexture(GL_TEXTURE_2D, it->second->getTextureID());
-			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_SPECULAR), 0);
+			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_SPECULAR), texturesLoaded);
 		} else if (it->first == REEnums::TextureTypes::TEXTURE_ALPHA) {
 			glActiveTexture(GL_TEXTURE0 + texturesLoaded);
 			glBindTexture(GL_TEXTURE_2D, it->second->getTextureID());
-			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_ALPHA), 0);
+			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_ALPHA), texturesLoaded);
 		} else if (it->first == REEnums::TextureTypes::TEXTURE_BUMP) {
 			glActiveTexture(GL_TEXTURE0 + texturesLoaded);
 			glBindTexture(GL_TEXTURE_2D, it->second->getTextureID());
-			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_BUMP), 0);
+			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_BUMP), texturesLoaded);
 		}
 		texturesLoaded++;
 	}

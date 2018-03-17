@@ -32,10 +32,6 @@ void ResourceOBJ::load(const char *path){
         std::vector<glm::vec3> vertices;
         std::vector<glm::vec3> normals;
         std::vector<glm::vec2> uvs;
-        std::vector<us32> indices;
-        std::vector<glm::vec3> indexed_vertices;
-        std::vector<glm::vec2> indexed_uvs;
-        std::vector<glm::vec3> indexed_normals;
 
         for (int j = 0; j < curMesh.Vertices.size(); j++) {
             glm::vec3 position(curMesh.Vertices[j].Position.X, curMesh.Vertices[j].Position.Y, curMesh.Vertices[j].Position.Z);
@@ -47,6 +43,10 @@ void ResourceOBJ::load(const char *path){
             uvs.push_back(textureCoordinate);
         }
 
+        std::vector<glm::vec3> indexed_vertices;
+        std::vector<glm::vec3> indexed_normals;
+        std::vector<glm::vec2> indexed_uvs;
+        std::vector<us32> indices;
         indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
 
         tempMesh->setVertices(indexed_vertices);
