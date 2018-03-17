@@ -9,19 +9,19 @@
 #include <MathEngine/Vector2.h>
 
 /**
- * @class BattleManager
- * @brief Create a BattleManager type object
+ * @class BattleManager.
+ * @brief Create a BattleManager type object.
  */
 class BattleManager {
     
     public:
         /**
-         * @brief BattleManager constructor
+         * @brief BattleManager constructor.
          */
         BattleManager();
 
         /**
-         * @brief BattleManager destructor
+         * @brief BattleManager destructor.
          */
         virtual ~BattleManager();
 
