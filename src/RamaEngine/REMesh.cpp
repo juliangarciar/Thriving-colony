@@ -29,6 +29,8 @@ REMesh::~REMesh() {
 
 }
 
+//ToDo: poder cambiar material de cada mesh (o de todos cambiando el MTL)
+
 void REMesh::rotate(f32 rX, f32 rY, f32 rZ, f32 angle) {
     TTransform* t = (TTransform*) rotationNode -> getEntity();
     t -> rotate(rX, rY, rZ, angle);
@@ -54,4 +56,8 @@ u32 REMesh::getMeshAmount(){
 
 TMesh *REMesh::getMesh(std::string meshName){
     return meshes[meshName];
+}
+
+std::map<std::string, TMesh*> REMesh::getMeshes(){
+    return meshes;
 }

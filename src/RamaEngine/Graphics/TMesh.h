@@ -40,6 +40,19 @@ class TMesh : public TEntity {
          */
         virtual void setTexture(REEnums::TextureTypes, TTexture*);
 
+        /**
+         * @brief Get the Mesh object
+         * 
+         * @return ResourceMesh* 
+         */
+        ResourceMesh* getMesh();
+
+        /**
+         * @brief Get the Material object
+         * 
+         * @return ResourceMaterial* 
+         */
+        ResourceMaterial* getMaterial();
     private:
         ResourceMesh* mesh;
         ResourceMaterial* material;

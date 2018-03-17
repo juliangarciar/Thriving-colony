@@ -133,3 +133,11 @@ void TMesh::endDraw() {
 void TMesh::setTexture(REEnums::TextureTypes tt, TTexture* t){
 	textures[tt] = t;
 }
+
+ResourceMesh* TMesh::getMesh(){
+	return mesh;
+}
+
+ResourceMaterial* TMesh::getMaterial(){
+	return material;
+}

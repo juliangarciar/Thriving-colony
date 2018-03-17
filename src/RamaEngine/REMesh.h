@@ -68,6 +68,13 @@ class REMesh {
          * @return TMesh* 
          */
         TMesh *getMesh(std::string);
+
+        /**
+         * @brief Get the Meshes object
+         * 
+         * @return std::map<std::string, TMesh*> 
+         */
+        std::map<std::string, TMesh*> getMeshes();
     private:
         TNode* meshNode;
         TNode* rotationNode;
