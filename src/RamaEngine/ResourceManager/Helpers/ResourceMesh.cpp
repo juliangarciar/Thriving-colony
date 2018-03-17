@@ -47,3 +47,7 @@ std::vector<us32> ResourceMesh::getIndices(){
 std::string ResourceMesh::getDefaultMaterialName(){
     return defaultMaterialName;
 }
+
+std::string ResourceMesh::getName(){
+    return name;
+}

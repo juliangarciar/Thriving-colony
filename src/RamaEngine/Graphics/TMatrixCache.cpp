@@ -39,7 +39,7 @@ void TMatrixCache::setMatrixID(REEnums::Matrices t, GLuint i){
 GLuint TMatrixCache::getMatrixID(REEnums::Matrices t){
     return matrixIDs.at(t);
 }
-//PABAJO
+
 void TMatrixCache::setCurrentMatrix(const glm::mat4& m) {
     currentMatrix = m;
 }

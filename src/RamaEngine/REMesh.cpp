@@ -18,16 +18,11 @@ REMesh::REMesh(RESceneNode* parent, ResourceOBJ *obj, ResourceMTL *mtl) {
 
         TMesh *tempMesh = new TMesh(it->second, it2->second);
 
-        meshes.push_back(tempMesh);
-
-        /*if (curMat.map_bump != ""){
-            ResourceIMG *tempResourceIMG = (ResourceIMG*)loadedBy->getResource(curMat.map_bump, sync);
-            TTexture *tempTex = new TTexture(tempResourceIMG);
-            tempMat -> setBumpMap(, tempTex);
-        }*/
+        meshes.insert(std::pair<std::string, TMesh*>(it->second->getName(), tempMesh));
     }
 
-    meshNode = new TNode(meshes.at(0), scaleNode);
+    //ToDo: un nodo para cada submesh
+    meshNode = new TNode(meshes.begin()->second, scaleNode);
 }
 
 REMesh::~REMesh() {
@@ -47,4 +42,16 @@ void REMesh::scale(f32 sX, f32 sY, f32 sZ) {
 void REMesh::translate(f32 tX, f32 tY, f32 tZ) {
     TTransform* t = (TTransform*) translationNode -> getEntity();
     t -> translate(tX, tY, tZ);
+}
+
+void REMesh::setTexture(std::string name, REEnums::TextureTypes tt, ResourceIMG *t){
+    meshes[name] -> setTexture(tt, new TTexture(t));
+}
+
+u32 REMesh::getMeshAmount(){
+    return meshes.size();
+}
+
+TMesh *REMesh::getMesh(std::string meshName){
+    return meshes[meshName];
 }

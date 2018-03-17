@@ -34,6 +34,12 @@ class TMesh : public TEntity {
          */
         virtual void endDraw();
 
+        /**
+         * @brief Set the Texture object
+         * 
+         */
+        virtual void setTexture(REEnums::TextureTypes, TTexture*);
+
     private:
         ResourceMesh* mesh;
         ResourceMaterial* material;

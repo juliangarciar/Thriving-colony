@@ -47,9 +47,32 @@ void TMesh::beginDraw() {
 	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_VIEWMODEL), 1, GL_FALSE, &MV[0][0]);
 	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_MVP), 1, GL_FALSE, &MVP[0][0]);
 
-	//glActiveTexture(GL_TEXTURE0);
-    //glBindTexture(GL_TEXTURE_2D, material->getDiffuseTextureMap()->getTextureID());
-    //glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE), 0);
+	//ToDo: mejorar
+	int texturesLoaded = 0;
+ 	for (std::map<REEnums::TextureTypes, TTexture*>::iterator it = textures.begin(); it != textures.end(); ++it) {
+		if (it->first == REEnums::TextureTypes::TEXTURE_AMBIENT) {
+			glActiveTexture(GL_TEXTURE0 + texturesLoaded);
+			glBindTexture(GL_TEXTURE_2D, it->second->getTextureID());
+			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_AMBIENT), 0);
+		} else if (it->first == REEnums::TextureTypes::TEXTURE_DIFFUSE) {
+			glActiveTexture(GL_TEXTURE0 + texturesLoaded);
+			glBindTexture(GL_TEXTURE_2D, it->second->getTextureID());
+			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_DIFFUSE), 0);
+		} else if (it->first == REEnums::TextureTypes::TEXTURE_SPECULAR) {
+			glActiveTexture(GL_TEXTURE0 + texturesLoaded);
+			glBindTexture(GL_TEXTURE_2D, it->second->getTextureID());
+			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_SPECULAR), 0);
+		} else if (it->first == REEnums::TextureTypes::TEXTURE_ALPHA) {
+			glActiveTexture(GL_TEXTURE0 + texturesLoaded);
+			glBindTexture(GL_TEXTURE_2D, it->second->getTextureID());
+			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_ALPHA), 0);
+		} else if (it->first == REEnums::TextureTypes::TEXTURE_BUMP) {
+			glActiveTexture(GL_TEXTURE0 + texturesLoaded);
+			glBindTexture(GL_TEXTURE_2D, it->second->getTextureID());
+			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_BUMP), 0);
+		}
+		texturesLoaded++;
+	}
 
 	// 1rst attribute buffer : vertices
 	glEnableVertexAttribArray(0);
@@ -105,4 +128,8 @@ void TMesh::beginDraw() {
 
 void TMesh::endDraw() {
 
+}
+
+void TMesh::setTexture(REEnums::TextureTypes tt, TTexture* t){
+	textures[tt] = t;
 }

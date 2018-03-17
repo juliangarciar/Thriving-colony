@@ -20,6 +20,7 @@ class ResourceMesh {
         std::vector<glm::vec2> getUVs();
         std::vector<us32> getIndices();
 
+        std::string getName();
         std::string getDefaultMaterialName();
     private:
         std::string name;
