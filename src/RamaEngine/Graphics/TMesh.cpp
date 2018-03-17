@@ -36,8 +36,7 @@ void TMesh::beginDraw() {
 
 	glm::mat4 pM = *cache->getMatrix(REEnums::Matrices::MATRIX_PROJECTION);
 	glm::mat4 vM = *cache->getMatrix(REEnums::Matrices::MATRIX_VIEW);
-	glm::mat4 mM = *cache->getMatrix(REEnums::Matrices::MATRIX_MODEL);
-	mM = glm::mat4(1.0f); //ToDo: aqui esta roto
+	glm::mat4 mM = cache->getCurrentMatrix();
 
 	// Matrices
 	glm::mat4 MV = vM * mM;
