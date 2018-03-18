@@ -17,8 +17,43 @@ StartMenu::StartMenu() {
     bgOptions -> setSize(Vector2<i32>(400, 300));
     bgOptions -> setVerticalLayout();
 
-    buttonAccept = new Button(bgOptions, "Accept changes");
+    std::vector<std::string> *languages = new std::vector<std::string>();
+    std::vector<std::string> *resolution = new std::vector<std::string>();
 
+    languages -> push_back("English");
+    languages -> push_back("Spanish");
+
+    resolution -> push_back("640x480");
+    resolution -> push_back("1080x720");
+
+
+    languageP = new Label(bgOptions, "Choose a language.");
+    languageP -> setSize(Vector2<i32>(120, 25));
+
+    languageCb = new ComboBox(bgOptions, *languages);
+    languageCb -> setPosition(Vector2<i32>(400, 200));
+    languageCb -> setSize(Vector2<i32>(120, 60));
+
+    resolutionP = new Label(bgOptions, "Choose a screen resolution.");
+    resolutionP -> setSize(Vector2<i32>(180, 25));
+
+    resolutionCb = new ComboBox(bgOptions, *resolution);
+    resolutionCb -> setPosition(Vector2<i32>(400, 200));
+    resolutionCb -> setSize(Vector2<i32>(120, 60));
+
+
+    languages -> clear();
+    delete languages;
+    resolution -> clear();
+    delete resolution;//me irl
+    // No va bien
+    /*
+    volumeSlider = new Slider(bgOptions);
+    //bgOptions -> addChild(volumeSlider);
+    volumeSlider -> setRange(std::pair<f32, f32>(0,100));
+    volumeSlider -> setPosition(Vector2<i32>(400, 300));
+*/
+    buttonAccept = new Button(bgOptions, "Accept changes");
     bgOptions -> hide();
     //Play
 
@@ -49,6 +84,11 @@ StartMenu::StartMenu() {
     mapsCb -> setPosition(Vector2<i32>(400, 200));
     mapsCb -> setSize(Vector2<i32>(120, 60));
 
+    races -> clear();
+    delete races;
+    maps -> clear();
+    delete maps;
+
     buttonPlay = new Button(bgPlay, "Start match");
     buttonBack = new Button(bgPlay, "Main menu"); 
     bgPlay -> hide();
@@ -62,7 +102,13 @@ StartMenu::~StartMenu() {
     delete bgMain;
     delete buttonQuit;
     delete buttonStart;
+
     delete bgOptions;
+    delete languageP;
+    delete languageCb,
+    delete resolutionP;
+    delete resolutionCb;
+    delete volumeSlider;
     delete buttonAccept;
 
     delete bgPlay;
