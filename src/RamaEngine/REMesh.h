@@ -5,6 +5,7 @@
 #include "RESceneNode.h"
 
 #include "ResourceManager/ResourceOBJ.h"
+#include "ResourceManager/ResourceMTL.h"
 
 #include "Graphics/TNode.h"
 #include "Graphics/TTransform.h"
@@ -16,9 +17,10 @@ class REMesh {
          * @brief 
          * 
          * @param  
-         * @param  
+         * @param 
+         * @param 
          */
-        REMesh(RESceneNode*, ResourceOBJ *);
+        REMesh(RESceneNode*, ResourceOBJ *, ResourceMTL *);
 
         /**
          * @brief 
@@ -47,12 +49,39 @@ class REMesh {
          */
         void translate(f32 tX, f32 tY, f32 tZ);
 
+        /**
+         * @brief Set the Texture object
+         * 
+         */
+        void setTexture(std::string, REEnums::TextureTypes, ResourceIMG*);
+
+        /**
+         * @brief Get the Mesh Amount object
+         * 
+         * @return u32 
+         */
+        u32 getMeshAmount();
+
+        /**
+         * @brief Get the Mesh object
+         * 
+         * @return TMesh* 
+         */
+        TMesh *getMesh(std::string);
+
+        /**
+         * @brief Get the Meshes object
+         * 
+         * @return std::map<std::string, TMesh*> 
+         */
+        std::map<std::string, TMesh*> getMeshes();
     private:
         TNode* meshNode;
         TNode* rotationNode;
         TNode* translationNode;
         TNode* scaleNode;
         
+        std::map<std::string, TMesh*> meshes;
 };
 
 #endif

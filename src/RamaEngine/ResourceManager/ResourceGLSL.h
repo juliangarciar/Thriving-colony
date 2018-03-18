@@ -2,6 +2,7 @@
 #define RESOURCEGLSL_H
 
 #include "Resource.h"
+#include "ResourceManager.h"
 
 class ResourceGLSL : public Resource {
     public:
@@ -19,6 +20,7 @@ class ResourceGLSL : public Resource {
     private:
         std::string shaderCode;
         REEnums::ShaderType type;
+        
 };
 
 #endif

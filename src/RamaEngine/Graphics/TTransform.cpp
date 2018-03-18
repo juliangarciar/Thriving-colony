@@ -9,19 +9,14 @@ TTransform::~TTransform() {
 }
 
 void TTransform::beginDraw(){
-    matrixStack.push(matrix);
-    // Por la derecha
-	glm::mat4 mM = *TMatrixCache::Instance()->getMatrix(REEnums::Matrices::MATRIX_MODEL);
-    mM = mM * matrix;
-    TMatrixCache::Instance()->setMatrix(REEnums::Matrices::MATRIX_MODEL, &mM);
+    TMatrixCache::Instance() -> getMatrixStack().push_back(TMatrixCache::Instance() -> getCurrentMatrix());
+    TMatrixCache::Instance() -> setCurrentMatrix(matrix * TMatrixCache::Instance() -> getCurrentMatrix());
 }
 
 void TTransform::endDraw() {
-    matrixStack.pop();
-    // Por la inversa por la izquierda
-	glm::mat4 mM = *TMatrixCache::Instance()->getMatrix(REEnums::Matrices::MATRIX_MODEL);
-    mM = glm::inverse(matrix) * mM;
-    TMatrixCache::Instance()->setMatrix(REEnums::Matrices::MATRIX_MODEL, &mM);
+
+    TMatrixCache::Instance() -> setCurrentMatrix(TMatrixCache::Instance() -> getMatrixStack().back());
+    TMatrixCache::Instance() -> getMatrixStack().pop_back();
 }
 
 void TTransform::identity() {

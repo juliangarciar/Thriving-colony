@@ -82,8 +82,7 @@ void BuildingManager::drawBuilding() {
 			tempBuilding = nullptr;
 			return;
 		}
-
-		/* Swapped by Julian */
+		
 		if (collision) {
 			tempBuilding->setColor(video::SColor(20, 255, 0, 0));
 		} else {

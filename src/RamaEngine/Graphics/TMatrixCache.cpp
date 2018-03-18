@@ -10,6 +10,7 @@ TMatrixCache* TMatrixCache::Instance() {
 }
 
 TMatrixCache::TMatrixCache() {
+    currentMatrix = glm::mat4(1.0f);
     identityMatrix = glm::mat4(1.0f);
     for (int i = 0; i < REEnums::Matrices::MATRICES; i++){
         matrices.push_back(&identityMatrix);
@@ -37,4 +38,16 @@ void TMatrixCache::setMatrixID(REEnums::Matrices t, GLuint i){
 
 GLuint TMatrixCache::getMatrixID(REEnums::Matrices t){
     return matrixIDs.at(t);
+}
+
+void TMatrixCache::setCurrentMatrix(const glm::mat4& m) {
+    currentMatrix = m;
+}
+
+glm::mat4& TMatrixCache::getCurrentMatrix() {
+    return currentMatrix;
+}
+
+std::deque<glm::mat4>& TMatrixCache::getMatrixStack() {
+    return matrixStack;
 }
