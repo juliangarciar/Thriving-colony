@@ -67,6 +67,10 @@ Vector2<T> Vector2<T>::operator + (const Vector2<T> &p) const {
     return Vector2<T>(this -> x + p.x, this -> y + p.y);
 }
 template <class T>
+Vector2<T> Vector2<T>::operator + (const f32 &num) const {
+    return Vector2<T>(this -> x + num, this -> y + num);
+}
+template <class T>
 Vector2<T> Vector2<T>::operator - (const Vector2<T> &p) const {
     return Vector2<T>(this -> x - p.x, this -> y - p.y);
 }

@@ -10,6 +10,7 @@
 #include <MathEngine/Vector3.h>
 #include <PathPlanner/PathManager.h>
 
+class Troop;
 class Unit : public Entity {
     
     public:
@@ -120,6 +121,8 @@ class Unit : public Entity {
         std::string moveEvent;
         std::string selectEvent;
 
+        /* Juli troops */
+        Troop* troops;
 };
 
 #endif

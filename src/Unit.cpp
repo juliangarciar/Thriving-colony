@@ -6,6 +6,7 @@
 #include "Map.h"
 #include "Hud.h"
 #include "GraphicEngine/Window.h"
+#include "Troop.h"
 
 Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t) : Entity(id, team, breed) {
     // Race type and unit type
@@ -42,6 +43,8 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
 
     //Graphic engine, this should be in the switch (when models done)
     setColor(video::SColor(125, 125, 0, 125)); //ToDo: cambiar por material
+
+    
 }
 
 Unit::~Unit() {
@@ -349,6 +352,8 @@ void Unit::Init() {
         default: break;
     }
     setModel(layer, path);
+    /* Juli */
+    troops = new Troop(layer, path, 4, ID);
     preTaxPlayer();
 }
 
@@ -527,30 +532,6 @@ void Unit::moveTroop() {
         }
     }
 }
-/*
-void Unit::moveTroop() {
-    if (moving) {
-        // close to destination, stop
-        if (std::abs(vectorDes -> x - position -> x) < 5.0 && std::abs(vectorDes -> z - position -> z) < 5.0) {
-            moving = false;
-            if (state == Enumeration::UnitState::Retract) {
-                readyToEnter = true;
-                if (team == Enumeration::Team::Human) {
-                    Human::Instance() -> getUnitManager() -> enterMainBuilding(type);
-                } else {
-                    IA::Instance() -> getUnitManager() -> enterMainBuilding(type);
-                }
-                return;
-            }
-            switchState(Enumeration::Idle);
-        } else {
-            // far from destination, move
-            Vector3<f32> newPos = vectorPos + vectorMov;
-            newPos.y = Game::Instance() -> getGameState() -> getTerrain() -> getY(newPos.x, newPos.z);
-            setTroopPosition(newPos);
-        }
-    }
-}*/
 
 void Unit::attack() {
     if (target != nullptr && target -> getTeam() != team) {
@@ -650,6 +631,7 @@ void Unit::setAttacking(bool attackingPnt) {
 void Unit::setTroopPosition(Vector3<f32> vectorData) {
     vectorPos.set(vectorData);
     setPosition(vectorData);
+    troops->setPosition(vectorData.toVector2());
 }
 // To do -> adjust units movement
 void Unit::setTroopDestination(Vector3<f32> vectorData) {
