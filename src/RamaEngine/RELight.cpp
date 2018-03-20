@@ -73,3 +73,13 @@ TNode* RELight::getLightNode() {
 TLight* RELight::getLightEntity() {
     return (TLight*) lightNode -> getEntity();
 }
+
+void RELight::setPosition(glm::vec3 p) {
+    TLight* l = (TLight*) lightNode -> getEntity();
+    l -> setPosition(p);
+}
+
+glm::vec3 RELight::getPosition() {
+    TLight* l = (TLight*) lightNode -> getEntity();
+    return l -> getPosition();
+}

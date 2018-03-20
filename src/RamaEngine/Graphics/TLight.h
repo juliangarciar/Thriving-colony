@@ -73,13 +73,27 @@ class TLight : public TEntity {
          * @return false otherwise
          */
         bool getActive();
+
+        /**
+         * @brief Set the Position object
+         * 
+         * @param p 
+         */
+        void setPosition(glm::vec3 p);
+
+        /**
+         * @brief Get the Position object
+         * 
+         * @return glm::vec3 
+         */
+        glm::vec3 getPosition();
     private:
         REColor color;
 
         u32 intensity;
 
         glm::vec4 lightMatrix;
-
+        glm::vec3 lightPosition;
         bool active;
 };
 

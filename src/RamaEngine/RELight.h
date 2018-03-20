@@ -62,6 +62,20 @@ class RELight {
         void setColor(REColor);
         
         /**
+         * @brief Set the Position object
+         * 
+         * @param p 
+         */
+        void setPosition(glm::vec3 p);
+
+        /**
+         * @brief Get the Position object
+         * 
+         * @return glm::vec3 
+         */
+        glm::vec3 getPosition();
+
+        /**
          * @brief 
          * 
          * @return REColor 

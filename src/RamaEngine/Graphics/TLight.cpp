@@ -4,6 +4,7 @@ TLight::TLight(REColor c, u32 i, bool a) : TEntity(){
     color = c;
     intensity = i;
     active = a;
+    lightPosition = glm::vec3(0,0,0);
 }
 
 TLight::~TLight(){
@@ -12,6 +13,8 @@ TLight::~TLight(){
 
 void TLight::beginDraw(){
     if (active) {
+        /// esto no sirve pa na porque le vamos a poner la posicion directamente
+        // la posicion es un vector 3 hay que meterle la coordenada homogenea antes de pasarselo a opengl y au
         //lightPosition = glm::vec4(0,0,0,1) * modelMatrix;//Posicion a partir de la matriz luz
         //Pasarselo a OpenGL no va aqui no?
     }
@@ -43,4 +46,12 @@ void TLight::setActive(bool _active) {
 
 bool TLight::getActive() {
     return active;
+}
+
+void TLight::setPosition(glm::vec3 p) {
+    lightPosition = p;
+}
+
+glm::vec3 TLight::getPosition() {
+    return lightPosition;
 }
