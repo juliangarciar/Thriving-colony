@@ -5,6 +5,7 @@ TLight::TLight(REColor c, u32 i, bool a) : TEntity(){
     intensity = i;
     active = a;
     lightPosition = glm::vec3(0,0,0);
+    lightType = REEnums::LightTypes::LIGHT_POINT;
 }
 
 TLight::~TLight(){
