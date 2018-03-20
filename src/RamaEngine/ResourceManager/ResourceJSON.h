@@ -1,9 +1,11 @@
 #ifndef RESOURCEJSON_H
 #define RESOURCEJSON_H
 
-#include <json/json.hpp>
 #include "Resource.h"
- 
+#include "ResourceManager.h"
+
+#include <json/json.hpp>
+
 using json = nlohmann::json; 
 
 class ResourceJSON : public Resource {
@@ -20,6 +22,7 @@ class ResourceJSON : public Resource {
         json *getJSON();
     private:
         json j;
+        
 };
 
 #endif

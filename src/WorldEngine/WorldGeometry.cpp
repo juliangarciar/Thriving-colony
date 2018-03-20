@@ -219,7 +219,7 @@ Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin, 
     Cell* sourceCell = referenceTarget;
     Cell* targetCell = referenceOrigin;
     i32 sourceIndex = sourceCell->getIndex();
-    i32 targetIndex = targetCell->getIndex();
+    //i32 targetIndex = targetCell->getIndex();
     /* Check what's needed and what's not */
     i32 MAX = 16384;
     std::vector<f32> GCosts = std::vector<f32>(MAX, 0);
@@ -277,6 +277,7 @@ Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin, 
             }    
         }
     }
+    return validCell;
 }
 Cell* WorldGeometry::positionToCell(Vector2<f32> position){
     int dummy = (i32)((MAP / CELL) * position.x / MAP) + 

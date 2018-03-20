@@ -30,13 +30,7 @@ class TRoot : public TEntity {
          */
         virtual void endDraw();
     private:
-        GLuint myMVP;
-        GLuint myProjection;
-        GLuint myView;
-        GLuint myModel;
-        GLuint myViewModel;
-        GLuint myTexture;
-        GLuint myLight;
+        std::map<REEnums::Matrices, GLuint> matrixIDs;
 };
 
 #endif

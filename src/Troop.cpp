@@ -19,9 +19,9 @@ Troop::Troop(SceneNode* scene, const wchar_t* path, i32 qnty, i32 ID){
         modelVector[i]->setScale(Vector3<f32>(25,25,25));
         modelVector[i]->setActive(true);
     }
-    f32 alignmentWeight = 1.0;
-    f32 cohesionWeight = 1.0;
-    f32 separationWeight = 1.1;
+    alignmentWeight = 1.0;
+    cohesionWeight = 1.0;
+    separationWeight = 1.1;
 }
 
 Troop::~Troop(){

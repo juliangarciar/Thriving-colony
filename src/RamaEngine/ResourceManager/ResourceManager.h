@@ -5,11 +5,6 @@
 
 #include "Resource.h"
 
-#include "ResourceOBJ.h"
-#include "ResourceJSON.h"
-#include "ResourceGLSL.h"
-#include "ResourceBMP.h"
-
 class ResourceManager {
     public:
         ResourceManager();
@@ -38,7 +33,7 @@ class ResourceManager {
          * @brief 
          * 
          */
-        void load(std::string);
+        void load(std::string, bool);
 
         /**
          * @brief 
@@ -48,6 +43,7 @@ class ResourceManager {
 
         std::map<std::string, Resource *> resources;
         std::queue<std::thread> threads;
+        std::vector<std::string> supportedFormats;
 };
 
 #endif
