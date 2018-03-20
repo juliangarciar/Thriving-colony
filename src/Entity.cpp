@@ -85,9 +85,9 @@ void Entity::setPosition(Vector3<f32> vectorData) {
     //bottomRight.y = vectorData.z + 120.f;
     //hitBox = Box2D(topLeft, bottomRight);
     hitBox.moveHitbox(vectorData.x, vectorData.z);
-    std::cout << "Moving HitBox to: \n";
-    std::cout << hitBox.TopLeft().x << "," << hitBox.TopLeft().y << "\n";
-    std::cout << hitBox.BottomRight().x << "," << hitBox.BottomRight().y << "\n";
+    //std::cout << "Moving HitBox to: \n";
+    //std::cout << hitBox.TopLeft().x << "," << hitBox.TopLeft().y << "\n";
+    //std::cout << hitBox.BottomRight().x << "," << hitBox.BottomRight().y << "\n";
 }
 
 void Entity::setColor(irr::video::SColor c){

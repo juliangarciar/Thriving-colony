@@ -201,6 +201,7 @@ void UnitManager::deploySelectedTroop(Vector3<f32> p) {
         dummy.z = target->getPosition().y;
         dummy.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.z);
         temp -> setTroopPosition(dummy);
+        temp -> setUnitCell(dummy.toVector2());
         temp -> setPosition(dummy);
         temp -> getModel() -> setActive(true);
         temp -> setPathToTarget(p);

@@ -7,6 +7,7 @@
 #include "Hud.h"
 #include "GraphicEngine/Window.h"
 #include "Troop.h"
+#include <WorldEngine/WorldGeometry.h>
 
 Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t) : Entity(id, team, breed) {
     // Race type and unit type
@@ -50,7 +51,10 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
 Unit::~Unit() {
     std::cout << "Deleting troop \n";
     delete pathManager;
+    WorldGeometry::Instance()->clearUnitCell(vectorPos.toVector2(),
+                                             this);
     delete layer;
+
     std::cout << "Done \n";
 }
 
@@ -511,13 +515,19 @@ void Unit::moveTroop() {
                 setTroopDestination(newDest);
             }
         }
+        /* Update Cell state */
         else if(std::floor(steps) == 0){
             Vector3<f32> move = vectorMov;
             //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
             //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
             Vector3<f32> newPos = vectorPos + move;
             newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
+            WorldGeometry::Instance()->updateUnitCell(vectorPos.toVector2(),
+                                                    newPos.toVector2(),
+                                                    this);
+            WorldGeometry::Instance()->getNeighborUnits(newPos.toVector2());
             setTroopPosition(newPos);
+            troops->moveTroops(move);
             steps = 0;
         } 
         else {
@@ -527,7 +537,12 @@ void Unit::moveTroop() {
             //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime();
             Vector3<f32> newPos = vectorPos + move;
             newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
+            WorldGeometry::Instance()->updateUnitCell(vectorPos.toVector2(),
+                                                    newPos.toVector2(),
+                                                    this);
+            WorldGeometry::Instance()->getNeighborUnits(newPos.toVector2());
             setTroopPosition(newPos);
+            troops->moveTroops(move);
             steps--;
         }
     }
@@ -620,6 +635,10 @@ void Unit::triggerRetractedCallback(){
 }
 
 /////SETTERS/////
+void Unit::setUnitCell(Vector2<f32> vectorPosition){
+    WorldGeometry::Instance()->setUnitCell(vectorPosition, this);
+}
+
 void Unit::setMoving(bool movingPnt) {
     moving = movingPnt;
 }
@@ -631,7 +650,7 @@ void Unit::setAttacking(bool attackingPnt) {
 void Unit::setTroopPosition(Vector3<f32> vectorData) {
     vectorPos.set(vectorData);
     setPosition(vectorData);
-    troops->setPosition(vectorData.toVector2());
+    troops->setPosition(vectorData);
 }
 // To do -> adjust units movement
 void Unit::setTroopDestination(Vector3<f32> vectorData) {
@@ -669,8 +688,9 @@ void Unit::setPathToTarget(Vector3<f32> vectorData){
         newDest.x = dummy.x;
         newDest.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y);
         newDest.z = dummy.y;
-        this->setTroopDestination(newDest);
-        this->pathFollow.pop_front();
+        setTroopDestination(newDest);
+        
+        pathFollow.pop_front();
     }
 }
 
