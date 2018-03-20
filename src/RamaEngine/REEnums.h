@@ -39,6 +39,12 @@ class REEnums {
             TEXTURE_ALPHA,
             TEXTURE_BUMP
         };
+
+        enum LightTypes {
+            LIGHT_POINT,
+            LIGHT_DIRECTIONAL,
+            LIGHT_SPOT
+        };
 };
 
 #endif

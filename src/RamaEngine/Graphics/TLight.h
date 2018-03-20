@@ -89,7 +89,7 @@ class TLight : public TEntity {
         glm::vec3 getPosition();
     private:
         REColor color;
-
+        REEnums::LightTypes lightType;
         u32 intensity;
 
         glm::vec4 lightMatrix;
