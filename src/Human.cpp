@@ -43,6 +43,7 @@ void Human::CleanUp() {
     std::cout << "Deleting human building \n";
     delete buildings;
     std::cout << "Human buildings deleted \n";
+    
     std::cout << "Deleting human troops \n";
     delete units;
     std::cout << "Human troops deleted \n";
