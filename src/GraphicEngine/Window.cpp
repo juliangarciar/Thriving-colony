@@ -54,13 +54,13 @@ Window::Window(i32 width, i32 height) {
     
     driver->setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, false);
     scene::ISceneNode* skybox=scene->addSkyBoxSceneNode(
-    driver->getTexture("./media/textures/placeholder.bmp"),
-    driver->getTexture("./media/textures/placeholder.bmp"),
-    driver->getTexture("./media/textures/placeholder.bmp"),
-    driver->getTexture("./media/textures/placeholder.bmp"),
-    driver->getTexture("./media/textures/placeholder.bmp"),
-    driver->getTexture("./media/textures/placeholder.bmp"));
-    scene::ISceneNode* skydome=scene->addSkyDomeSceneNode(driver->getTexture("./../media/textures/placeholder.bmp"),16,8,0.95f,2.0f);
+    driver->getTexture("./media/textures/bbb.jpg"),
+    driver->getTexture("./media/textures/bbb.jpg"),
+    driver->getTexture("./media/textures/bbb.jpg"),
+    driver->getTexture("./media/textures/bbb.jpg"),
+    driver->getTexture("./media/textures/bbb.jpg"),
+    driver->getTexture("./media/textures/bbb.jpg"));
+    scene::ISceneNode* skydome=scene->addSkyDomeSceneNode(driver->getTexture("./media/textures/bbb.jpg"),16,8,0.95f,2.0f);
     driver->setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, true);
     
     // create gui manager    
