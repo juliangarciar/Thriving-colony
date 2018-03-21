@@ -242,8 +242,6 @@ void Building::Init() {
     Texture *tex = new Texture("./media/textures/placeholder.bmp");
     Material *m = new Material(tex);
     this->model->setMaterial(m);
-
-    near = false;
 }
 
 void Building::update() {
@@ -254,18 +252,6 @@ void Building::update() {
         } else {
             // This update is called once every second
             buildTimer -= Window::Instance() -> getDeltaTime();
-        }
-    }
-    Vector3<f32> tarPos = Map::Instance() -> getCamera() -> getCameraPosition();
-    if (((position -> x + 2000 > tarPos.x && position -> x - 2000 < tarPos.x) && (position -> z + 2000 > tarPos.z && position -> z - 2000 < tarPos.z))) {
-        if (near == false){
-            near = true;
-            setColor(video::SColor(255, 0, 0, 0));
-        }
-    } else {
-        if (near == true) {
-            near = false;
-            setColor(video::SColor(255, 0, 0, 255));
         }
     }
 }
