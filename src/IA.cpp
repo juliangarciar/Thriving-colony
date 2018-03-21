@@ -53,7 +53,7 @@ void IA::Update() {
     Vector3<f32> tarPos = Map::Instance() -> getCamera() -> getTarPos();
     Vector3<f32> *IAPos = buildings -> getBuilding(0) -> getPosition();
     fast = false;
-    if (((IAPos -> x + 2000 > tarPos.x && IAPos -> x - 2000 < tarPos.x) && (IAPos -> y + 2000 > tarPos.y && IAPos -> y - 2000 < tarPos.y)) || underAttack) {
+    if (((IAPos -> x + 2000 > tarPos.x && IAPos -> x - 2000 < tarPos.x) && (IAPos -> z + 2000 > tarPos.z && IAPos -> z - 2000 < tarPos.z)) || underAttack) {
         fast = true;
     }
     if (fast == true) {

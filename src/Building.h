@@ -86,6 +86,8 @@ class Building : public Entity {
 
         //True if the building is finished and false if it is not.
         bool finished;
+
+        bool near;
 };
 
 #endif

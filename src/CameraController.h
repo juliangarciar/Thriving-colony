@@ -76,7 +76,8 @@ class CameraController {
          */
         void setRotateDegrees(i32, i32);
 
-        Vector3<f32> getTarPos();       
+        Vector3<f32> getTarPos();
+        Vector3<f32> getCameraPosition();  
         
     private:
         //Camera
