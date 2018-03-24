@@ -178,7 +178,7 @@ class RamaEngine {
         std::map<std::string, REShaderProgram*> shaderPrograms;
 
         // OpenGL
-	    GLuint vertexArrayID;
+	    GLuint VertexArrayID;
         GLuint programID;
 };
 

@@ -1,7 +1,7 @@
 #ifndef TROOT_H
 #define TROOT_H
 
-#include <GL/gl.h>
+#include <GL/glew.h>
 #include "TEntity.h"
 
 class TRoot : public TEntity {

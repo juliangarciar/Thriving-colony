@@ -45,19 +45,21 @@ void RamaEngine::Init() {
     // Accept fragment if it closer to the camera than the former one
     glDepthFunc(GL_LESS);
 
+    // Enable textures
+	glEnable(GL_TEXTURE_2D);
+
 	// Cull triangles which normal is not towards the camera
 	glEnable(GL_CULL_FACE);
     //Back face culling
     glCullFace(GL_BACK);
     glPolygonMode(GL_FRONT, GL_FILL);
-
-    // Create vertexArray
-	glGenVertexArrays(1, &vertexArrayID);
-	glBindVertexArray(vertexArrayID);	
+    
+	glGenVertexArrays(1, &VertexArrayID);
+	glBindVertexArray(VertexArrayID);
 }
 
 void RamaEngine::End(){
-	glDeleteVertexArrays(1, &vertexArrayID);
+	glDeleteVertexArrays(1, &VertexArrayID);
 }
 
 RELight* RamaEngine::createLight(REColor color, u32 intensity) {

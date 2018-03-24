@@ -1,7 +1,7 @@
 #ifndef RESHADERPROGRAM_H
 #define RESHADERPROGRAM_H
 
-#include <GL/gl.h>
+#include <GL/glew.h>
 #include "RETypes.h"
 #include "REEnums.h"
 

@@ -6,29 +6,20 @@ TMesh::TMesh(ResourceMesh *r, ResourceMaterial *m) : TEntity() {
 	mesh = r;
 	material = m;
 
-	glGenBuffers(1, &vertexbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	glBufferData(GL_ARRAY_BUFFER, mesh->getVertices().size() * sizeof(glm::vec3), &mesh->getVertices()[0], GL_STATIC_DRAW);
-
-	glGenBuffers(1, &normalbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
-	glBufferData(GL_ARRAY_BUFFER, mesh->getNormals().size() * sizeof(glm::vec3), &mesh->getNormals()[0], GL_STATIC_DRAW);
-
-	glGenBuffers(1, &uvbuffer);
-	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
-	glBufferData(GL_ARRAY_BUFFER, mesh->getUVs().size() * sizeof(glm::vec2), &mesh->getUVs()[0], GL_STATIC_DRAW);
+	// Generate a buffer for the vertices
+	glGenBuffers(1, &VBOID);
+	glBindBuffer(GL_ARRAY_BUFFER, VBOID);
+	glBufferData(GL_ARRAY_BUFFER, mesh->getVBO().size() * sizeof(f32), &mesh->getVBO()[0], GL_STATIC_DRAW);
 	
 	// Generate a buffer for the indices as well
-	glGenBuffers(1, &elementbuffer);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndices().size() * sizeof(unsigned short), &mesh->getIndices()[0] , GL_STATIC_DRAW);
+	glGenBuffers(1, &IBOID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBOID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndices().size() * sizeof(us32), &mesh->getIndices()[0] , GL_STATIC_DRAW);
 }
 
 TMesh::~TMesh() {
-	glDeleteBuffers(1, &vertexbuffer);
-	glDeleteBuffers(1, &uvbuffer);
-	glDeleteBuffers(1, &normalbuffer);
-	glDeleteBuffers(1, &elementbuffer);
+	glDeleteBuffers(1, &VBOID);
+	glDeleteBuffers(1, &IBOID);
 }
 
 void TMesh::beginDraw() {    
@@ -74,46 +65,19 @@ void TMesh::beginDraw() {
 		texturesLoaded++;
 	}
 
-	// 1rst attribute buffer : vertices
+	glBindBuffer(GL_ARRAY_BUFFER, VBOID);
 	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	glVertexAttribPointer(
-		0,                  // attribute
-		3,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		0,                  // stride
-		(void*)0            // array buffer offset
-	);
-
-	// 2nd attribute buffer : UVs
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, (3 + 3 + 2) * sizeof(f32), BUFFER_OFFSET(0));
 	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
-	glVertexAttribPointer(
-		1,                                // attribute
-		2,                                // size
-		GL_FLOAT,                         // type
-		GL_FALSE,                         // normalized?
-		0,                                // stride
-		(void*)0                          // array buffer offset
-	);
-
-	// 3rd attribute buffer : normals
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, (3 + 3 + 2) * sizeof(f32), BUFFER_OFFSET(3 * sizeof(f32)));
 	glEnableVertexAttribArray(2);
-	glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
-	glVertexAttribPointer(
-		2,                                // attribute
-		3,                                // size
-		GL_FLOAT,                         // type
-		GL_FALSE,                         // normalized?
-		0,                                // stride
-		(void*)0                          // array buffer offset
-	);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, (3 + 3 + 2) * sizeof(f32), BUFFER_OFFSET((3 + 3) * sizeof(f32)));
 
 	// Index buffer
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBOID);
 
-	// Draw the triangles !
+	//glDrawArrays(GL_TRIANGLES, 0, mesh->getIndices().size());
+	// Draw the triangles!
 	glDrawElements(
 		GL_TRIANGLES,      // mode
 		mesh->getIndices().size(),    // count

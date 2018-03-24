@@ -1,12 +1,14 @@
 #ifndef TMESH_H
 #define TMESH_H
 
-#include <GL/gl.h>
+#include <GL/glew.h>
 
 #include "TEntity.h"
 #include "../ResourceManager/Helpers/ResourceMesh.h"
 #include "../ResourceManager/Helpers/ResourceMaterial.h"
 #include "TTexture.h"
+
+#define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 class TMesh : public TEntity {
     public:
@@ -58,10 +60,8 @@ class TMesh : public TEntity {
         ResourceMaterial* material;
         std::map<REEnums::TextureTypes, TTexture*> textures;
 
-        GLuint vertexbuffer;
-        GLuint normalbuffer;
-        GLuint uvbuffer;
-	    GLuint elementbuffer;
+        GLuint VBOID;
+	    GLuint IBOID;
 };
 
 #endif

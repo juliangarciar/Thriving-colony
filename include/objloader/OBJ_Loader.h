@@ -197,7 +197,7 @@ namespace NAMESPACE
 
 		}
 		// Variable Set Constructor
-		Mesh(std::vector<Vertex>& _Vertices, std::vector<unsigned int>& _Indices)
+		Mesh(std::vector<Vertex>& _Vertices, std::vector<unsigned short>& _Indices)
 		{
 			Vertices = _Vertices;
 			Indices = _Indices;
@@ -207,7 +207,7 @@ namespace NAMESPACE
 		// Vertex List
 		std::vector<Vertex> Vertices;
 		// Index List
-		std::vector<unsigned int> Indices;
+		std::vector<unsigned short> Indices;
 
 		// Material
 		Material MeshMaterial;
@@ -418,7 +418,7 @@ namespace NAMESPACE
 			std::vector<Vector3> Normals;
 
 			std::vector<Vertex> Vertices;
-			std::vector<unsigned int> Indices;
+			std::vector<unsigned short> Indices;
 
 			std::vector<std::string> MeshMatNames;
 
@@ -428,8 +428,8 @@ namespace NAMESPACE
 			Mesh tempMesh;
 
 			#ifdef OBJL_CONSOLE_OUTPUT
-			const unsigned int outputEveryNth = 1000;
-			unsigned int outputIndicator = outputEveryNth;
+			const unsigned short outputEveryNth = 1000;
+			unsigned short outputIndicator = outputEveryNth;
 			#endif
 
 			std::string curline;
@@ -557,17 +557,17 @@ namespace NAMESPACE
 						LoadedVertices.push_back(vVerts[i]);
 					}
 
-					std::vector<unsigned int> iIndices;
+					std::vector<unsigned short> iIndices;
 
 					VertexTriangluation(iIndices, vVerts);
 
 					// Add Indices
 					for (int i = 0; i < int(iIndices.size()); i++)
 					{
-						unsigned int indnum = (unsigned int)((Vertices.size()) - vVerts.size()) + iIndices[i];
+						unsigned short indnum = (unsigned short)((Vertices.size()) - vVerts.size()) + iIndices[i];
 						Indices.push_back(indnum);
 
-						indnum = (unsigned int)((LoadedVertices.size()) - vVerts.size()) + iIndices[i];
+						indnum = (unsigned short)((LoadedVertices.size()) - vVerts.size()) + iIndices[i];
 						LoadedIndices.push_back(indnum);
 
 					}
@@ -848,7 +848,7 @@ namespace NAMESPACE
 		// Loaded Vertex Objects
 		std::vector<Vertex> LoadedVertices;
 		// Loaded Index Positions
-		std::vector<unsigned int> LoadedIndices;
+		std::vector<unsigned short> LoadedIndices;
 		// Loaded Material Objects
 		std::vector<Material> LoadedMaterials;
 		// Material path
@@ -968,7 +968,7 @@ namespace NAMESPACE
 
 		// Triangulate a list of vertices into a face by printing
 		//	inducies corresponding with triangles within it
-		void VertexTriangluation(std::vector<unsigned int>& oIndices,
+		void VertexTriangluation(std::vector<unsigned short>& oIndices,
 			const std::vector<Vertex>& iVerts)
 		{
 			// If there are 2 or less verts,
