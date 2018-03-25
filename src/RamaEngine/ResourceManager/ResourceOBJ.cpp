@@ -1,7 +1,6 @@
 #include "ResourceOBJ.h"
 
 #include <objloader/OBJ_Loader.h>
-#include <objloader/vboindexer.hpp>
 #include <glm/glm.hpp>
 
 ResourceOBJ::ResourceOBJ(){

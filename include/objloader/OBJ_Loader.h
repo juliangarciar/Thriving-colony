@@ -1,11 +1,15 @@
-#ifndef OBJLOADER_H
-#define OBJLOADER_H
+// OBJ_Loader.h - A Single Header OBJ Model Loader (Modified by Mario Gonzalez)
+
+#pragma once
 
 // Iostream - STD I/O Library
 #include <iostream>
 
 // Vector - STD Vector/Array Library
 #include <vector>
+
+// Algorith - STD Operations
+#include <algorithm>
 
 // String - STD String Library
 #include <string>
@@ -143,6 +147,10 @@ namespace NAMESPACE
 		// Texture Coordinate Vector
 		Vector2 TextureCoordinate;
 	};
+
+	bool operator ==(const Vertex& a, const Vertex& b) {
+		return (a.Position == b.Position && a.Normal == b.Normal && a.TextureCoordinate == b.TextureCoordinate);
+	}
 
 	struct Material
 	{
@@ -397,7 +405,7 @@ namespace NAMESPACE
 		//
 		// If the file is unable to be found
 		// or unable to be loaded return false
-		bool LoadFile(std::string Path)
+		bool LoadFile(std::string Path, bool triangulation = false)
 		{
 			// If the file is not an .obj file return false
 			if (Path.substr(Path.size() - 4, 4) != ".obj")
@@ -410,8 +418,6 @@ namespace NAMESPACE
 				return false;
 
 			LoadedMeshes.clear();
-			LoadedVertices.clear();
-			LoadedIndices.clear();
 
 			std::vector<Vector3> Positions;
 			std::vector<Vector2> TCoords;
@@ -545,31 +551,42 @@ namespace NAMESPACE
 				// Generate a Face (vertices & indices)
 				if (algorithm::firstToken(curline) == "f")
 				{
-					// Generate the vertices
+					std::vector<unsigned short> iIndices;
 					std::vector<Vertex> vVerts;
+
+					// Generate the vertices
 					GenVerticesFromRawOBJ(vVerts, Positions, TCoords, Normals, curline);
 
-					// Add Vertices
-					for (int i = 0; i < int(vVerts.size()); i++)
+					if (triangulation)
 					{
-						Vertices.push_back(vVerts[i]);
+						// Add Vertices
+						for (int i = 0; i < int(vVerts.size()); i++)
+						{
+							Vertices.push_back(vVerts[i]);
+						}
 
-						LoadedVertices.push_back(vVerts[i]);
-					}
+						VertexTriangluation(iIndices, vVerts);
 
-					std::vector<unsigned short> iIndices;
-
-					VertexTriangluation(iIndices, vVerts);
-
-					// Add Indices
-					for (int i = 0; i < int(iIndices.size()); i++)
+						// Add Indices
+						for (int i = 0; i < int(iIndices.size()); i++)
+						{
+							unsigned short indnum = (unsigned short)((Vertices.size()) - vVerts.size()) + iIndices[i];
+							Indices.push_back(indnum);
+						}
+					} 
+					else 
 					{
-						unsigned short indnum = (unsigned short)((Vertices.size()) - vVerts.size()) + iIndices[i];
-						Indices.push_back(indnum);
-
-						indnum = (unsigned short)((LoadedVertices.size()) - vVerts.size()) + iIndices[i];
-						LoadedIndices.push_back(indnum);
-
+						// Add Vertices
+						for (int i = 0; i < int(vVerts.size()); i++) {
+  							std::vector<Vertex>::iterator it;
+							if ((it = std::find(Vertices.begin(), Vertices.end(), vVerts[i])) == Vertices.end()){
+								Vertices.push_back(vVerts[i]);
+								Indices.push_back(Vertices.size() - 1);
+							} else {
+								std::ptrdiff_t index = std::distance(Vertices.begin(), it);
+								Indices.push_back(index);
+							}
+						}
 					}
 				}
 				// Get Mesh Material Name
@@ -671,7 +688,7 @@ namespace NAMESPACE
 				}
 			}
 
-			if (LoadedMeshes.empty() && LoadedVertices.empty() && LoadedIndices.empty())
+			if (LoadedMeshes.empty())
 			{
 				return false;
 			}
@@ -845,10 +862,6 @@ namespace NAMESPACE
 
 		// Loaded Mesh Objects
 		std::vector<Mesh> LoadedMeshes;
-		// Loaded Vertex Objects
-		std::vector<Vertex> LoadedVertices;
-		// Loaded Index Positions
-		std::vector<unsigned short> LoadedIndices;
 		// Loaded Material Objects
 		std::vector<Material> LoadedMaterials;
 		// Material path
@@ -1140,5 +1153,3 @@ namespace NAMESPACE
 		}
 	};
 }
-
-#endif
