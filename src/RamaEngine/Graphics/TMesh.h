@@ -59,9 +59,13 @@ class TMesh : public TEntity {
         ResourceMesh* mesh;
         ResourceMaterial* material;
         std::map<REEnums::TextureTypes, TTexture*> textures;
-
+        
         GLuint VBOID;
 	    GLuint IBOID;
+
+        GLuint lightID;
+        GLuint materialID;
+        GLuint textureID;
 };
 
 #endif

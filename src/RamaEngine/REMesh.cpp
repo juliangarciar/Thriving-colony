@@ -54,7 +54,7 @@ u32 REMesh::getMeshAmount(){
     return meshes.size();
 }
 
-TMesh *REMesh::getMesh(std::string meshName){
+TMesh *REMesh::getShape(std::string meshName){
     return meshes[meshName];
 }
 

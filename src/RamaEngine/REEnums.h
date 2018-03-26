@@ -12,26 +12,12 @@ class REEnums {
             ProjectionOrtographic,
             ProjectionParallel
         };
+
         enum ShaderType {
             VERTEX,
             FRAGMENT
         };
-        enum Matrices {
-            MATRIX_PROJECTION = 0,
-            MATRIX_VIEW,
-            MATRIX_MODEL,
-            MATRIX_MVP,
-            MATRIX_VIEWMODEL,
-            
-            MATRIX_LIGHT,
 
-            MATRIX_TEXTURE_AMBIENT,
-            MATRIX_TEXTURE_DIFFUSE,
-            MATRIX_TEXTURE_SPECULAR,
-            MATRIX_TEXTURE_ALPHA,
-            MATRIX_TEXTURE_BUMP,
-            MATRICES
-        };
         enum TextureTypes {
             TEXTURE_AMBIENT,
             TEXTURE_DIFFUSE,
@@ -44,6 +30,21 @@ class REEnums {
             LIGHT_POINT,
             LIGHT_DIRECTIONAL,
             LIGHT_SPOT
+        };
+
+        // Internal
+        enum ShaderParams {
+            MATRIX_PROJECTION = 0,
+            MATRIX_VIEW,
+            MATRIX_MODEL,
+            MATRIX_MV,
+            MATRIX_MVP,
+
+            BUFFER_LIGHT,
+            BUFFER_MATERIAL,
+            BUFFER_TEXTURE,
+
+            PARAMS
         };
 };
 

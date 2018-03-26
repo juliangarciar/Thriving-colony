@@ -5,7 +5,6 @@
 #include "RETypes.h"
 #include "REEnums.h"
 
-#include "Graphics/TRoot.h"
 #include "Graphics/TShader.h"
 
 class REShaderProgram {
@@ -24,11 +23,11 @@ class REShaderProgram {
         ~REShaderProgram();
 
         /**
-         * @brief Get the Root Entity object
+         * @brief Get the param ids object
          * 
          * @return GLuint 
          */
-        TRoot *getRootEntity();
+        std::vector<GLuint> getParamIDs();
 
         /**
          * @brief Get the Shader Program object
@@ -40,7 +39,8 @@ class REShaderProgram {
         GLuint pid;
         TShader *vertexShader;
         TShader *fragmentShader;
-        TRoot *rootEntity;
+
+        std::vector<GLuint> paramIDs;
 };
 
 #endif

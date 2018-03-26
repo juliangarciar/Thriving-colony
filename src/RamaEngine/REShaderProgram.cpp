@@ -1,5 +1,7 @@
 #include "REShaderProgram.h"
 
+#include "Graphics/TEntity.h"
+
 REShaderProgram::REShaderProgram(ResourceGLSL* vs, ResourceGLSL* fs){
 	vertexShader = new TShader(vs);
 	fragmentShader = new TShader(fs);
@@ -22,7 +24,7 @@ REShaderProgram::REShaderProgram(ResourceGLSL* vs, ResourceGLSL* fs){
 		exit(0);
 	}
 
-	rootEntity = new TRoot(pid);
+	paramIDs = TEntity::cache.generateAllParamIDs(pid);
 }
 
 REShaderProgram::~REShaderProgram(){
@@ -32,8 +34,8 @@ REShaderProgram::~REShaderProgram(){
 	glDeleteShader(fragmentShader->getShaderID());
 }
     
-TRoot *REShaderProgram::getRootEntity(){
-	return rootEntity;
+std::vector<GLuint> REShaderProgram::getParamIDs(){
+	return paramIDs;
 }
     
 GLuint REShaderProgram::getShaderProgram(){

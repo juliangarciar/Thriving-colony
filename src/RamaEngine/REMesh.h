@@ -67,7 +67,7 @@ class REMesh {
          * 
          * @return TMesh* 
          */
-        TMesh *getMesh(std::string);
+        TMesh *getShape(std::string);
 
         /**
          * @brief Get the Meshes object

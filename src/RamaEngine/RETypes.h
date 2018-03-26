@@ -25,4 +25,20 @@ typedef uint32_t u32;
 typedef unsigned short us32;
 typedef float f32;
 
+struct Light {
+    i32 shininess;
+    glm::vec3 color;
+};
+
+struct Material {
+    glm::vec3 ambientColor;
+    glm::vec3 diffuseColor;
+    glm::vec3 specularColor;
+};
+
+struct Texture {
+    GLuint type;
+    GLuint textureID;
+};
+
 #endif

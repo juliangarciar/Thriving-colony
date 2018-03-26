@@ -24,9 +24,8 @@ TCamera::~TCamera(){
 
 void TCamera::beginDraw(){
     if (active) {
-        TMatrixCache *cache = TMatrixCache::Instance();
-        cache->setMatrix(REEnums::Matrices::MATRIX_PROJECTION, &pMat);
-        cache->setMatrix(REEnums::Matrices::MATRIX_VIEW, &vMat);
+        cache.setProjectionMatrix(pMat);
+        cache.setViewMatrix(vMat);
     }
 }
 

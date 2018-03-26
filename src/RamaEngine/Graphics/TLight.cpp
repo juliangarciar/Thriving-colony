@@ -6,6 +6,11 @@ TLight::TLight(REColor c, u32 i, bool a) : TEntity(){
     active = a;
     lightPosition = glm::vec3(0,0,0);
     lightType = REEnums::LightTypes::LIGHT_POINT;
+
+    Light l;
+    l.color = glm::vec3(color.r, color.g, color.b);
+    l.shininess = i;
+    cache.getLights()->push_back(l);
 }
 
 TLight::~TLight(){

@@ -30,6 +30,8 @@ void ResourceOBJ::load(const char *path){
 
         std::vector<f32> vbo;
 
+        vbo.reserve(curMesh.Vertices.size() * 8);
+
         for (int j = 0; j < curMesh.Vertices.size(); j++) {
             vbo.push_back(curMesh.Vertices[j].Position.X);
             vbo.push_back(curMesh.Vertices[j].Position.Y);

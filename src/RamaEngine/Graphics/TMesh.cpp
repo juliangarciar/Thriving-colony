@@ -15,6 +15,32 @@ TMesh::TMesh(ResourceMesh *r, ResourceMaterial *m) : TEntity() {
 	glGenBuffers(1, &IBOID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBOID);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndices().size() * sizeof(us32), &mesh->getIndices()[0] , GL_STATIC_DRAW);
+
+	// Material
+	Material mat;
+	mat.ambientColor = material->getAmbientColor();
+	mat.diffuseColor = material->getDiffuseColor();
+	mat.specularColor = material->getSpecularColor();
+	glGenBuffers(1, &materialID);
+	glBindBuffer(GL_UNIFORM_BUFFER, materialID);
+	glBufferData(GL_UNIFORM_BUFFER , sizeof(materialID), &mat, GL_STATIC_DRAW);
+
+	// Textures
+    std::vector<Texture> textureIDs;
+ 	for (std::map<REEnums::TextureTypes, TTexture*>::iterator it = textures.begin(); it != textures.end(); ++it) {
+		Texture t;
+		t.type = (GLuint) it->first;
+		t.textureID = it->second->getTextureID();
+		textureIDs.push_back(t);
+	}
+	glGenBuffers(1, &textureID);
+	glBindBuffer(GL_UNIFORM_BUFFER, textureID);
+	glBufferData(GL_UNIFORM_BUFFER , sizeof(textureID), &textureIDs[0], GL_STATIC_DRAW);
+
+	// Lights
+	glGenBuffers(1, &lightID);
+	glBindBuffer(GL_UNIFORM_BUFFER, lightID);
+	glBufferData(GL_UNIFORM_BUFFER , sizeof(lightID), &cache.getLights()->at(0), GL_STATIC_DRAW);
 }
 
 TMesh::~TMesh() {
@@ -23,46 +49,28 @@ TMesh::~TMesh() {
 }
 
 void TMesh::beginDraw() {    
-    TMatrixCache *cache = TMatrixCache::Instance();
-
-	glm::mat4 pM = *cache->getMatrix(REEnums::Matrices::MATRIX_PROJECTION);
-	glm::mat4 vM = *cache->getMatrix(REEnums::Matrices::MATRIX_VIEW);
-	glm::mat4 mM = cache->getCurrentMatrix();
+	glm::mat4 pM = cache.getProjectionMatrix();
+	glm::mat4 vM = cache.getViewMatrix();
+	glm::mat4 mM = cache.getModelMatrix();
 
 	// Matrices
 	glm::mat4 MV = vM * mM;
 	glm::mat4 MVP = pM * vM * mM;
-	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_MODEL), 1, GL_FALSE, &mM[0][0]);
-	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_VIEW), 1, GL_FALSE, &vM[0][0]);
-	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_PROJECTION), 1, GL_FALSE, &pM[0][0]);
-	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_VIEWMODEL), 1, GL_FALSE, &MV[0][0]);
-	glUniformMatrix4fv(cache->getMatrixID(REEnums::Matrices::MATRIX_MVP), 1, GL_FALSE, &MVP[0][0]);
+	glUniformMatrix4fv(cache.getParamID(REEnums::ShaderParams::MATRIX_MODEL), 1, GL_FALSE, &mM[0][0]);
+	glUniformMatrix4fv(cache.getParamID(REEnums::ShaderParams::MATRIX_VIEW), 1, GL_FALSE, &vM[0][0]);
+	glUniformMatrix4fv(cache.getParamID(REEnums::ShaderParams::MATRIX_PROJECTION), 1, GL_FALSE, &pM[0][0]);
+	glUniformMatrix4fv(cache.getParamID(REEnums::ShaderParams::MATRIX_MV), 1, GL_FALSE, &MV[0][0]);
+	glUniformMatrix4fv(cache.getParamID(REEnums::ShaderParams::MATRIX_MVP), 1, GL_FALSE, &MVP[0][0]);
+	glUniformBlockBinding(cache.getCurrentProgramID(), cache.getParamID(REEnums::ShaderParams::BUFFER_MATERIAL), materialID);
+	glUniformBlockBinding(cache.getCurrentProgramID(), cache.getParamID(REEnums::ShaderParams::BUFFER_TEXTURE), textureID);
+	glUniformBlockBinding(cache.getCurrentProgramID(), cache.getParamID(REEnums::ShaderParams::BUFFER_LIGHT), lightID);
 
 	//ToDo: mejorar
-	int texturesLoaded = 0;
+	int i = 0;
  	for (std::map<REEnums::TextureTypes, TTexture*>::iterator it = textures.begin(); it != textures.end(); ++it) {
-		if (it->first == REEnums::TextureTypes::TEXTURE_AMBIENT) {
-			glActiveTexture(GL_TEXTURE0 + texturesLoaded);
-			glBindTexture(GL_TEXTURE_2D, it->second->getTextureID());
-			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_AMBIENT), texturesLoaded);
-		} else if (it->first == REEnums::TextureTypes::TEXTURE_DIFFUSE) {
-			glActiveTexture(GL_TEXTURE0 + texturesLoaded);
-			glBindTexture(GL_TEXTURE_2D, it->second->getTextureID());
-			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_DIFFUSE), texturesLoaded);
-		} else if (it->first == REEnums::TextureTypes::TEXTURE_SPECULAR) {
-			glActiveTexture(GL_TEXTURE0 + texturesLoaded);
-			glBindTexture(GL_TEXTURE_2D, it->second->getTextureID());
-			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_SPECULAR), texturesLoaded);
-		} else if (it->first == REEnums::TextureTypes::TEXTURE_ALPHA) {
-			glActiveTexture(GL_TEXTURE0 + texturesLoaded);
-			glBindTexture(GL_TEXTURE_2D, it->second->getTextureID());
-			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_ALPHA), texturesLoaded);
-		} else if (it->first == REEnums::TextureTypes::TEXTURE_BUMP) {
-			glActiveTexture(GL_TEXTURE0 + texturesLoaded);
-			glBindTexture(GL_TEXTURE_2D, it->second->getTextureID());
-			glUniform1i(cache->getMatrixID(REEnums::Matrices::MATRIX_TEXTURE_BUMP), texturesLoaded);
-		}
-		texturesLoaded++;
+		glActiveTexture(GL_TEXTURE0 + i);
+		glBindTexture(GL_TEXTURE_2D, it->second->getTextureID());
+		i++;
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBOID);
@@ -76,7 +84,6 @@ void TMesh::beginDraw() {
 	// Index buffer
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBOID);
 
-	//glDrawArrays(GL_TRIANGLES, 0, mesh->getIndices().size());
 	// Draw the triangles!
 	glDrawElements(
 		GL_TRIANGLES,      // mode

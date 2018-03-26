@@ -1,9 +1,9 @@
 #include "RamaEngine.h"
 
-#include "Graphics/TRoot.h"
-
 #include "ResourceManager/ResourceOBJ.h"
 #include "ResourceManager/ResourceGLSL.h"
+
+TCache TEntity::cache = TCache();
 
 RamaEngine::RamaEngine() {
     rootNode = new TNode();
@@ -14,9 +14,6 @@ RamaEngine::RamaEngine() {
 
     // Resource Manager
     REManager = new ResourceManager();
-
-    // Cache
-    matrixCache = TMatrixCache::Instance();
 }
 
 RamaEngine::~RamaEngine() {
@@ -135,7 +132,8 @@ void RamaEngine::setCurrentShaderProgram(std::string programName){
     it = shaderPrograms.find(programName);
     if (it != shaderPrograms.end()){
         currentProgram = it->second;
-        rootNode -> setEntity(currentProgram->getRootEntity());
+        TEntity::cache.setAllParamIDs(currentProgram -> getParamIDs());
+        TEntity::cache.setCurrentProgramID(currentProgram -> getShaderProgram());
     }
 }
 

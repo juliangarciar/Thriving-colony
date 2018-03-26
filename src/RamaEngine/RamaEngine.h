@@ -162,8 +162,6 @@ class RamaEngine {
          */
         RESceneNode* getDefaultLayer();
     private:
-        TMatrixCache *matrixCache;
-
         ResourceManager *REManager;
 
         TNode* rootNode;
