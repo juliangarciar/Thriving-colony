@@ -11,6 +11,7 @@ TLight::TLight(REColor c, u32 i, bool a) : TEntity(){
     l.color = glm::vec3(color.r, color.g, color.b);
     l.shininess = i;
     cache.getLights()->push_back(l);
+    //ToDo: actualizar array de luces cuando se modifica algun parametro (o usa punteros?)
 }
 
 TLight::~TLight(){
@@ -27,7 +28,6 @@ void TLight::beginDraw(){
 }
 
 void TLight::endDraw(){
-
 }
 
 void TLight::setColor(REColor c){
