@@ -32,6 +32,11 @@ Hud::~Hud() {
 void Hud::Init(){
     // Building buttons panel
     buildingsPanel = new Panel("Buildings");
+    //bgMain -> setSize(Vector2<i32>(400, 300));
+    //bgMain -> setVerticalLayout();
+    //bgMain -> refreshLayout();
+    //bgMain -> center();
+
     buildingsPanel -> setPosition(Vector2<i32>(575, 546));
 
     // General
@@ -40,9 +45,15 @@ void Hud::Init(){
     generalWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(generalWidget, "General functions");
+
     Button *buttonExpandTerrain = new Button(generalWidget, "Expand terrain");
+    buttonExpandTerrain -> setSize(Vector2<i32>(100, 50));
+    
     buttonOpenPanel = new Button(generalWidget, "Open Panel");
-    buttonOpenPanel -> setPosition(Vector2<i32>(100, 20));
+    buttonOpenPanel -> setSize(Vector2<i32>(100, 50));
+    buttonOpenPanel -> setBackgroundColor(255, 0, 0, 255);
+    buttonOpenPanel -> refreshButton();
+    //buttonOpenPanel -> setPosition(Vector2<i32>(100, 20));
 
     // Resources
     Widget *resourceWidget = new Widget(buildingsPanel);

@@ -55,13 +55,19 @@ void Button::setText(std::string text){
 }
 
 void Button::setSize(Vector2<i32> size){
-    button -> setSize(Eigen::Vector2i(size.x, size.y));
+    //button -> setSize(Eigen::Vector2i(size.x, size.y));
+    button-> setFixedSize(nanogui::Vector2i(size.x, size.y));
 }
 
 void Button::setPosition(Vector2<i32> position){
     button -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
-
+void Button::refreshButton(){
+    //button-> setFixedSize(nanogui::Vector2i(300, 200));
+}
+void Button::setBackgroundColor(i32 a, i32 r, i32 g, i32 b){
+    button -> setBackgroundColor(nanogui::Color(r, g, b, a));
+}
 nanogui::Widget *Button::getGUIElement(){
     return button; 
 }

@@ -4,18 +4,21 @@
 StartMenu::StartMenu() {
     //Main
     bgMain = new Panel("Thriving colony");
-    bgMain -> setPosition(Vector2<i32>(400, 200));
+    //bgMain -> setPosition(Vector2<i32>(400, 200));
     bgMain -> setSize(Vector2<i32>(400, 300));
     bgMain -> setVerticalLayout();
+    bgMain -> refreshLayout();
+    bgMain -> center();
 
     buttonStart = new Button(bgMain, "Play");
     buttonOptions = new Button(bgMain, "Options"); 
     buttonQuit = new Button(bgMain, "Quit");
     //Options
     bgOptions = new Panel("Options");
-    bgOptions -> setPosition(Vector2<i32>(400, 200));
     bgOptions -> setSize(Vector2<i32>(400, 300));
     bgOptions -> setVerticalLayout();
+    bgOptions -> refreshLayout();
+    bgOptions -> center();
 
     std::vector<std::string> *languages = new std::vector<std::string>();
     std::vector<std::string> *resolution = new std::vector<std::string>();
@@ -66,9 +69,11 @@ StartMenu::StartMenu() {
     maps -> push_back("Grim hollow");
 
     bgPlay = new Panel("Match options");
-    bgPlay -> setPosition(Vector2<i32>(400, 200));
     bgPlay -> setSize(Vector2<i32>(400, 300));
     bgPlay -> setVerticalLayout();
+    bgPlay -> refreshLayout();
+    bgPlay -> center();
+
 
     racesP = new Label(bgPlay, "Select a race.");
     racesP -> setSize(Vector2<i32>(120, 25));
