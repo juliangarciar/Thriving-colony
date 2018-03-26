@@ -1,5 +1,5 @@
 # Blender MTL File: 'command_center.blend'
-# Material Count: 3
+# Material Count: 2
 
 newmtl cuerpo
 Ns 96.078431
@@ -10,6 +10,9 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
+map_Bump cuerpo_Normal_OpenGL.jpg
+map_Kd cuerpo_Base_Color.jpg
+map_Ks cuerpo_Metallic.jpg
 
 newmtl drorania
 Ns 96.078431
@@ -20,13 +23,6 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-
-newmtl kaonov
-Ns 96.078431
-Ka 1.000000 1.000000 1.000000
-Kd 0.183799 0.568533 0.640000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 2
+map_Bump drorania_Normal_OpenGL.jpg
+map_Kd drorania_Base_Color.jpg
+map_Ks drorania_Metallic.jpg

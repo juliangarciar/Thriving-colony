@@ -168,7 +168,8 @@ void Building::Init() {
 
             buildTimer = 35;
             
-            metalCost = Enumeration::BuildingCost::QuarryMetalCost;
+            //metalCost = Enumeration::BuildingCost::QuarryMetalCost;
+            metalCost = 1;
             crystalCost = Enumeration::BuildingCost::QuarryCrystalCost;
             kCells = Enumeration::BuildingCells::QuarryCells;
 
