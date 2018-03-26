@@ -26,8 +26,11 @@ typedef unsigned short us32;
 typedef float f32;
 
 struct Light {
-    i32 shininess;
-    glm::vec3 color;
+    glm::vec3 position;
+
+    glm::vec3 ambientComponent;
+    glm::vec3 diffuseComponent;
+    glm::vec3 specularComponent;
 };
 
 struct Material {
@@ -37,8 +40,11 @@ struct Material {
 };
 
 struct Texture {
-    GLuint type;
-    GLuint textureID;
+    bool ambientTexture;
+    bool diffureTexture;
+    bool specularTexture;
+    bool alphaTexture;
+    bool bumpTexture;
 };
 
 #endif

@@ -36,24 +36,67 @@ void RELight::translate(f32 tX, f32 tY, f32 tZ) {
     t -> translate(tX, tY, tZ);
 }
 
-void RELight::setColor(REColor c) {
+void RELight::setAmbientColor(REColor c) {
     TLight* l = (TLight*) lightNode -> getEntity();
-    l -> setColor(c);
+    ambientColor = c;
+    l -> setAmbientComponent(ambientColor, ambientIntensity);
 }
 
-REColor RELight::getColor() {
-    TLight* l = (TLight*) lightNode -> getEntity();
-    return l -> getColor();
+REColor RELight::getAmbientColor() {
+    return ambientColor;
 }
 
-void RELight::setIntensity(u32 c) {
+void RELight::setAmbientIntensity(u32 c) {
     TLight* l = (TLight*) lightNode -> getEntity();
-    l -> setIntensity(c);
+    ambientIntensity = c;
+    l -> setAmbientComponent(ambientColor, ambientIntensity);
 }
 
-u32 RELight::getIntensity() {
+u32 RELight::getAmbientIntensity() {
     TLight* l = (TLight*) lightNode -> getEntity();
-    return l -> getIntensity();
+    return ambientIntensity;
+}
+
+void RELight::setDiffuseColor(REColor c) {
+    TLight* l = (TLight*) lightNode -> getEntity();
+    diffuseColor = c;
+    l -> setDiffuseComponent(diffuseColor, diffuseIntensity);
+}
+
+REColor RELight::getDiffuseColor() {
+    return diffuseColor;
+}
+
+void RELight::setDiffuseIntensity(u32 c) {
+    TLight* l = (TLight*) lightNode -> getEntity();
+    diffuseIntensity = c;
+    l -> setDiffuseComponent(diffuseColor, diffuseIntensity);
+}
+
+u32 RELight::getDiffuseIntensity() {
+    TLight* l = (TLight*) lightNode -> getEntity();
+    return diffuseIntensity;
+}
+
+void RELight::setSpecularColor(REColor c) {
+    TLight* l = (TLight*) lightNode -> getEntity();
+    specularColor = c;
+    l -> setSpecularComponent(specularColor, specularIntensity);
+}
+
+REColor RELight::getSpecularColor() {
+    return specularColor;
+}
+
+void RELight::setSpecularIntensity(u32 c) {
+    TLight* l = (TLight*) lightNode -> getEntity();
+    specularIntensity = c;
+    l -> setSpecularComponent(specularColor, specularIntensity);
+}
+
+u32 RELight::getSpecularIntensity() {
+    TLight* l = (TLight*) lightNode -> getEntity();
+    return specularIntensity;
 }
 
 void RELight::setActive(bool active) {

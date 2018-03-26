@@ -23,7 +23,9 @@ class REEnums {
             TEXTURE_DIFFUSE,
             TEXTURE_SPECULAR,
             TEXTURE_ALPHA,
-            TEXTURE_BUMP
+            TEXTURE_BUMP,
+
+            TEXTURE_SIZE
         };
 
         enum LightTypes {

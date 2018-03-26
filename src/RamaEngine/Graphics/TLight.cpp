@@ -1,17 +1,17 @@
 #include "TLight.h"
 
-TLight::TLight(REColor c, u32 i, bool a) : TEntity(){
-    color = c;
-    intensity = i;
+TLight::TLight(REColor c, f32 i, bool a) : TEntity(){
     active = a;
-    lightPosition = glm::vec3(0,0,0);
-    lightType = REEnums::LightTypes::LIGHT_POINT;
 
-    Light l;
-    l.color = glm::vec3(color.r, color.g, color.b);
-    l.shininess = i;
-    cache.getLights()->push_back(l);
-    //ToDo: actualizar array de luces cuando se modifica algun parametro (o usa punteros?)
+    lightType = REEnums::LightTypes::LIGHT_POINT; //ToDo: varios tipos?
+
+    setAmbientComponent(c, i);
+    setDiffuseComponent(c, i);
+    setSpecularComponent(c, i);
+    setPosition(glm::vec3(0,0,0));
+
+    cache.getLights()->push_back(components);
+    //ToDo: actualizar array de luces cuando se modifica algun parametro (o usar punteros?)
 }
 
 TLight::~TLight(){
@@ -29,21 +29,17 @@ void TLight::beginDraw(){
 
 void TLight::endDraw(){
 }
-
-void TLight::setColor(REColor c){
-    color = c;
+        
+void TLight::setAmbientComponent(REColor c, f32 i){
+    components.ambientComponent = c.getRGB() * (float)i;
 }
-
-REColor TLight::getColor(){
-    return color;
+        
+void TLight::setDiffuseComponent(REColor c, f32 i){
+    components.diffuseComponent = c.getRGB() * (float)i;
 }
-
-void TLight::setIntensity(u32 c){
-    intensity = c;
-}
-
-u32 TLight::getIntensity(){
-    return intensity;
+        
+void TLight::setSpecularComponent(REColor c, f32 i){
+    components.specularComponent = c.getRGB() * (float)i;
 }
 
 void TLight::setActive(bool _active) {
@@ -55,9 +51,9 @@ bool TLight::getActive() {
 }
 
 void TLight::setPosition(glm::vec3 p) {
-    lightPosition = p;
+    components.position = p;
 }
 
 glm::vec3 TLight::getPosition() {
-    return lightPosition;
+    return components.position;
 }

@@ -10,7 +10,7 @@ class TLight : public TEntity {
          * @brief 
          * 
          */
-        TLight(REColor color, u32 intensity, bool = true);
+        TLight(REColor, f32, bool = true);
 
         /**
          * @brief 
@@ -30,34 +30,26 @@ class TLight : public TEntity {
          */
         void endDraw();
         
-
         /**
          * @brief 
          * 
          * @param REColor 
          */
-        void setColor(REColor);
-
-        /**
-         * @brief 
-         * 
-         * @return REColor 
-         */
-        REColor getColor();
-
+        void setAmbientComponent(REColor, f32);
+        
         /**
          * @brief 
          * 
          * @param REColor 
          */
-        void setIntensity(u32);
-
+        void setDiffuseComponent(REColor, f32);
+        
         /**
          * @brief 
          * 
-         * @return REColor 
+         * @param REColor 
          */
-        u32 getIntensity();
+        void setSpecularComponent(REColor, f32);
 
         /**
          * @brief set the light to active or inactive
@@ -88,12 +80,10 @@ class TLight : public TEntity {
          */
         glm::vec3 getPosition();
     private:
-        REColor color;
         REEnums::LightTypes lightType;
-        u32 intensity;
 
-        glm::vec4 lightMatrix;
-        glm::vec3 lightPosition;
+        Light components;
+
         bool active;
 };
 

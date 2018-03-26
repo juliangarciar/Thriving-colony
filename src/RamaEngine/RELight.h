@@ -59,7 +59,84 @@ class RELight {
          * 
          * @param REColor 
          */
-        void setColor(REColor);
+        void setAmbientColor(REColor);
+
+        /**
+         * @brief 
+         * 
+         * @return REColor 
+         */
+        REColor getAmbientColor();
+        
+        /**
+         * @brief 
+         * 
+         * @param REColor 
+         */
+        void setAmbientIntensity(u32);
+
+        /**
+         * @brief 
+         * 
+         * @return REColor 
+         */
+        u32 getAmbientIntensity();
+
+        /**
+         * @brief 
+         * 
+         * @param REColor 
+         */
+        void setDiffuseColor(REColor);
+
+        /**
+         * @brief 
+         * 
+         * @return REColor 
+         */
+        REColor getDiffuseColor();
+        
+        /**
+         * @brief 
+         * 
+         * @param REColor 
+         */
+        void setDiffuseIntensity(u32);
+
+        /**
+         * @brief 
+         * 
+         * @return REColor 
+         */
+        u32 getDiffuseIntensity();
+
+        /**
+         * @brief 
+         * 
+         * @param REColor 
+         */
+        void setSpecularColor(REColor);
+
+        /**
+         * @brief 
+         * 
+         * @return REColor 
+         */
+        REColor getSpecularColor();
+        
+        /**
+         * @brief 
+         * 
+         * @param REColor 
+         */
+        void setSpecularIntensity(u32);
+
+        /**
+         * @brief 
+         * 
+         * @return REColor 
+         */
+        u32 getSpecularIntensity();
         
         /**
          * @brief Set the Position object
@@ -74,27 +151,6 @@ class RELight {
          * @return glm::vec3 
          */
         glm::vec3 getPosition();
-
-        /**
-         * @brief 
-         * 
-         * @return REColor 
-         */
-        REColor getColor();
-        
-        /**
-         * @brief 
-         * 
-         * @param REColor 
-         */
-        void setIntensity(u32);
-
-        /**
-         * @brief 
-         * 
-         * @return REColor 
-         */
-        u32 getIntensity();
 
         /**
          * @brief set the light to active or inactive
@@ -130,6 +186,13 @@ class RELight {
         TNode* rotationNode;
         TNode* translationNode;
         TNode* scaleNode;
+
+        REColor ambientColor;
+        u32 ambientIntensity;
+        REColor diffuseColor;
+        u32 diffuseIntensity;
+        REColor specularColor;
+        u32 specularIntensity;
 };
 
 #endif

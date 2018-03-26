@@ -30,9 +30,9 @@ std::vector<GLuint> TCache::generateAllParamIDs(int programID){
 	paramIDs[REEnums::ShaderParams::MATRIX_MV] = glGetUniformLocation(programID, "MV");
 	paramIDs[REEnums::ShaderParams::MATRIX_MVP] = glGetUniformLocation(programID, "MVP");
 
-	paramIDs[REEnums::ShaderParams::BUFFER_LIGHT] = glGetUniformBlockIndex(programID, "Light");
-	paramIDs[REEnums::ShaderParams::BUFFER_MATERIAL] = glGetUniformBlockIndex(programID, "Material");
-	paramIDs[REEnums::ShaderParams::BUFFER_TEXTURE] = glGetUniformBlockIndex(programID, "Texture");
+	paramIDs[REEnums::ShaderParams::BUFFER_LIGHT] = glGetUniformBlockIndex(programID, "LightBuffer");
+	paramIDs[REEnums::ShaderParams::BUFFER_MATERIAL] = glGetUniformBlockIndex(programID, "MaterialBuffer");
+	paramIDs[REEnums::ShaderParams::BUFFER_TEXTURE] = glGetUniformBlockIndex(programID, "TextureBuffer");
 
     return std::vector<GLuint>(paramIDs, paramIDs + REEnums::ShaderParams::PARAMS);
 }
