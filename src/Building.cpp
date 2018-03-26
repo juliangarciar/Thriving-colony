@@ -311,7 +311,6 @@ void Building::Init() {
 
     finished = false;
     
-    
     Material *m = new Material(tex);
     this->model->setMaterial(m);
 }

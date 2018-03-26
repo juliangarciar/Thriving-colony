@@ -25,6 +25,8 @@ class Label : public GUIElement {
         void setTooltip(std::string t);
         void setLabel(std::string t);
         
+        void setColor(i32 a, i32 r, i32 g, i32 b);
+
         nanogui::Widget *getGUIElement();
     private:
         nanogui::Label *label;

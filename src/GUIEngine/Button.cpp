@@ -3,11 +3,13 @@
 
 Button::Button(std::string buttonText) {
     button = Window::Instance() -> getGUIEnvironment() -> add<nanogui::Button>(buttonText);
+    button -> setFontSize(16);
 }
 
 Button::Button(GUIElement *parent, std::string buttonText) {
     button = parent -> getGUIElement() -> add<nanogui::Button>(buttonText);
     parent->addChild(this);
+    button -> setFontSize(16);
 }
 
 Button::~Button() {

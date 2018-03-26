@@ -3,11 +3,13 @@
 
 Widget::Widget() {
     widget = Window::Instance() -> getGUIEnvironment() -> add<nanogui::Widget>();
+    widget -> setFontSize(4);
 }
 
 Widget::Widget(GUIElement *parent) {
     widget = parent -> getGUIElement() -> add<nanogui::Widget>();
     parent->addChild(this);
+    widget -> setFontSize(4);
 }
 
 Widget::~Widget() {

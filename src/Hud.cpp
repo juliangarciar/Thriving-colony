@@ -5,6 +5,9 @@
 #include "IOEngine/IO.h"
 #include "GraphicEngine/Window.h"
 
+#define _WIDTH 100
+#define _HEIGHT 30
+
 Hud* Hud::pinstance = 0;
 
 Hud* Hud::Instance() {
@@ -42,28 +45,35 @@ void Hud::Init(){
     // General
     Widget *generalWidget = new Widget(buildingsPanel);
     generalWidget -> setVerticalLayout();
-    generalWidget -> setPosition(Vector2<i32>(20, 640));
+    //generalWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(generalWidget, "General functions");
 
     Button *buttonExpandTerrain = new Button(generalWidget, "Expand terrain");
-    buttonExpandTerrain -> setSize(Vector2<i32>(100, 50));
-    
+    buttonExpandTerrain -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
+    buttonExpandTerrain -> setBackgroundColor(150, 0, 200, 200);
+
     buttonOpenPanel = new Button(generalWidget, "Open Panel");
-    buttonOpenPanel -> setSize(Vector2<i32>(100, 50));
-    buttonOpenPanel -> setBackgroundColor(255, 0, 0, 255);
-    buttonOpenPanel -> refreshButton();
-    //buttonOpenPanel -> setPosition(Vector2<i32>(100, 20));
+    buttonOpenPanel -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
+    buttonOpenPanel -> setBackgroundColor(150, 0, 200, 200);
 
     // Resources
     Widget *resourceWidget = new Widget(buildingsPanel);
     resourceWidget -> setVerticalLayout();
     resourceWidget -> setPosition(Vector2<i32>(20, 640));
-
+    
     new Label(resourceWidget, "Resource buildings");
     Button *buttonHome = new Button(resourceWidget, "House");
+    buttonHome -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
+    buttonHome -> setBackgroundColor(150, 0, 200, 0);
+
     Button *buttonSiderurgy = new Button(resourceWidget, "Siderurgy");
+    buttonSiderurgy -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
+    buttonSiderurgy -> setBackgroundColor(150, 0, 200 ,0);
+
     Button *buttonQuarry = new Button(resourceWidget, "Quarry");
+    buttonQuarry -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
+    buttonQuarry -> setBackgroundColor(150, 0, 200, 0);
 
     // Services
     Widget *serviceWidget = new Widget(buildingsPanel);
@@ -72,8 +82,16 @@ void Hud::Init(){
 
     new Label(serviceWidget, "Service buildings");
     Button *buttonSchool = new Button(serviceWidget, "School");
+    buttonSchool -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
+    buttonSchool -> setBackgroundColor(150, 200, 0, 200);
+
     Button *buttonMarket = new Button(serviceWidget, "Market");
+    buttonMarket -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
+    buttonMarket -> setBackgroundColor(150, 200, 0, 200);
+
     Button *buttonHospital = new Button(serviceWidget, "Hospital");
+    buttonHospital -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
+    buttonHospital -> setBackgroundColor(150, 200, 0, 200);
 
     // Military
     Widget *militaryWidget = new Widget(buildingsPanel);
@@ -82,8 +100,16 @@ void Hud::Init(){
 
     new Label(militaryWidget, "Military buildings");
     Button *buttonBarrack = new Button(militaryWidget, "Barrack");
+    buttonBarrack -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
+    buttonBarrack -> setBackgroundColor(150, 200, 0, 0);
+
     Button *buttonBarn = new Button(militaryWidget, "Barn");
+    buttonBarn -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
+    buttonBarn -> setBackgroundColor(150, 200, 0, 0);
+
     Button *buttonWorkshop = new Button(militaryWidget, "Workshop");
+    buttonWorkshop -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
+    buttonWorkshop -> setBackgroundColor(150, 200, 0, 0);
 
     // Defense
     Widget *defenseWidget = new Widget(buildingsPanel);
@@ -92,7 +118,12 @@ void Hud::Init(){
 
     new Label(defenseWidget, "Defensive buildings");
     Button *buttonTower = new Button(defenseWidget, "Tower");
+    buttonTower -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
+    buttonTower -> setBackgroundColor(150, 0, 0, 200);
+
     Button *buttonWall = new Button(defenseWidget, "Wall");
+    buttonWall -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
+    buttonWall -> setBackgroundColor(150, 0, 0, 200);
 
     // Button callbacks
     buttonBarn->setTooltip("Build a barn that will allow you to train mounted military units.\n Metal cost: 800.");
@@ -168,7 +199,7 @@ void Hud::Init(){
     ///// DEBUG /////
     playerResources = new Panel("Player Resources");
     playerResources ->setVerticalLayout();
-    playerResources -> setSize(Vector2<i32> (200, 230));
+    playerResources -> setSize(Vector2<i32> (120, 230));
     i32 melees = 
         Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
         Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
@@ -181,15 +212,23 @@ void Hud::Init(){
     std::stringstream os;
     os << "Metal: " << std::to_string(Human::Instance() -> getMetalAmount());
     playerMetalAmount = new Label(playerResources, os.str());
+    playerMetalAmount -> setColor(200, 0, 200, 0);
+
     os = std::stringstream();
     os << "Crystal: " << std::to_string(Human::Instance() -> getCrystalAmount());
     playerCrystalAmount = new Label(playerResources, os.str());
+    playerCrystalAmount -> setColor(150, 0, 0, 150);
+
     os = std::stringstream();
     os << "Citizens: " << std::to_string(Human::Instance() -> getCitizens());
     playerCitizens = new Label(playerResources, os.str());
+    playerCitizens -> setColor(150, 200, 200, 0);
+
     os = std::stringstream();
     os << "Happiness: " << std::to_string(Human::Instance() -> getHappiness());
     playerHappiness = new Label(playerResources, os.str());
+    playerHappiness -> setColor(200, 210, 48, 130);
+
     os = std::stringstream();
     os << "City level: "<< std::to_string(Human::Instance() -> getCityLevel());
     playerCityLevel = new Label(playerResources, os.str());
@@ -208,6 +247,7 @@ void Hud::Init(){
     os = std::stringstream();
     
     iaResources = new Panel("IA Resources");
+    iaResources -> hide();
     iaResources -> setVerticalLayout();
     iaResources -> setPosition(Vector2<i32>(1100, 0));
     iaResources -> setSize(Vector2<i32> (200, 270));
