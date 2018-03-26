@@ -46,8 +46,8 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::BarnCrystalCost;
             kCells = Enumeration::BuildingCells::BarnCells;
 
-            path = L"media/buildingModels/establo.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/barn.obj";
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::Barrack:
 
@@ -62,8 +62,8 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::BarrackCrystalCost;
             kCells = Enumeration::BuildingCells::BarrackCells;
 
-            path = L"media/buildingModels/barraca.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/barrack.obj";
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::Hospital:
 
@@ -79,7 +79,7 @@ void Building::Init() {
             kCells = Enumeration::BuildingCells::HospitalCells;
 
             path = L"media/buildingModels/hospital.obj";
-            scale = Vector3<f32>(40,40,40);
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::House:
 
@@ -96,7 +96,7 @@ void Building::Init() {
             kCells = Enumeration::BuildingCells::HomeCells;
 
             path = L"media/buildingModels/house.obj";
-            scale = Vector3<f32>(40,40,40);
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::MainBuilding:
  
@@ -105,7 +105,7 @@ void Building::Init() {
             kCells = Enumeration::BuildingCells::MainCells;
 
             path = L"media/buildingModels/command_center.obj";
-            scale = Vector3<f32>(40,40,40);
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::Market:
 
@@ -120,8 +120,8 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::MarketCrystalCost;
             kCells = Enumeration::BuildingCells::MarketCells;
 
-            path = L"media/buildingModels/mercado.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/market.obj";
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::Quarry:
 
@@ -136,8 +136,8 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::QuarryCrystalCost;
             kCells = Enumeration::BuildingCells::QuarryCells;
 
-            path = L"media/buildingModels/cantera.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/quarry.obj";
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::Siderurgy:
 
@@ -152,8 +152,8 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::SiderurgyCrystalCost;
             kCells = Enumeration::BuildingCells::SiderurgyCells;
 
-            path = L"media/buildingModels/siderurgia.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/siderurgy.obj";
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::School:
 
@@ -169,8 +169,8 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::SchoolCrystalCost;
             kCells = Enumeration::BuildingCells::SchoolCells;
 
-            path = L"media/buildingModels/escuela.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/school.obj";
+            scale = Vector3<f32>(1,1,1);;
         break;
         case Enumeration::BuildingType::Tower:
 
@@ -185,8 +185,8 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::TowerCrystalCost;
             kCells = Enumeration::BuildingCells::TowerCells;
 
-            path = L"media/buildingModels/torre_vigilancia.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/tower.obj";
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::Wall:
 
@@ -201,8 +201,8 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::WallCrystalCost;
             kCells = Enumeration::BuildingCells::WallCells;
 
-            path = L"media/buildingModels/muralla.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/wall.obj";
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::Workshop:
 
@@ -217,8 +217,8 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::WorkshopCrystalCost;
             kCells = Enumeration::BuildingCells::WorkshopCells;
 
-            path = L"media/buildingModels/taller_maquinas_de_asedio.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/workshop.obj";
+            scale = Vector3<f32>(1,1,1);
         break;
         default: break;
     }
@@ -239,7 +239,7 @@ void Building::Init() {
 
     finished = false;
     
-    Texture *tex = new Texture("./media/textures/placeholder.bmp");
+    Texture *tex = new Texture("./media/textures/bar.jpg");
     Material *m = new Material(tex);
     this->model->setMaterial(m);
 }
