@@ -49,10 +49,9 @@ class BuildingManager {
 		bool setBuildingMode(Enumeration::BuildingType);
 
 		/**
-		 * @brief Create a new building at the point where the mouse is if it is not occupied and the left bottom of the mouse is pressed.
-		 * If the right bottom of the mouse is pressed, delete the tempBuilding variable and set it to MULL.
+		 * @brief Create a new building at the point where the mouse is if it is not occupied and the left botton of the mouse is pressed.
+		 * If the right botton of the mouse is pressed, delete the tempBuilding variable and set it to MULL.
 		 * Set buildingMode to false.
-		 * @param terrain donde se indica el terreno en el que construir.
 		 */
 		void drawBuilding();
 
@@ -83,13 +82,15 @@ class BuildingManager {
 		bool checkCanPay(Enumeration::BuildingType);
 		
 		/**
-		 * @brief Comprueba si un edificio ha termiando de construirse o no
-		 * @return true en caso de que este terminado y false, en caso contrario
+		 * @brief Check if the building with the key passed by parameter is finished or not.
+		 * @param The i32 is the key of the building that is going to be checked.
+		 * @return True when it is finished and false in other case.
 		 */
 		bool checkFinished(i32);
 
 		/**
-		 * @brief Actualiza el manejador de edificios
+		 * @brief Call the update method of every building stored at buildings variable.
+		 * @see update() method at Building class.
 		 */
 		void updateBuildingManager();
 		

@@ -51,7 +51,6 @@ Vector2<T> Vector2<T>::getFromPolarCoordinates(f32 r, f32 phi) {
     return point;
 }
 
-// Added by Julian
 template <class T>
 T Vector2<T>::calculateDistance(Vector2<T> b){
     

@@ -161,7 +161,7 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 	if (!instabuild) tempBuilding -> preTaxPlayer();
 
 	if (instabuild) tempBuilding -> triggerFinishedCallback();    
-	// Added by Julian
+	
 	WorldGeometry::Instance()->build(tempBuilding);
 	tempBuilding = NULL;
 	nextBuildingId++;

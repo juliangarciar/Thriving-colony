@@ -15,7 +15,6 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
     selectedTroop = 0; 
     nextTroopId = 1;
 
-    //Addes by Julian
     team = t;
     breed = b;
 

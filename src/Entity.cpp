@@ -22,7 +22,7 @@ Entity::Entity(i32 id, Enumeration::Team t, Enumeration::BreedType b) {
     citizens = 0;
     cityLevel = 0;
 
-    /* Added by Julian */
+    
     //hitBox = Box2D();
     armyLevel = 0;
 }
@@ -74,7 +74,7 @@ void Entity::setPosition(Vector3<f32> vectorData) {
     position -> set(vectorData);
     model -> setPosition(vectorData);
     hitbox -> set(model -> getBoundingBox());
-    /* Added by Julian */
+    
     /* Create the hitbox in another place */
     Vector2<f32> topLeft;
     Vector2<f32> bottomRight;
