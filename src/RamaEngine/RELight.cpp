@@ -53,7 +53,6 @@ void RELight::setAmbientIntensity(u32 c) {
 }
 
 u32 RELight::getAmbientIntensity() {
-    TLight* l = (TLight*) lightNode -> getEntity();
     return ambientIntensity;
 }
 
@@ -74,7 +73,6 @@ void RELight::setDiffuseIntensity(u32 c) {
 }
 
 u32 RELight::getDiffuseIntensity() {
-    TLight* l = (TLight*) lightNode -> getEntity();
     return diffuseIntensity;
 }
 
@@ -95,7 +93,6 @@ void RELight::setSpecularIntensity(u32 c) {
 }
 
 u32 RELight::getSpecularIntensity() {
-    TLight* l = (TLight*) lightNode -> getEntity();
     return specularIntensity;
 }
 

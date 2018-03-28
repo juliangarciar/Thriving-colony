@@ -17,6 +17,15 @@ class REColor {
          * @param red 
          * @param green 
          * @param blue 
+         */
+        REColor(i32 red, i32 green, i32 blue);
+
+        /**
+         * @brief 
+         * 
+         * @param red 
+         * @param green 
+         * @param blue 
          * @param alpha 
          */
         REColor(i32 red, i32 green, i32 blue, i32 alpha);

@@ -14,6 +14,13 @@ REColor::REColor(i32 red, i32 green, i32 blue, i32 alpha) {
     a = alpha;
 }
 
+REColor::REColor(i32 red, i32 green, i32 blue) {
+    r = red;
+    g = green;
+    b = blue;
+    a = 1.f;
+}
+
 REColor::~REColor() {
 
 }

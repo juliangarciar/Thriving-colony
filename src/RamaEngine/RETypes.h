@@ -1,7 +1,6 @@
 #ifndef RETYPES_H
 #define RETYPES_H
 
-#include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -25,7 +24,7 @@ typedef uint32_t u32;
 typedef unsigned short us32;
 typedef float f32;
 
-struct Light {
+struct glslLight {
     glm::vec3 position;
 
     glm::vec3 ambientComponent;
@@ -33,15 +32,15 @@ struct Light {
     glm::vec3 specularComponent;
 };
 
-struct Material {
+struct glslMaterial {
     glm::vec3 ambientColor;
     glm::vec3 diffuseColor;
     glm::vec3 specularColor;
 };
 
-struct Texture {
+struct glslTexture {
     bool ambientTexture;
-    bool diffureTexture;
+    bool diffuseTexture;
     bool specularTexture;
     bool alphaTexture;
     bool bumpTexture;

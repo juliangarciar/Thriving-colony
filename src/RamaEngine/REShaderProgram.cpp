@@ -24,7 +24,7 @@ REShaderProgram::REShaderProgram(ResourceGLSL* vs, ResourceGLSL* fs){
 		exit(0);
 	}
 
-	paramIDs = TEntity::cache.generateAllParamIDs(pid);
+	paramIDs = TEntity::cache.generateAllIDs(pid);
 }
 
 REShaderProgram::~REShaderProgram(){

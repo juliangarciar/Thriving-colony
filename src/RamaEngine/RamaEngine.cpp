@@ -1,5 +1,7 @@
 #include "RamaEngine.h"
 
+#include <GL/glew.h>
+
 #include "ResourceManager/ResourceOBJ.h"
 #include "ResourceManager/ResourceGLSL.h"
 
@@ -51,12 +53,14 @@ void RamaEngine::Init() {
     glCullFace(GL_BACK);
     glPolygonMode(GL_FRONT, GL_FILL);
     
-	glGenVertexArrays(1, &VertexArrayID);
-	glBindVertexArray(VertexArrayID);
+    GLuint VAO = TEntity::cache.getID(REEnums::OpenGLIDs::VAO_BUFFER);
+	glGenVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
 }
 
 void RamaEngine::End(){
-	glDeleteVertexArrays(1, &VertexArrayID);
+    GLuint VAO = TEntity::cache.getID(REEnums::OpenGLIDs::VAO_BUFFER);
+	glDeleteVertexArrays(1, &VAO);
 }
 
 RELight* RamaEngine::createLight(REColor color, u32 intensity) {
@@ -132,8 +136,8 @@ void RamaEngine::setCurrentShaderProgram(std::string programName){
     it = shaderPrograms.find(programName);
     if (it != shaderPrograms.end()){
         currentProgram = it->second;
-        TEntity::cache.setAllParamIDs(currentProgram -> getParamIDs());
-        TEntity::cache.setCurrentProgramID(currentProgram -> getShaderProgram());
+        TEntity::cache.setAllIDs(currentProgram -> getParamIDs());
+        TEntity::cache.setID(REEnums::OpenGLIDs::CURRENT_PROGRAM_ID, currentProgram -> getShaderProgram());
     }
 }
 

@@ -1,8 +1,6 @@
 #ifndef RAMAENGINE_H
 #define RAMAENGINE_H
 
-#include <GL/glew.h>
-
 #include "RETypes.h"
 #include "REEnums.h"
 #include "REAnimation.h"
@@ -174,10 +172,6 @@ class RamaEngine {
         std::vector<RECamera*> cameras;
         std::vector<RELight*> lights;
         std::map<std::string, REShaderProgram*> shaderPrograms;
-
-        // OpenGL
-	    GLuint VertexArrayID;
-        GLuint programID;
 };
 
 #endif

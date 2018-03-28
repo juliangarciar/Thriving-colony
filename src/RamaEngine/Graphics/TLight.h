@@ -82,7 +82,7 @@ class TLight : public TEntity {
     private:
         REEnums::LightTypes lightType;
 
-        Light components;
+        glslLight components;
 
         bool active;
 };

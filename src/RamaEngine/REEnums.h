@@ -35,8 +35,12 @@ class REEnums {
         };
 
         // Internal
-        enum ShaderParams {
-            MATRIX_PROJECTION = 0,
+        enum OpenGLIDs {
+            CURRENT_PROGRAM_ID = 0,
+
+            VAO_BUFFER,
+
+            MATRIX_PROJECTION,
             MATRIX_VIEW,
             MATRIX_MODEL,
             MATRIX_MV,
@@ -45,6 +49,12 @@ class REEnums {
             BUFFER_LIGHT,
             BUFFER_MATERIAL,
             BUFFER_TEXTURE,
+
+            SAMPLER_AMBIENT,
+            SAMPLER_DIFFUSE,
+            SAMPLER_SPECULAR,
+            SAMPLER_ALPHA,
+            SAMPLER_BUMP,
 
             PARAMS
         };

@@ -50,7 +50,7 @@ class REMesh {
         void translate(f32 tX, f32 tY, f32 tZ);
 
         /**
-         * @brief Set the Texture object
+         * @brief Set the glslTexture object
          * 
          */
         void setTexture(std::string, REEnums::TextureTypes, ResourceIMG*);

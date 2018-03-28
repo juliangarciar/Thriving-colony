@@ -11,10 +11,14 @@ TMesh::TMesh(ResourceMesh *r, ResourceMaterial *m) : TEntity() {
 	}
 
 	activeTextures.ambientTexture = false;
-	activeTextures.diffureTexture = false;
+	activeTextures.diffuseTexture = false;
 	activeTextures.specularTexture = false;
 	activeTextures.alphaTexture = false;
 	activeTextures.bumpTexture = false;
+	
+	currentMaterial.ambientColor = material->getAmbientColor();
+	currentMaterial.diffuseColor = material->getDiffuseColor();
+	currentMaterial.specularColor = material->getSpecularColor();
 
 	// Generate a buffer for the vertices
 	glGenBuffers(1, &VBOID);
@@ -26,24 +30,27 @@ TMesh::TMesh(ResourceMesh *r, ResourceMaterial *m) : TEntity() {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBOID);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndices().size() * sizeof(us32), &mesh->getIndices()[0] , GL_STATIC_DRAW);
 
-	// Material
-	Material mat;
-	mat.ambientColor = material->getAmbientColor();
-	mat.diffuseColor = material->getDiffuseColor();
-	mat.specularColor = material->getSpecularColor();
+	// Lights
+	glGenBuffers(1, &lightID);
+	glBindBuffer(GL_UNIFORM_BUFFER, lightID);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 1, lightID);
+	glNamedBufferData(lightID, sizeof(glslLight) * cache.getLights()->size(), nullptr, GL_DYNAMIC_DRAW);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslLight) * cache.getLights()->size(), &cache.getLights()->at(0));
+	glBindBufferRange(GL_UNIFORM_BUFFER, cache.getID(REEnums::OpenGLIDs::BUFFER_LIGHT), lightID, 0, sizeof(glslLight) * cache.getLights()->size());
+
+	// glslMaterial
 	glGenBuffers(1, &materialID);
 	glBindBuffer(GL_UNIFORM_BUFFER, materialID);
-	glBufferData(GL_UNIFORM_BUFFER , sizeof(Material), &mat, GL_STATIC_DRAW);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 2, materialID);
+	glNamedBufferData(materialID, sizeof(glslMaterial), nullptr, GL_DYNAMIC_DRAW);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslMaterial), &currentMaterial);
+	glBindBufferRange(GL_UNIFORM_BUFFER, cache.getID(REEnums::OpenGLIDs::BUFFER_MATERIAL), materialID, 0, sizeof(glslMaterial));
 
 	// Textures
 	glGenBuffers(1, &textureID);
 	glBindBuffer(GL_UNIFORM_BUFFER, textureID);
-	glBufferData(GL_UNIFORM_BUFFER , sizeof(Texture), &activeTextures, GL_STATIC_DRAW);
-
-	// Lights
-	glGenBuffers(1, &lightID);
-	glBindBuffer(GL_UNIFORM_BUFFER, lightID);
-	glBufferData(GL_UNIFORM_BUFFER , sizeof(Light) * cache.getLights()->size(), &cache.getLights()->at(0), GL_STATIC_DRAW);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 3, textureID);
+	glNamedBufferData(textureID, sizeof(glslTexture), nullptr, GL_DYNAMIC_DRAW);
 }
 
 TMesh::~TMesh() {
@@ -59,23 +66,49 @@ void TMesh::beginDraw() {
 	// Matrices
 	glm::mat4 MV = vM * mM;
 	glm::mat4 MVP = pM * vM * mM;
-	glUniformMatrix4fv(cache.getParamID(REEnums::ShaderParams::MATRIX_MODEL), 1, GL_FALSE, &mM[0][0]);
-	glUniformMatrix4fv(cache.getParamID(REEnums::ShaderParams::MATRIX_VIEW), 1, GL_FALSE, &vM[0][0]);
-	glUniformMatrix4fv(cache.getParamID(REEnums::ShaderParams::MATRIX_PROJECTION), 1, GL_FALSE, &pM[0][0]);
-	glUniformMatrix4fv(cache.getParamID(REEnums::ShaderParams::MATRIX_MV), 1, GL_FALSE, &MV[0][0]);
-	glUniformMatrix4fv(cache.getParamID(REEnums::ShaderParams::MATRIX_MVP), 1, GL_FALSE, &MVP[0][0]);
-	glUniformBlockBinding(cache.getCurrentProgramID(), cache.getParamID(REEnums::ShaderParams::BUFFER_MATERIAL), materialID);
-	glUniformBlockBinding(cache.getCurrentProgramID(), cache.getParamID(REEnums::ShaderParams::BUFFER_TEXTURE), textureID);
-	glUniformBlockBinding(cache.getCurrentProgramID(), cache.getParamID(REEnums::ShaderParams::BUFFER_LIGHT), lightID);
+	glUniformMatrix4fv(cache.getID(REEnums::OpenGLIDs::MATRIX_MODEL), 1, GL_FALSE, &mM[0][0]);
+	glUniformMatrix4fv(cache.getID(REEnums::OpenGLIDs::MATRIX_VIEW), 1, GL_FALSE, &vM[0][0]);
+	glUniformMatrix4fv(cache.getID(REEnums::OpenGLIDs::MATRIX_PROJECTION), 1, GL_FALSE, &pM[0][0]);
+	glUniformMatrix4fv(cache.getID(REEnums::OpenGLIDs::MATRIX_MV), 1, GL_FALSE, &MV[0][0]);
+	glUniformMatrix4fv(cache.getID(REEnums::OpenGLIDs::MATRIX_MVP), 1, GL_FALSE, &MVP[0][0]);
 
-	//ToDo: mejorar
-	int i = 0;
-	for (int i = 0; i < REEnums::TextureTypes::TEXTURE_SIZE; i++){
-		if (textures[i] != NULL){
-			glActiveTexture(GL_TEXTURE0 + i);
-			glBindTexture(GL_TEXTURE_2D, textures[i]->getTextureID());
-			i++;
-		}
+	// 
+
+	int loadedTextures = 0;
+
+	if (activeTextures.ambientTexture){
+		glActiveTexture(GL_TEXTURE0 + loadedTextures);
+		glBindTexture(GL_TEXTURE_2D, textures[REEnums::TextureTypes::TEXTURE_AMBIENT]->getTextureID());
+		glUniform1i(cache.getID(REEnums::OpenGLIDs::SAMPLER_AMBIENT), loadedTextures);
+		loadedTextures++;
+	}
+
+	if (activeTextures.diffuseTexture){
+		glActiveTexture(GL_TEXTURE0 + loadedTextures);
+		glBindTexture(GL_TEXTURE_2D, textures[REEnums::TextureTypes::TEXTURE_DIFFUSE]->getTextureID());
+		glUniform1i(cache.getID(REEnums::OpenGLIDs::SAMPLER_DIFFUSE), loadedTextures);
+		loadedTextures++;
+	}
+
+	if (activeTextures.specularTexture){
+		glActiveTexture(GL_TEXTURE0 + loadedTextures);
+		glBindTexture(GL_TEXTURE_2D, textures[REEnums::TextureTypes::TEXTURE_SPECULAR]->getTextureID());
+		glUniform1i(cache.getID(REEnums::OpenGLIDs::SAMPLER_SPECULAR), loadedTextures);
+		loadedTextures++;
+	}
+
+	if (activeTextures.alphaTexture){
+		glActiveTexture(GL_TEXTURE0 + loadedTextures);
+		glBindTexture(GL_TEXTURE_2D, textures[REEnums::TextureTypes::TEXTURE_ALPHA]->getTextureID());
+		glUniform1i(cache.getID(REEnums::OpenGLIDs::SAMPLER_ALPHA), loadedTextures);
+		loadedTextures++;
+	}
+
+	if (activeTextures.bumpTexture){
+		glActiveTexture(GL_TEXTURE0 + loadedTextures);
+		glBindTexture(GL_TEXTURE_2D, textures[REEnums::TextureTypes::TEXTURE_BUMP]->getTextureID());
+		glUniform1i(cache.getID(REEnums::OpenGLIDs::SAMPLER_BUMP), loadedTextures);
+		loadedTextures++;
 	}
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBOID);
@@ -106,7 +139,6 @@ void TMesh::endDraw() {
 
 }
 
-//ToDo: mejorar
 void TMesh::setTexture(REEnums::TextureTypes tt, TTexture* t){
 	textures[(int)tt] = t;
 	switch(tt){
@@ -114,7 +146,7 @@ void TMesh::setTexture(REEnums::TextureTypes tt, TTexture* t){
 			activeTextures.ambientTexture = true;
 		break;
 		case REEnums::TextureTypes::TEXTURE_DIFFUSE:
-			activeTextures.diffureTexture = true;
+			activeTextures.diffuseTexture = true;
 		break;
 		case REEnums::TextureTypes::TEXTURE_SPECULAR:
 			activeTextures.specularTexture = true;
@@ -125,7 +157,12 @@ void TMesh::setTexture(REEnums::TextureTypes tt, TTexture* t){
 		case REEnums::TextureTypes::TEXTURE_BUMP:
 			activeTextures.bumpTexture = true;
 		break;
+		default: break;
 	}
+
+	glBindBuffer(GL_UNIFORM_BUFFER, textureID);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslTexture), &activeTextures);
+	glBindBufferRange(GL_UNIFORM_BUFFER, cache.getID(REEnums::OpenGLIDs::BUFFER_TEXTURE), textureID, 0, sizeof(glslTexture));
 }
 
 ResourceMesh* TMesh::getMesh(){

@@ -37,7 +37,7 @@ class TMesh : public TEntity {
         virtual void endDraw();
 
         /**
-         * @brief Set the Texture object
+         * @brief Set the glslTexture object
          * 
          */
         virtual void setTexture(REEnums::TextureTypes, TTexture*);
@@ -50,7 +50,7 @@ class TMesh : public TEntity {
         ResourceMesh* getMesh();
 
         /**
-         * @brief Get the Material object
+         * @brief Get the glslMaterial object
          * 
          * @return ResourceMaterial* 
          */
@@ -61,7 +61,8 @@ class TMesh : public TEntity {
         
         std::vector<TTexture*> textures;
         
-        Texture activeTextures;
+        glslTexture activeTextures;
+	    glslMaterial currentMaterial;
         
         GLuint VBOID;
 	    GLuint IBOID;
