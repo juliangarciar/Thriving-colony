@@ -1,31 +1,31 @@
-#ifndef OBDESCENENODE_H
-#define OBDESCENENODE_H
+#ifndef OBDSCENENODE_H
+#define OBDSCENENODE_H
 
-#include "OBDETypes.h"
+#include "OBDTypes.h"
 #include "Graphics/TNode.h"
 #include "Graphics/TTransform.h"
 
-class OBDESceneNode {
+class OBDSceneNode {
     public:
         /**
          * @brief 
          * 
          * @param parent 
          */
-        OBDESceneNode(TNode*);
+        OBDSceneNode(TNode*);
 
         /**
          * @brief 
          * 
          * @param parent 
          */
-        OBDESceneNode(OBDESceneNode*);
+        OBDSceneNode(OBDSceneNode*);
 
         /**
          * @brief 
          * 
          */
-        ~OBDESceneNode();
+        ~OBDSceneNode();
 
         /**
          * @brief 

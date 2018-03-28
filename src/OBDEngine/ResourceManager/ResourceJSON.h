@@ -1,5 +1,5 @@
-#ifndef RESOURCEJSON_H
-#define RESOURCEJSON_H
+#ifndef OBDSOURCEJSON_H
+#define OBDSOURCEJSON_H
 
 #include "Resource.h"
 #include "ResourceManager.h"

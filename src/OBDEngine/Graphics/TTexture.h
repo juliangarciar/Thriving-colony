@@ -1,7 +1,9 @@
 #ifndef TTEXTURE_H
 #define TTEXTURE_H
 
-#include "../OBDETypes.h"
+#include <GL/glew.h>
+
+#include "../OBDTypes.h"
 
 class ResourceIMG;
 

@@ -1,7 +1,9 @@
 #ifndef TSHADER_H
 #define TSHADER_H
 
-#include "../OBDETypes.h"
+#include <GL/glew.h>
+
+#include "../OBDTypes.h"
 #include "../ResourceManager/ResourceGLSL.h"
 
 class TShader {

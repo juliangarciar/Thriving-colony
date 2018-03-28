@@ -1,8 +1,8 @@
-#ifndef RESOURCE_H
-#define RESOURCE_H
+#ifndef OBDSOURCE_H
+#define OBDSOURCE_H
 
-#include "../OBDETypes.h"
-#include "../OBDEEnums.h"
+#include "../OBDTypes.h"
+#include "../OBDEnums.h"
 
 class Resource {
     public:

@@ -1,8 +1,8 @@
-#ifndef OBDEMESH_H
-#define OBDEMESH_H
+#ifndef OBDMESH_H
+#define OBDMESH_H
 
-#include "OBDETypes.h"
-#include "OBDESceneNode.h"
+#include "OBDTypes.h"
+#include "OBDSceneNode.h"
 
 #include "ResourceManager/ResourceOBJ.h"
 #include "ResourceManager/ResourceMTL.h"
@@ -11,7 +11,7 @@
 #include "Graphics/TTransform.h"
 #include "Graphics/TMesh.h"
 
-class OBDEMesh {
+class OBDMesh {
     public:
         /**
          * @brief 
@@ -20,13 +20,13 @@ class OBDEMesh {
          * @param 
          * @param 
          */
-        OBDEMesh(OBDESceneNode*, ResourceOBJ *, ResourceMTL *);
+        OBDMesh(OBDSceneNode*, ResourceOBJ *, ResourceMTL *);
 
         /**
          * @brief 
          * 
          */
-        ~OBDEMesh();
+        ~OBDMesh();
 
         /**
          * @brief 
@@ -50,10 +50,10 @@ class OBDEMesh {
         void translate(f32 tX, f32 tY, f32 tZ);
 
         /**
-         * @brief Set the Texture object
+         * @brief Set the glslTexture object
          * 
          */
-        void setTexture(std::string, OBDEEnums::TextureTypes, ResourceIMG*);
+        void setTexture(std::string, OBDEnums::TextureTypes, ResourceIMG*);
 
         /**
          * @brief Get the Mesh Amount object
@@ -67,7 +67,7 @@ class OBDEMesh {
          * 
          * @return TMesh* 
          */
-        TMesh *getMesh(std::string);
+        TMesh *getShape(std::string);
 
         /**
          * @brief Get the Meshes object

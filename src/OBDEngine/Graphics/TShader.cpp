@@ -5,7 +5,7 @@ TShader::TShader(ResourceGLSL *s){
     int shaderInfoLogLength;
 
     // Read the shader Shader code from the file
-    if (s->getShaderType() == OBDEEnums::ShaderType::VERTEX){
+    if (s->getShaderType() == OBDEnums::ShaderType::VERTEX){
         shaderID = glCreateShader(GL_VERTEX_SHADER);
     } else {
         shaderID = glCreateShader(GL_FRAGMENT_SHADER);

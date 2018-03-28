@@ -1,26 +1,26 @@
-#ifndef OBDEANIMATION_H
-#define OBDEANIMATION_H
+#ifndef OBDANIMATION_H
+#define OBDANIMATION_H
 
-#include "OBDETypes.h"
-#include "OBDESceneNode.h"
+#include "OBDTypes.h"
+#include "OBDSceneNode.h"
 #include "Graphics/TNode.h"
 #include "Graphics/TTransform.h"
 #include "Graphics/TAnimation.h"
 
-class OBDEAnimation {
+class OBDAnimation {
     public:
         /**
          * @brief 
          * 
          * @param parent 
          */
-        OBDEAnimation(OBDESceneNode* parent);
+        OBDAnimation(OBDSceneNode* parent);
 
         /**
          * @brief 
          * 
          */
-        ~OBDEAnimation();
+        ~OBDAnimation();
 
         /**
          * @brief 

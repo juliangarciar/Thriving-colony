@@ -1,7 +1,7 @@
-#ifndef RESOURCEMANAGER_H
-#define RESOURCEMANAGER_H
+#ifndef OBDSOURCEMANAGER_H
+#define OBDSOURCEMANAGER_H
 
-#include "../OBDETypes.h"
+#include "../OBDTypes.h"
 
 #include "Resource.h"
 

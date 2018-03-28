@@ -1,7 +1,6 @@
 #include "ResourceOBJ.h"
 
 #include <objloader/OBJ_Loader.h>
-#include <objloader/vboindexer.hpp>
 #include <glm/glm.hpp>
 
 ResourceOBJ::ResourceOBJ(){
@@ -29,30 +28,23 @@ void ResourceOBJ::load(const char *path){
 
         ResourceMesh *tempMesh = new ResourceMesh(curMesh.MeshName);
 
-        std::vector<glm::vec3> vertices;
-        std::vector<glm::vec3> normals;
-        std::vector<glm::vec2> uvs;
+        std::vector<f32> vbo;
+
+        vbo.reserve(curMesh.Vertices.size() * 8);
 
         for (int j = 0; j < curMesh.Vertices.size(); j++) {
-            glm::vec3 position(curMesh.Vertices[j].Position.X, curMesh.Vertices[j].Position.Y, curMesh.Vertices[j].Position.Z);
-			glm::vec3 normal(curMesh.Vertices[j].Normal.X, curMesh.Vertices[j].Normal.Y, curMesh.Vertices[j].Normal.Z);
-			glm::vec2 textureCoordinate(curMesh.Vertices[j].TextureCoordinate.X, curMesh.Vertices[j].TextureCoordinate.Y);
-
-            vertices.push_back(position);
-            normals.push_back(normal);
-            uvs.push_back(textureCoordinate);
+            vbo.push_back(curMesh.Vertices[j].Position.X);
+            vbo.push_back(curMesh.Vertices[j].Position.Y);
+            vbo.push_back(curMesh.Vertices[j].Position.Z);
+            vbo.push_back(curMesh.Vertices[j].Normal.X);
+            vbo.push_back(curMesh.Vertices[j].Normal.Y);
+            vbo.push_back(curMesh.Vertices[j].Normal.Z);
+            vbo.push_back(curMesh.Vertices[j].TextureCoordinate.X);
+            vbo.push_back(1.0f - curMesh.Vertices[j].TextureCoordinate.Y);
         }
 
-        std::vector<glm::vec3> indexed_vertices;
-        std::vector<glm::vec3> indexed_normals;
-        std::vector<glm::vec2> indexed_uvs;
-        std::vector<us32> indices;
-        indexVBO(vertices, uvs, normals, indices, indexed_vertices, indexed_uvs, indexed_normals);
-
-        tempMesh->setVertices(indexed_vertices);
-        tempMesh->setNormals(indexed_normals);
-        tempMesh->setUVs(indexed_uvs);
-        tempMesh->setIndices(indices);
+        tempMesh->setVBO(vbo);
+        tempMesh->setIndices(curMesh.Indices);
         tempMesh->setDefaultMaterialName(curMesh.MeshMaterial.name);
 
         meshArray.insert(std::pair<std::string, ResourceMesh*>(curMesh.MeshName, tempMesh));

@@ -1,6 +1,8 @@
-#include "OBDEShaderProgram.h"
+#include "OBDShaderProgram.h"
 
-OBDEShaderProgram::OBDEShaderProgram(ResourceGLSL* vs, ResourceGLSL* fs){
+#include "Graphics/TEntity.h"
+
+OBDShaderProgram::OBDShaderProgram(ResourceGLSL* vs, ResourceGLSL* fs){
 	vertexShader = new TShader(vs);
 	fragmentShader = new TShader(fs);
 
@@ -22,20 +24,20 @@ OBDEShaderProgram::OBDEShaderProgram(ResourceGLSL* vs, ResourceGLSL* fs){
 		exit(0);
 	}
 
-	rootEntity = new TRoot(pid);
+	paramIDs = TEntity::cache.generateAllIDs(pid);
 }
 
-OBDEShaderProgram::~OBDEShaderProgram(){
+OBDShaderProgram::~OBDShaderProgram(){
 	glDetachShader(pid, vertexShader->getShaderID());
 	glDeleteShader(vertexShader->getShaderID());
 	glDetachShader(pid, fragmentShader->getShaderID());
 	glDeleteShader(fragmentShader->getShaderID());
 }
     
-TRoot *OBDEShaderProgram::getRootEntity(){
-	return rootEntity;
+std::vector<GLuint> OBDShaderProgram::getParamIDs(){
+	return paramIDs;
 }
     
-GLuint OBDEShaderProgram::getShaderProgram(){
+GLuint OBDShaderProgram::getShaderProgram(){
 	return pid;
 }

@@ -2,7 +2,7 @@
 #define TLIGHT_H
 
 #include "TEntity.h"
-#include "../OBDEColor.h"
+#include "../OBDColor.h"
 
 class TLight : public TEntity {
     public:
@@ -10,7 +10,7 @@ class TLight : public TEntity {
          * @brief 
          * 
          */
-        TLight(OBDEColor color, u32 intensity, bool = true);
+        TLight(OBDColor, f32, bool = true);
 
         /**
          * @brief 
@@ -30,34 +30,26 @@ class TLight : public TEntity {
          */
         void endDraw();
         
-
         /**
          * @brief 
          * 
-         * @param OBDEColor 
+         * @param OBDColor 
          */
-        void setColor(OBDEColor);
-
+        void setAmbientComponent(OBDColor, f32);
+        
         /**
          * @brief 
          * 
-         * @return OBDEColor 
+         * @param OBDColor 
          */
-        OBDEColor getColor();
-
+        void setDiffuseComponent(OBDColor, f32);
+        
         /**
          * @brief 
          * 
-         * @param OBDEColor 
+         * @param OBDColor 
          */
-        void setIntensity(u32);
-
-        /**
-         * @brief 
-         * 
-         * @return OBDEColor 
-         */
-        u32 getIntensity();
+        void setSpecularComponent(OBDColor, f32);
 
         /**
          * @brief set the light to active or inactive
@@ -73,12 +65,24 @@ class TLight : public TEntity {
          * @return false otherwise
          */
         bool getActive();
+
+        /**
+         * @brief Set the Position object
+         * 
+         * @param p 
+         */
+        void setPosition(glm::vec3 p);
+
+        /**
+         * @brief Get the Position object
+         * 
+         * @return glm::vec3 
+         */
+        glm::vec3 getPosition();
     private:
-        OBDEColor color;
+        OBDEnums::LightTypes lightType;
 
-        u32 intensity;
-
-        glm::vec4 lightMatrix;
+        glslLight components;
 
         bool active;
 };

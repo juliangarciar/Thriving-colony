@@ -1,53 +1,44 @@
-#ifndef OBDECAMERA_H
-#define OBDECAMERA_H
+#ifndef OBDCAMERA_H
+#define OBDCAMERA_H
 
-#include "OBDETypes.h"
-#include "OBDEEnums.h"
+#include "OBDTypes.h"
+#include "OBDEnums.h"
 #include "Graphics/TNode.h"
 #include "Graphics/TTransform.h"
 #include "Graphics/TCamera.h"
 
-class OBDECamera {
+class OBDCamera {
     public:
         /**
          * @brief 
          * 
          * @param parent 
          */
-        OBDECamera(TNode* parent);
+        OBDCamera(TNode* parent);
 
         /**
          * @brief 
          * 
          */
-        ~OBDECamera();
+        ~OBDCamera();
 
         /**
-         * @brief 
-         * 
-         * @param tX 
-         * @param tY 
-         * @param tZ 
-         */
-        void rotate(f32 rX, f32 rY, f32 rZ, f32 angle);
+          * @brief 
+          * 
+          * @param tX 
+          * @param tY 
+          * @param tZ 
+          */
+        void setTargetPosition(glm::vec3 p);
 
         /**
-         * @brief 
-         * 
-         * @param sX 
-         * @param sY 
-         * @param sZ 
-         */
-        void scale(f32 sX, f32 sY, f32 sZ);
-
-        /**
-         * @brief 
-         * 
-         * @param tX 
-         * @param tY 
-         * @param tZ 
-         */
-        void translate(f32 tX, f32 tY, f32 tZ);
+          * @brief 
+          * 
+          * @param tX 
+          * @param tY 
+          * @param tZ 
+          */
+        void setCameraPosition(glm::vec3 p);
 
         /**
          * @brief 
@@ -61,7 +52,7 @@ class OBDECamera {
          * 
          * @param n 
          */
-        void setNear(f32 n);
+        void setNearValue(f32 n);
 
         /**
          * @brief 
@@ -88,24 +79,6 @@ class OBDECamera {
          * @param fov 
          */
         void setFov(f32 fov);
-
-        /**
-          * @brief 
-          * 
-          * @param tX 
-          * @param tY 
-          * @param tZ 
-          */
-        void setTargetPosition(glm::vec3 p);
-
-        /**
-          * @brief 
-          * 
-          * @param tX 
-          * @param tY 
-          * @param tZ 
-          */
-        void setCameraPosition(glm::vec3 p);
 
         // En realidad no se si se necesitan getters pero los pongo por si acaso
 
@@ -141,7 +114,7 @@ class OBDECamera {
          * 
          * @return TEnums::CameraProjection 
          */
-        OBDEEnums::CameraProjection getProjectionMode();
+        OBDEnums::CameraProjection getProjectionMode();
 
         /**
          * @brief 
@@ -172,9 +145,6 @@ class OBDECamera {
         TCamera* getCameraEntity();
     private:
         TNode* cameraNode;
-        TNode* rotationNode;
-        TNode* translationNode;
-        TNode* scaleNode;
 };
 
 #endif

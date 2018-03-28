@@ -1,5 +1,5 @@
-#ifndef RESOURCEGLSL_H
-#define RESOURCEGLSL_H
+#ifndef OBDSOURCEGLSL_H
+#define OBDSOURCEGLSL_H
 
 #include "Resource.h"
 #include "ResourceManager.h"
@@ -16,10 +16,10 @@ class ResourceGLSL : public Resource {
         const char *getIdentifier();
 
         std::string *getShaderCode();
-        OBDEEnums::ShaderType getShaderType();
+        OBDEnums::ShaderType getShaderType();
     private:
         std::string shaderCode;
-        OBDEEnums::ShaderType type;
+        OBDEnums::ShaderType type;
         
 };
 

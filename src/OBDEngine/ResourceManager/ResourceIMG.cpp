@@ -15,7 +15,7 @@ void ResourceIMG::load(const char *path){
     resource = stbi_load(
         path,
         &width, &height, &channels,
-        0
+        STBI_default
     );
     if (!resource) {
         std::cout << "Failed opening " << path << " image. Check the path." << std::endl;

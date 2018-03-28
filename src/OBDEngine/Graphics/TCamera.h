@@ -8,7 +8,7 @@ class TCamera : public TEntity {
         /**
          * @brief constructs a new camera entity to be used on a node.
          * 
-         * @param OBDEEnums::CameraProjection projection mode.
+         * @param OBDEnums::CameraProjection projection mode.
          * @param f32 near.
          * @param f32 far.
          * @param f32 top.
@@ -17,7 +17,7 @@ class TCamera : public TEntity {
          * @param f32 right.
          * @param bool
          */
-        TCamera(OBDEEnums::CameraProjection, f32, f32, f32, f32, f32, f32, bool = true);
+        TCamera(OBDEnums::CameraProjection, f32, f32, f32, f32, f32, f32, bool = true);
 
         /**
          * @brief Destructor for a camera entity.
@@ -48,9 +48,15 @@ class TCamera : public TEntity {
         /**
          * @brief sets the current projection mode to the one specified as parameter.
          * 
+<<<<<<< HEAD:src/OBDEngine/Graphics/TCamera.h
          * @param OBDEEnums::CameraProjection new projection mode.
          */
         void setProjection(OBDEEnums::CameraProjection);
+=======
+         * @param OBDEnums::CameraProjection new projection mode.
+         */
+        void setProjection(OBDEnums::CameraProjection);
+>>>>>>> Engine:src/OBDEngine/Graphics/TCamera.h
 
         /**
          * @brief set the camera to active or inactive
@@ -130,9 +136,15 @@ class TCamera : public TEntity {
         /**
          * @brief Return the current projection mode.
          * 
+<<<<<<< HEAD:src/OBDEngine/Graphics/TCamera.h
          * @return OBDEEnums::CameraProjection current projection mode.
          */
         OBDEEnums::CameraProjection getProjection();
+=======
+         * @return OBDEnums::CameraProjection current projection mode.
+         */
+        OBDEnums::CameraProjection getProjection();
+>>>>>>> Engine:src/OBDEngine/Graphics/TCamera.h
 
         /**
          * @brief returns wether or not the camera is active
@@ -215,7 +227,11 @@ class TCamera : public TEntity {
         glm::mat4 vMat;
 
         //Projection Type
+<<<<<<< HEAD:src/OBDEngine/Graphics/TCamera.h
         OBDEEnums::CameraProjection projection;
+=======
+        OBDEnums::CameraProjection projection;
+>>>>>>> Engine:src/OBDEngine/Graphics/TCamera.h
         
         // Field of view (fov) is expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.
         f32 near, far, fov, top, bottom, left, right;

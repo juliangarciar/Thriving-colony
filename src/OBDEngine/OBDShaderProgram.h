@@ -1,34 +1,33 @@
-#ifndef OBDESHADERPROGRAM_H
-#define OBDESHADERPROGRAM_H
+#ifndef OBDSHADERPROGRAM_H
+#define OBDSHADERPROGRAM_H
 
-#include <GL/gl.h>
-#include "OBDETypes.h"
-#include "OBDEEnums.h"
+#include <GL/glew.h>
+#include "OBDTypes.h"
+#include "OBDEnums.h"
 
-#include "Graphics/TRoot.h"
 #include "Graphics/TShader.h"
 
-class OBDEShaderProgram {
+class OBDShaderProgram {
     public:
         /**
          * @brief 
          * @param shader
          * @param shader
          */
-        OBDEShaderProgram(ResourceGLSL*, ResourceGLSL*);
+        OBDShaderProgram(ResourceGLSL*, ResourceGLSL*);
 
         /**
          * @brief 
          * 
          */
-        ~OBDEShaderProgram();
+        ~OBDShaderProgram();
 
         /**
-         * @brief Get the Root Entity object
+         * @brief Get the param ids object
          * 
          * @return GLuint 
          */
-        TRoot *getRootEntity();
+        std::vector<GLuint> getParamIDs();
 
         /**
          * @brief Get the Shader Program object
@@ -40,7 +39,8 @@ class OBDEShaderProgram {
         GLuint pid;
         TShader *vertexShader;
         TShader *fragmentShader;
-        TRoot *rootEntity;
+
+        std::vector<GLuint> paramIDs;
 };
 
 #endif

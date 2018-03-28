@@ -117,9 +117,7 @@ class TTransform : public TEntity {
          * @return glm::mat4 
          */
         glm::mat4 getMatrix();
-        
     private:
-
         glm::mat4 matrix;
 };
 

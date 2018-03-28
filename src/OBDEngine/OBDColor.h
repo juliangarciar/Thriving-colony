@@ -1,15 +1,24 @@
-#ifndef OBDECOLOR_H
-#define OBDECOLOR_H
+#ifndef OBDCOLOR_H
+#define OBDCOLOR_H
 
-#include "OBDETypes.h"
+#include "OBDTypes.h"
 
-class OBDEColor {
+class OBDColor {
     public:
         /**
          * @brief 
          * 
          */
-        OBDEColor();
+        OBDColor();
+
+        /**
+         * @brief 
+         * 
+         * @param red 
+         * @param green 
+         * @param blue 
+         */
+        OBDColor(i32 red, i32 green, i32 blue);
 
         /**
          * @brief 
@@ -19,13 +28,13 @@ class OBDEColor {
          * @param blue 
          * @param alpha 
          */
-        OBDEColor(i32 red, i32 green, i32 blue, i32 alpha);
+        OBDColor(i32 red, i32 green, i32 blue, i32 alpha);
 
         /**
          * @brief 
          * 
          */
-        ~OBDEColor();
+        ~OBDColor();
 
 
         /**

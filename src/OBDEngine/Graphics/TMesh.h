@@ -1,12 +1,14 @@
 #ifndef TMESH_H
 #define TMESH_H
 
-#include <GL/gl.h>
+#include <GL/glew.h>
 
 #include "TEntity.h"
 #include "../ResourceManager/Helpers/ResourceMesh.h"
 #include "../ResourceManager/Helpers/ResourceMaterial.h"
 #include "TTexture.h"
+
+#define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 class TMesh : public TEntity {
     public:
@@ -35,10 +37,10 @@ class TMesh : public TEntity {
         virtual void endDraw();
 
         /**
-         * @brief Set the Texture object
+         * @brief Set the glslTexture object
          * 
          */
-        virtual void setTexture(OBDEEnums::TextureTypes, TTexture*);
+        virtual void setTexture(OBDEnums::TextureTypes, TTexture*);
 
         /**
          * @brief Get the Mesh object
@@ -48,7 +50,7 @@ class TMesh : public TEntity {
         ResourceMesh* getMesh();
 
         /**
-         * @brief Get the Material object
+         * @brief Get the glslMaterial object
          * 
          * @return ResourceMaterial* 
          */
@@ -56,12 +58,18 @@ class TMesh : public TEntity {
     private:
         ResourceMesh* mesh;
         ResourceMaterial* material;
-        std::map<OBDEEnums::TextureTypes, TTexture*> textures;
+        
+        std::vector<TTexture*> textures;
+        
+        glslTexture activeTextures;
+	    glslMaterial currentMaterial;
+        
+        GLuint VBOID;
+	    GLuint IBOID;
 
-        GLuint vertexbuffer;
-        GLuint normalbuffer;
-        GLuint uvbuffer;
-	    GLuint elementbuffer;
+        GLuint lightID;
+        GLuint materialID;
+        GLuint textureID;
 };
 
 #endif

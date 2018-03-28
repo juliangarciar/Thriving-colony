@@ -1,6 +1,6 @@
 #include "TCamera.h"
 
-TCamera::TCamera(OBDEEnums::CameraProjection projectionMode, f32 n, f32 f, f32 t, f32 b, f32 l, f32 r, bool a) : TEntity(){
+TCamera::TCamera(OBDEnums::CameraProjection projectionMode, f32 n, f32 f, f32 t, f32 b, f32 l, f32 r, bool a) : TEntity(){
     active = a;
 
     setNear(n);
@@ -24,9 +24,8 @@ TCamera::~TCamera(){
 
 void TCamera::beginDraw(){
     if (active) {
-        TMatrixCache *cache = TMatrixCache::Instance();
-        cache->setMatrix(OBDEEnums::Matrices::MATRIX_PROJECTION, &pMat);
-        cache->setMatrix(OBDEEnums::Matrices::MATRIX_VIEW, &vMat);
+        cache.setProjectionMatrix(pMat);
+        cache.setViewMatrix(vMat);
     }
 }
 
@@ -62,9 +61,9 @@ glm::vec3 TCamera::getCameraPosition() {
 
 ///////////////////////
 
-void TCamera::setProjection(OBDEEnums::CameraProjection cp){
+void TCamera::setProjection(OBDEnums::CameraProjection cp){
     projection = cp;
-    if (cp == OBDEEnums::CameraProjection::ProjectionPerspective){
+    if (cp == OBDEnums::CameraProjection::ProjectionPerspective){
         // Calculate aspect ratio
         f32 width = right - left;
         f32 height = bottom - top;
@@ -74,7 +73,7 @@ void TCamera::setProjection(OBDEEnums::CameraProjection cp){
     }
 }
 
-OBDEEnums::CameraProjection TCamera::getProjection(){
+OBDEnums::CameraProjection TCamera::getProjection(){
     return projection;
 }
 

@@ -1,5 +1,5 @@
-#ifndef RESOURCEMTL_H
-#define RESOURCEMTL_H
+#ifndef OBDSOURCEMTL_H
+#define OBDSOURCEMTL_H
 
 #include "Resource.h"
 #include "ResourceManager.h"

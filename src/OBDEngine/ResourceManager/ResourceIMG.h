@@ -1,5 +1,5 @@
-#ifndef RESOURCEIMG_H
-#define RESOURCEIMG_H
+#ifndef OBDSOURCEIMG_H
+#define OBDSOURCEIMG_H
 
 #include "Resource.h"
 #include "ResourceManager.h"

@@ -1,8 +1,8 @@
-#ifndef RESOURCEMATERIAL_H
-#define RESOURCEMATERIAL_H
+#ifndef OBDSOURCEMATERIAL_H
+#define OBDSOURCEMATERIAL_H
 
-#include "../../OBDETypes.h"
-#include "../../OBDEColor.h"
+#include "../../OBDTypes.h"
+#include "../../OBDColor.h"
 
 class ResourceMaterial {
     public:

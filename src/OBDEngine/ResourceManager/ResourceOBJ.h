@@ -1,5 +1,5 @@
-#ifndef RESOURCEOBJ_H
-#define RESOURCEOBJ_H
+#ifndef OBDSOURCEOBJ_H
+#define OBDSOURCEOBJ_H
 
 #include "Resource.h"
 #include "ResourceManager.h"

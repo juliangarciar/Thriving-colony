@@ -16,9 +16,9 @@ void ResourceGLSL::load(const char *path){
     std::size_t fragmentFound = file_path.find("fragment");
 
     if (vertexFound != std::string::npos) {
-        type = OBDEEnums::ShaderType::VERTEX;
+        type = OBDEnums::ShaderType::VERTEX;
     } else if (fragmentFound != std::string::npos) {
-        type = OBDEEnums::ShaderType::FRAGMENT;
+        type = OBDEnums::ShaderType::FRAGMENT;
     } else {
         std::cout << "Error, unknown shader type." << std::endl;
         exit(0);
@@ -51,6 +51,6 @@ std::string *ResourceGLSL::getShaderCode(){
     return &shaderCode;
 }
 
-OBDEEnums::ShaderType ResourceGLSL::getShaderType(){
+OBDEnums::ShaderType ResourceGLSL::getShaderType(){
     return type;
 }
