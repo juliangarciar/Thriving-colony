@@ -1,23 +1,19 @@
-#ifndef RESOURCEMESH_H
-#define RESOURCEMESH_H
+#ifndef OBDSOURCEMESH_H
+#define OBDSOURCEMESH_H
 
-#include "../../OBDETypes.h"
+#include "../../OBDTypes.h"
 
 class ResourceMesh {
     public:
         ResourceMesh(std::string);
         ~ResourceMesh();
 
-        void setVertices(std::vector<glm::vec3>);
-        void setNormals(std::vector<glm::vec3>);
-        void setUVs(std::vector<glm::vec2>);
+        void setVBO(std::vector<f32>);
         void setIndices(std::vector<us32>);
 
         void setDefaultMaterialName(std::string);
 
-        std::vector<glm::vec3> getVertices();
-        std::vector<glm::vec3> getNormals();
-        std::vector<glm::vec2> getUVs();
+        std::vector<f32> getVBO();
         std::vector<us32> getIndices();
 
         std::string getName();
@@ -25,9 +21,7 @@ class ResourceMesh {
     private:
         std::string name;
 
-        std::vector<glm::vec3> vertices;
-        std::vector<glm::vec3> normals;
-        std::vector<glm::vec2> uvs;
+        std::vector<f32> vbo;
         std::vector<us32> indices;
 
         std::string defaultMaterialName;
