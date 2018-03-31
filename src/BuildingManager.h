@@ -95,32 +95,40 @@ class BuildingManager {
 		void updateBuildingManager();
 		
 		/**
-		 * @brief Solicita el id de la colision
-		 * @return id de tipo entero
+		 * @brief Get the ID number of the mesh of currentCollision variable.
+		 * @return i32 with the ID of the mesh if the currentCollision variable if it is not NULL and -1 in other case.
 		 */
 		i32 getCollisionID();
+
 		/**
-		 * @brief Solicita el nombre de la colision
-		 * @return string con el nombre
+		 * @brief Get the name of the mesh of currentCollision variable.
+		 * @return std::string with the name of the mesh if currentCollision variable is not NULL and nullpntr in other case.
 		 */
 		std::string getCollisionName();
+		
 		/**
-		 * @brief Obtiene un edificio por su id
-		 * @param id del edificio
-		 * @return edificio
+		 * @brief Get the building stored in buildings variable associated to key passed by parameter.
+		 * @param i32 is the key associated to the building that is going to be returned.
+		 * @return A pointer to an object of Building type if the i32 passed by parameter matches with the key of one building stored in the buildings variable or NULL in other case.
 		 */
 		Building *getBuilding(i32);
+
 		/**
-		 * @brief Solicita los edificios del mapa
-		 * @return devuelve un objeto de tipo hash map con los edificios y sus IDs asociadas
+		 * @brief Get all player's buildings built.
+		 * @return Value of the buildings variable.
 		 */
 		std::map<i32, Building*>* getBuildings();
+
 		/**
-		 * @brief Solicita la capa en la que esta edificio
-		 * @return layer de tipo SceneNode
+		 * @brief Get the layer where the buildings are built.
+		 * @return Value of the buildingLayer variable.
 		 */
 		SceneNode* getBuildingLayer();
 
+		/**
+		 * @brief
+		 * @param
+		 */
 		void deleteBuilding(i32);
 
 		/**
