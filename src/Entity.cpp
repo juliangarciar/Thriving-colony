@@ -151,8 +151,11 @@ irr::video::SColor Entity::getBaseColor() {
 irr::video::SColor Entity::getCurrentColor() {
     return currentColor; //ToDo: reemplazar color por material
 }
-i32 Entity::getCells(){
-    return kCells;
+i32 Entity::getCellsX(){
+    return kCellsX;
+}
+i32 Entity::getCellsY(){
+    return kCellsY;
 }
 Box2D Entity::getHit(){
     return hitBox;

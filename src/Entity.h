@@ -132,7 +132,8 @@ class Entity {
          */
         irr::video::SColor getCurrentColor(); //ToDo: cambiar por material
         // Added by Julian
-        i32 getCells();
+        i32 getCellsX();
+        i32 getCellsY();
         Box2D getHit();
 
         i32 getArmyLevel();
@@ -177,7 +178,8 @@ class Entity {
         std::vector<Entity*> hostile;
 
         // Added by Julian
-        i32 kCells;
+        i32 kCellsX;
+        i32 kCellsY;
       private:
 };
 

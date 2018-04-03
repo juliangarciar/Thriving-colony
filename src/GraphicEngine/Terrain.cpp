@@ -12,7 +12,7 @@ Terrain::Terrain(const char* heightMap) {
 		core::vector3df(0.f, 0.f, 0.f),			// rotation
 		core::vector3df(0, 0, 0),				// scale
 		video::SColor ( 255, 255, 255, 255 ), 	// vertexColor
-		3,										// maxLOD
+		2,										// maxLOD
 		scene::ETPS_9,							// patchSize
 		4										// smoothFactor
     );

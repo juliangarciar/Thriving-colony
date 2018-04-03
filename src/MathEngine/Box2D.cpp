@@ -33,7 +33,7 @@ void Box2D::moveHitbox(f32 x, f32 y){
     m_vBottomRight.x = m_vTopRight.x;
     m_vBottomRight.y = m_vBottomLeft.y;
 
-    std::cout << "HalfSizeX: " << halfSizeX << " HalfSizeY: " << halfSizeY << "\n"; 
+    //std::cout << "HalfSizeX: " << halfSizeX << " HalfSizeY: " << halfSizeY << "\n"; 
 }
 /* TODO: Check this method, maybe is missfunctional */
 bool Box2D::isOverlappedWith(Box2D other){
