@@ -12,23 +12,24 @@
 
 /**
  * @class CameraController
- * @brief Crea un objeto tipo CameraController
+ * @brief Create a CameraController type object.
  */
 class CameraController {
     
     public:
         /**
-	* @brief Constructor
+	* @brief CameraController constructor
 	*/
         CameraController();
+
         /**
-	* @brief Destructor
+	* @brief CameraController destructor
 	*/
         ~CameraController();
 
         /**
          * @brief Inicia el sistema de camara
-         * 
+         * @param
          */
         void Init(Vector3<float>);
 
@@ -42,14 +43,17 @@ class CameraController {
 	 * @brief Mueve la camara
 	 */
         void Move();
+
         /**
 	 * @brief Rota e inclina la camara
 	 */
         void RotateAndInclinate();
+
         /**
 	 * @brief Hace zoom a la camara
 	 */
         void Zoom();
+
         /**
          * @brief Centra la camara
          */
@@ -63,20 +67,26 @@ class CameraController {
         
         /**
          * @brief 
-         * 
          * @param i32 
          */
         void setZoomDistanceFromTarget(i32);
         
         /**
          * @brief 
-         * 
          * @param i32 
          * @param i32 
          */
         void setRotateDegrees(i32, i32);
 
+        /**
+         * @brief
+         * @return
+         */
         Vector3<f32> getTarPos();
+        /**
+         * @brief
+         * @return
+         */
         Vector3<f32> getCameraPosition();  
         
     private:

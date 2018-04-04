@@ -17,7 +17,7 @@
 class BuildingManager {
 	public:
 		/**
-		 * @brief BuildingManager onstructor.
+		 * @brief BuildingManager constructor.
 		 * @param The Enumeration::Team is the team to which belongs the building manager: Enumeration::Team::Human or Enumeration::Team::IA.
          * @param The Enumeration::BreedType is the civilization to which belongs the building manager: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov.
 		 */
@@ -126,33 +126,47 @@ class BuildingManager {
 		SceneNode* getBuildingLayer();
 
 		/**
-		 * @brief
-		 * @param
+		 * @brief Delete the building stored in the buildings variable wich key is the one passed by parameter. Modifies happiness variable of class Player.
+		 * @param i32 is the key associated to the building that is going to be deleted.
+		 * @see decreaseHappiness(i32) of class Player.
 		 */
 		void deleteBuilding(i32);
 
 		/**
-		 * @brief Obtiene la cantidad de edificios de cualquier tipo
-		 * @param tipo de edificio
-		 * @return cantidad
+		 * @brief Get the amount of one type of building that the player has built.
+		 * @param Enumeration::BuildingType is the type of building that is going to be checked.
+		 * @return i32 that is the amount of buildings of this type.
 		 */
 		i32 getAmount(Enumeration::BuildingType);
 
 	private:
+		//Player's team: Enumeration::Team::Human or Enumeration::Team::IA.
 		Enumeration::Team team;
+
+		//Player's civilization: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov.
 		Enumeration::BreedType breed;
 
+		//Id number that is going to be asigned as the key of the next building built.
 		i32 nextBuildingId;
+
+		//
         i32 gridAlignment;
+		//True if there is a building selected to be built and false in other case.
         bool buildingMode;
 		
+		//Layer were the buildings will be built.
 		SceneNode *buildingLayer;
+
+		//
 		SceneNode *currentCollision;
 
+		//All buildings built stored with their id as key.
 		std::map<i32, Building*> *buildings;
 		
+		//Temporary building that is used when a building is selected to be built.
 		Building *tempBuilding;
 
+		//Amount of buildings built of each type.
 		i32 buildingAmounts[Enumeration::BuildingType::BuildingsSize];
 };
 
