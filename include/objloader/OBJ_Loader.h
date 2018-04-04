@@ -1,11 +1,15 @@
-#ifndef OBJLOADER_H
-#define OBJLOADER_H
+// OBJ_Loader.h - A Single Header OBJ Model Loader (Modified by Mario Gonzalez)
+
+#pragma once
 
 // Iostream - STD I/O Library
 #include <iostream>
 
 // Vector - STD Vector/Array Library
 #include <vector>
+
+// Algorith - STD Operations
+#include <algorithm>
 
 // String - STD String Library
 #include <string>
@@ -17,13 +21,17 @@
 #include <math.h>
 
 // Print progress to console while loading (large models)
-#define OBJL_CONSOLE_OUTPUT
+// #define OBJL_CONSOLE_OUTPUT
+
+#ifndef NAMESPACE
+	#define NAMESPACE objl
+#endif
 
 // Namespace: OBJL
 //
 // Description: The namespace that holds eveyrthing that
 //	is needed and used for the OBJ Model Loader
-namespace objl
+namespace NAMESPACE
 {
 	// Structure: Vector2
 	//
@@ -140,6 +148,10 @@ namespace objl
 		Vector2 TextureCoordinate;
 	};
 
+	bool operator ==(const Vertex& a, const Vertex& b) {
+		return (a.Position == b.Position && a.Normal == b.Normal && a.TextureCoordinate == b.TextureCoordinate);
+	}
+
 	struct Material
 	{
 		Material()
@@ -193,7 +205,7 @@ namespace objl
 
 		}
 		// Variable Set Constructor
-		Mesh(std::vector<Vertex>& _Vertices, std::vector<unsigned int>& _Indices)
+		Mesh(std::vector<Vertex>& _Vertices, std::vector<unsigned short>& _Indices)
 		{
 			Vertices = _Vertices;
 			Indices = _Indices;
@@ -203,7 +215,7 @@ namespace objl
 		// Vertex List
 		std::vector<Vertex> Vertices;
 		// Index List
-		std::vector<unsigned int> Indices;
+		std::vector<unsigned short> Indices;
 
 		// Material
 		Material MeshMaterial;
@@ -393,7 +405,7 @@ namespace objl
 		//
 		// If the file is unable to be found
 		// or unable to be loaded return false
-		bool LoadFile(std::string Path)
+		bool LoadFile(std::string Path, bool triangulation = false)
 		{
 			// If the file is not an .obj file return false
 			if (Path.substr(Path.size() - 4, 4) != ".obj")
@@ -406,15 +418,13 @@ namespace objl
 				return false;
 
 			LoadedMeshes.clear();
-			LoadedVertices.clear();
-			LoadedIndices.clear();
 
 			std::vector<Vector3> Positions;
 			std::vector<Vector2> TCoords;
 			std::vector<Vector3> Normals;
 
 			std::vector<Vertex> Vertices;
-			std::vector<unsigned int> Indices;
+			std::vector<unsigned short> Indices;
 
 			std::vector<std::string> MeshMatNames;
 
@@ -424,8 +434,8 @@ namespace objl
 			Mesh tempMesh;
 
 			#ifdef OBJL_CONSOLE_OUTPUT
-			const unsigned int outputEveryNth = 1000;
-			unsigned int outputIndicator = outputEveryNth;
+			const unsigned short outputEveryNth = 1000;
+			unsigned short outputIndicator = outputEveryNth;
 			#endif
 
 			std::string curline;
@@ -541,31 +551,42 @@ namespace objl
 				// Generate a Face (vertices & indices)
 				if (algorithm::firstToken(curline) == "f")
 				{
-					// Generate the vertices
+					std::vector<unsigned short> iIndices;
 					std::vector<Vertex> vVerts;
+
+					// Generate the vertices
 					GenVerticesFromRawOBJ(vVerts, Positions, TCoords, Normals, curline);
 
-					// Add Vertices
-					for (int i = 0; i < int(vVerts.size()); i++)
+					if (triangulation)
 					{
-						Vertices.push_back(vVerts[i]);
+						// Add Vertices
+						for (int i = 0; i < int(vVerts.size()); i++)
+						{
+							Vertices.push_back(vVerts[i]);
+						}
 
-						LoadedVertices.push_back(vVerts[i]);
-					}
+						VertexTriangluation(iIndices, vVerts);
 
-					std::vector<unsigned int> iIndices;
-
-					VertexTriangluation(iIndices, vVerts);
-
-					// Add Indices
-					for (int i = 0; i < int(iIndices.size()); i++)
+						// Add Indices
+						for (int i = 0; i < int(iIndices.size()); i++)
+						{
+							unsigned short indnum = (unsigned short)((Vertices.size()) - vVerts.size()) + iIndices[i];
+							Indices.push_back(indnum);
+						}
+					} 
+					else 
 					{
-						unsigned int indnum = (unsigned int)((Vertices.size()) - vVerts.size()) + iIndices[i];
-						Indices.push_back(indnum);
-
-						indnum = (unsigned int)((LoadedVertices.size()) - vVerts.size()) + iIndices[i];
-						LoadedIndices.push_back(indnum);
-
+						// Add Vertices
+						for (int i = 0; i < int(vVerts.size()); i++) {
+  							std::vector<Vertex>::iterator it;
+							if ((it = std::find(Vertices.begin(), Vertices.end(), vVerts[i])) == Vertices.end()){
+								Vertices.push_back(vVerts[i]);
+								Indices.push_back(Vertices.size() - 1);
+							} else {
+								std::ptrdiff_t index = std::distance(Vertices.begin(), it);
+								Indices.push_back(index);
+							}
+						}
 					}
 				}
 				// Get Mesh Material Name
@@ -610,25 +631,25 @@ namespace objl
 					std::vector<std::string> temp;
 					algorithm::split(Path, temp, "/");
 
-					std::string pathtomat = "";
+					pathToMaterial = "";
 
 					if (temp.size() != 1)
 					{
 						for (int i = 0; i < temp.size() - 1; i++)
 						{
-							pathtomat += temp[i] + "/";
+							pathToMaterial += temp[i] + "/";
 						}
 					}
 
 
-					pathtomat += algorithm::tail(curline);
+					pathToMaterial += algorithm::tail(curline);
 
 					#ifdef OBJL_CONSOLE_OUTPUT
-					std::cout << std::endl << "- find materials in: " << pathtomat << std::endl;
+					std::cout << std::endl << "- find materials in: " << pathToMaterial << std::endl;
 					#endif
 
 					// Load Materials
-					LoadMaterials(pathtomat);
+					LoadMaterials(pathToMaterial);
 				}
 			}
 
@@ -667,7 +688,7 @@ namespace objl
 				}
 			}
 
-			if (LoadedMeshes.empty() && LoadedVertices.empty() && LoadedIndices.empty())
+			if (LoadedMeshes.empty())
 			{
 				return false;
 			}
@@ -677,14 +698,174 @@ namespace objl
 			}
 		}
 
+		// Load Materials from .mtl file
+		bool LoadMaterials(std::string path)
+		{
+			// If the file is not a material file return false
+			if (path.substr(path.size() - 4, path.size()) != ".mtl")
+				return false;
+
+			std::ifstream file(path);
+
+			// If the file is not found return false
+			if (!file.is_open())
+				return false;
+
+			Material tempMaterial;
+
+			bool listening = false;
+
+			// Go through each line looking for material variables
+			std::string curline;
+			while (std::getline(file, curline))
+			{
+				// new material and material name
+				if (algorithm::firstToken(curline) == "newmtl")
+				{
+					if (!listening)
+					{
+						listening = true;
+
+						if (curline.size() > 7)
+						{
+							tempMaterial.name = algorithm::tail(curline);
+						}
+						else
+						{
+							tempMaterial.name = "none";
+						}
+					}
+					else
+					{
+						// Generate the material
+
+						// Push Back loaded Material
+						LoadedMaterials.push_back(tempMaterial);
+
+						// Clear Loaded Material
+						tempMaterial = Material();
+
+						if (curline.size() > 7)
+						{
+							tempMaterial.name = algorithm::tail(curline);
+						}
+						else
+						{
+							tempMaterial.name = "none";
+						}
+					}
+				}
+				// Ambient Color
+				if (algorithm::firstToken(curline) == "Ka")
+				{
+					std::vector<std::string> temp;
+					algorithm::split(algorithm::tail(curline), temp, " ");
+
+					if (temp.size() != 3)
+						continue;
+
+					tempMaterial.Ka.X = std::stof(temp[0]);
+					tempMaterial.Ka.Y = std::stof(temp[1]);
+					tempMaterial.Ka.Z = std::stof(temp[2]);
+				}
+				// Diffuse Color
+				if (algorithm::firstToken(curline) == "Kd")
+				{
+					std::vector<std::string> temp;
+					algorithm::split(algorithm::tail(curline), temp, " ");
+
+					if (temp.size() != 3)
+						continue;
+
+					tempMaterial.Kd.X = std::stof(temp[0]);
+					tempMaterial.Kd.Y = std::stof(temp[1]);
+					tempMaterial.Kd.Z = std::stof(temp[2]);
+				}
+				// Specular Color
+				if (algorithm::firstToken(curline) == "Ks")
+				{
+					std::vector<std::string> temp;
+					algorithm::split(algorithm::tail(curline), temp, " ");
+
+					if (temp.size() != 3)
+						continue;
+
+					tempMaterial.Ks.X = std::stof(temp[0]);
+					tempMaterial.Ks.Y = std::stof(temp[1]);
+					tempMaterial.Ks.Z = std::stof(temp[2]);
+				}
+				// Specular Exponent
+				if (algorithm::firstToken(curline) == "Ns")
+				{
+					tempMaterial.Ns = std::stof(algorithm::tail(curline));
+				}
+				// Optical Density
+				if (algorithm::firstToken(curline) == "Ni")
+				{
+					tempMaterial.Ni = std::stof(algorithm::tail(curline));
+				}
+				// Dissolve
+				if (algorithm::firstToken(curline) == "d")
+				{
+					tempMaterial.d = std::stof(algorithm::tail(curline));
+				}
+				// Illumination
+				if (algorithm::firstToken(curline) == "illum")
+				{
+					tempMaterial.illum = std::stoi(algorithm::tail(curline));
+				}
+				// Ambient Texture Map
+				if (algorithm::firstToken(curline) == "map_Ka")
+				{
+					tempMaterial.map_Ka = algorithm::tail(curline);
+				}
+				// Diffuse Texture Map
+				if (algorithm::firstToken(curline) == "map_Kd")
+				{
+					tempMaterial.map_Kd = algorithm::tail(curline);
+				}
+				// Specular Texture Map
+				if (algorithm::firstToken(curline) == "map_Ks")
+				{
+					tempMaterial.map_Ks = algorithm::tail(curline);
+				}
+				// Specular Hightlight Map
+				if (algorithm::firstToken(curline) == "map_Ns")
+				{
+					tempMaterial.map_Ns = algorithm::tail(curline);
+				}
+				// Alpha Texture Map
+				if (algorithm::firstToken(curline) == "map_d")
+				{
+					tempMaterial.map_d = algorithm::tail(curline);
+				}
+				// Bump Map
+				if (algorithm::firstToken(curline) == "map_Bump" || algorithm::firstToken(curline) == "map_bump" || algorithm::firstToken(curline) == "bump")
+				{
+					tempMaterial.map_bump = algorithm::tail(curline);
+				}
+			}
+
+			// Deal with last material
+
+			// Push Back loaded Material
+			LoadedMaterials.push_back(tempMaterial);
+
+			// Test to see if anything was loaded
+			// If not return false
+			if (LoadedMaterials.empty())
+				return false;
+			// If so return true
+			else
+				return true;
+		}
+
 		// Loaded Mesh Objects
 		std::vector<Mesh> LoadedMeshes;
-		// Loaded Vertex Objects
-		std::vector<Vertex> LoadedVertices;
-		// Loaded Index Positions
-		std::vector<unsigned int> LoadedIndices;
 		// Loaded Material Objects
 		std::vector<Material> LoadedMaterials;
+		// Material path
+		std::string pathToMaterial;
 
 	private:
 		// Generate vertices from a list of positions, 
@@ -800,7 +981,7 @@ namespace objl
 
 		// Triangulate a list of vertices into a face by printing
 		//	inducies corresponding with triangles within it
-		void VertexTriangluation(std::vector<unsigned int>& oIndices,
+		void VertexTriangluation(std::vector<unsigned short>& oIndices,
 			const std::vector<Vertex>& iVerts)
 		{
 			// If there are 2 or less verts,
@@ -970,169 +1151,5 @@ namespace objl
 				prevVertsNum = tVerts.size();
 			}
 		}
-
-		// Load Materials from .mtl file
-		bool LoadMaterials(std::string path)
-		{
-			// If the file is not a material file return false
-			if (path.substr(path.size() - 4, path.size()) != ".mtl")
-				return false;
-
-			std::ifstream file(path);
-
-			// If the file is not found return false
-			if (!file.is_open())
-				return false;
-
-			Material tempMaterial;
-
-			bool listening = false;
-
-			// Go through each line looking for material variables
-			std::string curline;
-			while (std::getline(file, curline))
-			{
-				// new material and material name
-				if (algorithm::firstToken(curline) == "newmtl")
-				{
-					if (!listening)
-					{
-						listening = true;
-
-						if (curline.size() > 7)
-						{
-							tempMaterial.name = algorithm::tail(curline);
-						}
-						else
-						{
-							tempMaterial.name = "none";
-						}
-					}
-					else
-					{
-						// Generate the material
-
-						// Push Back loaded Material
-						LoadedMaterials.push_back(tempMaterial);
-
-						// Clear Loaded Material
-						tempMaterial = Material();
-
-						if (curline.size() > 7)
-						{
-							tempMaterial.name = algorithm::tail(curline);
-						}
-						else
-						{
-							tempMaterial.name = "none";
-						}
-					}
-				}
-				// Ambient Color
-				if (algorithm::firstToken(curline) == "Ka")
-				{
-					std::vector<std::string> temp;
-					algorithm::split(algorithm::tail(curline), temp, " ");
-
-					if (temp.size() != 3)
-						continue;
-
-					tempMaterial.Ka.X = std::stof(temp[0]);
-					tempMaterial.Ka.Y = std::stof(temp[1]);
-					tempMaterial.Ka.Z = std::stof(temp[2]);
-				}
-				// Diffuse Color
-				if (algorithm::firstToken(curline) == "Kd")
-				{
-					std::vector<std::string> temp;
-					algorithm::split(algorithm::tail(curline), temp, " ");
-
-					if (temp.size() != 3)
-						continue;
-
-					tempMaterial.Kd.X = std::stof(temp[0]);
-					tempMaterial.Kd.Y = std::stof(temp[1]);
-					tempMaterial.Kd.Z = std::stof(temp[2]);
-				}
-				// Specular Color
-				if (algorithm::firstToken(curline) == "Ks")
-				{
-					std::vector<std::string> temp;
-					algorithm::split(algorithm::tail(curline), temp, " ");
-
-					if (temp.size() != 3)
-						continue;
-
-					tempMaterial.Ks.X = std::stof(temp[0]);
-					tempMaterial.Ks.Y = std::stof(temp[1]);
-					tempMaterial.Ks.Z = std::stof(temp[2]);
-				}
-				// Specular Exponent
-				if (algorithm::firstToken(curline) == "Ns")
-				{
-					tempMaterial.Ns = std::stof(algorithm::tail(curline));
-				}
-				// Optical Density
-				if (algorithm::firstToken(curline) == "Ni")
-				{
-					tempMaterial.Ni = std::stof(algorithm::tail(curline));
-				}
-				// Dissolve
-				if (algorithm::firstToken(curline) == "d")
-				{
-					tempMaterial.d = std::stof(algorithm::tail(curline));
-				}
-				// Illumination
-				if (algorithm::firstToken(curline) == "illum")
-				{
-					tempMaterial.illum = std::stoi(algorithm::tail(curline));
-				}
-				// Ambient Texture Map
-				if (algorithm::firstToken(curline) == "map_Ka")
-				{
-					tempMaterial.map_Ka = algorithm::tail(curline);
-				}
-				// Diffuse Texture Map
-				if (algorithm::firstToken(curline) == "map_Kd")
-				{
-					tempMaterial.map_Kd = algorithm::tail(curline);
-				}
-				// Specular Texture Map
-				if (algorithm::firstToken(curline) == "map_Ks")
-				{
-					tempMaterial.map_Ks = algorithm::tail(curline);
-				}
-				// Specular Hightlight Map
-				if (algorithm::firstToken(curline) == "map_Ns")
-				{
-					tempMaterial.map_Ns = algorithm::tail(curline);
-				}
-				// Alpha Texture Map
-				if (algorithm::firstToken(curline) == "map_d")
-				{
-					tempMaterial.map_d = algorithm::tail(curline);
-				}
-				// Bump Map
-				if (algorithm::firstToken(curline) == "map_Bump" || algorithm::firstToken(curline) == "map_bump" || algorithm::firstToken(curline) == "bump")
-				{
-					tempMaterial.map_bump = algorithm::tail(curline);
-				}
-			}
-
-			// Deal with last material
-
-			// Push Back loaded Material
-			LoadedMaterials.push_back(tempMaterial);
-
-			// Test to see if anything was loaded
-			// If not return false
-			if (LoadedMaterials.empty())
-				return false;
-			// If so return true
-			else
-				return true;
-		}
 	};
 }
-
-#endif

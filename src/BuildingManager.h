@@ -11,102 +11,124 @@
 #include <GraphicEngine/Model.h>
 
 /**
- * @class BuildingManager
- * @brief Crea un objeto tipo BuildingManager
+ * @class BuildingManager.
+ * @brief Create a BuildingManager type object.
  */
 class BuildingManager {
 	public:
 		/**
-		 * @brief Constructor
-		 * @param team
-		 * @param breed
+		 * @brief BuildingManager onstructor.
+		 * @param The Enumeration::Team is the team to which belongs the building manager: Enumeration::Team::Human or Enumeration::Team::IA.
+         * @param The Enumeration::BreedType is the civilization to which belongs the building manager: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov.
 		 */
 		BuildingManager(Enumeration::Team, Enumeration::BreedType);
+
 		/**
-		 * @brief Destructor
+		 * @brief BuildingManager destructor.
 		 */
 		virtual ~BuildingManager();
 
 		/**
-		 * @brief Comprueba las colisiones con el Raycast
+		 * @brief Check if the mouse pointer is on any building while buildingMode variable is false. 
+		 * The value of the currentCollision variable is modified to a new SceneNode with the new position of the mouse data.
 		 */
 		void testRaycastCollisions();
+
 		/**
-		 * @brief Actualiza las hitboxs
+		 * @brief Update the hitbox of each building at buildings variable.
+		 * @see Use getNodeCollision(Mouse*) at SceneNode class.
 		 */
 		void recalculateHitbox();
 
 		/**
-		 * @brief asigna que un edificio este en construccion
-		 * @param entero con el tipo de edificio que se esta construyendo
+		 * @brief Set the value of the buildingMode variable to true if the building can be paid and the value of the buildingMode variable is false.
+		 * Change the value of tempBuilding value to a new Building.
+		 * @param The Enumeration::BuildingType is the type of building of the new Building at temBuilding.
+		 * @return True if the value of the buildingMode variable is modified and false if it is not.
 		 */
 		bool setBuildingMode(Enumeration::BuildingType);
+
 		/**
-		 * @brief dibuja el edificio a construir en el terreno
-		 * @param terrain donde se indica el terreno en el que construir
+		 * @brief Create a new building at the point where the mouse is if it is not occupied and the left botton of the mouse is pressed.
+		 * If the right botton of the mouse is pressed, delete the tempBuilding variable and set it to MULL.
+		 * Set buildingMode to false.
 		 */
 		void drawBuilding();
+
 		/**
-		 * @brief Construye el edificio
-		 * @param coordenadas en las que se tiene que construir
-		 * @param buildingType con el tipo de edificio a construir
-		 * @param instabuild
+		 * @brief Set all the variables needed for the building at tempBuilding variable to be displayed and insert it at the buildings variable as its key as the value of the nextBuildingId.
+		 * Set the tempBuilding variable to NULL and add 1 to the nextBuildingId variable.
+		 * @param The Vector3<f32> is the position where the building is going to be created.
+		 * @param The Enumeration::BuildingType is the building type.
+		 * @param The bool will be true if the building is going to have an instant build and false if not.
 		 */
 		void buildBuilding(Vector3<f32>, Enumeration::BuildingType, bool = false);
 
 		/**
-		 * @brief Comprueba si el jugador tiene recursos necesarios para comprar el edificio
-		 * @param metal es el coste de metal del edificio
-		 * @param cristal es el coste de cristal del edificio
-		 * @param team es el equipo al que pertenecera el edificio
-		 * @return true si es solvente y false, en caso contrario
+		 * @brief Check if the player's metalAmount and crystalAmount variables are higher than the ones passed by parameter.
+		 * @param metalCost is the metal cost of the building
+		 * @param crystalCost is the crystal cost of the building
+		 * @return True if both player's variables are higher than the both passed by parameter and false in other case.
 		 */
-		bool isSolvent(i32, i32);
+		bool isSolvent(i32 metalCost, i32 crystalCost);
+
 		/**
-		 * @brief Registra el tipo de edifio que se quiere construir y 
-		 * maneja las llamadas al metodo isSolvent(), enviandole su precio.
-		 * @param buildingType especificando el tipo de edicio a construir
-		 * @return true si isSolvent()==true y false si !isSolvent()
+		 * @brief Responsible for managing calls to isSolvent() for the human player, registering the type
+ 		 * of the desired building and sending the aforementhioned method the prices. It has its own method
+ 		 * to avoid cluttering the setBuildingMode() method, as it used to be there in the first place.
+		 * @param The Enumeration::BuildingType is the building type.
+		 * @return True when isSolvent() returns true and false in other case.
 		 */
 		bool checkCanPay(Enumeration::BuildingType);
+		
 		/**
-		 * @brief Comprueba si un edificio ha termiando de construirse o no
-		 * @return true en caso de que este terminado y false, en caso contrario
+		 * @brief Check if the building with the key passed by parameter is finished or not.
+		 * @param The i32 is the key of the building that is going to be checked.
+		 * @return True when it is finished and false in other case.
 		 */
 		bool checkFinished(i32);
 
 		/**
-		 * @brief Actualiza el manejador de edificios
+		 * @brief Call the update method of every building stored at buildings variable.
+		 * @see update() method at Building class.
 		 */
 		void updateBuildingManager();
 		
 		/**
-		 * @brief Solicita el id de la colision
-		 * @return id de tipo entero
+		 * @brief Get the ID number of the mesh of currentCollision variable.
+		 * @return i32 with the ID of the mesh if the currentCollision variable if it is not NULL and -1 in other case.
 		 */
 		i32 getCollisionID();
+
 		/**
-		 * @brief Solicita el nombre de la colision
-		 * @return string con el nombre
+		 * @brief Get the name of the mesh of currentCollision variable.
+		 * @return std::string with the name of the mesh if currentCollision variable is not NULL and nullpntr in other case.
 		 */
 		std::string getCollisionName();
+		
 		/**
-		 * @brief Obtiene un edificio por su id
-		 * @param id del edificio
-		 * @return edificio
+		 * @brief Get the building stored in buildings variable associated to key passed by parameter.
+		 * @param i32 is the key associated to the building that is going to be returned.
+		 * @return A pointer to an object of Building type if the i32 passed by parameter matches with the key of one building stored in the buildings variable or NULL in other case.
 		 */
 		Building *getBuilding(i32);
+
 		/**
-		 * @brief Solicita los edificios del mapa
-		 * @return devuelve un objeto de tipo hash map con los edificios y sus IDs asociadas
+		 * @brief Get all player's buildings built.
+		 * @return Value of the buildings variable.
 		 */
 		std::map<i32, Building*>* getBuildings();
+
 		/**
-		 * @brief Solicita la capa en la que esta edificio
-		 * @return layer de tipo SceneNode
+		 * @brief Get the layer where the buildings are built.
+		 * @return Value of the buildingLayer variable.
 		 */
 		SceneNode* getBuildingLayer();
 
+		/**
+		 * @brief
+		 * @param
+		 */
 		void deleteBuilding(i32);
 
 		/**
@@ -115,6 +137,7 @@ class BuildingManager {
 		 * @return cantidad
 		 */
 		i32 getAmount(Enumeration::BuildingType);
+
 	private:
 		Enumeration::Team team;
 		Enumeration::BreedType breed;

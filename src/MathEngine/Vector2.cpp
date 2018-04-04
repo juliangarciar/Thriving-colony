@@ -51,7 +51,6 @@ Vector2<T> Vector2<T>::getFromPolarCoordinates(f32 r, f32 phi) {
     return point;
 }
 
-// Added by Julian
 template <class T>
 T Vector2<T>::calculateDistance(Vector2<T> b){
     
@@ -65,6 +64,10 @@ T Vector2<T>::calculateDistance(Vector2<T> b){
 template <class T>
 Vector2<T> Vector2<T>::operator + (const Vector2<T> &p) const {
     return Vector2<T>(this -> x + p.x, this -> y + p.y);
+}
+template <class T>
+Vector2<T> Vector2<T>::operator + (const f32 &num) const {
+    return Vector2<T>(this -> x + num, this -> y + num);
 }
 template <class T>
 Vector2<T> Vector2<T>::operator - (const Vector2<T> &p) const {

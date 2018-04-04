@@ -1,4 +1,3 @@
 #!/bin/bash
-export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
-echo "Ejecutando..."
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:./lib
 ./bin/ThrivingColony

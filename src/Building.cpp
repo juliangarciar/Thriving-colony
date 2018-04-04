@@ -29,7 +29,7 @@ void Building::Init() {
     //f32 r = 0;
     //f32 g = 0;
     //f32 b = 0;
-
+    Texture *tex;
     const wchar_t *path;
     Vector3<f32> scale;
     switch (type) {
@@ -46,8 +46,14 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::BarnCrystalCost;
             kCells = Enumeration::BuildingCells::BarnCells;
 
-            path = L"media/buildingModels/establo.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/barn.obj";
+            if(breed == Enumeration::BreedType::Drorania){
+                tex = new Texture("./media/textures/Kaonov/kaonov_barn_Base_Color.jpg");
+            }
+            else{
+                tex = new Texture("./media/textures/Kaonov/kaonov_barn_Base_Color.jpg");
+            }
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::Barrack:
 
@@ -62,8 +68,14 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::BarrackCrystalCost;
             kCells = Enumeration::BuildingCells::BarrackCells;
 
-            path = L"media/buildingModels/barraca.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/barrack.obj";
+            if(breed == Enumeration::BreedType::Drorania){
+                tex = new Texture("./media/textures/Kaonov/kaonov_barrack_Base_Color.jpg");
+            }
+            else{
+                tex = new Texture("./media/textures/Kaonov/kaonov_barrack_Base_Color.jpg");
+            }
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::Hospital:
 
@@ -79,7 +91,13 @@ void Building::Init() {
             kCells = Enumeration::BuildingCells::HospitalCells;
 
             path = L"media/buildingModels/hospital.obj";
-            scale = Vector3<f32>(40,40,40);
+            if(breed == Enumeration::BreedType::Drorania){
+                tex = new Texture("./media/textures/Kaonov/kaonov_hospital_Base_Color.jpg");
+            }
+            else{
+                tex = new Texture("./media/textures/Kaonov/kaonov_hospital_Base_Color.jpg");
+            }
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::House:
 
@@ -96,7 +114,13 @@ void Building::Init() {
             kCells = Enumeration::BuildingCells::HomeCells;
 
             path = L"media/buildingModels/house.obj";
-            scale = Vector3<f32>(40,40,40);
+            if(breed == Enumeration::BreedType::Drorania){
+                tex = new Texture("./media/textures/Kaonov/kaonov_house_Base_Color.jpg");
+            }
+            else{
+                tex = new Texture("./media/textures/Kaonov/kaonov_house_Base_Color.jpg");
+            }
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::MainBuilding:
  
@@ -105,7 +129,13 @@ void Building::Init() {
             kCells = Enumeration::BuildingCells::MainCells;
 
             path = L"media/buildingModels/command_center.obj";
-            scale = Vector3<f32>(40,40,40);
+            if(breed == Enumeration::BreedType::Drorania){
+                tex = new Texture("./media/textures/Kaonov/kaonov_command_center_Base_Color.jpg");
+            }
+            else{
+                tex = new Texture("./media/textures/Kaonov/kaonov_command_center_Base_Color.jpg");
+            }
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::Market:
 
@@ -120,8 +150,14 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::MarketCrystalCost;
             kCells = Enumeration::BuildingCells::MarketCells;
 
-            path = L"media/buildingModels/mercado.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/market.obj";
+            if(breed == Enumeration::BreedType::Drorania){
+                tex = new Texture("./media/textures/Kaonov/kaonov_market_Base_Color.jpg");
+            }
+            else{
+                tex = new Texture("./media/textures/Kaonov/kaonov_market_Base_Color.jpg");
+            }
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::Quarry:
 
@@ -132,12 +168,19 @@ void Building::Init() {
 
             buildTimer = 35;
             
-            metalCost = Enumeration::BuildingCost::QuarryMetalCost;
+            //metalCost = Enumeration::BuildingCost::QuarryMetalCost;
+            metalCost = 1;
             crystalCost = Enumeration::BuildingCost::QuarryCrystalCost;
             kCells = Enumeration::BuildingCells::QuarryCells;
 
-            path = L"media/buildingModels/cantera.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/quarry.obj";
+            if(breed == Enumeration::BreedType::Drorania){
+                tex = new Texture("./media/textures/Kaonov/kaonov_quarry_Base_Color.jpg");
+            }
+            else{
+                tex = new Texture("./media/textures/Kaonov/kaonov_quarry_Base_Color.jpg");
+            }
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::Siderurgy:
 
@@ -152,8 +195,14 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::SiderurgyCrystalCost;
             kCells = Enumeration::BuildingCells::SiderurgyCells;
 
-            path = L"media/buildingModels/siderurgia.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/siderurgy.obj";
+            if(breed == Enumeration::BreedType::Drorania){
+                tex = new Texture("./media/textures/Kaonov/kaonov_siderurgy_Base_Color.jpg");
+            }
+            else{
+                tex = new Texture("./media/textures/Kaonov/kaonov_siderurgy_Base_Color.jpg");
+            }
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::School:
 
@@ -169,8 +218,14 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::SchoolCrystalCost;
             kCells = Enumeration::BuildingCells::SchoolCells;
 
-            path = L"media/buildingModels/escuela.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/school.obj";
+            if(breed == Enumeration::BreedType::Drorania){
+                tex = new Texture("./media/textures/Kaonov/kaonov_school_Base_Color.jpg");
+            }
+            else{
+                tex = new Texture("./media/textures/Kaonov/kaonov_school_Base_Color.jpg");
+            }
+            scale = Vector3<f32>(1,1,1);;
         break;
         case Enumeration::BuildingType::Tower:
 
@@ -185,8 +240,14 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::TowerCrystalCost;
             kCells = Enumeration::BuildingCells::TowerCells;
 
-            path = L"media/buildingModels/torre_vigilancia.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/tower.obj";
+            if(breed == Enumeration::BreedType::Drorania){
+                tex = new Texture("./media/textures/Kaonov/kaonov_tower_Base_Color.jpg");
+            }
+            else{
+                tex = new Texture("./media/textures/Kaonov/kaonov_tower_Base_Color.jpg");
+            }
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::Wall:
 
@@ -201,8 +262,14 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::WallCrystalCost;
             kCells = Enumeration::BuildingCells::WallCells;
 
-            path = L"media/buildingModels/muralla.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/wall.obj";
+            if(breed == Enumeration::BreedType::Drorania){
+                tex = new Texture("./media/textures/Kaonov/kaonov_wall_Base_Color.jpg");
+            }
+            else{
+                tex = new Texture("./media/textures/Kaonov/kaonov_wall_Base_Color.jpg");
+            }
+            scale = Vector3<f32>(1,1,1);
         break;
         case Enumeration::BuildingType::Workshop:
 
@@ -217,8 +284,14 @@ void Building::Init() {
             crystalCost = Enumeration::BuildingCost::WorkshopCrystalCost;
             kCells = Enumeration::BuildingCells::WorkshopCells;
 
-            path = L"media/buildingModels/taller_maquinas_de_asedio.obj";
-            scale = Vector3<f32>(40,40,40);
+            path = L"media/buildingModels/workshop.obj";
+            if(breed == Enumeration::BreedType::Drorania){
+                tex = new Texture("./media/textures/Kaonov/kaonov_workshop_Base_Color.jpg");
+            }
+            else{
+                tex = new Texture("./media/textures/Kaonov/kaonov_workshop_Base_Color.jpg");
+            }
+            scale = Vector3<f32>(1,1,1);
         break;
         default: break;
     }
@@ -239,7 +312,6 @@ void Building::Init() {
 
     finished = false;
     
-    Texture *tex = new Texture("./media/textures/placeholder.bmp");
     Material *m = new Material(tex);
     this->model->setMaterial(m);
 }

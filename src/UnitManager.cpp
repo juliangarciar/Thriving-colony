@@ -15,7 +15,6 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
     selectedTroop = 0; 
     nextTroopId = 1;
 
-    //Addes by Julian
     team = t;
     breed = b;
 
@@ -37,26 +36,32 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
 
 //Destroyer
 UnitManager::~UnitManager() {
+    std::cout << "Deleting unit manager \n";
     for (std::map<i32, Unit*>::iterator it = inQueueTroops -> begin(); it != inQueueTroops -> end(); ++it){
         delete it -> second;
     }
     inQueueTroops -> clear();
     delete inQueueTroops;
+    std::cout << "Queue troops deleted \n";
 
     for (std::map<i32, Unit*>::iterator it = inHallTroops -> begin(); it != inHallTroops -> end(); ++it){
         delete it -> second;
     }
     inHallTroops -> clear();
     delete inHallTroops;
+    std::cout << "Hall troops deleted \n";
 
     for (std::map<i32, Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
 		delete it -> second;
     }
     inMapTroops -> clear();
     delete inMapTroops;
+    std::cout << "Map troops deleted \n";
 
     delete unitLayer;
-    if (selectedTroop != nullptr) delete selectedTroop;
+    /* This is the cause of error */
+    //if (selectedTroop != nullptr) delete selectedTroop;
+    std::cout << "Unit manager deleted \n";
 }
 
 //Create a new troops
@@ -201,6 +206,7 @@ void UnitManager::deploySelectedTroop(Vector3<f32> p) {
         dummy.z = target->getPosition().y;
         dummy.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.z);
         temp -> setTroopPosition(dummy);
+        temp -> setUnitCell(dummy.toVector2());
         temp -> setPosition(dummy);
         temp -> getModel() -> setActive(true);
         temp -> setPathToTarget(p);

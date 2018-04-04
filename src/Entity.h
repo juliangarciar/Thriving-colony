@@ -131,7 +131,7 @@ class Entity {
          * @return devuelve el color de tipo irr::video::SColor
          */
         irr::video::SColor getCurrentColor(); //ToDo: cambiar por material
-        // Added by Julian
+        
         i32 getCells();
         Box2D getHit();
 
@@ -176,7 +176,7 @@ class Entity {
 
         std::vector<Entity*> hostile;
 
-        // Added by Julian
+        
         i32 kCells;
       private:
 };

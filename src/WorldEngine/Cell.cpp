@@ -27,10 +27,10 @@ void Cell::setInhabitingUnit(Unit* unitPtr){
     inhabitingUnits.push_back(unitPtr);
 }
 void Cell::clearInhabitingUnit(Unit* unitPtr){
-    for(i32 i = 0; i < inhabitingUnits.size(); i++){
+    for(std::size_t i = 0; i < inhabitingUnits.size(); i++){
         if(inhabitingUnits[i] == unitPtr){
             inhabitingUnits.erase(inhabitingUnits.begin() + i);
-            break;
+            return;
         }
     }
 }

@@ -3,6 +3,7 @@
 
 #include <GUIEngine/Button.h>
 #include <Types.h>
+#include <GUIEngine/Panel.h>
 
 /**
  * @class PauseMenu
@@ -34,6 +35,7 @@ class PauseMenu {
         Button *buttonQuit;
         Button *buttonResume;
         Button *buttonMenu;
+        Panel* bgMenu;
 };
 
 #endif

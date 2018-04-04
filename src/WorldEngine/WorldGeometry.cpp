@@ -6,9 +6,13 @@
 #include <Map.h>
 #include <MathEngine/Box2D.h>
 #include <Building.h>
+#include <Unit.h>
 #include <MathEngine/PriorityQueue.h>
+#include <cstdlib> 
+
 #define MAP 10240
 #define CELL 80
+
 WorldGeometry* WorldGeometry::pinstance = 0;
 WorldGeometry* WorldGeometry::Instance(){
     if(pinstance == 0){
@@ -20,7 +24,7 @@ WorldGeometry* WorldGeometry::Instance(){
 WorldGeometry::WorldGeometry(){
 /* Calculates the maximun N cells and reserve memory */
     i32 n = (MAP * MAP) / (CELL * CELL);
-    mCells = std::vector<Cell*>(n);
+    mCells = std::vector< Cell* >(n);
     cellsDistance = std::vector< std::vector<f32> >(n);
     quadTree = NULL;
 }
@@ -164,6 +168,20 @@ void WorldGeometry::Clear(){
 void WorldGeometry::build(Building* buildingPtr){
     quadTree->insertBuilding(buildingPtr);
 }
+void WorldGeometry::updateUnitCell(Vector2<f32> oldPosition, Vector2<f32> newPosition, Unit* unitPtr){
+    Cell* oldCell = positionToCell(oldPosition);
+    Cell* newCell = positionToCell(newPosition);
+    if(oldCell != newCell){
+        oldCell->clearInhabitingUnit(unitPtr);
+        newCell->setInhabitingUnit(unitPtr);
+    }
+}
+void WorldGeometry::clearUnitCell(Vector2<f32> positionVector, Unit* unitPtr){
+    positionToCell(positionVector)->clearInhabitingUnit(unitPtr);
+}
+void WorldGeometry::setUnitCell(Vector2<f32> positionVector, Unit* unitPtr){
+    positionToCell(positionVector)->setInhabitingUnit(unitPtr);
+}
 bool WorldGeometry::checkBuildingSpace(Building* buildingPtr){
     Box2D dummy = buildingPtr->getHit().getAmplifiedBox(79.f);
     return quadTree->canBuild(dummy);
@@ -201,7 +219,7 @@ Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin, 
     Cell* sourceCell = referenceTarget;
     Cell* targetCell = referenceOrigin;
     i32 sourceIndex = sourceCell->getIndex();
-    i32 targetIndex = targetCell->getIndex();
+    //i32 targetIndex = targetCell->getIndex();
     /* Check what's needed and what's not */
     i32 MAX = 16384;
     std::vector<f32> GCosts = std::vector<f32>(MAX, 0);
@@ -259,6 +277,7 @@ Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin, 
             }    
         }
     }
+    return validCell;
 }
 Cell* WorldGeometry::positionToCell(Vector2<f32> position){
     int dummy = (i32)((MAP / CELL) * position.x / MAP) + 
@@ -285,6 +304,21 @@ f32 WorldGeometry::getCost(i32 indexA, i32 indexB){
     if(cellsDistance[indexA][indexB] == 0)
         std::cout << "Weird stuff happens \n";
     return cellsDistance[indexA][indexB];
+}
+std::vector< Unit* > WorldGeometry::getNeighborUnits(Vector2<f32> positionVector){
+    std::vector< Unit* > neighborUnits;
+    std::vector< Cell* > neighborCells = positionToCell(positionVector)->getNeighbors();
+    for(size_t i = 0; i < neighborCells.size(); i++){
+        if(!neighborCells[i]->getInhabitingUnits().empty()){
+            neighborUnits.insert(neighborUnits.end(), 
+                                neighborCells[i]->getInhabitingUnits().begin(), 
+                                neighborCells[i]->getInhabitingUnits().end());
+        }
+    }
+    if(!neighborUnits.empty()){
+        std::cout << "UNIDADES CERCANAS DETECTADAS -->" << neighborUnits.size() << "\n";
+    }
+    return neighborUnits;
 }
 const std::vector<Cell*>& WorldGeometry::getNeighbors(i32 index){
     return mCells[index]->getNeighbors();

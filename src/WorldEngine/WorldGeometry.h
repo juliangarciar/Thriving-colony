@@ -8,6 +8,7 @@ template <class T>
 class Vector2;
 class Cell;
 class Quadtree;
+class Unit;
 class Building;
 class WorldGeometry{
     private:
@@ -48,6 +49,10 @@ class WorldGeometry{
          * @param buildingPtr 
          */
         void build(Building* buildingPtr);
+        /* New methods */
+        void updateUnitCell(Vector2<f32> oldPosition, Vector2<f32> newPosition, Unit* unitPtr);
+        void clearUnitCell(Vector2<f32> positionVector, Unit* unitPtr);
+        void setUnitCell(Vector2<f32> positionVector, Unit* unitPtr);
         /**
          * @brief Check the terrain to build
          * 
@@ -109,6 +114,8 @@ class WorldGeometry{
          * @return f32 The distance between them in float format
          */
         f32 getCost(i32 indexA, i32 indexB);
+        /* New method */
+        std::vector< Unit* > getNeighborUnits(Vector2<f32> positionVector);
         /**
          * @brief A reference to the neighbors of a given cell index
          * 

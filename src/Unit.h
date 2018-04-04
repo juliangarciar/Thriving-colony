@@ -10,6 +10,7 @@
 #include <MathEngine/Vector3.h>
 #include <PathPlanner/PathManager.h>
 
+class Troop;
 class Unit : public Entity {
     
     public:
@@ -46,6 +47,7 @@ class Unit : public Entity {
         void triggerRetractedCallback();
 
         //Setters
+        void setUnitCell(Vector2<f32> vectorPosition);
         void setMoving(bool);
         void setAttacking(bool);
         void setTroopPosition(Vector3<f32> vectorData);
@@ -120,6 +122,8 @@ class Unit : public Entity {
         std::string moveEvent;
         std::string selectEvent;
 
+        /* Juli troops */
+        Troop* troops;
 };
 
 #endif

@@ -75,8 +75,8 @@ private:
     //const char * systemID;
     //FMOD_RESULT result;
     //FMOD_STUDIO_STOP_MODE pausedMode;
-    FMOD_GUID id;
-    FMOD_STUDIO_BUS*        bus = 0;
+    //FMOD_GUID id;
+    //FMOD_STUDIO_BUS*        bus = 0;
 	FMOD_STUDIO_PLAYBACK_STATE state;
     FMOD_STUDIO_SYSTEM*	system = 0;
 	FMOD_SYSTEM* lowLevelSystem = 0;

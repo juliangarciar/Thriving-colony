@@ -22,7 +22,7 @@ Entity::Entity(i32 id, Enumeration::Team t, Enumeration::BreedType b) {
     citizens = 0;
     cityLevel = 0;
 
-    /* Added by Julian */
+    
     //hitBox = Box2D();
     armyLevel = 0;
 }
@@ -74,7 +74,7 @@ void Entity::setPosition(Vector3<f32> vectorData) {
     position -> set(vectorData);
     model -> setPosition(vectorData);
     hitbox -> set(model -> getBoundingBox());
-    /* Added by Julian */
+    
     /* Create the hitbox in another place */
     Vector2<f32> topLeft;
     Vector2<f32> bottomRight;
@@ -85,9 +85,9 @@ void Entity::setPosition(Vector3<f32> vectorData) {
     //bottomRight.y = vectorData.z + 120.f;
     //hitBox = Box2D(topLeft, bottomRight);
     hitBox.moveHitbox(vectorData.x, vectorData.z);
-    std::cout << "Moving HitBox to: \n";
-    std::cout << hitBox.TopLeft().x << "," << hitBox.TopLeft().y << "\n";
-    std::cout << hitBox.BottomRight().x << "," << hitBox.BottomRight().y << "\n";
+    //std::cout << "Moving HitBox to: \n";
+    //std::cout << hitBox.TopLeft().x << "," << hitBox.TopLeft().y << "\n";
+    //std::cout << hitBox.BottomRight().x << "," << hitBox.BottomRight().y << "\n";
 }
 
 void Entity::setColor(irr::video::SColor c){

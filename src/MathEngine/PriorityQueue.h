@@ -12,8 +12,8 @@ private:
  
   std::vector<int>       m_invHeap;
 
-  int                    m_iSize,
-                         m_iMaxSize;
+  int                    m_iMaxSize,
+                         m_iSize;
 
   void Swap(int a, int b)
   {

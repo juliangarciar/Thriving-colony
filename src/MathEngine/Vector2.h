@@ -26,6 +26,7 @@ class Vector2 {
         T calculateDistance(Vector2<T> b);
 
         Vector2<T> operator +(const Vector2<T> &p) const;
+        Vector2<T> operator +(const f32 &num) const;
         Vector2<T> operator -(const Vector2<T> &p) const;
         Vector2<T> operator /(const f32 &num) const;
 

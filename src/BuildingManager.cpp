@@ -1,13 +1,14 @@
 #include "BuildingManager.h"
 #include "Game.h"
 #include <WorldEngine/WorldGeometry.h>
+#include "GraphicEngine/Window.h"
 
 BuildingManager::BuildingManager(Enumeration::Team t, Enumeration::BreedType b) {
 	team = t;
 	breed = b;
 
 	nextBuildingId = 0;
-    gridAlignment = 50;
+    gridAlignment =-100;
     buildingMode = false;
 
 	buildingLayer = new SceneNode();
@@ -55,22 +56,34 @@ void BuildingManager::drawBuilding() {
 
 		//Get position where the cursor is pointing to the terrain
         Vector3<f32> xyzPointCollision = Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse());
-
 		Vector3<f32> f = Box3D<f32>(tempBuilding -> getModel() -> getModel() -> getTransformedBoundingBox()).getSize(); //ToDo: fachada
-	// Change gridAligment -> by Julian
-        //f32 x = roundf(xyzPointCollision.x / gridAlignment) * gridAlignment;
-        //f32 y = (roundf(xyzPointCollision.y / gridAlignment) * gridAlignment) + (f.y/2);
-        //f32 z = roundf(xyzPointCollision.z / gridAlignment) * gridAlignment;
 	// Change 2nd parameter
 		bool collision = false;
-		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(xyzPointCollision.toVector2(), tempBuilding);
-		//std::cout << "Position: " << dummy.x << "," << dummy.y << "," << dummy.z << "\n";
 		Vector3<f32> dummy2;
+		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(xyzPointCollision.toVector2(), tempBuilding);
 		dummy2.x = dummy.x;
 		dummy2.z = dummy.y;
 		dummy2.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y);
+		//irr::core::matrix4 tmat;
+		//Window::Instance() -> getVideoDriver() -> setMaterial(irr::video::SMaterial());
+      	//indow::Instance() -> getVideoDriver() -> setTransform(irr::video::ETS_WORLD, irr::core::IdentityMatrix);
+		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7000, -100, 7000), irr::core::vector3df(7200, 500, 8000), irr::video::SColor(255,255,0,0));
+		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7005, -100, 7000), irr::core::vector3df(7205, 500, 8000), irr::video::SColor(255,255,0,0));
+		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7010, -100, 7000), irr::core::vector3df(7210, 500, 8000), irr::video::SColor(255,255,0,0));
+		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7015, -100, 7000), irr::core::vector3df(7215, 500, 8000), irr::video::SColor(255,255,0,0));
+		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7020, -100, 7000), irr::core::vector3df(7220, 500, 8000), irr::video::SColor(255,255,0,0));
 		tempBuilding -> setPosition (dummy2);
-		collision = WorldGeometry::Instance()->checkBuildingSpace(tempBuilding);
+		if(team == Enumeration::Team::Human){
+			Vector2<f32> tmp = Human::Instance()->getHallPosition().toVector2();
+			f32 distance = std::sqrt(std::pow(tmp.x - dummy.x, 2) + std::pow(tmp.y - dummy.y, 2));
+			if(Human::Instance()->getBuildingRadious() < distance){
+				collision = true;
+			}
+			else{
+				collision = WorldGeometry::Instance()->checkBuildingSpace(tempBuilding);
+			}
+		}
+		//std::cout << "Position: " << dummy.x << "," << dummy.y << "," << dummy.z << "\n";
 		//Pressing the right mouse button cancels the building
 		if (IO::Instance() -> getMouse() -> rightMouseDown()){
 			buildingMode = false;
@@ -78,19 +91,10 @@ void BuildingManager::drawBuilding() {
 			tempBuilding = nullptr;
 			return;
 		}
-
-		//Look if there is any other building built there
 		
-		// Make a collision mode with 
-		//for (std::map<i32,Building*>::iterator it = buildings -> begin(); it != buildings -> end() && !collision; ++it) {
-		//	collision = it -> second -> getHitbox() -> intersects(*tempBuilding -> getHitbox());
-		//}
-		/* Swapped by Julian */
 		if (collision) {
-			//tempBuilding->setColor(video::SColor(50,0,0,255)); //ToDo: reemplazar color por material
 			tempBuilding->setColor(video::SColor(20, 255, 0, 0));
 		} else {
-			//tempBuilding->setColor(tempBuilding -> getBaseColor()); //ToDo: reemplazar color por material
 			tempBuilding->setColor(video::SColor(20, 0, 255, 125));
 			//If there is no collision and the player press left button of the mouse, build the building
 			if (IO::Instance() -> getMouse() -> leftMouseDown()) {
@@ -157,7 +161,7 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 	if (!instabuild) tempBuilding -> preTaxPlayer();
 
 	if (instabuild) tempBuilding -> triggerFinishedCallback();    
-	// Added by Julian
+	
 	WorldGeometry::Instance()->build(tempBuilding);
 	tempBuilding = NULL;
 	nextBuildingId++;

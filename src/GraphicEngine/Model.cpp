@@ -1,8 +1,8 @@
 #include "Model.h"
 #include "Window.h"
-
+#include <cmath>
 using namespace irr;
-
+#define PI 3.14159265
 Model::Model(i32 id, const wchar_t *path) {
     scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
     meshNode = smgr -> addMeshSceneNode(smgr -> getMesh(path));
@@ -13,6 +13,8 @@ Model::Model(i32 id, const wchar_t *path) {
         meshNode -> setTriangleSelector(selector);
         selector -> drop(); // We're done with this selector, so drop it now.
     }
+    
+
 }
 
 Model::Model(SceneNode *parent, i32 id, const wchar_t *path) {
@@ -25,6 +27,7 @@ Model::Model(SceneNode *parent, i32 id, const wchar_t *path) {
         meshNode -> setTriangleSelector(selector);
         selector -> drop(); // We're done with this selector, so drop it now.
     }
+    
 
     parent -> getSceneNode() -> addChild(meshNode);
 }
@@ -50,6 +53,16 @@ void Model::setScale(Vector3<f32> s) {
     meshNode -> setScale(s.getVectorF()); 
 }
 
+void Model::rotate(f32 x, f32 y){
+    double param = atan(y / x) * 180 / PI;
+    //if(x < 0 && y < 0)
+    //    param += 180;
+    //else if(x < 0)
+    //    param += 90;
+    //else if(y < 0)
+    //    param += 270;
+    meshNode->setRotation(core::vector3df(0, param, 0));
+}
 void Model::setActive(bool a) {
     meshNode -> setVisible(a);
 }
