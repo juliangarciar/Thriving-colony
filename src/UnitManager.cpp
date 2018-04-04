@@ -36,20 +36,20 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
 
 //Destroyer
 UnitManager::~UnitManager() {
-    std::cout << "Deleting unit manager \n";
+    //std::cout << "Deleting unit manager \n";
     for (std::map<i32, Unit*>::iterator it = inQueueTroops -> begin(); it != inQueueTroops -> end(); ++it){
         delete it -> second;
     }
     inQueueTroops -> clear();
     delete inQueueTroops;
-    std::cout << "Queue troops deleted \n";
+    //std::cout << "Queue troops deleted \n";
 
     for (std::map<i32, Unit*>::iterator it = inHallTroops -> begin(); it != inHallTroops -> end(); ++it){
         delete it -> second;
     }
     inHallTroops -> clear();
     delete inHallTroops;
-    std::cout << "Hall troops deleted \n";
+    //std::cout << "Hall troops deleted \n";
 
     for (std::map<i32, Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
 		delete it -> second;
@@ -61,7 +61,7 @@ UnitManager::~UnitManager() {
     delete unitLayer;
     /* This is the cause of error */
     //if (selectedTroop != nullptr) delete selectedTroop;
-    std::cout << "Unit manager deleted \n";
+    //std::cout << "Unit manager deleted \n";
 }
 
 //Create a new troops
@@ -74,7 +74,7 @@ bool UnitManager::createTroop(Enumeration::UnitType type) {
         }
         newUnit -> setID(nextTroopId);
         // Distinto tamaño para distintas unidades?
-        newUnit -> getModel() -> setScale(Vector3<f32>(25,25,25));
+        //newUnit -> getModel() -> setScale(Vector3<f32>(25,25,25));
         newUnit -> getModel() -> setActive(false);
         newUnit -> setRecruitedCallback([&] (Unit* u){
             std::cout << "Se ha terminado de reclutar la unidad " << u->getID() << std::endl;

@@ -24,7 +24,7 @@ IA::~IA() {
     delete nodeRootIA;
     delete buildings;
     delete units;
-    std::cout << "IA units deleted \n";
+    //std::cout << "IA units deleted \n";
     choices -> clear();
     delete choices;
 }
@@ -124,7 +124,7 @@ Vector3<f32> IA::determinatePositionBuilding() {
         for (std::map<i32,Building*>::iterator it = b -> begin(); it != b -> end() && found == false; ++it){
             v2 = it -> second -> getPosition();
             occupied = false;
-            v = Vector3<f32>(v2 -> x, v2 -> y, v2 -> z + 200);
+            v = Vector3<f32>(v2 -> x, v2 -> y, v2 -> z + 300);
             for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                 v3 = it2 -> second -> getPosition();
                 if (v3 -> x == v.x && v3 -> z == v.z) {
@@ -134,7 +134,7 @@ Vector3<f32> IA::determinatePositionBuilding() {
             if (occupied == false ) {
                 found = true;
             } else {
-                v = Vector3<f32>(v2 -> x + 200, v2 -> y, v2 -> z);
+                v = Vector3<f32>(v2 -> x + 300, v2 -> y, v2 -> z);
                 occupied = false;
                 for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                     v3 = it2 -> second -> getPosition();
@@ -145,7 +145,7 @@ Vector3<f32> IA::determinatePositionBuilding() {
                 if (occupied == false ) {
                     found = true;
                 } else {
-                    v = Vector3<f32>(v2 -> x, v2 -> y, v2 -> z - 200);
+                    v = Vector3<f32>(v2 -> x, v2 -> y, v2 -> z - 300);
                     occupied = false;
                     for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                         v3 = it2 -> second -> getPosition();
@@ -156,7 +156,7 @@ Vector3<f32> IA::determinatePositionBuilding() {
                     if (occupied == false ) {
                         found = true;
                     } else {
-                        v = Vector3<f32>(v2 -> x - 200, v2 -> y, v2 -> z);
+                        v = Vector3<f32>(v2 -> x - 300, v2 -> y, v2 -> z);
                         occupied = false;
                         for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                             v3 = it2 -> second -> getPosition();

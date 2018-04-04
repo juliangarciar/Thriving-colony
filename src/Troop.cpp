@@ -16,7 +16,7 @@ Troop::Troop(SceneNode* scene, const wchar_t* path, i32 qnty, i32 ID){
         Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
             modelVector[i] -> getModel() -> getMesh(), irr::video::SColor(255, 125, 125, 0)
         );
-        modelVector[i]->setScale(Vector3<f32>(25,25,25));
+        modelVector[i]->setScale(Vector3<f32>(1,1,1));
         modelVector[i]->setActive(true);
     }
     alignmentWeight = 1.0;
@@ -25,6 +25,9 @@ Troop::Troop(SceneNode* scene, const wchar_t* path, i32 qnty, i32 ID){
 }
 
 Troop::~Troop(){
+    for(std::size_t i = 0; i < modelVector.size(); i++){
+        delete modelVector[i];
+    }
     modelVector.clear();
 }
 
@@ -99,5 +102,11 @@ void Troop::moveTroops(Vector3<f32> vectorMov){
     /* Work on rotation */
         //modelVector[i]->rotate(vectorMov.x, vectorMov.z);
         modelVector[i]->setPosition(positionVector[i]);
+    }
+}
+
+void Troop::setActive(bool data){
+    for(std::size_t i = 0; i < modelVector.size(); i++){
+        modelVector[i] -> setActive(data);
     }
 }

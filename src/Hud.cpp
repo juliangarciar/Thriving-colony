@@ -40,7 +40,7 @@ void Hud::Init(){
     //bgMain -> refreshLayout();
     //bgMain -> center();
 
-    buildingsPanel -> setPosition(Vector2<i32>(575, 546));
+    buildingsPanel -> setPosition(Vector2<i32>(125, 445));
 
     // General
     Widget *generalWidget = new Widget(buildingsPanel);

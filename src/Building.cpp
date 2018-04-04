@@ -44,11 +44,12 @@ void Building::Init() {
 
             metalCost = Enumeration::BuildingCost::BarnMetalCost;
             crystalCost = Enumeration::BuildingCost::BarnCrystalCost;
-            kCells = Enumeration::BuildingCells::BarnCells;
-
+            //kCellsX = Enumeration::BuildingCells::BarnCells;
+            kCellsX = 2;
+            kCellsY = 2;
             path = L"media/buildingModels/barn.obj";
             if(breed == Enumeration::BreedType::Drorania){
-                tex = new Texture("./media/textures/Kaonov/kaonov_barn_Base_Color.jpg");
+                tex = new Texture("./media/textures/Drorania/drorania_barn.jpg");
             }
             else{
                 tex = new Texture("./media/textures/Kaonov/kaonov_barn_Base_Color.jpg");
@@ -66,11 +67,13 @@ void Building::Init() {
 
             metalCost = Enumeration::BuildingCost::BarrackMetalCost;
             crystalCost = Enumeration::BuildingCost::BarrackCrystalCost;
-            kCells = Enumeration::BuildingCells::BarrackCells;
+            //kCells = Enumeration::BuildingCells::BarrackCells;
+            kCellsX = 4;
+            kCellsY = 4;
 
             path = L"media/buildingModels/barrack.obj";
             if(breed == Enumeration::BreedType::Drorania){
-                tex = new Texture("./media/textures/Kaonov/kaonov_barrack_Base_Color.jpg");
+                tex = new Texture("./media/textures/Drorania/drorania_barrack.jpg");
             }
             else{
                 tex = new Texture("./media/textures/Kaonov/kaonov_barrack_Base_Color.jpg");
@@ -88,11 +91,13 @@ void Building::Init() {
 
             metalCost = Enumeration::BuildingCost::HospitalMetalCost;
             crystalCost = Enumeration::BuildingCost::HospitalCrystalCost;
-            kCells = Enumeration::BuildingCells::HospitalCells;
+            //kCells = Enumeration::BuildingCells::HospitalCells;
+            kCellsX = 4;
+            kCellsY = 4;
 
             path = L"media/buildingModels/hospital.obj";
             if(breed == Enumeration::BreedType::Drorania){
-                tex = new Texture("./media/textures/Kaonov/kaonov_hospital_Base_Color.jpg");
+                tex = new Texture("./media/textures/Drorania/drorania_hospital.jpg");
             }
             else{
                 tex = new Texture("./media/textures/Kaonov/kaonov_hospital_Base_Color.jpg");
@@ -111,11 +116,13 @@ void Building::Init() {
             
             metalCost = Enumeration::BuildingCost::HomeMetalCost;
             crystalCost = Enumeration::BuildingCost::HomeCrystalCost;
-            kCells = Enumeration::BuildingCells::HomeCells;
+            //kCells = Enumeration::BuildingCells::HomeCells;
+            kCellsX = 1;
+            kCellsY = 1;
 
             path = L"media/buildingModels/house.obj";
             if(breed == Enumeration::BreedType::Drorania){
-                tex = new Texture("./media/textures/Kaonov/kaonov_house_Base_Color.jpg");
+                tex = new Texture("./media/textures/Drorania/drorania_house.jpg");
             }
             else{
                 tex = new Texture("./media/textures/Kaonov/kaonov_house_Base_Color.jpg");
@@ -126,11 +133,13 @@ void Building::Init() {
  
             maxHP = 3000;
             currentHP = 3000;
-            kCells = Enumeration::BuildingCells::MainCells;
+            //kCells = Enumeration::BuildingCells::MainCells;
+            kCellsX = 5;
+            kCellsY = 5;
 
             path = L"media/buildingModels/command_center.obj";
             if(breed == Enumeration::BreedType::Drorania){
-                tex = new Texture("./media/textures/Kaonov/kaonov_command_center_Base_Color.jpg");
+                tex = new Texture("./media/textures/Drorania/drorania_command_center.jpg");
             }
             else{
                 tex = new Texture("./media/textures/Kaonov/kaonov_command_center_Base_Color.jpg");
@@ -148,11 +157,13 @@ void Building::Init() {
 
             metalCost = Enumeration::BuildingCost::MarketMetalCost;
             crystalCost = Enumeration::BuildingCost::MarketCrystalCost;
-            kCells = Enumeration::BuildingCells::MarketCells;
+            //kCells = Enumeration::BuildingCells::MarketCells;
+            kCellsX = 3;
+            kCellsY = 4;
 
             path = L"media/buildingModels/market.obj";
             if(breed == Enumeration::BreedType::Drorania){
-                tex = new Texture("./media/textures/Kaonov/kaonov_market_Base_Color.jpg");
+                tex = new Texture("./media/textures/Drorania/drorania_market.jpg");
             }
             else{
                 tex = new Texture("./media/textures/Kaonov/kaonov_market_Base_Color.jpg");
@@ -171,11 +182,13 @@ void Building::Init() {
             //metalCost = Enumeration::BuildingCost::QuarryMetalCost;
             metalCost = 1;
             crystalCost = Enumeration::BuildingCost::QuarryCrystalCost;
-            kCells = Enumeration::BuildingCells::QuarryCells;
+            //kCells = Enumeration::BuildingCells::QuarryCells;
+            kCellsX = 4;
+            kCellsY = 4;
 
             path = L"media/buildingModels/quarry.obj";
             if(breed == Enumeration::BreedType::Drorania){
-                tex = new Texture("./media/textures/Kaonov/kaonov_quarry_Base_Color.jpg");
+                tex = new Texture("./media/textures/Drorania/drorania_quarry.jpg");
             }
             else{
                 tex = new Texture("./media/textures/Kaonov/kaonov_quarry_Base_Color.jpg");
@@ -193,11 +206,13 @@ void Building::Init() {
             
             metalCost = Enumeration::BuildingCost::SiderurgyMetalCost;
             crystalCost = Enumeration::BuildingCost::SiderurgyCrystalCost;
-            kCells = Enumeration::BuildingCells::SiderurgyCells;
+            //kCells = Enumeration::BuildingCells::SiderurgyCells;
+            kCellsX = 5;
+            kCellsY = 3;
 
             path = L"media/buildingModels/siderurgy.obj";
             if(breed == Enumeration::BreedType::Drorania){
-                tex = new Texture("./media/textures/Kaonov/kaonov_siderurgy_Base_Color.jpg");
+                tex = new Texture("./media/textures/Drorania/drorania_siderurgy.jpg");
             }
             else{
                 tex = new Texture("./media/textures/Kaonov/kaonov_siderurgy_Base_Color.jpg");
@@ -216,11 +231,13 @@ void Building::Init() {
 
             metalCost = Enumeration::BuildingCost::SchoolMetalCost;
             crystalCost = Enumeration::BuildingCost::SchoolCrystalCost;
-            kCells = Enumeration::BuildingCells::SchoolCells;
+            //kCells = Enumeration::BuildingCells::SchoolCells;
+            kCellsX = 3;
+            kCellsY = 2;
 
             path = L"media/buildingModels/school.obj";
             if(breed == Enumeration::BreedType::Drorania){
-                tex = new Texture("./media/textures/Kaonov/kaonov_school_Base_Color.jpg");
+                tex = new Texture("./media/textures/Drorania/drorania_school.jpg");
             }
             else{
                 tex = new Texture("./media/textures/Kaonov/kaonov_school_Base_Color.jpg");
@@ -238,11 +255,13 @@ void Building::Init() {
 
             metalCost = Enumeration::BuildingCost::TowerMetalCost;
             crystalCost = Enumeration::BuildingCost::TowerCrystalCost;
-            kCells = Enumeration::BuildingCells::TowerCells;
+            //kCells = Enumeration::BuildingCells::TowerCells;
+            kCellsX = 1;
+            kCellsY = 1;
 
             path = L"media/buildingModels/tower.obj";
             if(breed == Enumeration::BreedType::Drorania){
-                tex = new Texture("./media/textures/Kaonov/kaonov_tower_Base_Color.jpg");
+                tex = new Texture("./media/textures/Drorania/drorania_tower.jpg");
             }
             else{
                 tex = new Texture("./media/textures/Kaonov/kaonov_tower_Base_Color.jpg");
@@ -260,11 +279,13 @@ void Building::Init() {
 
             metalCost = Enumeration::BuildingCost::WallMetalCost;
             crystalCost = Enumeration::BuildingCost::WallCrystalCost;
-            kCells = Enumeration::BuildingCells::WallCells;
+            //kCells = Enumeration::BuildingCells::WallCells;
+            kCellsX = 2;
+            kCellsY = 1;
 
             path = L"media/buildingModels/wall.obj";
             if(breed == Enumeration::BreedType::Drorania){
-                tex = new Texture("./media/textures/Kaonov/kaonov_wall_Base_Color.jpg");
+                tex = new Texture("./media/textures/Drorania/drorania_wall.jpg");
             }
             else{
                 tex = new Texture("./media/textures/Kaonov/kaonov_wall_Base_Color.jpg");
@@ -282,11 +303,13 @@ void Building::Init() {
             
             metalCost = Enumeration::BuildingCost::WorkshopMetalCost;
             crystalCost = Enumeration::BuildingCost::WorkshopCrystalCost;
-            kCells = Enumeration::BuildingCells::WorkshopCells;
+            //kCells = Enumeration::BuildingCells::WorkshopCells;
+            kCellsX = 3;
+            kCellsY = 4;
 
             path = L"media/buildingModels/workshop.obj";
             if(breed == Enumeration::BreedType::Drorania){
-                tex = new Texture("./media/textures/Kaonov/kaonov_workshop_Base_Color.jpg");
+                tex = new Texture("./media/textures/Drorania/drorania_workshop.jpg");
             }
             else{
                 tex = new Texture("./media/textures/Kaonov/kaonov_workshop_Base_Color.jpg");
@@ -296,10 +319,11 @@ void Building::Init() {
         default: break;
     }
     /* Set the 2D hitbox */
-    topLeft.x = (kCells / 2.0) * (-80.f) + 1;
-    topLeft.y = (kCells / 2.0) * (-80.f) + 1;
-    bottomRight.x = (kCells / 2.0) * (80.f) - 1;
-    bottomRight.y = (kCells / 2.0) * (80.f) - 1;
+    topLeft.x = (kCellsX / 2.0) * (-80.f) + 1;
+    topLeft.y = (kCellsY / 2.0) * (-80.f) + 1;
+    bottomRight.x = (kCellsX / 2.0) * (80.f) - 1;
+    bottomRight.y = (kCellsY / 2.0) * (80.f) - 1;
+
     hitBox = Box2D(topLeft, bottomRight); 
 
     setModel(layer, path);

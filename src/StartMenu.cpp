@@ -102,7 +102,6 @@ StartMenu::StartMenu() {
 
 
     Window::Instance() -> setGUI();   
-
 }
 
 StartMenu::~StartMenu() {
