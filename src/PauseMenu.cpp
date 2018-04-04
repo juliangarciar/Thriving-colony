@@ -3,10 +3,14 @@
 
 PauseMenu::PauseMenu() {
     bgMenu = new Panel("Game paused");
-    bgMenu -> setPosition(Vector2<i32>(400, 200));
+    //bgMenu -> setPosition(Vector2<i32>(400, 200));
+    //bgMenu -> setSize(Vector2<i32>(400, 300));
+    //bgMenu -> setVerticalLayout();
+
     bgMenu -> setSize(Vector2<i32>(400, 300));
     bgMenu -> setVerticalLayout();
-
+    bgMenu -> refreshLayout();
+    bgMenu -> center();
 
     buttonResume = new Button(bgMenu, "Resume game");
     buttonResume -> setPosition(Vector2<i32>(600, 200));

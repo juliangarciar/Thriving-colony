@@ -46,6 +46,10 @@ void Label::hide(){
     label -> setVisible(false);
 }
 
+void Label::setColor(i32 a, i32 r, i32 g, i32 b){
+    label -> setColor(nanogui::Color(r, g, b, a));
+}
+
 bool Label::isVisible(){
     return label -> visible();
 }
