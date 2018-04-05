@@ -45,7 +45,7 @@ void Entity::takeDamage(i32 dmg) {
     }
 }
 
-void Entity::updateTarget(Entity *newTarget) {
+void Entity::setTarget(Entity *newTarget) {
     target = newTarget;
 }
 
@@ -179,10 +179,6 @@ void Entity::removeHostile(Entity* oldHostileUnit) {
             done = true;
         }
     }
-}
-
-void Entity::setTarget(Entity* newTarget) {
-    target = newTarget;
 }
 
 Entity* Entity::getTarget() {

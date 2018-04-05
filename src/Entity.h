@@ -40,7 +40,7 @@ class Entity {
 		 * @brief Set target as the value passed by parameter
          * @param The pointer to Entity is the value that is going be assigned to target variable. It can be NULL.
 		 */
-        void updateTarget(Entity*);
+        void setTarget(Entity*);
 
         /**
          * @brief Set the entity hitbox.
@@ -80,38 +80,32 @@ class Entity {
         void setID(i32);
 
         /**
-         * @brief
-         * @param
-         */
-        void setTarget(Entity*);
-
-        /**
-         * @brief
-         * @return
+         * @brief Get current traget of the entity.
+         * @return A pointer to an Entity object if the entity has current target and NULL in other case.
          */
         Entity* getTarget();
 
         /**
-		 * @brief Solicita el rango de ataque de la entidad
-         * @return AttackRange de tipo entero
+		 * @brief Get the attack range of the entity.
+         * @return i32 that will be the value of attackRange variable.
 		 */
         i32 getAttackRange();
 
         /**
-		 * @brief Devuelve el equipo al que pertenece la entidad
-         * @return team tipo Enumeration::Team
+		 * @brief Get the team of the entity.
+         * @return Enumeration::Team that will be the value of team variable: Enumeration::Team::Human or Enumeration::Team::IA.
 		 */
         Enumeration::Team getTeam();
         
         /**
-         * @brief
-         * @return
+         * @brief Get the type of the entity.
+         * @return Enumeration::EntityType that will be the value of entityType variable: Enumeration::EntityType::Building or Enumeration::EntityType::Unit.
          */
         Enumeration::EntityType getEntityType();
 
         /**
-		 * @brief Devuelte la salud de la entidad
-         * @return hp de tipo entero
+		 * @brief Get the current hp of the entity.
+         * @return i32 that will be the current value of currentHP variable.
 		 */
         i32 getHP();
 
