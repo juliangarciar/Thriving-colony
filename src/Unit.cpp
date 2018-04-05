@@ -391,9 +391,10 @@ void Unit::Init() {
     //Material *m = new Material(tex);
     //this->model->setMaterial(m);
     /* Juli */
-    setModel(layer, path);
+    
     troops = new Troop(layer, path, 4, ID);
-
+    path = L"media/unitModels/Flags/flag.obj";
+    setModel(layer, path);
     preTaxPlayer();
 }
 
