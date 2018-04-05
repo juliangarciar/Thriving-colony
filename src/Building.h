@@ -7,7 +7,7 @@
 
 /**
  * @class Building.
- * @brief Create a Building type object.
+ * @brief Create a Building type object. Public heritage from Entity class.
  */
 class Building : public Entity {
     

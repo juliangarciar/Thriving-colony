@@ -296,7 +296,7 @@ void UnitManager::moveOrder() {
     if (selectedTroop != nullptr) {
         selectedTroop -> setTroopDestination(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
         if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
-        // ToDo by Julian -> change attack iddle to pathfinding mode
+        // ToDo: change attack iddle to pathfinding mode
             selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
 
             selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
@@ -463,7 +463,6 @@ void UnitManager::deployTroopAtPosition(i32 index, Vector3<f32> vectorData) {
     //Game::Instance() -> getSoundSystem() -> playVoice(selectedTroop -> getMoveEvent());
     //selectedTroop -> setTroopDestination(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
 } 
-        //VERSION DEFINITIVA, LO DE DEBAJO ES DE JULIAN DE DEBUGERUNIS
         //Unit *newUnit = new Unit(unitLayer, std::rand(), L"media/buildingModels/dummy.obj", team, breed, unitData, Vector3<f32>());
         //newUnit -> getModel() -> setScale(Vector3<f32>(128, 128, 128));
 */

@@ -11,69 +11,84 @@
 #include <GraphicEngine/SceneNode.h>
 
 /**
- * @class Entity
- * @brief Crea un objeto tipo Entity
+ * @class Entity.
+ * @brief Create a Entity type object.
  */
 class Entity {
 
     public:
         /**
-		 * @brief Constructor
-         * @param layer sera la capa en la que se encuentra la entidad
-         * @param id de la entidad
-         * @param team
-         * @param breed
-		 */
+         * @brief Entity constructor.
+         * @param The id32 is the id number that will identify the entity.
+         * @param The Enumeration::Team is the team to which belongs the entity: Enumeration::Team::Human or Enumeration::Team::IA.
+         * @param The Enumeration::BreedType is the civilization to which belongs the entity: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov.
+         */
         Entity(i32, Enumeration::Team, Enumeration::BreedType);
+
         /**
-		 * @brief Destructor
+		 * @brief Entity destructor
 		 */
         virtual ~Entity();
 
         /**
-        * @brief Resta el daño que se le haga a una unidad a tu salud total
-         * @param dmg es el daño a restar
+         * @brief Subtract damage passed by parameter to currentHP variable.
+         * @param The i32 is the damage that is going to be subtracted to currentHP variable.
 		 */
         void takeDamage(i32);
-        /**
-		 * @brief Mueve el objeto 3D a las coordenadas (0,0,0)
-		 */
 
-        void updateTarget(Entity*);
         /**
-         * @brief Establece la hitbox de la entidad
+		 * @brief Set target as the value passed by parameter
+         * @param The pointer to Entity is the value that is going be assigned to target variable. It can be NULL.
+		 */
+        void updateTarget(Entity*);
+
+        /**
+         * @brief Set the entity hitbox.
          */
         void refreshHitbox();
+
         /**
-		 * @brief Devuelve el color original al modelo
+		 * @brief Set the color of the model to its original color unless tookDamageCountdown variable is higher than 0.
+         * @see setColor(irr::video::SColor) method of Entity class.
          * ToDo: cambiar por material
 		 */
         void returnToOriginalColor();
 
         /**
-         * @brief 
-         * 
-         * @param path 
+         * @brief Create the model, hitbox and position of the entity.
+         * @param The SceneNode is a pointer to the layer where is going to be created the entity.
+         * @param The const wchar_t is a pointer to the path of the file with the model.
          */
         void setModel(SceneNode *, const wchar_t *);
         
         /**
-		 * @brief Establece la posicion de la entidad
-         * @param vertorData es las nuevas coordenadas de la posicion
+		 * @brief Set the position of the model, hitbox, hitBox and position variables as the one passed by parameter.
+         * @param The Vector3 is the value that is going to be assigned as position to model, hitbox, hitBox and position variables.
 		 */
         void setPosition(Vector3<f32>);
+
+        /**
+         * @brief Set currentColor variable as the one passed by parameter.
+         * @param The irr::video::SColor is the color that is going to be assigned to currentColor variable.
+         */
+        void setColor(irr::video::SColor);
+
+        /**
+         * @brief Set a new id to the entity.
+         * @param The i32 is the value that is going to be assigned to ID variable.
+         */
+        void setID(i32);
+
         /**
          * @brief
          * @param
          */
-        void setColor(irr::video::SColor);
-        /**
-         * @brief set the id
-         * @param id
-         */
-        void setID(i32);
-
         void setTarget(Entity*);
+
+        /**
+         * @brief
+         * @return
+         */
         Entity* getTarget();
 
         /**
@@ -81,44 +96,59 @@ class Entity {
          * @return AttackRange de tipo entero
 		 */
         i32 getAttackRange();
+
         /**
 		 * @brief Devuelve el equipo al que pertenece la entidad
          * @return team tipo Enumeration::Team
 		 */
         Enumeration::Team getTeam();
         
+        /**
+         * @brief
+         * @return
+         */
         Enumeration::EntityType getEntityType();
+
         /**
 		 * @brief Devuelte la salud de la entidad
          * @return hp de tipo entero
 		 */
         i32 getHP();
+
         /**
 		 * @brief Solicita la posicion actual de la entidad
          * @return position sera el vector de coordenadas devuelto
 		 */
         Vector3<f32> *getPosition();
+
         /**
 		 * @brief Solicita la hitbox de la entidad
          * @return hitbox de tipo Box3D
 		 */
         Box3D<f32> *getHitbox();
+
         /**
 		 * @brief Solicita el modelo 3D de la entidad
          * @return model3D de tipo Model
 		 */
         Model *getModel();
+
         /**
 		 * @brief Devuelve el ViewRadius de la entidad
          * @return viewRadius de tipo entero
 		 */
         i32 getViewRadius();
+
         /**
          * @brief solicita el id del edificio
          * @return entero con el id 
          */
         i32 getID();
 
+         /**
+          * @brief
+          * @return
+          */
         i32 getHappiness();
         
         /**
@@ -126,21 +156,59 @@ class Entity {
          * @return devuelve el color de tipo irr::video::SColor
          */
         irr::video::SColor getBaseColor(); //ToDo: cambiar por material
+
         /**
          * @brief solicita el color del edificio
          * @return devuelve el color de tipo irr::video::SColor
          */
         irr::video::SColor getCurrentColor(); //ToDo: cambiar por material
-        // Added by Julian
+
+        /**
+         * @breif
+         * @return
+         */
         i32 getCellsX();
+
+        /**
+         * @breif
+         * @return
+         */
         i32 getCellsY();
+
+        /**
+         * @breif
+         * @return
+         */
         Box2D getHit();
 
+        /**
+         * @breif
+         * @return
+         */
         i32 getArmyLevel();
 
+        /**
+         * @breif
+         * @return
+         */
         std::vector<Entity*> getHostile();
+
+        /**
+         * @breif
+         * @param
+         */
         void addHostile(Entity*);
+
+        /**
+         * @breif
+         * @param
+         */
         void removeHostile(Entity*);
+
+        /**
+         * @breif
+         * @param
+         */
         void putHostileTargetsToNull();
 
     protected:
@@ -177,7 +245,6 @@ class Entity {
 
         std::vector<Entity*> hostile;
 
-        // Added by Julian
         i32 kCellsX;
         i32 kCellsY;
       private:

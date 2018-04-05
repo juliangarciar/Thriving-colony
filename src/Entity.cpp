@@ -46,7 +46,6 @@ void Entity::takeDamage(i32 dmg) {
 }
 
 void Entity::updateTarget(Entity *newTarget) {
-    // target can be null, meaning that he can't attack anything
     target = newTarget;
 }
 
@@ -76,8 +75,8 @@ void Entity::setPosition(Vector3<f32> vectorData) {
     hitbox -> set(model -> getBoundingBox());
     
     /* Create the hitbox in another place */
-    Vector2<f32> topLeft;
-    Vector2<f32> bottomRight;
+    //Vector2<f32> topLeft;
+    //Vector2<f32> bottomRight;
     /* Adjust the hitbox properly */
     //topLeft.x = vectorData.x - 120.f;
     //topLeft.y = vectorData.z - 120.f;
