@@ -9,7 +9,6 @@
 #define TOTAL 80
 
 Building::Building(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::BuildingType t) : Entity(id, team, breed) {
-    buildTimer = 0;
     layer = l;
     type = t;
     entityType = Enumeration::EntityType::Building;
@@ -19,6 +18,7 @@ Building::Building(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::Br
 }
 
 Building::~Building() {
+    delete buildTimer;
 }
 
 void Building::Init() {
@@ -32,6 +32,7 @@ void Building::Init() {
     Texture *tex;
     const wchar_t *path;
     Vector3<f32> scale;
+    
     switch (type) {
         case Enumeration::BuildingType::Barn:
 
@@ -40,7 +41,7 @@ void Building::Init() {
             happiness = Enumeration::HappinessProvided::AmountHappinessBarn;
             cityLevel = 15;
 
-            buildTimer = 50;
+            buildTimer = new Timer(50.0, true);
 
             metalCost = Enumeration::BuildingCost::BarnMetalCost;
             crystalCost = Enumeration::BuildingCost::BarnCrystalCost;
@@ -63,7 +64,7 @@ void Building::Init() {
             cityLevel = 10;
             happiness = Enumeration::HappinessProvided::AmountHappinessBarrack;
             
-            buildTimer = 5; //ToDo: antes 40, cambiado para testing
+            buildTimer = new Timer(5.0, true);//ToDo: antes 40, cambiado para testing
 
             metalCost = Enumeration::BuildingCost::BarrackMetalCost;
             crystalCost = Enumeration::BuildingCost::BarrackCrystalCost;
@@ -87,7 +88,7 @@ void Building::Init() {
             happiness = Enumeration::HappinessProvided::AmountHapppinesHospital;
             cityLevel = 5;
 
-            buildTimer = 60;
+            buildTimer = new Timer(60.0, true);
 
             metalCost = Enumeration::BuildingCost::HospitalMetalCost;
             crystalCost = Enumeration::BuildingCost::HospitalCrystalCost;
@@ -112,7 +113,7 @@ void Building::Init() {
             cityLevel = 5;
             citizens = 5;
 
-            buildTimer = 25;
+            buildTimer = new Timer(25.0, true);
             
             metalCost = Enumeration::BuildingCost::HomeMetalCost;
             crystalCost = Enumeration::BuildingCost::HomeCrystalCost;
@@ -153,7 +154,7 @@ void Building::Init() {
             happiness = Enumeration::HappinessProvided::AmountHappinessMarket;
             cityLevel = 5;
 
-            buildTimer = 60;
+            buildTimer = new Timer(60.0, true);
 
             metalCost = Enumeration::BuildingCost::MarketMetalCost;
             crystalCost = Enumeration::BuildingCost::MarketCrystalCost;
@@ -177,7 +178,7 @@ void Building::Init() {
             cityLevel = 15;
             happiness = Enumeration::HappinessProvided::AmountHappinessQuarry;
 
-            buildTimer = 35;
+            buildTimer = new Timer(35.0, true);
             
             //metalCost = Enumeration::BuildingCost::QuarryMetalCost;
             metalCost = 1;
@@ -202,7 +203,7 @@ void Building::Init() {
             cityLevel = 5;
             happiness = Enumeration::HappinessProvided::AmountHappinessSiderurgy;
 
-            buildTimer = 35;
+            buildTimer = new Timer(35.0, true);
             
             metalCost = Enumeration::BuildingCost::SiderurgyMetalCost;
             crystalCost = Enumeration::BuildingCost::SiderurgyCrystalCost;
@@ -221,13 +222,13 @@ void Building::Init() {
         break;
         case Enumeration::BuildingType::School:
 
-            this -> buildTimer = 35;
+            
             maxHP = 550;
             currentHP = 550;
             happiness = Enumeration::HappinessProvided::AmountHappinessSchool;
             cityLevel = 5;
 
-            buildTimer = 35;
+            buildTimer = new Timer(35.0, true);
 
             metalCost = Enumeration::BuildingCost::SchoolMetalCost;
             crystalCost = Enumeration::BuildingCost::SchoolCrystalCost;
@@ -251,7 +252,7 @@ void Building::Init() {
             happiness = Enumeration::HappinessProvided::AmountHappinessTower;
             cityLevel = 5;
 
-            buildTimer = 50;
+            buildTimer = new Timer(50.0, true);
 
             metalCost = Enumeration::BuildingCost::TowerMetalCost;
             crystalCost = Enumeration::BuildingCost::TowerCrystalCost;
@@ -275,7 +276,7 @@ void Building::Init() {
             happiness = Enumeration::HappinessProvided::AmountHappinessWall;
             cityLevel = 1;
 
-            buildTimer = 10;
+            buildTimer = new Timer(10.0, true);
 
             metalCost = Enumeration::BuildingCost::WallMetalCost;
             crystalCost = Enumeration::BuildingCost::WallCrystalCost;
@@ -299,7 +300,7 @@ void Building::Init() {
             cityLevel = 15;
             happiness = Enumeration::HappinessProvided::AmountHappinessWorkshop;
             
-            buildTimer = 50;
+            buildTimer = new Timer(50.0, true);
             
             metalCost = Enumeration::BuildingCost::WorkshopMetalCost;
             crystalCost = Enumeration::BuildingCost::WorkshopCrystalCost;
@@ -329,7 +330,7 @@ void Building::Init() {
     setModel(layer, path);
     model->setScale(scale);
 
-    buildTimer = 0; //ToDo: sin tiempo de construcción
+    //buildTimer = 0; //ToDo: sin tiempo de construcción
 
     //Establece el color base del edificio
     baseColor = video::SColor(255, 255, 255, 255); //ToDo: reemplazar color por material
@@ -342,12 +343,9 @@ void Building::Init() {
 
 void Building::update() {
     if (!finished){
-        if (buildTimer <= 0.0) {
+        if (buildTimer -> tick()) {
             finished = true;
             callback(this);
-        } else {
-            // This update is called once every second
-            buildTimer -= Window::Instance() -> getDeltaTime();
         }
     }
 }

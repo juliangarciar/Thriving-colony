@@ -9,6 +9,7 @@
 #include <MathEngine/Box2D.h>
 #include <GraphicEngine/Model.h>
 #include <GraphicEngine/SceneNode.h>
+#include <IOEngine/Timer.h>
 
 /**
  * @class Entity.
@@ -216,8 +217,7 @@ class Entity {
 
         i32 ID;
 
-        f32 tookDamageTimer;
-        f32 tookDamageCountdown;
+        Timer* tookDamageTimer;
 
         irr::video::SColor baseColor; //ToDo: cambiar por material
         irr::video::SColor currentColor; //ToDo: cambiar color por material

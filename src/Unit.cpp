@@ -31,9 +31,10 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
     Init();
 
     // Timers
-    recruitingTimer = recruitingTime;
-    lookForTargetTimer = 0.5;
-    lookForTargetCountdown = lookForTargetTimer;
+    //Esta forma es mejor de hacerlo, igual algun dia lo cambio en el building
+    recruitingTimer = new Timer(recruitingTime, false);
+    lookForTargetTimer = new Timer (0.5,true);
+    // Esto puede ser un timer?
     attackCountdown = 0;
 
     // Preparado para algo
@@ -459,19 +460,18 @@ void Unit::posTaxPlayer(){
 }
 
 void Unit::switchState(Enumeration::UnitState newState) {
-    lookForTargetCountdown = lookForTargetTimer;
+    lookForTargetTimer -> restart();
     state = newState;
 }
 
 void Unit::recruitingState(){
-    if (recruitingTimer > 0.0f){
-        recruitingTimer -= Window::Instance() -> getDeltaTime();
-        if (team == Enumeration::Team::Human){
-            Hud::Instance()->modifyTroopFromQueue(ID, recruitingTimer/recruitingTime);
-        }
-    } else {
+    if (recruitingTimer -> tick()){
         recruitedCallback(this);
         switchState(Enumeration::UnitState::InHome);
+    } else {
+        if (team == Enumeration::Team::Human){
+            Hud::Instance()->modifyTroopFromQueue(ID, recruitingTimer -> getElapsedTime()/recruitingTime);
+        }
     }
 }
 
@@ -646,11 +646,8 @@ bool Unit::refreshTarget() {
     bool targetUpdated = false;
 
     // Ask for a new target
-    if (lookForTargetCountdown <= 0) {
+    if (lookForTargetTimer -> tick()) {
         Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this); //ToDo: Puff, mas corto mejor no?
-        lookForTargetCountdown = lookForTargetTimer;
-    } else {
-        lookForTargetCountdown -= Window::Instance() -> getDeltaTime();
     }
     
     // return wether or not it got updated

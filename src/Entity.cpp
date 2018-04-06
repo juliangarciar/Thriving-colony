@@ -9,8 +9,7 @@ Entity::Entity(i32 id, Enumeration::Team t, Enumeration::BreedType b) {
 
     baseColor = video::SColor(255, 0, 0, 0); //ToDo: cambiar por material
 
-    tookDamageTimer = 0.1;
-    tookDamageCountdown = tookDamageTimer;
+    tookDamageTimer = new Timer (0.1, false);
 
     currentHP = 0;
     maxHP = 0;
@@ -32,12 +31,13 @@ Entity::~Entity() {
     delete hitbox;
     delete model;
     hostile.clear();
+    delete tookDamageTimer;
 }
 
 //METHODS
 void Entity::takeDamage(i32 dmg) {
     currentHP = currentHP-dmg;
-    tookDamageCountdown = tookDamageTimer;
+    tookDamageTimer -> restart();
     // Tint the model red
     setColor(video::SColor(255, 125, 125, 0)); //ToDo: sustituir por material
     if (currentHP <= 0) {
@@ -54,10 +54,8 @@ void Entity::refreshHitbox() {
 }
 
 void Entity::returnToOriginalColor() {
-    if (tookDamageCountdown <= 0.0) {
+    if (tookDamageTimer -> tick()) {
         setColor(baseColor); //ToDo: sustituir por material
-    } else {
-        tookDamageCountdown -= Window::Instance() -> getDeltaTime(); //ToDo: sustituir por timer real
     }
 }
 

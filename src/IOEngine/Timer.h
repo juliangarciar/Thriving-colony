@@ -40,6 +40,13 @@ class Timer {
          */
         void changeDuration(f32 d);
 
+        /**
+         * @brief Get the Elapsed Time object
+         * 
+         * @return f32 
+         */
+        f32 getElapsedTime();
+
     private:
         bool loop;
 

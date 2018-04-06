@@ -18,12 +18,10 @@ Hud* Hud::Instance() {
 }
 
 Hud::Hud() {
-    debugTime = 0.5;
-    debugTimer = debugTime;
+    debugTimer = new Timer (0.5, true);
 
     toastBool = false;
-    toastTime = 2;
-    toastTimer = toastTime;
+    toastTimer = new Timer(2, false);
 
     popUpOpen = false;
 }
@@ -470,18 +468,12 @@ void Hud::Init(){
 }
 
 void Hud::Update() { 
-    f32 dt = Window::Instance() -> getDeltaTime();
-    if (debugTimer <= 0) {
+    if (debugTimer -> tick()) {
         debug();
-        debugTimer = 0.5;
-    } else {
-        debugTimer -= dt;
     }
     if (toastBool){
-        if (toastTimer <= 0) {
+        if (toastTimer -> tick()) {
             hideToast();
-        } else {
-            toastTimer -= dt;
         }
     }
 }
@@ -491,6 +483,8 @@ void Hud::CleanUp(){
     delete tabContainer;
     delete playerResources;
     delete iaResources;
+    delete toastTimer;
+    delete debugTimer;
     //ToDo: incompleto
 }
 
@@ -723,7 +717,7 @@ void Hud::showToast(std::string s){
         toastText->setLabel(s);
         toast->refreshLayout();
         toast->show();
-        toastTimer = toastTime;
+        toastTimer -> restart();
         toastBool = true;
     }
 }

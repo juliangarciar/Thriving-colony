@@ -9,6 +9,7 @@
 #include <Entity.h>
 #include <MathEngine/Vector3.h>
 #include <PathPlanner/PathManager.h>
+#include <IOEngine/Timer.h>
 
 class Troop;
 class Unit : public Entity {
@@ -92,9 +93,10 @@ class Unit : public Entity {
         f32 recruitingTime;
 
         // Timers
-        f32 recruitingTimer;
-        f32 lookForTargetTimer;
+        Timer* recruitingTimer;
+        Timer* lookForTargetTimer;
         f32 lookForTargetCountdown;
+        // Esto que?
         f32 attackCountdown;
 
         // Scene Node
