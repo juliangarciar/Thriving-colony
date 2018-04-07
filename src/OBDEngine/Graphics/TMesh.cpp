@@ -30,6 +30,8 @@ TMesh::TMesh(ResourceMesh *r, ResourceMaterial *m) : TEntity() {
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBOID);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndices().size() * sizeof(us32), &mesh->getIndices()[0] , GL_STATIC_DRAW);
 
+	std::cout << cache.getLights()->at(0).ambientComponent.r << " " << cache.getLights()->at(0).ambientComponent.g << " " << cache.getLights()->at(0).ambientComponent.b << std::endl; 
+
 	// Lights
 	glGenBuffers(1, &lightID);
 	glBindBuffer(GL_UNIFORM_BUFFER, lightID);
@@ -38,7 +40,7 @@ TMesh::TMesh(ResourceMesh *r, ResourceMaterial *m) : TEntity() {
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslLight) * cache.getLights()->size(), &cache.getLights()->at(0));
 	glBindBufferRange(GL_UNIFORM_BUFFER, cache.getID(OBDEnums::OpenGLIDs::BUFFER_LIGHT), lightID, 0, sizeof(glslLight) * cache.getLights()->size());
 
-	// glslMaterial
+	// Material
 	glGenBuffers(1, &materialID);
 	glBindBuffer(GL_UNIFORM_BUFFER, materialID);
 	glBindBufferBase(GL_UNIFORM_BUFFER, 2, materialID);

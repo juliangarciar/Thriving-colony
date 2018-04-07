@@ -174,6 +174,20 @@ void Map::Init() {
     camera -> setZoomDistanceFromTarget(j["camera"]["zoomDistanceFromTarget"].get<int>());
     camera -> setRotateDegrees(j["camera"]["delta_x"].get<int>(), j["camera"]["delta_y"].get<int>());
     camera -> Init(Human::Instance() -> getHallPosition());
+
+    //Hud buttons
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Barn, j["hud"]["BarnButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Barrack, j["hud"]["BarrackButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Hospital, j["hud"]["HospitalButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::House, j["hud"]["HouseButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Market, j["hud"]["MarketButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Quarry, j["hud"]["QuarryButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Siderurgy, j["hud"]["SiderurgyButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::School, j["hud"]["SchoolButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Tower, j["hud"]["TowerButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Wall, j["hud"]["WallButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Workshop, j["hud"]["WorkshopButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::BuildingsSize, j["hud"]["BuildingsSizeButton"].get<bool>());
 }
 
 void Map::Input() {

@@ -35,53 +35,53 @@ void Hud::Init(){
     buildingsPanel -> setPosition(Vector2<i32>(575, 546));
 
     // General
-    Widget *generalWidget = new Widget(buildingsPanel);
+    generalWidget = new Widget(buildingsPanel);
     generalWidget -> setVerticalLayout();
     generalWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(generalWidget, "General functions");
-    Button *buttonExpandTerrain = new Button(generalWidget, "Expand terrain");
+    buttonExpandTerrain = new Button(generalWidget, "Expand terrain");
     buttonOpenPanel = new Button(generalWidget, "Open Panel");
     buttonOpenPanel -> setPosition(Vector2<i32>(100, 20));
 
     // Resources
-    Widget *resourceWidget = new Widget(buildingsPanel);
+    resourceWidget = new Widget(buildingsPanel);
     resourceWidget -> setVerticalLayout();
     resourceWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(resourceWidget, "Resource buildings");
-    Button *buttonHome = new Button(resourceWidget, "House");
-    Button *buttonSiderurgy = new Button(resourceWidget, "Siderurgy");
-    Button *buttonQuarry = new Button(resourceWidget, "Quarry");
+    buttonHouse = new Button(resourceWidget, "House");
+    buttonSiderurgy = new Button(resourceWidget, "Siderurgy");
+    buttonQuarry = new Button(resourceWidget, "Quarry");
 
     // Services
-    Widget *serviceWidget = new Widget(buildingsPanel);
+    serviceWidget = new Widget(buildingsPanel);
     serviceWidget -> setVerticalLayout();
     serviceWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(serviceWidget, "Service buildings");
-    Button *buttonSchool = new Button(serviceWidget, "School");
-    Button *buttonMarket = new Button(serviceWidget, "Market");
-    Button *buttonHospital = new Button(serviceWidget, "Hospital");
+    buttonSchool = new Button(serviceWidget, "School");
+    buttonMarket = new Button(serviceWidget, "Market");
+    buttonHospital = new Button(serviceWidget, "Hospital");
 
     // Military
-    Widget *militaryWidget = new Widget(buildingsPanel);
+    militaryWidget = new Widget(buildingsPanel);
     militaryWidget -> setVerticalLayout();
     militaryWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(militaryWidget, "Military buildings");
-    Button *buttonBarrack = new Button(militaryWidget, "Barrack");
-    Button *buttonBarn = new Button(militaryWidget, "Barn");
-    Button *buttonWorkshop = new Button(militaryWidget, "Workshop");
+    buttonBarrack = new Button(militaryWidget, "Barrack");
+    buttonBarn = new Button(militaryWidget, "Barn");
+    buttonWorkshop = new Button(militaryWidget, "Workshop");
 
     // Defense
-    Widget *defenseWidget = new Widget(buildingsPanel);
+    defenseWidget = new Widget(buildingsPanel);
     defenseWidget -> setVerticalLayout();
     defenseWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(defenseWidget, "Defensive buildings");
-    Button *buttonTower = new Button(defenseWidget, "Tower");
-    Button *buttonWall = new Button(defenseWidget, "Wall");
+    buttonTower = new Button(defenseWidget, "Tower");
+    buttonWall = new Button(defenseWidget, "Wall");
 
     // Button callbacks
     buttonBarn->setTooltip("Build a barn that will allow you to train mounted military units.\n Metal cost: 800.");
@@ -94,8 +94,8 @@ void Hud::Init(){
         Human::Instance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Barrack);
     });
 
-    buttonHome->setTooltip("Build a home that will increase your total citizens.\n Metal cost: 100.\nCitizens +10");
-    buttonHome->setCallback([]{
+    buttonHouse->setTooltip("Build a home that will increase your total citizens.\n Metal cost: 100.\nCitizens +10");
+    buttonHouse->setCallback([]{
         Human::Instance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::House);
     });
 
@@ -286,8 +286,6 @@ void Hud::Init(){
             b -> setCallback([&]{
                 IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::RetractTroopsHuman);
             });
-
-            mainBuildingTab->hide();
         }
         //BarrackTab
         {
@@ -322,8 +320,6 @@ void Hud::Init(){
             barrackScroll -> setSize(Vector2<i32>(250, 50));
             barrackTroopQueueWidget = new Widget(barrackScroll);
             barrackTroopQueueWidget -> setGroupLayout();
-
-            barrackContent -> hide();
         }
         //BarnTab
         {
@@ -365,8 +361,6 @@ void Hud::Init(){
             barnScroll -> setSize(Vector2<i32>(250, 50));
             barnTroopQueueWidget = new Widget(barnScroll);
             barnTroopQueueWidget -> setVerticalLayout();
-
-            barnContent -> hide();
         }
         //Workshop tab
         {
@@ -401,18 +395,47 @@ void Hud::Init(){
             workshopScroll -> setSize(Vector2<i32>(250, 50));
             workshopTroopQueueWidget = new Widget(workshopScroll);
             workshopTroopQueueWidget -> setVerticalLayout();
-
-            workshopContent -> hide();
         }
         tabs->changeActiveTab(0);
     tabContainer->refreshLayout();
     tabContainer->center();
-    tabContainer->hide();
-
 
     toast = new Panel("");
     toast->setPosition(Vector2<i32>(570, 50));
     toastText = new Label(toast, "");
+
+    //Hide tabs
+    mainBuildingTab->hide();
+    barrackContent -> hide();
+    barnContent -> hide();
+    workshopContent -> hide();
+    tabContainer->hide();
+
+    //Hide building buttons
+    buttonHouse -> hide();
+    buttonSiderurgy -> hide();
+    buttonQuarry -> hide();
+    buttonSchool -> hide();
+    buttonMarket -> hide();
+    buttonHospital -> hide();
+    buttonBarrack -> hide();
+    buttonBarn -> hide();
+    buttonWorkshop -> hide();
+    buttonTower -> hide();
+    buttonWall -> hide();
+    buttonExpandTerrain -> hide();
+
+    //Hide panel widgets
+    generalWidget -> hide();
+    resourceWidget -> hide();
+    serviceWidget -> hide();
+    militaryWidget -> hide();
+    defenseWidget -> hide();
+
+    // Hide panel
+    buildingsPanel -> hide();
+
+    //Hide toast
     toast->hide();
 
     Window::Instance() -> setGUI();
@@ -667,7 +690,7 @@ void Hud::updatePositions() {
 }
 
 void Hud::showToast(std::string s){
-    //ToDo: queue?
+    //ToDo: string queue?
     if (!toastBool){
         toastText->setLabel(s);
         toast->refreshLayout();
@@ -680,6 +703,82 @@ void Hud::showToast(std::string s){
 void Hud::hideToast(){
     toast->hide();
     toastBool = false;
+}
+
+void Hud::setButtonStatus(Enumeration::BuildingType b, bool status){
+    switch(b){
+        case Enumeration::BuildingType::Barn:
+            if (status) buttonBarn -> show();
+            else buttonBarn -> hide();
+        break;
+        case Enumeration::BuildingType::Barrack:
+            if (status) buttonBarrack -> show();
+            else buttonBarrack -> hide();
+        break;
+        case Enumeration::BuildingType::Hospital:
+            if (status) buttonHospital -> show();
+            else buttonHospital -> hide();
+        break;
+        case Enumeration::BuildingType::House:
+            if (status) buttonHouse -> show();
+            else buttonHouse -> hide();
+        break;
+        case Enumeration::BuildingType::Market:
+            if (status) buttonMarket -> show();
+            else buttonMarket -> hide();
+        break;
+        case Enumeration::BuildingType::Quarry:
+            if (status) buttonQuarry -> show();
+            else buttonQuarry -> hide();
+        break;
+        case Enumeration::BuildingType::School:
+            if (status) buttonSchool -> show();
+            else buttonSchool -> hide();
+        break;
+        case Enumeration::BuildingType::Siderurgy:
+            if (status) buttonSiderurgy -> show();
+            else buttonSiderurgy -> hide();
+        break;
+        case Enumeration::BuildingType::Tower:
+            if (status) buttonTower -> show();
+            else buttonTower -> hide();
+        break;
+        case Enumeration::BuildingType::Wall:
+            if (status) buttonWall -> show();
+            else buttonWall -> hide();
+        break;
+        case Enumeration::BuildingType::Workshop:
+            if (status) buttonWorkshop -> show();
+            else buttonWorkshop -> hide();
+        break;
+        case Enumeration::BuildingType::BuildingsSize:
+            if (status) buttonExpandTerrain -> show();
+            else buttonExpandTerrain -> hide();
+        break;
+        default: break;
+    }
+    adjustMenuVisibility();
+    buildingsPanel->refreshLayout();
+}
+
+void Hud::adjustMenuVisibility(){
+    if (!buttonSiderurgy->isVisible() && !buttonQuarry->isVisible() && !buttonHouse->isVisible()) resourceWidget->hide();
+    else resourceWidget->show();
+
+    if (!buttonSchool->isVisible() && !buttonMarket->isVisible() && !buttonHospital->isVisible()) serviceWidget->hide();
+    else serviceWidget->show();
+
+    if (!buttonBarrack->isVisible() && !buttonBarn->isVisible() && !buttonWorkshop->isVisible()) militaryWidget->hide();
+    else militaryWidget->show();
+
+    if (!buttonTower->isVisible() && !buttonWall->isVisible()) defenseWidget->hide();
+    else defenseWidget->show();
+
+    if (!buttonExpandTerrain->isVisible() && !militaryWidget->isVisible()) generalWidget->hide();
+    else generalWidget->show();
+
+    if (!generalWidget->isVisible() && !resourceWidget->isVisible() && !serviceWidget->isVisible() && !militaryWidget->isVisible() && !defenseWidget->isVisible()) buildingsPanel->hide();
+    else buildingsPanel->show();
 }
 
 void Hud::debug(){

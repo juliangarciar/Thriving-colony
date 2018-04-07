@@ -16,9 +16,14 @@ GameState::~GameState() {
 void GameState::Init() {
     IO::Instance() -> getResourceManager()->loadResource("media/map/map.json");
  
+    //Init players
     human -> Init(); 
     ia -> Init();
 
+    //Init HUD
+    hud -> Init();
+
+    //Load map
     map -> Init();
 
     //Initialize the event system
@@ -49,9 +54,6 @@ void GameState::Init() {
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::showRecruitedText, [&](){
         hud->showToast("Se ha reclutado una tropa");
     });
-
-    //Init HUD
-    hud -> Init();
 
     //Init battle manager
     battleManager = new BattleManager();
