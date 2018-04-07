@@ -295,15 +295,18 @@ void UnitManager::unSelectTroop() {
 void UnitManager::moveOrder() {
     if (selectedTroop != nullptr) {
         selectedTroop -> setTroopDestination(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
-        if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
-        // ToDo: change attack iddle to pathfinding mode
-            selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
+        if (selectedTroop -> getState() != Enumeration::UnitState::Retract) {
 
-            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
-        } else {
-            selectedTroop -> switchState(Enumeration::UnitState::Move);
+            if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
+            // ToDo: change attack iddle to pathfinding mode
+                selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
 
-            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
+                selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
+            } else {
+                selectedTroop -> switchState(Enumeration::UnitState::Move);
+
+                selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
+            }
         }
         //MOVEMENT VOICE
         //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());

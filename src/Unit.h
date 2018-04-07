@@ -67,6 +67,7 @@ class Unit : public Entity {
         std::list< Vector2<f32> > getPath();
         Enumeration::UnitType getType();
 
+        Enumeration::UnitState getState();
     private:
         /**
          * @brief inicia

@@ -530,6 +530,7 @@ void Unit::retractState() {
         retractedCallback(this);
         troops -> setActive(false);
         getModel() -> setActive(false);
+
         switchState(Enumeration::UnitState::InHome);
     }
 }
@@ -541,8 +542,8 @@ void Unit::moveTroop() {
             if(pathFollow.empty()){
                 moving = false;
                 if (state == Enumeration::UnitState::Retract) {
+                    Human::Instance() -> getUnitManager() -> unSelectTroop();
                     triggerRetractedCallback();
-                    
                     return;
                 }
                 switchState(Enumeration::Idle);
@@ -761,4 +762,8 @@ std::list< Vector2<f32> > Unit::getPath(){
 
 Enumeration::UnitType Unit::getType(){
     return type;
+}
+
+Enumeration::UnitState Unit::getState() {
+    return state;
 }
