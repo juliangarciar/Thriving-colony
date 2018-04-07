@@ -117,16 +117,30 @@ class Hud {
         void hideToast();
 
         /**
-         * @brief 
-         * @param std::string 
-         */
-        void debug();
-
-        /**
          * @brief Devuelve cosas
          * @return pop
          */
         bool getPopUpOpen();
+        
+        /**
+         * @brief Set the Button Status object
+         * 
+         * @param b 
+         * @param status
+         */
+        void setButtonStatus(Enumeration::BuildingType b, bool status);
+
+        /**
+         * @brief 
+         * 
+         */
+        void adjustMenuVisibility();
+
+        /**
+         * @brief 
+         * @param std::string 
+         */
+        void debug();
     protected:
         /**
          * @brief Constructor
@@ -151,6 +165,25 @@ class Hud {
         Panel *buildingsPanel;
 
         Button *buttonOpenPanel;
+
+        Widget *generalWidget;
+        Widget *resourceWidget;
+        Widget *serviceWidget;
+        Widget *militaryWidget;
+        Widget *defenseWidget;
+
+        Button *buttonHouse;
+        Button *buttonSiderurgy;
+        Button *buttonQuarry;
+        Button *buttonSchool;
+        Button *buttonMarket;
+        Button *buttonHospital;
+        Button *buttonBarrack;
+        Button *buttonBarn;
+        Button *buttonWorkshop;
+        Button *buttonTower;
+        Button *buttonWall;
+        Button *buttonExpandTerrain;
 
         //Popup panel
         Panel *tabContainer;

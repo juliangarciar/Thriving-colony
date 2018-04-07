@@ -24,6 +24,20 @@
 			"intensity": 100000
 		}
 	],
+	"hud":{
+		"BarnButton": true,
+		"BarrackButton": true,
+		"HospitalButton": true,
+		"HouseButton": true,
+		"MarketButton": true,
+		"QuarryButton": true,
+		"SiderurgyButton": true,
+		"SchoolButton": true,
+		"TowerButton": true,
+		"WallButton": true,
+		"WorkshopButton": true,
+		"ExpandTerrainButton": true
+	},
 	"player":
 	{
 		"initial_metal": 1200,
