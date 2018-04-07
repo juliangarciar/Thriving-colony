@@ -47,6 +47,12 @@ class Timer {
          */
         f32 getElapsedTime();
 
+        /**
+         * @brief 
+         * 
+         */
+         f32 getMaxDuration();
+
     private:
         bool loop;
 

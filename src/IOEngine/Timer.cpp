@@ -32,3 +32,7 @@ void Timer::changeDuration(f32 d) {
 f32 Timer::getElapsedTime() {
     return elapsedTime;
 }
+
+f32 Timer::getMaxDuration() {
+    return maxDuration;
+}

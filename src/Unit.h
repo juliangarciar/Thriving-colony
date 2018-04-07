@@ -90,7 +90,7 @@ class Unit : public Entity {
         bool attacking;
 
         // Unit info
-        f32 recruitingTime;
+        //f32 recruitingTime;
 
         // Timers
         Timer* recruitingTimer;

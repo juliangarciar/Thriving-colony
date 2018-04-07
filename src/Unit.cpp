@@ -32,7 +32,7 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
 
     // Timers
     //Esta forma es mejor de hacerlo, igual algun dia lo cambio en el building
-    recruitingTimer = new Timer(recruitingTime, false);
+    
     lookForTargetTimer = new Timer (0.5,true);
     // Esto puede ser un timer?
     attackCountdown = 0;
@@ -65,6 +65,7 @@ void Unit::Init() {
     //Texture *tex;
     const wchar_t *path;
     // Basic stats of each unit are here
+    f32 recruitingTime = 0;
     switch (type) {
         // Basic melee soldier
         case Enumeration::UnitType::StandardM:
@@ -389,6 +390,7 @@ void Unit::Init() {
         break;
         default: break;
     }
+    recruitingTimer = new Timer(recruitingTime, false);
     //Material *m = new Material(tex);
     //this->model->setMaterial(m);
     /* Juli */
@@ -470,7 +472,7 @@ void Unit::recruitingState(){
         switchState(Enumeration::UnitState::InHome);
     } else {
         if (team == Enumeration::Team::Human){
-            Hud::Instance()->modifyTroopFromQueue(ID, recruitingTimer -> getElapsedTime()/recruitingTime);
+            Hud::Instance()->modifyTroopFromQueue(ID, recruitingTimer -> getElapsedTime()/recruitingTimer -> getMaxDuration());
         }
     }
 }
