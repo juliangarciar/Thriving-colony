@@ -110,50 +110,50 @@ class Entity {
         i32 getHP();
 
         /**
-		 * @brief Solicita la posicion actual de la entidad
-         * @return position sera el vector de coordenadas devuelto
+		 * @brief Get the current position of the entity.
+         * @return Pointer to a Vector3 objetc that will be the value of the position variable.
 		 */
         Vector3<f32> *getPosition();
 
         /**
-		 * @brief Solicita la hitbox de la entidad
-         * @return hitbox de tipo Box3D
+		 * @brief Get the hitbox of the entity.
+         * @return Pointer to a Box3D object that will be the value of the hitbox variable.
 		 */
         Box3D<f32> *getHitbox();
 
         /**
-		 * @brief Solicita el modelo 3D de la entidad
-         * @return model3D de tipo Model
+		 * @brief Get the model of the entity.
+         * @return Pointer to a Model object that will be the value of the model variable.
 		 */
         Model *getModel();
 
         /**
-		 * @brief Devuelve el ViewRadius de la entidad
-         * @return viewRadius de tipo entero
+		 * @brief Get the distance until where the entity can see enemies.
+         * @return i32 that will be the value of the viewRadius variable.
 		 */
         i32 getViewRadius();
 
         /**
-         * @brief solicita el id del edificio
-         * @return entero con el id 
+         * @brief Get id of the entity.
+         * @return i32 that will be the value of the ID variable.
          */
         i32 getID();
 
          /**
-          * @brief
-          * @return
+          * @brief Get the happiness that the entity provides to the player's city.
+          * @return i32 that will be the value of the happiness variable.
           */
         i32 getHappiness();
         
         /**
-         * @brief solicita el color del edificio
-         * @return devuelve el color de tipo irr::video::SColor
+         * @brief Get the color of the entity.
+         * @return irr::video::SColor that will be the value of the baseColor variable.
          */
         irr::video::SColor getBaseColor(); //ToDo: cambiar por material
 
         /**
-         * @brief solicita el color del edificio
-         * @return devuelve el color de tipo irr::video::SColor
+         * @brief Get the current color of the entity.
+         * @return irr::video::SColor that will be the value of the currentColor variable.
          */
         irr::video::SColor getCurrentColor(); //ToDo: cambiar por material
 
@@ -176,71 +176,113 @@ class Entity {
         Box2D getHit();
 
         /**
-         * @breif
-         * @return
+         * @breif Get the army level that the entity provides to the player's city.
+         * @return i32 that will be the value of the armyLevel variable.
          */
         i32 getArmyLevel();
 
         /**
-         * @breif
-         * @return
+         * @breif Get all the enemies that have as target the entity.
+         * @return std::vector<Entity*> that will be the value of the hostile variable.
          */
         std::vector<Entity*> getHostile();
 
         /**
-         * @breif
-         * @param
+         * @breif Add an entity to the vector of enemies that have as target the entity.
+         * @param Pointer to the entity that is going to be added to hostile variable.
          */
         void addHostile(Entity*);
 
         /**
-         * @breif
-         * @param
+         * @breif Remove an entity from the vector of enemies that have as target the entity.
+         * @param Pointer to de the entity that is going to be removed from hostile variable.
          */
         void removeHostile(Entity*);
 
         /**
-         * @breif
-         * @param
+         * @breif Set all the enemies' target variable stored at hostile variable to NULL.
          */
         void putHostileTargetsToNull();
 
     protected:
+        //Pointer to the model of the entity.
         Model* model;
+
+        //Pointer to the position of the entity.
         Vector3<f32> *position;
+
+        //Pointer to the hitbox of the entity.
         Box3D<f32>* hitbox;
+
+        //
         Box2D hitBox;
+
+        //Team to which belongs the entity: Enumeration::Team::Human or Enumeration::Team::IA.
         Enumeration::Team team;
+
+        //Civilization to which belongs the entity: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov.
         Enumeration::BreedType breed;
+
+        //Type of the entity: Enumeration::EntityType::Unit or Enumeration::EntityType::Building.
         Enumeration::EntityType entityType;
 
+        //Number that identifies the entity.
         i32 ID;
 
+        //Time that has to pass since the last damage the entity took until the next damage that can take.
         f32 tookDamageTimer;
+
+        //Time used to know how much time has passed since last damage the entity took.
         f32 tookDamageCountdown;
 
+        //Base color of the entity.
         irr::video::SColor baseColor; //ToDo: cambiar por material
+
+        //Current color of the entity.
         irr::video::SColor currentColor; //ToDo: cambiar color por material
 
+        //Pointer to the enemy that is going to be attacked by the entity. Can be NULL.
         Entity* target;
         
-        // Values, costs, etc
+        //Current hp of the entity.
         i32 currentHP;
+
+        //Maximun hp of the entity.
         i32 maxHP;
+
+        //Distance until where the entity can see enemies.
         i32 viewRadius;
+
+        //Distance until where the entity can attack enemies.
         i32 attackRange;
+
+        //Metal cost of the entity.
         i32 metalCost;
+
+        //Crystal cost of the entity.
         i32 crystalCost;
+
+        //Happines that the entity provides to the player's city.
         i32 happiness;
+
+        //Citiziens that the entity provides to the player's city.
         i32 citizens;
-        // For IA and info
+        
+        //Level that the entity provides to the player's city.
         i32 cityLevel;
+
+        //Army level that the entity provides to the palyer's city.
         i32 armyLevel;
 
+        //All enemies that have as target the entity.
         std::vector<Entity*> hostile;
 
+        //
         i32 kCellsX;
+
+        //
         i32 kCellsY;
+        
       private:
 };
 
