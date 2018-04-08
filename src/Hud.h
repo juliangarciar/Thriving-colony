@@ -17,6 +17,7 @@
 #include <GUIEngine/ProgressBar.h>
 #include <IOEngine/Keyboard.h>
 #include <IOEngine/Mouse.h>
+#include <IOEngine/Timer.h>
 
 #include <string>
 #include <sstream>
@@ -228,16 +229,15 @@ class Hud {
         Label *iaNextChoice;
         Label *iaBehaviour;
 
-        f32 debugTime;
-        f32 debugTimer;
+
+        Timer* debugTimer;
 
         //Toast
         Panel *toast;
         Label *toastText;
 
         bool toastBool;
-        f32 toastTime;
-        f32 toastTimer;
+        Timer* toastTimer;
 
         /**
          * @brief Crea un boton 

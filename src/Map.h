@@ -6,6 +6,7 @@
 
 #include <GraphicEngine/Terrain.h>
 #include <GraphicEngine/Light.h>
+#include <GraphicEngine/SkyDome.h>
 
 #include <Types.h>
 /**
@@ -94,6 +95,10 @@ class Map {
 
         //For raycast
         Vector3<f32> collisionPoint;
+
+        //Skydome
+        SkyDome* skydome;
+
 };
 
 #endif

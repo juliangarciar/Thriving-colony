@@ -19,10 +19,11 @@ Map* Map::Instance() {
     return pinstance;
 }
 
-Map::Map() {
+Map::Map() {    
 }
 
 Map::~Map() {
+    delete skydome;
 }
 
 void Map::Init() {
@@ -49,6 +50,13 @@ void Map::Init() {
     //cellSpace = new CellSpacePartition(10240, 10240, 128, 128, 4);
 
     //ToDo: extraer de JSON
+
+    Window* w = Window::Instance();
+    w -> getVideoDriver() -> setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, false);
+    skydome = new SkyDome(w -> getSceneManager(), w -> getVideoDriver() -> getTexture("./media/textures/bar.jpg"));
+    w -> getVideoDriver() -> setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, true);
+
+
     Human::Instance()->setMetalAmount(j["player"]["initial_metal"].get<i32>());
     Human::Instance()->setCrystalAmount(j["player"]["initial_crystal"].get<i32>());
     Human::Instance()->setSiderurgyProductivity(j["player"]["siderurgy_productivity"].get<i32>());
