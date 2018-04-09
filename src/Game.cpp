@@ -44,7 +44,7 @@ void Game::Init() {
 
 void Game::Input() {
     state -> Input();
-    io->getMouse()->refreshStates();
+    io -> getMouse() -> refreshStates();
 }
 
 void Game::Update() {

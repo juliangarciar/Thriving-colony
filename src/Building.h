@@ -4,6 +4,7 @@
 #include "Entity.h"
 #include <functional>
 #include <Types.h>
+#include <IOEngine/Timer.h>
 
 /**
  * @class Building.
@@ -79,7 +80,7 @@ class Building : public Entity {
         Enumeration::BuildingType type;
 
         //Building timer used for the construction time.
-        f32 buildTimer;
+        Timer* buildTimer;
 
         //Finish building callback
         std::function<void(Building*)> callback;

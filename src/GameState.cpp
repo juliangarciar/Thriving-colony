@@ -74,7 +74,7 @@ void GameState::Input() {
             ia -> getUnitManager() -> testRaycastCollisions();
 
             i32 onMap = true;
-
+            bool sentToMainHall = false;
             //Interactions with our entities
             i32 idBuilding = human -> getBuildingManager() -> getCollisionID();
             if (idBuilding != -1){
@@ -89,10 +89,21 @@ void GameState::Input() {
                         }
                     }
                 }
+                // Right clicked
+                if (IO::Instance() -> getMouse() -> rightMousePressed()) {
+                    // Have a troop
+                    if (human -> getUnitManager() -> isTroopSelected()) {
+                        // Main hall
+                        if (idBuilding == 0) {
+                            human -> getUnitManager() -> getSelectedTroop() -> switchState(Enumeration::UnitState::Retract);
+                            sentToMainHall = true;
+                        }
+                    }
+                }
 
                 onMap = false;
             }
-
+            
             i32 idTroop = human -> getUnitManager() -> getCollisionID();
             if (idTroop != -1){
                 if (!human -> getUnitManager() -> isTroopSelected())
@@ -146,7 +157,7 @@ void GameState::Input() {
                             human -> getUnitManager() -> deployAllTroops(map->getMouseCollitionPoint());
                         }
                     } else {
-                        std::cout << "Ninguna tropa seleccionada" << std::endl;
+                        //std::cout << "Ninguna tropa seleccionada" << std::endl;
                     }
                 } else 
                     IO::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);

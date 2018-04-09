@@ -6,6 +6,7 @@
 
 #include <GraphicEngine/Terrain.h>
 #include <GraphicEngine/Light.h>
+#include <GraphicEngine/SkyDome.h>
 
 #include <Types.h>
 /**
@@ -81,6 +82,10 @@ class Map {
         virtual ~Map();
 
     private:
+        //Debug
+        void loadProgress(int);
+
+        //Map singleton instance
         static Map* pinstance;
 
         //Stuff
@@ -94,6 +99,10 @@ class Map {
 
         //For raycast
         Vector3<f32> collisionPoint;
+
+        //Skydome
+        SkyDome* skydome;
+
 };
 
 #endif

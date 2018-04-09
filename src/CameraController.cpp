@@ -141,7 +141,7 @@ void CameraController::Update(f32 deltaTime) {
 	}
 
 	if (centerCameraMode){
-		std::cout << userPos << std::endl;
+		//std::cout << userPos << std::endl;
 		tarPos = userPos;
 	}
 

@@ -9,6 +9,7 @@
 #include <MathEngine/Box2D.h>
 #include <GraphicEngine/Model.h>
 #include <GraphicEngine/SceneNode.h>
+#include <IOEngine/Timer.h>
 
 /**
  * @class Entity.
@@ -229,11 +230,7 @@ class Entity {
         //Number that identifies the entity.
         i32 ID;
 
-        //Time that has to pass since the last damage the entity took until the next damage that can take.
-        f32 tookDamageTimer;
-
-        //Time used to know how much time has passed since last damage the entity took.
-        f32 tookDamageCountdown;
+        Timer* tookDamageTimer;
 
         //Base color of the entity.
         irr::video::SColor baseColor; //ToDo: cambiar por material

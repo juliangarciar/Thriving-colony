@@ -28,3 +28,11 @@ void Timer::restart() {
 void Timer::changeDuration(f32 d) {
     maxDuration = d;
 }
+
+f32 Timer::getElapsedTime() {
+    return elapsedTime;
+}
+
+f32 Timer::getMaxDuration() {
+    return maxDuration;
+}
