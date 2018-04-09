@@ -27,9 +27,13 @@ Map::~Map() {
 }
 
 void Map::Init() {
+    loadProgress(0);
+
     ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/map/map.json");
 
     json j = *r -> getJSON();
+
+    loadProgress(5);
 
     //Create map
     terrain = new Terrain(j["map"]["heightmap"].get<std::string>().c_str());
@@ -37,6 +41,8 @@ void Map::Init() {
     terrain -> setTexture(new Texture(j["map"]["texture"].get<std::string>().c_str()), new Texture(j["map"]["detail_texture"].get<std::string>().c_str()));
     terrain -> setSize(Vector3<f32>(j["map"]["size"]["x"].get<int>(), j["map"]["size"]["y"].get<int>(), j["map"]["size"]["z"].get<int>()));
     
+    loadProgress(20);
+
     //Luz
     for (auto& element : j["lights"]){
         Vector3<f32> lp;
@@ -47,16 +53,37 @@ void Map::Init() {
         lights.push_back(light);
     }
 
+    loadProgress(30);
+
+    //Hud buttons
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Barn, j["hud"]["BarnButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Barrack, j["hud"]["BarrackButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Hospital, j["hud"]["HospitalButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::House, j["hud"]["HouseButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Market, j["hud"]["MarketButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Quarry, j["hud"]["QuarryButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Siderurgy, j["hud"]["SiderurgyButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::School, j["hud"]["SchoolButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Tower, j["hud"]["TowerButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Wall, j["hud"]["WallButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Workshop, j["hud"]["WorkshopButton"].get<bool>());
+    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::BuildingsSize, j["hud"]["ExpandTerrainButton"].get<bool>());
+
+    loadProgress(40);
+
+    //ToDo: julian revisa esto, si no tiene nada que sacar del JSON llevatelo a GameState
+    //WorldGeometry* newSystem = WorldGeometry::Instance();
     //cellSpace = new CellSpacePartition(10240, 10240, 128, 128, 4);
 
-    //ToDo: extraer de JSON
-
+    //Skydome
     Window* w = Window::Instance();
     w -> getVideoDriver() -> setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, false);
-    skydome = new SkyDome(w -> getSceneManager(), w -> getVideoDriver() -> getTexture("./media/textures/bar.jpg"));
+    skydome = new SkyDome(w -> getSceneManager(), w -> getVideoDriver() -> getTexture(j["map"]["skybox_texture"].get<std::string>().c_str()));
     w -> getVideoDriver() -> setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, true);
 
+    loadProgress(50);
 
+    //Human
     Human::Instance()->setMetalAmount(j["player"]["initial_metal"].get<i32>());
     Human::Instance()->setCrystalAmount(j["player"]["initial_crystal"].get<i32>());
     Human::Instance()->setSiderurgyProductivity(j["player"]["siderurgy_productivity"].get<i32>());
@@ -116,13 +143,14 @@ void Map::Init() {
         }
     }
 
+    loadProgress(70);
+
+    //IA
     IA::Instance()->setMetalAmount(j["IA"]["initial_metal"].get<i32>());
     IA::Instance()->setCrystalAmount(j["IA"]["initial_crystal"].get<i32>());
     IA::Instance()->setSiderurgyProductivity(j["IA"]["siderurgy_productivity"].get<i32>());
     IA::Instance()->setQuarryProductivity(j["IA"]["quarry_productivity"].get<i32>());
     IA::Instance()->setBuildingRadious(j["IA"]["building_radious"].get<f32>());
-
-    WorldGeometry* newSystem = WorldGeometry::Instance();
     
     for(auto& element : j["IA"]["buildings"]){
         if(element["type"].get<std::string>()=="MainBuilding"){
@@ -177,25 +205,15 @@ void Map::Init() {
         }
     }
 
+    loadProgress(90);
+
     //Init camera controller
     camera = new CameraController();
     camera -> setZoomDistanceFromTarget(j["camera"]["zoomDistanceFromTarget"].get<int>());
     camera -> setRotateDegrees(j["camera"]["delta_x"].get<int>(), j["camera"]["delta_y"].get<int>());
     camera -> Init(Human::Instance() -> getHallPosition());
 
-    //Hud buttons
-    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Barn, j["hud"]["BarnButton"].get<bool>());
-    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Barrack, j["hud"]["BarrackButton"].get<bool>());
-    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Hospital, j["hud"]["HospitalButton"].get<bool>());
-    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::House, j["hud"]["HouseButton"].get<bool>());
-    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Market, j["hud"]["MarketButton"].get<bool>());
-    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Quarry, j["hud"]["QuarryButton"].get<bool>());
-    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Siderurgy, j["hud"]["SiderurgyButton"].get<bool>());
-    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::School, j["hud"]["SchoolButton"].get<bool>());
-    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Tower, j["hud"]["TowerButton"].get<bool>());
-    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Wall, j["hud"]["WallButton"].get<bool>());
-    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::Workshop, j["hud"]["WorkshopButton"].get<bool>());
-    Hud::Instance()->setButtonStatus(Enumeration::BuildingType::BuildingsSize, j["hud"]["ExpandTerrainButton"].get<bool>());
+    loadProgress(100);
 }
 
 void Map::Input() {
@@ -243,4 +261,8 @@ Terrain* Map::getTerrain() {
 
 CameraController* Map::getCamera() {
     return camera;
+}
+
+void Map::loadProgress(int p){
+    std::cout << "Porcentaje de carga del mapa: " << p << "%" << std::endl;
 }

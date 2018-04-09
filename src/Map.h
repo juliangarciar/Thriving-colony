@@ -82,6 +82,10 @@ class Map {
         virtual ~Map();
 
     private:
+        //Debug
+        void loadProgress(int);
+
+        //Map singleton instance
         static Map* pinstance;
 
         //Stuff
