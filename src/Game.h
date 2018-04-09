@@ -22,7 +22,6 @@
  */
 class Game {
     public:
-
         /**
 		 * @brief Get the instance of the class. If it doesn't exist, create a new instance.
          * @return Pointer to a Game object that will be the value of pinstance variable.

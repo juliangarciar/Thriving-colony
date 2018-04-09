@@ -512,22 +512,22 @@ void Hud::CleanUp(){
 }
 
 void Hud::enableTab(Enumeration::BuildingType t){
-    switch (t){
+    switch (t) {
         case Enumeration::BuildingType::Barrack:
-            barrackEmpty->hide();
-            barrackContent->show();
+            barrackEmpty -> hide();
+            barrackContent -> show();
         break;
         case Enumeration::BuildingType::Barn:
-            barnEmpty->hide();
-            barnContent->show();
+            barnEmpty -> hide();
+            barnContent -> show();
         break;
         case Enumeration::BuildingType::Workshop:
-            workshopEmpty->hide();
-            workshopContent->show();
+            workshopEmpty -> hide();
+            workshopContent -> show();
         break;
         default: break;
     }
-    tabContainer->refreshLayout();
+    tabContainer -> refreshLayout();
 }
 
 void Hud::disableTab(Enumeration::BuildingType t){
@@ -614,8 +614,8 @@ void Hud::addTroopToHall(i32 idTroop, Enumeration::UnitType t){
         break;
         default: break;
     }
-    troopsInHallIDs . push_back(idTroop);
-    tabContainer->refreshLayout();
+    troopsInHallIDs.push_back(idTroop);
+    tabContainer -> refreshLayout();
 }
 
 void Hud::removeTroopFromHall(i32 idTroop){
@@ -623,8 +623,8 @@ void Hud::removeTroopFromHall(i32 idTroop){
    if (it != troopsInHallIDs.end()) {
         i32 nPosition = std::distance(troopsInHallIDs.begin(), it);
         hallTroopList -> removeOption(nPosition);
-        troopsInHallIDs . erase(it);
-        tabContainer->refreshLayout();
+        troopsInHallIDs.erase(it);
+        tabContainer -> refreshLayout();
    }
 }
 
@@ -708,7 +708,7 @@ void Hud::addTroopToQueue(i32 idTroop, Enumeration::UnitType t){
 void Hud::modifyTroopFromQueue(i32 idTroop, f32 newValue){
     std::map<i32,ProgressBar*>::iterator it = troopQueueProgressBars . find(idTroop);
     if (it != troopQueueProgressBars.end()) {
-        it->second->setValue(newValue);
+        it -> second -> setValue(newValue);
     }
     tabContainer->refreshLayout();
 }
@@ -716,7 +716,7 @@ void Hud::modifyTroopFromQueue(i32 idTroop, f32 newValue){
 void Hud::removeTroopFromQueue(i32 idTroop){
     std::map<i32,ProgressBar*>::iterator it = troopQueueProgressBars . find(idTroop);
     if (it != troopQueueProgressBars.end()) {
-        troopQueueProgressBars . erase(it);
+        troopQueueProgressBars.erase(it);
     }
     std::map<i32, Widget*>::iterator it2 = troopQueueList . find(idTroop);
     if (it2 != troopQueueList.end()) {
