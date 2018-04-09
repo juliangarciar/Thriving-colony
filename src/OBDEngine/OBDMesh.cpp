@@ -31,9 +31,9 @@ OBDMesh::~OBDMesh() {
 
 //ToDo: poder cambiar material de cada mesh (o de todos cambiando el MTL)
 
-void OBDMesh::rotate(f32 rX, f32 rY, f32 rZ, f32 angle) {
+void OBDMesh::rotate(f32 rX, f32 rY, f32 rZ) {
     TTransform* t = (TTransform*) rotationNode -> getEntity();
-    t -> rotate(rX, rY, rZ, angle);
+    t -> rotate(rX, rY, rZ, 0);
 }
 
 void OBDMesh::scale(f32 sX, f32 sY, f32 sZ) {
@@ -60,4 +60,19 @@ TMesh *OBDMesh::getShape(std::string meshName){
 
 std::map<std::string, TMesh*> OBDMesh::getMeshes(){
     return meshes;
+}
+
+void OBDMesh::setPosition(glm::vec3 p) {
+    TTransform* t = (TTransform*) translationNode -> getEntity();
+    t -> translate(p.x, p.y, p.z);
+}
+
+void OBDMesh::setRotation(glm::vec3 r) {
+    TTransform* t = (TTransform*) rotationNode -> getEntity();
+    t -> rotate(r.x, r.y, r.z, 0);
+}
+
+void OBDMesh::setScale(glm::vec3 s) {
+    TTransform* t = (TTransform*) scaleNode -> getEntity();
+    t -> scale(s.x, s.y, s.z);
 }
