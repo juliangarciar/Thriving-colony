@@ -157,7 +157,7 @@ void GameState::Input() {
                             human -> getUnitManager() -> deployAllTroops(map->getMouseCollitionPoint());
                         }
                     } else {
-                        std::cout << "Ninguna tropa seleccionada" << std::endl;
+                        //std::cout << "Ninguna tropa seleccionada" << std::endl;
                     }
                 } else 
                     IO::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);
