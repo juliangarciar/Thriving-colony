@@ -15,7 +15,8 @@ GameState::~GameState() {
 
 void GameState::Init() {
     IO::Instance() -> getResourceManager()->loadResource("media/map/map.json");
- 
+    IO::Instance() -> getResourceManager()->loadResource("media/map/troops.json");
+    
     human -> Init(); 
     ia -> Init();
     map -> Init();

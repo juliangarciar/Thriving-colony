@@ -4,7 +4,6 @@
 #include <vector>
 #include <Enumeration.h>
 #include <Unit.h>
-#include <Entity.h>
 #include <Building.h>
 #include <Types.h>
 #include <MathEngine/Vector2.h>

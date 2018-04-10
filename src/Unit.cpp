@@ -703,7 +703,8 @@ void Unit::setTroopDestination(Vector2<f32> vectorData) {
     //vectorMov -> z = (desp.z / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
     vectorMov.x = (desp.x / distance) * (moveSpeed / 100);
     vectorMov.y = (desp.y / distance) * (moveSpeed / 100);
-    //f32 movDistance = std::sqrt(std::pow(vectorMov.x, 2) + std::pow(vectorMov.y, 2));
+    f32 movDistance = std::sqrt(std::pow(vectorMov.x, 2) + std::pow(vectorMov.y, 2));
+    steps = distance / movDistance;
     moving = true;
 }
 

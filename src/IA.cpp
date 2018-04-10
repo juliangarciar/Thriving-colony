@@ -39,6 +39,7 @@ void IA::Init() {
     nodeRootIA = new RootNode();
     nodeRootIA -> init(behaviour);
 
+    /* Put here the JSON read */
     buildings = new BuildingManager(Enumeration::Team::IA, Enumeration::BreedType::Drorania);
     units = new UnitManager(Enumeration::Team::IA, Enumeration::BreedType::Kaonov);
 

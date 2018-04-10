@@ -27,7 +27,6 @@ Map::~Map() {
 
 void Map::Init() {
     ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/map/map.json");
-
     json j = *r -> getJSON();
 
     //Create map
@@ -114,8 +113,10 @@ void Map::Init() {
     IA::Instance()->setQuarryProductivity(j["IA"]["quarry_productivity"].get<i32>());
     IA::Instance()->setBuildingRadious(j["IA"]["building_radious"].get<f32>());
 
-    WorldGeometry* newSystem = WorldGeometry::Instance();
-    
+    /* Init */
+    WorldGeometry::Instance();
+    //newSystem->Init();
+
     for(auto& element : j["IA"]["buildings"]){
         if(element["type"].get<std::string>()=="MainBuilding"){
             Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
