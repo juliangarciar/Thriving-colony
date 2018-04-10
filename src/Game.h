@@ -21,6 +21,7 @@
  * @brief Create a Game type object. Singleton class.
  */
 class Game {
+    
     public:
         /**
 		 * @brief Get the instance of the class. If it doesn't exist, create a new instance.
