@@ -23,10 +23,6 @@ Human::~Human() {
 }
 
 void Human::Init() {
-    /* We need to move this */
-    ResourceJSON *troopsR = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/map/troops.json");
-    json troops = *troopsR -> getJSON();
-    /* Put here the JSON read */
     Player::Init();
     buildings = new BuildingManager(Enumeration::Team::Human, Enumeration::BreedType::Kaonov);
     units = new UnitManager(Enumeration::Team::Human, Enumeration::BreedType::Kaonov);

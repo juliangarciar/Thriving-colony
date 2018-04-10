@@ -1,6 +1,7 @@
 {
-    "Drorania": {
-      "StandardR": {
+    "Drorania": [
+      {
+        "unitName": "StandardR",
         "moveSpeed": 350,
         "attackDamage": 13,
         "attackRange": 3350,
@@ -19,7 +20,8 @@
         "path": "media/unitModels/Drorania/rank_soldier_drorania.obj",
         "troops": 4
       },
-      "AdvancedR": {
+      {
+        "unitName": "AdvancedR",
         "moveSpeed": 530,
         "attackDamage": 18,
         "attackRange": 700,
@@ -38,7 +40,8 @@
         "path": "media/unitModels/Drorania/criatura_drorania.obj",
         "troops": 4
       },
-      "StandardM": {
+      {
+        "unitName": "StandardM",
         "moveSpeed": 420,
         "attackDamage": 15,
         "attackRange": 100,
@@ -57,7 +60,8 @@
         "path": "media/unitModels/Drorania/Melee_Soldier_Drorania.obj",
         "troops": 4
       },
-      "AdvancedM": {
+      {
+        "unitName": "AdvancedM",
         "moveSpeed": 530,
         "attackDamage": 21,
         "attackRange": 140,
@@ -76,7 +80,8 @@
         "path": "media/unitModels/Drorania/criatura_drorania.obj",
         "troops": 4
       },
-      "Launcher": {
+      {
+        "unitName": "Launcher",
         "moveSpeed": 250,
         "attackDamage": 27,
         "attackRange": 900,
@@ -95,7 +100,8 @@
         "path": "media/unitModels/Drorania/drorania_cannon.obj",
         "troops": 4
       },
-      "Desintegrator": {
+      {
+        "unitName": "Launcher",
         "moveSpeed": 250,
         "attackDamage": 41,
         "attackRange": 120,
@@ -114,7 +120,8 @@
         "path": "media/unitModels/Drorania/drorania_walls_desintegrator.obj",
         "troops": 4
       },
-      "Idol": {
+      {
+        "unitName": "Idol",
         "moveSpeed": 250,
         "attackDamage": 27,
         "attackRange": 140,
@@ -133,7 +140,7 @@
         "path": "media/unitModels/Drorania/Ente_Drorania.obj",
         "troops": 4
       }
-    },
+    ],
     "Kaonov": {
       "StandardR": {
         "moveSpeed": 350,

@@ -9,6 +9,9 @@
 #include "Hud.h"
 #include "IOEngine/IO.h"
 
+struct baseUnit{
+
+};
 //Constructor
 UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
     gridAlignment = 20;
