@@ -133,126 +133,222 @@ class Hud {
         bool getPopUpOpen();
         
         /**
-         * @brief Set the Button Status object
-         * 
-         * @param b 
-         * @param status
+         * @brief Show or hide the button passed by parameter.
+         * @param The Enumeration::BuildingType is the type of the button that is going to be shown or hidden.
+         * @param False to be hidden or true to be shown.
          */
-        void setButtonStatus(Enumeration::BuildingType b, bool status);
+        void setButtonStatus(Enumeration::BuildingType, bool);
 
         /**
-         * @brief 
+         * @brief Ajust the widgets that have to be shown or hidden.
          */
         void adjustMenuVisibility();
 
         /**
-         * @brief 
-         * @param std::string 
+         * @brief Shows all relevant player's variables.
          */
         void debug();
+
     protected:
         /**
-         * @brief Constructor
+         * @brief Hud constructor.
          */
         Hud();
+
         /**
-         * @brief Destructor
+         * @brief Hud destructor.
          */
         ~Hud();
+
     private:
+        //Pointer to the only instance of Hud class.
         static Hud* pinstance;
 
-        //Stuff
+        //True if there is a pop up opened and false in other case.
         bool popUpOpen;
-    
+
+        //List of troops that are on the command center.
         std::vector<i32> troopsInHallIDs;
 
+        //Queue of the troops that are going to be trained.
         std::map<i32, Widget*> troopQueueList;
+
+        //List of troops that are being trained and their progress.
         std::map<i32, ProgressBar*> troopQueueProgressBars;
 
-        //Buildings panel
+        //Panel with all types of buildings.
         Panel *buildingsPanel;
 
+        //Button to open the panel.
         Button *buttonOpenPanel;
 
+        //
         Widget *generalWidget;
+        
+        //Widget of the buildings that provide resources.
         Widget *resourceWidget;
+
+        //Widget of the buildings that provide happiness.
         Widget *serviceWidget;
+
+        //Widget of the buildings that allow training troops.
         Widget *militaryWidget;
+
+        //Widget of the defense buildings.
         Widget *defenseWidget;
 
+        //Button to build a house.
         Button *buttonHouse;
+
+        //Button to build a siderurgy.
         Button *buttonSiderurgy;
+
+        //Button to build a quarry.
         Button *buttonQuarry;
+
+        //Button to build a school.
         Button *buttonSchool;
+
+        //Button to build a market.
         Button *buttonMarket;
+
+        //Button to build a hospital.
         Button *buttonHospital;
+
+        //Button to build a barrack.
         Button *buttonBarrack;
+
+        //Button to build a barn.
         Button *buttonBarn;
+
+        //Button to build a workshop.
         Button *buttonWorkshop;
+
+        //Button to build a tower.
         Button *buttonTower;
+
+        //Button to build a wall.
         Button *buttonWall;
+
+        //Button to expand the terrain.
         Button *buttonExpandTerrain;
 
-        //Popup panel
+        //
         Panel *tabContainer;
         
+        //
         TabPanel *tabs;
         
+        //Widget for when the barrack is not built.
         Widget *barrackEmpty;
+
+        //Widget for when the barrack is built.
         Widget *barrackContent;
+
+        //Widget for when the barn is not built.
         Widget *barnEmpty;
+
+        //Widget for when the barn is built.
         Widget *barnContent;
+
+        //Widget for when the workshop is not built.
         Widget *workshopEmpty;
+
+        //Widget for when the workshop is built.
         Widget *workshopContent;
 
+        //Widget for when in the barrack are troops being trained.
         Widget *barrackTroopQueueWidget;
+
+        //Widget for when in the barn are troops being trained.
         Widget *barnTroopQueueWidget;
+
+        //Widget for when in the workshop are troops being trained.
         Widget *workshopTroopQueueWidget;
 
+        //Place where the troops that are in the command center will be listed.
         ComboBox *hallTroopList;
         
-        //Debug
+        //Panel where will be listed player's resources.
         Panel *playerResources;
+
+        //Player's metal amount.
         Label *playerMetalAmount;
+
+        //Player's crystal amount.
         Label *playerCrystalAmount;
+
+        //Player's citizens amount.
         Label *playerCitizens;
+
+        //Player's happiness amount.
         Label *playerHappiness;
+
+        //Player's city level.
         Label *playerCityLevel;
+
+        //Player's army size.
         Label *playerArmySize;
+
+        //Player's melees amount.
         Label *playerMelees;
+
+        //Player's rangeds amount.
         Label *playerRangeds;
+
+        //Player's sieges amount.
         Label *playerSieges;
 
+        //Panel where will be listed AI's resources.
         Panel *iaResources;
+
+        //AI's metal amount.
         Label *iaMetalAmount;
+
+        //AI's crystal amount.
         Label *iaCrystalAmount;
+
+        //AI's citizens amount.
         Label *iaCitizens;
+
+        //AI's happiness amount.
         Label *iaHappiness;
+
+        //AI's city level.
         Label *iaCityLevel;
+
+        //AI's army size.
         Label *iaArmySize;
+
+        //AI's melees amount.
         Label *iaMelees;
+
+        //AI's rangeds amount.
         Label *iaRangeds;
+
+        //AI's sieges amount.
         Label *iaSieges;
+
+        //AI's next choice.
         Label *iaNextChoice;
+
+        //AI's behaviour.
         Label *iaBehaviour;
 
-
+        //Time that crontols when the players' panels will be updated.
         Timer* debugTimer;
 
-        //Toast
+        //
         Panel *toast;
+
+        //
         Label *toastText;
 
+        //
         bool toastBool;
-        Timer* toastTimer;
 
-        /**
-         * @brief Crea un boton 
-         * @param id del boton, de tipo entero
-         * @param type sera el tipo de edificio que se creara con ese boton, de tipo entero
-         */
-        void addTab(i32, i32);
+        //
+        Timer* toastTimer;
 };
 
 #endif

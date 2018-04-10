@@ -72,7 +72,6 @@ class Game {
 		GameState *getGameState();
 
     protected:
-
         /**
 		 * @brief Game constructor.
 		 */
@@ -89,7 +88,6 @@ class Game {
         Game &operator = (const Game & );
 
     private:
-
         //Pointer to the only instance of Game class.
         static Game* pinstance;
 

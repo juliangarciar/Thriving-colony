@@ -803,27 +803,27 @@ void Hud::setButtonStatus(Enumeration::BuildingType b, bool status){
         default: break;
     }
     adjustMenuVisibility();
-    buildingsPanel->refreshLayout();
+    buildingsPanel -> refreshLayout();
 }
 
 void Hud::adjustMenuVisibility(){
-    if (!buttonSiderurgy->isVisible() && !buttonQuarry->isVisible() && !buttonHouse->isVisible()) resourceWidget->hide();
-    else resourceWidget->show();
+    if (!buttonSiderurgy -> isVisible() && !buttonQuarry -> isVisible() && !buttonHouse -> isVisible()) resourceWidget -> hide();
+    else resourceWidget -> show();
 
-    if (!buttonSchool->isVisible() && !buttonMarket->isVisible() && !buttonHospital->isVisible()) serviceWidget->hide();
-    else serviceWidget->show();
+    if (!buttonSchool -> isVisible() && !buttonMarket -> isVisible() && !buttonHospital -> isVisible()) serviceWidget -> hide();
+    else serviceWidget -> show();
 
-    if (!buttonBarrack->isVisible() && !buttonBarn->isVisible() && !buttonWorkshop->isVisible()) militaryWidget->hide();
-    else militaryWidget->show();
+    if (!buttonBarrack -> isVisible() && !buttonBarn -> isVisible() && !buttonWorkshop -> isVisible()) militaryWidget -> hide();
+    else militaryWidget -> show();
 
-    if (!buttonTower->isVisible() && !buttonWall->isVisible()) defenseWidget->hide();
-    else defenseWidget->show();
+    if (!buttonTower -> isVisible() && !buttonWall -> isVisible()) defenseWidget -> hide();
+    else defenseWidget -> show();
 
-    if (!buttonExpandTerrain->isVisible() && !militaryWidget->isVisible()) generalWidget->hide();
-    else generalWidget->show();
+    if (!buttonExpandTerrain -> isVisible() && !militaryWidget -> isVisible()) generalWidget -> hide();
+    else generalWidget -> show();
 
-    if (!generalWidget->isVisible() && !resourceWidget->isVisible() && !serviceWidget->isVisible() && !militaryWidget->isVisible() && !defenseWidget->isVisible()) buildingsPanel->hide();
-    else buildingsPanel->show();
+    if (!generalWidget -> isVisible() && !resourceWidget -> isVisible() && !serviceWidget -> isVisible() && !militaryWidget -> isVisible() && !defenseWidget->isVisible()) buildingsPanel -> hide();
+    else buildingsPanel -> show();
 }
 
 void Hud::debug(){
