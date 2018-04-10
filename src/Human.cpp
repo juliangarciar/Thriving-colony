@@ -51,7 +51,7 @@ void Human::CleanUp() {
 
 bool Human::getUnderAttack() {
     if(underAttack == false){
-        Vector3<f32> *pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
+        Vector2<f32> pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
         i32 requesterRange = 1000;
         
         f32 xaux = 0;
@@ -63,8 +63,8 @@ bool Human::getUnderAttack() {
         for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
             if (it  -> second != nullptr) {
             // Calculate distance between troop requesting target and posible targets
-                xaux = it -> second -> getPosition() -> x - pos -> x;
-                yaux = it -> second -> getPosition() -> y - pos -> y;
+                xaux = it -> second -> getPosition().x - pos.x;
+                yaux = it -> second -> getPosition().y - pos.y;
                 dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
 
                 if (dist <= requesterRange) {

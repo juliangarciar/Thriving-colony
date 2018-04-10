@@ -15,7 +15,7 @@ void MarketNode::question() {
     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildMarket);
     //std::cout << "Contruyo un mercado" << std::endl;
     if (IA::Instance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::MarketMetalCost, Enumeration::BuildingCost::MarketCrystalCost)) {
-        Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
+        Vector2<f32> v = IA::Instance() -> determinatePositionBuilding();
         IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Market, false);
     }
 }

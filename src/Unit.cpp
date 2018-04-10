@@ -49,8 +49,7 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
 
 Unit::~Unit() {
     //std::cout << "Deleting troop \n";
-    WorldGeometry::Instance()->clearUnitCell(vectorPos.toVector2(),
-                                             this);
+    WorldGeometry::Instance()->clearUnitCell(vectorPos, this);
     delete pathManager;
     delete troops;
     //std::cout << "Done \n";
@@ -86,7 +85,7 @@ void Unit::Init() {
                 crystalCost = Enumeration::UnitCost::MeleeFootmenCrystalCost;
                 path = L"media/unitModels/Drorania/Melee_Soldier_Drorania.obj";
                 setModel(layer, path);
-                troops = new Troop(layer, path, 4, ID);
+                //troops = new Troop(layer, path, 4, ID);
                 //tex = new Texture("./media/textures/Drorania/Unit/drorania_melee_soldier.jpg");
             } else if (breed == Enumeration::BreedType::Kaonov) {
                 moveSpeed = 420;
@@ -107,7 +106,7 @@ void Unit::Init() {
                 crystalCost = Enumeration::UnitCost::MeleeFootmenCrystalCost;
                 path = L"media/unitModels/Kaonov/kaonov_melee_soldier.obj";
                 setModel(layer, path);
-                 troops = new Troop(layer, path, 4, ID);
+                //troops = new Troop(layer, path, 4, ID);
             }
         break;
         //Advanced melee soldier (mounted)
@@ -178,7 +177,7 @@ void Unit::Init() {
                 path = L"media/unitModels/Drorania/rank_soldier_drorania.obj";
                 //tex = new Texture("./media/textures/Drorania/Unit/drorania_rank_soldier.jpg");
                 setModel(layer, path);
-                troops = new Troop(layer, path, 4, ID);
+                //troops = new Troop(layer, path, 4, ID);
             } else if (breed == Enumeration::BreedType::Kaonov) {
                 moveSpeed = 350;
                 attackDamage = 13;
@@ -198,7 +197,7 @@ void Unit::Init() {
                 crystalCost = Enumeration::UnitCost::RangedFootmenCrystalCost;
                 path = L"media/unitModels/Kaonov/kaonov_rank_soldier.obj";
                 setModel(layer, path);
-                troops = new Troop(layer, path, 4, ID);
+                //troops = new Troop(layer, path, 4, ID);
             }   
         break;
         //Advanced ranged soldier (mounted)
@@ -223,7 +222,7 @@ void Unit::Init() {
                 path = L"media/unitModels/Drorania/criatura_drorania.obj";
                 //tex = new Texture("./media/textures/Drorania/Unit/drorania_criature.jpg");
                 setModel(layer, path);
-                troops = new Troop(layer, path, 0, ID);
+                //troops = new Troop(layer, path, 0, ID);
             } else if (breed == Enumeration::BreedType::Kaonov) {
                 moveSpeed = 530;
                 attackDamage = 18;
@@ -243,7 +242,7 @@ void Unit::Init() {
                 crystalCost = Enumeration::UnitCost::MountedRangedCrystalCost;
                 path = L"media/unitModels/Kaonov/creature_kaonov.obj";
                 setModel(layer, path);
-                troops = new Troop(layer, path, 0, ID);
+                //troops = new Troop(layer, path, 0, ID);
             }
         break;
         //Idol (to be defined)
@@ -269,7 +268,7 @@ void Unit::Init() {
                 path = L"media/unitModels/Drorania/Ente_Drorania.obj";
                 //tex = new Texture("./media/textures/Drorania/Unit/drorania_entity.jpg");
                 setModel(layer, path);
-                troops = new Troop(layer, path, 0, ID);
+                //troops = new Troop(layer, path, 0, ID);
             } else if (breed == Enumeration::BreedType::Kaonov) {
                 moveSpeed = 250;
                 attackDamage = 27;
@@ -290,7 +289,7 @@ void Unit::Init() {
                 crystalCost = Enumeration::UnitCost::CreatureCrystalCost;
                 path = L"media/unitModels/Kaonov/entinity_kaonov.obj";
                 setModel(layer, path);
-                troops = new Troop(layer, path, 0, ID);
+                //troops = new Troop(layer, path, 0, ID);
             }
         break;
         //Rock launcher
@@ -315,7 +314,7 @@ void Unit::Init() {
                 crystalCost = Enumeration::UnitCost::CatapultCrystalCost;
                 path = L"media/unitModels/Drorania/dorania_cannon.obj";
                 setModel(layer, path);
-                troops = new Troop(layer, path, 0, ID);
+                //troops = new Troop(layer, path, 0, ID);
             } 
             else if (breed == Enumeration::BreedType::Kaonov) {
                 moveSpeed = 250;
@@ -337,7 +336,7 @@ void Unit::Init() {
                 crystalCost = Enumeration::UnitCost::CatapultCrystalCost;
                 path = L"media/unitModels/Kaonov/kaonov_cannon.obj";
                 setModel(layer, path);
-                troops = new Troop(layer, path, 0, ID);
+                //troops = new Troop(layer, path, 0, ID);
             }
         break;
         //Wall desintegrator
@@ -362,7 +361,7 @@ void Unit::Init() {
                 crystalCost = Enumeration::UnitCost::RamCrystalCost;
                 path = L"media/unitModels/Drorania/drorania_walls_desintegrator.obj";
                 setModel(layer, path);
-                troops = new Troop(layer, path, 0, ID);
+                //troops = new Troop(layer, path, 0, ID);
             } else if (breed == Enumeration::BreedType::Kaonov) {
                 moveSpeed = 250;
                 attackDamage = 41;
@@ -383,7 +382,7 @@ void Unit::Init() {
                 crystalCost = Enumeration::UnitCost::RamCrystalCost;
                 path = L"media/unitModels/Kaonov/kaonov_walls_desintegrator.obj";
                 setModel(layer, path);
-                troops = new Troop(layer, path, 0, ID);
+                //troops = new Troop(layer, path, 0, ID);
             }
         break;
         default: break;
@@ -392,9 +391,9 @@ void Unit::Init() {
     //this->model->setMaterial(m);
     /* Juli */
     
-    troops = new Troop(layer, path, 4, ID);
-    path = L"media/unitModels/Flags/flag.obj";
-    setModel(layer, path);
+    //troops = new Troop(layer, path, 4, ID);
+    //path = L"media/unitModels/Flags/flag.obj";
+    //setModel(layer, path);
     preTaxPlayer();
 }
 
@@ -514,10 +513,9 @@ void Unit::attackState() {
 void Unit::chaseState() {
     //If I have a target, then chase it
     if (target != nullptr) {
-        Vector3<f32> tpos = Vector3<f32>(0,0,0);
-        tpos.x = target -> getPosition() -> x;
-        tpos.y = target -> getPosition() -> y;
-        tpos.z = target -> getPosition() -> z;
+        Vector2<f32> tpos = Vector2<f32>();
+        tpos.x = target->getPosition().x;
+        tpos.y = target->getPosition().y;
         this  -> setTroopDestination(tpos);
         chaseTarget();    
     }
@@ -527,13 +525,14 @@ void Unit::retractState() {
     moveTroop();
     if (readyToEnter){
         retractedCallback(this);
-        troops -> setActive(false);
+        //troops -> setActive(false);
         getModel() -> setActive(false);
         switchState(Enumeration::UnitState::InHome);
     }
 }
 
 void Unit::moveTroop() {
+    std::cout << "Esto en:" << getPosition().x << "," << getPosition().y << "\n";
     if (moving) {
         // close to destination, stop
         if (steps == 0) {
@@ -547,41 +546,40 @@ void Unit::moveTroop() {
                 switchState(Enumeration::Idle);
             }
             else{
-                Vector2<f32> dummy = this->pathFollow.front();
-                Vector3<f32> newDest(dummy.x, Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y), dummy.y);
+                //Vector2<f32> newDest = this->pathFollow.front();
+                //Vector2<f32> newDest(dummy.x, dummy.y);
+                //setTroopDestination(newDest);
+                setTroopDestination(this->pathFollow.front());
                 pathFollow.pop_front();
-                setTroopDestination(newDest);
             }
         }
         /* Update Cell state */
         else if(std::floor(steps) == 0){
-            Vector3<f32> move = vectorMov;
+            //Vector2<f32> move = vectorMov;
             //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
             //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
-            Vector3<f32> newPos = vectorPos + move;
-            newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
-            WorldGeometry::Instance()->updateUnitCell(vectorPos.toVector2(),
-                                                    newPos.toVector2(),
-                                                    this);
-            WorldGeometry::Instance()->getNeighborUnits(newPos.toVector2());
+            Vector2<f32> newPos = getPosition() + vectorMov;
+            //newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
+            WorldGeometry::Instance()->updateUnitCell(getPosition(), newPos, this);
+            WorldGeometry::Instance()->getNeighborUnits(newPos);
             setTroopPosition(newPos);
-            troops->moveTroops(move);
+            //troops->moveTroops(vectorMov);
             steps = 0;
+            std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
         } 
         else {
             // far from destination, move
-            Vector3<f32> move = vectorMov;
+            //Vector2<f32> move = vectorMov;
             //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime();
             //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime();
-            Vector3<f32> newPos = vectorPos + move;
-            newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
-            WorldGeometry::Instance()->updateUnitCell(vectorPos.toVector2(),
-                                                    newPos.toVector2(),
-                                                    this);
-            WorldGeometry::Instance()->getNeighborUnits(newPos.toVector2());
+            Vector2<f32> newPos = getPosition() + vectorMov;
+            //newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
+            WorldGeometry::Instance()->updateUnitCell(getPosition(), newPos, this);
+            WorldGeometry::Instance()->getNeighborUnits(newPos);
             setTroopPosition(newPos);
-            troops->moveTroops(move);
+            //troops->moveTroops(vectorMov);
             steps--;
+            std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
         }
     }
 }
@@ -623,18 +621,19 @@ void Unit::chaseTarget() {
             moving = false;
             switchState(Enumeration::UnitState::Attack);
         } else { //If i am too far away to attack, then move closer.
-            Vector3<f32> newPos = vectorPos + vectorMov;
-            newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
+            Vector2<f32> newPos = getPosition() + vectorMov;
+            //newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
             setTroopPosition(newPos);
         }
     }
 }
 
+/* Edit this */
 bool Unit::inRangeOfAttack() {
     bool inRange = false;
     if (target != nullptr) {
-        f32 xaux = target -> getPosition() -> x - position -> x;
-        f32 yaux = target -> getPosition() -> y - position -> y;
+        f32 xaux = target->getPosition().x - this->getPosition().x;
+        f32 yaux = target->getPosition().y - this->getPosition().y;
         f32 dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
         if (dist <= attackRange) {
             inRange = true;
@@ -684,33 +683,27 @@ void Unit::setMoving(bool movingPnt) {
 void Unit::setAttacking(bool attackingPnt) {
     attacking = attackingPnt;
 }
-
-void Unit::setTroopPosition(Vector3<f32> vectorData) {
-    vectorPos.set(vectorData);
+/* Weird method */
+void Unit::setTroopPosition(Vector2<f32> vectorData) {
+    //vectorPos.set(vectorData);
+    //vectorPos = vectorData;
     setPosition(vectorData);
-    troops->setPosition(vectorData);
+    //troops->setPosition(vectorData);
 }
 // To do -> adjust units movement
-void Unit::setTroopDestination(Vector3<f32> vectorData) {
+void Unit::setTroopDestination(Vector2<f32> vectorData) {
     if (state == Enumeration::UnitState::Move) {
         target = nullptr;
     }
-
-    vectorDes.set(vectorData);
-
-    Vector3<f32> desp = vectorDes - vectorPos;
-
-    f32 distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2));
-
+    //vectorDes.set(vectorData);
+    vectorDes = vectorData;
+    Vector2<f32> desp = vectorDes - getPosition();
+    f32 distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.y, 2));
     //vectorMov -> x = (desp.x / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
     //vectorMov -> z = (desp.z / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
     vectorMov.x = (desp.x / distance) * (moveSpeed / 100);
-    vectorMov.z = (desp.z / distance) * (moveSpeed / 100);
-    f32 movDistance = std::sqrt(std::pow(vectorMov.x, 2) + std::pow(vectorMov.z, 2));
-    steps = (distance / movDistance);
-    /*std::cout << "Distance: " << distance << "\n";
-    std::cout << "Mov distance " << movDistance << "\n"; 
-    std::cout << "Steps: " << steps << "\n";*/
+    vectorMov.y = (desp.y / distance) * (moveSpeed / 100);
+    //f32 movDistance = std::sqrt(std::pow(vectorMov.x, 2) + std::pow(vectorMov.y, 2));
     moving = true;
 }
 
@@ -718,16 +711,17 @@ void Unit::setPath(std::list< Vector2<f32> > path){
     this->pathFollow = path;
 }
 
-void Unit::setPathToTarget(Vector3<f32> vectorData){
-    this->pathManager->createPathTo(vectorData.toVector2());
+void Unit::setPathToTarget(Vector2<f32> vectorData){
+    std::cout << "Analizando camino \n";
+    this->pathManager->createPathTo(vectorData);
     if(!pathFollow.empty()){
-        Vector2<f32> dummy = this->pathFollow.front();
-        Vector3<f32> newDest;
-        newDest.x = dummy.x;
-        newDest.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y);
-        newDest.z = dummy.y;
-        setTroopDestination(newDest);
-        
+        //Vector2<f32> dummy = this->pathFollow.front();
+        //Vector2<f32> newDest;
+        //newDest.x = dummy.x;
+        //newDest.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y);
+        //newDest.y = dummy.y;
+        setTroopDestination(this->pathFollow.front());
+        std::cout << "Lo tengo " << pathFollow.size() << "\n";
         pathFollow.pop_front();
     }
 }
@@ -753,7 +747,7 @@ string Unit::getSelectEvent() {
     return selectEvent;
 }
 
-Vector3<f32> Unit::getDestination() {
+Vector2<f32> Unit::getDestination() {
     return vectorDes;
 }
 

@@ -35,7 +35,7 @@ class IA : public Player {
          * @brief Determina la posicion de construccion de un edificio
          * @return position sera un vector de posicion con las coordenadas del nuevo edificio
          */
-        Vector3<f32> determinatePositionBuilding();
+        Vector2<f32> determinatePositionBuilding();
 
         /**
          * @brief Inicializa las posibles decisiones de la IA

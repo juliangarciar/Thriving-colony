@@ -2,7 +2,7 @@
 #include "Cell.h"
 #include "Quadtree.h"
 #include <MathEngine/Vector2.h>
-#include <MathEngine/Vector3.h>
+//#include <MathEngine/Vector3.h>
 #include <Map.h>
 #include <MathEngine/Box2D.h>
 #include <Building.h>
@@ -239,11 +239,11 @@ Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin, 
     /* Stop condition, research about a system of conditions */
         if(buildingPtr != NULL){
             Vector2<f32> tmp = indexToCell(closestIndex)->getPosition();
-            Vector3<f32> dummy;
-            dummy.x = tmp.x;
-            dummy.z = tmp.y;
-            dummy.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.z);
-            buildingPtr->setPosition(dummy);
+            //Vector3<f32> dummy;
+            //dummy.x = tmp.x;
+            //dummy.z = tmp.y;
+            //dummy.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.z);
+            buildingPtr->setPosition(tmp);
             if(!checkBuildingSpace(buildingPtr)){
                 validCell = indexToCell(closestIndex);
                 return validCell;

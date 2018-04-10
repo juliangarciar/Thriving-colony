@@ -86,7 +86,7 @@ void Player::decreaseArmyLevel(i32 aldecrement) {
     armyLevel = armyLevel - aldecrement;
 }
 
-void Player::setHallPosition(Vector3<f32> p){
+void Player::setHallPosition(Vector2<f32> p){
     hallPosition = p;
 }
 
@@ -160,7 +160,7 @@ UnitManager* Player::getUnitManager() {
     return units;
 }
 
-Vector3<f32> Player::getHallPosition() {
+Vector2<f32> Player::getHallPosition() {
     return hallPosition;
 }
 

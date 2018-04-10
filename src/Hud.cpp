@@ -610,7 +610,7 @@ void Hud::removeTroopFromHall(i32 idTroop){
         tabContainer->refreshLayout();
    }
 }
-
+/* Kind of trash code */
 void Hud::addTroopToQueue(i32 idTroop, Enumeration::UnitType t){
     switch(t){
         case Enumeration::UnitType::StandardM:

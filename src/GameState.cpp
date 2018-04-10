@@ -18,16 +18,15 @@ void GameState::Init() {
  
     human -> Init(); 
     ia -> Init();
-
     map -> Init();
-
+    
     //Initialize the event system
     //IA Events
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::RetractTroopsIA, [&]() {
         ia -> getUnitManager() -> retractAllTroops();
     });
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::DeployTroopsIA, [&]() {
-        Vector3<f32> p = ia -> getHallPosition();
+        Vector2<f32> p = ia -> getHallPosition();
         p.x = p.x + 200; //ToDo: hacer bien
         ia -> getUnitManager() -> deployAllTroops(p);
     });
@@ -37,7 +36,7 @@ void GameState::Init() {
         human -> getUnitManager() -> retractAllTroops();
     });
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::DeployTroopsHuman, [&]() {
-        Vector3<f32> p = human -> getHallPosition();
+        Vector2<f32> p = human -> getHallPosition();
         p.x = p.x + 200; //ToDo: hacer bien
         human -> getUnitManager() -> deployAllTroops(p);
     });
@@ -136,12 +135,12 @@ void GameState::Input() {
                     i32 idTroop = human -> getUnitManager() -> getDeployingTroopID();
                     if (idTroop > 0){
                         if (IO::Instance() -> getMouse() -> rightMousePressed()){
-                            human -> getUnitManager() -> deploySelectedTroop(map->getMouseCollitionPoint());
+                            human -> getUnitManager() -> deploySelectedTroop(map->getMouseCollitionPoint().toVector2());
                             human -> getUnitManager() -> selectTroop(idTroop);
                         }
                     } else if (idTroop == 0) {
                         if (IO::Instance() -> getMouse() -> rightMousePressed()){
-                            human -> getUnitManager() -> deployAllTroops(map->getMouseCollitionPoint());
+                            human -> getUnitManager() -> deployAllTroops(map->getMouseCollitionPoint().toVector2());
                         }
                     } else {
                         std::cout << "Ninguna tropa seleccionada" << std::endl;

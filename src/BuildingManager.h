@@ -62,7 +62,7 @@ class BuildingManager {
 		 * @param The Enumeration::BuildingType is the building type.
 		 * @param The bool will be true if the building is going to have an instant build and false if not.
 		 */
-		void buildBuilding(Vector3<f32>, Enumeration::BuildingType, bool = false);
+		void buildBuilding(Vector2<f32>, Enumeration::BuildingType, bool = false);
 
 		/**
 		 * @brief Check if the player's metalAmount and crystalAmount variables are higher than the ones passed by parameter.

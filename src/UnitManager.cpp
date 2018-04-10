@@ -28,7 +28,7 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
     currentDeployingTroop = -1;
 
     selectedTroop = nullptr;
-
+    /* The fuck is this */
 	for (i32 i = 0; i < Enumeration::UnitType::TroopsSize; i++){
 		troopsAmount[i] = 0;
 	}
@@ -63,7 +63,7 @@ UnitManager::~UnitManager() {
     //if (selectedTroop != nullptr) delete selectedTroop;
     //std::cout << "Unit manager deleted \n";
 }
-
+/* This method is just so fucking weird, I just can't get it */
 //Create a new troops
 //In order to add a new unit, you must specify which one
 bool UnitManager::createTroop(Enumeration::UnitType type) {
@@ -72,6 +72,7 @@ bool UnitManager::createTroop(Enumeration::UnitType type) {
         if (newUnit == nullptr) {
             return false;
         }
+        /* What? */
         newUnit -> setID(nextTroopId);
         // Distinto tamaño para distintas unidades?
         //newUnit -> getModel() -> setScale(Vector3<f32>(25,25,25));
@@ -96,6 +97,7 @@ bool UnitManager::createTroop(Enumeration::UnitType type) {
         newUnit -> setRetractedCallback([&] (Unit *u){
             std::cout << "Se ha terminado de guardar la unidad " << u->getID() << std::endl;
             //Add in Hall
+            /* What? This method is duplicated */
             inHallTroops->insert(std::pair<i32, Unit*>(u->getID(), u));
             //Delete in Map
             u -> getModel() -> setActive(false);
@@ -175,7 +177,7 @@ void UnitManager::startDeployingAllTroops() {
     }
 } 
 /* Check this method -> Optimize, also change deployAllTroops */
-void UnitManager::deploySelectedTroop(Vector3<f32> p) {
+void UnitManager::deploySelectedTroop(Vector2<f32> p) {
     if (deployingTroop && currentDeployingTroop >= 0) { 
         Unit *temp = inHallTroops -> find(currentDeployingTroop) -> second;
 
@@ -187,27 +189,24 @@ void UnitManager::deploySelectedTroop(Vector3<f32> p) {
 
         temp -> switchState(Enumeration::UnitState::AttackMove); // ToDo: why attack move?
         //Vector3<f32> dummy = Vector3<f32>(0, 0, 0);
-        Cell* origin = WorldGeometry::Instance()->positionToCell(p.toVector2());
+        Cell* origin = WorldGeometry::Instance()->positionToCell(p);
         Cell* target;
         
         if (team == Enumeration::Team::IA){
             
             //Vector3<f32> correctPosition = Vector3<f32>(-384.f, 0, 0);
             //temp -> setTroopPosition(IA::Instance()->getHallPosition() + correctPosition);temp -> setPathToTarget(p);temp -> setPathToTarget(p);
-            target = WorldGeometry::Instance()->positionToCell(IA::Instance()->getHallPosition().toVector2());
+            target = WorldGeometry::Instance()->positionToCell(IA::Instance()->getHallPosition());
         } else {
             //Vector3<f32> correctPosition = Vector3<f32>(-384.f, 0, 0);
             //temp -> setTroopPosition(Human::Instance()->getHallPosition() + correctPosition);
-            target = WorldGeometry::Instance()->positionToCell(Human::Instance()->getHallPosition().toVector2());
+            target = WorldGeometry::Instance()->positionToCell(Human::Instance()->getHallPosition());
         }
         target = WorldGeometry::Instance()->getValidCell(target, origin, NULL);
-        Vector3<f32> dummy;
-        dummy.x = target->getPosition().x;
-        dummy.z = target->getPosition().y;
-        dummy.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.z);
+        Vector2<f32> dummy = target->getPosition();
         temp -> setTroopPosition(dummy);
-        temp -> setUnitCell(dummy.toVector2());
-        temp -> setPosition(dummy);
+        temp -> setUnitCell(dummy);
+        //temp -> setPosition(dummy);
         temp -> getModel() -> setActive(true);
         temp -> setPathToTarget(p);
         if (team == Enumeration::Team::Human){
@@ -220,7 +219,7 @@ void UnitManager::deploySelectedTroop(Vector3<f32> p) {
     }
 }
 /* Porbably add the new deploy system used above */
-void UnitManager::deployAllTroops(Vector3<f32> p){
+void UnitManager::deployAllTroops(Vector2<f32> p){
     for (std::map<i32,Unit*>::iterator it = inHallTroops -> begin(); it != inHallTroops -> end(); ++it) {
         Unit *temp = it -> second;
 
@@ -228,22 +227,20 @@ void UnitManager::deployAllTroops(Vector3<f32> p){
         inMapTroops -> insert(std::pair<i32, Unit*>(temp -> getModel() -> getID(), temp));
 
         temp -> switchState(Enumeration::UnitState::AttackMove); // ToDo: why attack move?
-        Cell* origin = WorldGeometry::Instance()->positionToCell(p.toVector2());
+        Cell* origin = WorldGeometry::Instance()->positionToCell(p);
         Cell* target;
         if (team == Enumeration::Team::IA){
             //temp -> setTroopPosition(IA::Instance()->getHallPosition());
-            target = WorldGeometry::Instance()->positionToCell(IA::Instance()->getHallPosition().toVector2());
+            target = WorldGeometry::Instance()->positionToCell(IA::Instance()->getHallPosition());
         } else {
             //temp -> setTroopPosition(Human::Instance()->getHallPosition());
-            target = WorldGeometry::Instance()->positionToCell(Human::Instance()->getHallPosition().toVector2());
+            target = WorldGeometry::Instance()->positionToCell(Human::Instance()->getHallPosition());
         }
         target = WorldGeometry::Instance()->getValidCell(target, origin, NULL);
-        Vector3<f32> dummy;
-        dummy.x = target->getPosition().x;
-        dummy.z = target->getPosition().y;
-        dummy.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.z);
+        Vector2<f32> dummy = target->getPosition();
         temp -> setTroopPosition(dummy);
-        temp -> setPosition(dummy);
+        temp -> setUnitCell(dummy);
+        //temp -> setPosition(dummy);
         temp -> getModel() -> setActive(true);
         temp -> setPathToTarget(p);
         if (team == Enumeration::Team::Human){
@@ -251,7 +248,6 @@ void UnitManager::deployAllTroops(Vector3<f32> p){
         }
         std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
     }
-    
     //Delete in hall
     inHallTroops->clear();
     
@@ -294,16 +290,16 @@ void UnitManager::unSelectTroop() {
 //Pass the order to the selected unit
 void UnitManager::moveOrder() {
     if (selectedTroop != nullptr) {
-        selectedTroop -> setTroopDestination(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
+        selectedTroop -> setTroopDestination(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
         if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
         // ToDo by Julian -> change attack iddle to pathfinding mode
             selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
 
-            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
+            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
         } else {
             selectedTroop -> switchState(Enumeration::UnitState::Move);
 
-            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
+            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
         }
         //MOVEMENT VOICE
         //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
@@ -381,7 +377,7 @@ bool UnitManager::isTroopSelected() {
 bool UnitManager::isDeployingTroop(){
     return deployingTroop;
 }
-
+// ToDo: Porque es necesario saber si IA o Humano, no esta implicito en el propio UnitManager?
 void UnitManager::deleteUnit(i32 id) {
     if (inMapTroops -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
         Human::Instance() -> decreaseArmyLevel(inMapTroops -> find(id) -> second -> getArmyLevel());

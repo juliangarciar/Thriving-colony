@@ -51,9 +51,9 @@ void IA::Update() {
     buildings -> updateBuildingManager();
     units -> updateUnitManager();
     Vector3<f32> tarPos = Map::Instance() -> getCamera() -> getTarPos();
-    Vector3<f32> *IAPos = buildings -> getBuilding(0) -> getPosition();
+    Vector2<f32> IAPos = buildings -> getBuilding(0) -> getPosition();
     fast = false;
-    if (((IAPos -> x + 2000 > tarPos.x && IAPos -> x - 2000 < tarPos.x) && (IAPos -> z + 2000 > tarPos.z && IAPos -> z - 2000 < tarPos.z)) || underAttack) {
+    if (((IAPos.x + 2000 > tarPos.x && IAPos.x - 2000 < tarPos.x) && (IAPos.y + 2000 > tarPos.z && IAPos.y - 2000 < tarPos.z)) || underAttack) {
         fast = true;
     }
     if (fast == true) {
@@ -100,8 +100,8 @@ BehaviourTree* IA::getTree() {
 * Goes over the vector of buildings looking up, right, down and left of every building built
 * until find the first empty position
 */
-Vector3<f32> IA::determinatePositionBuilding() {
-    Vector3<f32> v;
+Vector2<f32> IA::determinatePositionBuilding() {
+    Vector2<f32> v;
     bool found = false;
     bool occupied = false;
     std::map<i32, Building*> *b = buildings -> getBuildings();
@@ -114,53 +114,54 @@ Vector3<f32> IA::determinatePositionBuilding() {
          */
         f32 startingX = 2000;
         f32 startingZ = 2000;
-        v.set(startingX, 0, startingZ);
-        v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.z);
+        v = Vector2<f32>(startingX, startingZ);
+        //v.set(startingX, 0, startingZ);
+        //v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.z);
     } else {
         
         //When there are some buildings
-        Vector3<f32> *v2 = 0;
-        Vector3<f32> *v3 = 0;
+        Vector2<f32> v2;
+        Vector2<f32> v3;
         for (std::map<i32,Building*>::iterator it = b -> begin(); it != b -> end() && found == false; ++it){
             v2 = it -> second -> getPosition();
             occupied = false;
-            v = Vector3<f32>(v2 -> x, v2 -> y, v2 -> z + 300);
+            v = Vector2<f32>(v2.x, v2.y + 300);
             for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                 v3 = it2 -> second -> getPosition();
-                if (v3 -> x == v.x && v3 -> z == v.z) {
+                if (v3.x == v.x && v3.y == v.y) {
                     occupied = true;
                 }
             }
             if (occupied == false ) {
                 found = true;
             } else {
-                v = Vector3<f32>(v2 -> x + 300, v2 -> y, v2 -> z);
+                v = Vector2<f32>(v2.x + 300, v2.y);
                 occupied = false;
                 for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                     v3 = it2 -> second -> getPosition();
-                    if (v3 -> x == v.x && v3 -> z == v.z) {
+                    if (v3.x == v.x && v3.y == v.y) {
                         occupied = true;
                     }
                 }
                 if (occupied == false ) {
                     found = true;
                 } else {
-                    v = Vector3<f32>(v2 -> x, v2 -> y, v2 -> z - 300);
+                    v = Vector2<f32>(v2.x, v2.y - 300);
                     occupied = false;
                     for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                         v3 = it2 -> second -> getPosition();
-                        if (v3 -> x == v.x && v3 -> z == v.z) {
+                        if (v3.x == v.x && v3.y == v.y) {
                             occupied = true;
                         }
                     }
                     if (occupied == false ) {
                         found = true;
                     } else {
-                        v = Vector3<f32>(v2 -> x - 300, v2 -> y, v2 -> z);
+                        v = Vector2<f32>(v2.x - 300, v2.y);
                         occupied = false;
                         for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                             v3 = it2 -> second -> getPosition();
-                            if (v3 -> x == v.x && v3 -> z == v.z) {
+                            if (v3.x == v.x && v3.y == v.y) {
                                 occupied = true;
                             }
                         }
@@ -171,14 +172,14 @@ Vector3<f32> IA::determinatePositionBuilding() {
                 }
             }
         }
-        v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.z);
+        //v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.z);
     }
     return v;
 }
 
 bool IA::getUnderAttack() {
     underAttack = false;
-    Vector3<f32> *pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
+    Vector2<f32> pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
     i32 requesterRange = 1000;
     
     f32 xaux = 0;
@@ -191,8 +192,8 @@ bool IA::getUnderAttack() {
         for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
             if (it -> second != nullptr) {
             // Calculate distance between troop requesting target and posible targets
-                xaux = it -> second -> getPosition() -> x - pos -> x;
-                yaux = it -> second -> getPosition() -> y - pos -> y;
+                xaux = it -> second -> getPosition().x - pos.x;
+                yaux = it -> second -> getPosition().y - pos.y;
                 dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
 
             if (dist <= requesterRange) {

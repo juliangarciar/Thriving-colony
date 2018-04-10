@@ -51,14 +51,14 @@ class Map {
          * 
          * @return Vector2<f32> 
          */
-        Vector3<f32> getHumanStartPosition();
+        Vector2<f32> getHumanStartPosition();
 
         /**
          * @brief raycast
          * 
          * @return Vector2<f32> 
          */
-        Vector3<f32> getIAStartPosition();
+        Vector2<f32> getIAStartPosition();
 
         /**
          * @brief raycast
@@ -89,8 +89,8 @@ class Map {
         Terrain *terrain;
 
         //Start Positions
-        Vector3<f32> humanStartPos;
-        Vector3<f32> iaStartPos;
+        Vector2<f32> humanStartPos;
+        Vector2<f32> iaStartPos;
 
         //For raycast
         Vector3<f32> collisionPoint;

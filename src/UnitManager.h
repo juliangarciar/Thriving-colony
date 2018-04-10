@@ -17,9 +17,9 @@ class UnitManager{
 
         bool createTroop(Enumeration::UnitType unitData);
         void startDeployingTroop(i32 troopID);
-        void deploySelectedTroop(Vector3<f32>);
+        void deploySelectedTroop(Vector2<f32>);
         void startDeployingAllTroops();
-        void deployAllTroops(Vector3<f32>);
+        void deployAllTroops(Vector2<f32>);
         void retractAllTroops();
 
         void testRaycastCollisions();
@@ -63,7 +63,7 @@ class UnitManager{
 
         bool deployingTroop;
         i32 currentDeployingTroop;
-        
+        /* The fuck is this */
         i32 troopsAmount[Enumeration::UnitType::TroopsSize];
 
         i32 nextTroopId;

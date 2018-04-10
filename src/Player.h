@@ -33,7 +33,7 @@ class Player {
         void decreaseArmyLevel(i32);
 
         // Setters
-        void setHallPosition(Vector3<f32>);
+        void setHallPosition(Vector2<f32>);
         void setMetalAmount(i32);
         void setCrystalAmount(i32);
         void setSiderurgyProductivity(i32);
@@ -54,7 +54,7 @@ class Player {
         f32 getBuildingRadious();
         BuildingManager* getBuildingManager();
         UnitManager* getUnitManager();
-        Vector3<f32> getHallPosition();
+        Vector2<f32> getHallPosition();
 
         // Tricks
         void receiveMetal();
@@ -86,7 +86,7 @@ class Player {
         UnitManager *units;
 
         //City Hall
-        Vector3<f32> hallPosition;
+        Vector2<f32> hallPosition;
 
         Timer *testTimer;
 

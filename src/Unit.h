@@ -50,10 +50,10 @@ class Unit : public Entity {
         void setUnitCell(Vector2<f32> vectorPosition);
         void setMoving(bool);
         void setAttacking(bool);
-        void setTroopPosition(Vector3<f32> vectorData);
-        void setTroopDestination(Vector3<f32> vectorData);
+        void setTroopPosition(Vector2<f32> vectorData);
+        void setTroopDestination(Vector2<f32> vectorData);
         void setPath(std::list< Vector2<f32> > path);
-        void setPathToTarget(Vector3<f32> vectorData);
+        void setPathToTarget(Vector2<f32> vectorData);
         void setRecruitedCallback(std::function<void(Unit*)>);
         void setRetractedCallback(std::function<void(Unit*)>);
 
@@ -62,7 +62,7 @@ class Unit : public Entity {
         std::string getMoveEvent();
         std::string getSelectEvent();
 
-        Vector3<f32> getDestination();
+        Vector2<f32> getDestination();
         std::list< Vector2<f32> > getPath();
         Enumeration::UnitType getType();
 
@@ -109,9 +109,9 @@ class Unit : public Entity {
         std::function<void(Unit*)> retractedCallback;
 
         // Vector position is in the father
-        Vector3 <f32> vectorPos;
-        Vector3 <f32> vectorDes;
-        Vector3 <f32> vectorMov;
+        //Vector2<f32> vectorPos;
+        Vector2<f32> vectorDes;
+        Vector2<f32> vectorMov;
         f32 steps;
 
         // Stuff

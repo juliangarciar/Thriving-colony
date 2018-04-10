@@ -1,13 +1,6 @@
 #ifndef BATTLE_MANAGER_H
 #define BATTLE_MANAGER_H
-
-#include <vector>
-#include <Enumeration.h>
-#include <Unit.h>
-#include <Building.h>
-#include <Types.h>
-#include <MathEngine/Vector2.h>
-
+#include <Entity.h>
 /**
  * @class BattleManager.
  * @brief Create a BattleManager type object.

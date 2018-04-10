@@ -57,53 +57,53 @@ void Map::Init() {
 
     for (auto& element : j["player"]["buildings"]){
         if(element["type"].get<std::string>()=="MainBuilding"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, true);
             Human::Instance() -> setHallPosition(v);
             humanStartPos = v;
         }
         else if(element["type"].get<std::string>()=="Siderurgy"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
         }
         else if(element["type"].get<std::string>()=="Quarry"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"],  element["position"]["z"]);
             Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Quarry, true);
         }
         else if(element["type"].get<std::string>()=="Barn"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barn, true);
         }
         else if(element["type"].get<std::string>()=="Barrack"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barrack, true);
         }
         else if(element["type"].get<std::string>()=="Hospital"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Hospital, true);
         }
         else if(element["type"].get<std::string>()=="Hospital"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Hospital, true);
         }
         else if(element["type"].get<std::string>()=="Market"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Market, true);
         }
         else if(element["type"].get<std::string>()=="School"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::School, true);
         }
         else if(element["type"].get<std::string>()=="Tower"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Tower, true);
         }
         else if(element["type"].get<std::string>()=="Wall"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Wall, true);
         }
         else if(element["type"].get<std::string>()=="Workshop"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             Human::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Workshop, true);
         }
     }
@@ -118,53 +118,53 @@ void Map::Init() {
     
     for(auto& element : j["IA"]["buildings"]){
         if(element["type"].get<std::string>()=="MainBuilding"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::MainBuilding, true);
             IA::Instance() -> setHallPosition(v);
             iaStartPos = v;
         }
         else if(element["type"].get<std::string>()=="Siderurgy"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Siderurgy, true);
         }
         else if(element["type"].get<std::string>()=="Quarry"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Quarry, true);
         }
         else if(element["type"].get<std::string>()=="Barn"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barn, true);
         }
         else if(element["type"].get<std::string>()=="Barrack"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barrack, true);
         }
         else if(element["type"].get<std::string>()=="Hospital"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Hospital, true);
         }
         else if(element["type"].get<std::string>()=="Hospital"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Hospital, true);
         }
         else if(element["type"].get<std::string>()=="Market"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Market, true);
         }
         else if(element["type"].get<std::string>()=="School"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::School, true);
         }
         else if(element["type"].get<std::string>()=="Tower"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Tower, true);
         }
         else if(element["type"].get<std::string>()=="Wall"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Wall, true);
         }
         else if(element["type"].get<std::string>()=="Workshop"){
-            Vector3<f32> v(element["position"]["x"], terrain -> getY(element["position"]["x"], element["position"]["z"]), element["position"]["z"]);
+            Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
             IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Workshop, true);
         }
     }
@@ -203,11 +203,11 @@ void Map::CleanUp() {
     delete camera;
 }
 
-Vector3<f32> Map::getHumanStartPosition(){
+Vector2<f32> Map::getHumanStartPosition(){
     return humanStartPos;
 }
 
-Vector3<f32> Map::getIAStartPosition(){
+Vector2<f32> Map::getIAStartPosition(){
     return iaStartPos;
 }
 

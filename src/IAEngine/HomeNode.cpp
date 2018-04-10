@@ -16,7 +16,7 @@ void HomeNode::question() {
     //std::cout << "Voy a invertir en casas" << std::endl;
     if (IA::Instance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost)) {
         IA::Instance() -> getTree() -> setRequireCitizens(false);
-        Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
+        Vector2<f32> v = IA::Instance() -> determinatePositionBuilding();
         IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::House, false);
     }
 }

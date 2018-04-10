@@ -55,15 +55,16 @@ void BuildingManager::drawBuilding() {
         // tambien se cree una caja en las coordenadas actuales del cursor del raton.
 
 		//Get position where the cursor is pointing to the terrain
-        Vector3<f32> xyzPointCollision = Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse());
-		Vector3<f32> f = Box3D<f32>(tempBuilding -> getModel() -> getModel() -> getTransformedBoundingBox()).getSize(); //ToDo: fachada
+        Vector2<f32> collisionPoint = Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2();
+		/* The fuck is this */
+		//Vector2<f32> f = Box3D<f32>(tempBuilding -> getModel() -> getModel() -> getTransformedBoundingBox()).getSize().toVector2(); //ToDo: fachada
 	// Change 2nd parameter
 		bool collision = false;
-		Vector3<f32> dummy2;
-		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(xyzPointCollision.toVector2(), tempBuilding);
-		dummy2.x = dummy.x;
-		dummy2.z = dummy.y;
-		dummy2.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y);
+		//Vector2<f32> dummy2;
+		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(collisionPoint, tempBuilding);
+		//dummy2.x = dummy.x;
+		//dummy2.z = dummy.y;
+		//dummy2.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y);
 		//irr::core::matrix4 tmat;
 		//Window::Instance() -> getVideoDriver() -> setMaterial(irr::video::SMaterial());
       	//indow::Instance() -> getVideoDriver() -> setTransform(irr::video::ETS_WORLD, irr::core::IdentityMatrix);
@@ -72,9 +73,9 @@ void BuildingManager::drawBuilding() {
 		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7010, -100, 7000), irr::core::vector3df(7210, 500, 8000), irr::video::SColor(255,255,0,0));
 		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7015, -100, 7000), irr::core::vector3df(7215, 500, 8000), irr::video::SColor(255,255,0,0));
 		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7020, -100, 7000), irr::core::vector3df(7220, 500, 8000), irr::video::SColor(255,255,0,0));
-		tempBuilding -> setPosition (dummy2);
+		tempBuilding -> setPosition (dummy);
 		if(team == Enumeration::Team::Human){
-			Vector2<f32> tmp = Human::Instance()->getHallPosition().toVector2();
+			Vector2<f32> tmp = Human::Instance()->getHallPosition();
 			f32 distance = std::sqrt(std::pow(tmp.x - dummy.x, 2) + std::pow(tmp.y - dummy.y, 2));
 			if(Human::Instance()->getBuildingRadious() < distance){
 				collision = true;
@@ -99,13 +100,13 @@ void BuildingManager::drawBuilding() {
 			//If there is no collision and the player press left button of the mouse, build the building
 			if (IO::Instance() -> getMouse() -> leftMouseDown()) {
 				buildingMode = false;
-				buildBuilding(dummy2, tempBuilding -> getType());
+				buildBuilding(dummy, tempBuilding -> getType());
 			}
 		}
     }
 }
  
-void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType _type, bool instabuild) {
+void BuildingManager::buildBuilding(Vector2<f32> pos, Enumeration::BuildingType _type, bool instabuild) {
 	if (team == Enumeration::Team::IA || tempBuilding == nullptr) {
 		tempBuilding = new Building(buildingLayer, 0, team, breed, _type);
 		tempBuilding -> setPosition(pos);

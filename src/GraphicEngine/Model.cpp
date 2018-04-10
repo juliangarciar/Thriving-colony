@@ -1,6 +1,8 @@
 #include "Model.h"
 #include "Window.h"
 #include <cmath>
+#include "../Map.h"
+
 using namespace irr;
 #define PI 3.14159265
 Model::Model(i32 id, const wchar_t *path) {
@@ -47,6 +49,11 @@ void Model::setName(const wchar_t *name) {
 
 void Model::setPosition(Vector3<f32> pos) {
     meshNode -> setPosition(pos.getVectorF());
+}
+
+void Model::setPosition(Vector2<f32> pos){
+    Vector3<f32> tmp(pos.x, Map::Instance() -> getTerrain() -> getY(pos.x, pos.y), pos.y);
+    meshNode->setPosition(tmp.getVectorF());
 }
 
 void Model::setScale(Vector3<f32> s) {

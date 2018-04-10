@@ -53,9 +53,10 @@ CameraController::~CameraController() {
 	delete camera;
 }
 
-void CameraController::Init(Vector3<float> v){
+void CameraController::Init(Vector2<float> v){
+	Vector3<f32> tmp(v.x, Map::Instance() -> getTerrain() -> getY(v.x, v.y), v.y);
 	//Set camera and target positions
-	tarPos = v;
+	tarPos = tmp;
 	camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
 
     camera -> setTargetPosition(tarPos);
@@ -284,13 +285,13 @@ void CameraController::CenterCamera(){
 	centerCameraMode = false;
 	if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_SPACE)) { //ToDo: fachada
 		if(Human::Instance() -> getUnitManager() -> getSelectedTroop() != nullptr) {
-			userPos.x = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> x;
-			userPos.z = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition() -> z;
+			userPos.x = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition().x;
+			userPos.z = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition().y;
 			userPos.y = Map::Instance() -> getTerrain() -> getY(userPos.x, userPos.z);
 		} else {
 			userPos.x = Human::Instance() -> getHallPosition().x;
-			userPos.y = Human::Instance() -> getHallPosition().y;
-			userPos.z = Human::Instance() -> getHallPosition().z;
+			userPos.z = Human::Instance() -> getHallPosition().y;
+			userPos.y = Map::Instance() -> getTerrain() -> getY(userPos.x, userPos.z);
 		}
 		centerCameraMode = true;
 	}

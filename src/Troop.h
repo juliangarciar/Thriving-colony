@@ -13,7 +13,7 @@ class Troop{
         i32 max;
         i32 actualIndex;
         std::vector< Model* > modelVector;
-        std::vector< Vector3<f32> > positionVector; 
+        std::vector< Vector2<f32> > positionVector; 
 
         f32 alignmentWeight;
         f32 cohesionWeight;
@@ -22,12 +22,12 @@ class Troop{
         Vector2<f32> alignment();
         Vector2<f32> cohesion();
         Vector2<f32> separation();
-        Vector3<f32> calculateFlocking();
+        Vector2<f32> calculateFlocking();
     public:
         Troop(SceneNode *, const wchar_t *, i32 qnty, i32 ID);
         ~Troop();
-        void setPosition(Vector3<f32> vectorPos);
-        void moveTroops(Vector3<f32> vectorMov);
+        void setPosition(Vector2<f32> vectorPos);
+        void moveTroops(Vector2<f32> vectorMov);
         void setActive(bool data);
 };
 #endif /* TROOP_H */

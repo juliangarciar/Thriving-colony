@@ -11,11 +11,6 @@ class Quadtree;
 class Unit;
 class Building;
 class WorldGeometry{
-    private:
-        static WorldGeometry* pinstance;
-        std::vector<Cell*> mCells;
-        Quadtree* quadTree;
-        std::vector< std::vector<f32> > cellsDistance;
     public:
         /**
          * @brief Singleton pattern
@@ -135,5 +130,10 @@ class WorldGeometry{
          * @return const std::vector< std::vector<f32> >& Self-explanatory
          */
         const std::vector< std::vector<f32> >& getCellsDistance();
+    private:
+        static WorldGeometry* pinstance;
+        std::vector<Cell*> mCells;
+        Quadtree* quadTree;
+        std::vector< std::vector<f32> > cellsDistance;
 };
 #endif

@@ -31,7 +31,7 @@ class CameraController {
          * @brief Inicia el sistema de camara
          * @param
          */
-        void Init(Vector3<float>);
+        void Init(Vector2<float>);
 
         /**
 	* @brief Actualiza CameraController

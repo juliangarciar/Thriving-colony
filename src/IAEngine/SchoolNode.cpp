@@ -15,7 +15,7 @@ void SchoolNode::question() {
     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildSchool);
     //std::cout << "Contruyo una escuela" << std::endl;
     if (IA::Instance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::SchoolMetalCost, Enumeration::BuildingCost::SchoolCrystalCost)) {
-        Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
+        Vector2<f32> v = IA::Instance() -> determinatePositionBuilding();
         IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::School, false);
     }
 }
