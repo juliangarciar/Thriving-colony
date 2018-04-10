@@ -526,12 +526,21 @@ void Unit::chaseState() {
 
 void Unit::retractState() {
     moveTroop();
+    std::cout << "0" << std::endl;
     if (readyToEnter){
+        std::cout << "1" << std::endl;
         retractedCallback(this);
+        std::cout << "2" << std::endl;
         troops -> setActive(false);
+        std::cout << "3" << std::endl;
         getModel() -> setActive(false);
-
+        std::cout << "4" << std::endl;
         switchState(Enumeration::UnitState::InHome);
+        std::cout << "5" << std::endl;
+        // Aqui peta
+        triggerRetractedCallback();
+        std::cout << "6" << std::endl;
+                    
     }
 }
 
@@ -542,8 +551,9 @@ void Unit::moveTroop() {
             if(pathFollow.empty()){
                 moving = false;
                 if (state == Enumeration::UnitState::Retract) {
+                    readyToEnter = true;
                     Human::Instance() -> getUnitManager() -> unSelectTroop();
-                    triggerRetractedCallback();
+                    //triggerRetractedCallback();
                     return;
                 }
                 switchState(Enumeration::Idle);
