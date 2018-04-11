@@ -89,6 +89,9 @@ class Building : public Entity {
 
         //True if the building is near the camera and false if not. It is used to do the level of detail of the mesh
         bool near;
+
+        //ToDo: explicar aqui para que sirve esto
+        i32 cityLevel;
 };
 
 #endif

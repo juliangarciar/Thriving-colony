@@ -42,26 +42,23 @@ bool BuildingManager::setBuildingMode(Enumeration::BuildingType type) {
 		if (!buildingMode) {
 			buildingMode = true;
 			tempBuilding = new Building(buildingLayer, 0, team, breed, type);
-			recalculateHitbox(); //ToDo: quizas algo guarro pero menos que lo otro
+			recalculateHitbox(); //ToDo: quizas sea mejorable
 			return true;
 		}
 	}
 	return false;
 }
+
 /* ToDo: optimize, to much shit inside */
 void BuildingManager::drawBuilding() {
     if (buildingMode && tempBuilding != nullptr) {
-        // ToDo: Aqui tenemos que hacer que cuando se haya apretado el boton de nueva ventana,
-        // tambien se cree una caja en las coordenadas actuales del cursor del raton.
-
 		//Get position where the cursor is pointing to the terrain
         Vector2<f32> collisionPoint = Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2();
-		/* The fuck is this */
-		//Vector2<f32> f = Box3D<f32>(tempBuilding -> getModel() -> getModel() -> getTransformedBoundingBox()).getSize().toVector2(); //ToDo: fachada
-	// Change 2nd parameter
+		// Change 2nd parameter
 		bool collision = false;
-		//Vector2<f32> dummy2;
 		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(collisionPoint, tempBuilding);
+
+		//Vector2<f32> dummy2;
 		//dummy2.x = dummy.x;
 		//dummy2.z = dummy.y;
 		//dummy2.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y);
@@ -73,7 +70,10 @@ void BuildingManager::drawBuilding() {
 		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7010, -100, 7000), irr::core::vector3df(7210, 500, 8000), irr::video::SColor(255,255,0,0));
 		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7015, -100, 7000), irr::core::vector3df(7215, 500, 8000), irr::video::SColor(255,255,0,0));
 		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7020, -100, 7000), irr::core::vector3df(7220, 500, 8000), irr::video::SColor(255,255,0,0));
+		//std::cout << "Position: " << dummy.x << "," << dummy.y << "," << dummy.z << "\n";
+
 		tempBuilding -> setPosition (dummy);
+
 		if(team == Enumeration::Team::Human){
 			Vector2<f32> tmp = Human::Instance()->getHallPosition();
 			f32 distance = std::sqrt(std::pow(tmp.x - dummy.x, 2) + std::pow(tmp.y - dummy.y, 2));
@@ -84,7 +84,7 @@ void BuildingManager::drawBuilding() {
 				collision = WorldGeometry::Instance()->checkBuildingSpace(tempBuilding);
 			}
 		}
-		//std::cout << "Position: " << dummy.x << "," << dummy.y << "," << dummy.z << "\n";
+
 		//Pressing the right mouse button cancels the building
 		if (IO::Instance() -> getMouse() -> rightMouseDown()){
 			buildingMode = false;
@@ -94,9 +94,9 @@ void BuildingManager::drawBuilding() {
 		}
 		
 		if (collision) {
-			tempBuilding->setColor(video::SColor(20, 255, 0, 0));
+			//ToDo: material no se puede construir aqui
 		} else {
-			tempBuilding->setColor(video::SColor(20, 0, 255, 125));
+			//ToDo: volver al material original
 			//If there is no collision and the player press left button of the mouse, build the building
 			if (IO::Instance() -> getMouse() -> leftMouseDown()) {
 				buildingMode = false;
@@ -119,7 +119,7 @@ void BuildingManager::buildBuilding(Vector2<f32> pos, Enumeration::BuildingType 
 		//}
 	}
 	/* Establece su color original */
-	tempBuilding->setColor(tempBuilding -> getBaseColor());
+	//ToDo: material por defecto
 	/* Estable su posicion */
 	tempBuilding -> setPosition(pos);
     //Establece la ID inicial del edificio
@@ -130,12 +130,9 @@ void BuildingManager::buildBuilding(Vector2<f32> pos, Enumeration::BuildingType 
 	tempBuilding -> setFinishedCallback([&](Building *b){
 		//Tax the player when building is finished
 		b->posTaxPlayer();
-		b->setColor(b->getBaseColor()); //ToDo: cambiar por material
+		//ToDo: volver al material original
 
 		buildingAmounts[(i32)b->getType()]++;
-
-		//Cuando te ataquen y paren
-		//returnToOriginalColor(); 
 		
 		if (team == Enumeration::Team::Human){
 			if (buildingAmounts[(i32)b->getType()] == 1){

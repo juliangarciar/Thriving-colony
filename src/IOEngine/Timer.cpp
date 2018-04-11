@@ -11,8 +11,8 @@ Timer::~Timer() {
 }
 
 bool Timer::tick() {
-    //std::cout << elapsedTime << "/" << maxDuration << std::endl;
     if (elapsedTime <= 0.0) {
+        callback();
         if (loop) restart();
         return true;
     } else {
@@ -27,4 +27,12 @@ void Timer::restart() {
 
 void Timer::changeDuration(f32 d) {
     maxDuration = d;
+}
+
+void Timer::setCallback(std::function<void()> c){
+    callback = c;
+}
+
+void Timer::triggerCallback(){
+    callback();
 }

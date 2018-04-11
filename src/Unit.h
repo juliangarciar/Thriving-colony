@@ -90,6 +90,8 @@ class Unit : public Entity {
 
         // Unit info
         f32 recruitingTime;
+        i32 armyLevel; //ToDo: explicar para que sirve esto
+        i32 citizens;
 
         // Timers
         f32 recruitingTimer;
