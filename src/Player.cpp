@@ -111,6 +111,7 @@ void Player::setQuarryProductivity(i32 prod){
 void Player::setBuildingRadious(f32 radious){
     buildingRadious = radious;
 }
+
 //==========
 // Getters
 //==========
@@ -181,4 +182,10 @@ void Player::receiveCitizens() {
 
 void Player::decreaseHappiness(i32 h) {
     happiness = happiness - h;
+    if (happiness <= -100) {
+        happiness = -100;
+    }
+    if (happiness >= 100) {
+        happiness = 100;
+    }
 }
