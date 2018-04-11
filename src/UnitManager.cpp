@@ -56,7 +56,7 @@ UnitManager::~UnitManager() {
     }
     inMapTroops -> clear();
     delete inMapTroops;
-    std::cout << "Map troops deleted \n";
+    //std::cout << "Map troops deleted \n";
 
     delete unitLayer;
     /* This is the cause of error */
@@ -77,7 +77,7 @@ bool UnitManager::createTroop(Enumeration::UnitType type) {
         //newUnit -> getModel() -> setScale(Vector3<f32>(25,25,25));
         newUnit -> getModel() -> setActive(false);
         newUnit -> setRecruitedCallback([&] (Unit* u){
-            std::cout << "Se ha terminado de reclutar la unidad " << u->getID() << std::endl;
+            //std::cout << "Se ha terminado de reclutar la unidad " << u->getID() << std::endl;
             //Delete in Queue
             inQueueTroops->erase(inQueueTroops->find(u->getID()));
 
@@ -94,7 +94,7 @@ bool UnitManager::createTroop(Enumeration::UnitType type) {
             }
         });
         newUnit -> setRetractedCallback([&] (Unit *u){
-            std::cout << "Se ha terminado de guardar la unidad " << u->getID() << std::endl;
+            //std::cout << "Se ha terminado de guardar la unidad " << u->getID() << std::endl;
             //Add in Hall
             inHallTroops->insert(std::pair<i32, Unit*>(u->getID(), u));
             //Delete in Map
@@ -108,7 +108,7 @@ bool UnitManager::createTroop(Enumeration::UnitType type) {
             }
         });
 
-        std::cout << "Se ha empezado a reclutar la unidad " << newUnit->getID() << std::endl;
+        //std::cout << "Se ha empezado a reclutar la unidad " << newUnit->getID() << std::endl;
         inQueueTroops -> insert(std::pair<i32, Unit*>(newUnit->getID(), newUnit));
         if (team == Enumeration::Team::Human){
             Hud::Instance()->addTroopToQueue(newUnit->getID(), newUnit->getType());
@@ -213,7 +213,7 @@ void UnitManager::deploySelectedTroop(Vector3<f32> p) {
         if (team == Enumeration::Team::Human){
             Hud::Instance()->removeTroopFromHall(temp->getID());
         }
-        std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
+        //std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
 
         currentDeployingTroop = -1;
         deployingTroop = false;
@@ -249,7 +249,7 @@ void UnitManager::deployAllTroops(Vector3<f32> p){
         if (team == Enumeration::Team::Human){
             Hud::Instance()->removeTroopFromHall(temp->getID());
         }
-        std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
+        //std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
     }
     
     //Delete in hall

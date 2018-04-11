@@ -87,9 +87,6 @@ class Building : public Entity {
 
         //True if the building is finished and false if it is not.
         bool finished;
-
-        //True if the building is near the camera and false if not. It is used to do the level of detail of the mesh
-        bool near;
 };
 
 #endif

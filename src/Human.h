@@ -6,7 +6,7 @@
 
 /**
  * @class Human.
- * @brief Create a Human type object. Public heritage from Player class.
+ * @brief Create a Human type object. Public heritage from Player class. Singleton class.
  */
 class Human : public Player {
 
@@ -34,7 +34,7 @@ class Human : public Player {
 
         /**
          * @brief Determinate if the player's city is under attack.
-         * @return The true if there ir any enemie troop near the player's city and false in other case.
+         * @return True if there ir any enemie troop near the player's city and false in other case.
          */
         bool getUnderAttack();
 

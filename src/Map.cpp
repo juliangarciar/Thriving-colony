@@ -263,6 +263,6 @@ CameraController* Map::getCamera() {
     return camera;
 }
 
-void Map::loadProgress(int p){
+void Map::loadProgress(i32 p){
     std::cout << "Porcentaje de carga del mapa: " << p << "%" << std::endl;
 }

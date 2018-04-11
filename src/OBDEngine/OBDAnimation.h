@@ -45,7 +45,6 @@ class OBDAnimation {
 
 
     private:
-
         TNode* animationNode;
         TNode* rotationNode;
         TNode* translationNode;

@@ -49,7 +49,6 @@ class StartMenu {
         ComboBox *resolutionCb;
 
         Button *buttonAccept;
-        Slider *volumeSlider;
         
         //PlayMenu
         Panel *bgPlay;
