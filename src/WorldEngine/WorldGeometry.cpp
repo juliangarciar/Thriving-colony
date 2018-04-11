@@ -155,7 +155,7 @@ void WorldGeometry::Init(){
             cellsDistance[j][k] = calculateDistance(mCells[j]->getPosition(), neighbors[k]->getPosition());
             /* Debug intended */
             if(cellsDistance[j][k] == 0){
-                std::cout << "Weird stuff happens at init at: " << j << "," << k << "\n";
+                //std::cout << "Weird stuff happens at init at: " << j << "," << k << "\n";
             }
         }
     }
@@ -191,21 +191,22 @@ Vector2<f32> WorldGeometry::correctBuildingPosition(Vector2<f32> targetPos, Buil
     if(buildingPtr != NULL){
         Cell* dummy = positionToCell(targetPos);
         Vector2<f32> storage;
-        if(buildingPtr -> getCells() % 2 == 0){
+        /* Change this method */
+        if(buildingPtr -> getCellsX() % 2 == 0){
             storage = dummy->getHitbox().TopLeft();
             correctOne.x = storage.x;
             correctOne.y = storage.y;
             storage.x -= CELL / 2;
             storage.y -= CELL / 2;
-            storage.x -= (buildingPtr -> getCells() / 2) * (CELL / 2);
-            storage.y -= (buildingPtr -> getCells() / 2) * (CELL / 2);
+            storage.x -= (buildingPtr -> getCellsX() / 2) * (CELL / 2);
+            storage.y -= (buildingPtr -> getCellsY() / 2) * (CELL / 2);
         }
         else{
             storage = dummy->getHitbox().Center();
             correctOne.x = storage.x;
             correctOne.y = storage.y;
-            storage.x -= (buildingPtr -> getCells() - 1) * (CELL / 2);
-            storage.y -= (buildingPtr -> getCells() - 1) * (CELL / 2);
+            storage.x -= (buildingPtr -> getCellsX() - 1) * (CELL / 2);
+            storage.y -= (buildingPtr -> getCellsY() - 1) * (CELL / 2);
         }
     }
     return correctOne;
@@ -302,7 +303,7 @@ f32 WorldGeometry::calculateDistance(Vector2<f32> a, Vector2<f32> b){
 }
 f32 WorldGeometry::getCost(i32 indexA, i32 indexB){
     if(cellsDistance[indexA][indexB] == 0)
-        std::cout << "Weird stuff happens \n";
+        //std::cout << "Weird stuff happens \n";
     return cellsDistance[indexA][indexB];
 }
 std::vector< Unit* > WorldGeometry::getNeighborUnits(Vector2<f32> positionVector){
@@ -316,7 +317,7 @@ std::vector< Unit* > WorldGeometry::getNeighborUnits(Vector2<f32> positionVector
         }
     }
     if(!neighborUnits.empty()){
-        std::cout << "UNIDADES CERCANAS DETECTADAS -->" << neighborUnits.size() << "\n";
+        //std::cout << "UNIDADES CERCANAS DETECTADAS -->" << neighborUnits.size() << "\n";
     }
     return neighborUnits;
 }

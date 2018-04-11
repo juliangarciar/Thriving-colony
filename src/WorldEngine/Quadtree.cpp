@@ -124,7 +124,7 @@ bool Quadtree::canBuild(Box2D otherHitbox){
         for(i32 i = 0; i < 4; i++){
             if(innerTrees[i]->getHitbox().isOverlappedWith(otherHitbox)){
                 if(deep == 1){
-                    std::cout << "Estas en el Quadtree: " << i << "\n";
+                    //std::cout << "Estas en el Quadtree: " << i << "\n";
                 }
                 newCenter = innerTrees[i]->canBuild(otherHitbox);
                 if(newCenter){

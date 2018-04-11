@@ -22,31 +22,26 @@ Human::~Human() {
 
 void Human::Init() {
     Player::Init();
-    buildings = new BuildingManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
-    units = new UnitManager(Enumeration::Team::Human, Enumeration::BreedType::Drorania);
+    buildings = new BuildingManager(Enumeration::Team::Human, Enumeration::BreedType::Kaonov);
+    units = new UnitManager(Enumeration::Team::Human, Enumeration::BreedType::Kaonov);
     
 }
 
 void Human::Update() {
     buildings -> updateBuildingManager();
     units -> updateUnitManager();
-    if (updateTimer <= 0.0) {
+    if (updateTimer ->tick()) {
         gainResources();
-        updateTimer = 1.0;
-    } else {
-       updateTimer -= Window::Instance() -> getDeltaTime();
     }
 }
 
 void Human::CleanUp() {
 // Add a call to clean the cells the buildings inhabit
-    std::cout << "Deleting human building \n";
     delete buildings;
-    std::cout << "Human buildings deleted \n";
-    
-    std::cout << "Deleting human troops \n";
     delete units;
-    std::cout << "Human troops deleted \n";
+    delete updateTimer;
+    delete updateFastTimer;
+    delete updateSlowTimer;
 }
 
 bool Human::getUnderAttack() {

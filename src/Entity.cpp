@@ -9,8 +9,7 @@ Entity::Entity(i32 id, Enumeration::Team t, Enumeration::BreedType b) {
 
     baseColor = video::SColor(255, 0, 0, 0); //ToDo: cambiar por material
 
-    tookDamageTimer = 0.1;
-    tookDamageCountdown = tookDamageTimer;
+    tookDamageTimer = new Timer (0.1, false);
 
     currentHP = 0;
     maxHP = 0;
@@ -32,12 +31,13 @@ Entity::~Entity() {
     delete hitbox;
     delete model;
     hostile.clear();
+    delete tookDamageTimer;
 }
 
 //METHODS
 void Entity::takeDamage(i32 dmg) {
     currentHP = currentHP-dmg;
-    tookDamageCountdown = tookDamageTimer;
+    tookDamageTimer -> restart();
     // Tint the model red
     setColor(video::SColor(255, 125, 125, 0)); //ToDo: sustituir por material
     if (currentHP <= 0) {
@@ -45,8 +45,7 @@ void Entity::takeDamage(i32 dmg) {
     }
 }
 
-void Entity::updateTarget(Entity *newTarget) {
-    // target can be null, meaning that he can't attack anything
+void Entity::setTarget(Entity *newTarget) {
     target = newTarget;
 }
 
@@ -55,10 +54,8 @@ void Entity::refreshHitbox() {
 }
 
 void Entity::returnToOriginalColor() {
-    if (tookDamageCountdown <= 0.0) {
+    if (tookDamageTimer -> tick()) {
         setColor(baseColor); //ToDo: sustituir por material
-    } else {
-        tookDamageCountdown -= Window::Instance() -> getDeltaTime(); //ToDo: sustituir por timer real
     }
 }
 
@@ -76,8 +73,8 @@ void Entity::setPosition(Vector3<f32> vectorData) {
     hitbox -> set(model -> getBoundingBox());
     
     /* Create the hitbox in another place */
-    Vector2<f32> topLeft;
-    Vector2<f32> bottomRight;
+    //Vector2<f32> topLeft;
+    //Vector2<f32> bottomRight;
     /* Adjust the hitbox properly */
     //topLeft.x = vectorData.x - 120.f;
     //topLeft.y = vectorData.z - 120.f;
@@ -151,8 +148,11 @@ irr::video::SColor Entity::getBaseColor() {
 irr::video::SColor Entity::getCurrentColor() {
     return currentColor; //ToDo: reemplazar color por material
 }
-i32 Entity::getCells(){
-    return kCells;
+i32 Entity::getCellsX(){
+    return kCellsX;
+}
+i32 Entity::getCellsY(){
+    return kCellsY;
 }
 Box2D Entity::getHit(){
     return hitBox;
@@ -177,10 +177,6 @@ void Entity::removeHostile(Entity* oldHostileUnit) {
             done = true;
         }
     }
-}
-
-void Entity::setTarget(Entity* newTarget) {
-    target = newTarget;
 }
 
 Entity* Entity::getTarget() {

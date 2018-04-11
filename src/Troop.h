@@ -28,5 +28,6 @@ class Troop{
         ~Troop();
         void setPosition(Vector3<f32> vectorPos);
         void moveTroops(Vector3<f32> vectorMov);
+        void setActive(bool data);
 };
 #endif /* TROOP_H */

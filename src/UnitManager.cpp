@@ -36,32 +36,32 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
 
 //Destroyer
 UnitManager::~UnitManager() {
-    std::cout << "Deleting unit manager \n";
+    //std::cout << "Deleting unit manager \n";
     for (std::map<i32, Unit*>::iterator it = inQueueTroops -> begin(); it != inQueueTroops -> end(); ++it){
         delete it -> second;
     }
     inQueueTroops -> clear();
     delete inQueueTroops;
-    std::cout << "Queue troops deleted \n";
+    //std::cout << "Queue troops deleted \n";
 
     for (std::map<i32, Unit*>::iterator it = inHallTroops -> begin(); it != inHallTroops -> end(); ++it){
         delete it -> second;
     }
     inHallTroops -> clear();
     delete inHallTroops;
-    std::cout << "Hall troops deleted \n";
+    //std::cout << "Hall troops deleted \n";
 
     for (std::map<i32, Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
 		delete it -> second;
     }
     inMapTroops -> clear();
     delete inMapTroops;
-    std::cout << "Map troops deleted \n";
+    //std::cout << "Map troops deleted \n";
 
     delete unitLayer;
     /* This is the cause of error */
     //if (selectedTroop != nullptr) delete selectedTroop;
-    std::cout << "Unit manager deleted \n";
+    //std::cout << "Unit manager deleted \n";
 }
 
 //Create a new troops
@@ -74,10 +74,10 @@ bool UnitManager::createTroop(Enumeration::UnitType type) {
         }
         newUnit -> setID(nextTroopId);
         // Distinto tamaño para distintas unidades?
-        newUnit -> getModel() -> setScale(Vector3<f32>(25,25,25));
+        //newUnit -> getModel() -> setScale(Vector3<f32>(25,25,25));
         newUnit -> getModel() -> setActive(false);
         newUnit -> setRecruitedCallback([&] (Unit* u){
-            std::cout << "Se ha terminado de reclutar la unidad " << u->getID() << std::endl;
+            //std::cout << "Se ha terminado de reclutar la unidad " << u->getID() << std::endl;
             //Delete in Queue
             inQueueTroops->erase(inQueueTroops->find(u->getID()));
 
@@ -94,7 +94,7 @@ bool UnitManager::createTroop(Enumeration::UnitType type) {
             }
         });
         newUnit -> setRetractedCallback([&] (Unit *u){
-            std::cout << "Se ha terminado de guardar la unidad " << u->getID() << std::endl;
+            //std::cout << "Se ha terminado de guardar la unidad " << u->getID() << std::endl;
             //Add in Hall
             inHallTroops->insert(std::pair<i32, Unit*>(u->getID(), u));
             //Delete in Map
@@ -108,7 +108,7 @@ bool UnitManager::createTroop(Enumeration::UnitType type) {
             }
         });
 
-        std::cout << "Se ha empezado a reclutar la unidad " << newUnit->getID() << std::endl;
+        //std::cout << "Se ha empezado a reclutar la unidad " << newUnit->getID() << std::endl;
         inQueueTroops -> insert(std::pair<i32, Unit*>(newUnit->getID(), newUnit));
         if (team == Enumeration::Team::Human){
             Hud::Instance()->addTroopToQueue(newUnit->getID(), newUnit->getType());
@@ -213,7 +213,7 @@ void UnitManager::deploySelectedTroop(Vector3<f32> p) {
         if (team == Enumeration::Team::Human){
             Hud::Instance()->removeTroopFromHall(temp->getID());
         }
-        std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
+        //std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
 
         currentDeployingTroop = -1;
         deployingTroop = false;
@@ -249,7 +249,7 @@ void UnitManager::deployAllTroops(Vector3<f32> p){
         if (team == Enumeration::Team::Human){
             Hud::Instance()->removeTroopFromHall(temp->getID());
         }
-        std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
+        //std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
     }
     
     //Delete in hall
@@ -295,15 +295,18 @@ void UnitManager::unSelectTroop() {
 void UnitManager::moveOrder() {
     if (selectedTroop != nullptr) {
         selectedTroop -> setTroopDestination(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
-        if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
-        // ToDo by Julian -> change attack iddle to pathfinding mode
-            selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
+        if (selectedTroop -> getState() != Enumeration::UnitState::Retract) {
 
-            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
-        } else {
-            selectedTroop -> switchState(Enumeration::UnitState::Move);
+            if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
+            // ToDo: change attack iddle to pathfinding mode
+                selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
 
-            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
+                selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
+            } else {
+                selectedTroop -> switchState(Enumeration::UnitState::Move);
+
+                selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
+            }
         }
         //MOVEMENT VOICE
         //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
@@ -463,7 +466,6 @@ void UnitManager::deployTroopAtPosition(i32 index, Vector3<f32> vectorData) {
     //Game::Instance() -> getSoundSystem() -> playVoice(selectedTroop -> getMoveEvent());
     //selectedTroop -> setTroopDestination(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
 } 
-        //VERSION DEFINITIVA, LO DE DEBAJO ES DE JULIAN DE DEBUGERUNIS
         //Unit *newUnit = new Unit(unitLayer, std::rand(), L"media/buildingModels/dummy.obj", team, breed, unitData, Vector3<f32>());
         //newUnit -> getModel() -> setScale(Vector3<f32>(128, 128, 128));
 */

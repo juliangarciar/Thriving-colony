@@ -6,7 +6,7 @@ DefeatState::DefeatState() : State() {
 }
 
 DefeatState::~DefeatState() {
-
+    
 }
 
 void DefeatState::Init() {

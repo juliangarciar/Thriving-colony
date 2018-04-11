@@ -18,12 +18,10 @@ Hud* Hud::Instance() {
 }
 
 Hud::Hud() {
-    debugTime = 0.5;
-    debugTimer = debugTime;
+    debugTimer = new Timer (0.5, true);
 
     toastBool = false;
-    toastTime = 2;
-    toastTimer = toastTime;
+    toastTimer = new Timer(2, false);
 
     popUpOpen = false;
 }
@@ -40,16 +38,16 @@ void Hud::Init(){
     //bgMain -> refreshLayout();
     //bgMain -> center();
 
-    buildingsPanel -> setPosition(Vector2<i32>(575, 546));
+    buildingsPanel -> setPosition(Vector2<i32>(125, 445));
 
     // General
-    Widget *generalWidget = new Widget(buildingsPanel);
+    generalWidget = new Widget(buildingsPanel);
     generalWidget -> setVerticalLayout();
     //generalWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(generalWidget, "General functions");
 
-    Button *buttonExpandTerrain = new Button(generalWidget, "Expand terrain");
+    buttonExpandTerrain = new Button(generalWidget, "Expand terrain");
     buttonExpandTerrain -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonExpandTerrain -> setBackgroundColor(150, 0, 200, 200);
 
@@ -58,70 +56,70 @@ void Hud::Init(){
     buttonOpenPanel -> setBackgroundColor(150, 0, 200, 200);
 
     // Resources
-    Widget *resourceWidget = new Widget(buildingsPanel);
+    resourceWidget = new Widget(buildingsPanel);
     resourceWidget -> setVerticalLayout();
     resourceWidget -> setPosition(Vector2<i32>(20, 640));
     
     new Label(resourceWidget, "Resource buildings");
-    Button *buttonHome = new Button(resourceWidget, "House");
-    buttonHome -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
-    buttonHome -> setBackgroundColor(150, 0, 200, 0);
+    buttonHouse = new Button(resourceWidget, "House");
+    buttonHouse -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
+    buttonHouse -> setBackgroundColor(150, 0, 200, 0);
 
-    Button *buttonSiderurgy = new Button(resourceWidget, "Siderurgy");
+    buttonSiderurgy = new Button(resourceWidget, "Siderurgy");
     buttonSiderurgy -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonSiderurgy -> setBackgroundColor(150, 0, 200 ,0);
 
-    Button *buttonQuarry = new Button(resourceWidget, "Quarry");
+    buttonQuarry = new Button(resourceWidget, "Quarry");
     buttonQuarry -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonQuarry -> setBackgroundColor(150, 0, 200, 0);
 
     // Services
-    Widget *serviceWidget = new Widget(buildingsPanel);
+    serviceWidget = new Widget(buildingsPanel);
     serviceWidget -> setVerticalLayout();
     serviceWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(serviceWidget, "Service buildings");
-    Button *buttonSchool = new Button(serviceWidget, "School");
+    buttonSchool = new Button(serviceWidget, "School");
     buttonSchool -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonSchool -> setBackgroundColor(150, 200, 0, 200);
 
-    Button *buttonMarket = new Button(serviceWidget, "Market");
+    buttonMarket = new Button(serviceWidget, "Market");
     buttonMarket -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonMarket -> setBackgroundColor(150, 200, 0, 200);
 
-    Button *buttonHospital = new Button(serviceWidget, "Hospital");
+    buttonHospital = new Button(serviceWidget, "Hospital");
     buttonHospital -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonHospital -> setBackgroundColor(150, 200, 0, 200);
 
     // Military
-    Widget *militaryWidget = new Widget(buildingsPanel);
+    militaryWidget = new Widget(buildingsPanel);
     militaryWidget -> setVerticalLayout();
     militaryWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(militaryWidget, "Military buildings");
-    Button *buttonBarrack = new Button(militaryWidget, "Barrack");
+    buttonBarrack = new Button(militaryWidget, "Barrack");
     buttonBarrack -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonBarrack -> setBackgroundColor(150, 200, 0, 0);
 
-    Button *buttonBarn = new Button(militaryWidget, "Barn");
+    buttonBarn = new Button(militaryWidget, "Barn");
     buttonBarn -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonBarn -> setBackgroundColor(150, 200, 0, 0);
 
-    Button *buttonWorkshop = new Button(militaryWidget, "Workshop");
+    buttonWorkshop = new Button(militaryWidget, "Workshop");
     buttonWorkshop -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonWorkshop -> setBackgroundColor(150, 200, 0, 0);
 
     // Defense
-    Widget *defenseWidget = new Widget(buildingsPanel);
+    defenseWidget = new Widget(buildingsPanel);
     defenseWidget -> setVerticalLayout();
     defenseWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(defenseWidget, "Defensive buildings");
-    Button *buttonTower = new Button(defenseWidget, "Tower");
+    buttonTower = new Button(defenseWidget, "Tower");
     buttonTower -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonTower -> setBackgroundColor(150, 0, 0, 200);
 
-    Button *buttonWall = new Button(defenseWidget, "Wall");
+    buttonWall = new Button(defenseWidget, "Wall");
     buttonWall -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonWall -> setBackgroundColor(150, 0, 0, 200);
 
@@ -136,8 +134,8 @@ void Hud::Init(){
         Human::Instance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::Barrack);
     });
 
-    buttonHome->setTooltip("Build a home that will increase your total citizens.\n Metal cost: 100.\nCitizens +10");
-    buttonHome->setCallback([]{
+    buttonHouse->setTooltip("Build a home that will increase your total citizens.\n Metal cost: 100.\nCitizens +10");
+    buttonHouse->setCallback([]{
         Human::Instance() -> getBuildingManager() -> setBuildingMode(Enumeration::BuildingType::House);
     });
 
@@ -337,8 +335,6 @@ void Hud::Init(){
             b -> setCallback([&]{
                 IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::RetractTroopsHuman);
             });
-
-            mainBuildingTab->hide();
         }
         //BarrackTab
         {
@@ -373,8 +369,6 @@ void Hud::Init(){
             barrackScroll -> setSize(Vector2<i32>(250, 50));
             barrackTroopQueueWidget = new Widget(barrackScroll);
             barrackTroopQueueWidget -> setGroupLayout();
-
-            barrackContent -> hide();
         }
         //BarnTab
         {
@@ -416,8 +410,6 @@ void Hud::Init(){
             barnScroll -> setSize(Vector2<i32>(250, 50));
             barnTroopQueueWidget = new Widget(barnScroll);
             barnTroopQueueWidget -> setVerticalLayout();
-
-            barnContent -> hide();
         }
         //Workshop tab
         {
@@ -452,36 +444,59 @@ void Hud::Init(){
             workshopScroll -> setSize(Vector2<i32>(250, 50));
             workshopTroopQueueWidget = new Widget(workshopScroll);
             workshopTroopQueueWidget -> setVerticalLayout();
-
-            workshopContent -> hide();
         }
         tabs->changeActiveTab(0);
     tabContainer->refreshLayout();
     tabContainer->center();
-    tabContainer->hide();
-
 
     toast = new Panel("");
     toast->setPosition(Vector2<i32>(570, 50));
     toastText = new Label(toast, "");
+
+    //Hide tabs
+    mainBuildingTab->hide();
+    barrackContent -> hide();
+    barnContent -> hide();
+    workshopContent -> hide();
+    tabContainer->hide();
+
+    //Hide building buttons
+    buttonHouse -> hide();
+    buttonSiderurgy -> hide();
+    buttonQuarry -> hide();
+    buttonSchool -> hide();
+    buttonMarket -> hide();
+    buttonHospital -> hide();
+    buttonBarrack -> hide();
+    buttonBarn -> hide();
+    buttonWorkshop -> hide();
+    buttonTower -> hide();
+    buttonWall -> hide();
+    buttonExpandTerrain -> hide();
+
+    //Hide panel widgets
+    generalWidget -> hide();
+    resourceWidget -> hide();
+    serviceWidget -> hide();
+    militaryWidget -> hide();
+    defenseWidget -> hide();
+
+    // Hide panel
+    buildingsPanel -> hide();
+
+    //Hide toast
     toast->hide();
 
     Window::Instance() -> setGUI();
 }
 
 void Hud::Update() { 
-    f32 dt = Window::Instance() -> getDeltaTime();
-    if (debugTimer <= 0) {
+    if (debugTimer -> tick()) {
         debug();
-        debugTimer = 0.5;
-    } else {
-        debugTimer -= dt;
     }
     if (toastBool){
-        if (toastTimer <= 0) {
+        if (toastTimer -> tick()) {
             hideToast();
-        } else {
-            toastTimer -= dt;
         }
     }
 }
@@ -491,26 +506,28 @@ void Hud::CleanUp(){
     delete tabContainer;
     delete playerResources;
     delete iaResources;
+    delete toastTimer;
+    delete debugTimer;
     //ToDo: incompleto
 }
 
 void Hud::enableTab(Enumeration::BuildingType t){
-    switch (t){
+    switch (t) {
         case Enumeration::BuildingType::Barrack:
-            barrackEmpty->hide();
-            barrackContent->show();
+            barrackEmpty -> hide();
+            barrackContent -> show();
         break;
         case Enumeration::BuildingType::Barn:
-            barnEmpty->hide();
-            barnContent->show();
+            barnEmpty -> hide();
+            barnContent -> show();
         break;
         case Enumeration::BuildingType::Workshop:
-            workshopEmpty->hide();
-            workshopContent->show();
+            workshopEmpty -> hide();
+            workshopContent -> show();
         break;
         default: break;
     }
-    tabContainer->refreshLayout();
+    tabContainer -> refreshLayout();
 }
 
 void Hud::disableTab(Enumeration::BuildingType t){
@@ -597,8 +614,8 @@ void Hud::addTroopToHall(i32 idTroop, Enumeration::UnitType t){
         break;
         default: break;
     }
-    troopsInHallIDs . push_back(idTroop);
-    tabContainer->refreshLayout();
+    troopsInHallIDs.push_back(idTroop);
+    tabContainer -> refreshLayout();
 }
 
 void Hud::removeTroopFromHall(i32 idTroop){
@@ -606,8 +623,8 @@ void Hud::removeTroopFromHall(i32 idTroop){
    if (it != troopsInHallIDs.end()) {
         i32 nPosition = std::distance(troopsInHallIDs.begin(), it);
         hallTroopList -> removeOption(nPosition);
-        troopsInHallIDs . erase(it);
-        tabContainer->refreshLayout();
+        troopsInHallIDs.erase(it);
+        tabContainer -> refreshLayout();
    }
 }
 
@@ -691,7 +708,7 @@ void Hud::addTroopToQueue(i32 idTroop, Enumeration::UnitType t){
 void Hud::modifyTroopFromQueue(i32 idTroop, f32 newValue){
     std::map<i32,ProgressBar*>::iterator it = troopQueueProgressBars . find(idTroop);
     if (it != troopQueueProgressBars.end()) {
-        it->second->setValue(newValue);
+        it -> second -> setValue(newValue);
     }
     tabContainer->refreshLayout();
 }
@@ -699,7 +716,7 @@ void Hud::modifyTroopFromQueue(i32 idTroop, f32 newValue){
 void Hud::removeTroopFromQueue(i32 idTroop){
     std::map<i32,ProgressBar*>::iterator it = troopQueueProgressBars . find(idTroop);
     if (it != troopQueueProgressBars.end()) {
-        troopQueueProgressBars . erase(it);
+        troopQueueProgressBars.erase(it);
     }
     std::map<i32, Widget*>::iterator it2 = troopQueueList . find(idTroop);
     if (it2 != troopQueueList.end()) {
@@ -718,12 +735,12 @@ void Hud::updatePositions() {
 }
 
 void Hud::showToast(std::string s){
-    //ToDo: queue?
+    //ToDo: string queue?
     if (!toastBool){
         toastText->setLabel(s);
         toast->refreshLayout();
         toast->show();
-        toastTimer = toastTime;
+        toastTimer -> restart();
         toastBool = true;
     }
 }
@@ -731,6 +748,82 @@ void Hud::showToast(std::string s){
 void Hud::hideToast(){
     toast->hide();
     toastBool = false;
+}
+
+void Hud::setButtonStatus(Enumeration::BuildingType b, bool status){
+    switch(b){
+        case Enumeration::BuildingType::Barn:
+            if (status) buttonBarn -> show();
+            else buttonBarn -> hide();
+        break;
+        case Enumeration::BuildingType::Barrack:
+            if (status) buttonBarrack -> show();
+            else buttonBarrack -> hide();
+        break;
+        case Enumeration::BuildingType::Hospital:
+            if (status) buttonHospital -> show();
+            else buttonHospital -> hide();
+        break;
+        case Enumeration::BuildingType::House:
+            if (status) buttonHouse -> show();
+            else buttonHouse -> hide();
+        break;
+        case Enumeration::BuildingType::Market:
+            if (status) buttonMarket -> show();
+            else buttonMarket -> hide();
+        break;
+        case Enumeration::BuildingType::Quarry:
+            if (status) buttonQuarry -> show();
+            else buttonQuarry -> hide();
+        break;
+        case Enumeration::BuildingType::School:
+            if (status) buttonSchool -> show();
+            else buttonSchool -> hide();
+        break;
+        case Enumeration::BuildingType::Siderurgy:
+            if (status) buttonSiderurgy -> show();
+            else buttonSiderurgy -> hide();
+        break;
+        case Enumeration::BuildingType::Tower:
+            if (status) buttonTower -> show();
+            else buttonTower -> hide();
+        break;
+        case Enumeration::BuildingType::Wall:
+            if (status) buttonWall -> show();
+            else buttonWall -> hide();
+        break;
+        case Enumeration::BuildingType::Workshop:
+            if (status) buttonWorkshop -> show();
+            else buttonWorkshop -> hide();
+        break;
+        case Enumeration::BuildingType::BuildingsSize:
+            if (status) buttonExpandTerrain -> show();
+            else buttonExpandTerrain -> hide();
+        break;
+        default: break;
+    }
+    adjustMenuVisibility();
+    buildingsPanel -> refreshLayout();
+}
+
+void Hud::adjustMenuVisibility(){
+    if (!buttonSiderurgy -> isVisible() && !buttonQuarry -> isVisible() && !buttonHouse -> isVisible()) resourceWidget -> hide();
+    else resourceWidget -> show();
+
+    if (!buttonSchool -> isVisible() && !buttonMarket -> isVisible() && !buttonHospital -> isVisible()) serviceWidget -> hide();
+    else serviceWidget -> show();
+
+    if (!buttonBarrack -> isVisible() && !buttonBarn -> isVisible() && !buttonWorkshop -> isVisible()) militaryWidget -> hide();
+    else militaryWidget -> show();
+
+    if (!buttonTower -> isVisible() && !buttonWall -> isVisible()) defenseWidget -> hide();
+    else defenseWidget -> show();
+
+    if (!buttonExpandTerrain -> isVisible() && !militaryWidget -> isVisible()) generalWidget -> hide();
+    else generalWidget -> show();
+
+    if (!generalWidget -> isVisible() && !resourceWidget -> isVisible() && !serviceWidget -> isVisible() && !militaryWidget -> isVisible() && !defenseWidget->isVisible()) buildingsPanel -> hide();
+    else buildingsPanel -> show();
 }
 
 void Hud::debug(){

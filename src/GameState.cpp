@@ -16,9 +16,14 @@ GameState::~GameState() {
 void GameState::Init() {
     IO::Instance() -> getResourceManager()->loadResource("media/map/map.json");
  
+    //Init players
     human -> Init(); 
     ia -> Init();
 
+    //Init HUD
+    hud -> Init();
+
+    //Load map
     map -> Init();
 
     //Initialize the event system
@@ -50,9 +55,6 @@ void GameState::Init() {
         hud->showToast("Se ha reclutado una tropa");
     });
 
-    //Init HUD
-    hud -> Init();
-
     //Init battle manager
     battleManager = new BattleManager();
 
@@ -72,7 +74,7 @@ void GameState::Input() {
             ia -> getUnitManager() -> testRaycastCollisions();
 
             i32 onMap = true;
-
+            bool sentToMainHall = false;
             //Interactions with our entities
             i32 idBuilding = human -> getBuildingManager() -> getCollisionID();
             if (idBuilding != -1){
@@ -87,10 +89,21 @@ void GameState::Input() {
                         }
                     }
                 }
+                // Right clicked
+                if (IO::Instance() -> getMouse() -> rightMousePressed()) {
+                    // Have a troop
+                    if (human -> getUnitManager() -> isTroopSelected()) {
+                        // Main hall
+                        if (idBuilding == 0) {
+                            human -> getUnitManager() -> getSelectedTroop() -> switchState(Enumeration::UnitState::Retract);
+                            sentToMainHall = true;
+                        }
+                    }
+                }
 
                 onMap = false;
             }
-
+            
             i32 idTroop = human -> getUnitManager() -> getCollisionID();
             if (idTroop != -1){
                 if (!human -> getUnitManager() -> isTroopSelected())
@@ -144,7 +157,7 @@ void GameState::Input() {
                             human -> getUnitManager() -> deployAllTroops(map->getMouseCollitionPoint());
                         }
                     } else {
-                        std::cout << "Ninguna tropa seleccionada" << std::endl;
+                        //std::cout << "Ninguna tropa seleccionada" << std::endl;
                     }
                 } else 
                     IO::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);
@@ -183,7 +196,7 @@ void GameState::Update(){
         hud -> Update();
 
         //NEW SOUND SYSTEM
-        /* SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");*/
+        SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");
         SoundSystem::Instance() -> update();
         
         //If human is building something

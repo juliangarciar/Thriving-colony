@@ -4,10 +4,11 @@
 #include "Entity.h"
 #include <functional>
 #include <Types.h>
+#include <IOEngine/Timer.h>
 
 /**
  * @class Building.
- * @brief Create a Building type object.
+ * @brief Create a Building type object. Public heritage from Entity class.
  */
 class Building : public Entity {
     
@@ -79,16 +80,13 @@ class Building : public Entity {
         Enumeration::BuildingType type;
 
         //Building timer used for the construction time.
-        f32 buildTimer;
+        Timer* buildTimer;
 
         //Finish building callback
         std::function<void(Building*)> callback;
 
         //True if the building is finished and false if it is not.
         bool finished;
-
-        //True if the building is near the camera and false if not. It is used to do the level of detail of the mesh
-        bool near;
 };
 
 #endif

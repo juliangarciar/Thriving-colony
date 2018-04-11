@@ -3,6 +3,7 @@
 		"heightmap": "media/map/mapa3-256x256.bmp",
 		"texture": "media/map/map-texture.jpg",
 		"detail_texture": "media/map/map-detail-texture.jpg",
+		"skybox_texture": "media/map/skybox-texture.jpg",
 		"size":{
 			"x": 40,
 			"y": 20,
@@ -24,6 +25,20 @@
 			"intensity": 100000
 		}
 	],
+	"hud":{
+		"BarnButton": true,
+		"BarrackButton": true,
+		"HospitalButton": true,
+		"HouseButton": true,
+		"MarketButton": true,
+		"QuarryButton": true,
+		"SiderurgyButton": true,
+		"SchoolButton": true,
+		"TowerButton": true,
+		"WallButton": true,
+		"WorkshopButton": true,
+		"ExpandTerrainButton": true
+	},
 	"player":
 	{
 		"initial_metal": 1200,
@@ -35,8 +50,8 @@
 			{
 				"type": "MainBuilding", 
 				"position": {
-					"x": 8000,
-					"z": 8000
+					"x": 8040,
+					"z": 8040
 				},
 				"scale": {
 					"x": 0,
@@ -52,8 +67,8 @@
 			{
 				"type": "Siderurgy", 
 				"position": {
-					"x": 8000,
-					"z": 8500
+					"x": 8120,
+					"z": 8600
 				},
 				"scale": {
 					"x": 0,
@@ -79,8 +94,8 @@
 			{
 				"type": "MainBuilding", 
 				"position": {
-					"x": 2000,
-					"z": 2000
+					"x": 1960,
+					"z": 1960
 				},
 				"scale": {
 					"x": 0,
@@ -96,8 +111,8 @@
 			{
 				"type": "Siderurgy", 
 				"position": {
-					"x": 2000,
-					"z": 1500
+					"x": 2120,
+					"z": 1480
 				},
 				"scale": {
 					"x": 0,

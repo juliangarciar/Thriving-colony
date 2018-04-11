@@ -67,7 +67,7 @@ Vector3<T> Vector3<T>::rotateFromPoint(f32 r, f32 phi, f32 theta) {
 
     return point;
 }
-// Added by Julian
+
 template <class T>
 Vector2<T> Vector3<T>::toVector2(){
     Vector2<T> dummy;

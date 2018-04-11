@@ -13,67 +13,78 @@
 #include <Types.h>
 
 /**
- * @class GameState
- * @brief Tiene herencia publica de State y crea un objeto tipo GameState
+ * @class GameState.
+ * @brief Create a GameState type object. Public heritage from State class.
  */
 class GameState : public State {
     public:
         /**
-		 * @brief Constructor de GameState
-		 */
+         * @brief GameState constructor.
+         */
+
         GameState();
+
         /**
-		 * @brief Destructor
-		 */
+         * @brief GameState destructor.
+         */
         virtual ~GameState();
 
          /**
-		 * @brief Inicializa GameState
-		 */
+         * @brief Initialize the variables.
+         */
         void Init();
+
         /**
-		 * @brief Recoge las entradas de teclado y raton
-		 */
+         * @brief Update all inputs of the variables.
+         */
         void Input();
+
         /**
-		 * @brief Actualiza
-		 */
+         * @brief Update the variables.
+         */
         void Update();
+
         /**
-		 * @brief Renderiza
-		 */
+         * @brief Render.
+         */
         void Render();
+
         /**
-		 * @brief Constructor
-		 */
+         * @brief Delete all variables.
+         */
         void CleanUp();
         
          /**
-        * @brief Devuelve el manejador de batalla
-        * @return objeto de tipo BattleManager
+        * @brief Get the battle manager.
+        * @return Pointer to a BattleManager object that will be the value of battleManager variable.
         */
         BattleManager* getBattleManager();
 
         /**
-         * @brief 
-         * 
+         * @brief Delete pauseMenu variable and set gamePaused as false.
          */
         void cleanGamePaused();
 
     private:
-        //Singletons
+        //Pointer to the human player's object.
         Human *human;
+
+        //Pointer to the AI player's object.
         IA *ia;
+
+        //Pointer to the map that will be used.
         Map *map;
+
+        //Pointer to the hud that will be used.
         Hud *hud;
 
-        //Pause
+        //Pointer to the hud of pause mode.
         PauseMenu *pauseMenu;
         
-        //Battles
+        //Pointer to the battle manager.
         BattleManager *battleManager;
 
-        // This is for pausing
+        //True when the game is paused and false in other case.
         bool gamePaused;
 };
 

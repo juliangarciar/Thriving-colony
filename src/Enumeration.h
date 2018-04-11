@@ -2,24 +2,25 @@
 #define ENUMERATION_H
 
 /**
- * @class Enumeration
- * @brief Declara las enumeraciones que van a ser necesarias
+ * @class Enumeration.
+ * @brief Set the enumerations that are going to be needed.
  */
 class Enumeration {
     public:
-        // Breed types
+
+        //Civilizations.
         enum BreedType {
             Drorania,
             Kaonov
         };
 
-        //Team
+        //Teams.
         enum Team {
             Human,
             IA
         };
 
-        //Game states
+        //Game states.
         enum State {
             DefeatState,
             GameState,
@@ -27,7 +28,7 @@ class Enumeration {
             WinState
         };
 
-        //Building types
+        //Building types.
         enum BuildingType {
             MainBuilding,
             Barn,
@@ -44,7 +45,7 @@ class Enumeration {
             BuildingsSize
         };
 
-        //Unit types
+        //Unit types.
         enum UnitType {
             StandardR,
             AdvancedR,
@@ -56,22 +57,22 @@ class Enumeration {
             TroopsSize
         };
 
-        //Unit types
+        //Event types.
         enum EventType {
-            //IA
+            //AI events.
             DeployTroopsIA,
             RetractTroopsIA,
 
-            //Human
+            //Human events.
             DeployTroopsHuman,
             RetractTroopsHuman,
 
-            //Text
+            //Text events.
             showBuiltText,
             showRecruitedText
         };
         
-        //Unit states
+        //Unit states.
         enum UnitState {
             Recruiting,
             InHome,
@@ -83,6 +84,7 @@ class Enumeration {
             Retract
         };
 
+        //Metal and crystal costs of each building.
         enum BuildingCost {
             SchoolMetalCost = 500,
             SchoolCrystalCost = 0,
@@ -117,57 +119,41 @@ class Enumeration {
             TowerMetalCost = 300,
             TowerCrystalCost = 0,
         };
+
+        //Cells occupied by each building.
         enum BuildingCells{
             MainCells = 3,
-
             SchoolCells = 2,
-
             MarketCells = 2,
-
             HospitalCells = 3,
-
             SiderurgyCells = 3,
-
             QuarryCells = 3,
-
             HomeCells = 1,
-
             BarrackCells = 3,
-
             BarnCells = 2,
-
             WorkshopCells = 2,
-
             WallCells = 1,
-
             TowerCells = 1
 
         };
+
+        //
         enum BuildingHalfsize{
             MainHalfsize = 120,
-
             SchoolHalfsize = 80,
-
             MarketHalfsize = 80,
-
             HospitalHalfsize = 120,
-
             SiderurgyHalfsize = 120,
-
             QuarryHalfsize = 120,
-
             HomeHalfsize = 40,
-
             BarrackHalfsize = 80,
-
             BarnHalfsize = 80,
-
             WorkshopHalfsize = 80,
-
             WallHalfsize = 40,
-
             TowerHalfsize = 40
         };
+
+        //Metal and crystal costs of each unit.
         enum UnitCost {
             MeleeFootmenMetalCost = 125,
             MeleeFootmenCrystalCost = 0,
@@ -191,7 +177,7 @@ class Enumeration {
             RamCrystalCost = 160,
         };
 
-        // Enumeration for UP, DOWN, PRESSED and RELEASED key states. Also used for mouse button states.
+        //IO states.
         enum ioStatesENUM {
             PRESSED, 
             RELEASED, 
@@ -199,6 +185,7 @@ class Enumeration {
             DOWN
         };
 
+        //AI choices.
         enum IAChoices {
             DeployingTroops,
             TrainMeleeFootman,
@@ -224,6 +211,7 @@ class Enumeration {
 
         };
 
+        //AI types of behaviour.
         enum IABehaviour {
             VeryHappy,
             Happy,
@@ -232,11 +220,13 @@ class Enumeration {
             VeryUnhappy
         };
 
+        //Entity types.
         enum EntityType {
             Building,
             Unit
         };
 
+        //Amount of happiness provided by each building.
         enum HappinessProvided {
             AmountHappinessBarn = 0,
             AmountHappinessBarrack = 0,
@@ -251,16 +241,19 @@ class Enumeration {
             AmountHappinessWorkshop = 0
         };
         
+        //Position of the AI's command center.
         enum IACityHall {
             ia_x = 2000,
             ia_z = 2000
         };
 
+        //Position of the Human's command center.
         enum HumanCityHall {
             human_x = 8000,
             human_z = 8000
         };
 
+        //Margins of the map.
         enum MapMargins {
             mapMarginTop = 1500,
             mapMarginLeft = 1500,
@@ -268,6 +261,7 @@ class Enumeration {
             mapMarginRight = 8500
         };
 
+        //Army level provided by each type of unit.
         enum ArmyLevel {
             Footmen = 5,
             Mounted = 10,
@@ -283,7 +277,6 @@ class Enumeration {
         };
 
     private:
-        
         //Old buttons
         enum idGUI {
             ID0,
@@ -321,7 +314,6 @@ class Enumeration {
             GUI_ID_EXPAND_TERRAIN_BUTTON,
             GUI_ID_OPEN_PANEL_BUTTON
         };
-
 };
 
 #endif
