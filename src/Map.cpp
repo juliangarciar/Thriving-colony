@@ -19,11 +19,14 @@ Map* Map::Instance() {
     return pinstance;
 }
 
-Map::Map() {    
+Map::Map() {
+
 }
 
 Map::~Map() {
-    delete skydome;
+    delete skydome; //Violacion del segmento al borrar.
+    delete terrain;
+    delete camera;
 }
 
 void Map::Init() {
@@ -241,6 +244,7 @@ void Map::CleanUp() {
     lights.clear();
     delete terrain;
     delete camera;
+    //delete skydome; Violacion del segmento al borrar.
 }
 
 Vector3<f32> Map::getHumanStartPosition(){

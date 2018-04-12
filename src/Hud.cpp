@@ -502,13 +502,68 @@ void Hud::Update() {
 }
 
 void Hud::CleanUp(){
-    delete buildingsPanel;
-    delete tabContainer;
-    delete playerResources;
-    delete iaResources;
     delete toastTimer;
     delete debugTimer;
-    //ToDo: incompleto
+
+    delete buttonExpandTerrain;
+    delete buttonOpenPanel;
+    delete buttonHouse;
+    delete buttonSiderurgy;
+    delete buttonQuarry;
+    delete resourceWidget;
+    delete buttonSchool;
+    delete buttonMarket;
+    delete buttonHospital;
+    delete serviceWidget;
+    delete buttonBarrack;
+    delete buttonBarn;
+    delete buttonWorkshop;
+    delete militaryWidget;
+    delete buttonTower;
+    delete buttonWall;
+    delete defenseWidget;
+    delete buildingsPanel;
+    delete generalWidget;
+
+    delete playerMetalAmount;
+    delete playerCrystalAmount;
+    delete playerCitizens;
+    delete playerHappiness;
+    delete playerCityLevel;
+    delete playerArmySize;
+    delete playerMelees;
+    delete playerRangeds;
+    delete playerSieges;
+    delete playerResources;
+
+    delete iaMetalAmount;
+    delete iaCrystalAmount;
+    delete iaCitizens;
+    delete iaHappiness;
+    delete iaCityLevel;
+    delete iaArmySize;
+    delete iaMelees;
+    delete iaRangeds;
+    delete iaSieges;
+    delete iaNextChoice;
+    delete iaBehaviour;
+    delete iaResources;
+
+    delete hallTroopList;
+    delete barrackEmpty;
+    delete barrackTroopQueueWidget;
+    delete barrackContent;
+    delete barnEmpty;
+    delete barnTroopQueueWidget;
+    delete barnContent;
+    delete workshopEmpty;
+    delete workshopTroopQueueWidget;
+    delete workshopContent;
+    delete tabs;
+    delete tabContainer;
+
+    delete toastText;
+    delete toast;
 }
 
 void Hud::enableTab(Enumeration::BuildingType t){

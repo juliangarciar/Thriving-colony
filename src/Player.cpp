@@ -7,8 +7,6 @@ Player::Player() {
 }
 
 Player::~Player() {
-    delete units;
-    delete buildings;
     delete updateTimer;
     delete updateFastTimer;
     delete updateSlowTimer;

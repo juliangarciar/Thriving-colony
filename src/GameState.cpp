@@ -11,6 +11,7 @@ GameState::GameState() : State() {
 }
 
 GameState::~GameState() {
+    
 } 
 
 void GameState::Init() {
