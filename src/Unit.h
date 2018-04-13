@@ -68,6 +68,12 @@ class Unit : public Entity {
         Enumeration::UnitType getType();
 
         Enumeration::UnitState getState();
+
+        /**
+         * @breif Get the army level that the entity provides to the player's city.
+         * @return i32 that will be the value of the armyLevel variable.
+         */
+        i32 getArmyLevel();
     private:
         /**
          * @brief inicia

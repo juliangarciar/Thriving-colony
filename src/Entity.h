@@ -7,87 +7,34 @@
 #include <IOEngine/Timer.h>
 #include <MathEngine/Box3D.h>
 #include <MathEngine/Box2D.h>
-<<<<<<< HEAD
-
-class Model;
-class SceneNode;
-=======
 #include <GraphicEngine/Model.h>
 #include <GraphicEngine/SceneNode.h>
 #include <IOEngine/Timer.h>
->>>>>>> master
 
 /**
  * @class Entity.
  * @brief Create a Entity type object.
  */
 class Entity {
-
     public:
-<<<<<<< HEAD
-        Entity(i32, Enumeration::Team, Enumeration::EntityType);
-        virtual ~Entity();
-
-        /* MAIN FUNCTIONS */
-        void refreshHitbox();
-        void takeDamage(i32);
-        void addHostile(Entity* hostileTarget);
-        void removeHostile(Entity* hostileTarget);
-        void putHostileTargetsToNull();
-
-        /* SETTERS */
-        void setTarget(Entity*);
-        void setModel(SceneNode* sNode, const wchar_t* modelPath);
-        void setPosition(Vector2<f32> positionVector);
-        void setID(i32 idValue);
-        
-        /* GETTERS */
-        i32 getHP() const;
-        i32 getViewRadius() const;
-        i32 getHappiness() const;
-        i32 getID() const;
-        Enumeration::Team getTeam() const; 
-        Enumeration::EntityType getEntityType() const; /* Is this needed? We just need to know that's an entity (?) */
-        Model* getModel() const;
-        std::vector<Entity*> getHostile() const;
-        Entity* getTarget() const;
-        Vector2<f32> getPosition() const; 
-        Box3D<f32> getHitBox() const;
-        Box2D getHit() const;
-        i32 getCellsX() const;
-        i32 getCellsY() const;
-    protected:
-        i32 ID;
-        Enumeration::Team team;
-        Enumeration::EntityType entityType;
-
-        //Entity data
-        i32 maxHP;
-=======
         /**
          * @brief Entity constructor.
          * @param The id32 is the id number that will identify the entity.
          * @param The Enumeration::Team is the team to which belongs the entity: Enumeration::Team::Human or Enumeration::Team::IA.
-         * @param The Enumeration::BreedType is the civilization to which belongs the entity: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov.
+         * @param The Enumeration::EntityType is type of entity.
          */
-        Entity(i32, Enumeration::Team, Enumeration::BreedType);
+        Entity(i32, Enumeration::Team, Enumeration::EntityType);
 
         /**
-		 * @brief Entity destructor
-		 */
+         * @brief Entity destructor
+         */
         virtual ~Entity();
 
         /**
-         * @brief Subtract damage passed by parameter to currentHP variable.
-         * @param The i32 is the damage that is going to be subtracted to currentHP variable.
-		 */
-        void takeDamage(i32);
-
-        /**
-		 * @brief Set target as the value passed by parameter
-         * @param The pointer to Entity is the value that is going be assigned to target variable. It can be NULL.
-		 */
-        void setTarget(Entity*);
+         * @brief Update the entity
+         * 
+         */
+        void update();
 
         /**
          * @brief Set the entity hitbox.
@@ -95,197 +42,168 @@ class Entity {
         void refreshHitbox();
 
         /**
-		 * @brief Set the color of the model to its original color unless tookDamageCountdown variable is higher than 0.
-         * @see setColor(irr::video::SColor) method of Entity class.
-         * ToDo: cambiar por material
-		 */
-        void returnToOriginalColor();
-
-        /**
-         * @brief Create the model, hitbox and position of the entity.
-         * @param The SceneNode is a pointer to the layer where is going to be created the entity.
-         * @param The const wchar_t is a pointer to the path of the file with the model.
-         */
-        void setModel(SceneNode *, const wchar_t *);
-        
-        /**
-		 * @brief Set the position of the model, hitbox, hitBox and position variables as the one passed by parameter.
-         * @param The Vector3 is the value that is going to be assigned as position to model, hitbox, hitBox and position variables.
-		 */
-        void setPosition(Vector3<f32>);
-
-        /**
-         * @brief Set currentColor variable as the one passed by parameter.
-         * @param The irr::video::SColor is the color that is going to be assigned to currentColor variable.
-         */
-        void setColor(irr::video::SColor);
-
-        /**
-         * @brief Set a new id to the entity.
-         * @param The i32 is the value that is going to be assigned to ID variable.
-         */
-        void setID(i32);
-
-        /**
-         * @brief Get current traget of the entity.
-         * @return A pointer to an Entity object if the entity has current target and NULL in other case.
-         */
-        Entity* getTarget();
-
-        /**
-		 * @brief Get the attack range of the entity.
-         * @return i32 that will be the value of attackRange variable.
-		 */
-        i32 getAttackRange();
-
-        /**
-		 * @brief Get the team of the entity.
-         * @return Enumeration::Team that will be the value of team variable: Enumeration::Team::Human or Enumeration::Team::IA.
-		 */
-        Enumeration::Team getTeam();
-        
-        /**
-         * @brief Get the type of the entity.
-         * @return Enumeration::EntityType that will be the value of entityType variable: Enumeration::EntityType::Building or Enumeration::EntityType::Unit.
-         */
-        Enumeration::EntityType getEntityType();
-
-        /**
-		 * @brief Get the current hp of the entity.
-         * @return i32 that will be the current value of currentHP variable.
-		 */
-        i32 getHP();
-
-        /**
-		 * @brief Get the current position of the entity.
-         * @return Pointer to a Vector3 objetc that will be the value of the position variable.
-		 */
-        Vector3<f32> *getPosition();
-
-        /**
-		 * @brief Get the hitbox of the entity.
-         * @return Pointer to a Box3D object that will be the value of the hitbox variable.
-		 */
-        Box3D<f32> *getHitbox();
-
-        /**
-		 * @brief Get the model of the entity.
-         * @return Pointer to a Model object that will be the value of the model variable.
-		 */
-        Model *getModel();
-
-        /**
-		 * @brief Get the distance until where the entity can see enemies.
-         * @return i32 that will be the value of the viewRadius variable.
-		 */
-        i32 getViewRadius();
-
-        /**
-         * @brief Get id of the entity.
-         * @return i32 that will be the value of the ID variable.
-         */
-        i32 getID();
-
-         /**
-          * @brief Get the happiness that the entity provides to the player's city.
-          * @return i32 that will be the value of the happiness variable.
-          */
-        i32 getHappiness();
-        
-        /**
-         * @brief Get the color of the entity.
-         * @return irr::video::SColor that will be the value of the baseColor variable.
-         */
-        irr::video::SColor getBaseColor(); //ToDo: cambiar por material
-
-        /**
-         * @brief Get the current color of the entity.
-         * @return irr::video::SColor that will be the value of the currentColor variable.
-         */
-        irr::video::SColor getCurrentColor(); //ToDo: cambiar por material
-
-        /**
-         * @breif
-         * @return
-         */
-        i32 getCellsX();
-
-        /**
-         * @breif
-         * @return
-         */
-        i32 getCellsY();
-
-        /**
-         * @breif
-         * @return
-         */
-        Box2D getHit();
-
-        /**
-         * @breif Get the army level that the entity provides to the player's city.
-         * @return i32 that will be the value of the armyLevel variable.
-         */
-        i32 getArmyLevel();
-
-        /**
-         * @breif Get all the enemies that have as target the entity.
-         * @return std::vector<Entity*> that will be the value of the hostile variable.
-         */
-        std::vector<Entity*> getHostile();
+         * @brief Subtract damage passed by parameter to currentHP variable.
+         * @param The i32 is the damage that is going to be subtracted to currentHP variable.
+	*/
+        void takeDamage(i32);
 
         /**
          * @breif Add an entity to the vector of enemies that have as target the entity.
          * @param Pointer to the entity that is going to be added to hostile variable.
          */
-        void addHostile(Entity*);
+        void addHostile(Entity* hostileTarget);
 
         /**
          * @breif Remove an entity from the vector of enemies that have as target the entity.
          * @param Pointer to de the entity that is going to be removed from hostile variable.
          */
-        void removeHostile(Entity*);
+        void removeHostile(Entity* hostileTarget);
 
         /**
          * @breif Set all the enemies' target variable stored at hostile variable to NULL.
          */
         void putHostileTargetsToNull();
 
+        /**
+	 * @brief Set the color of the model to its original color
+	 */
+        void returnToOriginalMaterial();
+
+        /**
+	* @brief Set target as the value passed by parameter
+         * @param The pointer to Entity is the value that is going be assigned to target variable. It can be NULL.
+	*/
+        void setTarget(Entity*);
+
+        /**
+         * @brief Create the model, hitbox and position of the entity.
+         * @param The SceneNode is a pointer to the layer where is going to be created the entity.
+         * @param The const wchar_t is a pointer to the path of the file with the model.
+         */
+        void setModel(SceneNode* sNode, const wchar_t* modelPath);
+        
+        /**
+         * @brief Set the position of the model, hitbox, hitBox and position variables as the one passed by parameter.
+         * @param The Vector3 is the value that is going to be assigned as position to model, hitbox, hitBox and position variables.
+	 */
+        void setPosition(Vector2<f32> positionVector);
+
+        /**
+         * @brief Set a new id to the entity.
+         * @param The i32 is the value that is going to be assigned to ID variable.
+         */
+        void setID(i32 idValue);
+
+        /**
+	 * @brief Get the team of the entity.
+         * @return Enumeration::Team that will be the value of team variable: Enumeration::Team::Human or Enumeration::Team::IA.
+	 */
+        Enumeration::Team getTeam() const; 
+        
+        /**
+         * @brief Get the type of the entity.
+         * @return Enumeration::EntityType that will be the value of entityType variable: Enumeration::EntityType::Building or Enumeration::EntityType::Unit.
+         */
+        Enumeration::EntityType getEntityType() const;
+
+        /**
+         * @brief Get id of the entity.
+         * @return i32 that will be the value of the ID variable.
+         */
+        i32 getID() const;
+
+        /**
+	 * @brief Get the current hp of the entity.
+         * @return i32 that will be the current value of currentHP variable.
+	 */
+        i32 getHP() const;
+
+        /**
+	 * @brief Get the distance until where the entity can see enemies.
+         * @return i32 that will be the value of the viewRadius variable.
+	 */
+        i32 getViewRadius() const;
+
+         /**
+          * @brief Get the happiness that the entity provides to the player's city.
+          * @return i32 that will be the value of the happiness variable.
+          */
+        i32 getHappiness() const;
+
+        /**
+	 * @brief Get the model of the entity.
+         * @return Pointer to a Model object that will be the value of the model variable.
+	 */
+        Model* getModel() const;
+
+        /**
+	 * @brief Get the current position of the entity.
+         * @return Pointer to a Vector3 objetc that will be the value of the position variable.
+	 */
+        Vector2<f32> getPosition() const; 
+
+        /**
+	 * @brief Get the hitbox of the entity.
+         * @return Pointer to a Box3D object that will be the value of the hitbox variable.
+	 */
+        Box3D<f32> getHitBox() const;
+
+        /**
+         * @breif Get all the enemies that have as target the entity.
+         * @return std::vector<Entity*> that will be the value of the hostile variable.
+         */
+        std::vector<Entity*> getHostile() const;
+
+        /**
+         * @brief Get current traget of the entity.
+         * @return A pointer to an Entity object if the entity has current target and NULL in other case.
+         */
+        Entity* getTarget() const;
+
+        /**
+         * @brief
+         * @return
+         */
+        Box2D getHit() const;
+
+        /**
+         * @brief
+         * @return
+         */
+        i32 getCellsX() const;
+
+        /**
+         * @brief
+         * @return
+         */
+        i32 getCellsY() const;
+
+        /**
+	 * @brief Get the attack range of the entity.
+         * @return i32 that will be the value of attackRange variable.
+	 */
+        //i32 getAttackRange();
     protected:
-        //Pointer to the model of the entity.
-        Model* model;
-
-        //Pointer to the position of the entity.
-        Vector3<f32> *position;
-
-        //Pointer to the hitbox of the entity.
-        Box3D<f32>* hitbox;
-
-        //
-        Box2D hitBox;
+        //Number that identifies the entity.
+        i32 ID;
 
         //Team to which belongs the entity: Enumeration::Team::Human or Enumeration::Team::IA.
         Enumeration::Team team;
 
-        //Civilization to which belongs the entity: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov.
-        Enumeration::BreedType breed;
-
         //Type of the entity: Enumeration::EntityType::Unit or Enumeration::EntityType::Building.
         Enumeration::EntityType entityType;
 
-        //Number that identifies the entity.
-        i32 ID;
+        //Pointer to the model of the entity.
+        Model* model;
 
-        Timer* tookDamageTimer;
+        //Pointer to the position of the entity.
+        Vector2<f32> vectorPos;
 
-        //Base color of the entity.
-        irr::video::SColor baseColor; //ToDo: cambiar por material
+        //Pointer to the hitbox of the entity.
+        Box3D<f32> hitbox; //ToDo: revisar si es necesario
 
-        //Current color of the entity.
-        irr::video::SColor currentColor; //ToDo: cambiar color por material
-
-        //Pointer to the enemy that is going to be attacked by the entity. Can be NULL.
-        Entity* target;
+        //HitBox
+        Box2D hitBox; //ToDo: revisar si es necesario
         
         //Current hp of the entity.
         i32 currentHP;
@@ -300,7 +218,6 @@ class Entity {
         i32 attackRange;
 
         //Metal cost of the entity.
->>>>>>> master
         i32 metalCost;
 
         //Crystal cost of the entity.
@@ -308,52 +225,23 @@ class Entity {
 
         //Happines that the entity provides to the player's city.
         i32 happiness;
-<<<<<<< HEAD
-        i32 viewRadius;
-        i32 attackRange;
 
-        //Variable data
-        Timer *damageTimer;
-        i32 currentHP;
-
-        //Model info
-        Model *model;
-        Box3D<f32> hitbox; //ToDo: revisar si es necesario
-        Box2D hitBox; //ToDo: revisar si es necesario
-        Vector2<f32> vectorPos;
-
-        //Fight info
-=======
-
-        //Citiziens that the entity provides to the player's city.
+        //Cityzens that give/take
         i32 citizens;
-        
-        //Level that the entity provides to the player's city.
-        i32 cityLevel;
 
-        //Army level that the entity provides to the palyer's city.
-        i32 armyLevel;
+        //Took damage timer
+        Timer *tookDamageTimer;
 
-        //All enemies that have as target the entity.
->>>>>>> master
-        std::vector<Entity*> hostile;
+        //Pointer to the enemy that is going to be attacked by the entity. Can be NULL.
         Entity* target;
 
-<<<<<<< HEAD
+        //Hostile units vector
+        std::vector<Entity*> hostile;
+
         //CellSpace info
         std::vector<i32> kCells; //ToDo: revisar si es necesario
-=======
-        //
->>>>>>> master
         i32 kCellsX;
-
-        //
         i32 kCellsY;
-<<<<<<< HEAD
-=======
-        
-      private:
->>>>>>> master
 };
 
 #endif

@@ -125,26 +125,26 @@ void BuildingManager::buildBuilding(Vector2<f32> pos, Enumeration::BuildingType 
     //Establece la ID inicial del edificio
 	tempBuilding -> setID(nextBuildingId);
     //Establece el color inicial del edificio
-    tempBuilding -> setColor(video::SColor(255, 0, 0, 0)); //ToDo: reemplazar color por material
+    //ToDo: establece el material inicial
 
 	tempBuilding -> setFinishedCallback([&](Building *b){
 		//Tax the player when building is finished
-		b->posTaxPlayer();
+		b -> posTaxPlayer();
 		//ToDo: volver al material original
 
-		buildingAmounts[(i32)b->getType()]++;
+		buildingAmounts[(i32)b -> getType()]++;
 		
 		if (team == Enumeration::Team::Human){
-			if (buildingAmounts[(i32)b->getType()] == 1){
-				switch (b->getType()){
+			if (buildingAmounts[(i32)b -> getType()] == 1){
+				switch (b -> getType()){
 					case Enumeration::BuildingType::Barrack:
-						Hud::Instance() -> enableTab(b->getType());
+						Hud::Instance() -> enableTab(b -> getType());
 					break;
 					case Enumeration::BuildingType::Barn:
-						Hud::Instance() -> enableTab(b->getType());
+						Hud::Instance() -> enableTab(b -> getType());
 					break;
 					case Enumeration::BuildingType::Workshop:
-						Hud::Instance() -> enableTab(b->getType());
+						Hud::Instance() -> enableTab(b -> getType());
 					break;
 					default: break;
 				}
@@ -160,7 +160,7 @@ void BuildingManager::buildBuilding(Vector2<f32> pos, Enumeration::BuildingType 
 
 	if (instabuild) tempBuilding -> triggerFinishedCallback();    
 	
-	WorldGeometry::Instance()->build(tempBuilding);
+	WorldGeometry::Instance() -> build(tempBuilding);
 	tempBuilding = NULL;
 	nextBuildingId++;
 }

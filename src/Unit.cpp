@@ -9,7 +9,7 @@
 #include "Troop.h"
 #include <WorldEngine/WorldGeometry.h>
 
-Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t) : Entity(id, team, breed) {
+Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t) : Entity(id, team, Enumeration::EntityType::Unit) {
     // Race type and unit type
     type = t;
     layer = l;
@@ -44,16 +44,14 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
     pathManager = new PathManager(this);
 
     //Graphic engine, this should be in the switch (when models done)
-    setColor(video::SColor(125, 125, 0, 125)); //ToDo: cambiar por material
+    //setColor(video::SColor(125, 125, 0, 125)); //ToDo: cambiar por material
 
 }
 
 Unit::~Unit() {
-    //std::cout << "Deleting troop \n";
     WorldGeometry::Instance()->clearUnitCell(vectorPos, this);
     delete pathManager;
     delete troops;
-    //std::cout << "Done \n";
 }
 
 void Unit::Init() {
@@ -65,7 +63,7 @@ void Unit::Init() {
     const wchar_t *path;
     // Basic stats of each unit are here
     f32 recruitingTime = 0;
-    switch (type) {
+    /*switch (type) {
         // Basic melee soldier
         case Enumeration::UnitType::StandardM:
             if (breed == Enumeration::BreedType::Drorania) {
@@ -388,7 +386,7 @@ void Unit::Init() {
             }
         break;
         default: break;
-    }
+    }*/
     recruitingTimer = new Timer(recruitingTime, false);
     //Material *m = new Material(tex);
     //this->model->setMaterial(m);
@@ -412,27 +410,27 @@ void Unit::update() {
             inHomeState();
         break;
         case Enumeration::UnitState::Idle:
-            setColor(video::SColor(255, 0, 255, 255)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 0, 255, 255)); //ToDo: cambiar por materiales
             idleState();
         break;
         case Enumeration::UnitState::Move:
-            setColor(video::SColor(255, 255, 0, 255)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 255, 0, 255)); //ToDo: cambiar por materiales
             moveState();
         break;
         case Enumeration::UnitState::AttackMove:
-            setColor(video::SColor(255, 255, 255, 0)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 255, 255, 0)); //ToDo: cambiar por materiales
             attackMoveState();
         break;
         case Enumeration::UnitState::Attack:
-            setColor(video::SColor(255, 0, 0, 0)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 0, 0, 0)); //ToDo: cambiar por materiales
             attackState();
         break;    
         case Enumeration::UnitState::Chase:
-            setColor(video::SColor(255, 255, 255, 255)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 255, 255, 255)); //ToDo: cambiar por materiales
             chaseState();
         break;
         case Enumeration::UnitState::Retract:
-            setColor(video::SColor(255, 127, 127, 127)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 127, 127, 127)); //ToDo: cambiar por materiales
             retractState();
         break;
         default: break;
@@ -762,4 +760,8 @@ Enumeration::UnitType Unit::getType(){
 
 Enumeration::UnitState Unit::getState() {
     return state;
+}
+
+i32 Unit::getArmyLevel(){
+    return armyLevel;
 }

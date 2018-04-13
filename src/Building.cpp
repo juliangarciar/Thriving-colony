@@ -8,7 +8,7 @@
 #define MAX_MAP 10240
 #define TOTAL 80
 
-Building::Building(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::BuildingType t) : Entity(id, team, breed) {
+Building::Building(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::BuildingType t) : Entity(id, team, Enumeration::EntityType::Building) {
     layer = l;
     type = t;
     entityType = Enumeration::EntityType::Building;
@@ -35,7 +35,7 @@ void Building::Init() {
     
     f32 buildTime = 0;
 
-    switch (type) {
+    /*switch (type) {
         case Enumeration::BuildingType::Barn:
 
             maxHP = 1100;
@@ -320,7 +320,7 @@ void Building::Init() {
             scale = Vector3<f32>(1,1,1);
         break;
         default: break;
-    }
+    }*/
     /* Set the 2D hitbox */
     topLeft.x = (kCellsX / 2.0) * (-80.f) + 1;
     topLeft.y = (kCellsY / 2.0) * (-80.f) + 1;

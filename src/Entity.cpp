@@ -7,8 +7,8 @@
 Entity::Entity(i32 id, Enumeration::Team t, Enumeration::EntityType e) : ID(id), team(t), entityType(e),
     currentHP(0), maxHP(0), viewRadius(0), attackRange(0), metalCost(0), crystalCost(0), happiness(0), 
     model(nullptr) {
-        damageTimer = new Timer(0.1, false);
-        damageTimer -> setCallback([&](){
+        tookDamageTimer = new Timer(0.1, false);
+        tookDamageTimer -> setCallback([&](){
             //ToDo: cambiar a material original
         });
 }
@@ -18,6 +18,10 @@ Entity::~Entity() {
     if (model != nullptr) delete model;
     hostile.clear();
     delete tookDamageTimer;
+}
+
+void Entity::update(){
+    tookDamageTimer -> tick();
 }
 
 void Entity::refreshHitbox() {
@@ -46,7 +50,7 @@ void Entity::putHostileTargetsToNull() {
 
 void Entity::takeDamage(i32 dmg) {
     currentHP = currentHP - dmg;
-    damageTimer -> restart();
+    tookDamageTimer -> restart();
     // Tint the model red
     //ToDo: cambiar a material daño recibido
     if (currentHP <= 0) {
@@ -54,22 +58,21 @@ void Entity::takeDamage(i32 dmg) {
     }
 }
 
-void Entity::returnToOriginalColor() {
-    if (tookDamageTimer -> tick()) {
-        //ToDo: volver al material original
-    }
+void Entity::returnToOriginalMaterial() {
+    tookDamageTimer -> triggerCallback();
 }
 
 //SETTERS
+void Entity::setID(i32 id){
+    ID = id;
+    model->setID(id);
+}
+
 void Entity::setModel(SceneNode *layer, const wchar_t *path) {
     model = new Model(layer, ID, path);
     hitbox = Box3D<f32>();
     vectorPos = Vector2<f32>();
     //ToDo: cambiar a material normal
-}
-
-void Entity::setTarget(Entity *newTarget) {
-    target = newTarget;
 }
 
 //ToDo: revisar
@@ -94,12 +97,7 @@ void Entity::setPosition(Vector2<f32> vectorData) {
     //std::cout << hitBox.BottomRight().x << "," << hitBox.BottomRight().y << "\n";
 }
 
-void Entity::setID(i32 id){
-    ID = id;
-    model->setID(id);
-}
-
-void Entity::setTarget(Entity* newTarget) {
+void Entity::setTarget(Entity *newTarget) {
     target = newTarget;
 }
 
