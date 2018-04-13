@@ -22,38 +22,31 @@ class Entity {
         virtual ~Entity();
 
         /* MAIN FUNCTIONS */
-        void updateTarget(Entity*);
-        void returnToOriginalColor();
         void refreshHitbox();
-        /* SETTERS */
         void takeDamage(i32);
-        void setModel(SceneNode* sNode, const wchar_t* modelPath);
-        void setPosition(Vector2<f32> positionVector);
-        void setID(i32 idValue);
-        void setTarget(Entity* target);
         void addHostile(Entity* hostileTarget);
         void removeHostile(Entity* hostileTarget);
         void putHostileTargetsToNull();
+
+        /* SETTERS */
+        void setTarget(Entity*);
+        void setModel(SceneNode* sNode, const wchar_t* modelPath);
+        void setPosition(Vector2<f32> positionVector);
+        void setID(i32 idValue);
         
         /* GETTERS */
         i32 getHP() const;
         i32 getViewRadius() const;
-        /* Same as above, we already got enums */
         i32 getHappiness() const;
         i32 getID() const;
-        /* Is this needed? We just need to know that's an entity (?) */
-        Enumeration::Team getTeam() const;
-        Enumeration::EntityType getEntityType() const;
+        Enumeration::Team getTeam() const; 
+        Enumeration::EntityType getEntityType() const; /* Is this needed? We just need to know that's an entity (?) */
         Model* getModel() const;
         std::vector<Entity*> getHostile() const;
         Entity* getTarget() const;
         Vector2<f32> getPosition() const; 
         Box3D<f32> getHitBox() const;
         Box2D getHit() const;
-        //std::vector<i32> getCellSpace() const;
-        /* Check to delete */
-        i32 getAttackRange() const;
-        i32 getArmyLevel() const;
         i32 getCellsX() const;
         i32 getCellsY() const;
     protected:
@@ -84,8 +77,7 @@ class Entity {
         Entity* target;
 
         //CellSpace info
-        /* Check to delete */
-        std::vector<i32> kCells;
+        std::vector<i32> kCells; //ToDo: revisar si es necesario
         i32 kCellsX;
         i32 kCellsY;
 };

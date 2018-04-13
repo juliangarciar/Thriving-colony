@@ -19,16 +19,30 @@ Entity::~Entity() {
     hostile.clear();
 }
 
-void Entity::updateTarget(Entity *newTarget) {
-    // target can be nullptr, meaning that he can't attack anything
-    target = newTarget;
-}
-
 void Entity::refreshHitbox() {
     hitbox.set(model -> getBoundingBox());
 }
 
-//SETTERS
+void Entity::addHostile(Entity* newHostileUnit) {
+    hostile.push_back(newHostileUnit);
+}
+
+void Entity::removeHostile(Entity* oldHostileUnit) {
+    bool done = false;
+    for (i32 i = 0; i < hostile.size() && done == false; i++) {
+        if (hostile.at(i) == oldHostileUnit) {
+            hostile.erase(hostile.begin() + i);
+            done = true;
+        }
+    }
+}
+
+void Entity::putHostileTargetsToNull() {
+    for (i32 i = 0; i < hostile.size(); i++) {
+        hostile.at(i) -> setTarget(nullptr);
+    }
+}
+
 void Entity::takeDamage(i32 dmg) {
     currentHP = currentHP - dmg;
     damageTimer -> restart();
@@ -39,6 +53,7 @@ void Entity::takeDamage(i32 dmg) {
     }
 }
 
+//SETTERS
 void Entity::setModel(SceneNode *layer, const wchar_t *path) {
     model = new Model(layer, ID, path);
     hitbox = Box3D<f32>();
@@ -46,7 +61,12 @@ void Entity::setModel(SceneNode *layer, const wchar_t *path) {
     //ToDo: cambiar a material normal
 }
 
-/* Edit */
+void Entity::setTarget(Entity *newTarget) {
+    // target can be nullptr, meaning that he can't attack anything
+    target = newTarget;
+}
+
+//ToDo: revisar
 void Entity::setPosition(Vector2<f32> vectorData) {
     vectorPos = vectorData;
     model -> setPosition(vectorData);
@@ -77,27 +97,27 @@ void Entity::setTarget(Entity* newTarget) {
     target = newTarget;
 }
 
-void Entity::addHostile(Entity* newHostileUnit) {
-    hostile.push_back(newHostileUnit);
-}
-
-void Entity::removeHostile(Entity* oldHostileUnit) {
-    bool done = false;
-    for (i32 i = 0; i < hostile.size() && done == false; i++) {
-        if (hostile.at(i) == oldHostileUnit) {
-            hostile.erase(hostile.begin() + i);
-            done = true;
-        }
-    }
-}
-
-void Entity::putHostileTargetsToNull() {
-    for (i32 i = 0; i < hostile.size(); i++) {
-        hostile.at(i) -> setTarget(nullptr);
-    }
-}
-
 //GETTERS
+Model* Entity::getModel() const{
+    return model;
+}
+
+Vector2<f32> Entity::getPosition() const{
+    return vectorPos;
+}
+
+i32 Entity::getID() const{
+    return ID;
+}
+
+Enumeration::EntityType Entity::getEntityType() const{
+    return entityType;
+}
+
+Enumeration::Team Entity::getTeam() const{
+    return team;
+}
+
 i32 Entity::getHP() const{
     return currentHP;
 }
@@ -110,44 +130,22 @@ i32 Entity::getHappiness() const{
     return happiness;
 }
 
-i32 Entity::getID() const{
-    return ID;
-}
-
-Enumeration::Team Entity::getTeam() const{
-    return team;
-}
-
-Enumeration::EntityType Entity::getEntityType() const{
-    return entityType;
-}
-
-Model* Entity::getModel() const{
-    return model;
-}
-
 std::vector<Entity*> Entity::getHostile() const{
     return hostile;
-}
-
-Vector2<f32> Entity::getPosition() const{
-    return vectorPos;
 }
 
 Entity* Entity::getTarget() const{
     return target;
 }
 
+//ToDo: revisar
 Box3D<f32> Entity::getHitBox() const{
     return hitbox;
 }
 
+//ToDo: revisar
 Box2D Entity::getHit() const{
     return hitBox;
-}
-
-i32 Entity::getAttackRange() const{
-    return attackRange;
 }
 
 i32 Entity::getCellsX() const{

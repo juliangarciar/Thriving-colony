@@ -98,5 +98,5 @@ void BattleManager::askForTarget(Entity* requester) {
             }
         }
     }
-    requester -> updateTarget(target);
+    requester -> setTarget(target);
 }
