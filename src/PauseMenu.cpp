@@ -24,10 +24,10 @@ PauseMenu::PauseMenu() {
 }
 
 PauseMenu::~PauseMenu() {
-    delete bgMenu;
     delete buttonQuit;
     delete buttonResume;
     delete buttonMenu;
+    delete bgMenu;
 }
 
 void PauseMenu::setHUDEvents(){

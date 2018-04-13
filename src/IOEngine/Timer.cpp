@@ -36,3 +36,11 @@ void Timer::setCallback(std::function<void()> c){
 void Timer::triggerCallback(){
     callback();
 }
+
+f32 Timer::getElapsedTime() {
+    return elapsedTime;
+}
+
+f32 Timer::getMaxDuration() {
+    return maxDuration;
+}

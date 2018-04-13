@@ -26,16 +26,10 @@ Game::Game() {
 }
 
 Game::~Game() {
-    //delete window;
-
-    //delete io;
-
     delete menu;
     delete game;
     delete win;
     delete defeat;
-
-    delete soundSystem;
 }
 
 void Game::Init() {
@@ -44,7 +38,7 @@ void Game::Init() {
 
 void Game::Input() {
     state -> Input();
-    io->getMouse()->refreshStates();
+    io -> getMouse() -> refreshStates();
 }
 
 void Game::Update() {

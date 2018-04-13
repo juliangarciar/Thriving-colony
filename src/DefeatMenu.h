@@ -5,35 +5,40 @@
 #include <GUIEngine/Label.h>
 
 /**
- * @class DefeatMenu
- * @brief Crea un objeto tipo DefeatMenu
+ * @class DefeatMenu.
+ * @brief Create a DefeatMenu type object.
  */
 class DefeatMenu {
     
     public:
         /**
-         * @brief Constructor
+         * @brief DefeatMenu constructor.
          */
         DefeatMenu();
+
         /**
-         * @brief Destructor
+         * @brief DefeatMenu destructor.
          */
         ~DefeatMenu();
 
         /**
-         * @brief Establece los distintos eventos asociados a cada uno de los botones del HUD 
+         * @brief Set the different events associated to each Hud button. 
          */
         void setHUDEvents();
 
         /**
-         * @brief Actualiza el HUD
+         * @brief Update.
          */
         void update();
 
     private:
+        //Pointer to Button object that closes the game.
         Button *buttonQuit;
+
+        //Pointer to Button object that goes to the main menu.
         Button *buttonStart;
 
+        //Text with the defeat message.
         Label *winText;
 };
 

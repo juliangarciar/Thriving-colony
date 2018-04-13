@@ -24,7 +24,6 @@ IA::~IA() {
     delete nodeRootIA;
     delete buildings;
     delete units;
-    //std::cout << "IA units deleted \n";
     choices -> clear();
     delete choices;
 }
@@ -58,27 +57,20 @@ void IA::Update() {
         fast = true;
     }
     if (fast == true) {
-        if (updateFastTimer <= 0.0) {
+        if (updateFastTimer -> tick()) {
             nodeRootIA -> question();
-            updateFastTimer = 1.0;
-            updateSlowTimer = 3.0;
-        } else {
-            updateFastTimer -= Window::Instance() -> getDeltaTime();
+            updateFastTimer -> restart();
+            updateSlowTimer -> restart();
         }
     } else {
-        if (updateSlowTimer <= 0.0) {
+        if (updateSlowTimer -> tick()) {
             nodeRootIA -> question();
-            updateFastTimer = 1.0;
-            updateSlowTimer = 3.0;
-        } else {
-            updateSlowTimer -= Window::Instance() -> getDeltaTime();
+            updateFastTimer -> restart();
+            updateSlowTimer -> restart();
         }
     }
-    if (updateTimer <= 0.0) {
+    if (updateTimer -> tick()) {
         gainResources();
-        updateTimer = 1.0;
-    } else {
-        updateTimer -= Window::Instance() -> getDeltaTime();
     }
 }
 
@@ -90,6 +82,9 @@ void IA::CleanUp() {
     delete units;
     choices -> clear();
     delete choices;
+    delete updateTimer;
+    delete updateFastTimer;
+    delete updateSlowTimer;
 }
 
 BehaviourTree* IA::getTree() {

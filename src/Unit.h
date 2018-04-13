@@ -9,6 +9,7 @@
 #include <Entity.h>
 #include <MathEngine/Vector3.h>
 #include <PathPlanner/PathManager.h>
+#include <IOEngine/Timer.h>
 
 class Troop;
 class Unit : public Entity {
@@ -66,6 +67,7 @@ class Unit : public Entity {
         std::list< Vector2<f32> > getPath();
         Enumeration::UnitType getType();
 
+        Enumeration::UnitState getState();
     private:
         /**
          * @brief inicia
@@ -89,14 +91,15 @@ class Unit : public Entity {
         bool attacking;
 
         // Unit info
-        f32 recruitingTime;
+        //f32 recruitingTime;
         i32 armyLevel; //ToDo: explicar para que sirve esto
         i32 citizens;
 
         // Timers
-        f32 recruitingTimer;
-        f32 lookForTargetTimer;
+        Timer* recruitingTimer;
+        Timer* lookForTargetTimer;
         f32 lookForTargetCountdown;
+        // Esto que?
         f32 attackCountdown;
 
         // Scene Node

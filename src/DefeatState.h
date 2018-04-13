@@ -5,43 +5,50 @@
 #include "DefeatMenu.h"
 
 /**
- * @class DefeatState
- * @brief Tiene herencia publica de state y crea un objeto tipo DefeatState
+ * @class DefeatState.
+ * @brief Create a DefeatState type object. Public heritage from State class.
  */
 class DefeatState : public State {
     
 public:
         /**
-         * @brief Constructor
+         * @brief DefeatState constructor.
          */
         DefeatState();
+
         /**
-         * @brief Constructor
+         * @brief DefeatState destructor.
          */
         virtual ~DefeatState();
 
         /**
-         * @brief Inicializa DefeatState
+         * @brief Initialize the variables.
          */
         void Init();
+
         /**
-         * @brief Recoge las entradas de teclado y raton
+         * @brief Update the hud variable.
+         * @see update() method of DefeatMenu class.
          */
         void Input();
+
         /**
-         * @brief Actualiza
+         * @brief Update.
          */
         void Update();
+
         /**
-         * @brief Renderiza
+         * @brief Render.
          */
         void Render();
+
         /**
-         * @brief Constructor
+         * @brief Delete all variables.
          */
         void CleanUp();
 
     private:
+        //Pointer to the hud that will be used.
         DefeatMenu *hud;
 };
 

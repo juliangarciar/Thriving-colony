@@ -31,9 +31,10 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
     Init();
 
     // Timers
-    recruitingTimer = recruitingTime;
-    lookForTargetTimer = 0.5;
-    lookForTargetCountdown = lookForTargetTimer;
+    //Esta forma es mejor de hacerlo, igual algun dia lo cambio en el building
+    
+    lookForTargetTimer = new Timer (0.5,true);
+    // Esto puede ser un timer?
     attackCountdown = 0;
 
     // Preparado para algo
@@ -63,6 +64,7 @@ void Unit::Init() {
     //Texture *tex;
     const wchar_t *path;
     // Basic stats of each unit are here
+    f32 recruitingTime = 0;
     switch (type) {
         // Basic melee soldier
         case Enumeration::UnitType::StandardM:
@@ -387,6 +389,7 @@ void Unit::Init() {
         break;
         default: break;
     }
+    recruitingTimer = new Timer(recruitingTime, false);
     //Material *m = new Material(tex);
     //this->model->setMaterial(m);
     /* Juli */
@@ -459,19 +462,18 @@ void Unit::posTaxPlayer(){
 }
 
 void Unit::switchState(Enumeration::UnitState newState) {
-    lookForTargetCountdown = lookForTargetTimer;
+    lookForTargetTimer -> restart();
     state = newState;
 }
 
 void Unit::recruitingState(){
-    if (recruitingTimer > 0.0f){
-        recruitingTimer -= Window::Instance() -> getDeltaTime();
-        if (team == Enumeration::Team::Human){
-            Hud::Instance()->modifyTroopFromQueue(ID, recruitingTimer/recruitingTime);
-        }
-    } else {
+    if (recruitingTimer -> tick()){
         recruitedCallback(this);
         switchState(Enumeration::UnitState::InHome);
+    } else {
+        if (team == Enumeration::Team::Human){
+            Hud::Instance()->modifyTroopFromQueue(ID, recruitingTimer -> getElapsedTime()/recruitingTimer -> getMaxDuration());
+        }
     }
 }
 
@@ -527,6 +529,7 @@ void Unit::retractState() {
         retractedCallback(this);
         //troops -> setActive(false);
         getModel() -> setActive(false);
+
         switchState(Enumeration::UnitState::InHome);
     }
 }
@@ -539,8 +542,8 @@ void Unit::moveTroop() {
             if(pathFollow.empty()){
                 moving = false;
                 if (state == Enumeration::UnitState::Retract) {
+                    Human::Instance() -> getUnitManager() -> unSelectTroop();
                     triggerRetractedCallback();
-                    
                     return;
                 }
                 switchState(Enumeration::Idle);
@@ -646,11 +649,8 @@ bool Unit::refreshTarget() {
     bool targetUpdated = false;
 
     // Ask for a new target
-    if (lookForTargetCountdown <= 0) {
+    if (lookForTargetTimer -> tick()) {
         Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this); //ToDo: Puff, mas corto mejor no?
-        lookForTargetCountdown = lookForTargetTimer;
-    } else {
-        lookForTargetCountdown -= Window::Instance() -> getDeltaTime();
     }
     
     // return wether or not it got updated
@@ -758,4 +758,8 @@ std::list< Vector2<f32> > Unit::getPath(){
 
 Enumeration::UnitType Unit::getType(){
     return type;
+}
+
+Enumeration::UnitState Unit::getState() {
+    return state;
 }

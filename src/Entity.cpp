@@ -7,7 +7,7 @@
 Entity::Entity(i32 id, Enumeration::Team t, Enumeration::EntityType e) : ID(id), team(t), entityType(e),
     currentHP(0), maxHP(0), viewRadius(0), attackRange(0), metalCost(0), crystalCost(0), happiness(0), 
     model(nullptr) {
-        damageTimer = new Timer(0.1);
+        damageTimer = new Timer(0.1, false);
         damageTimer -> setCallback([&](){
             //ToDo: cambiar a material original
         });
@@ -17,6 +17,7 @@ Entity::~Entity() {
     //ToDo: revisar
     if (model != nullptr) delete model;
     hostile.clear();
+    delete tookDamageTimer;
 }
 
 void Entity::refreshHitbox() {
@@ -53,6 +54,12 @@ void Entity::takeDamage(i32 dmg) {
     }
 }
 
+void Entity::returnToOriginalColor() {
+    if (tookDamageTimer -> tick()) {
+        //ToDo: volver al material original
+    }
+}
+
 //SETTERS
 void Entity::setModel(SceneNode *layer, const wchar_t *path) {
     model = new Model(layer, ID, path);
@@ -62,7 +69,6 @@ void Entity::setModel(SceneNode *layer, const wchar_t *path) {
 }
 
 void Entity::setTarget(Entity *newTarget) {
-    // target can be nullptr, meaning that he can't attack anything
     target = newTarget;
 }
 
@@ -151,22 +157,7 @@ Box2D Entity::getHit() const{
 i32 Entity::getCellsX() const{
     return kCellsX;
 }
+
 i32 Entity::getCellsY() const{
     return kCellsY;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

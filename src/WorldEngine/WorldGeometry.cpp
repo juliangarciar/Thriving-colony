@@ -155,7 +155,7 @@ void WorldGeometry::Init(){
             cellsDistance[j][k] = calculateDistance(mCells[j]->getPosition(), neighbors[k]->getPosition());
             /* Debug intended */
             if(cellsDistance[j][k] == 0){
-                std::cout << "Weird stuff happens at init at: " << j << "," << k << "\n";
+                //std::cout << "Weird stuff happens at init at: " << j << "," << k << "\n";
             }
         }
     }
@@ -303,7 +303,7 @@ f32 WorldGeometry::calculateDistance(Vector2<f32> a, Vector2<f32> b){
 }
 f32 WorldGeometry::getCost(i32 indexA, i32 indexB){
     if(cellsDistance[indexA][indexB] == 0)
-        std::cout << "Weird stuff happens \n";
+        //std::cout << "Weird stuff happens \n";
     return cellsDistance[indexA][indexB];
 }
 std::vector< Unit* > WorldGeometry::getNeighborUnits(Vector2<f32> positionVector){
@@ -317,7 +317,7 @@ std::vector< Unit* > WorldGeometry::getNeighborUnits(Vector2<f32> positionVector
         }
     }
     if(!neighborUnits.empty()){
-        std::cout << "UNIDADES CERCANAS DETECTADAS -->" << neighborUnits.size() << "\n";
+        //std::cout << "UNIDADES CERCANAS DETECTADAS -->" << neighborUnits.size() << "\n";
     }
     return neighborUnits;
 }
