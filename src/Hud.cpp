@@ -197,7 +197,7 @@ void Hud::Init(){
     ///// DEBUG /////
     playerResources = new Panel("Player Resources");
     playerResources ->setVerticalLayout();
-    playerResources -> setSize(Vector2<i32> (120, 230));
+    playerResources -> setSize(Vector2<i32> (120, 245));
     i32 melees = 
         Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
         Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
@@ -242,6 +242,10 @@ void Hud::Init(){
     os = std::stringstream();
     os << "Siege: " << std::to_string(sieges);
     playerSieges = new Label(playerResources, os.str());
+    os = std::stringstream();
+    os << "FPS: " << std::to_string(Window::Instance() -> getFrameRate());
+    framerateLabel = new Label(playerResources, os.str());
+    framerateLabel -> setSize(Vector2<i32> (50, 15));
     os = std::stringstream();
     
     iaResources = new Panel("IA Resources");
@@ -564,6 +568,7 @@ void Hud::CleanUp(){
 
     delete toastText;
     delete toast;
+    delete framerateLabel;
 }
 
 void Hud::enableTab(Enumeration::BuildingType t){
@@ -919,6 +924,9 @@ void Hud::debug(){
     os = std::stringstream();
     os << "Siege: " << std::to_string(sieges);
     playerSieges -> setLabel(os.str());
+    os = std::stringstream();
+    os << "FPS: " << std::to_string(Window::Instance() -> getFrameRate());
+    framerateLabel -> setLabel(os.str());
     os = std::stringstream();
 
     melees = 

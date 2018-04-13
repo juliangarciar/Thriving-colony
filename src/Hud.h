@@ -345,10 +345,15 @@ class Hud {
         Label *toastText;
 
         //
+        Label *framerateLabel;
+        
+        //
         bool toastBool;
 
         //
         Timer* toastTimer;
+
+        
 };
 
 #endif
