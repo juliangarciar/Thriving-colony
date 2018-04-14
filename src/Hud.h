@@ -344,7 +344,7 @@ class Hud {
         //
         Label *toastText;
 
-        //
+        //Frame per second of the game.
         Label *framerateLabel;
         
         //

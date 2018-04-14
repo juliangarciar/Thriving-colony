@@ -35,7 +35,7 @@ class OBDMesh {
          * @param tY 
          * @param tZ 
          */
-        void rotate(f32 rX, f32 rY, f32 rZ, f32 angle);
+        void rotate(f32 rX, f32 rY, f32 rZ);
 
         /**
          * @brief 
@@ -75,6 +75,24 @@ class OBDMesh {
          * @return std::map<std::string, TMesh*> 
          */
         std::map<std::string, TMesh*> getMeshes();
+
+        /**
+         * @brief 
+         * 
+         */
+        void setPosition(glm::vec3 p);
+
+        /**
+         * @brief 
+         * 
+         */
+        void setRotation(glm::vec3 r);
+
+        /**
+         * @brief 
+         * 
+         */
+        void setScale(glm::vec3 s);
     private:
         TNode* meshNode;
         TNode* rotationNode;
