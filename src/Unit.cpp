@@ -47,7 +47,7 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
 }
 
 Unit::~Unit() {
-    WorldGeometry::Instance()->clearUnitCell(vectorPos.toVector2(), this);
+    WorldGeometry::Instance()->clearUnitCell(vectorPos, this);
     delete lookForTargetTimer;
     delete pathManager;
     delete troops;
@@ -407,7 +407,7 @@ void Unit::update() {
             recruitingState();
         break;
         case Enumeration::UnitState::InHome:
-            inHomeState();
+            //inHomeState();
         break;
         case Enumeration::UnitState::Idle:
             //setColor(video::SColor(255, 0, 255, 255)); //ToDo: cambiar por materiales
@@ -563,13 +563,13 @@ void Unit::moveTroop() {
             WorldGeometry::Instance()->getNeighborUnits(newPos);
             setTroopPosition(newPos);
             //troops->moveTroops(vectorMov);
-            Vector3<f32> move = vectorMov;
+            /*Vector3<f32> move = vectorMov;
             Vector3<f32> newPos = vectorPos + move;
             newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
             WorldGeometry::Instance()->updateUnitCell(vectorPos.toVector2(), newPos.toVector2(), this);
             WorldGeometry::Instance()->getNeighborUnits(newPos.toVector2());
-            setTroopPosition(newPos);
-            troops -> moveTroops(move);
+            setTroopPosition(newPos);*/
+            troops -> moveTroops(newPos);
             steps = 0;
             std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
         } 
@@ -584,13 +584,13 @@ void Unit::moveTroop() {
             WorldGeometry::Instance()->getNeighborUnits(newPos);
             setTroopPosition(newPos);
             //troops->moveTroops(vectorMov);
-            Vector3<f32> move = vectorMov;
+            /*Vector3<f32> move = vectorMov;
             Vector3<f32> newPos = vectorPos + move;
             newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
             WorldGeometry::Instance()->updateUnitCell(vectorPos.toVector2(), newPos.toVector2(), this);
             WorldGeometry::Instance()->getNeighborUnits(newPos.toVector2());
-            setTroopPosition(newPos);
-            troops -> moveTroops(move);
+            setTroopPosition(newPos);*/
+            troops -> moveTroops(newPos);
             steps--;
             std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
         }
@@ -714,13 +714,13 @@ void Unit::setTroopDestination(Vector2<f32> vectorData) {
     f32 movDistance = std::sqrt(std::pow(vectorMov.x, 2) + std::pow(vectorMov.y, 2));
     steps = distance / movDistance;
 
-    vectorDes.set(vectorData);
+    /*vectorDes.set(vectorData);
     Vector3<f32> desp = vectorDes - vectorPos;
     f32 distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2));
     vectorMov.x = (desp.x / distance) * (moveSpeed / 100);
     vectorMov.z = (desp.z / distance) * (moveSpeed / 100);
     f32 movDistance = std::sqrt(std::pow(vectorMov.x, 2) + std::pow(vectorMov.z, 2));
-    steps = (distance / movDistance);
+    steps = (distance / movDistance);*/
     moving = true;
 }
 

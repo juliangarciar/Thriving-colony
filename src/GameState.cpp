@@ -22,6 +22,9 @@ void GameState::Init() {
     human -> Init(); 
     ia -> Init();
 
+    //Hud
+    hud -> Init();
+
     //Init map
     map -> Init();
     

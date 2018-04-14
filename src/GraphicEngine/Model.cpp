@@ -22,6 +22,10 @@ Model::Model(i32 id, const wchar_t *path) {
 Model::Model(SceneNode *parent, i32 id, const wchar_t *path) {
     scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
     meshNode = smgr -> addMeshSceneNode(smgr -> getMesh(path));
+    if (!meshNode) {
+        std::cout << "ERROR: no se puede cargar el modelo" << std::endl;
+        exit(0);
+    }
     meshNode -> setID(id);
 
     selector = smgr -> createTriangleSelectorFromBoundingBox(meshNode);
