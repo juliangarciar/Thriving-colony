@@ -21,9 +21,9 @@ OBDLight::~OBDLight() {
     delete lightNode;
 }
 
-void OBDLight::rotate(f32 rX, f32 rY, f32 rZ, f32 angle) {
+void OBDLight::rotate(f32 rX, f32 rY, f32 rZ) {
     TTransform* t = (TTransform*) rotationNode -> getEntity();
-    t -> rotate(rX, rY, rZ, angle);
+    t -> rotate(rX, rY, rZ, 0);
 }
 
 void OBDLight::scale(f32 sX, f32 sY, f32 sZ) {
@@ -122,4 +122,14 @@ void OBDLight::setPosition(glm::vec3 p) {
 glm::vec3 OBDLight::getPosition() {
     TLight* l = (TLight*) lightNode -> getEntity();
     return l -> getPosition();
+}
+
+void OBDLight::setRotation(glm::vec3 r) {
+    TTransform* t = (TTransform*) rotationNode -> getEntity();
+    t -> rotate(r.x, r.y, r.z, 0);
+}
+
+void OBDLight::setScale(glm::vec3 s) {
+    TTransform* t = (TTransform*) scaleNode -> getEntity();
+    t -> scale(s.x, s.y, s.z);
 }

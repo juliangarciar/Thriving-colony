@@ -522,6 +522,8 @@ void Unit::retractState() {
         troops -> setActive(false);
         getModel() -> setActive(false);
         switchState(Enumeration::UnitState::InHome);
+        // Aqui peta
+        triggerRetractedCallback();        
     }
 }
 
@@ -532,8 +534,9 @@ void Unit::moveTroop() {
             if(pathFollow.empty()){
                 moving = false;
                 if (state == Enumeration::UnitState::Retract) {
+                    readyToEnter = true;
                     Human::Instance() -> getUnitManager() -> unSelectTroop();
-                    triggerRetractedCallback();
+                    //triggerRetractedCallback();
                     return;
                 }
                 switchState(Enumeration::Idle);
