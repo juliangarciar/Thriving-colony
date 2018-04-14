@@ -55,6 +55,18 @@ class TMesh : public TEntity {
          * @return ResourceMaterial* 
          */
         ResourceMaterial* getMaterial();
+
+        void setActive(bool a);
+
+        bool getActive();
+
+        void setName(std::string n);
+
+        std::string getName();
+
+        void setID(GLuint i);
+
+        GLuint getID();
     private:
         ResourceMesh* mesh;
         ResourceMaterial* material;
@@ -70,6 +82,10 @@ class TMesh : public TEntity {
         GLuint lightID;
         GLuint materialID;
         GLuint textureID;
+
+        GLuint ID;
+        bool active;
+        std::string name;
 };
 
 #endif

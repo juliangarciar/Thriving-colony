@@ -76,3 +76,33 @@ void OBDMesh::setScale(glm::vec3 s) {
     TTransform* t = (TTransform*) scaleNode -> getEntity();
     t -> scale(s.x, s.y, s.z);
 }
+
+void OBDMesh::setActive(bool a) {
+    TMesh* m = (TMesh*) meshNode -> getEntity();
+    m -> setActive(a);
+}
+
+bool OBDMesh::getActive() {
+    TMesh* m = (TMesh*) meshNode -> getEntity();
+    return m -> getActive();
+}
+
+void OBDMesh::setName(std::string n) {
+    TMesh* m = (TMesh*) meshNode -> getEntity();
+    m -> setName(n);
+}
+
+std::string OBDMesh::getName() {
+    TMesh* m = (TMesh*) meshNode -> getEntity();
+    return m -> getName();
+}
+
+void OBDMesh::setID(GLuint i) {
+    TMesh* m = (TMesh*) meshNode -> getEntity();
+    m -> setID(i);
+}
+
+GLuint OBDMesh::getID() {
+    TMesh* m = (TMesh*) meshNode -> getEntity();
+    return m -> getID();
+}

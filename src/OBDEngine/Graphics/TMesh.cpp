@@ -60,7 +60,9 @@ TMesh::~TMesh() {
 	glDeleteBuffers(1, &IBOID);
 }
 
-void TMesh::beginDraw() {    
+void TMesh::beginDraw() { 
+	if (!active) return;
+	   
 	glm::mat4 pM = cache.getProjectionMatrix();
 	glm::mat4 vM = cache.getViewMatrix();
 	glm::mat4 mM = cache.getModelMatrix();
@@ -173,4 +175,28 @@ ResourceMesh* TMesh::getMesh(){
 
 ResourceMaterial* TMesh::getMaterial(){
 	return material;
+}
+
+void TMesh::setActive(bool a) {
+	active = a;
+}
+
+bool TMesh::getActive() {
+	return active;
+}
+
+void TMesh::setName(std::string n) {
+	name = n;
+}
+
+std::string TMesh::getName() {
+	return name;
+}
+
+void TMesh::setID(GLuint i) {
+	ID = i;
+}
+
+GLuint TMesh::getID() {
+	return ID;
 }

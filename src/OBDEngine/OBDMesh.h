@@ -93,6 +93,18 @@ class OBDMesh {
          * 
          */
         void setScale(glm::vec3 s);
+
+        void setActive(bool a);
+
+        bool getActive();
+
+        void setName(std::string n);
+
+        std::string getName();
+
+        void setID(GLuint i);
+
+        GLuint getID();
     private:
         TNode* meshNode;
         TNode* rotationNode;
