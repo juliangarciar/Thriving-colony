@@ -11,39 +11,120 @@
 
 class PathManager;
 class Troop;
+
+/**
+ * @class Unit.
+ * @brief Create a Unit type object. Public heritage from Entity class.
+ */
 class Unit : public Entity {
     
     public:
-        //The consctructor is empty because the object it's constructed in the child
+        /**
+         * @brief Unit constructor.
+         * @param The SceneNode is the layer where the unit is going to be created.
+         * @param The id32 is the id number that will identify the unit.
+         * @param The Enumeration::Team is the team to which belongs the building: Enumeration::Team::Human or Enumeration::Team::IA. 
+         * @param The Enumeration::BreedType is the civilization to which belongs the building: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov.
+         * @param The Enumeration::UnitType is the unit type.
+         */
         Unit(SceneNode *, i32, Enumeration::Team, Enumeration::BreedType, Enumeration::UnitType);
+        
+        /**
+         * @brief Unit destructor.
+         */
         virtual ~Unit();
 
-        // Game
+        /**
+         * @brief Decrease the metal and crystal cost of the unit to the player's mteal and crystal amount and increase player's happiness, citizens and army level depending of the values of the unit.
+         */
         virtual void preTaxPlayer();
+
+        /**
+         * #brief Increase the palyer's army size.
+         */
         virtual void posTaxPlayer();
+
+        /**
+         * @brief Update the troop depending of its state.
+        */
         void update();
 
-        // Agro methods
+        /**
+         * @brief Attack the target if it is not NULL and when the attackCountdown variable is 0 or less.
+         */
         void attack();
+
+        /**
+         * @brief Move the unit.
+         */
         void moveTroop();
-        void attackMoveTroop();
+
+        /**
+         * @brief Chase the target when it is at range of vision of the unit and it is not at range of attack of the unit.
+         */
         void chaseTarget();
+
+        /**
+         * @brief Look fora new target for the unit.
+         * @return True when the unit has a target and false in other case.
+         */
         bool refreshTarget();
+
+        /**
+         * @brief Determinate if the target of the unit is in its range of attack.
+         * @return True when the target is in the range of attack of the unit and false in other case. 
+         */
         bool inRangeOfAttack();
 
-        bool isMoving(); 
-
-        // State machine
+        /**
+         * @breif Switch the current state of the unit to the state passed by parameter.
+         * @param The Enumeration::UnitState is the new state of the unit.
+         */
         void switchState(Enumeration::UnitState);
+
+        /**
+         * @brief Update the unit when its state is Enumeration::UnitState::Recruiting.
+         */
         void recruitingState();
-        void inHomeState();
+
+        /**
+         * @brief Update the unit when its state is Enumeration::UnitState::Idle.
+         */
         void idleState();
+
+        /**
+         * @brief Update the unit when its state is Enumeration::UnitState::Move.
+         */
         void moveState();
+
+        /**
+         * @brief Update the unit when its state is Enumeration::UnitState::AttackMove.
+         */
         void attackMoveState();
+
+        /**
+         * @brief Update the unit when its state is Enumeration::UnitState::Attack.
+         */
         void attackState();
+
+        /**
+         * @brief Update the unit when its state is Enumeration::UnitState::Chase.
+         */
         void chaseState();
+
+        /**
+         * @brief Update the unit when its state is Enumeration::UnitState::Retract.
+         */
         void retractState();
+
+        /**
+         * @brief Finish recruiting the unit.
+         */
         void triggerRecruitedCallback();
+
+        /**
+         * @brief Finish retracting the unit
+         */
         void triggerRetractedCallback();
 
         //Setters
@@ -66,6 +147,13 @@ class Unit : public Entity {
         std::list< Vector2<f32> > getPath();
         Enumeration::UnitType getType();
 
+        Enumeration::UnitState getState();
+
+        /**
+         * @breif Get the army level that the entity provides to the player's city.
+         * @return i32 that will be the value of the armyLevel variable.
+         */
+        i32 getArmyLevel();
     private:
         /**
          * @brief inicia
@@ -89,12 +177,15 @@ class Unit : public Entity {
         bool attacking;
 
         // Unit info
-        f32 recruitingTime;
+        //f32 recruitingTime;
+        i32 armyLevel; //ToDo: explicar para que sirve esto
+        i32 citizens;
 
         // Timers
-        f32 recruitingTimer;
-        f32 lookForTargetTimer;
+        Timer* recruitingTimer;
+        Timer* lookForTargetTimer;
         f32 lookForTargetCountdown;
+        // Esto que?
         f32 attackCountdown;
 
         // Scene Node
@@ -122,7 +213,6 @@ class Unit : public Entity {
         std::string moveEvent;
         std::string selectEvent;
 
-        /* Juli troops */
         Troop* troops;
 };
 

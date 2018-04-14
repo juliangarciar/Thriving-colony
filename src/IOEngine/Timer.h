@@ -20,6 +20,18 @@ class Timer {
         ~Timer();
 
         /**
+         * @brief Set the Callback object
+         * 
+         */
+        void setCallback(std::function<void()>);
+
+        /**
+         * @brief 
+         * 
+         */
+        void triggerCallback();
+
+        /**
          * @brief 
          * 
          * @return true 
@@ -40,11 +52,26 @@ class Timer {
          */
         void changeDuration(f32 d);
 
+        /**
+         * @brief Get the Elapsed Time object
+         * 
+         * @return f32 
+         */
+        f32 getElapsedTime();
+
+        /**
+         * @brief 
+         * 
+         */
+         f32 getMaxDuration();
+
     private:
         bool loop;
 
         f32 maxDuration;
         f32 elapsedTime;
+
+        std::function<void()> callback;
         
 };
     

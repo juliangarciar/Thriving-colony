@@ -30,7 +30,6 @@ class Button : public GUIElement{
 
         void setCallback(std::function<void()> callback);
 
-        /* Added by Julian */
         void refreshButton();
         void setBackgroundColor(i32 a, i32 r, i32 g, i32 b);
 

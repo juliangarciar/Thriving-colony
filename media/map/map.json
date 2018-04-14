@@ -3,6 +3,7 @@
 		"heightmap": "media/map/mapa3-256x256.bmp",
 		"texture": "media/map/map-texture.jpg",
 		"detail_texture": "media/map/map-detail-texture.jpg",
+		"skybox_texture": "media/map/skybox-texture.jpg",
 		"size":{
 			"x": 40,
 			"y": 20,
@@ -24,6 +25,20 @@
 			"intensity": 100000
 		}
 	],
+	"hud":{
+		"BarnButton": true,
+		"BarrackButton": true,
+		"HospitalButton": true,
+		"HouseButton": true,
+		"MarketButton": true,
+		"QuarryButton": true,
+		"SiderurgyButton": true,
+		"SchoolButton": true,
+		"TowerButton": true,
+		"WallButton": true,
+		"WorkshopButton": true,
+		"ExpandTerrainButton": true
+	},
 	"player":
 	{
 		"initial_metal": 1200,

@@ -3,107 +3,243 @@
 
 #include <vector>
 #include <Types.h>
-/* Maybe enumeraiton should be removed */
-#include <Enumeration.h>
-//#include <MathEngine/Vector3.h>
+#include <Enumeration.h> /* Maybe enumeraiton should be removed */
+#include <IOEngine/Timer.h>
 #include <MathEngine/Box3D.h>
 #include <MathEngine/Box2D.h>
+#include <GraphicEngine/Model.h>
+#include <GraphicEngine/SceneNode.h>
+#include <IOEngine/Timer.h>
 
-
-class Model;
-class SceneNode;
 /**
- * @class Entity
- * @brief Crea un objeto tipo Entity
+ * @class Entity.
+ * @brief Create a Entity type object.
  */
 class Entity {
-
     public:
-        Entity(i32, Enumeration::Team, Enumeration::BreedType);
-        virtual ~Entity();
-        /* MAIN FUNCTIONS */
-        void updateTarget(Entity*);
-        void returnToOriginalColor();
-        void refreshHitbox();
-        /* SETTERS */
-        void takeDamage(i32);
-        void setModel(SceneNode* sNode, const wchar_t* modelPath);
-        void setPosition(Vector2<f32> positionVector);
-        void setColor(irr::video::SColor);
-        void setID(i32 idValue);
-        void setTarget(Entity* target);
-        void addHostile(Entity* hostileTarget);
-        void removeHostile(Entity* hostileTarget);
-        void putHostileTargetsToNull();
-        
-        /* GETTERS */
-        i32 getHP() const;
-        i32 getViewRadius() const;
-        /* Same as above, we already got enums */
-        i32 getHappiness() const;
-        i32 getID() const;
-        /* Is this needed? We just need to know that's an entity (?) */
-        Enumeration::Team getTeam() const;
-        Enumeration::EntityType getEntityType() const;
-        Model* getModel() const;
-        irr::video::SColor getBaseColor() const;
-        irr::video::SColor getCurrentColor() const; //ToDo: cambiar por material
-        std::vector<Entity*> getHostile() const;
-        Entity* getTarget() const;
-        Vector2<f32> getPosition() const; 
-        Box3D<f32> getHitBox() const;
-        Box2D getHit() const;
-        //std::vector<i32> getCellSpace() const;
-        /* Check to delete */
-        i32 getAttackRange() const;
-        i32 getArmyLevel() const;
-        i32 getCellsX() const;
-        i32 getCellsY() const;
-    protected:
-        i32 maxHP;
-        i32 currentHP;
-        /* This should be const */
-        i32 viewRadius;
-        /* Check to delete */
-        i32 attackRange;
-        /* Why we need this?, we already got enums for this purpose */
-        i32 metalCost;
-        i32 crystalCost;
-        i32 happiness;
+        /**
+         * @brief Entity constructor.
+         * @param The id32 is the id number that will identify the entity.
+         * @param The Enumeration::Team is the team to which belongs the entity: Enumeration::Team::Human or Enumeration::Team::IA.
+         * @param The Enumeration::EntityType is type of entity.
+         */
+        Entity(i32, Enumeration::Team, Enumeration::EntityType);
 
+        /**
+         * @brief Entity destructor
+         */
+        virtual ~Entity();
+
+        /**
+         * @brief Update the entity
+         * 
+         */
+        void update();
+
+        /**
+         * @brief Set the entity hitbox.
+         */
+        void refreshHitbox();
+
+        /**
+         * @brief Subtract damage passed by parameter to currentHP variable.
+         * @param The i32 is the damage that is going to be subtracted to currentHP variable.
+	*/
+        void takeDamage(i32);
+
+        /**
+         * @breif Add an entity to the vector of enemies that have as target the entity.
+         * @param Pointer to the entity that is going to be added to hostile variable.
+         */
+        void addHostile(Entity* hostileTarget);
+
+        /**
+         * @breif Remove an entity from the vector of enemies that have as target the entity.
+         * @param Pointer to de the entity that is going to be removed from hostile variable.
+         */
+        void removeHostile(Entity* hostileTarget);
+
+        /**
+         * @breif Set all the enemies' target variable stored at hostile variable to NULL.
+         */
+        void putHostileTargetsToNull();
+
+        /**
+	 * @brief Set the color of the model to its original color
+	 */
+        void returnToOriginalMaterial();
+
+        /**
+	* @brief Set target as the value passed by parameter
+         * @param The pointer to Entity is the value that is going be assigned to target variable. It can be NULL.
+	*/
+        void setTarget(Entity*);
+
+        /**
+         * @brief Create the model, hitbox and position of the entity.
+         * @param The SceneNode is a pointer to the layer where is going to be created the entity.
+         * @param The const wchar_t is a pointer to the path of the file with the model.
+         */
+        void setModel(SceneNode* sNode, const wchar_t* modelPath);
+        
+        /**
+         * @brief Set the position of the model, hitbox, hitBox and position variables as the one passed by parameter.
+         * @param The Vector3 is the value that is going to be assigned as position to model, hitbox, hitBox and position variables.
+	 */
+        void setPosition(Vector2<f32> positionVector);
+
+        /**
+         * @brief Set a new id to the entity.
+         * @param The i32 is the value that is going to be assigned to ID variable.
+         */
+        void setID(i32 idValue);
+
+        /**
+	 * @brief Get the team of the entity.
+         * @return Enumeration::Team that will be the value of team variable: Enumeration::Team::Human or Enumeration::Team::IA.
+	 */
+        Enumeration::Team getTeam() const; 
+        
+        /**
+         * @brief Get the type of the entity.
+         * @return Enumeration::EntityType that will be the value of entityType variable: Enumeration::EntityType::Building or Enumeration::EntityType::Unit.
+         */
+        Enumeration::EntityType getEntityType() const;
+
+        /**
+         * @brief Get id of the entity.
+         * @return i32 that will be the value of the ID variable.
+         */
+        i32 getID() const;
+
+        /**
+	 * @brief Get the current hp of the entity.
+         * @return i32 that will be the current value of currentHP variable.
+	 */
+        i32 getHP() const;
+
+        /**
+	 * @brief Get the distance until where the entity can see enemies.
+         * @return i32 that will be the value of the viewRadius variable.
+	 */
+        i32 getViewRadius() const;
+
+         /**
+          * @brief Get the happiness that the entity provides to the player's city.
+          * @return i32 that will be the value of the happiness variable.
+          */
+        i32 getHappiness() const;
+
+        /**
+	 * @brief Get the model of the entity.
+         * @return Pointer to a Model object that will be the value of the model variable.
+	 */
+        Model* getModel() const;
+
+        /**
+	 * @brief Get the current position of the entity.
+         * @return Pointer to a Vector3 objetc that will be the value of the position variable.
+	 */
+        Vector2<f32> getPosition() const; 
+
+        /**
+	 * @brief Get the hitbox of the entity.
+         * @return Pointer to a Box3D object that will be the value of the hitbox variable.
+	 */
+        Box3D<f32> getHitBox() const;
+
+        /**
+         * @breif Get all the enemies that have as target the entity.
+         * @return std::vector<Entity*> that will be the value of the hostile variable.
+         */
+        std::vector<Entity*> getHostile() const;
+
+        /**
+         * @brief Get current traget of the entity.
+         * @return A pointer to an Entity object if the entity has current target and NULL in other case.
+         */
+        Entity* getTarget() const;
+
+        /**
+         * @brief
+         * @return
+         */
+        Box2D getHit() const;
+
+        /**
+         * @brief
+         * @return
+         */
+        i32 getCellsX() const;
+
+        /**
+         * @brief
+         * @return
+         */
+        i32 getCellsY() const;
+
+        /**
+	 * @brief Get the attack range of the entity.
+         * @return i32 that will be the value of attackRange variable.
+	 */
+        //i32 getAttackRange();
+    protected:
+        //Number that identifies the entity.
         i32 ID;
+
+        //Team to which belongs the entity: Enumeration::Team::Human or Enumeration::Team::IA.
         Enumeration::Team team;
-        Enumeration::BreedType breed;
+
+        //Type of the entity: Enumeration::EntityType::Unit or Enumeration::EntityType::Building.
         Enumeration::EntityType entityType;
 
+        //Pointer to the model of the entity.
         Model* model;
-        irr::video::SColor baseColor; //ToDo: cambiar por material
-        irr::video::SColor currentColor; //ToDo: cambiar color por material
-        /* Check to delete */
-        Box3D<f32> hitbox;
-        Box2D hitBox;
-        /* More const */
-        f32 tookDamageTimer;
-        f32 tookDamageCountdown;        
 
-        std::vector<Entity*> hostile;
+        //Pointer to the position of the entity.
+        Vector2<f32> vectorPos;
+
+        //Pointer to the hitbox of the entity.
+        Box3D<f32> hitbox; //ToDo: revisar si es necesario
+
+        //HitBox
+        Box2D hitBox; //ToDo: revisar si es necesario
+        
+        //Current hp of the entity.
+        i32 currentHP;
+
+        //Maximun hp of the entity.
+        i32 maxHP;
+
+        //Distance until where the entity can see enemies.
+        i32 viewRadius;
+
+        //Distance until where the entity can attack enemies.
+        i32 attackRange;
+
+        //Metal cost of the entity.
+        i32 metalCost;
+
+        //Crystal cost of the entity.
+        i32 crystalCost;
+
+        //Happines that the entity provides to the player's city.
+        i32 happiness;
+
+        //Cityzens that give/take
+        i32 citizens;
+
+        //Took damage timer
+        Timer *tookDamageTimer;
+
+        //Pointer to the enemy that is going to be attacked by the entity. Can be NULL.
         Entity* target;
 
-        Vector2<f32> vectorPos;
-        
-        std::vector<i32> kCells;
-        // Values, costs, etc
+        //Hostile units vector
+        std::vector<Entity*> hostile;
 
-        /* Move to Unit */
-        i32 citizens;
-        // For IA and info
-        /* Move to building */
-        i32 cityLevel;
-        /* Move to Unit */
-        i32 armyLevel;
-        /* Why? */
-        
-        /* Check to delete */
+        //CellSpace info
+        std::vector<i32> kCells; //ToDo: revisar si es necesario
         i32 kCellsX;
         i32 kCellsY;
 };

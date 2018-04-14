@@ -8,8 +8,7 @@
 #define MAX_MAP 10240
 #define TOTAL 80
 
-Building::Building(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::BuildingType t) : Entity(id, team, breed) {
-    buildTimer = 0;
+Building::Building(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::BuildingType t) : Entity(id, team, Enumeration::EntityType::Building) {
     layer = l;
     type = t;
     entityType = Enumeration::EntityType::Building;
@@ -19,6 +18,7 @@ Building::Building(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::Br
 }
 
 Building::~Building() {
+    delete buildTimer;
 }
 
 void Building::Init() {
@@ -32,7 +32,10 @@ void Building::Init() {
     Texture *tex;
     const wchar_t *path;
     Vector3<f32> scale;
-    switch (type) {
+    
+    f32 buildTime = 0;
+
+    /*switch (type) {
         case Enumeration::BuildingType::Barn:
 
             maxHP = 1100;
@@ -40,7 +43,7 @@ void Building::Init() {
             happiness = Enumeration::HappinessProvided::AmountHappinessBarn;
             cityLevel = 15;
 
-            buildTimer = 50;
+            buildTime = 50.0;
 
             metalCost = Enumeration::BuildingCost::BarnMetalCost;
             crystalCost = Enumeration::BuildingCost::BarnCrystalCost;
@@ -63,8 +66,8 @@ void Building::Init() {
             cityLevel = 10;
             happiness = Enumeration::HappinessProvided::AmountHappinessBarrack;
             
-            buildTimer = 5; //ToDo: antes 40, cambiado para testing
-
+            buildTime = 5.0; //Antes 40 ahora cambiado a 5 para testeo
+            
             metalCost = Enumeration::BuildingCost::BarrackMetalCost;
             crystalCost = Enumeration::BuildingCost::BarrackCrystalCost;
             //kCells = Enumeration::BuildingCells::BarrackCells;
@@ -87,8 +90,8 @@ void Building::Init() {
             happiness = Enumeration::HappinessProvided::AmountHapppinesHospital;
             cityLevel = 5;
 
-            buildTimer = 60;
-
+            buildTime = 60.0;
+            
             metalCost = Enumeration::BuildingCost::HospitalMetalCost;
             crystalCost = Enumeration::BuildingCost::HospitalCrystalCost;
             //kCells = Enumeration::BuildingCells::HospitalCells;
@@ -112,7 +115,7 @@ void Building::Init() {
             cityLevel = 5;
             citizens = 5;
 
-            buildTimer = 25;
+            buildTime = 25.0;
             
             metalCost = Enumeration::BuildingCost::HomeMetalCost;
             crystalCost = Enumeration::BuildingCost::HomeCrystalCost;
@@ -153,8 +156,8 @@ void Building::Init() {
             happiness = Enumeration::HappinessProvided::AmountHappinessMarket;
             cityLevel = 5;
 
-            buildTimer = 60;
-
+            buildTime = 60.0;
+            
             metalCost = Enumeration::BuildingCost::MarketMetalCost;
             crystalCost = Enumeration::BuildingCost::MarketCrystalCost;
             //kCells = Enumeration::BuildingCells::MarketCells;
@@ -177,7 +180,7 @@ void Building::Init() {
             cityLevel = 15;
             happiness = Enumeration::HappinessProvided::AmountHappinessQuarry;
 
-            buildTimer = 35;
+            buildTime = 35.0;
             
             //metalCost = Enumeration::BuildingCost::QuarryMetalCost;
             metalCost = 1;
@@ -202,7 +205,7 @@ void Building::Init() {
             cityLevel = 5;
             happiness = Enumeration::HappinessProvided::AmountHappinessSiderurgy;
 
-            buildTimer = 35;
+            buildTime = 35.0;
             
             metalCost = Enumeration::BuildingCost::SiderurgyMetalCost;
             crystalCost = Enumeration::BuildingCost::SiderurgyCrystalCost;
@@ -221,14 +224,14 @@ void Building::Init() {
         break;
         case Enumeration::BuildingType::School:
 
-            this -> buildTimer = 35;
+            
             maxHP = 550;
             currentHP = 550;
             happiness = Enumeration::HappinessProvided::AmountHappinessSchool;
             cityLevel = 5;
 
-            buildTimer = 35;
-
+            buildTime = 35.0;
+            
             metalCost = Enumeration::BuildingCost::SchoolMetalCost;
             crystalCost = Enumeration::BuildingCost::SchoolCrystalCost;
             //kCells = Enumeration::BuildingCells::SchoolCells;
@@ -251,8 +254,8 @@ void Building::Init() {
             happiness = Enumeration::HappinessProvided::AmountHappinessTower;
             cityLevel = 5;
 
-            buildTimer = 50;
-
+            buildTime = 50.0;
+            
             metalCost = Enumeration::BuildingCost::TowerMetalCost;
             crystalCost = Enumeration::BuildingCost::TowerCrystalCost;
             //kCells = Enumeration::BuildingCells::TowerCells;
@@ -275,8 +278,8 @@ void Building::Init() {
             happiness = Enumeration::HappinessProvided::AmountHappinessWall;
             cityLevel = 1;
 
-            buildTimer = 10;
-
+            buildTime = 10.0;
+            
             metalCost = Enumeration::BuildingCost::WallMetalCost;
             crystalCost = Enumeration::BuildingCost::WallCrystalCost;
             //kCells = Enumeration::BuildingCells::WallCells;
@@ -299,7 +302,7 @@ void Building::Init() {
             cityLevel = 15;
             happiness = Enumeration::HappinessProvided::AmountHappinessWorkshop;
             
-            buildTimer = 50;
+            buildTime = 50.0;
             
             metalCost = Enumeration::BuildingCost::WorkshopMetalCost;
             crystalCost = Enumeration::BuildingCost::WorkshopCrystalCost;
@@ -317,7 +320,7 @@ void Building::Init() {
             scale = Vector3<f32>(1,1,1);
         break;
         default: break;
-    }
+    }*/
     /* Set the 2D hitbox */
     topLeft.x = (kCellsX / 2.0) * (-80.f) + 1;
     topLeft.y = (kCellsY / 2.0) * (-80.f) + 1;
@@ -329,25 +332,22 @@ void Building::Init() {
     setModel(layer, path);
     model->setScale(scale);
 
-    buildTimer = 0; //ToDo: sin tiempo de construcción
+    //buildTime = 0; //DEBUG
+    buildTimer = new Timer(buildTime, true);
 
     //Establece el color base del edificio
-    baseColor = video::SColor(255, 255, 255, 255); //ToDo: reemplazar color por material
+    //ToDo: crear material base
 
     finished = false;
     
-    Material *m = new Material(tex);
-    this->model->setMaterial(m);
+    this->model->setMaterial(new Material(tex));
 }
 
 void Building::update() {
     if (!finished){
-        if (buildTimer <= 0.0) {
+        if (buildTimer -> tick()) {
             finished = true;
             callback(this);
-        } else {
-            // This update is called once every second
-            buildTimer -= Window::Instance() -> getDeltaTime();
         }
     }
 }

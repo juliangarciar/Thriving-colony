@@ -7,12 +7,12 @@ Player::Player() {
 }
 
 Player::~Player() {
-    delete units;
-    delete buildings;
+    delete updateTimer;
+    delete updateFastTimer;
+    delete updateSlowTimer;
 }
 
 void Player::Init() {
-    testTimer = new Timer(1.00);
     happiness = 0;
     cityLevel = 10;
     armyLevel = 0;
@@ -23,9 +23,9 @@ void Player::Init() {
 
     underAttack = false;
 
-    updateTimer = 1.00;
-    updateFastTimer = 1.00;
-    updateSlowTimer = 3.00;
+    updateTimer = new Timer(1.00, true);
+    updateFastTimer = new Timer(1.00, true);
+    updateSlowTimer = new Timer(3.00, true);
 }
 
 /**
@@ -109,6 +109,7 @@ void Player::setQuarryProductivity(i32 prod){
 void Player::setBuildingRadious(f32 radious){
     buildingRadious = radious;
 }
+
 //==========
 // Getters
 //==========
@@ -179,4 +180,10 @@ void Player::receiveCitizens() {
 
 void Player::decreaseHappiness(i32 h) {
     happiness = happiness - h;
+    if (happiness <= -100) {
+        happiness = -100;
+    }
+    if (happiness >= 100) {
+        happiness = 100;
+    }
 }

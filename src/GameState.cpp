@@ -11,14 +11,21 @@ GameState::GameState() : State() {
 }
 
 GameState::~GameState() {
+    
 } 
 
 void GameState::Init() {
     IO::Instance() -> getResourceManager()->loadResource("media/map/map.json");
     IO::Instance() -> getResourceManager()->loadResource("media/map/troops.json");
     
+    //Init players
     human -> Init(); 
     ia -> Init();
+
+    //Hud
+    hud -> Init();
+
+    //Init map
     map -> Init();
     
     //Initialize the event system
@@ -50,9 +57,6 @@ void GameState::Init() {
         hud->showToast("Se ha reclutado una tropa");
     });
 
-    //Init HUD
-    hud -> Init();
-
     //Init battle manager
     battleManager = new BattleManager();
 
@@ -72,7 +76,7 @@ void GameState::Input() {
             ia -> getUnitManager() -> testRaycastCollisions();
 
             i32 onMap = true;
-
+            bool sentToMainHall = false;
             //Interactions with our entities
             i32 idBuilding = human -> getBuildingManager() -> getCollisionID();
             if (idBuilding != -1){
@@ -87,10 +91,21 @@ void GameState::Input() {
                         }
                     }
                 }
+                // Right clicked
+                if (IO::Instance() -> getMouse() -> rightMousePressed()) {
+                    // Have a troop
+                    if (human -> getUnitManager() -> isTroopSelected()) {
+                        // Main hall
+                        if (idBuilding == 0) {
+                            human -> getUnitManager() -> getSelectedTroop() -> switchState(Enumeration::UnitState::Retract);
+                            sentToMainHall = true;
+                        }
+                    }
+                }
 
                 onMap = false;
             }
-
+            
             i32 idTroop = human -> getUnitManager() -> getCollisionID();
             if (idTroop != -1){
                 if (!human -> getUnitManager() -> isTroopSelected())
@@ -144,7 +159,7 @@ void GameState::Input() {
                             human -> getUnitManager() -> deployAllTroops(map->getMouseCollitionPoint().toVector2());
                         }
                     } else {
-                        std::cout << "Ninguna tropa seleccionada" << std::endl;
+                        //std::cout << "Ninguna tropa seleccionada" << std::endl;
                     }
                 } else 
                     IO::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);
@@ -206,6 +221,9 @@ void GameState::Update(){
             g -> changeState(Enumeration::State::DefeatState);
         }
     }
+    //todo llevar a un metodo en window supongo
+    //fps count goes after game logic to see how long it took to go through the logic
+    Window::Instance() -> calculateFramerate();
 }
 
 void GameState::Render() {

@@ -10,7 +10,7 @@
 #include <WorldEngine/WorldGeometry.h>
 #include <PathPlanner/PathManager.h>
 
-Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t) : Entity(id, team, breed) {
+Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t) : Entity(id, team, Enumeration::EntityType::Unit) {
     // Race type and unit type
     type = t;
     layer = l;
@@ -32,9 +32,8 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
     Init();
 
     // Timers
-    recruitingTimer = recruitingTime;
-    lookForTargetTimer = 0.5;
-    lookForTargetCountdown = lookForTargetTimer;
+    lookForTargetTimer = new Timer (0.5,true);
+    // Esto puede ser un timer?
     attackCountdown = 0;
 
     // Preparado para algo
@@ -44,27 +43,28 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
     pathManager = new PathManager(this);
 
     //Graphic engine, this should be in the switch (when models done)
-    setColor(video::SColor(125, 125, 0, 125)); //ToDo: cambiar por material
+    //setColor(video::SColor(125, 125, 0, 125)); //ToDo: cambiar por material
 
 }
 
 Unit::~Unit() {
-    //std::cout << "Deleting troop \n";
     WorldGeometry::Instance()->clearUnitCell(vectorPos, this);
+    delete lookForTargetTimer;
     delete pathManager;
     delete troops;
-    //std::cout << "Done \n";
+    delete recruitingTimer;
 }
 
 void Unit::Init() {
-    /* Box2D parameters */
+    // Box2D parameters
     Vector2<f32> topLeft;
     Vector2<f32> bottomRight;
 
     //Texture *tex;
     const wchar_t *path;
     // Basic stats of each unit are here
-    switch (type) {
+    f32 recruitingTime = 0;
+    /*switch (type) {
         // Basic melee soldier
         case Enumeration::UnitType::StandardM:
             if (breed == Enumeration::BreedType::Drorania) {
@@ -387,7 +387,8 @@ void Unit::Init() {
             }
         break;
         default: break;
-    }
+    }*/
+    recruitingTimer = new Timer(recruitingTime, false);
     //Material *m = new Material(tex);
     //this->model->setMaterial(m);
     /* Juli */
@@ -407,30 +408,30 @@ void Unit::update() {
             recruitingState();
         break;
         case Enumeration::UnitState::InHome:
-            inHomeState();
+            //inHomeState();
         break;
         case Enumeration::UnitState::Idle:
-            setColor(video::SColor(255, 0, 255, 255)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 0, 255, 255)); //ToDo: cambiar por materiales
             idleState();
         break;
         case Enumeration::UnitState::Move:
-            setColor(video::SColor(255, 255, 0, 255)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 255, 0, 255)); //ToDo: cambiar por materiales
             moveState();
         break;
         case Enumeration::UnitState::AttackMove:
-            setColor(video::SColor(255, 255, 255, 0)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 255, 255, 0)); //ToDo: cambiar por materiales
             attackMoveState();
         break;
         case Enumeration::UnitState::Attack:
-            setColor(video::SColor(255, 0, 0, 0)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 0, 0, 0)); //ToDo: cambiar por materiales
             attackState();
         break;    
         case Enumeration::UnitState::Chase:
-            setColor(video::SColor(255, 255, 255, 255)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 255, 255, 255)); //ToDo: cambiar por materiales
             chaseState();
         break;
         case Enumeration::UnitState::Retract:
-            setColor(video::SColor(255, 127, 127, 127)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 127, 127, 127)); //ToDo: cambiar por materiales
             retractState();
         break;
         default: break;
@@ -460,24 +461,19 @@ void Unit::posTaxPlayer(){
 }
 
 void Unit::switchState(Enumeration::UnitState newState) {
-    lookForTargetCountdown = lookForTargetTimer;
+    lookForTargetTimer -> restart();
     state = newState;
 }
 
 void Unit::recruitingState(){
-    if (recruitingTimer > 0.0f){
-        recruitingTimer -= Window::Instance() -> getDeltaTime();
-        if (team == Enumeration::Team::Human){
-            Hud::Instance()->modifyTroopFromQueue(ID, recruitingTimer/recruitingTime);
-        }
-    } else {
+    if (recruitingTimer -> tick()){
         recruitedCallback(this);
         switchState(Enumeration::UnitState::InHome);
+    } else {
+        if (team == Enumeration::Team::Human){
+            Hud::Instance() -> modifyTroopFromQueue(ID, recruitingTimer -> getElapsedTime()/recruitingTimer -> getMaxDuration());
+        }
     }
-}
-
-void Unit::inHomeState() {
-    //ToDo: hay que hacer algo mientras esté en base?
 }
 
 void Unit::idleState() {
@@ -529,6 +525,8 @@ void Unit::retractState() {
         //troops -> setActive(false);
         getModel() -> setActive(false);
         switchState(Enumeration::UnitState::InHome);
+        // Aqui peta
+        triggerRetractedCallback();        
     }
 }
 
@@ -540,8 +538,9 @@ void Unit::moveTroop() {
             if(pathFollow.empty()){
                 moving = false;
                 if (state == Enumeration::UnitState::Retract) {
-                    triggerRetractedCallback();
-                    
+                    readyToEnter = true;
+                    Human::Instance() -> getUnitManager() -> unSelectTroop();
+                    //triggerRetractedCallback();
                     return;
                 }
                 switchState(Enumeration::Idle);
@@ -554,7 +553,7 @@ void Unit::moveTroop() {
                 pathFollow.pop_front();
             }
         }
-        /* Update Cell state */
+        // Update Cell state 
         else if(std::floor(steps) == 0){
             //Vector2<f32> move = vectorMov;
             //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
@@ -565,6 +564,13 @@ void Unit::moveTroop() {
             WorldGeometry::Instance()->getNeighborUnits(newPos);
             setTroopPosition(newPos);
             //troops->moveTroops(vectorMov);
+            /*Vector3<f32> move = vectorMov;
+            Vector3<f32> newPos = vectorPos + move;
+            newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
+            WorldGeometry::Instance()->updateUnitCell(vectorPos.toVector2(), newPos.toVector2(), this);
+            WorldGeometry::Instance()->getNeighborUnits(newPos.toVector2());
+            setTroopPosition(newPos);*/
+            troops -> moveTroops(newPos);
             steps = 0;
             std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
         } 
@@ -579,6 +585,13 @@ void Unit::moveTroop() {
             WorldGeometry::Instance()->getNeighborUnits(newPos);
             setTroopPosition(newPos);
             //troops->moveTroops(vectorMov);
+            /*Vector3<f32> move = vectorMov;
+            Vector3<f32> newPos = vectorPos + move;
+            newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
+            WorldGeometry::Instance()->updateUnitCell(vectorPos.toVector2(), newPos.toVector2(), this);
+            WorldGeometry::Instance()->getNeighborUnits(newPos.toVector2());
+            setTroopPosition(newPos);*/
+            troops -> moveTroops(newPos);
             steps--;
             std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
         }
@@ -609,7 +622,7 @@ void Unit::attack() {
                     }
                 }
                 target = nullptr;
-                this -> switchState(Enumeration::UnitState::AttackMove);
+                switchState(Enumeration::UnitState::AttackMove);
             }
         }
     }
@@ -645,15 +658,10 @@ bool Unit::inRangeOfAttack() {
 
 bool Unit::refreshTarget() {
     bool targetUpdated = false;
-
     // Ask for a new target
-    if (lookForTargetCountdown <= 0) {
-        Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this); //ToDo: Puff, mas corto mejor no?
-        lookForTargetCountdown = lookForTargetTimer;
-    } else {
-        lookForTargetCountdown -= Window::Instance() -> getDeltaTime();
+    if (lookForTargetTimer -> tick()) {
+        Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this); //ToDo: La hipocresia
     }
-    
     // return wether or not it got updated
     if (target != nullptr) {
         targetUpdated = true;
@@ -674,7 +682,7 @@ void Unit::triggerRetractedCallback(){
 
 /////SETTERS/////
 void Unit::setUnitCell(Vector2<f32> vectorPosition){
-    WorldGeometry::Instance()->setUnitCell(vectorPosition, this);
+    WorldGeometry::Instance() -> setUnitCell(vectorPosition, this);
 }
 
 void Unit::setMoving(bool movingPnt) {
@@ -706,6 +714,14 @@ void Unit::setTroopDestination(Vector2<f32> vectorData) {
     vectorMov.y = (desp.y / distance) * (moveSpeed / 100);
     f32 movDistance = std::sqrt(std::pow(vectorMov.x, 2) + std::pow(vectorMov.y, 2));
     steps = distance / movDistance;
+
+    /*vectorDes.set(vectorData);
+    Vector3<f32> desp = vectorDes - vectorPos;
+    f32 distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2));
+    vectorMov.x = (desp.x / distance) * (moveSpeed / 100);
+    vectorMov.z = (desp.z / distance) * (moveSpeed / 100);
+    f32 movDistance = std::sqrt(std::pow(vectorMov.x, 2) + std::pow(vectorMov.z, 2));
+    steps = (distance / movDistance);*/
     moving = true;
 }
 
@@ -759,4 +775,12 @@ std::list< Vector2<f32> > Unit::getPath(){
 
 Enumeration::UnitType Unit::getType(){
     return type;
+}
+
+Enumeration::UnitState Unit::getState() {
+    return state;
+}
+
+i32 Unit::getArmyLevel(){
+    return armyLevel;
 }

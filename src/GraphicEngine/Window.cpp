@@ -49,19 +49,7 @@ Window::Window(i32 width, i32 height) {
 
     // create scene manager
 	scene = device -> getSceneManager();
-
-    //create skyboxo  TODO: esto no va aqui ni de lejos
-    /*driver->setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, false);
-    scene::ISceneNode* skybox=scene->addSkyBoxSceneNode(
-    driver->getTexture("./media/textures/bbb.jpg"),
-    driver->getTexture("./media/textures/bbb.jpg"),
-    driver->getTexture("./media/textures/bbb.jpg"),
-    driver->getTexture("./media/textures/bbb.jpg"),
-    driver->getTexture("./media/textures/bbb.jpg"),
-    driver->getTexture("./media/textures/bbb.jpg"));
-    scene::ISceneNode* skydome=scene->addSkyDomeSceneNode(driver->getTexture("./media/textures/bbb.jpg"),16,8,0.95f,2.0f);
-    driver->setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, true);*/
-    
+   
     // create gui manager    
     gui = new nanogui::Screen();
     gui -> initialize(window, true);
@@ -103,6 +91,7 @@ void Window::beginScene(){
     double now = glfwGetTime();
     deltaTime = (double)(now - dtThen); // Time in seconds
     dtThen = now;
+    
 
     driver -> beginScene(true, true, video::SColor(0,0,0,0));
 }
@@ -165,4 +154,12 @@ i32 Window::getRealWindowHeight(){
 
 f32 Window::getDeltaTime() {
     return deltaTime;
+}
+
+void Window::calculateFramerate() {
+    framerate = floor(1.0 / Window::Instance() -> getDeltaTime());
+}
+
+i32 Window::getFrameRate() {
+    return framerate;
 }

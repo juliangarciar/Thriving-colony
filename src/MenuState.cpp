@@ -2,8 +2,7 @@
 #include "GraphicEngine/Window.h"
 
 MenuState::MenuState() : State() {
-    prevWindowWidth = 1280;
-    prevWindowHeight = 720;
+    
 }
 
 MenuState::~MenuState() {
@@ -21,10 +20,7 @@ void MenuState::Input() {
 }
 
 void MenuState::Update() {
-    /*Game *g = Game::Instance();
-    if (g -> getWindow() -> getRealWindowWidth() != prevWindowWidth || g -> getWindow() -> getRealWindowHeight() != prevWindowHeight) {
-        hud -> updatePositions();
-    }*/
+    
 }
 
 void MenuState::Render() {

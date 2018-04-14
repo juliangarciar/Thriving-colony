@@ -12,7 +12,7 @@ class TCamera : public TEntity {
          * @param f32 near.
          * @param f32 far.
          * @param f32 top.
-         * @param f32 bottom.
+         * @param f32 button.
          * @param f32 left.
          * @param f32 right.
          * @param bool
@@ -88,9 +88,9 @@ class TCamera : public TEntity {
         void setTop(f32);
 
         /**
-         * @brief set the bottom border to the amount specified as a parameter.
+         * @brief set the button border to the amount specified as a parameter.
          * 
-         * @param f32 bottom border.
+         * @param f32 button border.
          */
         void setBottom(f32);
 
@@ -171,9 +171,9 @@ class TCamera : public TEntity {
         f32 getTop();
 
         /**
-         * @brief returns the bottom border of the camera.
+         * @brief returns the button border of the camera.
          * 
-         * @return f32 bottom border.
+         * @return f32 button border.
          */
         f32 getBottom();
 

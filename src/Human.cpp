@@ -32,23 +32,18 @@ void Human::Init() {
 void Human::Update() {
     buildings -> updateBuildingManager();
     units -> updateUnitManager();
-    if (updateTimer <= 0.0) {
+    if (updateTimer ->tick()) {
         gainResources();
-        updateTimer = 1.0;
-    } else {
-       updateTimer -= Window::Instance() -> getDeltaTime();
     }
 }
 
 void Human::CleanUp() {
 // Add a call to clean the cells the buildings inhabit
-    //std::cout << "Deleting human building \n";
     delete buildings;
-    //std::cout << "Human buildings deleted \n";
-    
-    //std::cout << "Deleting human troops \n";
     delete units;
-    //std::cout << "Human troops deleted \n";
+    delete updateTimer;
+    delete updateFastTimer;
+    delete updateSlowTimer;
 }
 
 bool Human::getUnderAttack() {
