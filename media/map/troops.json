@@ -12,13 +12,14 @@
         "happiness": -10,
         "citizens": -10,
         "armyLevel": 5,
+        "metalCost": 120,
+        "crystalCost": 0,
+        "troops": 4,
         "attackEvent": "event:/UnitAttack/Drorania_ranged_S",
         "moveEvent": "event:/UnitMovement/Drorania_ranged_S",
         "selectEvent": "event:/UnitSelect/Drorania_ranged_S",
-        "metalCost": 120,
-        "crystalCost": 0,
-        "path": "media/unitModels/Drorania/rank_soldier_drorania.obj",
-        "troops": 4
+        "modelPath": "media/unitModels/Drorania/rank_soldier_drorania.obj",
+        "texturePath": "media/textures/Drorania/drorania_barn.jpg"
       },
       {
         "unitName": "AdvancedR",
@@ -37,7 +38,8 @@
         "selectEvent": "event:/UnitSelect/Drorania_ranged_A",
         "metalCost": 120,
         "crystalCost": 0,
-        "path": "media/unitModels/Drorania/criatura_drorania.obj",
+        "modelPath": "media/unitModels/Drorania/criatura_drorania.obj",
+        "texturePath": "media/textures/Drorania/drorania_barn.jpg",
         "troops": 4
       },
       {
@@ -57,7 +59,8 @@
         "selectEvent": "event:/UnitSelect/Drorania_melee_S",
         "metalCost": 120,
         "crystalCost": 0,
-        "path": "media/unitModels/Drorania/Melee_Soldier_Drorania.obj",
+        "modelPath": "media/unitModels/Drorania/Melee_Soldier_Drorania.obj",
+        "texturePath": "media/textures/Drorania/drorania_barn.jpg",
         "troops": 4
       },
       {
@@ -77,7 +80,8 @@
         "selectEvent": "event:/UnitSelect/Drorania_melee_A",
         "metalCost": 120,
         "crystalCost": 0,
-        "path": "media/unitModels/Drorania/criatura_drorania.obj",
+        "modelPath": "media/unitModels/Drorania/criatura_drorania.obj",
+        "texturePath": "media/textures/Drorania/drorania_barn.jpg",
         "troops": 4
       },
       {
@@ -97,7 +101,8 @@
         "selectEvent": "event:/UnitSelect/Drorania_ranged_S",
         "metalCost": 120,
         "crystalCost": 0,
-        "path": "media/unitModels/Drorania/drorania_cannon.obj",
+        "modelPath": "media/unitModels/Drorania/drorania_cannon.obj",
+        "texturePath": "media/textures/Drorania/drorania_barn.jpg",
         "troops": 4
       },
       {
@@ -117,7 +122,8 @@
         "selectEvent": "event:/UnitSelect/Drorania_ranged_A",
         "metalCost": 120,
         "crystalCost": 0,
-        "path": "media/unitModels/Drorania/drorania_walls_desintegrator.obj",
+        "modelPath": "media/unitModels/Drorania/drorania_walls_desintegrator.obj",
+        "texturePath": "media/textures/Drorania/drorania_barn.jpg",
         "troops": 4
       },
       {
@@ -137,12 +143,14 @@
         "selectEvent": "event:/UnitSelect/Drorania_melee_A",
         "metalCost": 120,
         "crystalCost": 0,
-        "path": "media/unitModels/Drorania/Ente_Drorania.obj",
+        "modelPath": "media/unitModels/Drorania/Ente_Drorania.obj",
+        "texturePath": "media/textures/Drorania/drorania_barn.jpg",
         "troops": 4
       }
     ],
-    "Kaonov": {
-      "StandardR": {
+    "Kaonov": [
+      {
+        "unitName": "StandardR",
         "moveSpeed": 350,
         "attackDamage": 13,
         "attackRange": 350,
@@ -158,10 +166,12 @@
         "selectEvent": "event:/UnitSelect/Kaonov_ranged_S",
         "metalCost": 120,
         "crystalCost": 0,
-        "path": "media/unitModels/Drorania/kaonov_rank_soldier.obj",
+        "modelPath": "media/unitModels/Drorania/kaonov_rank_soldier.obj",
+        "texturePath": "media/textures/Drorania/drorania_barn.jpg",
         "troops": 4
       },
-      "AdvancedR": {
+      {
+        "unitName": "AdvancedR",
         "moveSpeed": 530,
         "attackDamage": 18,
         "attackRange": 700,
@@ -177,10 +187,12 @@
         "selectEvent": "event:/UnitSelect/Kaonov_ranged_A",
         "metalCost": 120,
         "crystalCost": 0,
-        "path": "media/unitModels/Drorania/creature_kaonov.obj",
+        "modelPath": "media/unitModels/Drorania/creature_kaonov.obj",
+        "texturePath": "media/textures/Drorania/drorania_barn.jpg",
         "troops": 4
       },
-      "StandardM": {
+      {
+        "unitName": "StandardM",
         "moveSpeed": 420,
         "attackDamage": 15,
         "attackRange": 100,
@@ -196,10 +208,12 @@
         "selectEvent": "event:/UnitSelect/Kaonov_melee_S",
         "metalCost": 120,
         "crystalCost": 0,
-        "path": "media/unitModels/Drorania/kaonov_melee_soldier.obj",
+        "modelPath": "media/unitModels/Drorania/kaonov_melee_soldier.obj",
+        "texturePath": "media/textures/Drorania/drorania_barn.jpg",
         "troops": 4
       },
-      "AdvancedM": {
+      {
+        "unitName": "AdvancedM",
         "moveSpeed": 530,
         "attackDamage": 21,
         "attackRange": 140,
@@ -215,10 +229,12 @@
         "selectEvent": "event:/UnitSelect/Kaonov_melee_A",
         "metalCost": 120,
         "crystalCost": 0,
-        "path": "media/unitModels/Drorania/creature_kaonov.obj",
+        "modelPath": "media/unitModels/Drorania/creature_kaonov.obj",
+        "texturePath": "media/textures/Drorania/drorania_barn.jpg",
         "troops": 4
       },
-      "Launcher": {
+      {
+        "unitName": "Launcher",
         "moveSpeed": 250,
         "attackDamage": 27,
         "attackRange": 900,
@@ -234,10 +250,12 @@
         "selectEvent": "event:/UnitSelect/Kaonov_ranged_S",
         "metalCost": 120,
         "crystalCost": 0,
-        "path": "media/unitModels/Drorania/kaonov_cannon.obj",
+        "modelPath": "media/unitModels/Drorania/kaonov_cannon.obj",
+        "texturePath": "media/textures/Drorania/drorania_barn.jpg",
         "troops": 4
       },
-      "Desintegrator": {
+      {
+        "unitName": "Desintegrator",
         "moveSpeed": 250,
         "attackDamage": 41,
         "attackRange": 120,
@@ -253,10 +271,12 @@
         "selectEvent": "event:/UnitSelect/Kaonov_ranged_A",
         "metalCost": 120,
         "crystalCost": 0,
-        "path": "media/unitModels/Drorania/kaonov_walls_desintegrator.obj",
+        "modelPath": "media/unitModels/Drorania/kaonov_walls_desintegrator.obj",
+        "texturePath": "media/textures/Drorania/drorania_barn.jpg",
         "troops": 4
       },
-      "Idol": {
+      {
+        "unitName": "Idol",
         "moveSpeed": 250,
         "attackDamage": 27,
         "attackRange": 140,
@@ -272,8 +292,9 @@
         "selectEvent": "event:/UnitSelect/Kaonov_melee_A",
         "metalCost": 120,
         "crystalCost": 0,
-        "path": "media/unitModels/Drorania/entinity_kaonov.obj",
+        "modelPath": "media/unitModels/Drorania/entinity_kaonov.obj",
+        "texturePath": "media/textures/Drorania/drorania_barn.jpg",
         "troops": 4
       }
-    }
+    ]
   }

@@ -8,8 +8,8 @@
 #include <Types.h>
 #include <Entity.h>
 #include <MathEngine/Vector3.h>
-#include <PathPlanner/PathManager.h>
 
+class PathManager;
 class Troop;
 class Unit : public Entity {
     
@@ -101,7 +101,7 @@ class Unit : public Entity {
         SceneNode *layer;
 
         // Space vectors used for unit movement
-        class PathManager* pathManager;
+        PathManager* pathManager;
         std::list< Vector2<f32> > pathFollow;
 
         //Finish recruiting callback

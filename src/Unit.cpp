@@ -8,6 +8,7 @@
 #include "GraphicEngine/Window.h"
 #include "Troop.h"
 #include <WorldEngine/WorldGeometry.h>
+#include <PathPlanner/PathManager.h>
 
 Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t) : Entity(id, team, breed) {
     // Race type and unit type
