@@ -5,9 +5,9 @@
 #include <GraphicEngine/SceneNode.h>
 
 Entity::Entity(i32 id, Enumeration::Team t, Enumeration::EntityType e) : ID(id), team(t), entityType(e),
-    currentHP(0), maxHP(0), viewRadius(0), attackRange(0), metalCost(0), crystalCost(0), happiness(0), 
-    model(nullptr) {
-        tookDamageTimer = new Timer(0.1, false);
+    currentHP(0), maxHP(0), viewRadius(0), attackRange(0), metalCost(0), crystalCost(0), happinessVariation(0), citizensVariation(0),
+    model(nullptr), target(nullptr) {
+        tookDamageTimer = new Timer(0.1);
         tookDamageTimer -> setCallback([&](){
             //ToDo: cambiar a material original
         });
@@ -59,19 +59,19 @@ void Entity::takeDamage(i32 dmg) {
 }
 
 void Entity::returnToOriginalMaterial() {
+    tookDamageTimer -> stop();
     tookDamageTimer -> triggerCallback();
 }
 
 //SETTERS
 void Entity::setID(i32 id){
     ID = id;
-    model->setID(id);
+    model -> setID(id);
 }
 
-void Entity::setModel(SceneNode *layer, const wchar_t *path) {
+void Entity::setModel(SceneNode *layer, const char *path) {
     model = new Model(layer, ID, path);
-    hitbox = Box3D<f32>();
-    vectorPos = Vector2<f32>();
+    refreshHitbox();
     //ToDo: cambiar a material normal
 }
 
@@ -102,44 +102,24 @@ void Entity::setTarget(Entity *newTarget) {
 }
 
 //GETTERS
-Model* Entity::getModel() const{
-    return model;
-}
-
-Vector2<f32> Entity::getPosition() const{
-    return vectorPos;
-}
-
 i32 Entity::getID() const{
     return ID;
-}
-
-Enumeration::EntityType Entity::getEntityType() const{
-    return entityType;
 }
 
 Enumeration::Team Entity::getTeam() const{
     return team;
 }
 
-i32 Entity::getHP() const{
-    return currentHP;
+Enumeration::EntityType Entity::getEntityType() const{
+    return entityType;
 }
 
-i32 Entity::getViewRadius() const{
-    return viewRadius;
+Model* Entity::getModel() const{
+    return model;
 }
 
-i32 Entity::getHappiness() const{
-    return happiness;
-}
-
-std::vector<Entity*> Entity::getHostile() const{
-    return hostile;
-}
-
-Entity* Entity::getTarget() const{
-    return target;
+Vector2<f32> Entity::getPosition() const{
+    return vectorPos;
 }
 
 //ToDo: revisar
@@ -150,6 +130,46 @@ Box3D<f32> Entity::getHitBox() const{
 //ToDo: revisar
 Box2D Entity::getHit() const{
     return hitBox;
+}
+
+i32 Entity::getCurrentHP() const{
+    return currentHP;
+}
+
+i32 Entity::getMaxHP() const{
+    return maxHP;
+}
+
+i32 Entity::getViewRadius() const{
+    return viewRadius;
+}
+
+i32 Entity::getAttackRange() const{
+    return attackRange;
+}
+
+i32 Entity::getMetalCost() const{
+    return metalCost;
+}
+
+i32 Entity::getCrystalCost() const{
+    return crystalCost;
+}
+
+i32 Entity::getHappinessVariation() const{
+    return happinessVariation;
+}
+
+i32 Entity::getCitizensVariation() const{
+    return citizensVariation;
+}
+
+Entity* Entity::getTarget() const{
+    return target;
+}
+
+std::vector<Entity*> Entity::getHostile() const{
+    return hostile;
 }
 
 i32 Entity::getCellsX() const{

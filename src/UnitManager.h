@@ -12,10 +12,10 @@
 
 class UnitManager{
     public:
-        UnitManager(Enumeration::Team teamData, Enumeration::BreedType raceData);
+        UnitManager(Enumeration::Team teamData);
         virtual ~UnitManager();
 
-        bool createTroop(Enumeration::UnitType unitData);
+        bool createTroop(std::string unitData);
         void startDeployingTroop(i32 troopID);
         void deploySelectedTroop(Vector2<f32>);
         void startDeployingAllTroops();
@@ -32,15 +32,15 @@ class UnitManager{
         void deleteUnit(i32);
 
         bool isTroopSelected();
-        bool isSolvent(i32, i32);
-        bool checkCanPay(Enumeration::UnitType);
+        bool isSolvent(i32, i32, i32);
+        bool checkCanPay(std::string);
         bool isDeployingTroop();
         bool areTroopsDeployed();
         bool areTroopsInMap();
 
         //GETTERS
 		i32 getCollisionID();
-        i32 getTroopAmount(Enumeration::UnitType);
+        i32 getTroopAmount(std::string);
         i32 getTotalTroopAmount();
         i32 getDeployingTroopID();
         Unit* getSelectedTroop();
@@ -50,21 +50,22 @@ class UnitManager{
 		std::string getCollisionName();
     private:
         Enumeration::Team team;
-        Enumeration::BreedType breed;
 
         SceneNode *unitLayer;
 		SceneNode *currentCollision;
+
+        std::map<std::string, UnitData> units;
 
         std::map<i32, Unit*> *inQueueTroops;
         std::map<i32, Unit*> *inHallTroops;
         std::map<i32, Unit*> *inMapTroops;
 
+        std::map<std::string, i32> troopsAmount;
+
         Unit *selectedTroop;
 
         bool deployingTroop;
         i32 currentDeployingTroop;
-        /* The fuck is this */
-        i32 troopsAmount[Enumeration::UnitType::TroopsSize];
 
         i32 nextTroopId;
 

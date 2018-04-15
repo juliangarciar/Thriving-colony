@@ -5,9 +5,16 @@
 
 using namespace irr;
 #define PI 3.14159265
-Model::Model(i32 id, const wchar_t *path) {
+Model::Model(i32 id, const char *path) {
+    std::wstringstream o;
+    o << path;
+
     scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
-    meshNode = smgr -> addMeshSceneNode(smgr -> getMesh(path));
+    meshNode = smgr -> addMeshSceneNode(smgr -> getMesh(o.str().c_str()));
+    if (!meshNode) {
+        std::cout << "ERROR: no se puede cargar el modelo: " << path << std::endl;
+        exit(0);
+    }
     meshNode -> setID(id);
     
     selector = smgr -> createTriangleSelectorFromBoundingBox(meshNode);
@@ -19,11 +26,14 @@ Model::Model(i32 id, const wchar_t *path) {
 
 }
 
-Model::Model(SceneNode *parent, i32 id, const wchar_t *path) {
+Model::Model(SceneNode *parent, i32 id, const char *path) {
+    std::wstringstream o;
+    o << path;
+
     scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
-    meshNode = smgr -> addMeshSceneNode(smgr -> getMesh(path));
+    meshNode = smgr -> addMeshSceneNode(smgr -> getMesh(o.str().c_str()));
     if (!meshNode) {
-        std::cout << "ERROR: no se puede cargar el modelo" << std::endl;
+        std::cout << "ERROR: no se puede cargar el modelo: " << path << std::endl;
         exit(0);
     }
     meshNode -> setID(id);
@@ -47,7 +57,7 @@ void Model::setID(i32 id) {
     meshNode -> setID(id);
 }
 
-void Model::setName(const wchar_t *name) {
+void Model::setName(const char *name) {
     meshNode -> setName(core::stringw(name).c_str());
 }
 

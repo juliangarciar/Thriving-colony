@@ -26,7 +26,7 @@ WorldGeometry::WorldGeometry(){
     i32 n = (MAP * MAP) / (CELL * CELL);
     mCells = std::vector< Cell* >(n);
     cellsDistance = std::vector< std::vector<f32> >(n);
-    quadTree = NULL;
+    quadTree = nullptr;
 }
 WorldGeometry::~WorldGeometry(){
     mCells.clear();
@@ -188,7 +188,7 @@ bool WorldGeometry::checkBuildingSpace(Building* buildingPtr){
 }
 Vector2<f32> WorldGeometry::correctBuildingPosition(Vector2<f32> targetPos, Building *buildingPtr){
     Vector2<f32> correctOne = Vector2<f32>();
-    if(buildingPtr != NULL){
+    if(buildingPtr != nullptr){
         Cell* dummy = positionToCell(targetPos);
         Vector2<f32> storage;
         /* Change this method */
@@ -215,7 +215,7 @@ Vector2<f32> WorldGeometry::correctBuildingPosition(Vector2<f32> targetPos, Buil
 /* NEEDS A HARD CLEAN !!! */
 Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin, Building* buildingPtr){
     /* The wanted Cell */
-    Cell* validCell = NULL;
+    Cell* validCell = nullptr;
     /* Intended swap */
     Cell* sourceCell = referenceTarget;
     Cell* targetCell = referenceOrigin;
@@ -226,8 +226,8 @@ Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin, 
     std::vector<f32> GCosts = std::vector<f32>(MAX, 0);
     std::vector<f32> FCosts = std::vector<f32>(MAX, 0);
 
-    std::vector< Cell* > shortestPath = std::vector<Cell*>(MAX, NULL);
-    std::vector< Cell* > searchFrontier = std::vector<Cell*>(MAX, NULL);
+    std::vector< Cell* > shortestPath = std::vector<Cell*>(MAX, nullptr);
+    std::vector< Cell* > searchFrontier = std::vector<Cell*>(MAX, nullptr);
     /* Priority queue, that orders the weights of each iterated Cell */
     IndexedPriorityQLow<float> pq(FCosts, MAX);
     pq.insert(sourceIndex);
@@ -237,7 +237,7 @@ Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin, 
     /* Adds the cell to the path vector */
         shortestPath[closestIndex] = searchFrontier[closestIndex];
     /* Stop condition, research about a system of conditions */
-        if(buildingPtr != NULL){
+        if(buildingPtr != nullptr){
             Vector2<f32> tmp = indexToCell(closestIndex)->getPosition();
             //Vector3<f32> dummy;
             //dummy.x = tmp.x;
@@ -262,7 +262,7 @@ Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin, 
             f32 GCost = GCosts[closestIndex] + getCost(closestIndex, i);
             //std::cout << "Distancia H: " << HCost << "\n";
             //std::cout << "Distancia G: " << GCost << "\n";
-            if(searchFrontier[potentialNode] == NULL){
+            if(searchFrontier[potentialNode] == nullptr){
                 FCosts[potentialNode] = GCost + HCost;
                 GCosts[potentialNode] = GCost;
 
@@ -270,7 +270,7 @@ Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin, 
                 searchFrontier[potentialNode] = indexToCell(closestIndex);
             }
         /* Fix this method, isn't working properly */
-            else if((GCost < GCosts[potentialNode]) && (shortestPath[potentialNode] == NULL)){
+            else if((GCost < GCosts[potentialNode]) && (shortestPath[potentialNode] == nullptr)){
                 FCosts[potentialNode] = GCost + HCost;
                 GCosts[potentialNode] = GCost;
 
@@ -284,7 +284,7 @@ Cell* WorldGeometry::positionToCell(Vector2<f32> position){
     int dummy = (i32)((MAP / CELL) * position.x / MAP) + 
                 ((i32)((MAP / CELL) * position.y / MAP) * (MAP / CELL));
     if(dummy < 0 || dummy > mCells.size()){
-        return NULL;
+        return nullptr;
     }
     i32 idx = dummy;
 

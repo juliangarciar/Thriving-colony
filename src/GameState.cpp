@@ -214,10 +214,10 @@ void GameState::Update(){
         }*/
 
         //Win/Lose
-        if (ia -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
+        if (ia -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
             g -> changeState(Enumeration::State::WinState);
         }
-        if (human -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
+        if (human -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
             g -> changeState(Enumeration::State::DefeatState);
         }
     }

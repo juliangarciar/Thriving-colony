@@ -24,17 +24,15 @@ Human::~Human() {
 
 void Human::Init() {
     Player::Init();
-    buildings = new BuildingManager(Enumeration::Team::Human, Enumeration::BreedType::Kaonov);
-    units = new UnitManager(Enumeration::Team::Human, Enumeration::BreedType::Kaonov);
+    buildings = new BuildingManager(Enumeration::Team::Human);
+    units = new UnitManager(Enumeration::Team::Human);
     
 }
 
 void Human::Update() {
     buildings -> updateBuildingManager();
     units -> updateUnitManager();
-    if (updateTimer ->tick()) {
-        gainResources();
-    }
+    updateTimer ->tick();
 }
 
 void Human::CleanUp() {
@@ -42,8 +40,6 @@ void Human::CleanUp() {
     delete buildings;
     delete units;
     delete updateTimer;
-    delete updateFastTimer;
-    delete updateSlowTimer;
 }
 
 bool Human::getUnderAttack() {

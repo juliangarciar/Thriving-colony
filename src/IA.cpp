@@ -16,7 +16,20 @@ IA* IA::Instance() {
 }
 
 IA::IA() : Player() {
+    //Initialize tree stuff
+    tree = new BehaviourTree();
+    nodeRootIA = new RootNode();
+
+    //Initialize managers
+    buildings = new BuildingManager(Enumeration::Team::IA);
+    units = new UnitManager(Enumeration::Team::IA);
     
+    //Define choice stuff
+    choiceIndex = 0;
+    choosingTimer = new Timer(1.0f, true, false);
+    choosingTimer -> setCallback([&](){
+        nodeRootIA -> question();
+    });
 }
 
 IA::~IA() {
@@ -30,21 +43,19 @@ IA::~IA() {
 
 void IA::Init() {
     Player::Init();
+
     // Choose a behaviour
     chooseBehaviour();
+
     // Create a behaviour and a root node and set them up according to the behaviour
-    tree = new BehaviourTree();
     tree -> init(behaviour);
-    nodeRootIA = new RootNode();
     nodeRootIA -> init(behaviour);
 
-    /* Put here the JSON read */
-    buildings = new BuildingManager(Enumeration::Team::IA, Enumeration::BreedType::Drorania);
-    units = new UnitManager(Enumeration::Team::IA, Enumeration::BreedType::Kaonov);
-
     // Choices for the debugging system
-    choiceIndex = 0;
     initializeChoices();
+
+    //Initialize choosing Timer
+    choosingTimer -> start();
 }
 
 void IA::Update() {
@@ -52,39 +63,32 @@ void IA::Update() {
     units -> updateUnitManager();
     Vector3<f32> tarPos = Map::Instance() -> getCamera() -> getTarPos();
     Vector2<f32> IAPos = buildings -> getBuilding(0) -> getPosition();
-    fast = false;
+    
     if (((IAPos.x + 2000 > tarPos.x && IAPos.x - 2000 < tarPos.x) && (IAPos.y + 2000 > tarPos.z && IAPos.y - 2000 < tarPos.z)) || underAttack) {
-        fast = true;
-    }
-    if (fast == true) {
-        if (updateFastTimer -> tick()) {
-            nodeRootIA -> question();
-            updateFastTimer -> restart();
-            updateSlowTimer -> restart();
+        if (!fast) {
+            choosingTimer->changeDuration(1.0f);
+            fast = true;
         }
     } else {
-        if (updateSlowTimer -> tick()) {
-            nodeRootIA -> question();
-            updateFastTimer -> restart();
-            updateSlowTimer -> restart();
+        if (fast) {
+            choosingTimer->changeDuration(3.0f);
+            fast = false;
         }
     }
-    if (updateTimer -> tick()) {
-        gainResources();
-    }
+
+    choosingTimer -> tick();
+    updateTimer -> tick();
 }
 
 void IA::CleanUp() {
     delete tree;
     delete nodeRootIA;
-    // Add a method to clean the cells the buildings inahbit
+    // ToDo: Add a method to clean the cells the buildings inahbit
     delete buildings;
     delete units;
     choices -> clear();
     delete choices;
-    delete updateTimer;
-    delete updateFastTimer;
-    delete updateSlowTimer;
+    delete choosingTimer;
 }
 
 BehaviourTree* IA::getTree() {
@@ -276,6 +280,7 @@ void IA::initializeChoices() {
     
     //ARRAY FORM
     // SI ALGUN DIA SE PONE ASI SERIA FANTISTOCOSO
+    // PARA ESO CAMBIA VECTOR POR MAP
     /*
     // Commented choices are repeated through
     choices[Enumeration::IAChoices::DeployingTroops] = "Deploying troops";

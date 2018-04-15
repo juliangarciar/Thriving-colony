@@ -8,34 +8,98 @@
 #define MAX_MAP 10240
 #define TOTAL 80
 
-Building::Building(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::BuildingType t) : Entity(id, team, Enumeration::EntityType::Building) {
+Building::Building(SceneNode *l, i32 id, Enumeration::Team team, BuildingData d) : Entity(id, team, Enumeration::EntityType::Building) {
     layer = l;
-    type = t;
-    entityType = Enumeration::EntityType::Building;
-    target = NULL;
 
-    Init();
+    finished = false;
+
+    callback = nullptr;
+
+    target = nullptr;
+
+    //ToDo: load from JSON
+
+    /* Set the model and texture */
+    //setModel(layer, modelPath);
+    //Texture *tex = new Texture(texturePath);
+    //this->model->setMaterial(new Material(tex)); //ToDo: crear material inicial
+	/* Establece su color original */
+	//ToDo: establece el material por defecto
+
+    /* Box2D parameters */
+    Vector2<f32> topLeft;
+    Vector2<f32> bottomRight;
+
+    /* Set the 2D hitbox params */
+    topLeft.x = (kCellsX / 2.0) * (-80.f) + 1;
+    topLeft.y = (kCellsY / 2.0) * (-80.f) + 1;
+    bottomRight.x = (kCellsX / 2.0) * (80.f) - 1;
+    bottomRight.y = (kCellsY / 2.0) * (80.f) - 1;
+
+    /* Set the 2D hitbox */
+    hitBox = Box2D(topLeft, bottomRight); 
+
+    /* Set the timer */
+    buildTimer = new Timer(d.buildTime, false, false);
+    buildTimer -> setCallback([&]{
+		//ToDo: volver al material original
+        adjustCityStats();
+        if (callback != nullptr) callback(this);
+        finished = true;
+    });
 }
 
 Building::~Building() {
     delete buildTimer;
 }
 
-void Building::Init() {
-    /* Box2D parameters */
-    Vector2<f32> topLeft;
-    Vector2<f32> bottomRight;
+void Building::update() {
+    buildTimer -> tick();
+}
 
-    //f32 r = 0;
-    //f32 g = 0;
-    //f32 b = 0;
-    Texture *tex;
-    const wchar_t *path;
-    Vector3<f32> scale;
-    
-    f32 buildTime = 0;
+void Building::startBuilding() {
+    taxPlayer();
+    buildTimer -> start();
+}
 
-    /*switch (type) {
+void Building::taxPlayer(){
+    //Tax the player
+    if (team == Enumeration::Team::Human) {
+        Human::Instance() -> spendResources(metalCost, crystalCost);
+    } else {
+        IA::Instance() -> spendResources(metalCost, crystalCost);
+    }
+}
+
+void Building::adjustCityStats() {
+    // Tax the human
+    if (team == Enumeration::Team::Human) {
+        // Tax costs
+        Human::Instance() -> increaseCityLevel(cityLevel);  
+        Human::Instance() -> increaseHappiness(happinessVariation);
+        Human::Instance() -> increaseCitizens(citizensVariation);   
+    } else { // Tax the AI
+        // Tax costs
+        IA::Instance() -> increaseHappiness(happinessVariation);
+        IA::Instance() -> increaseCitizens(citizensVariation);   
+        IA::Instance() -> increaseCityLevel(cityLevel); //ToDo: deberia ir en el pos?
+    }
+}
+
+void Building::setFinishedCallback(std::function<void(Building*)> f){
+    callback = f;
+}
+
+bool Building::getFinished(){
+    return finished;
+}
+
+
+
+
+
+
+    /*switch (buildingType) {
         case Enumeration::BuildingType::Barn:
 
             maxHP = 1100;
@@ -50,7 +114,7 @@ void Building::Init() {
             //kCellsX = Enumeration::BuildingCells::BarnCells;
             kCellsX = 2;
             kCellsY = 2;
-            path = L"media/buildingModels/barn.obj";
+            modelPath = L"media/buildingModels/barn.obj";
             if(breed == Enumeration::BreedType::Drorania){
                 tex = new Texture("./media/textures/Drorania/drorania_barn.jpg");
             }
@@ -74,7 +138,7 @@ void Building::Init() {
             kCellsX = 4;
             kCellsY = 4;
 
-            path = L"media/buildingModels/barrack.obj";
+            modelPath = L"media/buildingModels/barrack.obj";
             if(breed == Enumeration::BreedType::Drorania){
                 tex = new Texture("./media/textures/Drorania/drorania_barrack.jpg");
             }
@@ -98,7 +162,7 @@ void Building::Init() {
             kCellsX = 4;
             kCellsY = 4;
 
-            path = L"media/buildingModels/hospital.obj";
+            modelPath = L"media/buildingModels/hospital.obj";
             if(breed == Enumeration::BreedType::Drorania){
                 tex = new Texture("./media/textures/Drorania/drorania_hospital.jpg");
             }
@@ -123,7 +187,7 @@ void Building::Init() {
             kCellsX = 1;
             kCellsY = 1;
 
-            path = L"media/buildingModels/house.obj";
+            modelPath = L"media/buildingModels/house.obj";
             if(breed == Enumeration::BreedType::Drorania){
                 tex = new Texture("./media/textures/Drorania/drorania_house.jpg");
             }
@@ -140,7 +204,7 @@ void Building::Init() {
             kCellsX = 5;
             kCellsY = 5;
 
-            path = L"media/buildingModels/command_center.obj";
+            modelPath = L"media/buildingModels/command_center.obj";
             if(breed == Enumeration::BreedType::Drorania){
                 tex = new Texture("./media/textures/Drorania/drorania_command_center.jpg");
             }
@@ -164,7 +228,7 @@ void Building::Init() {
             kCellsX = 3;
             kCellsY = 4;
 
-            path = L"media/buildingModels/market.obj";
+            modelPath = L"media/buildingModels/market.obj";
             if(breed == Enumeration::BreedType::Drorania){
                 tex = new Texture("./media/textures/Drorania/drorania_market.jpg");
             }
@@ -189,7 +253,7 @@ void Building::Init() {
             kCellsX = 4;
             kCellsY = 4;
 
-            path = L"media/buildingModels/quarry.obj";
+            modelPath = L"media/buildingModels/quarry.obj";
             if(breed == Enumeration::BreedType::Drorania){
                 tex = new Texture("./media/textures/Drorania/drorania_quarry.jpg");
             }
@@ -213,7 +277,7 @@ void Building::Init() {
             kCellsX = 5;
             kCellsY = 3;
 
-            path = L"media/buildingModels/siderurgy.obj";
+            modelPath = L"media/buildingModels/siderurgy.obj";
             if(breed == Enumeration::BreedType::Drorania){
                 tex = new Texture("./media/textures/Drorania/drorania_siderurgy.jpg");
             }
@@ -238,7 +302,7 @@ void Building::Init() {
             kCellsX = 3;
             kCellsY = 2;
 
-            path = L"media/buildingModels/school.obj";
+            modelPath = L"media/buildingModels/school.obj";
             if(breed == Enumeration::BreedType::Drorania){
                 tex = new Texture("./media/textures/Drorania/drorania_school.jpg");
             }
@@ -262,7 +326,7 @@ void Building::Init() {
             kCellsX = 1;
             kCellsY = 1;
 
-            path = L"media/buildingModels/tower.obj";
+            modelPath = L"media/buildingModels/tower.obj";
             if(breed == Enumeration::BreedType::Drorania){
                 tex = new Texture("./media/textures/Drorania/drorania_tower.jpg");
             }
@@ -286,7 +350,7 @@ void Building::Init() {
             kCellsX = 2;
             kCellsY = 1;
 
-            path = L"media/buildingModels/wall.obj";
+            modelPath = L"media/buildingModels/wall.obj";
             if(breed == Enumeration::BreedType::Drorania){
                 tex = new Texture("./media/textures/Drorania/drorania_wall.jpg");
             }
@@ -310,7 +374,7 @@ void Building::Init() {
             kCellsX = 3;
             kCellsY = 4;
 
-            path = L"media/buildingModels/workshop.obj";
+            modelPath = L"media/buildingModels/workshop.obj";
             if(breed == Enumeration::BreedType::Drorania){
                 tex = new Texture("./media/textures/Drorania/drorania_workshop.jpg");
             }
@@ -320,77 +384,89 @@ void Building::Init() {
             scale = Vector3<f32>(1,1,1);
         break;
         default: break;
-    }*/
-    /* Set the 2D hitbox */
-    topLeft.x = (kCellsX / 2.0) * (-80.f) + 1;
-    topLeft.y = (kCellsY / 2.0) * (-80.f) + 1;
-    bottomRight.x = (kCellsX / 2.0) * (80.f) - 1;
-    bottomRight.y = (kCellsY / 2.0) * (80.f) - 1;
-
-    hitBox = Box2D(topLeft, bottomRight); 
-
-    setModel(layer, path);
-    model->setScale(scale);
-
-    //buildTime = 0; //DEBUG
-    buildTimer = new Timer(buildTime, true);
-
-    //Establece el color base del edificio
-    //ToDo: crear material base
-
-    finished = false;
+    }
     
-    this->model->setMaterial(new Material(tex));
-}
+        //Metal and crystal costs of each building.
+        enum BuildingCost {
+            SchoolMetalCost = 500,
+            SchoolCrystalCost = 0,
 
-void Building::update() {
-    if (!finished){
-        if (buildTimer -> tick()) {
-            finished = true;
-            callback(this);
-        }
-    }
-}
+            MarketMetalCost = 800,
+            MarketCrystalCost = 0,
 
-void Building::triggerFinishedCallback(){
-    finished = true;
-    callback(this);
-}
+            HospitalMetalCost = 800,
+            HospitalCrystalCost = 0,
 
-void Building::preTaxPlayer() {
-    // Tax the human
-    if (team == Enumeration::Team::Human) {
-        // Tax costs
-        Human::Instance() -> spendResources(metalCost, crystalCost);
-        Human::Instance() -> increaseCityLevel(cityLevel);  
-    } else { // Tax the AI
-        // Tax costs
-        IA::Instance() -> spendResources(metalCost, crystalCost);
-        IA::Instance() -> increaseCityLevel(cityLevel); //ToDo: deberia ir en el pos?
-    }
-}
+            SiderurgyMetalCost = 500,
+            SiderurgyCrystalCost = 0,
 
-void Building::posTaxPlayer() {
-    // Tax the human
-    if (team == Enumeration::Team::Human) {
-        // Tax costs
-        Human::Instance() -> increaseHappiness(happiness);
-        Human::Instance() -> increaseCitizens(citizens);   
-    } else { // Tax the AI
-        // Tax costs
-        IA::Instance() -> increaseHappiness(happiness);
-        IA::Instance() -> increaseCitizens(citizens);   
-    }
-}
+            QuarryMetalCost = 2000,
+            QuarryCrystalCost = 0,
 
-void Building::setFinishedCallback(std::function<void(Building*)> f){
-    callback = f;
-}
+            HomeMetalCost = 100,
+            HomeCrystalCost = 0,
 
-Enumeration::BuildingType Building::getType() { 
-    return type;
-} 
+            BarrackMetalCost = 500,
+            BarrackCrystalCost = 0,
 
-bool Building::getFinished(){
-    return finished;
-}
+            BarnMetalCost = 675,
+            BarnCrystalCost = 230,
+
+            WorkshopMetalCost = 725,
+            WorkshopCrystalCost = 300,
+
+            WallMetalCost = 75,
+            WallCrystalCost = 0,
+
+            TowerMetalCost = 300,
+            TowerCrystalCost = 0,
+        };
+
+        //Cells occupied by each building.
+        enum BuildingCells{
+            MainCells = 3,
+            SchoolCells = 2,
+            MarketCells = 2,
+            HospitalCells = 3,
+            SiderurgyCells = 3,
+            QuarryCells = 3,
+            HomeCells = 1,
+            BarrackCells = 3,
+            BarnCells = 2,
+            WorkshopCells = 2,
+            WallCells = 1,
+            TowerCells = 1
+
+        };
+
+        //
+        enum BuildingHalfsize{
+            MainHalfsize = 120,
+            SchoolHalfsize = 80,
+            MarketHalfsize = 80,
+            HospitalHalfsize = 120,
+            SiderurgyHalfsize = 120,
+            QuarryHalfsize = 120,
+            HomeHalfsize = 40,
+            BarrackHalfsize = 80,
+            BarnHalfsize = 80,
+            WorkshopHalfsize = 80,
+            WallHalfsize = 40,
+            TowerHalfsize = 40
+        };
+
+        //Amount of happiness provided by each building.
+        enum HappinessProvided {
+            AmountHappinessBarn = 0,
+            AmountHappinessBarrack = 0,
+            AmountHapppinesHospital = 40,
+            AmountHappinessHouse = 1,
+            AmountHappinessMarket = 30,
+            AmountHappinessQuarry = 0,
+            AmountHappinessSchool = 20,
+            AmountHappinessSiderurgy = 0,
+            AmountHappinessTower = 1,
+            AmountHappinessWall = 1,
+            AmountHappinessWorkshop = 0
+        };
+    */

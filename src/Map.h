@@ -93,7 +93,7 @@ class Map {
     private:
         /**
          * @brief Show at the terminal the progress of the map loading.
-         * @param The i32 is the value of the current progress.
+         * @param i32 is the value of the current progress.
          */
         void loadProgress(i32);
 

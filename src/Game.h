@@ -56,7 +56,7 @@ class Game {
 
         /**
         * @brief Change the state variable to the state passed by parameter.
-        * @param The Enumeration::State is the new state to which is going to change the game. 
+        * @param Enumeration::State is the new state to which is going to change the game. 
         */
         void changeState(Enumeration::State);
 
