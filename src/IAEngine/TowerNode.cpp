@@ -14,8 +14,8 @@ void TowerNode::question() {
 
     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildTower);
     //std::cout << "Construyo un torre" << std::endl;
-    if (IA::Instance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::TowerMetalCost, Enumeration::BuildingCost::TowerCrystalCost)) {
+    if (IA::Instance() -> getBuildingManager() -> checkCanPay("Tower")) {
         Vector2<f32> v = IA::Instance() -> determinatePositionBuilding();
-        IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Tower, false);
+        IA::Instance() -> getBuildingManager() -> createBuilding(v, "Tower");
     }
 }

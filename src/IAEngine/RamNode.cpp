@@ -19,12 +19,11 @@ RamNode::~RamNode() {
 void RamNode::question() {
 
     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::TrainRam);
-    if (IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Workshop) > 0) {
+    if (IA::Instance() -> getBuildingManager() -> getAmount("Workshop") > 0) {
         //std::cout << "Genero un ariete" << std::endl;
-        if (IA::Instance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::RamMetalCost, Enumeration::UnitCost::RamCrystalCost)) {
+        if (IA::Instance() -> getUnitManager() -> checkCanPay("Desintegrator")) {
             // Unit type
-            Enumeration::UnitType unitData = Enumeration::UnitType::Desintegrator;
-            IA::Instance() -> getUnitManager() -> createTroop(unitData);
+            IA::Instance() -> getUnitManager() -> createTroop("Desintegrator");
         }
     } else {
         IA::Instance() -> getTree() -> setRequireWorkshop(true);

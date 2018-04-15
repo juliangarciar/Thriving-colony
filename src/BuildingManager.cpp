@@ -87,10 +87,10 @@ void BuildingManager::drawBuilding() {
     }
 }
 
-void BuildingManager::instabuildBuilding(Vector2<f32> pos, std::string type){
+void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 buildTime){
 	if (buildings.find(type) != buildings.end()){
 		BuildingData b = buildings[type];
-		b.buildTime = 0;
+		if (buildTime >= 0) b.buildTime = buildTime;
 		tempBuilding = new Building(buildingLayer, 0, team, b);
 		buildBuilding(pos);
 	}

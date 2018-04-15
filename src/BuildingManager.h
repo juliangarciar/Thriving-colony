@@ -55,11 +55,12 @@ class BuildingManager {
 		void drawBuilding();
 
 		/**
-		 * @brief build building without CoolDown
+		 * @brief create and build building
 		 * @param Vector3<f32> is the position where the building is going to be created.
 		 * @param std::string is the building type.
+		 * @param i32 is the buildingTime (if < 0 it takes the original).
 		 */
-		void instabuildBuilding(Vector2<f32>, std::string);
+		void createBuilding(Vector2<f32>, std::string, i32 = -1);
 
 		/**
 		 * @brief Set all the variables needed for the building at tempBuilding variable to be displayed and insert it at the buildings variable as its key as the value of the nextBuildingId.
@@ -138,7 +139,7 @@ class BuildingManager {
 
 		/**
 		 * @brief Get the amount of one type of building that the player has built.
-		 * @param Enumeration::BuildingType is the type of building that is going to be checked.
+		 * @param std::string is the type of building that is going to be checked.
 		 * @return i32 that is the amount of buildings of this type.
 		 */
 		i32 getAmount(std::string);

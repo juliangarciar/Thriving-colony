@@ -17,14 +17,12 @@ MountedRangeNode::~MountedRangeNode() {
 }
 
 void MountedRangeNode::question() {
-
     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::TrainMountedRanged);
-    if (IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barn) > 0) {
+    if (IA::Instance() -> getBuildingManager() -> getAmount("Barn") > 0) {
         //std::cout << "Genero un soldado montado de rango" << std::endl;
-        if (IA::Instance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MountedRangedMetalCost, Enumeration::UnitCost::MountedRangedCrystalCost)) {
+        if (IA::Instance() -> getUnitManager() -> checkCanPay("AdvancedR")) {
             // Unit type
-            Enumeration::UnitType unitData = Enumeration::UnitType::StandardR; 
-            IA::Instance() -> getUnitManager() -> createTroop(unitData);
+            IA::Instance() -> getUnitManager() -> createTroop("AdvancedR");
         }
     } else {
         IA::Instance() -> getTree() -> setRequireBarn(true);

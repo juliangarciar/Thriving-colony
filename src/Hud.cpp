@@ -23,7 +23,7 @@ Hud::Hud() {
         debug();
     });
 
-    toastTimer = new Timer(2, false);
+    toastTimer = new Timer(2);
     toastTimer -> setCallback([&](){
         hideToast();
     });

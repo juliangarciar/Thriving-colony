@@ -19,12 +19,11 @@ CreatureNode::~CreatureNode() {
 void CreatureNode::question() {
 
     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::TrainCreature);
-    if (IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barn) > 0) {
+    if (IA::Instance() -> getBuildingManager() -> getAmount("Barn") > 0) {
         //std::cout << "Genero una criatura" << std::endl;
-        if (IA::Instance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::CreatureMetalCost, Enumeration::UnitCost::CreatureCrystalCost)) {
+        if (IA::Instance() -> getUnitManager() -> checkCanPay("Idol")) {
             // Unit type
-            Enumeration::UnitType unitData = Enumeration::UnitType::Idol;
-            IA::Instance() -> getUnitManager() -> createTroop(unitData);
+            IA::Instance() -> getUnitManager() -> createTroop("Idol");
         }
     } else {
         IA::Instance() -> getTree() -> setRequireBarn(true);

@@ -7,6 +7,7 @@
 #include <IOEngine/Timer.h>
 
 struct BuildingData {
+    std::string type;
     f32 buildTime;
     i32 metalCost;
     i32 crystalCost;

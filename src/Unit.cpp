@@ -101,7 +101,7 @@ void Unit::Init() {
         };
     switch (type) {
         // Basic melee soldier
-        case Enumeration::UnitType::StandardM:
+        case StandardM:
             if (breed == Enumeration::BreedType::Drorania) {
                 moveSpeed = 420;
                 attackDamage = 15;
@@ -146,7 +146,7 @@ void Unit::Init() {
             }
         break;
         //Advanced melee soldier (mounted)
-        case Enumeration::UnitType::AdvancedM:
+        case AdvancedM:
             if (breed == Enumeration::BreedType::Drorania) {
                 moveSpeed = 530;
                 attackDamage = 21;
@@ -192,7 +192,7 @@ void Unit::Init() {
             }
         break;
         //Standard ranged unit
-        case Enumeration::UnitType::StandardR:
+        case StandardR:
             if (breed == Enumeration::BreedType::Drorania) {
                 moveSpeed = 350;
                 attackDamage = 13;
@@ -237,7 +237,7 @@ void Unit::Init() {
             }   
         break;
         //Advanced ranged soldier (mounted)
-        case Enumeration::UnitType::AdvancedR:
+        case AdvancedR:
             if (breed == Enumeration::BreedType::Drorania) {
                 moveSpeed = 530;
                 attackDamage = 18;
@@ -282,7 +282,7 @@ void Unit::Init() {
             }
         break;
         //Idol (to be defined)
-        case Enumeration::UnitType::Idol:
+        case Idol:
             if (breed == Enumeration::BreedType::Drorania) {
                 moveSpeed = 250;
                 attackDamage = 27;
@@ -329,7 +329,7 @@ void Unit::Init() {
             }
         break;
         //Rock launcher
-        case Enumeration::UnitType::Launcher:
+        case Launcher:
             if (breed == Enumeration::BreedType::Drorania) {
                 moveSpeed = 250;
                 attackDamage = 27;
@@ -376,7 +376,7 @@ void Unit::Init() {
             }
         break;
         //Wall desintegrator
-        case Enumeration::UnitType::Desintegrator:
+        case Desintegrator:
             if (breed == Enumeration::BreedType::Drorania) {
                 moveSpeed = 250;
                 attackDamage = 41;

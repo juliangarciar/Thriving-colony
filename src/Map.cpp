@@ -84,13 +84,13 @@ void Map::Init() {
     Human::Instance()->setBuildingRadious(j["player"]["building_radious"].get<f32>());
 
     Vector2<f32> humanPosition(j["player"]["mainBuilding"]["position"]["x"], j["player"]["mainBuilding"]["position"]["z"]);
-    Human::Instance() -> getBuildingManager() -> instabuildBuilding(humanPosition, "MainBuilding");
+    Human::Instance() -> getBuildingManager() -> createBuilding(humanPosition, "MainBuilding");
     Human::Instance() -> setHallPosition(humanPosition);
     humanStartPos = humanPosition;
 
     for (auto& element : j["player"]["buildings"]){
         Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
-        Human::Instance() -> getBuildingManager() -> instabuildBuilding(v, element["type"].get<std::string>());
+        Human::Instance() -> getBuildingManager() -> createBuilding(v, element["type"].get<std::string>(), 0);
     }
 
     loadProgress(70);
@@ -103,13 +103,13 @@ void Map::Init() {
     IA::Instance()->setBuildingRadious(j["IA"]["building_radious"].get<f32>());
 
     Vector2<f32> iaPosition(j["IA"]["mainBuilding"]["position"]["x"], j["IA"]["mainBuilding"]["position"]["z"]);
-    IA::Instance() -> getBuildingManager() -> instabuildBuilding(iaPosition, "MainBuilding");
+    IA::Instance() -> getBuildingManager() -> createBuilding(iaPosition, "MainBuilding");
     IA::Instance() -> setHallPosition(iaPosition);
     iaStartPos = iaPosition;
     
     for(auto& element : j["IA"]["buildings"]){
         Vector2<f32> iaPosition(element["position"]["x"], element["position"]["z"]);
-        IA::Instance() -> getBuildingManager() -> instabuildBuilding(iaPosition, element["type"].get<std::string>());
+        IA::Instance() -> getBuildingManager() -> createBuilding(iaPosition, element["type"].get<std::string>(), 0);
     }
 
     loadProgress(90);
