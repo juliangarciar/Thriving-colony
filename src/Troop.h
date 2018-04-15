@@ -16,7 +16,7 @@ class SceneNode;
 class Troop{
 
     public:
-        Troop(SceneNode *, const wchar_t *, i32 qnty, i32 ID);
+        Troop(SceneNode *, const char *, i32 qnty, i32 ID);
         ~Troop();
         void setPosition(Vector2<f32> vectorPos);
         void moveTroops(Vector2<f32> vectorMov);

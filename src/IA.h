@@ -51,7 +51,7 @@ class IA : public Player {
         
         /**
          * @brief Set choiceIndex variable as the value passed by parameter.
-         * @param The i32 is the value that is going to be set to choiceIndex variable.
+         * @param i32 is the value that is going to be set to choiceIndex variable.
          */
         void setChoiceIndex(i32);
 
@@ -117,6 +117,9 @@ class IA : public Player {
 
         //Current choice of the AI.
         i32 choiceIndex;
+        
+        //Choose timer
+        Timer *choosingTimer;
 
         //Determine if the choice of the Ai is updated fast or not. True will be the fast mode and false the slow.
         bool fast;

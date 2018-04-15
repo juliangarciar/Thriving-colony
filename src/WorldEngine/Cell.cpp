@@ -7,13 +7,13 @@ Cell::Cell(Vector2<f32> vectorPosition, Box2D hitboxData, i32 idx){
     position = vectorPosition;
     hitBox = hitboxData;
     index = idx;
-    inhabitingBuilding = NULL;
+    inhabitingBuilding = nullptr;
     inhabitingUnits = std::vector<Unit*>();
     neighbors = std::vector<Cell*>();
     blocked = false;
 }
 Cell::~Cell(){
-    inhabitingBuilding = NULL;
+    inhabitingBuilding = nullptr;
     inhabitingUnits.clear();
     neighbors.clear();
 }
@@ -21,7 +21,7 @@ void Cell::setInhabitingBuilding(Building* buildingPtr){
     inhabitingBuilding = buildingPtr;
 }
 void Cell::clearInhabitingBuilding(){
-    inhabitingBuilding = NULL;
+    inhabitingBuilding = nullptr;
 }
 void Cell::setInhabitingUnit(Unit* unitPtr){
     inhabitingUnits.push_back(unitPtr);
@@ -41,7 +41,7 @@ void Cell::setBlocked(bool data){
     blocked = data;
 }
 void Cell::Clear(){
-    inhabitingBuilding = NULL;
+    inhabitingBuilding = nullptr;
     inhabitingUnits.clear();
     neighbors.clear();
 }

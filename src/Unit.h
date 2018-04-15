@@ -13,6 +13,12 @@
 
 class Troop;
 
+struct UnitData {
+    i32 metalCost;
+    i32 crystalCost;
+    i32 citizensCost;
+};
+
 /**
  * @class Unit.
  * @brief Create a Unit type object. Public heritage from Entity class.
@@ -22,13 +28,12 @@ class Unit : public Entity {
     public:
         /**
          * @brief Unit constructor.
-         * @param The SceneNode is the layer where the unit is going to be created.
-         * @param The id32 is the id number that will identify the unit.
-         * @param The Enumeration::Team is the team to which belongs the building: Enumeration::Team::Human or Enumeration::Team::IA. 
-         * @param The Enumeration::BreedType is the civilization to which belongs the building: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov.
-         * @param The Enumeration::UnitType is the unit type.
+         * @param SceneNode is the layer where the unit is going to be created.
+         * @param id32 is the id number that will identify the unit.
+         * @param Enumeration::Team is the team to which belongs the building: Enumeration::Team::Human or Enumeration::Team::IA. 
+         * @param UnitData is the data for this unit
          */
-        Unit(SceneNode *, i32, Enumeration::Team, Enumeration::BreedType, Enumeration::UnitType);
+        Unit(SceneNode *, i32, Enumeration::Team, UnitData);
         
         /**
          * @brief Unit destructor.
@@ -51,7 +56,7 @@ class Unit : public Entity {
         void update();
 
         /**
-         * @brief Attack the target if it is not NULL and when the attackCountdown variable is 0 or less.
+         * @brief Attack the target if it is not nullptr and when the attackCountdown variable is 0 or less.
          */
         void attack();
 
@@ -79,7 +84,7 @@ class Unit : public Entity {
 
         /**
          * @breif Switch the current state of the unit to the state passed by parameter.
-         * @param The Enumeration::UnitState is the new state of the unit.
+         * @param Enumeration::UnitState is the new state of the unit.
          */
         void switchState(Enumeration::UnitState);
 
@@ -146,7 +151,7 @@ class Unit : public Entity {
 
         Vector2<f32> getDestination();
         std::list< Vector2<f32> > getPath();
-        Enumeration::UnitType getType();
+        std::string getType();
 
         Enumeration::UnitState getState();
 
@@ -165,7 +170,7 @@ class Unit : public Entity {
         Enumeration::UnitState state;
 
         // Unit type
-        Enumeration::UnitType type;
+        std::string type;
 
         // Unit stats
         i32 moveSpeed;

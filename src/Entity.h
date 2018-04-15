@@ -19,9 +19,9 @@ class Entity {
     public:
         /**
          * @brief Entity constructor.
-         * @param The id32 is the id number that will identify the entity.
-         * @param The Enumeration::Team is the team to which belongs the entity: Enumeration::Team::Human or Enumeration::Team::IA.
-         * @param The Enumeration::EntityType is type of entity.
+         * @param id32 is the id number that will identify the entity.
+         * @param Enumeration::Team is the team to which belongs the entity: Enumeration::Team::Human or Enumeration::Team::IA.
+         * @param Enumeration::EntityType is type of entity.
          */
         Entity(i32, Enumeration::Team, Enumeration::EntityType);
 
@@ -43,8 +43,8 @@ class Entity {
 
         /**
          * @brief Subtract damage passed by parameter to currentHP variable.
-         * @param The i32 is the damage that is going to be subtracted to currentHP variable.
-	*/
+         * @param i32 is the damage that is going to be subtracted to currentHP variable.
+	    */
         void takeDamage(i32);
 
         /**
@@ -60,44 +60,50 @@ class Entity {
         void removeHostile(Entity* hostileTarget);
 
         /**
-         * @breif Set all the enemies' target variable stored at hostile variable to NULL.
+         * @breif Set all the enemies' target variable stored at hostile variable to nullptr.
          */
         void putHostileTargetsToNull();
 
         /**
-	 * @brief Set the color of the model to its original color
-	 */
+	     * @brief Set the color of the model to its original color
+	     */
         void returnToOriginalMaterial();
 
         /**
-	* @brief Set target as the value passed by parameter
-         * @param The pointer to Entity is the value that is going be assigned to target variable. It can be NULL.
-	*/
+	     * @brief Set target as the value passed by parameter
+         * @param pointer to Entity is the value that is going be assigned to target variable. It can be nullptr.
+	     */
         void setTarget(Entity*);
 
         /**
          * @brief Create the model, hitbox and position of the entity.
-         * @param The SceneNode is a pointer to the layer where is going to be created the entity.
-         * @param The const wchar_t is a pointer to the path of the file with the model.
+         * @param SceneNode is a pointer to the layer where is going to be created the entity.
+         * @param const char is a pointer to the path of the file with the model.
          */
-        void setModel(SceneNode* sNode, const wchar_t* modelPath);
+        void setModel(SceneNode* sNode, const char* modelPath);
         
         /**
          * @brief Set the position of the model, hitbox, hitBox and position variables as the one passed by parameter.
-         * @param The Vector3 is the value that is going to be assigned as position to model, hitbox, hitBox and position variables.
-	 */
+         * @param Vector3 is the value that is going to be assigned as position to model, hitbox, hitBox and position variables.
+	     */
         void setPosition(Vector2<f32> positionVector);
 
         /**
          * @brief Set a new id to the entity.
-         * @param The i32 is the value that is going to be assigned to ID variable.
+         * @param i32 is the value that is going to be assigned to ID variable.
          */
         void setID(i32 idValue);
 
         /**
-	 * @brief Get the team of the entity.
+         * @brief Get id of the entity.
+         * @return i32 that will be the value of the ID variable.
+         */
+        i32 getID() const;
+
+        /**
+	     * @brief Get the team of the entity.
          * @return Enumeration::Team that will be the value of team variable: Enumeration::Team::Human or Enumeration::Team::IA.
-	 */
+	     */
         Enumeration::Team getTeam() const; 
         
         /**
@@ -107,64 +113,88 @@ class Entity {
         Enumeration::EntityType getEntityType() const;
 
         /**
-         * @brief Get id of the entity.
-         * @return i32 that will be the value of the ID variable.
+	     * @brief Get the model of the entity.
+         * @return Pointer to a Model object that will be the value of the model variable.
+	     */
+        Model* getModel() const;
+
+        /**
+	     * @brief Get the current position of the entity.
+         * @return Pointer to a Vector3 objetc that will be the value of the position variable.
+	     */
+        Vector2<f32> getPosition() const; 
+
+        /**
+	     * @brief Get the hitbox of the entity.
+         * @return Pointer to a Box3D object that will be the value of the hitbox variable.
+	     */
+        Box3D<f32> getHitBox() const; //ToDo: revisar
+
+        /**
+         * @brief
+         * @return
          */
-        i32 getID() const;
+        Box2D getHit() const; //ToDo: revisar
 
         /**
-	 * @brief Get the current hp of the entity.
+	     * @brief Get the current hp of the entity.
          * @return i32 that will be the current value of currentHP variable.
-	 */
-        i32 getHP() const;
+	     */
+        i32 getCurrentHP() const;
 
         /**
-	 * @brief Get the distance until where the entity can see enemies.
+	     * @brief Get the max hp of the entity.
+         * @return i32 that will be the value of maxHP variable.
+	     */
+        i32 getMaxHP() const; //
+
+        /**
+	     * @brief Get the distance until where the entity can see enemies.
          * @return i32 that will be the value of the viewRadius variable.
-	 */
-        i32 getViewRadius() const;
+	     */
+        i32 getViewRadius() const; //
+
+        /**
+	     * @brief Get the attack range of the entity.
+         * @return i32 that will be the value of attackRange variable.
+	     */
+        i32 getAttackRange() const; //
+
+        /**
+         * @brief Get the Metal Cost
+         * @return i32 
+         */
+        i32 getMetalCost() const; //
+
+        /**
+         * @brief Get the Crystal Cost
+         * @return i32 
+         */
+        i32 getCrystalCost() const; //
 
          /**
           * @brief Get the happiness that the entity provides to the player's city.
           * @return i32 that will be the value of the happiness variable.
           */
-        i32 getHappiness() const;
+        i32 getHappinessVariation() const; //
 
         /**
-	 * @brief Get the model of the entity.
-         * @return Pointer to a Model object that will be the value of the model variable.
-	 */
-        Model* getModel() const;
+         * @brief Get the Citizens Variation
+         * @return i32 
+         */
+        i32 getCitizensVariation() const; //
 
         /**
-	 * @brief Get the current position of the entity.
-         * @return Pointer to a Vector3 objetc that will be the value of the position variable.
-	 */
-        Vector2<f32> getPosition() const; 
-
-        /**
-	 * @brief Get the hitbox of the entity.
-         * @return Pointer to a Box3D object that will be the value of the hitbox variable.
-	 */
-        Box3D<f32> getHitBox() const;
+         * @brief Get current traget of the entity.
+         * @return A pointer to an Entity object if the entity has current target and nullptr in other case.
+         */
+        Entity* getTarget() const;
 
         /**
          * @breif Get all the enemies that have as target the entity.
          * @return std::vector<Entity*> that will be the value of the hostile variable.
          */
         std::vector<Entity*> getHostile() const;
-
-        /**
-         * @brief Get current traget of the entity.
-         * @return A pointer to an Entity object if the entity has current target and NULL in other case.
-         */
-        Entity* getTarget() const;
-
-        /**
-         * @brief
-         * @return
-         */
-        Box2D getHit() const;
 
         /**
          * @brief
@@ -177,12 +207,6 @@ class Entity {
          * @return
          */
         i32 getCellsY() const;
-
-        /**
-	 * @brief Get the attack range of the entity.
-         * @return i32 that will be the value of attackRange variable.
-	 */
-        //i32 getAttackRange();
     protected:
         //Number that identifies the entity.
         i32 ID;
@@ -224,19 +248,19 @@ class Entity {
         i32 crystalCost;
 
         //Happines that the entity provides to the player's city.
-        i32 happiness;
+        i32 happinessVariation;
 
         //Cityzens that give/take
-        i32 citizens;
+        i32 citizensVariation;
 
-        //Took damage timer
-        Timer *tookDamageTimer;
-
-        //Pointer to the enemy that is going to be attacked by the entity. Can be NULL.
+        //Pointer to the enemy that is going to be attacked by the entity. Can be nullptr.
         Entity* target;
 
         //Hostile units vector
         std::vector<Entity*> hostile;
+
+        //Took damage timer
+        Timer *tookDamageTimer;
 
         //CellSpace info
         std::vector<i32> kCells; //ToDo: revisar si es necesario

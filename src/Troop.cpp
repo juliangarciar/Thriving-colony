@@ -6,7 +6,7 @@
 #include <GraphicEngine/Window.h>
 #include <WorldEngine/WorldGeometry.h>
 
-Troop::Troop(SceneNode* scene, const wchar_t* path, i32 qnty, i32 ID){
+Troop::Troop(SceneNode* scene, const char* path, i32 qnty, i32 ID){
     max = qnty;
     modelVector = std::vector< Model* >(max);
     positionVector = std::vector< Vector2<f32> >(max);

@@ -9,9 +9,8 @@
 #include "Troop.h"
 #include <WorldEngine/WorldGeometry.h>
 
-Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType breed, Enumeration::UnitType t) : Entity(id, team, Enumeration::EntityType::Unit) {
-    // Race type and unit type
-    type = t;
+Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, UnitData d) : Entity(id, team, Enumeration::EntityType::Unit) {
+    //Layer
     layer = l;
 
     // Actions of the units
@@ -25,14 +24,20 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
     //Default state
     state = Enumeration::UnitState::Recruiting;
 
-    entityType = Enumeration::EntityType::Unit;
-
-    //Iniciar
-    Init();
-
     // Timers
-    lookForTargetTimer = new Timer (0.5,true);
-    // Esto puede ser un timer?
+    lookForTargetTimer = new Timer (0.5, true);
+    lookForTargetTimer -> setCallback([&](){
+        // Ask for a new target
+        Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this); //ToDo: La hipocresia
+    });
+
+    recruitingTimer = new Timer(0, false);
+    recruitingTimer -> setCallback([&](){
+        recruitedCallback(this);
+        switchState(Enumeration::UnitState::InHome);
+    });
+
+    // ToDo: Esto puede ser un timer?
     attackCountdown = 0;
 
     // Preparado para algo
@@ -41,9 +46,8 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
     // Pathfinding
     pathManager = new PathManager(this);
 
-    //Graphic engine, this should be in the switch (when models done)
-    //setColor(video::SColor(125, 125, 0, 125)); //ToDo: cambiar por material
-
+    //Iniciar
+    Init();
 }
 
 Unit::~Unit() {
@@ -60,10 +64,42 @@ void Unit::Init() {
     Vector2<f32> bottomRight;
 
     //Texture *tex;
-    const wchar_t *path;
+    //const char *path;
     // Basic stats of each unit are here
     f32 recruitingTime = 0;
-    /*switch (type) {
+    /*
+        //Metal and crystal costs of each unit.
+        enum UnitCost {
+            MeleeFootmenMetalCost = 125,
+            MeleeFootmenCrystalCost = 0,
+
+            RangedFootmenMetalCost = 150,
+            RangedFootmenCrystalCost = 0,
+
+            MountedMeleeMetalCost = 235,
+            MountedMeleeCrystalCost = 75,
+
+            MountedRangedMetalCost = 245,
+            MountedRangedCrystalCost = 75,
+
+            CreatureMetalCost = 215,
+            CreatureCrystalCost = 60,
+
+            CatapultMetalCost = 265,
+            CatapultCrystalCost = 160,
+
+            RamMetalCost = 295,
+            RamCrystalCost = 160,
+        };
+
+        //Army level provided by each type of unit.
+        enum ArmyLevel {
+            Footmen = 5,
+            Mounted = 10,
+            Siege = 7,
+            Creatures = 15
+        };
+    switch (type) {
         // Basic melee soldier
         case Enumeration::UnitType::StandardM:
             if (breed == Enumeration::BreedType::Drorania) {
@@ -387,7 +423,6 @@ void Unit::Init() {
         break;
         default: break;
     }*/
-    recruitingTimer = new Timer(recruitingTime, false);
     //Material *m = new Material(tex);
     //this->model->setMaterial(m);
     /* Juli */
@@ -440,13 +475,13 @@ void Unit::update() {
 void Unit::preTaxPlayer() {
     if (team == Enumeration::Team::Human) {
         Human::Instance() -> spendResources(metalCost, crystalCost);
-        Human::Instance() -> increaseHappiness(happiness);
-        Human::Instance() -> increaseCitizens(citizens);
+        Human::Instance() -> increaseHappiness(happinessVariation);
+        Human::Instance() -> increaseCitizens(citizensVariation);
         Human::Instance() -> increaseArmyLevel(armyLevel);
     } else {
         IA::Instance() -> spendResources(metalCost, crystalCost);
-        IA::Instance() -> increaseHappiness(happiness);
-        IA::Instance() -> increaseCitizens(citizens);
+        IA::Instance() -> increaseHappiness(happinessVariation);
+        IA::Instance() -> increaseCitizens(citizensVariation);
         IA::Instance() -> increaseArmyLevel(armyLevel);
     }
 }
@@ -465,12 +500,10 @@ void Unit::switchState(Enumeration::UnitState newState) {
 }
 
 void Unit::recruitingState(){
-    if (recruitingTimer -> tick()){
-        recruitedCallback(this);
-        switchState(Enumeration::UnitState::InHome);
-    } else {
+    recruitingTimer -> tick();
+    if (!recruitingTimer -> isRunning()){
         if (team == Enumeration::Team::Human){
-            Hud::Instance() -> modifyTroopFromQueue(ID, recruitingTimer -> getElapsedTime()/recruitingTimer -> getMaxDuration());
+            Hud::Instance() -> modifyTroopFromQueue(ID, recruitingTimer -> getElapsedTime() / recruitingTimer -> getMaxDuration());
         }
     }
 }
@@ -603,7 +636,7 @@ void Unit::attack() {
         if (attackCountdown <= 0) {
             target -> takeDamage(attackDamage);
             attackCountdown = attackSpeed;
-            if (target -> getHP() <= 0) {
+            if (target -> getCurrentHP() <= 0) {
                 if (target -> getTarget() != nullptr) {
                     target -> getTarget() -> removeHostile(target);
                 }
@@ -657,10 +690,7 @@ bool Unit::inRangeOfAttack() {
 
 bool Unit::refreshTarget() {
     bool targetUpdated = false;
-    // Ask for a new target
-    if (lookForTargetTimer -> tick()) {
-        Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this); //ToDo: La hipocresia
-    }
+    lookForTargetTimer -> tick();
     // return wether or not it got updated
     if (target != nullptr) {
         targetUpdated = true;
@@ -772,7 +802,7 @@ std::list< Vector2<f32> > Unit::getPath(){
     return pathFollow;
 }
 
-Enumeration::UnitType Unit::getType(){
+std::string Unit::getType(){
     return type;
 }
 

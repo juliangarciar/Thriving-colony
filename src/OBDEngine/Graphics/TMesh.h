@@ -8,7 +8,7 @@
 #include "../ResourceManager/Helpers/ResourceMaterial.h"
 #include "TTexture.h"
 
-#define BUFFER_OFFSET(i) ((char *)NULL + (i))
+#define BUFFER_OFFSET(i) ((char *)nullptr + (i))
 
 class TMesh : public TEntity {
     public:
