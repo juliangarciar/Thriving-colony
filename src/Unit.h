@@ -8,6 +8,7 @@
 #include <Types.h>
 #include <Entity.h>
 #include <MathEngine/Vector3.h>
+#include "EntityData.h"
 
 class PathManager;
 class Troop;
@@ -32,7 +33,7 @@ class Unit : public Entity {
          * @param Enumeration::Team is the team to which belongs the building: Enumeration::Team::Human or Enumeration::Team::IA. 
          * @param UnitData is the data for this unit
          */
-        Unit(SceneNode *, i32, Enumeration::Team, UnitData);
+        Unit(SceneNode *node, i32 id, Enumeration::Team teamData, baseUnit baseData);
         
         /**
          * @brief Unit destructor.
