@@ -51,13 +51,13 @@ class Hud {
 
         /**
          * @brief Enable the tab pssaed by parameter.
-         * @param std::string is the type of building of the tab that is going to be enabled: Enumeration::BuildingType::Barrack, Enumeration::BuildingType::Barn or Enumeration::BuildingType::Workshop.
+         * @param std::string is the type of building of the tab that is going to be enabled.
          */
         void enableTab(std::string);
 
         /**
          * @brief Disable the tab passed by parameter.
-         * @param std::string is the type of building of the tab that is going to be disabled: Enumeration::BuildingType::Barrack, Enumeration::BuildingType::Barn or Enumeration::BuildingType::Workshop.
+         * @param std::string is the type of building of the tab that is going to be disabled.
          */
         void disableTab(std::string);
 
@@ -68,7 +68,7 @@ class Hud {
 
         /**
          * @brief Show the tabContainer variable and the tab passed by parameter.
-         * @param std::string is the type of building of the tab that is going to be shown: Enumeration::BuildingType::MainBuilding, Enumeration::BuildingType::Barrack, Enumeration::BuildingType::Barn or Enumeration::BuildingType::Workshop.
+         * @param std::string is the type of building of the tab that is going to be shown.
          */
         void showPopup(std::string);
 
