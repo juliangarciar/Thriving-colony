@@ -24,8 +24,8 @@ Human::~Human() {
 
 void Human::Init() {
     Player::Init();
-    buildings = new BuildingManager(Enumeration::Team::Human);
-    units = new UnitManager(Enumeration::Team::Human);
+    buildings = new BuildingManager(Enumeration::Team::Human, "kaonov");
+    units = new UnitManager(Enumeration::Team::Human, "kaonov");
     
 }
 

@@ -8,9 +8,16 @@
 
 struct BuildingData {
     std::string type;
+    std::string modelPath;
+    std::string texturePath;
     f32 buildTime;
     i32 metalCost;
     i32 crystalCost;
+    i32 maxHP;
+    i32 viewRadius;
+    i32 attackRange;
+    i32 happinessVariation;
+    i32 citizensVariation;
 };
 
 /**

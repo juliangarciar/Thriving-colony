@@ -19,8 +19,9 @@ class BuildingManager {
 		/**
 		 * @brief BuildingManager constructor.
 		 * @param Enumeration::Team is the team to which belongs the building manager: Enumeration::Team::Human or Enumeration::Team::IA.
+		 * @param std::string is the breed
 		 */
-		BuildingManager(Enumeration::Team);
+		BuildingManager(Enumeration::Team, std::string);
 
 		/**
 		 * @brief BuildingManager destructor.

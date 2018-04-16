@@ -21,8 +21,8 @@ IA::IA() : Player() {
     nodeRootIA = new RootNode();
 
     //Initialize managers
-    buildings = new BuildingManager(Enumeration::Team::IA);
-    units = new UnitManager(Enumeration::Team::IA);
+    buildings = new BuildingManager(Enumeration::Team::IA, "drorania");
+    units = new UnitManager(Enumeration::Team::IA, "drorania");
     
     //Define choice stuff
     choiceIndex = 0;

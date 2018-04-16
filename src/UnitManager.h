@@ -12,7 +12,7 @@
 
 class UnitManager{
     public:
-        UnitManager(Enumeration::Team teamData);
+        UnitManager(Enumeration::Team, std::string);
         virtual ~UnitManager();
 
         bool createTroop(std::string unitData);

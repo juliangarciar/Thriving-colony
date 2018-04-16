@@ -1,9 +1,10 @@
 #include "BuildingManager.h"
 #include "Game.h"
 #include <WorldEngine/WorldGeometry.h>
-#include "GraphicEngine/Window.h"
+#include <GraphicEngine/Window.h>
+#include <OBDEngine/ResourceManager/ResourceJSON.h>
 
-BuildingManager::BuildingManager(Enumeration::Team t) {
+BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
 	team = t;
 
 	nextBuildingId = 0;
@@ -14,6 +15,16 @@ BuildingManager::BuildingManager(Enumeration::Team t) {
 	currentCollision = nullptr;
 	inMapBuildings = new std::map<i32, Building*>();
 	tempBuilding = nullptr;
+
+    IO::Instance() -> getResourceManager()->loadResource("media/map/"+b+".json");
+    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/map/"+b+".json");
+    json j = *r -> getJSON();
+
+    for (auto& element : j["buildings"]){
+		BuildingData d;
+		//ToDo: rellenar buildingData
+		buildings.insert(std::pair<std::string, BuildingData>(element["type"].get<std::string>(), d));
+	}
 }
 
 BuildingManager::~BuildingManager() {

@@ -13,7 +13,7 @@ struct baseUnit{
 
 };
 //Constructor
-UnitManager::UnitManager(Enumeration::Team t) {
+UnitManager::UnitManager(Enumeration::Team t, std::string b) {
     gridAlignment = 20;
     selectedTroop = 0; 
     nextTroopId = 1;
@@ -30,6 +30,8 @@ UnitManager::UnitManager(Enumeration::Team t) {
     currentDeployingTroop = -1;
 
     selectedTroop = nullptr;
+
+    //ToDO: load json from b (breed)
 }
 
 //Destroyer

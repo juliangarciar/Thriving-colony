@@ -5,26 +5,26 @@
 #include "IA.h"
 #include "GraphicEngine/Window.h"
 
-#define MAX_MAP 10240
-#define TOTAL 80
-
 Building::Building(SceneNode *l, i32 id, Enumeration::Team team, BuildingData d) : Entity(id, team, Enumeration::EntityType::Building) {
     layer = l;
+    data = d;
 
     finished = false;
-
     callback = nullptr;
-
     target = nullptr;
 
-    //ToDo: load from JSON
+    maxHP = d.maxHP;
+    viewRadius = d.viewRadius;
+    attackRange = d.attackRange;
+    metalCost = d.metalCost;
+    crystalCost = d.crystalCost;
+    happinessVariation = d.happinessVariation;
+    citizensVariation = d.citizensVariation;
+    currentHP = maxHP;
 
     /* Set the model and texture */
-    //setModel(layer, modelPath);
-    //Texture *tex = new Texture(texturePath);
-    //this->model->setMaterial(new Material(tex)); //ToDo: crear material inicial
-	/* Establece su color original */
-	//ToDo: establece el material por defecto
+    setModel(layer, d.modelPath.c_str());
+    model->setMaterial(new Material(new Texture(d.texturePath.c_str())));
 
     /* Box2D parameters */
     Vector2<f32> topLeft;
