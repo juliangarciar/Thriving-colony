@@ -4,14 +4,6 @@
 #include <GraphicEngine/Model.h>
 #include <GraphicEngine/SceneNode.h>
 
-//Entity::Entity(i32 id, Enumeration::Team t, Enumeration::EntityType e) : ID(id), team(t), entityType(e),
-//    currentHP(0), maxHP(0), viewRadius(0), attackRange(0), metalCost(0), crystalCost(0), happinessVariation(0), citizensVariation(0),
-//    model(nullptr), target(nullptr) {
-//        tookDamageTimer = new Timer(0.1);
-//        tookDamageTimer -> setCallback([&](){
-//            //ToDo: cambiar a material original
-//        });
-//}
 Entity::Entity(SceneNode* _layer,
     i32 _id,
     Enumeration::Team _team,
@@ -152,6 +144,10 @@ void Entity::setTarget(Entity *newTarget) {
 }
 
 //GETTERS
+SceneNode *Entity::getLayer() {
+    return layer;
+}
+
 i32 Entity::getID() const{
     return ID;
 }
@@ -190,6 +186,14 @@ i32 Entity::getViewRadius() const{
 
 i32 Entity::getAttackRange() const{
     return attackRange;
+}
+
+i32 Entity::getAttackDamage() const{
+    return attackDamage;
+}
+
+i32 Entity::getAttackSpeed() const{
+    return attackSpeed;
 }
 
 i32 Entity::getMetalCost() const{

@@ -186,8 +186,8 @@ class Unit : public Entity {
         // Timers
         Timer* recruitingTimer;
         Timer* lookForTargetTimer;
-        f32 lookForTargetCountdown;
-        // Esto que?
+
+        // ToDo: Esto que?
         f32 attackCountdown;
 
         // Space vectors used for unit movement

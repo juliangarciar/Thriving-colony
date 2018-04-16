@@ -48,6 +48,4 @@ struct BuildingData {
     i32 cityLevel;
 };
 
-/* Add BaseBuilding */
-
 #endif

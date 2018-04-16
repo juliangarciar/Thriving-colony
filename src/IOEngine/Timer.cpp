@@ -56,6 +56,10 @@ bool Timer::isRunning(){
     return running;
 }
 
+bool Timer::isFinished(){
+    return (elapsedTime >= maxDuration && !loop);
+}
+
 f32 Timer::getElapsedTime() {
     return elapsedTime;
 }

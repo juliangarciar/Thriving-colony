@@ -24,11 +24,11 @@ Building::Building(SceneNode *_layer, i32 _id, Enumeration::Team _team, Building
         1,
         baseData.modelPath,
         baseData.texturePath
-    )
+    ), 
+    cityLevel(baseData.cityLevel),
+    buildingType(baseData.type),
+    callback(nullptr)
 {
-    finished = false;
-    callback = nullptr;
-
     /* Set the model and texture */
     getModel()->setMaterial(new Material(new Texture(baseData.texturePath.c_str())));
 
@@ -38,7 +38,6 @@ Building::Building(SceneNode *_layer, i32 _id, Enumeration::Team _team, Building
 		//ToDo: volver al material original
         adjustCityStats();
         if (callback != nullptr) callback(this);
-        finished = true;
     });
 }
 
@@ -65,17 +64,15 @@ void Building::taxPlayer(){
 }
 
 void Building::adjustCityStats() {
-    // Tax the human
+    // Adjust the stats of the player
     if (getTeam() == Enumeration::Team::Human) {
-        // Tax costs
         Human::Instance() -> increaseHappiness(getHappinessVariation());
         Human::Instance() -> increaseCitizens(getCitizensVariation());   
-        Human::Instance() -> increaseCityLevel(cityLevel); //ToDo: deberia ir en el pos?
-    } else { // Tax the AI
-        // Tax costs
+        Human::Instance() -> increaseCityLevel(cityLevel);
+    } else {
         IA::Instance() -> increaseHappiness(getHappinessVariation());
         IA::Instance() -> increaseCitizens(getCitizensVariation());   
-        IA::Instance() -> increaseCityLevel(cityLevel); //ToDo: deberia ir en el pos?
+        IA::Instance() -> increaseCityLevel(cityLevel);
     }
 }
 
@@ -84,9 +81,9 @@ void Building::setFinishedCallback(std::function<void(Building*)> f){
 }
 
 bool Building::getFinished(){
-    return finished;
+    return buildTimer->isFinished();
 }
 
 std::string Building::getType(){
-    return data.type;
+    return buildingType;
 }

@@ -346,9 +346,6 @@ class Hud {
 
         //Frame per second of the game.
         Label *framerateLabel;
-        
-        //
-        bool toastBool;
 
         //
         Timer* toastTimer;

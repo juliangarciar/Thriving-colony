@@ -74,6 +74,14 @@ class Timer {
          * @return false 
          */
         bool isRunning();
+
+        /**
+         * @brief is finished
+         * 
+         * @return true 
+         * @return false 
+         */
+        bool isFinished();
         
         /**
          * @brief Get the Elapsed Time

@@ -12,7 +12,6 @@
  * @brief Create a Building type object. Public heritage from Entity class.
  */
 class Building : public Entity {
-    
     public:
         /**
          * @brief Buiding constructor.
@@ -55,7 +54,6 @@ class Building : public Entity {
          * @return std::string 
          */
         std::string getType();
-        
     private:
         /**
          * @brief Subtract the metal and crystal cost of the building to the metal and crystal available of the player (Human or IA) and
@@ -68,23 +66,17 @@ class Building : public Entity {
          */
         void adjustCityStats();
 
-        //Building type
-        BuildingData data;
+        //ToDo: explicar aqui para que sirve esto
+        i32 cityLevel;
+
+        //
+        std::string buildingType;
 
         //Building timer used for the construction time.
         Timer* buildTimer;
 
         //Finish building callback
         std::function<void(Building*)> callback;
-
-        //True if the building is finished and false if it is not.
-        bool finished;
-
-        //True if the building is near the camera and false if not. It is used to do the level of detail of the mesh
-        bool near;
-
-        //ToDo: explicar aqui para que sirve esto
-        i32 cityLevel;
 };
 
 #endif

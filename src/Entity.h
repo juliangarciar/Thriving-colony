@@ -101,6 +101,13 @@ class Entity {
         void setTarget(Entity*);
 
         /**
+         * @brief Get the Layer object
+         * 
+         * @return SceneNode* 
+         */
+        SceneNode *getLayer();
+
+        /**
          * @brief Get id of the entity.
          * @return i32 that will be the value of the ID variable.
          */
@@ -159,6 +166,18 @@ class Entity {
          * @return i32 that will be the value of attackRange variable.
 	     */
         i32 getAttackRange() const;
+
+        /**
+	     * @brief Get the attack damage of the entity.
+         * @return i32 that will be the value of attackDamage variable.
+	     */
+        i32 getAttackDamage() const;
+
+        /**
+	     * @brief Get the attack speed of the entity.
+         * @return i32 that will be the value of attackSpeed variable.
+	     */
+        i32 getAttackSpeed() const;
 
         /**
          * @brief Get the Metal Cost
