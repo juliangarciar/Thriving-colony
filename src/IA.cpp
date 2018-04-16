@@ -1,7 +1,9 @@
 #include "IA.h"
+#include "Player.h"
+#include "IAEngine/BehaviourTree.h"
+#include "IAEngine/RootNode.h"
 #include "Game.h"
 #include <WorldEngine/WorldGeometry.h>
-
 #include "GraphicEngine/Window.h"
 #include "Human.h"
 #include "Map.h"

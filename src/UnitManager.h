@@ -9,6 +9,7 @@
 #include <GraphicEngine/Terrain.h>
 #include <SoundEngine/SoundSystem.h>
 #include <PathPlanner/PathManager.h>
+#include "Enumeration.h"
 
 class UnitManager{
     public:
@@ -54,7 +55,7 @@ class UnitManager{
         SceneNode *unitLayer;
 		SceneNode *currentCollision;
 
-        std::map<std::string, UnitData> baseUnits;
+        std::map<std::string, baseUnit> baseUnits;
 
         std::map<i32, Unit*> *inQueueTroops;
         std::map<i32, Unit*> *inHallTroops;

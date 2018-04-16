@@ -2,10 +2,12 @@
 #define IA_H
 
 #include "Player.h"
-#include "IAEngine/BehaviourTree.h"
-#include "IAEngine/RootNode.h"
 #include <Types.h>
+#include "Enumeration.h"
+#include <vector>
 
+class BehaviourTree;
+class RootNode;
 /**
  * @class IA.
  * @brief Create a IA type object. Public heritage from Player class. Singleton class.

@@ -23,7 +23,46 @@ class Entity {
          * @param Enumeration::Team is the team to which belongs the entity: Enumeration::Team::Human or Enumeration::Team::IA.
          * @param Enumeration::EntityType is type of entity.
          */
-        Entity(i32, Enumeration::Team, Enumeration::EntityType);
+        Entity(SceneNode* _layer,
+            i32 _id,
+            Enumeration::Team _team,
+            Enumeration::EntityType _type,
+            i32 _maxHP,
+            i32 _maxView,
+            i32 _maxRange,
+            i32 _metal,
+            i32 _crystal,
+            i32 _happines,
+            i32 _citizens,
+            i32 _cellsX,
+            i32 _cellsY,
+            std::string _modelPath,
+            std::string _texturePath):layer(_layer),
+                                    ID(_id),
+                                    team(_team),
+                                    entityType(_type),
+                                    model(nullptr),
+                                    vectorPos(0,0),
+                                    hitBox(0,0),
+                                    currentHP(_maxHP),
+                                    maxHP(_maxHP), 
+                                    viewRadius(_maxView), 
+                                    attackRange(_maxRange), 
+                                    metalCost(_metal), 
+                                    crystalCost(_crystal), 
+                                    happinessVariation(_happines), 
+                                    citizensVariation(_citizens),
+                                    target(nullptr),
+                                    hostile(),
+                                    kCellsX(_cellsX),
+                                    kCellsY(_cellsY)
+        {
+            model = new Model(_layer, _id, _modelPath);
+            tookDamageTimer = new Timer(0.1);
+            tookDamageTimer -> setCallback([&](){
+                //ToDo: cambiar a material original
+            });
+        };
 
         /**
          * @brief Entity destructor
@@ -208,6 +247,7 @@ class Entity {
          */
         i32 getCellsY() const;
     protected:
+        SceneNode* layer;
         //Number that identifies the entity.
         i32 ID;
 
@@ -263,9 +303,8 @@ class Entity {
         Timer *tookDamageTimer;
 
         //CellSpace info
-        std::vector<i32> kCells; //ToDo: revisar si es necesario
+        //std::vector<i32> kCells;
         i32 kCellsX;
         i32 kCellsY;
 };
-
 #endif

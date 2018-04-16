@@ -9,8 +9,8 @@ class Enumeration {
     public:
         //Teams.
         enum Team {
-            Human,
-            IA
+            _Human,
+            _IA
         };
 
         //Game states.

@@ -1,55 +1,54 @@
 #include "Unit.h"
 
-#include "Game.h"
 #include "Human.h"
 #include "IA.h"
 #include "Map.h"
 #include "Hud.h"
 #include "GraphicEngine/Window.h"
-#include "Troop.h"
 #include <WorldEngine/WorldGeometry.h>
-#include <PathPlanner/PathManager.h>
+#include <functional>
+#include <cmath>
 
-Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, UnitData d) : Entity(id, team, Enumeration::EntityType::Unit) {
-    //Layer
-    layer = l;
-
-    // Actions of the units
-    finished = false;
-    moving = false;
-    attacking = false;
-
-    // Default target
-    target = nullptr;
-
-    //Default state
-    state = Enumeration::UnitState::Recruiting;
-
-    // Timers
-    lookForTargetTimer = new Timer (0.5, true);
-    lookForTargetTimer -> setCallback([&](){
-        // Ask for a new target
-        Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this); //ToDo: La hipocresia
-    });
-
-    recruitingTimer = new Timer(0, false);
-    recruitingTimer -> setCallback([&](){
-        recruitedCallback(this);
-        switchState(Enumeration::UnitState::InHome);
-    });
-
-    // ToDo: Esto puede ser un timer?
-    attackCountdown = 0;
-
-    // Preparado para algo
-    readyToEnter = false;
-
-    // Pathfinding
-    pathManager = new PathManager(this);
-
-    //Iniciar
-    Init();
-}
+//Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, UnitData d) : Entity(id, team, Enumeration::EntityType::Unit) {
+//    //Layer
+//    layer = l;
+//
+//    // Actions of the units
+//    finished = false;
+//    moving = false;
+//    attacking = false;
+//
+//    // Default target
+//    target = nullptr;
+//
+//    //Default state
+//    state = Enumeration::UnitState::Recruiting;
+//
+//    // Timers
+//    lookForTargetTimer = new Timer (0.5, true);
+//    lookForTargetTimer -> setCallback([&](){
+//        // Ask for a new target
+//        Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this); //ToDo: La hipocresia
+//    });
+//
+//    recruitingTimer = new Timer(0, false);
+//    recruitingTimer -> setCallback([&](){
+//        recruitedCallback(this);
+//        switchState(Enumeration::UnitState::InHome);
+//    });
+//
+//    // ToDo: Esto puede ser un timer?
+//    attackCountdown = 0;
+//
+//    // Preparado para algo
+//    readyToEnter = false;
+//
+//    // Pathfinding
+//    pathManager = new PathManager(this);
+//
+//    //Iniciar
+//    Init();
+//}
 
 Unit::~Unit() {
     WorldGeometry::Instance()->clearUnitCell(vectorPos, this);

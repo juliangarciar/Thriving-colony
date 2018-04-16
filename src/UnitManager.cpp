@@ -96,12 +96,12 @@ UnitManager::~UnitManager() {
 bool UnitManager::createTroop(std::string type) {
     if (units.find(type) != units.end()){
         if (checkCanPay(type)) {
-            Unit *newUnit = new Unit(unitLayer, nextTroopId, team, units[type]);
+            Unit *newUnit = new Unit(unitLayer, nextTroopId, team, baseUnits[type]);
             if (newUnit == nullptr) {
                 return false;
             }
             /* What? */
-            newUnit -> setID(nextTroopId);
+            //newUnit -> setID(nextTroopId);
             // Distinto tamaño para distintas unidades?
             //newUnit -> getModel() -> setScale(Vector3<f32>(25,25,25));
             newUnit -> getModel() -> setActive(false);
