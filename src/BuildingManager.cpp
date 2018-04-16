@@ -173,9 +173,10 @@ bool BuildingManager::checkCanPay(std::string type) {
 	return false;
 }
 
+//ToDo: ya no hace falta no?
 void BuildingManager::recalculateHitbox(){
 	for (std::map<i32,Building*>::iterator it = inMapBuildings -> begin(); it != inMapBuildings -> end(); ++it) {
-		it -> second -> refreshHitbox();
+		//it -> second -> refreshHitbox();
 	}
 }
 

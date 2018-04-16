@@ -23,13 +23,16 @@ class Entity {
          * @param Enumeration::Team is the team to which belongs the entity: Enumeration::Team::Human or Enumeration::Team::IA.
          * @param Enumeration::EntityType is type of entity.
          */
-        Entity(SceneNode* _layer,
+        Entity(
+            SceneNode* _layer,
             i32 _id,
             Enumeration::Team _team,
             Enumeration::EntityType _type,
             i32 _maxHP,
             i32 _maxView,
-            i32 _maxRange,
+            i32 _attackRange,
+            i32 _attackDamage,
+            i32 _attackSpeed,
             i32 _metal,
             i32 _crystal,
             i32 _happines,
@@ -37,32 +40,8 @@ class Entity {
             i32 _cellsX,
             i32 _cellsY,
             std::string _modelPath,
-            std::string _texturePath):layer(_layer),
-                                    ID(_id),
-                                    team(_team),
-                                    entityType(_type),
-                                    model(nullptr),
-                                    vectorPos(0,0),
-                                    hitBox(0,0),
-                                    currentHP(_maxHP),
-                                    maxHP(_maxHP), 
-                                    viewRadius(_maxView), 
-                                    attackRange(_maxRange), 
-                                    metalCost(_metal), 
-                                    crystalCost(_crystal), 
-                                    happinessVariation(_happines), 
-                                    citizensVariation(_citizens),
-                                    target(nullptr),
-                                    hostile(),
-                                    kCellsX(_cellsX),
-                                    kCellsY(_cellsY)
-        {
-            model = new Model(_layer, _id, _modelPath);
-            tookDamageTimer = new Timer(0.1);
-            tookDamageTimer -> setCallback([&](){
-                //ToDo: cambiar a material original
-            });
-        };
+            std::string _texturePath
+        );
 
         /**
          * @brief Entity destructor
@@ -74,11 +53,6 @@ class Entity {
          * 
          */
         void update();
-
-        /**
-         * @brief Set the entity hitbox.
-         */
-        void refreshHitbox();
 
         /**
          * @brief Subtract damage passed by parameter to currentHP variable.
@@ -104,22 +78,15 @@ class Entity {
         void putHostileTargetsToNull();
 
         /**
-	     * @brief Set the color of the model to its original color
+	     * @brief Set the material of the model to its original material
 	     */
         void returnToOriginalMaterial();
 
         /**
-	     * @brief Set target as the value passed by parameter
-         * @param pointer to Entity is the value that is going be assigned to target variable. It can be nullptr.
-	     */
-        void setTarget(Entity*);
-
-        /**
-         * @brief Create the model, hitbox and position of the entity.
-         * @param SceneNode is a pointer to the layer where is going to be created the entity.
-         * @param const char is a pointer to the path of the file with the model.
+         * @brief Set a new id to the entity.
+         * @param i32 is the value that is going to be assigned to ID variable.
          */
-        void setModel(SceneNode* sNode, const char* modelPath);
+        void setID(i32 idValue);
         
         /**
          * @brief Set the position of the model, hitbox, hitBox and position variables as the one passed by parameter.
@@ -128,10 +95,10 @@ class Entity {
         void setPosition(Vector2<f32> positionVector);
 
         /**
-         * @brief Set a new id to the entity.
-         * @param i32 is the value that is going to be assigned to ID variable.
-         */
-        void setID(i32 idValue);
+	     * @brief Set target as the value passed by parameter
+         * @param pointer to Entity is the value that is going be assigned to target variable. It can be nullptr.
+	     */
+        void setTarget(Entity*);
 
         /**
          * @brief Get id of the entity.
@@ -164,12 +131,6 @@ class Entity {
         Vector2<f32> getPosition() const; 
 
         /**
-	     * @brief Get the hitbox of the entity.
-         * @return Pointer to a Box3D object that will be the value of the hitbox variable.
-	     */
-        //Box3D<f32> getHitBox() const; //ToDo: revisar
-
-        /**
          * @brief
          * @return
          */
@@ -185,43 +146,43 @@ class Entity {
 	     * @brief Get the max hp of the entity.
          * @return i32 that will be the value of maxHP variable.
 	     */
-        i32 getMaxHP() const; //
+        i32 getMaxHP() const;
 
         /**
 	     * @brief Get the distance until where the entity can see enemies.
          * @return i32 that will be the value of the viewRadius variable.
 	     */
-        i32 getViewRadius() const; //
+        i32 getViewRadius() const;
 
         /**
 	     * @brief Get the attack range of the entity.
          * @return i32 that will be the value of attackRange variable.
 	     */
-        i32 getAttackRange() const; //
+        i32 getAttackRange() const;
 
         /**
          * @brief Get the Metal Cost
          * @return i32 
          */
-        i32 getMetalCost() const; //
+        i32 getMetalCost() const;
 
         /**
          * @brief Get the Crystal Cost
          * @return i32 
          */
-        i32 getCrystalCost() const; //
+        i32 getCrystalCost() const;
 
          /**
           * @brief Get the happiness that the entity provides to the player's city.
           * @return i32 that will be the value of the happiness variable.
           */
-        i32 getHappinessVariation() const; //
+        i32 getHappinessVariation() const;
 
         /**
          * @brief Get the Citizens Variation
          * @return i32 
          */
-        i32 getCitizensVariation() const; //
+        i32 getCitizensVariation() const;
 
         /**
          * @brief Get current traget of the entity.
@@ -246,8 +207,10 @@ class Entity {
          * @return
          */
         i32 getCellsY() const;
-    protected:
+    private:
+        //Layer for the model
         SceneNode* layer;
+
         //Number that identifies the entity.
         i32 ID;
 
@@ -263,11 +226,8 @@ class Entity {
         //Pointer to the position of the entity.
         Vector2<f32> vectorPos;
 
-        //Pointer to the hitbox of the entity.
-        Box3D<f32> hitbox; //ToDo: revisar si es necesario
-
         //HitBox
-        Box2D hitBox; //ToDo: revisar si es necesario
+        Box2D hitBox;
         
         //Current hp of the entity.
         i32 currentHP;
@@ -280,6 +240,12 @@ class Entity {
 
         //Distance until where the entity can attack enemies.
         i32 attackRange;
+
+        //Distance until where the entity can attack enemies.
+        i32 attackDamage;
+
+        //Distance until where the entity can attack enemies.
+        i32 attackSpeed;
 
         //Metal cost of the entity.
         i32 metalCost;
@@ -303,7 +269,6 @@ class Entity {
         Timer *tookDamageTimer;
 
         //CellSpace info
-        //std::vector<i32> kCells;
         i32 kCellsX;
         i32 kCellsY;
 };

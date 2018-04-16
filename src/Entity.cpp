@@ -12,6 +12,67 @@
 //            //ToDo: cambiar a material original
 //        });
 //}
+Entity::Entity(SceneNode* _layer,
+    i32 _id,
+    Enumeration::Team _team,
+    Enumeration::EntityType _type,
+    i32 _maxHP,
+    i32 _maxView,
+    i32 _attackRange,
+    i32 _attackDamage,
+    i32 _attackSpeed,
+    i32 _metal,
+    i32 _crystal,
+    i32 _happines,
+    i32 _citizens,
+    i32 _cellsX,
+    i32 _cellsY,
+    std::string _modelPath,
+    std::string _texturePath) : 
+        layer(_layer),
+        ID(_id),
+        team(_team),
+        entityType(_type),
+        model(nullptr),
+        vectorPos(0,0),
+        hitBox(0,0),
+        currentHP(_maxHP),
+        maxHP(_maxHP), 
+        viewRadius(_maxView),
+        attackRange(_attackRange),
+        attackDamage(_attackDamage),
+        attackSpeed(_attackSpeed),
+        metalCost(_metal), 
+        crystalCost(_crystal), 
+        happinessVariation(_happines), 
+        citizensVariation(_citizens),
+        target(nullptr),
+        hostile(),
+        kCellsX(_cellsX),
+        kCellsY(_cellsY) 
+{
+    //set Timer
+    tookDamageTimer = new Timer(0.1);
+    tookDamageTimer -> setCallback([&](){
+        returnToOriginalMaterial();
+    });
+
+    //Set model
+    model = new Model(_layer, _id, _modelPath.c_str());
+
+    /* Box2D parameters */
+    Vector2<f32> topLeft;
+    Vector2<f32> bottomRight;
+
+    /* Set the 2D hitbox params */
+    topLeft.x = (kCellsX / 2.0) * (-80.f) + 1;
+    topLeft.y = (kCellsY / 2.0) * (-80.f) + 1;
+    bottomRight.x = (kCellsX / 2.0) * (80.f) - 1;
+    bottomRight.y = (kCellsY / 2.0) * (80.f) - 1;
+
+    /* Set the 2D hitbox */
+    hitBox = Box2D(topLeft, bottomRight); 
+}
 
 Entity::~Entity() {
     //ToDo: revisar
@@ -22,10 +83,6 @@ Entity::~Entity() {
 
 void Entity::update(){
     tookDamageTimer -> tick();
-}
-
-void Entity::refreshHitbox() {
-    hitbox.set(model -> getBoundingBox());
 }
 
 void Entity::addHostile(Entity* newHostileUnit) {
@@ -69,18 +126,11 @@ void Entity::setID(i32 id){
     model -> setID(id);
 }
 
-void Entity::setModel(SceneNode *layer, const char *path) {
-    model = new Model(layer, ID, path);
-    refreshHitbox();
-    //ToDo: cambiar a material normal
-}
-
 //ToDo: revisar
 void Entity::setPosition(Vector2<f32> vectorData) {
     vectorPos = vectorData;
     model -> setPosition(vectorData);
 
-    hitbox.set(model -> getBoundingBox()); //ToDo: revisar si es necesario
     hitBox.moveHitbox(vectorData.x, vectorData.y); //ToDo: revisar si es necesario
 
     //position -> set(vectorData);
@@ -122,7 +172,6 @@ Vector2<f32> Entity::getPosition() const{
     return vectorPos;
 }
 
-//ToDo: revisar
 Box2D Entity::getHitbox() const{
     return hitBox;
 }

@@ -183,7 +183,7 @@ void WorldGeometry::setUnitCell(Vector2<f32> positionVector, Unit* unitPtr){
     positionToCell(positionVector)->setInhabitingUnit(unitPtr);
 }
 bool WorldGeometry::checkBuildingSpace(Building* buildingPtr){
-    Box2D dummy = buildingPtr->getHit().getAmplifiedBox(79.f);
+    Box2D dummy = buildingPtr->getHitbox().getAmplifiedBox(79.f);
     return quadTree->canBuild(dummy);
 }
 Vector2<f32> WorldGeometry::correctBuildingPosition(Vector2<f32> targetPos, Building *buildingPtr){

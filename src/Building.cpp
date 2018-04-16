@@ -5,42 +5,35 @@
 #include "IA.h"
 #include "GraphicEngine/Window.h"
 
-Building::Building(SceneNode *l, i32 id, Enumeration::Team team, BuildingData d) : Entity(id, team, Enumeration::EntityType::Building) {
-    layer = l;
-    data = d;
-
+Building::Building(SceneNode *_layer, i32 _id, Enumeration::Team _team, BuildingData baseData) : 
+    Entity(
+        _layer,
+        _id,
+        _team,
+        Enumeration::EntityType::Unit,
+        baseData.maxHP,
+        baseData.viewRadius,
+        baseData.attackRange,
+        baseData.attackDamage,
+        baseData.attackSpeed,
+        baseData.metalCost,
+        baseData.crystalCost,
+        baseData.happinessVariation,
+        baseData.citizensVariation,
+        1,
+        1,
+        baseData.modelPath,
+        baseData.texturePath
+    )
+{
     finished = false;
     callback = nullptr;
-    target = nullptr;
-
-    maxHP = d.maxHP;
-    viewRadius = d.viewRadius;
-    attackRange = d.attackRange;
-    metalCost = d.metalCost;
-    crystalCost = d.crystalCost;
-    happinessVariation = d.happinessVariation;
-    citizensVariation = d.citizensVariation;
-    currentHP = maxHP;
 
     /* Set the model and texture */
-    setModel(layer, d.modelPath.c_str());
-    model->setMaterial(new Material(new Texture(d.texturePath.c_str())));
-
-    /* Box2D parameters */
-    Vector2<f32> topLeft;
-    Vector2<f32> bottomRight;
-
-    /* Set the 2D hitbox params */
-    topLeft.x = (kCellsX / 2.0) * (-80.f) + 1;
-    topLeft.y = (kCellsY / 2.0) * (-80.f) + 1;
-    bottomRight.x = (kCellsX / 2.0) * (80.f) - 1;
-    bottomRight.y = (kCellsY / 2.0) * (80.f) - 1;
-
-    /* Set the 2D hitbox */
-    hitBox = Box2D(topLeft, bottomRight); 
+    getModel()->setMaterial(new Material(new Texture(baseData.texturePath.c_str())));
 
     /* Set the timer */
-    buildTimer = new Timer(d.buildTime, false, false);
+    buildTimer = new Timer(baseData.buildTime, false, false);
     buildTimer -> setCallback([&]{
 		//ToDo: volver al material original
         adjustCityStats();
@@ -64,24 +57,24 @@ void Building::startBuilding() {
 
 void Building::taxPlayer(){
     //Tax the player
-    if (team == Enumeration::Team::Human) {
-        Human::Instance() -> spendResources(metalCost, crystalCost);
+    if (getTeam() == Enumeration::Team::Human) {
+        Human::Instance() -> spendResources(getMetalCost(), getCrystalCost());
     } else {
-        IA::Instance() -> spendResources(metalCost, crystalCost);
+        IA::Instance() -> spendResources(getMetalCost(), getCrystalCost());
     }
 }
 
 void Building::adjustCityStats() {
     // Tax the human
-    if (team == Enumeration::Team::Human) {
+    if (getTeam() == Enumeration::Team::Human) {
         // Tax costs
-        Human::Instance() -> increaseCityLevel(cityLevel);  
-        Human::Instance() -> increaseHappiness(happinessVariation);
-        Human::Instance() -> increaseCitizens(citizensVariation);   
+        Human::Instance() -> increaseHappiness(getHappinessVariation());
+        Human::Instance() -> increaseCitizens(getCitizensVariation());   
+        Human::Instance() -> increaseCityLevel(cityLevel); //ToDo: deberia ir en el pos?
     } else { // Tax the AI
         // Tax costs
-        IA::Instance() -> increaseHappiness(happinessVariation);
-        IA::Instance() -> increaseCitizens(citizensVariation);   
+        IA::Instance() -> increaseHappiness(getHappinessVariation());
+        IA::Instance() -> increaseCitizens(getCitizensVariation());   
         IA::Instance() -> increaseCityLevel(cityLevel); //ToDo: deberia ir en el pos?
     }
 }

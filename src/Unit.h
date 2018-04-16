@@ -31,56 +31,7 @@ class Unit : public Entity {
         Unit(SceneNode* _layer, 
             i32 _id, 
             Enumeration::Team _team, 
-            baseUnit baseData):Entity(_layer,
-                                    _id,
-                                    _team,
-                                    Enumeration::EntityType::Unit,
-                                    baseData.maxHP,
-                                    baseData.viewRadious,
-                                    baseData.attackRange,
-                                    baseData.metalCost,
-                                    baseData.crystalCost,
-                                    baseData.happines,
-                                    baseData.citizens,
-                                    1,
-                                    1,
-                                    baseData.modelPath,
-                                    baseData.texturePath
-                                    ),
-                                    state(Enumeration::UnitState::Recruiting),
-                                    moveSpeed(baseData.moveSpeed),
-                                    attackSpeed(baseData.attackSpeed),
-                                    attackDamage(baseData.attackDamage),
-                                    finished(false),
-                                    moving(false),
-                                    attacking(false),
-                                    armyLevel(baseData.armyLevel),
-                                    citizens(baseData.citizens),
-                                    attackCountdown(0),
-                                    pathManager(nullptr),
-                                    pathFollow(),
-                                    vectorDes(0,0),
-                                    vectorMov(0,0),
-                                    steps(0),
-                                    readyToEnter(false),
-                                    attackEvent(baseData.attackEvent),
-                                    moveEvent(baseData.moveEvent),
-                                    selectEvent(baseData.selectEvent),
-                                    troops(nullptr)         
-        {
-            lookForTargetTimer = new Timer (0.5, true);
-            lookForTargetTimer -> setCallback([&](){
-                // Ask for a new target
-                //Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this); //ToDo: La hipocresia
-            });
-
-            recruitingTimer = new Timer(0, false);
-            recruitingTimer -> setCallback([&](){
-                recruitedCallback(this);
-                switchState(Enumeration::UnitState::InHome);
-            });
-            pathManager = new PathManager(this);
-        };
+            UnitData baseData);
         
         /**
          * @brief Unit destructor.
@@ -230,9 +181,7 @@ class Unit : public Entity {
         bool attacking;
 
         // Unit info
-        //f32 recruitingTime;
-        i32 armyLevel; //ToDo: explicar para que sirve esto
-        i32 citizens;
+        i32 armyLevel;
 
         // Timers
         Timer* recruitingTimer;
@@ -240,9 +189,6 @@ class Unit : public Entity {
         f32 lookForTargetCountdown;
         // Esto que?
         f32 attackCountdown;
-
-        // Scene Node
-        //SceneNode *layer;
 
         // Space vectors used for unit movement
         PathManager* pathManager;

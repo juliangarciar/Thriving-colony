@@ -4,55 +4,48 @@
 #include <string>
 #include "Types.h"
 
-struct baseUnit{
-    baseUnit(std::string _name,
-            i32 _move,
-            i32 _damage,
-            i32 _range,
-            i32 _speed,
-            i32 _radious,
-            i32 _hp,
-            i32 _time,
-            i32 _happy,
-            i32 _citizens,
-            i32 _army,
-            i32 _metal,
-            i32 _crystal,
-            i32 _troops,
-            std::string _attEvent,
-            std::string _mvEvent,
-            std::string _selEvent,
-            std::string _mdlPath,
-            std::string _txtPath):unitName(_name),
-                                    moveSpeed(_move),
-                                    attackDamage(_damage),
-                                    attackRange(_range),
-                                    attackSpeed(_speed),
-                                    viewRadious(_radious),
-                                    maxHP(_hp),
-                                    recruitingTime(_time),
-                                    happines(_happy),
-                                    citizens(_citizens),
-                                    armyLevel(_army),
-                                    metalCost(_metal),
-                                    crystalCost(_crystal),
-                                    troops(_troops),
-                                    attackEvent(_attEvent),
-                                    moveEvent(_mvEvent),
-                                    selectEvent(_selEvent),
-                                    modelPath(_mdlPath),
-                                    texturePath(_txtPath){};
-    std::string unitName;
+struct UnitData {
+    std::string type;
+    std::string modelPath;
+    std::string texturePath;
 
-    i32 moveSpeed, attackDamage, attackRange, attackSpeed,
-        viewRadious, maxHP, recruitingTime, happines, citizens,
-        armyLevel, metalCost, crystalCost, troops;
+    i32 metalCost;
+    i32 crystalCost;
+    i32 maxHP;
+    i32 viewRadius;
+    i32 attackRange;
+    i32 attackDamage;
+    i32 attackSpeed;
+    i32 happinessVariation;
+    i32 citizensVariation;
+
+    i32 recruitingTime;
+    i32 armyLevel; 
+    i32 moveSpeed;
+    i32 troops;
 
     std::string attackEvent; 
     std::string moveEvent;
-    std::string selectEvent; 
+    std::string selectEvent;      
+};
+
+struct BuildingData {
+    std::string type;
     std::string modelPath;
-    std::string texturePath;               
+    std::string texturePath;
+
+    i32 metalCost;
+    i32 crystalCost;
+    i32 maxHP;
+    i32 viewRadius;
+    i32 attackRange;
+    i32 attackDamage;
+    i32 attackSpeed;
+    i32 happinessVariation;
+    i32 citizensVariation;
+
+    f32 buildTime;
+    i32 cityLevel;
 };
 
 /* Add BaseBuilding */

@@ -15,33 +15,30 @@
 UnitManager::UnitManager(Enumeration::Team t, std::string b) {
     ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/map/"+b+"-troops.json");
     json j = *r -> getJSON();
-    //std::map<std::string, baseUnit> baseUnits;
-    /* ToDo: choose between Kaonov and Drorania */
-    for (auto& element : j["Kaonov"]){
-        baseUnit tmp(element["unitName"].get<std::string>(),
-                    element["moveSpeed"].get<i32>(),
-                    element["attackDamage"].get<i32>(),
-                    element["attackRange"].get<i32>(),
-                    element["attackSpeed"].get<i32>(),
-                    element["viewRadious"].get<i32>(),
-                    element["maxHP"].get<i32>(),
-                    element["recruitingTime"].get<i32>(),
-                    element["happiness"].get<i32>(),
-                    element["citizens"].get<i32>(),
-                    element["armyLevel"].get<i32>(),
-                    element["metalCost"].get<i32>(),
-                    element["crystalCost"].get<i32>(),
-                    element["troops"].get<i32>(),
-                    element["attackEvent"].get<std::string>(),
-                    element["moveEvent"].get<std::string>(),
-                    element["selectEvent"].get<std::string>(),
-                    element["modelPath"].get<std::string>(),
-                    element["texturePath"].get<std::string>()
-        );
-        baseUnits.insert(std::pair<std::string, baseUnit>(element["unitName"], tmp));
+    for (auto& element : j["Units"]){
+        UnitData tmp;
+            tmp.type = element["type"].get<std::string>();
+            tmp.modelPath = element["modelPath"].get<std::string>();
+            tmp.texturePath = element["texturePath"].get<std::string>();
+            tmp.metalCost = element["metalCost"].get<i32>();
+            tmp.crystalCost = element["crystalCost"].get<i32>();
+            tmp.maxHP = element["maxHP"].get<i32>();
+            tmp.viewRadius = element["viewRadius"].get<i32>();
+            tmp.attackRange = element["attackRange"].get<i32>();
+            tmp.attackDamage = element["attackDamage"].get<i32>();
+            tmp.attackSpeed = element["attackSpeed"].get<i32>();
+            tmp.happinessVariation = element["happiness"].get<i32>();
+            tmp.citizensVariation = element["citizens"].get<i32>();
+            tmp.recruitingTime = element["recruitingTime"].get<i32>();
+            tmp.armyLevel = element["armyLevel"].get<i32>();
+            tmp.moveSpeed = element["moveSpeed"].get<i32>();
+            tmp.troops = element["troops"].get<i32>();
+            tmp.attackEvent = element["attackEvent"].get<std::string>();
+            tmp.moveEvent = element["moveEvent"].get<std::string>();
+            tmp.selectEvent = element["selectEvent"].get<std::string>();
+        baseUnits.insert(std::pair<std::string, UnitData>(element["type"], tmp));
     }
 
-    //gridAlignment = 20;
     selectedTroop = 0; 
     nextTroopId = 1;
 
@@ -57,8 +54,6 @@ UnitManager::UnitManager(Enumeration::Team t, std::string b) {
     currentDeployingTroop = -1;
 
     selectedTroop = nullptr;
-
-    //ToDO: load json from b (breed)
 }
 
 //Destroyer
@@ -370,7 +365,7 @@ bool UnitManager::isSolvent(i32 metalCost, i32 crystalCost, i32 citizensCost) {
  */
 bool UnitManager::checkCanPay(std::string type) {
 	if (baseUnits.find(type) != baseUnits.end()){
-		return isSolvent(baseUnits[type].metalCost, baseUnits[type].crystalCost, baseUnits[type].citizens);
+		return isSolvent(baseUnits[type].metalCost, baseUnits[type].crystalCost, baseUnits[type].citizensVariation);
 	}
 	return false;
 }

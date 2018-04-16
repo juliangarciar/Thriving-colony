@@ -3,22 +3,9 @@
 
 #include "Entity.h"
 #include <functional>
+#include <EntityData.h>
 #include <Types.h>
 #include <IOEngine/Timer.h>
-
-struct BuildingData {
-    std::string type;
-    std::string modelPath;
-    std::string texturePath;
-    f32 buildTime;
-    i32 metalCost;
-    i32 crystalCost;
-    i32 maxHP;
-    i32 viewRadius;
-    i32 attackRange;
-    i32 happinessVariation;
-    i32 citizensVariation;
-};
 
 /**
  * @class Building.
@@ -80,9 +67,6 @@ class Building : public Entity {
          * @brief Add the happiness and citizens provided by the building to the player's happiness and citizens (Human or IA).
          */
         void adjustCityStats();
-
-        //Layer where the building was created.
-        SceneNode *layer;
 
         //Building type
         BuildingData data;
