@@ -4,14 +4,14 @@
 #include <GraphicEngine/Model.h>
 #include <GraphicEngine/SceneNode.h>
 
-Entity::Entity(i32 id, Enumeration::Team t, Enumeration::EntityType e) : ID(id), team(t), entityType(e),
-    currentHP(0), maxHP(0), viewRadius(0), attackRange(0), metalCost(0), crystalCost(0), happinessVariation(0), citizensVariation(0),
-    model(nullptr), target(nullptr) {
-        tookDamageTimer = new Timer(0.1);
-        tookDamageTimer -> setCallback([&](){
-            //ToDo: cambiar a material original
-        });
-}
+//Entity::Entity(i32 id, Enumeration::Team t, Enumeration::EntityType e) : ID(id), team(t), entityType(e),
+//    currentHP(0), maxHP(0), viewRadius(0), attackRange(0), metalCost(0), crystalCost(0), happinessVariation(0), citizensVariation(0),
+//    model(nullptr), target(nullptr) {
+//        tookDamageTimer = new Timer(0.1);
+//        tookDamageTimer -> setCallback([&](){
+//            //ToDo: cambiar a material original
+//        });
+//}
 
 Entity::~Entity() {
     //ToDo: revisar

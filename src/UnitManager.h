@@ -9,6 +9,7 @@
 #include <GraphicEngine/Terrain.h>
 #include <SoundEngine/SoundSystem.h>
 #include <PathPlanner/PathManager.h>
+#include "Enumeration.h"
 
 class UnitManager{
     public:
