@@ -66,6 +66,7 @@ UnitManager::UnitManager(Enumeration::Team t) {
     ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/map/troops.json");
     json j = *r -> getJSON();
     std::map<std::string, baseUnit> baseUnits;
+    /* ToDo: choose between Kaonov and Drorania */
     for (auto& element : j["Kaonov"]){
         baseUnit tmp(element["unitName"].get<std::string>(),
                     element["moveSpeed"].get<i32>(),

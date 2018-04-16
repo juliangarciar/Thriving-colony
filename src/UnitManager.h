@@ -54,7 +54,7 @@ class UnitManager{
         SceneNode *unitLayer;
 		SceneNode *currentCollision;
 
-        std::map<std::string, UnitData> units;
+        std::map<std::string, UnitData> baseUnits;
 
         std::map<i32, Unit*> *inQueueTroops;
         std::map<i32, Unit*> *inHallTroops;
@@ -69,7 +69,7 @@ class UnitManager{
 
         i32 nextTroopId;
 
-        i32 gridAlignment;
+        //i32 gridAlignment;
 };
 
 #endif
