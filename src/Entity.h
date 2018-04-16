@@ -36,8 +36,8 @@ class Entity {
             i32 _citizens,
             i32 _cellsX,
             i32 _cellsY,
-            std::string _modelPath
-            std::string _texturePath:layer(_layer),
+            std::string _modelPath,
+            std::string _texturePath):layer(_layer),
                                     ID(_id),
                                     team(_team),
                                     entityType(_type),
@@ -53,7 +53,7 @@ class Entity {
                                     happinessVariation(_happines), 
                                     citizensVariation(_citizens),
                                     target(nullptr),
-                                    hotile(),
+                                    hostile(),
                                     kCellsX(_cellsX),
                                     kCellsY(_cellsY)
         {
@@ -61,7 +61,7 @@ class Entity {
             tookDamageTimer = new Timer(0.1);
             tookDamageTimer -> setCallback([&](){
                 //ToDo: cambiar a material original
-            }
+            });
         };
 
         /**
@@ -306,5 +306,5 @@ class Entity {
         //std::vector<i32> kCells;
         i32 kCellsX;
         i32 kCellsY;
-
+};
 #endif

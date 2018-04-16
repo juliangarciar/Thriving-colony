@@ -1,14 +1,13 @@
 #include "Unit.h"
 
-#include "Game.h"
 #include "Human.h"
 #include "IA.h"
 #include "Map.h"
 #include "Hud.h"
 #include "GraphicEngine/Window.h"
-#include "Troop.h"
 #include <WorldEngine/WorldGeometry.h>
-#include <PathPlanner/PathManager.h>
+#include <functional>
+#include <cmath>
 
 //Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, UnitData d) : Entity(id, team, Enumeration::EntityType::Unit) {
 //    //Layer

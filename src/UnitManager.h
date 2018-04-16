@@ -55,7 +55,7 @@ class UnitManager{
         SceneNode *unitLayer;
 		SceneNode *currentCollision;
 
-        std::map<std::string, UnitData> baseUnits;
+        std::map<std::string, baseUnit> baseUnits;
 
         std::map<i32, Unit*> *inQueueTroops;
         std::map<i32, Unit*> *inHallTroops;

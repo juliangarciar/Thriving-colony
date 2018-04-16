@@ -1,6 +1,7 @@
 #ifndef BATTLE_MANAGER_H
 #define BATTLE_MANAGER_H
-#include <Entity.h>
+
+class Entity;
 /**
  * @class BattleManager.
  * @brief Create a BattleManager type object.

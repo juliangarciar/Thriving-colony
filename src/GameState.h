@@ -2,14 +2,12 @@
 #define GAMESTATE_H
 
 #include "State.h"
-
-#include "Hud.h"
-#include "PauseMenu.h"
 #include "Human.h"
 #include "IA.h"
 #include "Map.h"
 #include "BattleManager.h"
-
+#include "Hud.h"
+#include "PauseMenu.h"
 #include <Types.h>
 
 /**

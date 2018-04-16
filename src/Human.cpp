@@ -1,5 +1,7 @@
 #include "Human.h"
 
+#include "Enumeration.h"
+#include "Player.h"
 #include "IA.h"
 #include "GraphicEngine/Window.h"
 #include "IOEngine/IO.h"

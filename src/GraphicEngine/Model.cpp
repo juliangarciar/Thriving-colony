@@ -5,14 +5,15 @@
 
 using namespace irr;
 #define PI 3.14159265
-Model::Model(i32 id, const char *path) {
+Model::Model(i32 id, std::string path) {
+    const char* c = path.c_str();
     std::wstringstream o;
-    o << path;
+    o << c;
 
     scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
     meshNode = smgr -> addMeshSceneNode(smgr -> getMesh(o.str().c_str()));
     if (!meshNode) {
-        std::cout << "ERROR: no se puede cargar el modelo: " << path << std::endl;
+        std::cout << "ERROR: no se puede cargar el modelo: " << c << std::endl;
         exit(0);
     }
     meshNode -> setID(id);
@@ -26,9 +27,10 @@ Model::Model(i32 id, const char *path) {
 
 }
 
-Model::Model(SceneNode *parent, i32 id, const char *path) {
+Model::Model(SceneNode *parent, i32 id, std::string path) {
+    const char* c = path.c_str();
     std::wstringstream o;
-    o << path;
+    o << c;
 
     scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
     meshNode = smgr -> addMeshSceneNode(smgr -> getMesh(o.str().c_str()));

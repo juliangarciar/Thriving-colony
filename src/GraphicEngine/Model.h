@@ -11,8 +11,8 @@ using namespace irr;
 
 class Model {
     public:
-        Model(i32 id, const char *path);
-        Model(SceneNode *parent, i32 id, const char *path);
+        Model(i32 id,std::string path);
+        Model(SceneNode *parent, i32 id, std::string path);
 
         ~Model();
 

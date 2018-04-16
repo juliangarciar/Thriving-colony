@@ -2,20 +2,16 @@
 #define GAME_H
 
 #include <IOEngine/IO.h>
-
 #include <GraphicEngine/Window.h>
-
 #include <SoundEngine/SoundSystem.h>
-
 #include <Enumeration.h>
 #include <Types.h>
-
 #include "State.h"
 #include "MenuState.h"
 #include "GameState.h"
 #include "WinState.h"
 #include "DefeatState.h"
-
+#include "Human.h"
 /**
  * @class Game.
  * @brief Create a Game type object. Singleton class.

@@ -1,17 +1,16 @@
 #ifndef UNIT_H
 #define UNIT_H
 
-#include <functional>
-#include <cmath>
+
 #include <string>
 #include <list>
 #include <Types.h>
 #include <Entity.h>
-#include <MathEngine/Vector3.h>
 #include <PathPlanner/PathManager.h>
 #include <Troop.h>
 #include <EntityData.h>
 #include <Enumeration.h>
+#include "Game.h"
 
 //class PathManager;
 //class Troop;
@@ -48,8 +47,8 @@ class Unit : public Entity {
                                     1,
                                     baseData.modelPath,
                                     baseData.texturePath
-                                    ):
-                                    state(Enumeration:UnitState::Recruiting),
+                                    ),
+                                    state(Enumeration::UnitState::Recruiting),
                                     moveSpeed(baseData.moveSpeed),
                                     attackSpeed(baseData.attackSpeed),
                                     attackDamage(baseData.attackDamage),
@@ -58,20 +57,22 @@ class Unit : public Entity {
                                     attacking(false),
                                     armyLevel(baseData.armyLevel),
                                     citizens(baseData.citizens),
+                                    attackCountdown(0),
+                                    pathManager(nullptr),
                                     pathFollow(),
                                     vectorDes(0,0),
                                     vectorMov(0,0),
                                     steps(0),
+                                    readyToEnter(false),
                                     attackEvent(baseData.attackEvent),
                                     moveEvent(baseData.moveEvent),
                                     selectEvent(baseData.selectEvent),
-                                    attackCountdown(0),
-                                    readyToEnter(false)
+                                    troops(nullptr)         
         {
             lookForTargetTimer = new Timer (0.5, true);
             lookForTargetTimer -> setCallback([&](){
                 // Ask for a new target
-                Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this); //ToDo: La hipocresia
+                //Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this); //ToDo: La hipocresia
             });
 
             recruitingTimer = new Timer(0, false);
@@ -242,7 +243,7 @@ class Unit : public Entity {
         f32 attackCountdown;
 
         // Scene Node
-        SceneNode *layer;
+        //SceneNode *layer;
 
         // Space vectors used for unit movement
         PathManager* pathManager;
