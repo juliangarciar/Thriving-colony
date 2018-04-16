@@ -133,82 +133,181 @@ class Unit : public Entity {
          */
         void triggerRetractedCallback();
 
-        //Setters
-        void setUnitCell(Vector2<f32> vectorPosition);
+        /**
+         * @brief 
+         * @param
+         */
+        void setUnitCell(Vector2<f32>);
+
+        /**
+         * @brief Set to true or false moving variable.
+         * @param True when the unit is walking and false in other case.
+         */
         void setMoving(bool);
+
+        /**
+         * @brief Set to true or false attacking variable.
+         * @param True when the unit is attacking to its target and false in other case.
+         */
         void setAttacking(bool);
-        void setTroopPosition(Vector3<f32> vectorData);
-        void setTroopDestination(Vector3<f32> vectorData);
-        void setPath(std::list< Vector2<f32> > path);
-        void setPathToTarget(Vector3<f32> vectorData);
+
+        /**
+         * @brief Set the position of the unit.
+         * @param The Vector3 is the position that is going to be assigned to the unit.
+         */
+        void setTroopPosition(Vector3<f32>);
+
+        /**
+         * @brief Set the position where the unit is going to walk to.
+         * @param The Vector3 is the destination that is going to be assigned to the unit.
+         */
+        void setTroopDestination(Vector3<f32>);
+
+        /**
+         * @brief
+         * @param
+         */
+        void setPath(std::list< Vector2<f32> >);
+
+        /**
+         * @brief
+         * @param
+         */
+        void setPathToTarget(Vector3<f32>);
+
+        /**
+         * @brief
+         * @param
+         */
         void setRecruitedCallback(std::function<void(Unit*)>);
+
+        /**
+         * @brief
+         * @param
+         */
         void setRetractedCallback(std::function<void(Unit*)>);
 
-        //Getters
+        /**
+         * @brief 
+         * @return
+         */
         std::string getAttackEvent();
+
+        /**
+         * @brief 
+         * @return
+         */
         std::string getMoveEvent();
+
+        /**
+         * @brief 
+         * @return
+         */
         std::string getSelectEvent();
 
+        /**
+         * @brief Get the destination of the unit.
+         * @return Vector3 that will be the value of vectorDes variable.
+         */
         Vector3<f32> getDestination();
+
+        /**
+         * @brief 
+         * @return
+         */
         std::list< Vector2<f32> > getPath();
+
+        /**
+         * @brief Get the type of unit of the troop.
+         * @return Enumeration::UnitType that will be the value of type variable.
+         */
         Enumeration::UnitType getType();
 
+        /**
+         * @brief Get the current state of the unit.
+         * @return Enumeration::UnitState that will be the value of state variable.
+         */
         Enumeration::UnitState getState();
 
     private:
         /**
-         * @brief inicia
+         * @brief Initialize the variables.
          */
         void Init();
 
-        // CurrentState
+        //Current state of the unit that will conditione its actions.
         Enumeration::UnitState state;
 
-        // Unit type
+        //Type of the unit.
         Enumeration::UnitType type;
 
-        // Unit stats
+        //Speed with which the unit moves.
         i32 moveSpeed;
+
+        //Speed with which the unit attacks.
         i32 attackSpeed;
+
+        //Damage infliceted by the unit.
         i32 attackDamage;
 
-        // Action bools
+        //True when the unit is trained and false in other case.
         bool finished;
+
+        //True when the unit is moving and false in other case.
         bool moving;
+
+        //True when the unit is attacking and false in other case.
         bool attacking;
 
         // Unit info
         //f32 recruitingTime;
 
-        // Timers
+        //Timer that controls the time of training of the unit.
         Timer* recruitingTimer;
+
+        //Timer that controls the time that has to pass since the last time that the unit looked for a new target.
         Timer* lookForTargetTimer;
 
-        // Scene Node
+        //Layer where the unit is created.
         SceneNode *layer;
 
-        // Space vectors used for unit movement
+        //
         class PathManager* pathManager;
+
+        //
         std::list< Vector2<f32> > pathFollow;
 
-        //Finish recruiting callback
+        //Method to finish the training of the unit.
         std::function<void(Unit*)> recruitedCallback;
+
+        //Method to finish of retracting the unit.
         std::function<void(Unit*)> retractedCallback;
 
-        // Vector position is in the father
+        //Position of the unit.
         Vector3 <f32> vectorPos;
+
+        //Destination of the unit.
         Vector3 <f32> vectorDes;
+
+        //
         Vector3 <f32> vectorMov;
+
+        //
         f32 steps;
 
-        // Stuff
+        //True when the unit is ready to get into the command center and false in other case.
         bool readyToEnter;
 
-        // Music events to be played
+        //
         std::string attackEvent;
+
+        //
         std::string moveEvent;
+
+        //
         std::string selectEvent;
 
+        //
         Troop* troops;
 };
 
