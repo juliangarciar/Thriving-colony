@@ -123,12 +123,7 @@ Vector2<f32> Entity::getPosition() const{
 }
 
 //ToDo: revisar
-Box3D<f32> Entity::getHitBox() const{
-    return hitbox;
-}
-
-//ToDo: revisar
-Box2D Entity::getHit() const{
+Box2D Entity::getHitbox() const{
     return hitBox;
 }
 

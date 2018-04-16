@@ -8,6 +8,7 @@
 #include "GraphicEngine/Window.h"
 #include "Troop.h"
 #include <WorldEngine/WorldGeometry.h>
+#include <PathPlanner/PathManager.h>
 
 Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, UnitData d) : Entity(id, team, Enumeration::EntityType::Unit) {
     //Layer

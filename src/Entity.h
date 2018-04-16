@@ -128,13 +128,13 @@ class Entity {
 	     * @brief Get the hitbox of the entity.
          * @return Pointer to a Box3D object that will be the value of the hitbox variable.
 	     */
-        Box3D<f32> getHitBox() const; //ToDo: revisar
+        //Box3D<f32> getHitBox() const; //ToDo: revisar
 
         /**
          * @brief
          * @return
          */
-        Box2D getHit() const; //ToDo: revisar
+        Box2D getHitbox() const; //ToDo: revisar
 
         /**
 	     * @brief Get the current hp of the entity.

@@ -8,12 +8,39 @@
 #include "Map.h"
 #include "Hud.h"
 #include "IOEngine/IO.h"
+#include <OBDEngine/ResourceManager/ResourceJSON.h>
+#include "EntityData.h"
 
-struct baseUnit{
-
-};
 //Constructor
 UnitManager::UnitManager(Enumeration::Team t, std::string b) {
+    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/map/"+b+"-troops.json");
+    json j = *r -> getJSON();
+    //std::map<std::string, baseUnit> baseUnits;
+    /* ToDo: choose between Kaonov and Drorania */
+    for (auto& element : j["Kaonov"]){
+        baseUnit tmp(element["unitName"].get<std::string>(),
+                    element["moveSpeed"].get<i32>(),
+                    element["attackDamage"].get<i32>(),
+                    element["attackRange"].get<i32>(),
+                    element["attackSpeed"].get<i32>(),
+                    element["viewRadious"].get<i32>(),
+                    element["maxHP"].get<i32>(),
+                    element["recruitingTime"].get<i32>(),
+                    element["happiness"].get<i32>(),
+                    element["citizens"].get<i32>(),
+                    element["armyLevel"].get<i32>(),
+                    element["metalCost"].get<i32>(),
+                    element["crystalCost"].get<i32>(),
+                    element["troops"].get<i32>(),
+                    element["attackEvent"].get<std::string>(),
+                    element["moveEvent"].get<std::string>(),
+                    element["selectEvent"].get<std::string>(),
+                    element["modelPath"].get<std::string>(),
+                    element["texturePath"].get<std::string>()
+        );
+        baseUnits.insert(std::pair<std::string, baseUnit>(element["unitName"], tmp));
+    }
+
     gridAlignment = 20;
     selectedTroop = 0; 
     nextTroopId = 1;

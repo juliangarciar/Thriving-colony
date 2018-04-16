@@ -77,7 +77,7 @@ void Quadtree::insertCell(Cell* cellPtr){
 void Quadtree::insertBuilding(Building* buildingPtr){
     if(this->deep == 0){
         for(i32 i = 0; i < innerCells.size(); i++){
-            if(innerCells[i]->getHitbox().isOverlappedWith(buildingPtr->getHit()) && innerCells[i]->getInhabitingBuilding() == nullptr){
+            if(innerCells[i]->getHitbox().isOverlappedWith(buildingPtr->getHitbox()) && innerCells[i]->getInhabitingBuilding() == nullptr){
                 innerCells[i]->setInhabitingBuilding(buildingPtr);
                 innerCells[i]->setBlocked(true);
             }
@@ -85,7 +85,7 @@ void Quadtree::insertBuilding(Building* buildingPtr){
     }
     else{
         for(i32 i = 0; i < 4; i++){
-            if(innerTrees[i]->getHitbox().isOverlappedWith(buildingPtr->getHit())){
+            if(innerTrees[i]->getHitbox().isOverlappedWith(buildingPtr->getHitbox())){
                 innerTrees[i]->insertBuilding(buildingPtr);
             }
         }

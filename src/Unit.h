@@ -8,9 +8,9 @@
 #include <Types.h>
 #include <Entity.h>
 #include <MathEngine/Vector3.h>
-#include <PathPlanner/PathManager.h>
-#include <IOEngine/Timer.h>
+#include "EntityData.h"
 
+class PathManager;
 class Troop;
 
 struct UnitData {
@@ -33,7 +33,7 @@ class Unit : public Entity {
          * @param Enumeration::Team is the team to which belongs the building: Enumeration::Team::Human or Enumeration::Team::IA. 
          * @param UnitData is the data for this unit
          */
-        Unit(SceneNode *, i32, Enumeration::Team, UnitData);
+        Unit(SceneNode *node, i32 id, Enumeration::Team teamData, baseUnit baseData);
         
         /**
          * @brief Unit destructor.
@@ -198,7 +198,7 @@ class Unit : public Entity {
         SceneNode *layer;
 
         // Space vectors used for unit movement
-        class PathManager* pathManager;
+        PathManager* pathManager;
         std::list< Vector2<f32> > pathFollow;
 
         //Finish recruiting callback
