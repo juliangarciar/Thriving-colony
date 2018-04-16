@@ -24,8 +24,8 @@ class Unit : public Entity {
          * @brief Unit constructor.
          * @param The SceneNode is the layer where the unit is going to be created.
          * @param The id32 is the id number that will identify the unit.
-         * @param The Enumeration::Team is the team to which belongs the building: Enumeration::Team::Human or Enumeration::Team::IA. 
-         * @param The Enumeration::BreedType is the civilization to which belongs the building: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov.
+         * @param The Enumeration::Team is the team to which belongs the unit: Enumeration::Team::Human or Enumeration::Team::IA. 
+         * @param The Enumeration::BreedType is the civilization to which belongs the unit: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov.
          * @param The Enumeration::UnitType is the unit type.
          */
         Unit(SceneNode *, i32, Enumeration::Team, Enumeration::BreedType, Enumeration::UnitType);
