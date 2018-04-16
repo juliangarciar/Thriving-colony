@@ -99,6 +99,11 @@ class Unit : public Entity {
         void moveState();
 
         /**
+         * @brief Update the unit when its state is Enumeration::UnitState::InHome.
+         */
+        void inHomeState();
+
+        /**
          * @brief Update the unit when its state is Enumeration::UnitState::AttackMove.
          */
         void attackMoveState();
@@ -178,9 +183,6 @@ class Unit : public Entity {
         // Timers
         Timer* recruitingTimer;
         Timer* lookForTargetTimer;
-        f32 lookForTargetCountdown;
-        // Esto que?
-        f32 attackCountdown;
 
         // Scene Node
         SceneNode *layer;

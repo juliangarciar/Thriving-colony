@@ -573,6 +573,10 @@ void Unit::moveTroop() {
     }
 }
 
+void Unit::inHomeState() {
+    //ToDo: Creo que no hacia nada pero  bueno.
+}
+
 void Unit::attack() {
     if (target != nullptr && target -> getTeam() != team) {
         setAttacking(true);
