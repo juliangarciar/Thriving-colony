@@ -3,11 +3,10 @@
 
 #include "BuildingManager.h"
 #include "UnitManager.h"
-#include "Unit.h"
 #include <vector>
 #include <Types.h>
 #include <IOEngine/Timer.h>
-
+#include <MathEngine/Vector2.h>
 /**
  * @class Player.
  * @brief Create a Player type object.

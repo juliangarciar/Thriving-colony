@@ -27,7 +27,7 @@ void BattleManager::askForTarget(Entity* requester) {
     f32 yaux = 0;
     f32 dist = 0;
 
-    if (requester  -> getTeam() == Enumeration::Team::_Human) { // Requester is human
+    if (requester  -> getTeam() == Enumeration::Team::Human) { // Requester is human
         // Get units in the map of the opposing team
         std::map<i32, Unit*> *inMapTroops = IA::Instance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map

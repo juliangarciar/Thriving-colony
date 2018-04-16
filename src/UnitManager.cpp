@@ -41,7 +41,7 @@ UnitManager::UnitManager(Enumeration::Team t, std::string b) {
         baseUnits.insert(std::pair<std::string, baseUnit>(element["unitName"], tmp));
     }
 
-    gridAlignment = 20;
+    //gridAlignment = 20;
     selectedTroop = 0; 
     nextTroopId = 1;
 
@@ -94,7 +94,7 @@ UnitManager::~UnitManager() {
 //Create a new troops
 //In order to add a new unit, you must specify which one
 bool UnitManager::createTroop(std::string type) {
-    if (units.find(type) != units.end()){
+    if (baseUnits.find(type) != baseUnits.end()){
         if (checkCanPay(type)) {
             Unit *newUnit = new Unit(unitLayer, nextTroopId, team, baseUnits[type]);
             if (newUnit == nullptr) {
@@ -369,8 +369,8 @@ bool UnitManager::isSolvent(i32 metalCost, i32 crystalCost, i32 citizensCost) {
  * to avoid cluttering the setBuildingMode() method, as it used to be there in the first place.
  */
 bool UnitManager::checkCanPay(std::string type) {
-	if (units.find(type) != units.end()){
-		return isSolvent(units[type].metalCost, units[type].crystalCost, units[type].citizensCost);
+	if (baseUnits.find(type) != baseUnits.end()){
+		return isSolvent(baseUnits[type].metalCost, baseUnits[type].crystalCost, baseUnits[type].citizens);
 	}
 	return false;
 }

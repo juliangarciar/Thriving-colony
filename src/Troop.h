@@ -1,5 +1,6 @@
 #ifndef TROOP_H
 #define TROOP_H
+
 #include <vector>
 #include "Types.h"
 
