@@ -10,7 +10,6 @@
 #include <Troop.h>
 #include <EntityData.h>
 #include <Enumeration.h>
-#include "Game.h"
 
 //class PathManager;
 //class Troop;

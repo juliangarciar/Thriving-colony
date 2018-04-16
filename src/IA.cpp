@@ -1,5 +1,4 @@
 #include "IA.h"
-#include "Player.h"
 #include "IAEngine/BehaviourTree.h"
 #include "IAEngine/RootNode.h"
 #include "Game.h"
