@@ -23,7 +23,7 @@ class IA : public Player {
         /**
 		 * @brief Initialize all variables.
 		 */
-        void Init();
+        void Init(std::string _race);
 
         /**
          * @brief Update buildings, units variables and choice the next step when is time.

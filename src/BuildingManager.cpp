@@ -119,6 +119,7 @@ void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 bui
 		if (buildTime >= 0) b.buildTime = buildTime;
 		tempBuilding = new Building(buildingLayer, 0, team, b);
 		buildBuilding(pos);
+		std::cout << "Aqui pasan cositas \n";
 	}
 }
 
@@ -206,9 +207,12 @@ bool BuildingManager::checkFinished(i32 _id) {
 }
 
 i32 BuildingManager::getAmount(std::string type){
+	std::cout << "Me muero building manager 1 \n";
 	if (baseBuildings.find(type) != baseBuildings.end()){
+		std::cout << "Me muero building manager 2 \n";
 		return buildingAmounts[type];
 	} 
+	std::cout << "Me muero building manager 3 \n";
 	return 0;
 }
 

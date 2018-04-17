@@ -20,10 +20,6 @@ IA::IA() : Player() {
     tree = new BehaviourTree();
     nodeRootIA = new RootNode();
 
-    //Initialize managers
-    buildings = new BuildingManager(Enumeration::Team::IA, "Drorania");
-    units = new UnitManager(Enumeration::Team::IA, "Drorania");
-    
     //Define choice stuff
     choiceIndex = 0;
     choosingTimer = new Timer(1.0f, true, false);
@@ -41,8 +37,12 @@ IA::~IA() {
     delete choices;
 }
 
-void IA::Init() {
+void IA::Init(std::string _race) {
     Player::Init();
+
+    //Initialize managers
+    buildings = new BuildingManager(Enumeration::Team::IA, _race);
+    units = new UnitManager(Enumeration::Team::IA, _race);
 
     // Choose a behaviour
     chooseBehaviour();

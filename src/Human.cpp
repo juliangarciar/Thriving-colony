@@ -23,10 +23,10 @@ Human::~Human() {
     delete units;
 }
 
-void Human::Init() {
+void Human::Init(std::string _race) {
     Player::Init();
-    buildings = new BuildingManager(Enumeration::Team::Human, "Drorania");
-    units = new UnitManager(Enumeration::Team::Human, "Drorania");
+    buildings = new BuildingManager(Enumeration::Team::Human, _race);
+    units = new UnitManager(Enumeration::Team::Human, _race);
 }
 
 void Human::Update() {

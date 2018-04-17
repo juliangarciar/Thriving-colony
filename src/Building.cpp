@@ -41,6 +41,7 @@ Building::Building(SceneNode *_layer,
         adjustCityStats();
         if (callback != nullptr) callback(this);
     });
+    std::cout << "Me muero building \n";
 }
 
 Building::~Building() {

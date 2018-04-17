@@ -16,7 +16,7 @@
 			"cellsY": 2,
 			"crystalCost": 0,
 			"modelPath": "media/buildingModels/barn.obj",
-			"texturePath": "media/textures/Drorania/drorania_barn.jpg"
+			"texturePath": "media/textures/Kaonov/kaonov_barn_Base_Color.jpg"
 		},
 		{
 			"buildingName": "Barrack",
@@ -35,7 +35,7 @@
 			"cellsY": 4,
 			"crystalCost": 0,
 			"modelPath": "media/buildingModels/barrack.obj",
-			"texturePath": "media/textures/Drorania/drorania_barrack.jpg"
+			"texturePath": "media/textures/Kaonov/kaonov_barrack_Base_Color.jpg"
 		},
 		{
 			"buildingName": "Hospital",
@@ -54,7 +54,7 @@
 			"cellsY": 4,
 			"crystalCost": 0,
 			"modelPath": "media/buildingModels/hospital.obj",
-			"texturePath": "media/textures/Drorania/drorania_hospital.jpg"
+			"texturePath": "media/textures/Kaonov/kaonov_hospital_Base_Color.jpg"
 		},
 		{
 			"buildingName": "House",
@@ -73,7 +73,7 @@
 			"cellsY": 1,
 			"crystalCost": 0,
 			"modelPath": "media/buildingModels/house.obj",
-			"texturePath": "media/textures/Drorania/drorania_house.jpg"
+			"texturePath": "media/textures/Kaonov/kaonov_house_Base_Color.jpg"
 		},
 		{
 			"buildingName": "MainBuilding",
@@ -92,7 +92,7 @@
 			"cellsY": 5,
 			"crystalCost": 0,
 			"modelPath": "media/buildingModels/command_center.obj",
-			"texturePath": "media/textures/Drorania/drorania_command_center.jpg"
+			"texturePath": "media/textures/Kaonov/kaonov_command_center_Base_Color.jpg"
 		},
 		{
 			"buildingName": "Market",
@@ -111,7 +111,7 @@
 			"cellsY": 4,
 			"crystalCost": 0,
 			"modelPath": "media/buildingModels/market.obj",
-			"texturePath": "media/textures/Drorania/drorania_market.jpg"
+			"texturePath": "media/textures/Kaonov/kaonov_market_Base_Color.jpg"
 		},
 		{
 			"buildingName": "Quarry",
@@ -130,7 +130,7 @@
 			"cellsY": 4,
 			"crystalCost": 0,
 			"modelPath": "media/buildingModels/quarry.obj",
-			"texturePath": "media/textures/Drorania/drorania_quarry.jpg"
+			"texturePath": "media/textures/Kaonov/kaonov_quarry_Base_Color.jpg"
 		},
 		{
 			"buildingName": "Market",
@@ -149,7 +149,7 @@
 			"cellsY": 4,
 			"crystalCost": 0,
 			"modelPath": "media/buildingModels/market.obj",
-			"texturePath": "media/textures/Drorania/drorania_market.jpg"
+			"texturePath": "media/textures/Kaonov/kaonov_market_Base_Color.jpg"
 		},
 		{
 			"buildingName": "Siderurgy",
@@ -168,7 +168,7 @@
 			"cellsY": 3,
 			"crystalCost": 0,
 			"modelPath": "media/buildingModels/siderurgy.obj",
-			"texturePath": "media/textures/Drorania/drorania_siderurgy.jpg"
+			"texturePath": "media/textures/Kaonov/kaonov_siderurgy_Base_Color.jpg"
 		},
 		{
 			"buildingName": "School",
@@ -187,7 +187,7 @@
 			"cellsY": 4,
 			"crystalCost": 0,
 			"modelPath": "media/buildingModels/school.obj",
-			"texturePath": "media/textures/Drorania/drorania_school.jpg"
+			"texturePath": "media/textures/Kaonov/kaonov_school_Base_Color.jpg"
 		},
 		{
 			"buildingName": "Tower",
@@ -206,7 +206,7 @@
 			"cellsY": 1,
 			"crystalCost": 0,
 			"modelPath": "media/buildingModels/tower.obj",
-			"texturePath": "media/textures/Drorania/drorania_tower.jpg"
+			"texturePath": "media/textures/Kaonov/kaonov_tower_Base_Color.jpg"
 		},
 		{
 			"buildingName": "Wall",
@@ -225,7 +225,7 @@
 			"cellsY": 1,
 			"crystalCost": 0,
 			"modelPath": "media/buildingModels/wall.obj",
-			"texturePath": "media/textures/Drorania/drorania_wall.jpg"
+			"texturePath": "media/textures/Kaonov/kaonov_wall_Base_Color.jpg"
 		},
 		{
 			"buildingName": "Workshop",
@@ -244,7 +244,7 @@
 			"cellsY": 4,
 			"crystalCost": 0,
 			"modelPath": "media/buildingModels/workshop.obj",
-			"texturePath": "media/textures/Drorania/drorania_workshop.jpg"
+			"texturePath": "media/textures/Kaonov/kaonov_workshop_Base_Color.jpg"
 		}
 	]
 }

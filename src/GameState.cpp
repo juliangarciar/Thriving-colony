@@ -19,15 +19,14 @@ void GameState::Init() {
     //IO::Instance() -> getResourceManager()->loadResource("media/map/troops.json");
     
     //Init players
-    human -> Init(); 
-    ia -> Init();
+    human -> Init(humanRace); 
+    ia -> Init(iaRace);
 
     //Hud
     hud -> Init();
 
     //Init map
     map -> Init();
-    
     //Initialize the event system
     //IA Events
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::RetractTroopsIA, [&]() {
@@ -189,6 +188,7 @@ void GameState::Input() {
 
 void GameState::Update(){
     if (gamePaused == false) {
+        std::cout << "Me muero gamestate 1 \n";
         Game *g = Game::Instance();
 
         //Update map
@@ -215,15 +215,19 @@ void GameState::Update(){
 
         //Win/Lose
         if (ia -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
+            std::cout << "Me muero gamestate 2.3 \n";
             g -> changeState(Enumeration::State::WinState);
         }
-        if (human -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
+        else if (human -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
+            std::cout << "Me muero gamestate 2.4 \n";
             g -> changeState(Enumeration::State::DefeatState);
         }
+        std::cout << "Me muero gamestate 2 \n";
     }
     //todo llevar a un metodo en window supongo
     //fps count goes after game logic to see how long it took to go through the logic
     Window::Instance() -> calculateFramerate();
+    std::cout << "Me muero gamestate 3 \n";
 }
 
 void GameState::Render() {
@@ -265,3 +269,8 @@ void GameState::cleanGamePaused() {
     Vector3<float> v = map -> getPointCollision(g -> getMouse());
     human -> getUnitManager() -> UpdateUnitManager();
 */
+
+void GameState::setRaces(std::string _iaRace, std::string _humanRace){
+    iaRace = _iaRace;
+    humanRace = _humanRace;
+}

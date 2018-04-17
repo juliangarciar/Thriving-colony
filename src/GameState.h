@@ -63,6 +63,8 @@ class GameState : public State {
          */
         void cleanGamePaused();
 
+        /* Added by Juli */
+        void setRaces(std::string _iaRace, std::string _humanRace);
     private:
         //Pointer to the human player's object.
         Human *human;
@@ -84,6 +86,10 @@ class GameState : public State {
 
         //True when the game is paused and false in other case.
         bool gamePaused;
+
+        /* Added by Julian */
+        std::string humanRace;
+        std::string iaRace;
 };
 
 #endif

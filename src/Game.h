@@ -67,6 +67,8 @@ class Game {
          * @return Pointer to a GAmeState object that will be the value of game variable.
 		 */
 		GameState *getGameState();
+        /* Added by Juli */
+        void setRaces(std::string _iaRace, std::string _humanRace);
 
     protected:
         /**
@@ -115,6 +117,8 @@ class Game {
         //Pointer to the sound system of the game.
         SoundSystem *soundSystem;
         
+        std::string humanRace;
+        std::string iaRace;
 };
 
 #endif

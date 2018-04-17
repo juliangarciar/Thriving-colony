@@ -66,6 +66,7 @@ void Game::changeState(Enumeration::State data) {
         case Enumeration::State::GameState:
             state -> CleanUp();
             state = game;
+            game -> setRaces(iaRace, humanRace);
             state -> Init();
         break;
         case Enumeration::State::WinState:
@@ -80,6 +81,7 @@ void Game::changeState(Enumeration::State data) {
         break;
     }
     stateData = data;
+    std::cout << "Me muero game 3 \n";
 }
 
 MenuState *Game::getMenuState() {
@@ -88,4 +90,9 @@ MenuState *Game::getMenuState() {
 
 GameState *Game::getGameState() {
 	return game;
+}
+
+void Game::setRaces(std::string _iaRace, std::string _humanRace){
+    iaRace = _iaRace;
+    humanRace = _humanRace;
 }

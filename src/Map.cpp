@@ -58,10 +58,10 @@ void Map::Init() {
     loadProgress(30);
 
     //Hud buttons
-    for (auto& element : j["player"]["buildables"]){
+    for (auto& element : j["buildables"]){
         Hud::Instance()->setButtonStatus(element["type"].get<std::string>(), element["isBuildable"].get<bool>());
     }
-
+    Hud::Instance()->setButtonStatus("expandableTerrain", j["expandableTerrain"].get<bool>());
     loadProgress(40);
 
     //ToDo: julian revisa esto, si no tiene nada que sacar del JSON llevatelo a GameState
@@ -84,7 +84,7 @@ void Map::Init() {
     Human::Instance()->setBuildingRadious(j["player"]["building_radious"].get<f32>());
 
     Vector2<f32> humanPosition(j["player"]["mainBuilding"]["position"]["x"], j["player"]["mainBuilding"]["position"]["z"]);
-    Human::Instance() -> getBuildingManager() -> createBuilding(humanPosition, "MainBuilding");
+    Human::Instance() -> getBuildingManager() -> createBuilding(humanPosition, "MainBuilding", 0);
     Human::Instance() -> setHallPosition(humanPosition);
     humanStartPos = humanPosition;
 
@@ -103,7 +103,7 @@ void Map::Init() {
     IA::Instance()->setBuildingRadious(j["IA"]["building_radious"].get<f32>());
 
     Vector2<f32> iaPosition(j["IA"]["mainBuilding"]["position"]["x"], j["IA"]["mainBuilding"]["position"]["z"]);
-    IA::Instance() -> getBuildingManager() -> createBuilding(iaPosition, "MainBuilding");
+    IA::Instance() -> getBuildingManager() -> createBuilding(iaPosition, "MainBuilding", 0);
     IA::Instance() -> setHallPosition(iaPosition);
     iaStartPos = iaPosition;
     
