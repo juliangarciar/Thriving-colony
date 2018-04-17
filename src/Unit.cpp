@@ -32,6 +32,7 @@ Unit::Unit(SceneNode* _layer,
                         baseData.texturePath
                         ),
                         state(Enumeration::UnitState::Recruiting),
+                        type(baseData.type),
                         moveSpeed(baseData.moveSpeed),
                         attackSpeed(baseData.attackSpeed),
                         attackDamage(baseData.attackDamage),
@@ -210,6 +211,12 @@ void Unit::retractState() {
 
 void Unit::moveTroop() {
     std::cout << "Esto en:" << getPosition().x << "," << getPosition().y << "\n";
+    if(team == 0){
+        std::cout << "Soy humano \n";
+    }
+    else{
+        std::cout << "Soy ia \n";
+    }
     if (moving) {
         // close to destination, stop
         if (steps == 0) {
@@ -236,9 +243,9 @@ void Unit::moveTroop() {
             //Vector2<f32> move = vectorMov;
             //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
             //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
-            Vector2<f32> newPos = getPosition() + vectorMov;
+            Vector2<f32> newPos = vectorPos + vectorMov;
             //newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
-            WorldGeometry::Instance()->updateUnitCell(getPosition(), newPos, this);
+            WorldGeometry::Instance()->updateUnitCell(vectorPos, newPos, this);
             WorldGeometry::Instance()->getNeighborUnits(newPos);
             setTroopPosition(newPos);
             //troops->moveTroops(vectorMov);
@@ -248,7 +255,7 @@ void Unit::moveTroop() {
             WorldGeometry::Instance()->updateUnitCell(vectorPos.toVector2(), newPos.toVector2(), this);
             WorldGeometry::Instance()->getNeighborUnits(newPos.toVector2());
             setTroopPosition(newPos);*/
-            troops -> moveTroops(newPos);
+            //troops -> moveTroops(newPos);
             steps = 0;
             std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
         } 
@@ -257,9 +264,9 @@ void Unit::moveTroop() {
             //Vector2<f32> move = vectorMov;
             //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime();
             //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime();
-            Vector2<f32> newPos = getPosition() + vectorMov;
+            Vector2<f32> newPos = vectorPos + vectorMov;
             //newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
-            WorldGeometry::Instance()->updateUnitCell(getPosition(), newPos, this);
+            WorldGeometry::Instance()->updateUnitCell(vectorPos, newPos, this);
             WorldGeometry::Instance()->getNeighborUnits(newPos);
             setTroopPosition(newPos);
             //troops->moveTroops(vectorMov);
@@ -269,7 +276,7 @@ void Unit::moveTroop() {
             WorldGeometry::Instance()->updateUnitCell(vectorPos.toVector2(), newPos.toVector2(), this);
             WorldGeometry::Instance()->getNeighborUnits(newPos.toVector2());
             setTroopPosition(newPos);*/
-            troops -> moveTroops(newPos);
+            //troops -> moveTroops(newPos);
             steps--;
             std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
         }
@@ -416,6 +423,7 @@ void Unit::setPathToTarget(Vector2<f32> vectorData){
         setTroopDestination(this->pathFollow.front());
         std::cout << "Lo tengo " << pathFollow.size() << "\n";
         pathFollow.pop_front();
+        std::cout << "Salgo ya " << "\n";
     }
 }
 

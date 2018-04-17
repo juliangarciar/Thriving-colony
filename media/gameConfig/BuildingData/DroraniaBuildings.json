@@ -28,7 +28,7 @@
 			"attackSpeed": 0,
 			"happinessVariation": 0,
 			"citizensVariation": 0,
-			"buildingTime": 40,
+			"buildingTime": 4,
 			"cityLevel": 10,
 			"cellsX": 4,
 			"cellsY": 4,

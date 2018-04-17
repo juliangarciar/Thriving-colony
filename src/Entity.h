@@ -239,7 +239,7 @@ class Entity {
          * @return
          */
         i32 getCellsY() const;
-    private:
+    protected:
         //Layer for the model
         SceneNode* layer;
 

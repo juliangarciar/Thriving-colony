@@ -58,8 +58,8 @@
 			"selectEvent": "event:/UnitSelect/Drorania_melee_S",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"modelPath": "media/unitModels/Drorania/Melee_Soldier_Drorania.obj",
-			"texturePath": "media/textures/Drorania/drorania_barn.jpg",
+			"modelPath": "media/unitModels/Flags/flag.obj",
+			"texturePath": "media/textures/Drorania/drorania_melee_soldier.jpg",
 			"troops": 4
 		},
 		{

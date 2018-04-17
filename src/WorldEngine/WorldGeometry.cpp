@@ -287,7 +287,7 @@ Cell* WorldGeometry::positionToCell(Vector2<f32> position){
         return nullptr;
     }
     i32 idx = dummy;
-
+    std::cout << "Indice de celula: " << idx << "\n";
     if (idx == mCells.size()) 
         idx = mCells.size() - 1;
 
