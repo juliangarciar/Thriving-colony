@@ -34,7 +34,7 @@ class OBDLight {
          * @param tY 
          * @param tZ 
          */
-        void rotate(f32 rX, f32 rY, f32 rZ);
+        void rotate(f32 rX, f32 rY, f32 rZ, f32 angle);
 
         /**
          * @brief 
@@ -185,7 +185,7 @@ class OBDLight {
          * @brief 
          * 
          */
-        void setRotation(glm::vec3 r);
+        void setRotation(glm::vec3 r, f32 angle);
 
         /**
          * @brief 
