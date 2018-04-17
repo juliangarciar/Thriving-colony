@@ -65,6 +65,7 @@ class UnitManager{
          * @brief 
          * 
          */
+         */
         void retractAllTroops();
 
         /**
