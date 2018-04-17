@@ -302,9 +302,8 @@ f32 WorldGeometry::calculateDistance(Vector2<f32> a, Vector2<f32> b){
     return std::sqrt(std::pow(dX, 2) + std::pow(dY,2));
 }
 f32 WorldGeometry::getCost(i32 indexA, i32 indexB){
-    if(cellsDistance[indexA][indexB] == 0)
-        //std::cout << "Weird stuff happens \n";
-    return cellsDistance[indexA][indexB];
+    if(cellsDistance[indexA][indexB] == 0) return cellsDistance[indexA][indexB];
+    return 0;
 }
 std::vector< Unit* > WorldGeometry::getNeighborUnits(Vector2<f32> positionVector){
     std::vector< Unit* > neighborUnits;
