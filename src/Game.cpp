@@ -81,7 +81,6 @@ void Game::changeState(Enumeration::State data) {
         break;
     }
     stateData = data;
-    std::cout << "Me muero game 3 \n";
 }
 
 MenuState *Game::getMenuState() {

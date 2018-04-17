@@ -8,7 +8,6 @@ BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
 	team = t;
 
 	nextBuildingId = 0;
-    gridAlignment = -100;
     buildingMode = false;
 
 	buildingLayer = new SceneNode();
@@ -63,7 +62,6 @@ bool BuildingManager::setBuildingMode(std::string type) {
 		if (!buildingMode) {
 			buildingMode = true;
 			tempBuilding = new Building(buildingLayer, 0, team, baseBuildings[type]);
-			recalculateHitbox();
 			return true;
 		}
 	}
@@ -101,9 +99,9 @@ void BuildingManager::drawBuilding() {
 		}
 		
 		if (collision) {
-			//ToDo: material no se puede construir aqui
+			//ToDo: cambiar a material no se puede construir aqui
 		} else {
-			//ToDo: volver al material original
+			tempBuilding->returnToOriginalMaterial();
 			//If there is no collision and the player press left button of the mouse, build the building
 			if (IO::Instance() -> getMouse() -> leftMouseDown()) {
 				buildingMode = false;
@@ -119,7 +117,6 @@ void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 bui
 		if (buildTime >= 0) b.buildTime = buildTime;
 		tempBuilding = new Building(buildingLayer, 0, team, b);
 		buildBuilding(pos);
-		std::cout << "Aqui pasan cositas \n";
 	}
 }
 
@@ -151,7 +148,7 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
 		//
 		WorldGeometry::Instance() -> build(tempBuilding);
 
-		//
+		//Finish everything
 		tempBuilding = nullptr;
 		nextBuildingId++;
 	} else {
@@ -189,13 +186,6 @@ bool BuildingManager::checkCanPay(std::string type) {
 	return false;
 }
 
-//ToDo: ya no hace falta no?
-void BuildingManager::recalculateHitbox(){
-	for (std::map<i32,Building*>::iterator it = inMapBuildings -> begin(); it != inMapBuildings -> end(); ++it) {
-		//it -> second -> refreshHitbox();
-	}
-}
-
 void BuildingManager::updateBuildingManager() {
 	for (std::map<i32,Building*>::iterator it = inMapBuildings -> begin(); it != inMapBuildings -> end(); ++it) {
 		it -> second -> update();
@@ -207,12 +197,9 @@ bool BuildingManager::checkFinished(i32 _id) {
 }
 
 i32 BuildingManager::getAmount(std::string type){
-	std::cout << "Me muero building manager 1 \n";
 	if (baseBuildings.find(type) != baseBuildings.end()){
-		std::cout << "Me muero building manager 2 \n";
 		return buildingAmounts[type];
 	} 
-	std::cout << "Me muero building manager 3 \n";
 	return 0;
 }
 

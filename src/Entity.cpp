@@ -112,7 +112,7 @@ void Entity::takeDamage(i32 dmg) {
 
 void Entity::returnToOriginalMaterial() {
     tookDamageTimer -> stop();
-    tookDamageTimer -> triggerCallback();
+    //ToDo: volver al material original
 }
 
 //SETTERS
@@ -126,20 +126,8 @@ void Entity::setPosition(Vector2<f32> vectorData) {
     vectorPos = vectorData;
     model -> setPosition(vectorData);
 
-    hitBox.moveHitbox(vectorData.x, vectorData.y); //ToDo: revisar si es necesario
-
-    //position -> set(vectorData);
-    /* Adjust the hitbox properly */
-    //Vector2<f32> topLeft;
-    //Vector2<f32> bottomRight;
-    //topLeft.x = vectorData.x - 120.f;
-    //topLeft.y = vectorData.z - 120.f;
-    //bottomRight.x = vectorData.x + 120.f;
-    //bottomRight.y = vectorData.z + 120.f;
-    //hitBox = Box2D(topLeft, bottomRight);
-    //std::cout << "Moving HitBox to: \n";
-    //std::cout << hitBox.TopLeft().x << "," << hitBox.TopLeft().y << "\n";
-    //std::cout << hitBox.BottomRight().x << "," << hitBox.BottomRight().y << "\n";
+    hitBox.moveHitbox(vectorData.x, vectorData.y);
+    //ToDo: revisar lo de ajustar hitbox (Julian lo tienes al final de este archivo)
 }
 
 void Entity::setTarget(Entity *newTarget) {
@@ -230,3 +218,16 @@ i32 Entity::getCellsX() const{
 i32 Entity::getCellsY() const{
     return kCellsY;
 }
+
+    //position -> set(vectorData);
+    /* Adjust the hitbox properly */
+    //Vector2<f32> topLeft;
+    //Vector2<f32> bottomRight;
+    //topLeft.x = vectorData.x - 120.f;
+    //topLeft.y = vectorData.z - 120.f;
+    //bottomRight.x = vectorData.x + 120.f;
+    //bottomRight.y = vectorData.z + 120.f;
+    //hitBox = Box2D(topLeft, bottomRight);
+    //std::cout << "Moving HitBox to: \n";
+    //std::cout << hitBox.TopLeft().x << "," << hitBox.TopLeft().y << "\n";
+    //std::cout << hitBox.BottomRight().x << "," << hitBox.BottomRight().y << "\n";

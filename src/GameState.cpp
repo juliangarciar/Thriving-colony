@@ -16,7 +16,6 @@ GameState::~GameState() {
 
 void GameState::Init() {
     IO::Instance() -> getResourceManager()->loadResource("media/map/map.json");
-    //IO::Instance() -> getResourceManager()->loadResource("media/map/troops.json");
     
     //Init players
     human -> Init(humanRace); 
@@ -27,8 +26,8 @@ void GameState::Init() {
 
     //Init map
     map -> Init();
-    //Initialize the event system
-    //IA Events
+
+    //IA events
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::RetractTroopsIA, [&]() {
         ia -> getUnitManager() -> retractAllTroops();
     });
@@ -124,7 +123,7 @@ void GameState::Input() {
                 IO::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
 
                 if (IO::Instance() -> getMouse() -> rightMousePressed()) {
-                    //ToDo
+                    //ToDo: pelea
                 }
                 
                 onMap = false;
@@ -135,7 +134,7 @@ void GameState::Input() {
                 IO::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
 
                 if (IO::Instance() -> getMouse() -> rightMousePressed()){
-                    //ToDo
+                    //ToDo: pelea
                 }
                 
                 onMap = false;
@@ -158,7 +157,7 @@ void GameState::Input() {
                             human -> getUnitManager() -> deployAllTroops(map->getMouseCollitionPoint().toVector2());
                         }
                     } else {
-                        //std::cout << "Ninguna tropa seleccionada" << std::endl;
+                        // Ninguna tropa seleccionada
                     }
                 } else 
                     IO::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);
@@ -188,7 +187,6 @@ void GameState::Input() {
 
 void GameState::Update(){
     if (gamePaused == false) {
-        std::cout << "Me muero gamestate 1 \n";
         Game *g = Game::Instance();
 
         //Update map
@@ -215,19 +213,13 @@ void GameState::Update(){
 
         //Win/Lose
         if (ia -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
-            std::cout << "Me muero gamestate 2.3 \n";
             g -> changeState(Enumeration::State::WinState);
-        }
-        else if (human -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
-            std::cout << "Me muero gamestate 2.4 \n";
+        } else if (human -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
             g -> changeState(Enumeration::State::DefeatState);
         }
-        std::cout << "Me muero gamestate 2 \n";
     }
-    //todo llevar a un metodo en window supongo
-    //fps count goes after game logic to see how long it took to go through the logic
+    //ToDo: quizas llevar a un metodo en window supongo (fps count goes after game logic to see how long it took to go through the logic)
     Window::Instance() -> calculateFramerate();
-    std::cout << "Me muero gamestate 3 \n";
 }
 
 void GameState::Render() {
@@ -252,23 +244,6 @@ void GameState::cleanGamePaused() {
     gamePaused = false;
     delete pauseMenu;
 }
-
-/*  
-    //Hacks
-    if (g -> getIO() -> keyPressed(KEY_KEY_1)) {
-        human -> receiveMetal();
-    }
-
-    if (g -> getIO() -> keyPressed(KEY_KEY_2)) {
-        human -> receiveCrystal();
-    }
-
-    if (g -> getIO() -> keyPressed(KEY_KEY_3)) {
-        human -> receiveCitizens();
-    }
-    Vector3<float> v = map -> getPointCollision(g -> getMouse());
-    human -> getUnitManager() -> UpdateUnitManager();
-*/
 
 void GameState::setRaces(std::string _iaRace, std::string _humanRace){
     iaRace = _iaRace;

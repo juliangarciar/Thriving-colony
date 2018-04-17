@@ -141,10 +141,7 @@ void CameraController::Update(f32 deltaTime) {
 		}
 	}
 
-	if (centerCameraMode){
-		//std::cout << userPos << std::endl;
-		tarPos = userPos;
-	}
+	if (centerCameraMode) tarPos = userPos;
 
     if (movementMode || rotationOrInclinationMode || zoomMode || centerCameraMode){
 		camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
@@ -161,9 +158,6 @@ void CameraController::Update(f32 deltaTime) {
 
 void CameraController::Move() {
 	Window *w = Window::Instance();
-
-    /*direction = (receiver -> keyDown(KEY_KEY_W) << 0) | (receiver -> keyDown(KEY_KEY_A) << 1)
-		| receiver -> keyDown(KEY_KEY_S) << 2 | receiver -> keyDown(KEY_KEY_D) << 3;*/
 
 	direction = 0;
 	movementMode = false;

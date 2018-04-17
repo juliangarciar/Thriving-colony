@@ -35,12 +35,6 @@ class BuildingManager {
 		void testRaycastCollisions();
 
 		/**
-		 * @brief Update the hitbox of each building at buildings variable.
-		 * @see Use getNodeCollision(Mouse*) at SceneNode class.
-		 */
-		void recalculateHitbox();
-
-		/**
 		 * @brief Set the value of the buildingMode variable to true if the building can be paid and the value of the buildingMode variable is false.
 		 * Change the value of tempBuilding value to a new Building.
 		 * @param std::string is the type of building of the new Building at temBuilding.
@@ -152,16 +146,13 @@ class BuildingManager {
 		//Id number that is going to be asigned as the key of the next building built.
 		i32 nextBuildingId;
 
-		//
-        i32 gridAlignment;
-
 		//True if there is a building selected to be built and false in other case.
         bool buildingMode;
 		
 		//Layer were the buildings will be built.
 		SceneNode *buildingLayer;
 
-		//
+		//Current colliding layer
 		SceneNode *currentCollision;
 		
 		//Temporary building that is used when a building is selected to be built.

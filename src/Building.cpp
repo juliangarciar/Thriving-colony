@@ -32,16 +32,15 @@ Building::Building(SceneNode *_layer,
                 callback(nullptr)
 {
     /* Set the model and texture */
-    //getModel()->setMaterial(new Material(new Texture(baseData.texturePath.c_str())));
+    getModel()->setMaterial(new Material(new Texture(baseData.texturePath.c_str())));
 
     /* Set the timer */
     buildTimer = new Timer(baseData.buildTime, false, false);
     buildTimer -> setCallback([&]{
-		//ToDo: volver al material original
+		returnToOriginalMaterial();
         adjustCityStats();
         if (callback != nullptr) callback(this);
     });
-    std::cout << "Me muero building \n";
 }
 
 Building::~Building() {

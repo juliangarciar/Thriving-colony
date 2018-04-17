@@ -72,7 +72,7 @@ class Building : public Entity {
         //ToDo: explicar aqui para que sirve esto
         i32 cityLevel;
 
-        //
+        //Type of building
         std::string buildingType;
 
         //Building timer used for the construction time.

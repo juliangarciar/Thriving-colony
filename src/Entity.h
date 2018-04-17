@@ -3,9 +3,7 @@
 
 #include <vector>
 #include <Types.h>
-#include <Enumeration.h> /* Maybe enumeraiton should be removed */
-#include <IOEngine/Timer.h>
-#include <MathEngine/Box3D.h>
+#include <Enumeration.h>
 #include <MathEngine/Box2D.h>
 #include <GraphicEngine/Model.h>
 #include <GraphicEngine/SceneNode.h>
@@ -18,10 +16,25 @@
 class Entity {
     public:
         /**
-         * @brief Entity constructor.
-         * @param id32 is the id number that will identify the entity.
-         * @param Enumeration::Team is the team to which belongs the entity: Enumeration::Team::Human or Enumeration::Team::IA.
-         * @param Enumeration::EntityType is type of entity.
+         * @brief Construct a new Entity object
+         * 
+         * @param _layer is the Layer of the entity
+         * @param _id is the id number that will identify the entity.
+         * @param _team is the team to which belongs the entity: Enumeration::Team::Human or Enumeration::Team::IA.
+         * @param _type is type of entity.
+         * @param _maxHP 
+         * @param _maxView 
+         * @param _attackRange 
+         * @param _attackDamage 
+         * @param _attackSpeed 
+         * @param _metal 
+         * @param _crystal 
+         * @param _happines 
+         * @param _citizens 
+         * @param _cellsX 
+         * @param _cellsY 
+         * @param _modelPath 
+         * @param _texturePath 
          */
         Entity(
             SceneNode* _layer,
@@ -138,10 +151,10 @@ class Entity {
         Vector2<f32> getPosition() const; 
 
         /**
-         * @brief
+         * @brief gets the hitbox
          * @return
          */
-        Box2D getHitbox() const; //ToDo: revisar
+        Box2D getHitbox() const;
 
         /**
 	     * @brief Get the current hp of the entity.
