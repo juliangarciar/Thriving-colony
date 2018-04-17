@@ -20,7 +20,10 @@ class Building : public Entity {
          * @param Enumeration::Team is the team to which belongs the building: Enumeration::Team::Human or Enumeration::Team::IA.
          * @param BuildingData is the data of the building
          */
-        Building(SceneNode *, i32, Enumeration::Team, BuildingData);
+        Building(SceneNode *_layer, 
+                i32 _id, 
+                Enumeration::Team _team, 
+                BuildingData baseData);
 
         /**
          * @brief Building destructor.

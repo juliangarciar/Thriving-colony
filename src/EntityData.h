@@ -43,7 +43,9 @@ struct BuildingData {
     i32 attackSpeed;
     i32 happinessVariation;
     i32 citizensVariation;
-
+    i32 cellsX;
+    i32 cellsY;
+    
     f32 buildTime;
     i32 cityLevel;
 };

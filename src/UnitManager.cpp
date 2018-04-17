@@ -13,17 +13,19 @@
 
 //Constructor
 UnitManager::UnitManager(Enumeration::Team t, std::string b) {
-    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/map/"+b+"-troops.json");
+    IO::Instance() -> getResourceManager()->loadResource("media/gameConfig/UnitData/"+b+"Units.json");
+    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/gameConfig/UnitData/"+b+"Units.json");
     json j = *r -> getJSON();
+
     for (auto& element : j["Units"]){
         UnitData tmp;
-            tmp.type = element["type"].get<std::string>();
+            tmp.type = element["unitName"].get<std::string>();
             tmp.modelPath = element["modelPath"].get<std::string>();
             tmp.texturePath = element["texturePath"].get<std::string>();
             tmp.metalCost = element["metalCost"].get<i32>();
             tmp.crystalCost = element["crystalCost"].get<i32>();
             tmp.maxHP = element["maxHP"].get<i32>();
-            tmp.viewRadius = element["viewRadius"].get<i32>();
+            tmp.viewRadius = element["viewRadious"].get<i32>();
             tmp.attackRange = element["attackRange"].get<i32>();
             tmp.attackDamage = element["attackDamage"].get<i32>();
             tmp.attackSpeed = element["attackSpeed"].get<i32>();
@@ -36,7 +38,7 @@ UnitManager::UnitManager(Enumeration::Team t, std::string b) {
             tmp.attackEvent = element["attackEvent"].get<std::string>();
             tmp.moveEvent = element["moveEvent"].get<std::string>();
             tmp.selectEvent = element["selectEvent"].get<std::string>();
-        baseUnits.insert(std::pair<std::string, UnitData>(element["type"], tmp));
+        baseUnits.insert(std::pair<std::string, UnitData>(tmp.type, tmp));
     }
 
     selectedTroop = 0; 

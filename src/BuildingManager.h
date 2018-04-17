@@ -168,7 +168,7 @@ class BuildingManager {
 		Building *tempBuilding;
 
 		//List of buildings
-		std::map<std::string, BuildingData> buildings;
+		std::map<std::string, BuildingData> baseBuildings;
 
 		//Amount of buildings built of each type.
 		std::map<std::string, i32> buildingAmounts;

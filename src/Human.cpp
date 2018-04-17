@@ -1,7 +1,6 @@
 #include "Human.h"
 
 #include "Enumeration.h"
-#include "Player.h"
 #include "IA.h"
 #include "GraphicEngine/Window.h"
 #include "IOEngine/IO.h"
@@ -26,9 +25,8 @@ Human::~Human() {
 
 void Human::Init() {
     Player::Init();
-    buildings = new BuildingManager(Enumeration::Team::Human, "kaonov");
-    units = new UnitManager(Enumeration::Team::Human, "kaonov");
-    
+    buildings = new BuildingManager(Enumeration::Team::Human, "Drorania");
+    units = new UnitManager(Enumeration::Team::Human, "Drorania");
 }
 
 void Human::Update() {

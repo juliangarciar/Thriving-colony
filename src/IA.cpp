@@ -1,6 +1,5 @@
 #include "IA.h"
-#include "IAEngine/BehaviourTree.h"
-#include "IAEngine/RootNode.h"
+
 #include "Game.h"
 #include <WorldEngine/WorldGeometry.h>
 #include "GraphicEngine/Window.h"
@@ -22,8 +21,8 @@ IA::IA() : Player() {
     nodeRootIA = new RootNode();
 
     //Initialize managers
-    buildings = new BuildingManager(Enumeration::Team::IA, "drorania");
-    units = new UnitManager(Enumeration::Team::IA, "drorania");
+    buildings = new BuildingManager(Enumeration::Team::IA, "Drorania");
+    units = new UnitManager(Enumeration::Team::IA, "Drorania");
     
     //Define choice stuff
     choiceIndex = 0;

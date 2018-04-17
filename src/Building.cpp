@@ -5,32 +5,34 @@
 #include "IA.h"
 #include "GraphicEngine/Window.h"
 
-Building::Building(SceneNode *_layer, i32 _id, Enumeration::Team _team, BuildingData baseData) : 
-    Entity(
-        _layer,
-        _id,
-        _team,
-        Enumeration::EntityType::Unit,
-        baseData.maxHP,
-        baseData.viewRadius,
-        baseData.attackRange,
-        baseData.attackDamage,
-        baseData.attackSpeed,
-        baseData.metalCost,
-        baseData.crystalCost,
-        baseData.happinessVariation,
-        baseData.citizensVariation,
-        1,
-        1,
-        baseData.modelPath,
-        baseData.texturePath
-    ), 
-    cityLevel(baseData.cityLevel),
-    buildingType(baseData.type),
-    callback(nullptr)
+Building::Building(SceneNode *_layer,
+                i32 _id, 
+                Enumeration::Team _team, 
+                BuildingData baseData):Entity(
+                _layer,
+                _id,
+                _team,
+                Enumeration::EntityType::Building,
+                baseData.maxHP,
+                baseData.viewRadius,
+                baseData.attackRange,
+                baseData.attackDamage,
+                baseData.attackSpeed,
+                baseData.metalCost,
+                baseData.crystalCost,
+                baseData.happinessVariation,
+                baseData.citizensVariation,
+                baseData.cellsX,
+                baseData.cellsY,
+                baseData.modelPath,
+                baseData.texturePath
+                ), 
+                cityLevel(baseData.cityLevel),
+                buildingType(baseData.type),
+                callback(nullptr)
 {
     /* Set the model and texture */
-    getModel()->setMaterial(new Material(new Texture(baseData.texturePath.c_str())));
+    //getModel()->setMaterial(new Material(new Texture(baseData.texturePath.c_str())));
 
     /* Set the timer */
     buildTimer = new Timer(baseData.buildTime, false, false);

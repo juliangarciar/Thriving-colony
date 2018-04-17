@@ -50,7 +50,10 @@ Entity::Entity(SceneNode* _layer,
     });
 
     //Set model
-    model = new Model(_layer, _id, _modelPath.c_str());
+    model = new Model(_layer, _id, _modelPath);
+    
+    //Set texture
+    model->setMaterial(new Material(new Texture(_texturePath.c_str())));
 
     /* Box2D parameters */
     Vector2<f32> topLeft;

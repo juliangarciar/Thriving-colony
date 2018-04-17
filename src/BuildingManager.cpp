@@ -16,14 +16,29 @@ BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
 	inMapBuildings = new std::map<i32, Building*>();
 	tempBuilding = nullptr;
 
-    IO::Instance() -> getResourceManager()->loadResource("media/map/"+b+".json");
-    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/map/"+b+".json");
+    IO::Instance() -> getResourceManager()->loadResource("media/gameConfig/BuildingData/"+b+"Buildings.json");
+    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/gameConfig/BuildingData/"+b+"Buildings.json");
     json j = *r -> getJSON();
 
-    for (auto& element : j["buildings"]){
-		BuildingData d;
-		//ToDo: rellenar buildingData
-		buildings.insert(std::pair<std::string, BuildingData>(element["type"].get<std::string>(), d));
+    for (auto& element : j["Buildings"]){
+		BuildingData tmp;
+			tmp.type = element["buildingName"].get<std::string>();
+			tmp.modelPath = element["modelPath"].get<std::string>();
+			tmp.texturePath = element["texturePath"].get<std::string>();
+			tmp.metalCost = element["metalCost"].get<i32>();
+			tmp.crystalCost = element["crystalCost"].get<i32>();
+			tmp.maxHP = element["maxHP"].get<i32>();
+			tmp.viewRadius = element["viewRadious"].get<i32>();
+			tmp.attackRange = element["attackRange"].get<i32>();
+			tmp.attackDamage = element["attackDamage"].get<i32>();
+			tmp.attackSpeed = element["attackSpeed"].get<i32>();
+			tmp.happinessVariation = element["happiness"].get<i32>();
+			tmp.citizensVariation = element["citizens"].get<i32>();
+			tmp.buildTime = element["buildingTime"].get<f32>();
+			tmp.cityLevel = element["cityLevel"].get<i32>();
+			tmp.cellsX = element["cellsX"].get<i32>();
+			tmp.cellsY = element["cellsY"].get<i32>();
+		baseBuildings.insert(std::pair<std::string, BuildingData>(tmp.type, tmp));
 	}
 }
 
@@ -44,10 +59,10 @@ void BuildingManager::testRaycastCollisions() {
 }
 
 bool BuildingManager::setBuildingMode(std::string type) {
-	if (buildings.find(type) != buildings.end() && checkCanPay(type)) {
+	if (baseBuildings.find(type) != baseBuildings.end() && checkCanPay(type)) {
 		if (!buildingMode) {
 			buildingMode = true;
-			tempBuilding = new Building(buildingLayer, 0, team, buildings[type]);
+			tempBuilding = new Building(buildingLayer, 0, team, baseBuildings[type]);
 			recalculateHitbox();
 			return true;
 		}
@@ -99,8 +114,8 @@ void BuildingManager::drawBuilding() {
 }
 
 void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 buildTime){
-	if (buildings.find(type) != buildings.end()){
-		BuildingData b = buildings[type];
+	if (baseBuildings.find(type) != baseBuildings.end()){
+		BuildingData b = baseBuildings[type];
 		if (buildTime >= 0) b.buildTime = buildTime;
 		tempBuilding = new Building(buildingLayer, 0, team, b);
 		buildBuilding(pos);
@@ -167,8 +182,8 @@ bool BuildingManager::isSolvent(i32 metalCost, i32 crystalCost) {
  * to avoid cluttering the setBuildingMode() method, as it used to be there in the first place.
  */
 bool BuildingManager::checkCanPay(std::string type) {
-	if (buildings.find(type) != buildings.end()){
-		return isSolvent(buildings[type].metalCost, buildings[type].crystalCost);
+	if (baseBuildings.find(type) != baseBuildings.end()){
+		return isSolvent(baseBuildings[type].metalCost, baseBuildings[type].crystalCost);
 	}
 	return false;
 }
@@ -191,7 +206,7 @@ bool BuildingManager::checkFinished(i32 _id) {
 }
 
 i32 BuildingManager::getAmount(std::string type){
-	if (buildings.find(type) != buildings.end()){
+	if (baseBuildings.find(type) != baseBuildings.end()){
 		return buildingAmounts[type];
 	} 
 	return 0;
