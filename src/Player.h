@@ -13,6 +13,7 @@
  * @brief Create a Player type object.
  */
 class Player {
+    
     public:
         /**
          * @brief Player constructor.

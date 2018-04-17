@@ -197,7 +197,7 @@ void Hud::Init(){
     ///// DEBUG /////
     playerResources = new Panel("Player Resources");
     playerResources ->setVerticalLayout();
-    playerResources -> setSize(Vector2<i32> (120, 230));
+    playerResources -> setSize(Vector2<i32> (120, 245));
     i32 melees = 
         Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + 
         Human::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
@@ -242,6 +242,10 @@ void Hud::Init(){
     os = std::stringstream();
     os << "Siege: " << std::to_string(sieges);
     playerSieges = new Label(playerResources, os.str());
+    os = std::stringstream();
+    os << "FPS: " << std::to_string(Window::Instance() -> getFrameRate());
+    framerateLabel = new Label(playerResources, os.str());
+    framerateLabel -> setSize(Vector2<i32> (50, 15));
     os = std::stringstream();
     
     iaResources = new Panel("IA Resources");
@@ -502,13 +506,69 @@ void Hud::Update() {
 }
 
 void Hud::CleanUp(){
-    delete buildingsPanel;
-    delete tabContainer;
-    delete playerResources;
-    delete iaResources;
     delete toastTimer;
     delete debugTimer;
-    //ToDo: incompleto
+
+    delete buttonExpandTerrain;
+    delete buttonOpenPanel;
+    delete buttonHouse;
+    delete buttonSiderurgy;
+    delete buttonQuarry;
+    delete resourceWidget;
+    delete buttonSchool;
+    delete buttonMarket;
+    delete buttonHospital;
+    delete serviceWidget;
+    delete buttonBarrack;
+    delete buttonBarn;
+    delete buttonWorkshop;
+    delete militaryWidget;
+    delete buttonTower;
+    delete buttonWall;
+    delete defenseWidget;
+    delete buildingsPanel;
+    delete generalWidget;
+
+    delete playerMetalAmount;
+    delete playerCrystalAmount;
+    delete playerCitizens;
+    delete playerHappiness;
+    delete playerCityLevel;
+    delete playerArmySize;
+    delete playerMelees;
+    delete playerRangeds;
+    delete playerSieges;
+    delete playerResources;
+
+    delete iaMetalAmount;
+    delete iaCrystalAmount;
+    delete iaCitizens;
+    delete iaHappiness;
+    delete iaCityLevel;
+    delete iaArmySize;
+    delete iaMelees;
+    delete iaRangeds;
+    delete iaSieges;
+    delete iaNextChoice;
+    delete iaBehaviour;
+    delete iaResources;
+
+    delete hallTroopList;
+    delete barrackEmpty;
+    delete barrackTroopQueueWidget;
+    delete barrackContent;
+    delete barnEmpty;
+    delete barnTroopQueueWidget;
+    delete barnContent;
+    delete workshopEmpty;
+    delete workshopTroopQueueWidget;
+    delete workshopContent;
+    delete tabs;
+    delete tabContainer;
+
+    delete toastText;
+    delete toast;
+    delete framerateLabel;
 }
 
 void Hud::enableTab(Enumeration::BuildingType t){
@@ -864,6 +924,9 @@ void Hud::debug(){
     os = std::stringstream();
     os << "Siege: " << std::to_string(sieges);
     playerSieges -> setLabel(os.str());
+    os = std::stringstream();
+    os << "FPS: " << std::to_string(Window::Instance() -> getFrameRate());
+    framerateLabel -> setLabel(os.str());
     os = std::stringstream();
 
     melees = 

@@ -24,7 +24,6 @@ IA::~IA() {
     delete nodeRootIA;
     delete buildings;
     delete units;
-    //std::cout << "IA units deleted \n";
     choices -> clear();
     delete choices;
     delete rootNode;

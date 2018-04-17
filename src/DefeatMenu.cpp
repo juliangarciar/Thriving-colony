@@ -16,6 +16,7 @@ DefeatMenu::DefeatMenu() {
 DefeatMenu::~DefeatMenu() {
     delete buttonQuit;
     delete buttonStart;
+    delete winText;
 }
 
 void DefeatMenu::setHUDEvents(){

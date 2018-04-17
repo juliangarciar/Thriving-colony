@@ -44,6 +44,21 @@ class Window {
         GLFWwindow *getWindow() {
             return window;
         }
+
+        /**
+         * @brief calculates the framerate of the window. It is important to call
+         * this function after the game logic has fully executed to see how long it
+         * took to get through it, otherwise results won't be correct.
+         * 
+         */
+        void calculateFramerate();
+
+        /**
+         * @brief returns the current framerate
+         * 
+         * @return i32 framerate
+         */
+        i32 getFrameRate();
         
     protected:
         Window(i32 width, i32 height);
@@ -70,6 +85,7 @@ class Window {
         
         double dtThen;
         double deltaTime;
+        i32 framerate;
 };
 
 #endif
