@@ -9,7 +9,7 @@ TTransform::~TTransform() {
 }
 
 void TTransform::beginDraw(){
-    cache . getMatrixStack().push(cache.getModelMatrix());
+    cache . getMatrixStack().push(matrix);
     cache . setModelMatrix(cache . getModelMatrix() * matrix);
 }
 

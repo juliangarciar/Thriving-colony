@@ -37,6 +37,13 @@ class TMesh : public TEntity {
         virtual void endDraw();
 
         /**
+         * @brief Set the Material object
+         * 
+         * @param m 
+         */
+        virtual void setMaterial(ResourceMaterial *m);
+
+        /**
          * @brief Set the glslTexture object
          * 
          */

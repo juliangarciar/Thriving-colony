@@ -1,4 +1,4 @@
-#version 450 core
+#version 430 core
 
 // Data structs
 struct myLight {
@@ -90,4 +90,5 @@ vec3 Phong() {
 void main(){
     // Output color = color of the texture at the specified UV
     FragColor = vec4(Phong(), 1);
+    //FragColor = vec4(1, 1, 1, 1);
 }
