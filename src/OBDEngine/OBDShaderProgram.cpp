@@ -19,7 +19,7 @@ OBDShaderProgram::OBDShaderProgram(ResourceGLSL* vs, ResourceGLSL* fs){
 	glGetProgramiv(pid, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	if (InfoLogLength > 0){
 		std::vector<char> ProgramErrorMessage(InfoLogLength+1);
-		glGetProgramInfoLog(pid, InfoLogLength, nullptr, &ProgramErrorMessage[0]);
+		glGetProgramInfoLog(pid, InfoLogLength, NULL, &ProgramErrorMessage[0]);
 		std::cout << &ProgramErrorMessage[0] << std::endl;
 		exit(0);
 	}

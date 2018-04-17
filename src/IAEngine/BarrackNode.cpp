@@ -15,9 +15,9 @@ void BarrackNode::question() {
 
     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildBarrack);
     //std::cout << "Construyo un cuartel" << std::endl;
-    if (IA::Instance() -> getBuildingManager() -> checkCanPay("Barrack")) {
+    if (IA::Instance() -> getBuildingManager() -> isSolvent(Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost)) {
         IA::Instance() -> getTree() -> setRequireBarrack(false);
-        Vector2<f32> v = IA::Instance() -> determinatePositionBuilding();
-        IA::Instance() -> getBuildingManager() -> createBuilding(v, "Barrack");
+        Vector3<f32> v = IA::Instance() -> determinatePositionBuilding();
+        IA::Instance() -> getBuildingManager() -> buildBuilding(v, Enumeration::BuildingType::Barrack, false);
     }
 }

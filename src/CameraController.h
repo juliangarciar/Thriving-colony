@@ -31,7 +31,7 @@ class CameraController {
          * @brief Set camera and target positions and the distance to the target.
          * @param Vector3 that will be the target position.
          */
-        void Init(Vector2<float>);
+        void Init(Vector3<float>);
 
         /**
 	* @brief Update target and camera position based on the changes done since the last update.

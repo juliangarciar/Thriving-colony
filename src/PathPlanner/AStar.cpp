@@ -14,8 +14,8 @@ AStar::AStar(Cell* source, Cell* target){
     GCosts = std::vector<f32>(MAX, 0);
     FCosts = std::vector<f32>(MAX, 0);
 
-    shortestPath = std::vector<Cell*>(MAX, nullptr);
-    searchFrontier = std::vector<Cell*>(MAX, nullptr);
+    shortestPath = std::vector<Cell*>(MAX, NULL);
+    searchFrontier = std::vector<Cell*>(MAX, NULL);
 }
 AStar::~AStar(){
     shortestPath.clear();
@@ -49,7 +49,7 @@ void AStar::Search(){
                 f32 GCost = GCosts[closestIndex] + worldGeometry->getCost(closestIndex, i);
                 //std::cout << "Distancia H: " << HCost << "\n";
                 //std::cout << "Distancia G: " << GCost << "\n";
-                if(searchFrontier[potentialNode] == nullptr){
+                if(searchFrontier[potentialNode] == NULL){
                     FCosts[potentialNode] = GCost + HCost;
                     GCosts[potentialNode] = GCost;
 
@@ -57,7 +57,7 @@ void AStar::Search(){
                     searchFrontier[potentialNode] = worldGeometry->indexToCell(closestIndex);
                 }
             /* Fix this method, isn't working properly */
-                else if((GCost < GCosts[potentialNode]) && (shortestPath[potentialNode] == nullptr)){
+                else if((GCost < GCosts[potentialNode]) && (shortestPath[potentialNode] == NULL)){
                     FCosts[potentialNode] = GCost + HCost;
                     GCosts[potentialNode] = GCost;
 

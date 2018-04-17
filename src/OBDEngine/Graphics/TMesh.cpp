@@ -7,7 +7,7 @@ TMesh::TMesh(ResourceMesh *r, ResourceMaterial *m) : TEntity() {
 	material = m;
 
 	for (int i = 0; i < OBDEnums::TextureTypes::TEXTURE_SIZE; i++){
-		textures.push_back(nullptr);
+		textures.push_back(NULL);
 	}
 
 	activeTextures.ambientTexture = false;

@@ -51,15 +51,15 @@ class Hud {
 
         /**
          * @brief Enable the tab pssaed by parameter.
-         * @param std::string is the type of building of the tab that is going to be enabled.
+         * @param The Enumeration::BuildingType is the type of building of the tab that is going to be enabled: Enumeration::BuildingType::Barrack, Enumeration::BuildingType::Barn or Enumeration::BuildingType::Workshop.
          */
-        void enableTab(std::string);
+        void enableTab(Enumeration::BuildingType);
 
         /**
          * @brief Disable the tab passed by parameter.
-         * @param std::string is the type of building of the tab that is going to be disabled.
+         * @param The Enumeration::BuildingType is the type of building of the tab that is going to be disabled: Enumeration::BuildingType::Barrack, Enumeration::BuildingType::Barn or Enumeration::BuildingType::Workshop.
          */
-        void disableTab(std::string);
+        void disableTab(Enumeration::BuildingType);
 
         /**
          * @brief Show the tabContainer variable.
@@ -68,9 +68,9 @@ class Hud {
 
         /**
          * @brief Show the tabContainer variable and the tab passed by parameter.
-         * @param std::string is the type of building of the tab that is going to be shown.
+         * @param The Enumeration::BuildingType is the type of building of the tab that is going to be shown: Enumeration::BuildingType::MainBuilding, Enumeration::BuildingType::Barrack, Enumeration::BuildingType::Barn or Enumeration::BuildingType::Workshop.
          */
-        void showPopup(std::string);
+        void showPopup(Enumeration::BuildingType);
 
         /**
          * @brief Hide the tabContainer variable.
@@ -84,40 +84,40 @@ class Hud {
 
         /**
          * @brief Add the troop passed by parameter to the list of troops in the command center.
-         * @param i32 is the identifier number of the troop.
-         * @param std::string is the type of the unit.
+         * @param The i32 is the identifier number of the troop.
+         * @param The Enumeration::UnitType is the type of the unit.
          */
-        void addTroopToHall(i32, std::string);
+        void addTroopToHall(i32, Enumeration::UnitType);
 
         /**
          * @brief Remove the troop passed by parameter from the list of troops in the command center.
-         * @param i32 is the identifier number of the troop.
+         * @param The i32 is the identifier number of the troop.
          */
         void removeTroopFromHall(i32);
 
         /**
          * @brief Add the troop passed by parameter to the queue of troops that are going to be trained.
-         * @param i32 is the identifier number of the troop.
-         * @param std::string is the type of the unit.
+         * @param The i32 is the identifier number of the troop.
+         * @param The Enumeration::UnitType is the type of the unit.
          */
-        void addTroopToQueue(i32, std::string);
+        void addTroopToQueue(i32, Enumeration::UnitType);
 
         /**
          * @brief Modify the progress of training of the troop passed by parameter.
-         * @param i32 is the identifier of the troop.
-         * @param f32 is the new value of the progress of training of the troop.
+         * @param The i32 is the identifier of the troop.
+         * @param The f32 is the new value of the progress of training of the troop.
          */
         void modifyTroopFromQueue(i32, f32);
 
         /**
          * @brief Remove the troop passed by parameter from the queue of troops that are going to be trained.
-         * @param i32 is the identifier number of the troop.
+         * @param The i32 is the identifier number of the troop.
          */
         void removeTroopFromQueue(i32);
 
         /**
          * @brief Show the text passed by parameter.
-         * @param std::string is the text that is going to be shown.
+         * @param The std::string is the text that is going to be shown.
          */
         void showToast(std::string);
 
@@ -134,10 +134,10 @@ class Hud {
         
         /**
          * @brief Show or hide the button passed by parameter.
-         * @param std::string is the type of the button that is going to be shown or hidden.
+         * @param The Enumeration::BuildingType is the type of the button that is going to be shown or hidden.
          * @param False to be hidden or true to be shown.
          */
-        void setButtonStatus(std::string, bool);
+        void setButtonStatus(Enumeration::BuildingType, bool);
 
         /**
          * @brief Ajust the widgets that have to be shown or hidden.
@@ -346,6 +346,9 @@ class Hud {
 
         //Frame per second of the game.
         Label *framerateLabel;
+        
+        //
+        bool toastBool;
 
         //
         Timer* toastTimer;

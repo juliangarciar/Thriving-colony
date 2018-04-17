@@ -8,11 +8,10 @@ class Timer {
     public:
         /**
          * @brief 
-         * @param maxDuration
-         * @param isLoop
-         * @param autoStart
+         * 
+         * @param maxD 
          */
-        Timer(f32, bool = false, bool = true);
+        Timer(f32, bool = true);
 
         /**
          * @brief 
@@ -21,95 +20,44 @@ class Timer {
         ~Timer();
 
         /**
-         * @brief start couting time
+         * @brief 
          * 
+         * @return true 
+         * @return false 
          */
-        void start();
-
+        bool tick();
+        
         /**
-         * @brief restart the timer
+         * @brief 
          * 
          */
         void restart();
 
         /**
-         * @brief pause the timer
-         * 
-         */
-        void pause();
-
-        /**
-         * @brief stop the timer
-         * 
-         */
-        void stop();
-
-        /**
-         * @brief count time
-         */
-        void tick();
-
-        /**
          * @brief 
+         * 
          * @param d 
          */
         void changeDuration(f32 d);
 
         /**
-         * @brief Set the Callback object
-         * 
-         */
-        void setCallback(std::function<void()>);
-
-        /**
-         * @brief 
-         * 
-         */
-        void triggerCallback();
-
-        /**
-         * @brief is running
-         * 
-         * @return true 
-         * @return false 
-         */
-        bool isRunning();
-
-        /**
-         * @brief is finished
-         * 
-         * @return true 
-         * @return false 
-         */
-        bool isFinished();
-        
-        /**
-         * @brief Get the Elapsed Time
+         * @brief Get the Elapsed Time object
          * 
          * @return f32 
          */
         f32 getElapsedTime();
-        
-        /**
-         * @brief Get the Remaining Time
-         * 
-         * @return f32 
-         */
-        f32 getRemainingTime();
 
         /**
          * @brief 
          * 
          */
          f32 getMaxDuration();
+
     private:
         bool loop;
-        bool running;
 
         f32 maxDuration;
         f32 elapsedTime;
-
-        std::function<void()> callback;
         
 };
     

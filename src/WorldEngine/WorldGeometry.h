@@ -11,6 +11,11 @@ class Quadtree;
 class Unit;
 class Building;
 class WorldGeometry{
+    private:
+        static WorldGeometry* pinstance;
+        std::vector<Cell*> mCells;
+        Quadtree* quadTree;
+        std::vector< std::vector<f32> > cellsDistance;
     public:
         /**
          * @brief Singleton pattern
@@ -69,7 +74,7 @@ class WorldGeometry{
         Vector2<f32> correctBuildingPosition(Vector2<f32> targetPos, Building* buildingPtr);
         /**
          * @brief Returns a valid cell, depending on the search mode
-         * Case buildingPtr == nullptr -> searchs for the nearest cell to the reference target (non-blocked)
+         * Case buildingPtr == NULL -> searchs for the nearest cell to the reference target (non-blocked)
          * Case else -> searchs for the nearest cell to the reference target where 
          * the IA pretends to build HARDEST AS FUCK
          * 
@@ -130,10 +135,5 @@ class WorldGeometry{
          * @return const std::vector< std::vector<f32> >& Self-explanatory
          */
         const std::vector< std::vector<f32> >& getCellsDistance();
-    private:
-        static WorldGeometry* pinstance;
-        std::vector<Cell*> mCells;
-        Quadtree* quadTree;
-        std::vector< std::vector<f32> > cellsDistance;
 };
 #endif

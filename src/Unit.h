@@ -1,18 +1,17 @@
 #ifndef UNIT_H
 #define UNIT_H
 
-
+#include <functional>
+#include <cmath>
 #include <string>
 #include <list>
 #include <Types.h>
 #include <Entity.h>
+#include <MathEngine/Vector3.h>
 #include <PathPlanner/PathManager.h>
-#include <Troop.h>
-#include <EntityData.h>
-#include <Enumeration.h>
+#include <IOEngine/Timer.h>
 
-//class PathManager;
-//class Troop;
+class Troop;
 
 /**
  * @class Unit.
@@ -23,15 +22,13 @@ class Unit : public Entity {
     public:
         /**
          * @brief Unit constructor.
-         * @param SceneNode is the layer where the unit is going to be created.
-         * @param id32 is the id number that will identify the unit.
-         * @param Enumeration::Team is the team to which belongs the building: Enumeration::Team::Human or Enumeration::Team::IA. 
-         * @param UnitData is the data for this unit
+         * @param The SceneNode is the layer where the unit is going to be created.
+         * @param The id32 is the id number that will identify the unit.
+         * @param The Enumeration::Team is the team to which belongs the unit: Enumeration::Team::Human or Enumeration::Team::IA. 
+         * @param The Enumeration::BreedType is the civilization to which belongs the unit: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov.
+         * @param The Enumeration::UnitType is the unit type.
          */
-        Unit(SceneNode* _layer, 
-            i32 _id, 
-            Enumeration::Team _team, 
-            UnitData baseData);
+        Unit(SceneNode *, i32, Enumeration::Team, Enumeration::BreedType, Enumeration::UnitType);
         
         /**
          * @brief Unit destructor.
@@ -54,7 +51,7 @@ class Unit : public Entity {
         void update();
 
         /**
-         * @brief Attack the target if it is not nullptr and when the attackCountdown variable is 0 or less.
+         * @brief Attack the target if it is not NULL and when the attackCountdown variable is 0 or less.
          */
         void attack();
 
@@ -82,7 +79,7 @@ class Unit : public Entity {
 
         /**
          * @breif Switch the current state of the unit to the state passed by parameter.
-         * @param Enumeration::UnitState is the new state of the unit.
+         * @param The Enumeration::UnitState is the new state of the unit.
          */
         void switchState(Enumeration::UnitState);
 
@@ -156,21 +153,27 @@ class Unit : public Entity {
 
         /**
          * @brief Set the position of the unit.
-         * @param Vector2 is the position that is going to be assigned to the unit.
+         * @param The Vector3 is the position that is going to be assigned to the unit.
          */
-        void setTroopPosition(Vector2<f32> vectorData);
+        void setTroopPosition(Vector3<f32>);
 
         /**
          * @brief Set the position where the unit is going to walk to.
-         * @param Vector3 is the destination that is going to be assigned to the unit.
+         * @param The Vector3 is the destination that is going to be assigned to the unit.
          */
-        void setTroopDestination(Vector2<f32> vectorData);
+        void setTroopDestination(Vector3<f32>);
 
         /**
          * @brief
          * @param
          */
-        void setPathToTarget(Vector2<f32> vectorData);
+        void setPath(std::list< Vector2<f32> >);
+
+        /**
+         * @brief
+         * @param
+         */
+        void setPathToTarget(Vector3<f32>);
 
         /**
          * @brief
@@ -183,12 +186,6 @@ class Unit : public Entity {
          * @param
          */
         void setRetractedCallback(std::function<void(Unit*)>);
-
-        /**
-         * @brief
-         * @param
-         */
-        void setPath(std::list< Vector2<f32> >);
 
         /**
          * @brief 
@@ -210,9 +207,9 @@ class Unit : public Entity {
 
         /**
          * @brief Get the destination of the unit.
-         * @return Vector2 that will be the value of vectorDes variable.
+         * @return Vector3 that will be the value of vectorDes variable.
          */
-        Vector2<f32> getDestination();
+        Vector3<f32> getDestination();
 
         /**
          * @brief 
@@ -222,9 +219,9 @@ class Unit : public Entity {
 
         /**
          * @brief Get the type of unit of the troop.
-         * @return std::string that will be the value of type variable.
+         * @return Enumeration::UnitType that will be the value of type variable.
          */
-        std::string getType();
+        Enumeration::UnitType getType();
 
         /**
          * @brief Get the current state of the unit.
@@ -232,11 +229,6 @@ class Unit : public Entity {
          */
         Enumeration::UnitState getState();
 
-        /**
-         * @breif Get the army level that the entity provides to the player's city.
-         * @return i32 that will be the value of the armyLevel variable.
-         */
-        i32 getArmyLevel();
     private:
         /**
          * @brief Initialize the variables.
@@ -246,8 +238,8 @@ class Unit : public Entity {
         //Current state of the unit that will conditione its actions.
         Enumeration::UnitState state;
 
-        // Unit type
-        std::string type;
+        //Type of the unit.
+        Enumeration::UnitType type;
 
         //Speed with which the unit moves.
         i32 moveSpeed;
@@ -268,7 +260,7 @@ class Unit : public Entity {
         bool attacking;
 
         // Unit info
-        i32 armyLevel;
+        //f32 recruitingTime;
 
         //Timer that controls the time of training of the unit.
         Timer* recruitingTimer;
@@ -279,8 +271,8 @@ class Unit : public Entity {
         //Layer where the unit is created.
         SceneNode *layer;
 
-        // Space vectors used for unit movement
-        PathManager* pathManager;
+        //
+        class PathManager* pathManager;
 
         //
         std::list< Vector2<f32> > pathFollow;
@@ -290,6 +282,9 @@ class Unit : public Entity {
 
         //Method to finish of retracting the unit.
         std::function<void(Unit*)> retractedCallback;
+
+        //Position of the unit.
+        Vector3 <f32> vectorPos;
 
         //Destination of the unit.
         Vector3 <f32> vectorDes;

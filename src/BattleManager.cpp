@@ -1,13 +1,6 @@
 #include "BattleManager.h"
 #include "Human.h"
 #include "IA.h"
-#include <vector>
-#include <Enumeration.h>
-#include <Unit.h>
-#include <Building.h>
-#include <Types.h>
-#include <MathEngine/Vector2.h>
-#include <Entity.h>
 
 BattleManager::BattleManager() {
     
@@ -18,7 +11,7 @@ BattleManager::~BattleManager() {
 }
 
 void BattleManager::askForTarget(Entity* requester) {
-    Vector2<f32> requesterPos = requester -> getPosition();
+    Vector3<f32> *requesterPos = requester -> getPosition();
     i32 requesterRange = requester -> getViewRadius();
     Entity* target = nullptr;
     f32 minDistance = FLT_MAX; // Maximum value of f32
@@ -34,8 +27,8 @@ void BattleManager::askForTarget(Entity* requester) {
         for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
             if (it  -> second != nullptr) {
             // Calculate distance between troop requesting target and posible targets
-                xaux = it -> second -> getPosition().x - requesterPos.x;
-                yaux = it -> second -> getPosition().y - requesterPos.y;
+                xaux = it -> second -> getPosition() -> x - requesterPos -> x;
+                yaux = it -> second -> getPosition() -> y - requesterPos -> y;
                 dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
 
                 if (dist <= requesterRange && dist < minDistance) {
@@ -50,8 +43,8 @@ void BattleManager::askForTarget(Entity* requester) {
             for (std::map<i32,Building*>::iterator it = buildings -> begin(); it != buildings -> end(); ++it) {
                 if (it  -> second != nullptr) {
                 // Calculate distance between troop requesting target and posible targets
-                    xaux = it -> second -> getPosition().x - (requesterPos.x);
-                    yaux = it -> second -> getPosition().y - (requesterPos.y);
+                    xaux = it -> second -> getPosition() -> x - (requesterPos -> x);
+                    yaux = it -> second -> getPosition() -> y - (requesterPos -> y);
                     dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
 
                     if (dist <= requesterRange && dist < minDistance) {
@@ -69,8 +62,8 @@ void BattleManager::askForTarget(Entity* requester) {
         for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
             if (it  -> second != nullptr) {
             // Calculate distance between troop requesting target and posible targets
-                xaux = it -> second -> getPosition().x - requesterPos.x;
-                yaux = it -> second -> getPosition().y - requesterPos.y;
+                xaux = it -> second -> getPosition() -> x - requesterPos -> x;
+                yaux = it -> second -> getPosition() -> y - requesterPos -> y;
                 dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
 
                 if (dist <= requesterRange && dist < minDistance) {
@@ -86,8 +79,8 @@ void BattleManager::askForTarget(Entity* requester) {
             for (std::map<i32,Building*>::iterator it = buildings -> begin(); it != buildings -> end(); ++it) {
                 if (it  -> second != nullptr) {
                 // Calculate distance between troop requesting target and posible targets
-                    xaux = it -> second -> getPosition().x - requesterPos.x;
-                    yaux = it -> second -> getPosition().y - requesterPos.y;
+                    xaux = it -> second -> getPosition() -> x - requesterPos -> x;
+                    yaux = it -> second -> getPosition() -> y - requesterPos -> y;
                     dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
 
                     if (dist <= requesterRange && dist < minDistance) {

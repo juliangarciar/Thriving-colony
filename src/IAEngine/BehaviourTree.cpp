@@ -79,12 +79,12 @@ bool BehaviourTree::needArmyInvestment() {
      * A player doesn't have it yet
      * A player requires it to create a unit OR a player's city level is high enough for it to be considered a need
      */
-    needBarracks = !(IA::Instance() -> getBuildingManager() -> getAmount("Barrack")) && requireBarrack;
-    needBarn = !(IA::Instance() -> getBuildingManager() -> getAmount("Barn")) && (requireBarn || IA::Instance() -> getCityLevel() >= barnMilestone);
-    needWorkshop = !(IA::Instance() -> getBuildingManager() -> getAmount("Workshop")) && (requireWorkshop || IA::Instance() -> getCityLevel() >= workshopMilestone);
+    needBarracks = !(IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barrack)) && requireBarrack;
+    needBarn = !(IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barn)) && (requireBarn || IA::Instance() -> getCityLevel() >= barnMilestone);
+    needWorkshop = !(IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Workshop)) && (requireWorkshop || IA::Instance() -> getCityLevel() >= workshopMilestone);
     
     needWall = evaluateWallNeed();
-    needTower = IA::Instance() -> getBuildingManager() -> getAmount("Wall") && IA::Instance() -> getCityLevel() >= towerMilestone;
+    needTower = IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Wall) && IA::Instance() -> getCityLevel() >= towerMilestone;
 
     return (needSoldiers || needBarracks || needBarn || needWorkshop || needWall || needTower);
 }
@@ -93,7 +93,7 @@ bool BehaviourTree::needArmyInvestment() {
 * Calculates the ratio between army and melee soldiers
 */
 f32 BehaviourTree::calculateMeleeRate() {
-    f32 meleeAmt = IA::Instance() -> getUnitManager() -> getTroopAmount("StandardM") + IA::Instance() -> getUnitManager() -> getTroopAmount("AdvancedM");
+    f32 meleeAmt = IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardM) + IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedM);
 
     f32 armySize = IA::Instance() -> getArmySize();
 
@@ -107,7 +107,7 @@ f32 BehaviourTree::calculateMeleeRate() {
 * Calculates the ratio between army and range soldiers
 */
 f32 BehaviourTree::calculateRangeRate() {
-    f32 rangeAmt = IA::Instance() -> getUnitManager() -> getTroopAmount("StandardR") + IA::Instance() -> getUnitManager() -> getTroopAmount("AdvancedR");
+    f32 rangeAmt = IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::StandardR) + IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::AdvancedR);
     f32 armySize = IA::Instance() -> getArmySize();
     if (armySize == 0) {
         return 0;
@@ -119,7 +119,7 @@ f32 BehaviourTree::calculateRangeRate() {
 * Calculates the ratio between army and siege soldiers
 */
 f32 BehaviourTree::calculateSiegeRate() {
-    f32 siegeAmt = IA::Instance() -> getUnitManager() -> getTroopAmount("Desintegrator") + IA::Instance() -> getUnitManager() -> getTroopAmount("Launcher");
+    f32 siegeAmt = IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Desintegrator) + IA::Instance() -> getUnitManager() -> getTroopAmount(Enumeration::UnitType::Launcher);
     f32 armySize = IA::Instance() -> getArmySize();
     if (armySize == 0) {
         return 0;
@@ -130,7 +130,7 @@ f32 BehaviourTree::calculateSiegeRate() {
 bool BehaviourTree::evaluateWallNeed() {
     //ToDo: Analizar cuando la expansion de terreno edificable llega a donde hay que construir la muralla
 
-    return IA::Instance() -> getCityLevel() >= wallMilestone && IA::Instance() -> getBuildingManager() -> getAmount("Wall") == 0;
+    return IA::Instance() -> getCityLevel() >= wallMilestone && IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Wall) == 0;
 }
 
 bool BehaviourTree::readyToAttack() {

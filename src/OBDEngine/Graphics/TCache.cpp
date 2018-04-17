@@ -1,7 +1,7 @@
 #include "TCache.h"
 
 TCache::TCache() {
-    //glm::mat4 identityMatrix = glm::mat4(1.0f);
+    glm::mat4 identityMatrix = glm::mat4(1.0f);
     for (int i = 0; i < (int)OBDEnums::OpenGLIDs::PARAMS; i++){
         parameterIDs.push_back(0);
     }

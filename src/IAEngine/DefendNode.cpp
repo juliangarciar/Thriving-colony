@@ -21,7 +21,7 @@ void DefendNode::question() {
     if (IA::Instance() -> getUnitManager() -> areTroopsDeployed() == false) {
         children[0] -> question();
     } else {
-        if (IA::Instance() -> getBuildingManager() -> getAmount("Barrack") > 0) {
+        if (IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barrack) > 0) {
             children[1] -> question();
         } else {
             children[2] -> question();

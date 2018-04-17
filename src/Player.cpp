@@ -3,28 +3,29 @@
 //ToDo: seria ideal que todo fuera parametrizable y todo estuviera en el mismo sitio
 
 Player::Player() {
-    happiness = 0;
-    cityLevel = 0;
-    armyLevel = 0;
-    citizens = 0;
-
-    metalAmount = 0;
-    crystalAmount = 0;
-
-    underAttack = false;
-
-    updateTimer = new Timer(1.00, true, false);
-    updateTimer -> setCallback([&](){
-        gainResources();
-    });
+    
 }
 
 Player::~Player() {
     delete updateTimer;
+    delete updateFastTimer;
+    delete updateSlowTimer;
 }
 
 void Player::Init() {
-    updateTimer -> start();
+    happiness = 0;
+    cityLevel = 10;
+    armyLevel = 0;
+    citizens = 20;
+
+    metalAmount = 1200;
+    crystalAmount = 0;
+
+    underAttack = false;
+
+    updateTimer = new Timer(1.00, true);
+    updateFastTimer = new Timer(1.00, true);
+    updateSlowTimer = new Timer(3.00, true);
 }
 
 /**
@@ -85,7 +86,7 @@ void Player::decreaseArmyLevel(i32 aldecrement) {
     armyLevel = armyLevel - aldecrement;
 }
 
-void Player::setHallPosition(Vector2<f32> p){
+void Player::setHallPosition(Vector3<f32> p){
     hallPosition = p;
 }
 
@@ -137,11 +138,11 @@ i32 Player::getCrystalAmount() {
 }
 
 i32 Player::getMetalProduction() {
-    return buildings->getAmount("Siderurgy") * siderurgyProductivity;
+    return buildings->getAmount(Enumeration::BuildingType::Siderurgy) * siderurgyProductivity;
 }
 
 i32 Player::getCrystalProduction() {
-    return buildings->getAmount("Quarry") * quarryProductivity;
+    return buildings->getAmount(Enumeration::BuildingType::Quarry) * quarryProductivity;
 }
 
 i32 Player::getArmyLevel() {
@@ -160,7 +161,7 @@ UnitManager* Player::getUnitManager() {
     return units;
 }
 
-Vector2<f32> Player::getHallPosition() {
+Vector3<f32> Player::getHallPosition() {
     return hallPosition;
 }
 

@@ -18,11 +18,12 @@ MountedMeleeNode::~MountedMeleeNode() {
 
 void MountedMeleeNode::question() {
     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::TrainMountedMelee);
-    if (IA::Instance() -> getBuildingManager() -> getAmount("Barn") > 0) {
+    if (IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Barn) > 0) {
     //std::cout << "Genero un soldado montado melee" << std::endl;
-        if (IA::Instance() -> getUnitManager() -> checkCanPay("AdvancedM")) {
+        if (IA::Instance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::MountedMeleeMetalCost, Enumeration::UnitCost::MountedMeleeCrystalCost)) {
             // Unit type
-            IA::Instance() -> getUnitManager() -> createTroop("AdvancedM");
+            Enumeration::UnitType unitData = Enumeration::UnitType::AdvancedM; 
+            IA::Instance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {
         IA::Instance() -> getTree() -> setRequireBarn(true);

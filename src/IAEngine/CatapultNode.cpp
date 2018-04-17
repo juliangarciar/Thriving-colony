@@ -19,11 +19,12 @@ CatapultNode::~CatapultNode() {
 void CatapultNode::question() {
 
     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::TrainCatapult);
-    if (IA::Instance() -> getBuildingManager() -> getAmount("Workshop") > 0) {
+    if (IA::Instance() -> getBuildingManager() -> getAmount(Enumeration::BuildingType::Workshop) > 0) {
         //std::cout << "Genero una catapulta" << std::endl;
-        if (IA::Instance() -> getUnitManager() -> checkCanPay("Launcher")) {
+        if (IA::Instance() -> getUnitManager() -> isSolvent(Enumeration::UnitCost::CatapultMetalCost, Enumeration::UnitCost::CatapultCrystalCost)) {
             // Unit type
-            IA::Instance() -> getUnitManager() -> createTroop("Launcher");
+            Enumeration::UnitType unitData = Enumeration::UnitType::Launcher; 
+            IA::Instance() -> getUnitManager() -> createTroop(unitData);
         }
     } else {
         IA::Instance() -> getTree() -> setRequireWorkshop(true);

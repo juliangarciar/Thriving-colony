@@ -1,10 +1,7 @@
 #include "Human.h"
 
-#include "Enumeration.h"
 #include "IA.h"
 #include "GraphicEngine/Window.h"
-#include "IOEngine/IO.h"
-#include <OBDEngine/ResourceManager/ResourceJSON.h>
 
 Human* Human::instance = 0;
 
@@ -23,16 +20,19 @@ Human::~Human() {
     delete units;
 }
 
-void Human::Init(std::string _race) {
+void Human::Init() {
     Player::Init();
-    buildings = new BuildingManager(Enumeration::Team::Human, _race);
-    units = new UnitManager(Enumeration::Team::Human, _race);
+    buildings = new BuildingManager(Enumeration::Team::Human, Enumeration::BreedType::Kaonov);
+    units = new UnitManager(Enumeration::Team::Human, Enumeration::BreedType::Kaonov);
+    
 }
 
 void Human::Update() {
     buildings -> updateBuildingManager();
     units -> updateUnitManager();
-    updateTimer ->tick();
+    if (updateTimer ->tick()) {
+        gainResources();
+    }
 }
 
 void Human::CleanUp() {
@@ -40,11 +40,13 @@ void Human::CleanUp() {
     delete buildings;
     delete units;
     delete updateTimer;
+    delete updateFastTimer;
+    delete updateSlowTimer;
 }
 
 bool Human::getUnderAttack() {
     if(underAttack == false){
-        Vector2<f32> pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
+        Vector3<f32> *pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
         i32 requesterRange = 1000;
         
         f32 xaux = 0;
@@ -56,8 +58,8 @@ bool Human::getUnderAttack() {
         for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
             if (it  -> second != nullptr) {
             // Calculate distance between troop requesting target and posible targets
-                xaux = it -> second -> getPosition().x - pos.x;
-                yaux = it -> second -> getPosition().y - pos.y;
+                xaux = it -> second -> getPosition() -> x - pos -> x;
+                yaux = it -> second -> getPosition() -> y - pos -> y;
                 dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
 
                 if (dist <= requesterRange) {
