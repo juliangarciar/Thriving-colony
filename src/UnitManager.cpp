@@ -212,7 +212,7 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
         inMapTroops -> insert(std::pair<i32, Unit*>(temp -> getModel() -> getID(), temp));
 
         temp -> switchState(Enumeration::UnitState::AttackMove);
-        /*Cell* origin = WorldGeometry::Instance() -> positionToCell(p.toVector2());
+        Cell* origin = WorldGeometry::Instance() -> positionToCell(p.toVector2());
         Cell* target;
         
         if (team == Enumeration::Team::IA){
@@ -225,7 +225,7 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
         dummy.x = target->getPosition().x;
         dummy.z = target->getPosition().y;
         dummy.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.z);
-        temp -> switchState(Enumeration::UnitState::AttackMove); // ToDo: why attack move?*/
+        temp -> switchState(Enumeration::UnitState::AttackMove); // ToDo: why attack move?
         //Vector3<f32> dummy = Vector3<f32>(0, 0, 0);
         Cell* origin = WorldGeometry::Instance()->positionToCell(p);
         Cell* target;
@@ -265,15 +265,15 @@ void UnitManager::deployAllTroops(Vector2<f32> p){
         inMapTroops -> insert(std::pair<i32, Unit*>(temp -> getModel() -> getID(), temp));
 
         temp -> switchState(Enumeration::UnitState::AttackMove); // ToDo: why attack move?
-        Cell* origin = WorldGeometry::Instance() -> positionToCell(p);
+        Cell* origin = WorldGeometry::Instance() -> positionToCell(p.toVector2());
         Cell* target;
         if (team == Enumeration::Team::IA){
-            target = WorldGeometry::Instance() -> positionToCell(IA::Instance() -> getHallPosition());
+            target = WorldGeometry::Instance() -> positionToCell(IA::Instance() -> getHallPosition().toVector2());
         } else {
-            target = WorldGeometry::Instance() -> positionToCell(Human::Instance() -> getHallPosition());
+            target = WorldGeometry::Instance() -> positionToCell(Human::Instance() -> getHallPosition().toVector2());
         }
         target = WorldGeometry::Instance() -> getValidCell(target, origin, NULL);
-        /*Vector3<f32> dummy;
+        Vector3<f32> dummy;
         dummy.x = target -> getPosition().x;
         dummy.z = target -> getPosition().y;
         dummy.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.z);
@@ -286,7 +286,7 @@ void UnitManager::deployAllTroops(Vector2<f32> p){
             //temp -> setTroopPosition(Human::Instance()->getHallPosition());
             target = WorldGeometry::Instance()->positionToCell(Human::Instance()->getHallPosition());
         }
-        target = WorldGeometry::Instance()->getValidCell(target, origin, nullptr);*/
+        target = WorldGeometry::Instance()->getValidCell(target, origin, nullptr);
         Vector2<f32> dummy = target->getPosition();
         temp -> setTroopPosition(dummy);
         temp -> setUnitCell(dummy);
@@ -335,21 +335,24 @@ void UnitManager::unSelectTroop() {
 
 void UnitManager::moveOrder() {
     if (selectedTroop != nullptr) {
-        selectedTroop -> setTroopDestination(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
+        selectedTroop -> setTroopDestination(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
         if (selectedTroop -> getState() != Enumeration::UnitState::Retract) {
             if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
-                // ToDo by Julian -> change attack iddle to pathfinding mode
+            // ToDo: change attack iddle to pathfinding mode
                 selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
+        selectedTroop -> setTroopDestination(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
+        if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
+            // ToDo by Julian -> change attack iddle to pathfinding mode
+            selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
 
-                selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
-            } else {
-                selectedTroop -> switchState(Enumeration::UnitState::Move);
+            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
+        } else {
+            selectedTroop -> switchState(Enumeration::UnitState::Move);
 
-                selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
-            }
-            //MOVEMENT VOICE
-            //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
+            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
         }
+        //MOVEMENT VOICE
+        //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
     }
 }
 

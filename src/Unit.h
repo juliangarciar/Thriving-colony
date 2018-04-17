@@ -292,10 +292,10 @@ class Unit : public Entity {
         std::function<void(Unit*)> retractedCallback;
 
         //Destination of the unit.
-        Vector2<f32> vectorDes;
+        Vector3 <f32> vectorDes;
 
         //
-        Vector2<f32> vectorMov;
+        Vector3 <f32> vectorMov;
 
         //
         f32 steps;
@@ -314,8 +314,6 @@ class Unit : public Entity {
 
         //
         Troop* troops;
-
-        i32 attackCountdown;
 };
 
 #endif
