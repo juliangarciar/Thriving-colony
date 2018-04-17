@@ -88,6 +88,12 @@ class IA : public Player {
          */
         bool getFast();
 
+        void veryHappyBehaviour();
+        void happyBehaviour();
+        void neutralBehaviour();
+        void unhappyBehaviour();
+        void veryUnhappyBehaviour();
+
     protected:
         /**
          * @brief IA constructor.

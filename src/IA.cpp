@@ -207,20 +207,115 @@ void IA::chooseBehaviour() {
     switch (behaviour) {
         case Enumeration::IABehaviour::VeryHappy: 
             chosenBehaviour = "Very happy";
+            veryHappyBehaviour();
         break;
         case Enumeration::IABehaviour::Happy: 
-            chosenBehaviour = "Happy";    
+            chosenBehaviour = "Happy";   
+            happyBehaviour(); 
         break;
         case Enumeration::IABehaviour::Neutral:
             chosenBehaviour = "Neutral"; 
+            neutralBehaviour();
         break;
         case Enumeration::IABehaviour::Unhappy: 
             chosenBehaviour = "Unhappy";
+            unhappyBehaviour();
         break;
         case Enumeration::IABehaviour::VeryUnhappy: 
             chosenBehaviour = "Very unhappy";
+            veryUnhappyBehaviour();
         break;
     }
+}
+
+void IA::veryHappyBehaviour() {
+    std::vector<Behaviour*> auxroot;
+
+    //Defend
+    std::vector<Behaviour*> auxdef;
+    auxdef.add(new CDeployTroops(new ADeployTroops()));
+    std::vector<Behaviour*> aux1;
+    aux1.add(new CBuild(new ABuild(), Enumeration::BuildingType::Barrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
+    aux1.add(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    auxdef.add(new Selector(aux1));
+    auxroot.add(new Selector(auxdef));
+
+    //Attack
+
+
+    rootNode = new ActiveSelector(auxroot);
+}
+
+void IA::happyBehaviour() {
+    std::vector<Behaviour*> auxroot;
+
+    //Defend
+    std::vector<Behaviour*> auxdef;
+    auxdef.add(new CDeployTroops(new ADeployTroops()));
+    std::vector<Behaviour*> aux1;
+    aux1.add(new CBuild(new ABuild(), Enumeration::BuildingType::Barrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
+    aux1.add(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    auxdef.add(new Selector(aux1));
+    auxroot.add(new Selector(auxdef));
+
+    //Attack
+    
+
+    rootNode = new ActiveSelector(auxroot);
+}
+
+void IA::neutralBehaviour() {
+    std::vector<Behaviour*> auxroot;
+
+    //Defend
+    std::vector<Behaviour*> auxdef;
+    auxdef.add(new CDeployTroops(new ADeployTroops()));
+    std::vector<Behaviour*> aux1;
+    aux1.add(new CBuild(new ABuild(), Enumeration::BuildingType::Barrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
+    aux1.add(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    auxdef.add(new Selector(aux1));
+    auxroot.add(new Selector(auxdef));
+
+    //Attack
+    
+
+    rootNode = new ActiveSelector(auxroot);
+}
+
+void IA::unhappyBehaviour() {
+    std::vector<Behaviour*> auxroot;
+
+    //Defend
+    std::vector<Behaviour*> auxdef;
+    auxdef.add(new CDeployTroops(new ADeployTroops()));
+    std::vector<Behaviour*> aux1;
+    aux1.add(new CBuild(new ABuild(), Enumeration::BuildingType::Barrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
+    aux1.add(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    auxdef.add(new Selector(aux1));
+    auxroot.add(new Selector(auxdef));
+
+    //Attack
+    
+
+    rootNode = new ActiveSelector(auxroot);
+}
+
+void IA::veryUnhappyBehaviour() {
+    std::vector<Behaviour*> auxroot;
+
+    //Defend
+    std::vector<Behaviour*> auxdef;
+    auxdef.add(new CDeployTroops(new ADeployTroops()));
+    std::vector<Behaviour*> aux1;
+    aux1.add(new CBuild(new ABuild(), Enumeration::BuildingType::Barrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
+    aux1.add(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    auxdef.add(new Selector(aux1));
+    auxroot.add(new Selector(auxdef));
+
+    //Attack
+    
+
+    rootNode = new ActiveSelector(auxroot);
 }
 
 std::string IA::getNextChoice() {

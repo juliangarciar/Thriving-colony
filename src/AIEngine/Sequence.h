@@ -4,7 +4,7 @@
 #include "Composite.h"
 
 /**
- * @class Sequence
+ * @class Sequence.
  * @brief Crea un objeto tipo Sequence
  */
 class Sequence : public Composite {
@@ -14,10 +14,13 @@ class Sequence : public Composite {
          * @brief Constructor de Sequence
          */
         Sequence(std::vector<Behaviour*>);
+
         /**
          * @brief Destructor de Sequence
          */
         virtual ~Sequence();
+
+        Enumeration::BehaviourState Update();
 
     private:
 

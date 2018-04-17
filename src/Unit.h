@@ -268,6 +268,9 @@ class Unit : public Entity {
         //Timer that controls the time that has to pass since the last time that the unit looked for a new target.
         Timer* lookForTargetTimer;
 
+        //Timer that controls the time that has to pass since the last time that the unit attack its target.
+        f32 attackCountdown;
+
         //Layer where the unit is created.
         SceneNode *layer;
 
