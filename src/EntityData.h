@@ -44,7 +44,7 @@ struct BuildingData {
     i32 happinessVariation;
     i32 citizensVariation;
     
-    f32 buildTime;
+    f32 buildingTime;
     i32 cityLevel;
     i32 cellsX;
     i32 cellsY;

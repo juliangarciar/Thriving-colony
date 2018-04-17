@@ -35,7 +35,7 @@ Building::Building(SceneNode *_layer,
     getModel()->setMaterial(new Material(new Texture(baseData.texturePath.c_str())));
 
     /* Set the timer */
-    buildTimer = new Timer(baseData.buildTime, false, false);
+    buildTimer = new Timer(baseData.buildingTime, false, false);
     buildTimer -> setCallback([&]{
 		returnToOriginalMaterial();
         adjustCityStats();

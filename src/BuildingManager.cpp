@@ -27,13 +27,13 @@ BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
 			tmp.metalCost = element["metalCost"].get<i32>();
 			tmp.crystalCost = element["crystalCost"].get<i32>();
 			tmp.maxHP = element["maxHP"].get<i32>();
-			tmp.viewRadius = element["viewRadious"].get<i32>();
+			tmp.viewRadius = element["viewRadius"].get<i32>();
 			tmp.attackRange = element["attackRange"].get<i32>();
 			tmp.attackDamage = element["attackDamage"].get<i32>();
 			tmp.attackSpeed = element["attackSpeed"].get<i32>();
-			tmp.happinessVariation = element["happiness"].get<i32>();
-			tmp.citizensVariation = element["citizens"].get<i32>();
-			tmp.buildTime = element["buildingTime"].get<f32>();
+			tmp.happinessVariation = element["happinessVariation"].get<i32>();
+			tmp.citizensVariation = element["citizensVariation"].get<i32>();
+			tmp.buildingTime = element["buildingTime"].get<f32>();
 			tmp.cityLevel = element["cityLevel"].get<i32>();
 			tmp.cellsX = element["cellsX"].get<i32>();
 			tmp.cellsY = element["cellsY"].get<i32>();
@@ -114,7 +114,7 @@ void BuildingManager::drawBuilding() {
 void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 buildTime){
 	if (baseBuildings.find(type) != baseBuildings.end()){
 		BuildingData b = baseBuildings[type];
-		if (buildTime >= 0) b.buildTime = buildTime;
+		if (buildTime >= 0) b.buildingTime = buildTime;
 		tempBuilding = new Building(buildingLayer, 0, team, b);
 		buildBuilding(pos);
 	}
