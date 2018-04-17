@@ -5,6 +5,9 @@
 TMesh::TMesh(ResourceMesh *r, ResourceMaterial *m) : TEntity() {
 	mesh = r;
 	material = m;
+	
+	active = true;
+	name= "";
 
 	for (int i = 0; i < OBDEnums::TextureTypes::TEXTURE_SIZE; i++){
 		textures.push_back(NULL);
