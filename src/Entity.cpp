@@ -1,168 +1,83 @@
 #include "Entity.h"
 #include "GraphicEngine/Window.h"
+#include <MathEngine/Vector3.h>
+#include <GraphicEngine/Model.h>
+#include <GraphicEngine/SceneNode.h>
 
-Entity::Entity(i32 id, Enumeration::Team t, Enumeration::BreedType b) {
-    ID = id;
+Entity::Entity(SceneNode* _layer,
+    i32 _id,
+    Enumeration::Team _team,
+    Enumeration::EntityType _type,
+    i32 _maxHP,
+    i32 _maxView,
+    i32 _attackRange,
+    i32 _attackDamage,
+    i32 _attackSpeed,
+    i32 _metal,
+    i32 _crystal,
+    i32 _happines,
+    i32 _citizens,
+    i32 _cellsX,
+    i32 _cellsY,
+    std::string _modelPath,
+    std::string _texturePath) : 
+        layer(_layer),
+        ID(_id),
+        team(_team),
+        entityType(_type),
+        model(nullptr),
+        vectorPos(0,0),
+        hitBox(0,0),
+        currentHP(_maxHP),
+        maxHP(_maxHP), 
+        viewRadius(_maxView),
+        attackRange(_attackRange),
+        attackDamage(_attackDamage),
+        attackSpeed(_attackSpeed),
+        metalCost(_metal), 
+        crystalCost(_crystal), 
+        happinessVariation(_happines), 
+        citizensVariation(_citizens),
+        target(nullptr),
+        hostile(),
+        kCellsX(_cellsX),
+        kCellsY(_cellsY) 
+{
+    //set Timer
+    tookDamageTimer = new Timer(0.1);
+    tookDamageTimer -> setCallback([&](){
+        returnToOriginalMaterial();
+    });
 
-    team = t;
-    breed = b;
-
-    baseColor = video::SColor(255, 0, 0, 0); //ToDo: cambiar por material
-
-    tookDamageTimer = new Timer (0.1, false);
-
-    currentHP = 0;
-    maxHP = 0;
-    viewRadius = 0;
-    attackRange = 0;
-    metalCost = 0;
-    crystalCost = 0;
-    happiness = 0;
-    citizens = 0;
-    cityLevel = 0;
-
+    //Set model
+    model = new Model(_layer, _id, _modelPath);
     
-    //hitBox = Box2D();
-    armyLevel = 0;
+    //Set texture
+    model->setMaterial(new Material(new Texture(_texturePath.c_str())));
+
+    /* Box2D parameters */
+    Vector2<f32> topLeft;
+    Vector2<f32> bottomRight;
+
+    /* Set the 2D hitbox params */
+    topLeft.x = (kCellsX / 2.0) * (-80.f) + 1;
+    topLeft.y = (kCellsY / 2.0) * (-80.f) + 1;
+    bottomRight.x = (kCellsX / 2.0) * (80.f) - 1;
+    bottomRight.y = (kCellsY / 2.0) * (80.f) - 1;
+
+    /* Set the 2D hitbox */
+    hitBox = Box2D(topLeft, bottomRight); 
 }
 
 Entity::~Entity() {
-    delete position;
-    delete hitbox;
-    delete model;
+    //ToDo: revisar
+    if (model != nullptr) delete model;
     hostile.clear();
     delete tookDamageTimer;
 }
 
-//METHODS
-void Entity::takeDamage(i32 dmg) {
-    currentHP = currentHP-dmg;
-    tookDamageTimer -> restart();
-    // Tint the model red
-    setColor(video::SColor(255, 125, 125, 0)); //ToDo: sustituir por material
-    if (currentHP <= 0) {
-        currentHP = 0;
-    }
-}
-
-void Entity::setTarget(Entity *newTarget) {
-    target = newTarget;
-}
-
-void Entity::refreshHitbox() {
-    hitbox -> set(model -> getBoundingBox());
-}
-
-void Entity::returnToOriginalColor() {
-    if (tookDamageTimer -> tick()) {
-        setColor(baseColor); //ToDo: sustituir por material
-    }
-}
-
-//SETTERS
-void Entity::setModel(SceneNode *layer, const wchar_t *path) {
-    model = new Model(layer, ID, path);
-    hitbox = new Box3D<f32>();
-    position = new Vector3<f32>();
-    setColor(baseColor);
-}
-/* Edit */
-void Entity::setPosition(Vector3<f32> vectorData) {
-    position -> set(vectorData);
-    model -> setPosition(vectorData);
-    hitbox -> set(model -> getBoundingBox());
-    
-    /* Create the hitbox in another place */
-    //Vector2<f32> topLeft;
-    //Vector2<f32> bottomRight;
-    /* Adjust the hitbox properly */
-    //topLeft.x = vectorData.x - 120.f;
-    //topLeft.y = vectorData.z - 120.f;
-    //bottomRight.x = vectorData.x + 120.f;
-    //bottomRight.y = vectorData.z + 120.f;
-    //hitBox = Box2D(topLeft, bottomRight);
-    hitBox.moveHitbox(vectorData.x, vectorData.z);
-    //std::cout << "Moving HitBox to: \n";
-    //std::cout << hitBox.TopLeft().x << "," << hitBox.TopLeft().y << "\n";
-    //std::cout << hitBox.BottomRight().x << "," << hitBox.BottomRight().y << "\n";
-}
-
-void Entity::setColor(irr::video::SColor c){
-    currentColor = c;
-    //ToDo: reemplazar color por material
-    Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
-        model -> getModel() -> getMesh(), c
-    );
-}
-
-void Entity::setID(i32 id){
-    ID = id;
-    model->setID(id);
-}
-
-//GETTERS
-Vector3<f32>* Entity::getPosition() {
-    return position;
-}
-
-Box3D<f32>* Entity::getHitbox() {
-    return hitbox;
-}
-
-Model* Entity::getModel() {
-    return model;
-}
-
-Enumeration::Team Entity::getTeam() {
-    return team;
-}
-
-i32 Entity::getAttackRange() {
-    return attackRange;
-}
-
-i32 Entity::getViewRadius() {
-    return viewRadius;
-}
-
-Enumeration::EntityType Entity::getEntityType() {
-    return entityType;
-}
-
-i32 Entity::getHP() {
-    return currentHP;
-}
-
-i32 Entity::getID() {
-    return ID;
-}
-
-i32 Entity::getHappiness() {
-    return happiness;
-}
-
-irr::video::SColor Entity::getBaseColor() {
-    return baseColor; //ToDo: reemplazar color por material
-}
-
-irr::video::SColor Entity::getCurrentColor() {
-    return currentColor; //ToDo: reemplazar color por material
-}
-i32 Entity::getCellsX(){
-    return kCellsX;
-}
-i32 Entity::getCellsY(){
-    return kCellsY;
-}
-Box2D Entity::getHit(){
-    return hitBox;
-}
-i32 Entity::getArmyLevel() {
-    return armyLevel;
-}
-
-std::vector<Entity*> Entity::getHostile() {
-    return hostile;
+void Entity::update(){
+    tookDamageTimer -> tick();
 }
 
 void Entity::addHostile(Entity* newHostileUnit) {
@@ -179,12 +94,140 @@ void Entity::removeHostile(Entity* oldHostileUnit) {
     }
 }
 
-Entity* Entity::getTarget() {
-    return target;
-}
-
 void Entity::putHostileTargetsToNull() {
     for (i32 i = 0; i < hostile.size(); i++) {
         hostile.at(i) -> setTarget(nullptr);
     }
 }
+
+void Entity::takeDamage(i32 dmg) {
+    currentHP = currentHP - dmg;
+    tookDamageTimer -> restart();
+    // Tint the model red
+    //ToDo: cambiar a material daño recibido
+    if (currentHP <= 0) {
+        currentHP = 0;
+    }
+}
+
+void Entity::returnToOriginalMaterial() {
+    tookDamageTimer -> stop();
+    //ToDo: volver al material original
+}
+
+//SETTERS
+void Entity::setID(i32 id){
+    ID = id;
+    model -> setID(id);
+}
+
+//ToDo: revisar
+void Entity::setPosition(Vector2<f32> vectorData) {
+    vectorPos = vectorData;
+    model -> setPosition(vectorData);
+
+    hitBox.moveHitbox(vectorData.x, vectorData.y);
+    //ToDo: revisar lo de ajustar hitbox (Julian lo tienes al final de este archivo)
+}
+
+void Entity::setTarget(Entity *newTarget) {
+    target = newTarget;
+}
+
+//GETTERS
+SceneNode *Entity::getLayer() {
+    return layer;
+}
+
+i32 Entity::getID() const{
+    return ID;
+}
+
+Enumeration::Team Entity::getTeam() const{
+    return team;
+}
+
+Enumeration::EntityType Entity::getEntityType() const{
+    return entityType;
+}
+
+Model* Entity::getModel() const{
+    return model;
+}
+
+Vector2<f32> Entity::getPosition() const{
+    return vectorPos;
+}
+
+Box2D Entity::getHitbox() const{
+    return hitBox;
+}
+
+i32 Entity::getCurrentHP() const{
+    return currentHP;
+}
+
+i32 Entity::getMaxHP() const{
+    return maxHP;
+}
+
+i32 Entity::getViewRadius() const{
+    return viewRadius;
+}
+
+i32 Entity::getAttackRange() const{
+    return attackRange;
+}
+
+i32 Entity::getAttackDamage() const{
+    return attackDamage;
+}
+
+i32 Entity::getAttackSpeed() const{
+    return attackSpeed;
+}
+
+i32 Entity::getMetalCost() const{
+    return metalCost;
+}
+
+i32 Entity::getCrystalCost() const{
+    return crystalCost;
+}
+
+i32 Entity::getHappinessVariation() const{
+    return happinessVariation;
+}
+
+i32 Entity::getCitizensVariation() const{
+    return citizensVariation;
+}
+
+Entity* Entity::getTarget() const{
+    return target;
+}
+
+std::vector<Entity*> Entity::getHostile() const{
+    return hostile;
+}
+
+i32 Entity::getCellsX() const{
+    return kCellsX;
+}
+
+i32 Entity::getCellsY() const{
+    return kCellsY;
+}
+
+    //position -> set(vectorData);
+    /* Adjust the hitbox properly */
+    //Vector2<f32> topLeft;
+    //Vector2<f32> bottomRight;
+    //topLeft.x = vectorData.x - 120.f;
+    //topLeft.y = vectorData.z - 120.f;
+    //bottomRight.x = vectorData.x + 120.f;
+    //bottomRight.y = vectorData.z + 120.f;
+    //hitBox = Box2D(topLeft, bottomRight);
+    //std::cout << "Moving HitBox to: \n";
+    //std::cout << hitBox.TopLeft().x << "," << hitBox.TopLeft().y << "\n";
+    //std::cout << hitBox.BottomRight().x << "," << hitBox.BottomRight().y << "\n";

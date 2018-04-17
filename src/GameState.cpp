@@ -16,24 +16,23 @@ GameState::~GameState() {
 
 void GameState::Init() {
     IO::Instance() -> getResourceManager()->loadResource("media/map/map.json");
- 
+    
     //Init players
-    human -> Init(); 
-    ia -> Init();
+    human -> Init(humanRace); 
+    ia -> Init(iaRace);
 
-    //Init HUD
+    //Hud
     hud -> Init();
 
-    //Load map
+    //Init map
     map -> Init();
 
-    //Initialize the event system
-    //IA Events
+    //IA events
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::RetractTroopsIA, [&]() {
         ia -> getUnitManager() -> retractAllTroops();
     });
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::DeployTroopsIA, [&]() {
-        Vector3<f32> p = ia -> getHallPosition();
+        Vector2<f32> p = ia -> getHallPosition();
         p.x = p.x + 200; //ToDo: hacer bien
         ia -> getUnitManager() -> deployAllTroops(p);
     });
@@ -43,7 +42,7 @@ void GameState::Init() {
         human -> getUnitManager() -> retractAllTroops();
     });
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::DeployTroopsHuman, [&]() {
-        Vector3<f32> p = human -> getHallPosition();
+        Vector2<f32> p = human -> getHallPosition();
         p.x = p.x + 200; //ToDo: hacer bien
         human -> getUnitManager() -> deployAllTroops(p);
     });
@@ -124,7 +123,7 @@ void GameState::Input() {
                 IO::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
 
                 if (IO::Instance() -> getMouse() -> rightMousePressed()) {
-                    //ToDo
+                    //ToDo: pelea
                 }
                 
                 onMap = false;
@@ -135,7 +134,7 @@ void GameState::Input() {
                 IO::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
 
                 if (IO::Instance() -> getMouse() -> rightMousePressed()){
-                    //ToDo
+                    //ToDo: pelea
                 }
                 
                 onMap = false;
@@ -150,15 +149,15 @@ void GameState::Input() {
                     i32 idTroop = human -> getUnitManager() -> getDeployingTroopID();
                     if (idTroop > 0){
                         if (IO::Instance() -> getMouse() -> rightMousePressed()){
-                            human -> getUnitManager() -> deploySelectedTroop(map->getMouseCollitionPoint());
+                            human -> getUnitManager() -> deploySelectedTroop(map->getMouseCollitionPoint().toVector2());
                             human -> getUnitManager() -> selectTroop(idTroop);
                         }
                     } else if (idTroop == 0) {
                         if (IO::Instance() -> getMouse() -> rightMousePressed()){
-                            human -> getUnitManager() -> deployAllTroops(map->getMouseCollitionPoint());
+                            human -> getUnitManager() -> deployAllTroops(map->getMouseCollitionPoint().toVector2());
                         }
                     } else {
-                        //std::cout << "Ninguna tropa seleccionada" << std::endl;
+                        // Ninguna tropa seleccionada
                     }
                 } else 
                     IO::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);
@@ -213,15 +212,13 @@ void GameState::Update(){
         }*/
 
         //Win/Lose
-        if (ia -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
+        if (ia -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
             g -> changeState(Enumeration::State::WinState);
-        }
-        if (human -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
+        } else if (human -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
             g -> changeState(Enumeration::State::DefeatState);
         }
     }
-    //todo llevar a un metodo en window supongo
-    //fps count goes after game logic to see how long it took to go through the logic
+    //ToDo: quizas llevar a un metodo en window supongo (fps count goes after game logic to see how long it took to go through the logic)
     Window::Instance() -> calculateFramerate();
 }
 
@@ -248,19 +245,7 @@ void GameState::cleanGamePaused() {
     delete pauseMenu;
 }
 
-/*  
-    //Hacks
-    if (g -> getIO() -> keyPressed(KEY_KEY_1)) {
-        human -> receiveMetal();
-    }
-
-    if (g -> getIO() -> keyPressed(KEY_KEY_2)) {
-        human -> receiveCrystal();
-    }
-
-    if (g -> getIO() -> keyPressed(KEY_KEY_3)) {
-        human -> receiveCitizens();
-    }
-    Vector3<float> v = map -> getPointCollision(g -> getMouse());
-    human -> getUnitManager() -> UpdateUnitManager();
-*/
+void GameState::setRaces(std::string _iaRace, std::string _humanRace){
+    iaRace = _iaRace;
+    humanRace = _humanRace;
+}

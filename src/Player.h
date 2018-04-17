@@ -3,11 +3,10 @@
 
 #include "BuildingManager.h"
 #include "UnitManager.h"
-#include "Unit.h"
 #include <vector>
 #include <Types.h>
 #include <IOEngine/Timer.h>
-
+#include <MathEngine/Vector2.h>
 /**
  * @class Player.
  * @brief Create a Player type object.
@@ -51,32 +50,32 @@ class Player {
 
         /**
          * @brief Decrease the metal and crystal amount based on the meatl and rystal cost passed by parameter.
-         * @param The metalCost is the amount that is going to be subtracted from metalAmount variable.
-         * @param The crystalCost is the amount that is going to be subtracted from crystalAmount variable.
+         * @param metalCost is the amount that is going to be subtracted from metalAmount variable.
+         * @param crystalCost is the amount that is going to be subtracted from crystalAmount variable.
          */
         void spendResources(i32 metalCost, i32 crystalCost);
 
         /**
          * @brief Increase the happiness of the player's city based on the happiness passed by parameter.
-         * @param The i32 is the happiness that is going to be added to happiness variable. Can be a negative number.
+         * @param i32 is the happiness that is going to be added to happiness variable. Can be a negative number.
          */
         void increaseHappiness(i32);
 
         /**
          * @brief Decrease the happiness of the player's city based on the happiness passed by parameter.
-         * @param The i32 is the happiness that is going to be subtracted to happiness variable. Can be a negative number.
+         * @param i32 is the happiness that is going to be subtracted to happiness variable. Can be a negative number.
          */
         void decreaseHappiness(i32);
 
         /**
          * @brief Increase the city level based on the city level passed by parameter.
-         * @param The i32 is the city level that is going to be added to cityLevel variable. 
+         * @param i32 is the city level that is going to be added to cityLevel variable. 
          */
         void increaseCityLevel(i32);
 
         /**
          * @brief Increase the citizens based on the citizens passed by parameter.
-         * @param The i32 is the citizens that are going to be added to citizens variable.
+         * @param i32 is the citizens that are going to be added to citizens variable.
          */
         void increaseCitizens(i32);
 
@@ -98,49 +97,49 @@ class Player {
 
         /**
          * @brief Increase the player's amry level based on the level passed by parameter.
-         * @param The i32 is the army level that is going to be added to armyLevel variable.
+         * @param i32 is the army level that is going to be added to armyLevel variable.
          */
         void increaseArmyLevel(i32);
 
         /**
          * @brief Decrease the palyer's army level based on the level passed by parameter.
-         * @param The i32 is the army level that is going to be subtracted to armyLevel variable.
+         * @param i32 is the army level that is going to be subtracted to armyLevel variable.
          */
         void decreaseArmyLevel(i32);
 
         /**
          * @brief Set the position of the player's command center.
-         * @param The Vector3 is the value that is going to be assigned to hallPosition variable.
+         * @param Vector3 is the value that is going to be assigned to hallPosition variable.
          */
-        void setHallPosition(Vector3<f32>);
+        void setHallPosition(Vector2<f32>);
 
         /**
          * @brief Set the palyer's metal amount.
-         * @param The i32 is the value that is going to be assigned to metalAmount variable.
+         * @param i32 is the value that is going to be assigned to metalAmount variable.
          */
         void setMetalAmount(i32);
 
         /**
          * @brief Set the player's crystal amount.
-         * @param The i32 is the value that is going to be assigned to crystalAmount variable.
+         * @param i32 is the value that is going to be assigned to crystalAmount variable.
          */
         void setCrystalAmount(i32);
 
         /**
          * @brief Set the production of each siderurgy.
-         * @param The i32 is the value that is going to be assigned to siderurgyProductivity variable.
+         * @param i32 is the value that is going to be assigned to siderurgyProductivity variable.
          */
         void setSiderurgyProductivity(i32);
 
         /**
          * @brief Ste the production of each quarry.
-         * @param The i32 is the value that is going to be assigned to quarryProductivity variable.
+         * @param i32 is the value that is going to be assigned to quarryProductivity variable.
          */
         void setQuarryProductivity(i32);
 
         /**
          * @brief 
-         * @param The i32 is the value that is going to be assigned to buildingRadious variable.
+         * @param i32 is the value that is going to be assigned to buildingRadious variable.
          */
         void setBuildingRadious(f32);
 
@@ -221,7 +220,7 @@ class Player {
          * @brief Get the position of the player's commamd center.
          * @return Vector3 that will be the value of hallPosition variable.
          */
-        Vector3<f32> getHallPosition();
+        Vector2<f32> getHallPosition();
 
         /**
          * @brief Add 200 of metal to the player's metal amount.
@@ -271,13 +270,7 @@ class Player {
         
         //Time used to update the variables.
         Timer* updateTimer;
-
-        //Timer used to update fast the AI's choices.
-        Timer* updateFastTimer;
-
-        //Timer used to update slow tha AI's choices.
-        Timer* updateSlowTimer;
-
+        
         //
         f32 buildableRange;
         
@@ -288,7 +281,7 @@ class Player {
         UnitManager *units;
 
         //Position of the player's command center.
-        Vector3<f32> hallPosition;
+        Vector2<f32> hallPosition;
 
     private:
         

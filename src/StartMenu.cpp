@@ -77,12 +77,19 @@ StartMenu::StartMenu() {
     bgPlay -> center();
 
 
-    racesP = new Label(bgPlay, "Select a race.");
+    racesP = new Label(bgPlay, "Select your race.");
     racesP -> setSize(Vector2<i32>(120, 25));
 
     racesCb = new ComboBox(bgPlay, *races);
     racesCb -> setPosition(Vector2<i32>(400, 200));
     racesCb -> setSize(Vector2<i32>(120, 60));
+
+    racesO = new Label(bgPlay, "Select the IA's race.");
+    racesO -> setSize(Vector2<i32>(120, 25));
+
+    racesIA = new ComboBox(bgPlay, *races);
+    racesIA -> setPosition(Vector2<i32>(400, 200));
+    racesIA -> setSize(Vector2<i32>(120, 60));
 
     mapsP = new Label(bgPlay, "Select a map.");
     mapsP -> setSize(Vector2<i32>(120, 25));
@@ -120,7 +127,9 @@ StartMenu::~StartMenu() {
 
     delete bgPlay;
     delete racesP;
+    delete racesO;
     delete racesCb;
+    delete racesIA;
     delete mapsP;
     delete mapsCb;
     delete buttonPlay;
@@ -148,7 +157,12 @@ void StartMenu::setHUDEvents(){
         bgMain -> show();
     });
 
-    buttonPlay -> setCallback([]{
+    buttonPlay -> setCallback([this]{
+        //Game::Instance() -> setRaces("Drorania", racesCb -> getSelectedOptionText());
+        humanRace = racesCb -> getSelectedOptionText();
+        iaRace = racesIA -> getSelectedOptionText();
+
+        Game::Instance() -> setRaces(iaRace, humanRace);
         Game::Instance() -> changeState(Enumeration::State::GameState);
     });
 
@@ -156,7 +170,6 @@ void StartMenu::setHUDEvents(){
         bgMain -> show();
         bgPlay -> hide();
     });
-
 }
 
 void StartMenu::update() {

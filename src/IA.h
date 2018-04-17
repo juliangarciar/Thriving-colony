@@ -5,6 +5,8 @@
 #include "IAEngine/BehaviourTree.h"
 #include "IAEngine/RootNode.h"
 #include <Types.h>
+#include "Enumeration.h"
+#include <vector>
 
 /**
  * @class IA.
@@ -21,7 +23,7 @@ class IA : public Player {
         /**
 		 * @brief Initialize all variables.
 		 */
-        void Init();
+        void Init(std::string _race);
 
         /**
          * @brief Update buildings, units variables and choice the next step when is time.
@@ -37,7 +39,7 @@ class IA : public Player {
          * @brief Deteerminate the position where will be built the next building.
          * @return Vector3 that will be the position where the next uilding wiil be built.
          */
-        Vector3<f32> determinatePositionBuilding();
+        Vector2<f32> determinatePositionBuilding();
 
         /**
          * @brief Initialize all choices that can do the AI player.
@@ -51,7 +53,7 @@ class IA : public Player {
         
         /**
          * @brief Set choiceIndex variable as the value passed by parameter.
-         * @param The i32 is the value that is going to be set to choiceIndex variable.
+         * @param i32 is the value that is going to be set to choiceIndex variable.
          */
         void setChoiceIndex(i32);
 
@@ -117,6 +119,9 @@ class IA : public Player {
 
         //Current choice of the AI.
         i32 choiceIndex;
+        
+        //Choose timer
+        Timer *choosingTimer;
 
         //Determine if the choice of the Ai is updated fast or not. True will be the fast mode and false the slow.
         bool fast;

@@ -9,6 +9,7 @@
 #include <GraphicEngine/Terrain.h>
 #include <SoundEngine/SoundSystem.h>
 #include <PathPlanner/PathManager.h>
+#include "Enumeration.h"
 
 /**
  * @class UnitManager.
@@ -19,10 +20,10 @@ class UnitManager{
     public:
         /**
          * @brief UnitManager constructor.
-         * @param The Enumeration::Team is the team to which belongs the unit manager: Enumeration::Team::Human or Enumeration::Team::IA. 
-         * @param The Enumeration::BreedType is the civilization to which belongs the unit manager: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov.
+         * @param Enumeration::Team is the team to which belongs the unit manager: Enumeration::Team::Human or Enumeration::Team::IA. 
+         * @param std::string is the civilization to which belongs the unit manager: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov.
          */
-        UnitManager(Enumeration::Team, Enumeration::BreedType);
+        UnitManager(Enumeration::Team, std::string);
 
         /**
          * @brief Unit destructor.
@@ -31,11 +32,11 @@ class UnitManager{
 
         /**
          * @brief Create a troop if the player can pay it.
-         * @param The Enumeration::UnitType is the type of unit that is going to be created.
+         * @param std::string is the type of unit that is going to be created.
          * @return True if the troop is created and false in other case.
          * @see checkCanPay(Enumeration::UnitType) method.
          */
-        bool createTroop(Enumeration::UnitType);
+        bool createTroop(std::string);
 
         /**
          * @brief Check if there is not a current troop being deployed and start deploying the troop selected.
@@ -47,7 +48,7 @@ class UnitManager{
          * @brief Deploy the selected troop from the command center to the map.
          * @param The Vector3 is the position where the troop is going to move to from the command center.
          */
-        void deploySelectedTroop(Vector3<f32>);
+        void deploySelectedTroop(Vector2<f32>);
 
         /**
          * @brief Check if there is not a current troop being deployed and start deploying all the troops that are in the command center.
@@ -56,12 +57,14 @@ class UnitManager{
 
         /**
          * @brief Deploy all the troops from the command center to the map.
-         * @param The Vector3 is the position where the troops are going to move to from the command center.
+         * @param The Vector2 is the position where the troops are going to move to from the command center.
          */
-        void deployAllTroops(Vector3<f32>);
+        void deployAllTroops(Vector2<f32>);
 
         /**
-         * @brief Retract all the player's troops from the map to the command center.
+         * @brief 
+         * 
+         */
          */
         void retractAllTroops();
 
@@ -110,20 +113,21 @@ class UnitManager{
         bool isTroopSelected();
 
         /**
-		 * @brief Check if the player's metalAmount and crystalAmount variables are higher than the ones passed by parameter.
-		 * @param metalCost is the metal cost of the unit.
-		 * @param crystalCost is the crystal cost of the unit.
-		 * @return True if both player's variables are higher than the both passed by parameter and false in other case.
-		 */
-		bool isSolvent(i32 metalCost, i32 crystalCost);
+         * @brief Check if the player's metalAmount and crystalAmount variables are higher than the ones passed by parameter.
+         * @param i32 is the metal cost of the unit.
+         * @param i32 is the crystal cost of the unit.
+         * @param i32 is the citizen cost of the unit.
+         * @return True if both player's variables are higher than the both passed by parameter and false in other case.
+         */
+	bool isSolvent(i32, i32, i32);
 
         /**
-		 * @brief Responsible for managing calls to isSolvent() for the human player, registering the type
- 		 * of the desired unit and sending the aforementhioned method the prices.
-		 * @param The Enumeration::UnitType is the unit type.
-		 * @return True when isSolvent() returns true and false in other case.
-		 */
-        bool checkCanPay(Enumeration::UnitType);
+         * @brief Responsible for managing calls to isSolvent() for the human player, registering the type
+         * of the desired unit and sending the aforementhioned method the prices.
+         * @param std::string is the unit type.
+         * @return True when isSolvent() returns true and false in other case.
+         */
+        bool checkCanPay(std::string);
 
         /**
          * @brief Get the value of deployingTroop variable.
@@ -131,41 +135,52 @@ class UnitManager{
          */
         bool isDeployingTroop();
 
-        
+        /**
+         * @brief 
+         * 
+         * @return true 
+         * @return false 
+         */
         bool areTroopsDeployed();
+
+        /**
+         * @brief 
+         * 
+         * @return true 
+         * @return false 
+         */
         bool areTroopsInMap();
 
         //GETTERS
-		i32 getCollisionID();
-        i32 getTroopAmount(Enumeration::UnitType);
+	i32 getCollisionID();
+        i32 getTroopAmount(std::string);
         i32 getTotalTroopAmount();
         i32 getDeployingTroopID();
         Unit* getSelectedTroop();
         std::map<i32, Unit*> *getInQueueTroops();
         std::map<i32, Unit*> *getInHallTroops();
         std::map<i32, Unit*> *getInMapTroops();
-		std::string getCollisionName();
+	std::string getCollisionName();
     private:
         Enumeration::Team team;
-        Enumeration::BreedType breed;
 
         SceneNode *unitLayer;
-		SceneNode *currentCollision;
+	SceneNode *currentCollision;
+
+        std::map<std::string, UnitData> baseUnits;
 
         std::map<i32, Unit*> *inQueueTroops;
         std::map<i32, Unit*> *inHallTroops;
         std::map<i32, Unit*> *inMapTroops;
 
+        std::map<std::string, i32> troopsAmount;
+
         Unit *selectedTroop;
 
         bool deployingTroop;
         i32 currentDeployingTroop;
-        
-        i32 troopsAmount[Enumeration::UnitType::TroopsSize];
 
         i32 nextTroopId;
-
-        i32 gridAlignment;
 };
 
 #endif

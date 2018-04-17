@@ -2,20 +2,16 @@
 #define GAME_H
 
 #include <IOEngine/IO.h>
-
 #include <GraphicEngine/Window.h>
-
 #include <SoundEngine/SoundSystem.h>
-
 #include <Enumeration.h>
 #include <Types.h>
-
 #include "State.h"
 #include "MenuState.h"
 #include "GameState.h"
 #include "WinState.h"
 #include "DefeatState.h"
-
+#include "Human.h"
 /**
  * @class Game.
  * @brief Create a Game type object. Singleton class.
@@ -56,7 +52,7 @@ class Game {
 
         /**
         * @brief Change the state variable to the state passed by parameter.
-        * @param The Enumeration::State is the new state to which is going to change the game. 
+        * @param Enumeration::State is the new state to which is going to change the game. 
         */
         void changeState(Enumeration::State);
 
@@ -71,6 +67,8 @@ class Game {
          * @return Pointer to a GAmeState object that will be the value of game variable.
 		 */
 		GameState *getGameState();
+        /* Added by Juli */
+        void setRaces(std::string _iaRace, std::string _humanRace);
 
     protected:
         /**
@@ -119,6 +117,8 @@ class Game {
         //Pointer to the sound system of the game.
         SoundSystem *soundSystem;
         
+        std::string humanRace;
+        std::string iaRace;
 };
 
 #endif

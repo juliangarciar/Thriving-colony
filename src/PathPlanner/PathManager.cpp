@@ -11,10 +11,10 @@ PathManager::~PathManager(){
     
 }
 bool PathManager::createPathTo(Vector2<f32> targetPos){
-    Cell* origin = WorldGeometry::Instance()->positionToCell(propietary->getPosition()->toVector2());
+    Cell* origin = WorldGeometry::Instance()->positionToCell(propietary->getPosition());
     Cell* end = WorldGeometry::Instance()->positionToCell(targetPos);
     if(end->isBlocked()){
-        end = WorldGeometry::Instance()->getValidCell(end, origin, NULL);
+        end = WorldGeometry::Instance()->getValidCell(end, origin, nullptr);
     }
     AStar* astar = new AStar(origin, end);
 

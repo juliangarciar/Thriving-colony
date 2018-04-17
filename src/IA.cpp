@@ -1,7 +1,7 @@
 #include "IA.h"
+
 #include "Game.h"
 #include <WorldEngine/WorldGeometry.h>
-
 #include "GraphicEngine/Window.h"
 #include "Human.h"
 #include "Map.h"
@@ -16,7 +16,16 @@ IA* IA::Instance() {
 }
 
 IA::IA() : Player() {
-    
+    //Initialize tree stuff
+    tree = new BehaviourTree();
+    nodeRootIA = new RootNode();
+
+    //Define choice stuff
+    choiceIndex = 0;
+    choosingTimer = new Timer(1.0f, true, false);
+    choosingTimer -> setCallback([&](){
+        nodeRootIA -> question();
+    });
 }
 
 IA::~IA() {
@@ -28,62 +37,58 @@ IA::~IA() {
     delete choices;
 }
 
-void IA::Init() {
+void IA::Init(std::string _race) {
     Player::Init();
+
+    //Initialize managers
+    buildings = new BuildingManager(Enumeration::Team::IA, _race);
+    units = new UnitManager(Enumeration::Team::IA, _race);
+
     // Choose a behaviour
     chooseBehaviour();
+
     // Create a behaviour and a root node and set them up according to the behaviour
-    tree = new BehaviourTree();
     tree -> init(behaviour);
-    nodeRootIA = new RootNode();
     nodeRootIA -> init(behaviour);
 
-    buildings = new BuildingManager(Enumeration::Team::IA, Enumeration::BreedType::Drorania);
-    units = new UnitManager(Enumeration::Team::IA, Enumeration::BreedType::Kaonov);
-
     // Choices for the debugging system
-    choiceIndex = 0;
     initializeChoices();
+
+    //Initialize choosing Timer
+    choosingTimer -> start();
 }
 
 void IA::Update() {
     buildings -> updateBuildingManager();
     units -> updateUnitManager();
     Vector3<f32> tarPos = Map::Instance() -> getCamera() -> getTarPos();
-    Vector3<f32> *IAPos = buildings -> getBuilding(0) -> getPosition();
-    fast = false;
-    if (((IAPos -> x + 2000 > tarPos.x && IAPos -> x - 2000 < tarPos.x) && (IAPos -> z + 2000 > tarPos.z && IAPos -> z - 2000 < tarPos.z)) || underAttack) {
-        fast = true;
-    }
-    if (fast == true) {
-        if (updateFastTimer -> tick()) {
-            nodeRootIA -> question();
-            updateFastTimer -> restart();
-            updateSlowTimer -> restart();
+    Vector2<f32> IAPos = buildings -> getBuilding(0) -> getPosition();
+    
+    if (((IAPos.x + 2000 > tarPos.x && IAPos.x - 2000 < tarPos.x) && (IAPos.y + 2000 > tarPos.z && IAPos.y - 2000 < tarPos.z)) || underAttack) {
+        if (!fast) {
+            choosingTimer->changeDuration(1.0f);
+            fast = true;
         }
     } else {
-        if (updateSlowTimer -> tick()) {
-            nodeRootIA -> question();
-            updateFastTimer -> restart();
-            updateSlowTimer -> restart();
+        if (fast) {
+            choosingTimer->changeDuration(3.0f);
+            fast = false;
         }
     }
-    if (updateTimer -> tick()) {
-        gainResources();
-    }
+
+    choosingTimer -> tick();
+    updateTimer -> tick();
 }
 
 void IA::CleanUp() {
     delete tree;
     delete nodeRootIA;
-    // Add a method to clean the cells the buildings inahbit
+    // ToDo: Add a method to clean the cells the buildings inahbit
     delete buildings;
     delete units;
     choices -> clear();
     delete choices;
-    delete updateTimer;
-    delete updateFastTimer;
-    delete updateSlowTimer;
+    delete choosingTimer;
 }
 
 BehaviourTree* IA::getTree() {
@@ -95,8 +100,8 @@ BehaviourTree* IA::getTree() {
 * Goes over the vector of buildings looking up, right, down and left of every building built
 * until find the first empty position
 */
-Vector3<f32> IA::determinatePositionBuilding() {
-    Vector3<f32> v;
+Vector2<f32> IA::determinatePositionBuilding() {
+    Vector2<f32> v;
     bool found = false;
     bool occupied = false;
     std::map<i32, Building*> *b = buildings -> getBuildings();
@@ -109,53 +114,54 @@ Vector3<f32> IA::determinatePositionBuilding() {
          */
         f32 startingX = 2000;
         f32 startingZ = 2000;
-        v.set(startingX, 0, startingZ);
-        v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.z);
+        v = Vector2<f32>(startingX, startingZ);
+        //v.set(startingX, 0, startingZ);
+        //v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.z);
     } else {
         
         //When there are some buildings
-        Vector3<f32> *v2 = 0;
-        Vector3<f32> *v3 = 0;
+        Vector2<f32> v2;
+        Vector2<f32> v3;
         for (std::map<i32,Building*>::iterator it = b -> begin(); it != b -> end() && found == false; ++it){
             v2 = it -> second -> getPosition();
             occupied = false;
-            v = Vector3<f32>(v2 -> x, v2 -> y, v2 -> z + 300);
+            v = Vector2<f32>(v2.x, v2.y + 300);
             for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                 v3 = it2 -> second -> getPosition();
-                if (v3 -> x == v.x && v3 -> z == v.z) {
+                if (v3.x == v.x && v3.y == v.y) {
                     occupied = true;
                 }
             }
             if (occupied == false ) {
                 found = true;
             } else {
-                v = Vector3<f32>(v2 -> x + 300, v2 -> y, v2 -> z);
+                v = Vector2<f32>(v2.x + 300, v2.y);
                 occupied = false;
                 for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                     v3 = it2 -> second -> getPosition();
-                    if (v3 -> x == v.x && v3 -> z == v.z) {
+                    if (v3.x == v.x && v3.y == v.y) {
                         occupied = true;
                     }
                 }
                 if (occupied == false ) {
                     found = true;
                 } else {
-                    v = Vector3<f32>(v2 -> x, v2 -> y, v2 -> z - 300);
+                    v = Vector2<f32>(v2.x, v2.y - 300);
                     occupied = false;
                     for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                         v3 = it2 -> second -> getPosition();
-                        if (v3 -> x == v.x && v3 -> z == v.z) {
+                        if (v3.x == v.x && v3.y == v.y) {
                             occupied = true;
                         }
                     }
                     if (occupied == false ) {
                         found = true;
                     } else {
-                        v = Vector3<f32>(v2 -> x - 300, v2 -> y, v2 -> z);
+                        v = Vector2<f32>(v2.x - 300, v2.y);
                         occupied = false;
                         for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                             v3 = it2 -> second -> getPosition();
-                            if (v3 -> x == v.x && v3 -> z == v.z) {
+                            if (v3.x == v.x && v3.y == v.y) {
                                 occupied = true;
                             }
                         }
@@ -166,14 +172,14 @@ Vector3<f32> IA::determinatePositionBuilding() {
                 }
             }
         }
-        v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.z);
+        //v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.z);
     }
     return v;
 }
 
 bool IA::getUnderAttack() {
     underAttack = false;
-    Vector3<f32> *pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
+    Vector2<f32> pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
     i32 requesterRange = 1000;
     
     f32 xaux = 0;
@@ -186,8 +192,8 @@ bool IA::getUnderAttack() {
         for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
             if (it -> second != nullptr) {
             // Calculate distance between troop requesting target and posible targets
-                xaux = it -> second -> getPosition() -> x - pos -> x;
-                yaux = it -> second -> getPosition() -> y - pos -> y;
+                xaux = it -> second -> getPosition().x - pos.x;
+                yaux = it -> second -> getPosition().y - pos.y;
                 dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
 
             if (dist <= requesterRange) {
@@ -274,6 +280,7 @@ void IA::initializeChoices() {
     
     //ARRAY FORM
     // SI ALGUN DIA SE PONE ASI SERIA FANTISTOCOSO
+    // PARA ESO CAMBIA VECTOR POR MAP
     /*
     // Commented choices are repeated through
     choices[Enumeration::IAChoices::DeployingTroops] = "Deploying troops";

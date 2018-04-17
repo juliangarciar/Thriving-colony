@@ -1,34 +1,54 @@
 #include "BuildingManager.h"
 #include "Game.h"
 #include <WorldEngine/WorldGeometry.h>
-#include "GraphicEngine/Window.h"
+#include <GraphicEngine/Window.h>
+#include <OBDEngine/ResourceManager/ResourceJSON.h>
 
-BuildingManager::BuildingManager(Enumeration::Team t, Enumeration::BreedType b) {
+BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
 	team = t;
-	breed = b;
 
 	nextBuildingId = 0;
-    gridAlignment =-100;
     buildingMode = false;
 
 	buildingLayer = new SceneNode();
 	currentCollision = nullptr;
-	buildings = new std::map<i32, Building*>();
+	inMapBuildings = new std::map<i32, Building*>();
 	tempBuilding = nullptr;
 
-	for (i32 i = 0; i < Enumeration::BuildingType::BuildingsSize; i++){
-		buildingAmounts[i] = 0;
+    IO::Instance() -> getResourceManager()->loadResource("media/gameConfig/BuildingData/"+b+"Buildings.json");
+    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/gameConfig/BuildingData/"+b+"Buildings.json");
+    json j = *r -> getJSON();
+
+    for (auto& element : j["Buildings"]){
+		BuildingData tmp;
+			tmp.type = element["buildingName"].get<std::string>();
+			tmp.modelPath = element["modelPath"].get<std::string>();
+			tmp.texturePath = element["texturePath"].get<std::string>();
+			tmp.metalCost = element["metalCost"].get<i32>();
+			tmp.crystalCost = element["crystalCost"].get<i32>();
+			tmp.maxHP = element["maxHP"].get<i32>();
+			tmp.viewRadius = element["viewRadious"].get<i32>();
+			tmp.attackRange = element["attackRange"].get<i32>();
+			tmp.attackDamage = element["attackDamage"].get<i32>();
+			tmp.attackSpeed = element["attackSpeed"].get<i32>();
+			tmp.happinessVariation = element["happiness"].get<i32>();
+			tmp.citizensVariation = element["citizens"].get<i32>();
+			tmp.buildTime = element["buildingTime"].get<f32>();
+			tmp.cityLevel = element["cityLevel"].get<i32>();
+			tmp.cellsX = element["cellsX"].get<i32>();
+			tmp.cellsY = element["cellsY"].get<i32>();
+		baseBuildings.insert(std::pair<std::string, BuildingData>(tmp.type, tmp));
 	}
 }
 
 BuildingManager::~BuildingManager() {
 	delete tempBuilding;
 	delete buildingLayer;
-	for (std::map<i32,Building*>::iterator it = buildings -> begin(); it != buildings -> end(); ++it) {
+	for (std::map<i32,Building*>::iterator it = inMapBuildings -> begin(); it != inMapBuildings -> end(); ++it) {
 		delete it -> second;
     }
-	buildings -> clear();
-	delete buildings;
+	inMapBuildings -> clear();
+	delete inMapBuildings;
 }
 
 void BuildingManager::testRaycastCollisions() {
@@ -37,44 +57,30 @@ void BuildingManager::testRaycastCollisions() {
 	}
 }
 
-bool BuildingManager::setBuildingMode(Enumeration::BuildingType type) {
-	if (checkCanPay(type)) {
+bool BuildingManager::setBuildingMode(std::string type) {
+	if (baseBuildings.find(type) != baseBuildings.end() && checkCanPay(type)) {
 		if (!buildingMode) {
 			buildingMode = true;
-			tempBuilding = new Building(buildingLayer, 0, team, breed, type);
-			recalculateHitbox(); //ToDo: quizas algo guarro pero menos que lo otro
+			tempBuilding = new Building(buildingLayer, 0, team, baseBuildings[type]);
 			return true;
 		}
 	}
 	return false;
 }
+
 /* ToDo: optimize, to much shit inside */
 void BuildingManager::drawBuilding() {
     if (buildingMode && tempBuilding != nullptr) {
-        // ToDo: Aqui tenemos que hacer que cuando se haya apretado el boton de nueva ventana,
-        // tambien se cree una caja en las coordenadas actuales del cursor del raton.
-
 		//Get position where the cursor is pointing to the terrain
-        Vector3<f32> xyzPointCollision = Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse());
-		Vector3<f32> f = Box3D<f32>(tempBuilding -> getModel() -> getModel() -> getTransformedBoundingBox()).getSize(); //ToDo: fachada
-	// Change 2nd parameter
+        Vector2<f32> collisionPoint = Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2();
+		// Change 2nd parameter
 		bool collision = false;
-		Vector3<f32> dummy2;
-		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(xyzPointCollision.toVector2(), tempBuilding);
-		dummy2.x = dummy.x;
-		dummy2.z = dummy.y;
-		dummy2.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y);
-		//irr::core::matrix4 tmat;
-		//Window::Instance() -> getVideoDriver() -> setMaterial(irr::video::SMaterial());
-      	//indow::Instance() -> getVideoDriver() -> setTransform(irr::video::ETS_WORLD, irr::core::IdentityMatrix);
-		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7000, -100, 7000), irr::core::vector3df(7200, 500, 8000), irr::video::SColor(255,255,0,0));
-		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7005, -100, 7000), irr::core::vector3df(7205, 500, 8000), irr::video::SColor(255,255,0,0));
-		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7010, -100, 7000), irr::core::vector3df(7210, 500, 8000), irr::video::SColor(255,255,0,0));
-		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7015, -100, 7000), irr::core::vector3df(7215, 500, 8000), irr::video::SColor(255,255,0,0));
-		//Window::Instance() -> getVideoDriver() -> draw3DLine(irr::core::vector3df(7020, -100, 7000), irr::core::vector3df(7220, 500, 8000), irr::video::SColor(255,255,0,0));
-		tempBuilding -> setPosition (dummy2);
+		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(collisionPoint, tempBuilding);
+
+		tempBuilding -> setPosition(dummy);
+
 		if(team == Enumeration::Team::Human){
-			Vector2<f32> tmp = Human::Instance()->getHallPosition().toVector2();
+			Vector2<f32> tmp = Human::Instance()->getHallPosition();
 			f32 distance = std::sqrt(std::pow(tmp.x - dummy.x, 2) + std::pow(tmp.y - dummy.y, 2));
 			if(Human::Instance()->getBuildingRadious() < distance){
 				collision = true;
@@ -83,7 +89,7 @@ void BuildingManager::drawBuilding() {
 				collision = WorldGeometry::Instance()->checkBuildingSpace(tempBuilding);
 			}
 		}
-		//std::cout << "Position: " << dummy.x << "," << dummy.y << "," << dummy.z << "\n";
+
 		//Pressing the right mouse button cancels the building
 		if (IO::Instance() -> getMouse() -> rightMouseDown()){
 			buildingMode = false;
@@ -93,78 +99,62 @@ void BuildingManager::drawBuilding() {
 		}
 		
 		if (collision) {
-			tempBuilding->setColor(video::SColor(20, 255, 0, 0));
+			//ToDo: cambiar a material no se puede construir aqui
 		} else {
-			tempBuilding->setColor(video::SColor(20, 0, 255, 125));
+			tempBuilding->returnToOriginalMaterial();
 			//If there is no collision and the player press left button of the mouse, build the building
 			if (IO::Instance() -> getMouse() -> leftMouseDown()) {
 				buildingMode = false;
-				buildBuilding(dummy2, tempBuilding -> getType());
+				buildBuilding(dummy);
 			}
 		}
     }
 }
- 
-void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType _type, bool instabuild) {
-	if (team == Enumeration::Team::IA || tempBuilding == nullptr) {
-		tempBuilding = new Building(buildingLayer, 0, team, breed, _type);
-		tempBuilding -> setPosition(pos);
-		//if(WorldGeometry::Instance()->checkBuildingSpace(tempBuilding)){
-		//	buildingMode = false;
-		//	delete tempBuilding;
-		//	tempBuilding = nullptr;
-		//	return;
-		//	//Cell* tmp = WorldGeometry::getValidCell();
-		//}
+
+void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 buildTime){
+	if (baseBuildings.find(type) != baseBuildings.end()){
+		BuildingData b = baseBuildings[type];
+		if (buildTime >= 0) b.buildTime = buildTime;
+		tempBuilding = new Building(buildingLayer, 0, team, b);
+		buildBuilding(pos);
 	}
-	/* Establece su color original */
-	tempBuilding->setColor(tempBuilding -> getBaseColor());
-	/* Estable su posicion */
-	tempBuilding -> setPosition(pos);
-    //Establece la ID inicial del edificio
-	tempBuilding -> setID(nextBuildingId);
-    //Establece el color inicial del edificio
-    tempBuilding -> setColor(video::SColor(255, 0, 0, 0)); //ToDo: reemplazar color por material
+}
 
-	tempBuilding -> setFinishedCallback([&](Building *b){
-		//Tax the player when building is finished
-		b->posTaxPlayer();
-		b->setColor(b->getBaseColor()); //ToDo: cambiar por material
-
-		buildingAmounts[(i32)b->getType()]++;
-
-		//Cuando te ataquen y paren
-		//returnToOriginalColor(); 
-		
-		if (team == Enumeration::Team::Human){
-			if (buildingAmounts[(i32)b->getType()] == 1){
-				switch (b->getType()){
-					case Enumeration::BuildingType::Barrack:
-						Hud::Instance() -> enableTab(b->getType());
-					break;
-					case Enumeration::BuildingType::Barn:
-						Hud::Instance() -> enableTab(b->getType());
-					break;
-					case Enumeration::BuildingType::Workshop:
-						Hud::Instance() -> enableTab(b->getType());
-					break;
-					default: break;
+void BuildingManager::buildBuilding(Vector2<f32> pos) {
+	if (tempBuilding != nullptr){
+		//Establece la posicion inicial del edificio
+		tempBuilding -> setPosition(pos);
+		//Establece la ID inicial del edificio
+		tempBuilding -> setID(nextBuildingId);
+		//Establece un callback que se ejecutará al acabar de construir
+		tempBuilding -> setFinishedCallback([&](Building *b){
+			buildingAmounts[b -> getType()]++;
+			
+			if (team == Enumeration::Team::Human){
+				if (buildingAmounts[b -> getType()] == 1 
+					&& (b -> getType() == "Barrack" || b -> getType() == "Barn" || b -> getType() == "Workshop")) {
+					Hud::Instance() -> enableTab(b -> getType());
 				}
+				IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showBuiltText);  
 			}
-    		if (!instabuild) IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showBuiltText);  
-		}
-	});
+		});
 
-	buildings -> insert(std::pair<i32,Building*>(nextBuildingId, tempBuilding));
-	
-	// Tax the player when placing the building
-	if (!instabuild) tempBuilding -> preTaxPlayer();
+		//Insert building in a map
+		inMapBuildings -> insert(std::pair<i32,Building*>(nextBuildingId, tempBuilding));
+		
+		//Start the construction of the building
+		tempBuilding -> startBuilding();
+		
+		//
+		WorldGeometry::Instance() -> build(tempBuilding);
 
-	if (instabuild) tempBuilding -> triggerFinishedCallback();    
-	
-	WorldGeometry::Instance()->build(tempBuilding);
-	tempBuilding = NULL;
-	nextBuildingId++;
+		//Finish everything
+		tempBuilding = nullptr;
+		nextBuildingId++;
+	} else {
+		std::cout << "Error, se ha intentado construir un edificio inexistente" << std::endl;
+		exit(0);
+	}
 }
 
 //Checks if the player, either the human or the AI can afford to build a specific building 
@@ -189,68 +179,28 @@ bool BuildingManager::isSolvent(i32 metalCost, i32 crystalCost) {
  * of the desired building and sending the aforementhioned method the prices. It has its own method
  * to avoid cluttering the setBuildingMode() method, as it used to be there in the first place.
  */
-bool BuildingManager::checkCanPay(Enumeration::BuildingType type) {
-	//Esto esta aqui para no hacer clutter arriba
-	bool canPay = false;
-
-	//CHECK IF YOU CAN PAY THE BUILDING
-	switch(type) {
-        case Enumeration::BuildingType::School:
-			canPay = isSolvent(Enumeration::BuildingCost::SchoolMetalCost, Enumeration::BuildingCost::SchoolCrystalCost);
-        break;
-        case Enumeration::BuildingType::Market:
-			canPay = isSolvent(Enumeration::BuildingCost::MarketMetalCost, Enumeration::BuildingCost::MarketCrystalCost);
-        break;
-        case Enumeration::BuildingType::Hospital:
-			canPay = isSolvent(Enumeration::BuildingCost::HospitalMetalCost, Enumeration::BuildingCost::HospitalCrystalCost);
-        break;
-        case Enumeration::BuildingType::Siderurgy:
-			canPay = isSolvent(Enumeration::BuildingCost::SiderurgyMetalCost, Enumeration::BuildingCost::SiderurgyCrystalCost);
-        break;
-        case Enumeration::BuildingType::Quarry:
-			canPay = isSolvent(Enumeration::BuildingCost::QuarryMetalCost, Enumeration::BuildingCost::QuarryCrystalCost);
-        break;
-        case Enumeration::BuildingType::House:
-			canPay = isSolvent(Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost);
-        break;
-        case Enumeration::BuildingType::Barrack:
-			canPay = isSolvent(Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost);
-        break;
-        case Enumeration::BuildingType::Barn:
-			canPay = isSolvent(Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost);
-        break;
-        case Enumeration::BuildingType::Workshop:
-			canPay = isSolvent(Enumeration::BuildingCost::WorkshopMetalCost, Enumeration::BuildingCost::WorkshopCrystalCost);
-        break;
-        case Enumeration::BuildingType::Wall:
-			canPay = isSolvent(Enumeration::BuildingCost::WallMetalCost, Enumeration::BuildingCost::WallCrystalCost);
-        break;
-        case Enumeration::BuildingType::Tower:
-			canPay = isSolvent(Enumeration::BuildingCost::TowerMetalCost, Enumeration::BuildingCost::TowerCrystalCost);
-        break;
-		default: break;
+bool BuildingManager::checkCanPay(std::string type) {
+	if (baseBuildings.find(type) != baseBuildings.end()){
+		return isSolvent(baseBuildings[type].metalCost, baseBuildings[type].crystalCost);
 	}
-	return canPay;
-}
-
-void BuildingManager::recalculateHitbox(){
-	for (std::map<i32,Building*>::iterator it = buildings -> begin(); it != buildings -> end(); ++it) {
-		it -> second -> refreshHitbox();
-	}
+	return false;
 }
 
 void BuildingManager::updateBuildingManager() {
-	for (std::map<i32,Building*>::iterator it = buildings -> begin(); it != buildings -> end(); ++it) {
+	for (std::map<i32,Building*>::iterator it = inMapBuildings -> begin(); it != inMapBuildings -> end(); ++it) {
 		it -> second -> update();
 	}
 }
 
 bool BuildingManager::checkFinished(i32 _id) {	
-	return (buildings -> find(_id) -> second -> getFinished());	
+	return (inMapBuildings -> find(_id) -> second -> getFinished());	
 }
 
-i32 BuildingManager::getAmount(Enumeration::BuildingType t){
-	return buildingAmounts[(i32)t];
+i32 BuildingManager::getAmount(std::string type){
+	if (baseBuildings.find(type) != baseBuildings.end()){
+		return buildingAmounts[type];
+	} 
+	return 0;
 }
 
 i32 BuildingManager::getCollisionID() {
@@ -268,7 +218,7 @@ std::string BuildingManager::getCollisionName() {
 }
 
 std::map<i32, Building*>* BuildingManager::getBuildings() {
-	return buildings;
+	return inMapBuildings;
 }
 
 SceneNode* BuildingManager::getBuildingLayer() {
@@ -276,20 +226,20 @@ SceneNode* BuildingManager::getBuildingLayer() {
 }
 
 void BuildingManager::deleteBuilding(i32 id) {
-	if (buildings -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
-		Human::Instance() -> decreaseHappiness(buildings -> find(id) -> second -> getHappiness());
+	if (inMapBuildings -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
+		Human::Instance() -> decreaseHappiness(inMapBuildings -> find(id) -> second -> getHappinessVariation());
 	} else {
-		IA::Instance() -> decreaseHappiness(buildings -> find(id) -> second -> getHappiness());
+		IA::Instance() -> decreaseHappiness(inMapBuildings -> find(id) -> second -> getHappinessVariation());
 	}
-	buildingAmounts[(i32)buildings -> find(id) -> second -> getType()]--;
-	delete buildings -> find(id) -> second;
-	buildings -> erase(id);
+	buildingAmounts[inMapBuildings -> find(id) -> second -> getType()]--;
+	delete inMapBuildings -> find(id) -> second;
+	inMapBuildings -> erase(id);
 } 
 
 Building *BuildingManager::getBuilding(i32 id){
   	std::map<i32,Building*>::iterator it;
-	it = buildings->find(id);
-  	if (it != buildings->end())
+	it = inMapBuildings->find(id);
+  	if (it != inMapBuildings->end())
 		return it->second;
 	else 
 		return nullptr;

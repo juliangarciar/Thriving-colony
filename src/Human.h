@@ -20,7 +20,7 @@ class Human : public Player {
         /**
 		 * @brief Initialize all variables.
 		 */
-        void Init();
+        void Init(std::string _race);
 
         /**
          * @brief Update buildings and units variables.

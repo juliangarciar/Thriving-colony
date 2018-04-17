@@ -59,13 +59,13 @@ class Map {
          * @brief Get the position of the human player's command center.
          * @return Vector3 that will be the value of humanStartPos variable.
          */
-        Vector3<f32> getHumanStartPosition();
+        Vector2<f32> getHumanStartPosition();
 
         /**
          * @brief Get the position of the AI player's command center.
          * @return Vector3 that will be the value of iaStartPos variable.
          */
-        Vector3<f32> getIAStartPosition();
+        Vector2<f32> getIAStartPosition();
 
         /**
          * @brief Get the postion of the terrain correspondent to the position of the mouse cursor.
@@ -93,7 +93,7 @@ class Map {
     private:
         /**
          * @brief Show at the terminal the progress of the map loading.
-         * @param The i32 is the value of the current progress.
+         * @param i32 is the value of the current progress.
          */
         void loadProgress(i32);
 
@@ -110,10 +110,10 @@ class Map {
         Terrain *terrain;
 
         //Position of the human player's command center.
-        Vector3<f32> humanStartPos;
+        Vector2<f32> humanStartPos;
 
         //Position of the AI player's command center.
-        Vector3<f32> iaStartPos;
+        Vector2<f32> iaStartPos;
 
         //Position of the terrain correspondent to the position of the mouse cursor.
         Vector3<f32> collisionPoint;
