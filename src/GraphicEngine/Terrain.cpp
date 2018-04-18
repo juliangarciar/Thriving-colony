@@ -22,13 +22,17 @@ Terrain::Terrain(const char* heightMap) {
 }
 
 Terrain::~Terrain() {
-    //ToDo: borrar terreno y selector
     terrain -> removeAll();
 	terrain -> remove();
+	delete terrain;
+	delete selector;
+	delete collisionManager;
+	terrain = nullptr;
+	selector = nullptr;
+	collisionManager = nullptr;
 }
 
 void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture) {
-	//terrain -> setMaterialFlag(video::EMF_LIGHTING, false);
 	terrain -> setMaterialTexture(0, terrainTexture -> getTexture());
 	terrain -> setMaterialTexture(1, detailTexture -> getTexture());
 	terrain -> setMaterialType(video::EMT_DETAIL_MAP);

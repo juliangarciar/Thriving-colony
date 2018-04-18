@@ -69,7 +69,7 @@ class Building : public Entity {
          */
         void adjustCityStats();
 
-        //ToDo: explicar aqui para que sirve esto
+        //Incremento del nivel de la ciudad
         i32 cityLevel;
 
         //Type of building

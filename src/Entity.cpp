@@ -69,8 +69,8 @@ Entity::Entity(SceneNode* _layer,
     hitBox = Box2D(topLeft, bottomRight); 
 }
 
+//ToDo: revisar
 Entity::~Entity() {
-    //ToDo: revisar
     if (model != nullptr) delete model;
     hostile.clear();
     delete tookDamageTimer;
@@ -121,7 +121,6 @@ void Entity::setID(i32 id){
     model -> setID(id);
 }
 
-//ToDo: revisar
 void Entity::setPosition(Vector2<f32> vectorData) {
     vectorPos = vectorData;
     model -> setPosition(vectorData);
