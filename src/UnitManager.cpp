@@ -20,8 +20,10 @@ UnitManager::UnitManager(Enumeration::Team t, std::string b) {
     for (auto& element : j["Units"]){
         UnitData tmp;
             tmp.type = element["unitName"].get<std::string>();
-            tmp.modelPath = element["modelPath"].get<std::string>();
-            tmp.texturePath = element["texturePath"].get<std::string>();
+            tmp.troopModel = element["troopPath"]["modelPath"].get<std::string>();
+            tmp.troopTexture = element["troopPath"]["texturePath"].get<std::string>();
+            tmp.flagModel = element["flagPath"]["modelPath"].get<std::string>();
+            tmp.flagTexture = element["flagPath"]["texturePath"].get<std::string>();
             tmp.metalCost = element["metalCost"].get<i32>();
             tmp.crystalCost = element["crystalCost"].get<i32>();
             tmp.maxHP = element["maxHP"].get<i32>();

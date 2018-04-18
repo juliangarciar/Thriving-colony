@@ -6,8 +6,10 @@
 
 struct UnitData {
     std::string type;
-    std::string modelPath;
-    std::string texturePath;
+    std::string troopModel;
+    std::string troopTexture;
+    std::string flagModel;
+    std::string flagTexture;
 
     i32 metalCost;
     i32 crystalCost;

@@ -16,8 +16,14 @@
 			"selectEvent": "event:/UnitSelect/Kaonov_ranged_S",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"modelPath": "media/unitModels/Drorania/kaonov_rank_soldier.obj",
-			"texturePath": "media/textures/Drorania/drorania_barn.jpg",
+			"troopPath":{
+				"modelPath": "media/unitModels/Troops/Kaonov/kaonov_melee_soldier.obj",
+				"texturePath": "media/textures/Kaonov/Kaonov_barn.jpg"
+			},
+			"flagPath": {
+				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
+				"texturePath": ""
+			},
 			"troops": 4
 		},
 		{
@@ -37,8 +43,14 @@
 			"selectEvent": "event:/UnitSelect/Kaonov_ranged_A",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"modelPath": "media/unitModels/Drorania/creature_kaonov.obj",
-			"texturePath": "media/textures/Drorania/drorania_barn.jpg",
+			"troopPath":{
+				"modelPath": "media/unitModels/Troops/Kaonov/creature_kaonov.obj",
+				"texturePath": "media/textures/Kaonov/Kaonov_barn.jpg"
+			},
+			"flagPath": {
+				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
+				"texturePath": ""
+			},
 			"troops": 4
 		},
 		{
@@ -58,8 +70,14 @@
 			"selectEvent": "event:/UnitSelect/Kaonov_melee_S",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"modelPath": "media/unitModels/Drorania/kaonov_melee_soldier.obj",
-			"texturePath": "media/textures/Drorania/drorania_barn.jpg",
+			"troopPath":{
+				"modelPath": "media/unitModels/Troops/Kaonov/kaonov_melee_soldier.obj",
+				"texturePath": "media/textures/Kaonov/Kaonov_barn.jpg"
+			},
+			"flagPath": {
+				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
+				"texturePath": ""
+			},
 			"troops": 4
 		},
 		{
@@ -79,8 +97,14 @@
 			"selectEvent": "event:/UnitSelect/Kaonov_melee_A",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"modelPath": "media/unitModels/Drorania/creature_kaonov.obj",
-			"texturePath": "media/textures/Drorania/drorania_barn.jpg",
+			"troopPath":{
+				"modelPath": "media/unitModels/Troops/Kaonov/creature_kaonov.obj",
+				"texturePath": "media/textures/Kaonov/Kaonov_barn.jpg"
+			},
+			"flagPath": {
+				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
+				"texturePath": ""
+			},
 			"troops": 4
 		},
 		{
@@ -100,8 +124,14 @@
 			"selectEvent": "event:/UnitSelect/Kaonov_ranged_S",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"modelPath": "media/unitModels/Drorania/kaonov_cannon.obj",
-			"texturePath": "media/textures/Drorania/drorania_barn.jpg",
+			"troopPath":{
+				"modelPath": "media/unitModels/Troops/Kaonov/kaonov_cannon.obj",
+				"texturePath": "media/textures/Kaonov/Kaonov_barn.jpg"
+			},
+			"flagPath": {
+				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
+				"texturePath": ""
+			},
 			"troops": 4
 		},
 		{
@@ -121,8 +151,14 @@
 			"selectEvent": "event:/UnitSelect/Kaonov_ranged_A",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"modelPath": "media/unitModels/Drorania/kaonov_walls_desintegrator.obj",
-			"texturePath": "media/textures/Drorania/drorania_barn.jpg",
+			"troopPath":{
+				"modelPath": "media/unitModels/Troops/Kaonov/kaonov_walls_desintegrator.obj",
+				"texturePath": "media/textures/Kaonov/Kaonov_barn.jpg"
+			},
+			"flagPath": {
+				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
+				"texturePath": ""
+			},
 			"troops": 4
 		},
 		{
@@ -142,8 +178,14 @@
 			"selectEvent": "event:/UnitSelect/Kaonov_melee_A",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"modelPath": "media/unitModels/Drorania/entinity_kaonov.obj",
-			"texturePath": "media/textures/Drorania/drorania_barn.jpg",
+			"troopPath":{
+				"modelPath": "media/unitModels/Troops/Kaonov/entinity_kaonov.obj",
+				"texturePath": "media/textures/Kaonov/Kaonov_barn.jpg"
+			},
+			"flagPath": {
+				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
+				"texturePath": ""
+			},
 			"troops": 4
 		}
 	]

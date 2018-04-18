@@ -28,8 +28,8 @@ Unit::Unit(SceneNode* _layer,
                         baseData.citizensVariation,
                         1,
                         1,
-                        baseData.modelPath,
-                        baseData.texturePath
+                        baseData.flagModel,
+                        baseData.flagTexture
                         ),
                         state(Enumeration::UnitState::Recruiting),
                         type(baseData.type),
