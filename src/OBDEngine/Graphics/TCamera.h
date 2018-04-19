@@ -15,9 +15,8 @@ class TCamera : public TEntity {
          * @param f32 button.
          * @param f32 left.
          * @param f32 right.
-         * @param bool
          */
-        TCamera(OBDEnums::CameraProjection, f32, f32, f32, f32, f32, f32, bool = true);
+        TCamera(OBDEnums::CameraProjection, f32, f32, f32, f32, f32, f32);
 
         /**
          * @brief Destructor for a camera entity.
@@ -51,13 +50,6 @@ class TCamera : public TEntity {
          * @param OBDEnums::CameraProjection new projection mode.
          */
         void setProjection(OBDEnums::CameraProjection);
-
-        /**
-         * @brief set the camera to active or inactive
-         * 
-         * @param bool new camera active state
-         */
-        void setActive(bool);
 
         /**
          * @brief sets the distance from the camera at which sits the near plane.
@@ -133,14 +125,6 @@ class TCamera : public TEntity {
          * @return OBDEnums::CameraProjection current projection mode.
          */
         OBDEnums::CameraProjection getProjection();
-
-        /**
-         * @brief returns wether or not the camera is active
-         * 
-         * @return true if the camera is active
-         * @return false otherwise
-         */
-        bool getActive();
 
         /**
          * @brief return the distance at which sits the near plane of the camera.
@@ -219,8 +203,6 @@ class TCamera : public TEntity {
         
         // Field of view (fov) is expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.
         f32 near, far, fov, top, bottom, left, right;
-
-        bool active;
 };
 
 #endif

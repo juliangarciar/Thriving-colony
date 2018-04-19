@@ -63,10 +63,6 @@ class TMesh : public TEntity {
          */
         ResourceMaterial* getMaterial();
 
-        void setActive(bool a);
-
-        bool getActive();
-
         void setName(std::string n);
 
         std::string getName();
@@ -91,7 +87,6 @@ class TMesh : public TEntity {
         GLuint textureID;
 
         GLuint ID;
-        bool active;
         std::string name;
 };
 

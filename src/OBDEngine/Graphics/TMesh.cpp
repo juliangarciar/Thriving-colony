@@ -5,8 +5,7 @@
 TMesh::TMesh(ResourceMesh *r, ResourceMaterial *m) : TEntity() {
 	mesh = r;
 	material = m;
-	
-	active = true;
+
 	name= "";
 
 	for (int i = 0; i < OBDEnums::TextureTypes::TEXTURE_SIZE; i++){
@@ -55,8 +54,6 @@ TMesh::~TMesh() {
 }
 
 void TMesh::beginDraw() { 
-	if (!active) return;
-	   
 	glm::mat4 pM = cache.getProjectionMatrix();
 	glm::mat4 vM = cache.getViewMatrix();
 	glm::mat4 mM = cache.getModelMatrix();
@@ -187,14 +184,6 @@ ResourceMesh* TMesh::getMesh(){
 
 ResourceMaterial* TMesh::getMaterial(){
 	return material;
-}
-
-void TMesh::setActive(bool a) {
-	active = a;
-}
-
-bool TMesh::getActive() {
-	return active;
 }
 
 void TMesh::setName(std::string n) {

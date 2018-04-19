@@ -1,8 +1,6 @@
 #include "TLight.h"
 
-TLight::TLight(OBDColor c, f32 i, bool a) : TEntity(){
-    active = a;
-
+TLight::TLight(OBDColor c, f32 i) : TEntity(){
     lightType = OBDEnums::LightTypes::LIGHT_POINT; //ToDo: varios tipos?
 
     setAmbientComponent(c, i);
@@ -15,16 +13,9 @@ TLight::TLight(OBDColor c, f32 i, bool a) : TEntity(){
 }
 
 TLight::~TLight(){
-
 }
 
 void TLight::beginDraw(){
-    if (active) {
-        /// esto no sirve pa na porque le vamos a poner la posicion directamente
-        // la posicion es un vector 3 hay que meterle la coordenada homogenea antes de pasarselo a opengl y au
-        //lightPosition = glm::vec4(0,0,0,1) * modelMatrix;//Posicion a partir de la matriz luz
-        //Pasarselo a OpenGL no va aqui no?
-    }
 }
 
 void TLight::endDraw(){
@@ -40,14 +31,6 @@ void TLight::setDiffuseComponent(OBDColor c, f32 i){
         
 void TLight::setSpecularComponent(OBDColor c, f32 i){
     components.specularComponent = c.getRGB() * (float)i;
-}
-
-void TLight::setActive(bool _active) {
-    active = _active;
-}
-
-bool TLight::getActive() {
-    return active;
 }
 
 void TLight::setPosition(glm::vec3 p) {

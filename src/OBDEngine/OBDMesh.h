@@ -50,6 +50,28 @@ class OBDMesh {
         void translate(f32 tX, f32 tY, f32 tZ);
 
         /**
+         * @brief Set the Position
+         * 
+         * @param p 
+         */
+        void setPosition(glm::vec3 p);
+
+        /**
+         * @brief Set the Rotation
+         * 
+         * @param r 
+         * @param angle 
+         */
+        void setRotation(glm::vec3 r, f32 angle);
+
+        /**
+         * @brief Set the Scale
+         * 
+         * @param s 
+         */
+        void setScale(glm::vec3 s);
+
+        /**
          * @brief Set the glslTexture object
          * 
          */
@@ -77,33 +99,46 @@ class OBDMesh {
         std::map<std::string, TMesh*> getMeshes();
 
         /**
-         * @brief 
+         * @brief Set the Active object
          * 
+         * @param a 
          */
-        void setPosition(glm::vec3 p);
-
-        /**
-         * @brief 
-         * 
-         */
-        void setRotation(glm::vec3 r, f32 angle);
-
-        /**
-         * @brief 
-         * 
-         */
-        void setScale(glm::vec3 s);
-
         void setActive(bool a);
 
+        /**
+         * @brief Get the Active object
+         * 
+         * @return true 
+         * @return false 
+         */
         bool getActive();
 
+        /**
+         * @brief Set the Name object
+         * 
+         * @param n 
+         */
         void setName(std::string n);
 
+        /**
+         * @brief Get the Name object
+         * 
+         * @return std::string 
+         */
         std::string getName();
 
+        /**
+         * @brief 
+         * 
+         * @param i 
+         */
         void setID(GLuint i);
 
+        /**
+         * @brief 
+         * 
+         * @return GLuint 
+         */
         GLuint getID();
     private:
         TNode* meshNode;
@@ -112,6 +147,10 @@ class OBDMesh {
         TNode* scaleNode;
         
         std::map<std::string, TMesh*> meshes;
+
+        glm::vec3 node_position;
+        glm::vec3 node_rotation;
+        glm::vec3 node_scale;
 };
 
 #endif

@@ -72,6 +72,21 @@ class TNode {
         TEntity *getEntity();
 
         /**
+         * @brief Set if Active
+         * 
+         * @param a 
+         */
+        void setActive(bool a);
+
+        /**
+         * @brief Get if Active
+         * 
+         * @return true 
+         * @return false 
+         */
+        bool getActive();
+
+        /**
          * @brief 
          * 
          * @return TNode* 
@@ -81,6 +96,7 @@ class TNode {
         TEntity *entity;
         TNode *parent;
         std::vector<TNode*> children;
+        bool active;
 };
 
 #endif

@@ -30,33 +30,6 @@ class OBDLight {
         /**
          * @brief 
          * 
-         * @param tX 
-         * @param tY 
-         * @param tZ 
-         */
-        void rotate(f32 rX, f32 rY, f32 rZ, f32 angle);
-
-        /**
-         * @brief 
-         * 
-         * @param sX 
-         * @param sY 
-         * @param sZ 
-         */
-        void scale(f32 sX, f32 sY, f32 sZ);
-
-        /**
-         * @brief 
-         * 
-         * @param tX 
-         * @param tY 
-         * @param tZ 
-         */
-        void translate(f32 tX, f32 tY, f32 tZ);
-
-        /**
-         * @brief 
-         * 
          * @param OBDColor 
          */
         void setAmbientColor(OBDColor);
@@ -181,23 +154,8 @@ class OBDLight {
          */
         TLight* getLightEntity();
 
-        /**
-         * @brief 
-         * 
-         */
-        void setRotation(glm::vec3 r, f32 angle);
-
-        /**
-         * @brief 
-         * 
-         */
-        void setScale(glm::vec3 s);
-
     private:
         TNode* lightNode;
-        TNode* rotationNode;
-        TNode* translationNode;
-        TNode* scaleNode;
 
         OBDColor ambientColor;
         u32 ambientIntensity;

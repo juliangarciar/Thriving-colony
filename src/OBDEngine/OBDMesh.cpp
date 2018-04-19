@@ -31,19 +31,22 @@ OBDMesh::~OBDMesh() {
 
 //ToDo: poder cambiar material de cada mesh (o de todos cambiando el MTL)
 
+void OBDMesh::translate(f32 tX, f32 tY, f32 tZ) {
+    TTransform* t = (TTransform*) translationNode -> getEntity();
+    t -> translate(tX, tY, tZ);
+    node_position += glm::vec3(tX, tY, tZ);
+}
+
 void OBDMesh::rotate(f32 rX, f32 rY, f32 rZ, f32 angle) {
     TTransform* t = (TTransform*) rotationNode -> getEntity();
     t -> rotate(rX, rY, rZ, angle);
+    node_rotation += glm::vec3(rX, rY, rZ);
 }
 
 void OBDMesh::scale(f32 sX, f32 sY, f32 sZ) {
     TTransform* t = (TTransform*) scaleNode -> getEntity();
     t -> scale(sX, sY, sZ);
-}
-
-void OBDMesh::translate(f32 tX, f32 tY, f32 tZ) {
-    TTransform* t = (TTransform*) translationNode -> getEntity();
-    t -> translate(tX, tY, tZ);
+    node_scale += glm::vec3(sX, sY, sZ);
 }
 
 void OBDMesh::setTexture(std::string name, OBDEnums::TextureTypes tt, ResourceIMG *t){
@@ -64,27 +67,31 @@ std::map<std::string, TMesh*> OBDMesh::getMeshes(){
 
 void OBDMesh::setPosition(glm::vec3 p) {
     TTransform* t = (TTransform*) translationNode -> getEntity();
-    t -> translate(p.x, p.y, p.z);
+    glm::vec3 o = node_position - p;
+    t -> translate(o.x, o.y, o.z);
+    node_position = p;
 }
 
 void OBDMesh::setRotation(glm::vec3 r, f32 angle) {
     TTransform* t = (TTransform*) rotationNode -> getEntity();
-    t -> rotate(r.x, r.y, r.z, angle);
+    glm::vec3 o = node_rotation - r;
+    t -> rotate(o.x, o.y, o.z, angle);
+    node_rotation = r;
 }
 
 void OBDMesh::setScale(glm::vec3 s) {
     TTransform* t = (TTransform*) scaleNode -> getEntity();
-    t -> scale(s.x, s.y, s.z);
+    glm::vec3 o = node_scale - s;
+    t -> scale(o.x, o.y, o.z);
+    node_scale = s;
 }
 
 void OBDMesh::setActive(bool a) {
-    TMesh* m = (TMesh*) meshNode -> getEntity();
-    m -> setActive(a);
+    meshNode -> setActive(a);
 }
 
 bool OBDMesh::getActive() {
-    TMesh* m = (TMesh*) meshNode -> getEntity();
-    return m -> getActive();
+    return meshNode -> getActive();
 }
 
 void OBDMesh::setName(std::string n) {

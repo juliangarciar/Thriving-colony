@@ -1,8 +1,6 @@
 #include "TCamera.h"
 
-TCamera::TCamera(OBDEnums::CameraProjection projectionMode, f32 n, f32 f, f32 t, f32 b, f32 l, f32 r, bool a) : TEntity(){
-    active = a;
-
+TCamera::TCamera(OBDEnums::CameraProjection projectionMode, f32 n, f32 f, f32 t, f32 b, f32 l, f32 r) : TEntity(){
     setNear(n);
     setFar(f);
     
@@ -23,10 +21,8 @@ TCamera::~TCamera(){
 }
 
 void TCamera::beginDraw(){
-    if (active) {
-        cache.setProjectionMatrix(pMat);
-        cache.setViewMatrix(vMat);
-    }
+    cache.setProjectionMatrix(pMat);
+    cache.setViewMatrix(vMat);
 }
 
 void TCamera::endDraw(){
@@ -75,14 +71,6 @@ void TCamera::setProjection(OBDEnums::CameraProjection cp){
 
 OBDEnums::CameraProjection TCamera::getProjection(){
     return projection;
-}
-
-void TCamera::setActive(bool _active) {
-    active = _active;
-}
-
-bool TCamera::getActive() {
-    return active;
 }
 
 void TCamera::setFov(f32 f) {

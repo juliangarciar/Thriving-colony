@@ -49,6 +49,28 @@ class OBDSceneNode {
         void translate(f32 tX, f32 tY, f32 tZ);
 
         /**
+         * @brief Set the Position
+         * 
+         * @param p 
+         */
+        void setPosition(glm::vec3 p);
+
+        /**
+         * @brief Set the Rotation
+         * 
+         * @param r 
+         * @param angle 
+         */
+        void setRotation(glm::vec3 r, f32 angle);
+
+        /**
+         * @brief Set the Scale
+         * 
+         * @param s 
+         */
+        void setScale(glm::vec3 s);
+
+        /**
          * @brief 
          * 
          * @return TNode* 
@@ -60,6 +82,10 @@ class OBDSceneNode {
         TNode* rotationNode;
         TNode* translationNode;
         TNode* scaleNode;
+
+        glm::vec3 node_position;
+        glm::vec3 node_rotation;
+        glm::vec3 node_scale;
 };
 
 #endif
