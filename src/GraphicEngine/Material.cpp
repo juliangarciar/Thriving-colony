@@ -11,7 +11,9 @@ Material::Material(Texture *tex) {
 }
 
 Material::~Material() {
+    //material -> remove();
     delete material;
+    material = nullptr;
 }
 
 video::SMaterial * Material::getMaterial() {

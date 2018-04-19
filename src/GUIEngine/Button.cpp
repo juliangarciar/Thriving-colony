@@ -14,7 +14,7 @@ Button::Button(GUIElement *parent, std::string buttonText) {
 
 Button::~Button() {
     for (int i = 0; i < children.size(); i++){
-        //ToDo: eliminar hijos
+        //if (children[i] != nullptr && children[i] -> getGUIElement() != nullptr) delete children[i];
     }
     //ToDo: eliminar este
     hide();

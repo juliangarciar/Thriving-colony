@@ -12,11 +12,10 @@ TextBox::TextBox(GUIElement *parent, std::string t) {
 
 TextBox::~TextBox() {
     for (int i = 0; i < children.size(); i++){
-        //ToDo: eliminar hijos
+        //if (children[i] -> getGUIElement() -> getRefCount() > 1) children[i] -> getGUIElement() -> decRef();
     }
     //ToDo: eliminar este
     hide();
-
 }
 
 void TextBox::addChild(GUIElement *elem) {

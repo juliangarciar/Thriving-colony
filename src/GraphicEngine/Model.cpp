@@ -23,8 +23,6 @@ Model::Model(i32 id, std::string path) {
         meshNode -> setTriangleSelector(selector);
         selector -> drop(); // We're done with this selector, so drop it now.
     }
-    
-
 }
 
 Model::Model(SceneNode *parent, i32 id, std::string path) {
@@ -46,13 +44,11 @@ Model::Model(SceneNode *parent, i32 id, std::string path) {
         selector -> drop(); // We're done with this selector, so drop it now.
     }
     
-
     parent -> getSceneNode() -> addChild(meshNode);
 }
 
 Model::~Model() {
-    meshNode -> remove();
-    //selector -> drop();
+    //ToDo: remove model
 }
 
 void Model::setID(i32 id) {

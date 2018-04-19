@@ -12,7 +12,7 @@ CheckBox::CheckBox(GUIElement *parent, std::string text) {
 
 CheckBox::~CheckBox() {
     for (int i = 0; i < children.size(); i++){
-        //ToDo: eliminar hijos
+        //if (children[i] -> getGUIElement() -> getRefCount() > 1) children[i] -> getGUIElement() -> decRef();
     }
     //ToDo: eliminar este
     hide();

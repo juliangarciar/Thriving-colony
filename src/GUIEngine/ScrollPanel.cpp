@@ -12,7 +12,7 @@ ScrollPanel::ScrollPanel(GUIElement *parent) {
 
 ScrollPanel::~ScrollPanel() {
     for (int i = 0; i < children.size(); i++){
-        //ToDo: eliminar hijos
+        //if (children[i] -> getGUIElement() -> getRefCount() > 1) children[i] -> getGUIElement() -> decRef();
     }
     //ToDo: eliminar este
     hide();

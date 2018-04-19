@@ -8,6 +8,7 @@ Camera::Camera() {
 }
 
 Camera::~Camera() {
+    camera -> remove();
     delete camera;
     camera = nullptr;
 }

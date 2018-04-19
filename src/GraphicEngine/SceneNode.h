@@ -22,7 +22,6 @@ class SceneNode {
 		scene::ISceneNode *getSceneNode();
 	private:
 		scene::ISceneNode *node;
-		scene::ISceneCollisionManager *collisionManager;
 
 		SceneNode *collisionNode;
 };

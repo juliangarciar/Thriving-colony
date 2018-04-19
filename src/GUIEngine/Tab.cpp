@@ -6,7 +6,11 @@ Tab::Tab(nanogui::Widget *t){
 }
 
 Tab::~Tab(){
-    tab -> decRef();
+    for (int i = 0; i < children.size(); i++){
+        //if (children[i] -> getGUIElement() -> getRefCount() > 1) children[i] -> getGUIElement() -> decRef();
+    }
+    //ToDo: eliminar este
+    hide();
 }
 
 void Tab::addChild(GUIElement *elem) {

@@ -2,9 +2,10 @@
 #include "Window.h"
 using namespace irr;
 
+//ToDo: no deberain haber datos aqui
 Terrain::Terrain(const char* heightMap) {
-	Window *sc = Window::Instance();
-    terrain = sc -> getSceneManager() -> addTerrainSceneNode(
+	scene::ISceneManager *sc = Window::Instance() -> getSceneManager();
+    terrain = sc -> addTerrainSceneNode(
 		heightMap,
 		0,										// parent node
 		-1,										// node id
@@ -16,20 +17,14 @@ Terrain::Terrain(const char* heightMap) {
 		scene::ETPS_9,							// patchSize
 		4										// smoothFactor
     );
-    selector = sc -> getSceneManager() -> createTerrainTriangleSelector(terrain);
+    selector = sc -> createTerrainTriangleSelector(terrain);
     terrain -> setTriangleSelector(selector);
-    collisionManager = sc -> getSceneManager() -> getSceneCollisionManager();
+	selector -> drop();
 }
 
 Terrain::~Terrain() {
-    terrain -> removeAll();
 	terrain -> remove();
-	delete terrain;
-	delete selector;
-	delete collisionManager;
 	terrain = nullptr;
-	selector = nullptr;
-	collisionManager = nullptr;
 }
 
 void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture) {
@@ -44,7 +39,6 @@ void Terrain::setSize(Vector3<f32> s){
 	terrain -> setScale(s.getVectorF());
 	selector = sc -> getSceneManager() -> createTerrainTriangleSelector(terrain);
     terrain -> setTriangleSelector(selector);
-    collisionManager = sc -> getSceneManager() -> getSceneCollisionManager();
 }
 
 Vector3<f32> Terrain::getPointCollision(Mouse *cursor){
@@ -53,6 +47,7 @@ Vector3<f32> Terrain::getPointCollision(Mouse *cursor){
 	core::vector3df point;
 	core::triangle3df triangle;
 	scene::ISceneNode *node = 0;
+    scene::ISceneCollisionManager* collisionManager = Window::Instance() -> getSceneManager() -> getSceneCollisionManager();
     const core::line3d<f32> ray = collisionManager -> getRayFromScreenCoordinates(pos);
     if (collisionManager -> getCollisionPoint (ray, selector, point, triangle, node)) {
 		return Vector3<f32>(point);

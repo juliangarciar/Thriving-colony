@@ -6,16 +6,12 @@ using namespace irr;
 SceneNode::SceneNode() {
 	scene::ISceneManager *w = Window::Instance() -> getSceneManager();
 	node = w -> addEmptySceneNode(w -> getRootSceneNode());
-	collisionManager = w -> getSceneCollisionManager();
-
 	collisionNode = nullptr;
 }
 
 SceneNode::SceneNode(SceneNode *parent) {
 	scene::ISceneManager *w = Window::Instance() -> getSceneManager();
 	node = w -> addEmptySceneNode(parent -> getSceneNode()); 
-	collisionManager = w -> getSceneCollisionManager();
-
 	collisionNode = nullptr;
 }
 
@@ -24,13 +20,13 @@ SceneNode::SceneNode(scene::ISceneNode *n){
 }
 
 SceneNode::~SceneNode() {
-	delete node;
-	if (collisionNode != nullptr) delete collisionNode;
+	node -> remove();
 	node = nullptr;
-	collisionNode = nullptr;
 }
  
 SceneNode *SceneNode::getNodeCollision(Mouse *cursor){
+	scene::ISceneCollisionManager *collisionManager = Window::Instance() -> getSceneManager() -> getSceneCollisionManager();
+
 	Vector2<i32> p = cursor -> getPosition();
 	core::position2d<s32> pos = core::position2d<s32>(p.x, p.y);
 	core::vector3df point;

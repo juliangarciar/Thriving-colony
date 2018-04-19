@@ -26,7 +26,6 @@ class Terrain{
     private:
         scene::ITerrainSceneNode* terrain;
         scene::ITriangleSelector* selector;
-        scene::ISceneCollisionManager* collisionManager;
 };
 
 #endif
