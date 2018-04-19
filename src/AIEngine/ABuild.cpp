@@ -32,3 +32,11 @@ Enumeration::BehaviourState ABuild::Update(Enumeration::BuildingType type) {
     IA::Instance() -> getBuildingManager() -> buildBuilding(v, type, false);
     return Enumeration::BehaviourState::Success;
 }
+
+Enumeration::BehaviourState ABuild::Update() {
+    return Enumeration::BehaviourState::Failure;
+}
+
+Enumeration::BehaviourState ABuild::Update(Enumeration::UnitType) {
+    return Enumeration::BehaviourState::Failure;
+}

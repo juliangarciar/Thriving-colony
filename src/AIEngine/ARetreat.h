@@ -20,6 +20,8 @@ class ARetreat : public Action {
         virtual ~ARetreat();
 
         Enumeration::BehaviourState Update();
+        Enumeration::BehaviourState Update(Enumeration::UnitType);
+        Enumeration::BehaviourState Update(Enumeration::BuildingType);
 
     private:
 };

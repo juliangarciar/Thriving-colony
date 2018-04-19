@@ -20,6 +20,8 @@ class ADeployTroops : public Action {
         virtual ~ADeployTroops();
 
         Enumeration::BehaviourState Update();
+        Enumeration::BehaviourState Update(Enumeration::UnitType);
+        Enumeration::BehaviourState Update(Enumeration::BuildingType);
 
     private:
 };

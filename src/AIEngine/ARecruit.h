@@ -19,7 +19,9 @@ class ARecruit : public Action {
          */
         virtual ~ARecruit();
 
+        Enumeration::BehaviourState Update();
         Enumeration::BehaviourState Update(Enumeration::UnitType);
+        Enumeration::BehaviourState Update(Enumeration::BuildingType);
 
     private:
 };

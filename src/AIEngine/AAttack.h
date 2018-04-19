@@ -20,6 +20,8 @@ class AAttack : public Action {
         virtual ~AAttack();
 
         Enumeration::BehaviourState Update();
+        Enumeration::BehaviourState Update(Enumeration::UnitType);
+        Enumeration::BehaviourState Update(Enumeration::BuildingType);
 
     private:
 };

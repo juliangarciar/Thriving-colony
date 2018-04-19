@@ -262,8 +262,6 @@ class Unit : public Entity {
         // Unit info
         //f32 recruitingTime;
 
-        f32 attackCountdown;
-
         //Timer that controls the time of training of the unit.
         Timer* recruitingTimer;
 

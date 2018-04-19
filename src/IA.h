@@ -2,8 +2,7 @@
 #define IA_H
 
 #include "Player.h"
-#include "IAEngine/BehaviourTree.h"
-#include "IAEngine/RootNode.h"
+#include "AIEngine/BehaviourTree.h"
 #include "AIEngine/ActiveSelector.h"
 #include <Types.h>
 
@@ -113,7 +112,7 @@ class IA : public Player {
         BehaviourTree* tree;
 
         //Pointer to the root of the behaviour tree.
-        RootNode *nodeRootIA;
+        //RootNode *nodeRootIA;
 
         ActiveSelector *rootNode;
 
