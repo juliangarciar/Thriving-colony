@@ -364,14 +364,12 @@ void Hud::Init(){
             b -> setTooltip("Create a melee unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::Instance() -> getUnitManager() -> createTroop("StandardM");
-                //ToDo: añadir a la cola de produccion (HUD)
             });
             
             b = new Button(barrackContent, "Create ranged footman");
             b -> setTooltip("Create a ranged unit that moves around by feet\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::Instance() -> getUnitManager() -> createTroop("StandardR");
-                //ToDo: añadir a la cola de produccion (HUD)
             });
 
             ScrollPanel *barrackScroll = new ScrollPanel(barrackContent);
@@ -398,21 +396,18 @@ void Hud::Init(){
             b -> setTooltip("Create a melee unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::Instance() -> getUnitManager() -> createTroop("AdvancedM");
-                //ToDo: añadir a la cola de produccion (HUD)
             });
             
             b = new Button(barnContent, "Create mounted ranged unit");
             b -> setTooltip("Create a ranged unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::Instance() -> getUnitManager() -> createTroop("AdvancedR");
-                //ToDo: añadir a la cola de produccion (HUD)
             });
 
             b = new Button(barnContent, "Create monster");
             b -> setTooltip("Create a overwhelmingly powerful creature to destroy your enemies\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::Instance() -> getUnitManager() -> createTroop("Idol");
-                //ToDo: añadir a la cola de produccion (HUD)
             });
 
             ScrollPanel *barnScroll = new ScrollPanel(barnContent);
@@ -439,14 +434,12 @@ void Hud::Init(){
             b -> setTooltip("Create a ram that specializes in destroying buildings\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::Instance() -> getUnitManager() -> createTroop("Desintegrator");
-                //ToDo: añadir a la cola de produccion (HUD)
             });
             
             b = new Button(workshopContent, "Create catapult");
             b -> setTooltip("Create a catapult that heavy area of damage\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::Instance() -> getUnitManager() -> createTroop("Launcher");
-                //ToDo: añadir a la cola de produccion (HUD)
             });
 
             ScrollPanel *workshopScroll = new ScrollPanel(workshopContent);
@@ -751,7 +744,7 @@ void Hud::updatePositions() {
 }
 
 void Hud::showToast(std::string s){
-    //ToDo: string queue?
+    //ToDo: hacer cola de notificaciones
     toastText->setLabel(s);
     toast->refreshLayout();
     toast->show();

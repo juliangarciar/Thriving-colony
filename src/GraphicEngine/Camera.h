@@ -20,11 +20,6 @@ class Camera {
 
         Vector3<f32> getCameraPosition();
         Vector3<f32> getTargetPosition();
-
-        //ToDo: no se donde meter esto
-        f32 getReciprocalSquareroot() {
-            return core::reciprocal_squareroot((f32)2);
-        }
     private:
         scene::ICameraSceneNode* camera;
 };

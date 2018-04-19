@@ -7,7 +7,6 @@ Timer::Timer(f32 maxD, bool l, bool a) : maxDuration(maxD), loop(l),
 }
 
 Timer::~Timer() {
-    //ToDo: free callback?
 }
 
 void Timer::start(){

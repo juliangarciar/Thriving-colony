@@ -2,7 +2,7 @@
 #include "Window.h"
 using namespace irr;
 
-//ToDo: no deberain haber datos aqui
+//ToDo: no deberian haber datos aqui
 Terrain::Terrain(const char* heightMap) {
 	scene::ISceneManager *sc = Window::Instance() -> getSceneManager();
     terrain = sc -> addTerrainSceneNode(

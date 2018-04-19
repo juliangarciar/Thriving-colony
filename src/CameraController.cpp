@@ -15,7 +15,7 @@ CameraController::CameraController() {
     camera -> setShadowDistance(42000.f);
 
 	// Helper initializations
-	recipsqrt2 = camera -> getReciprocalSquareroot();
+	recipsqrt2 = 1.0 / sqrt(2);
 	centerMargin = 20;
 
 	// Cam movement initializations

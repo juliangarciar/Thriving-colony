@@ -59,7 +59,7 @@ Unit::Unit(SceneNode* _layer,
         //Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
     });
 
-    recruitingTimer = new Timer(0, false);
+    recruitingTimer = new Timer(baseData.recruitingTime, false);
     recruitingTimer -> setCallback([&](){
         recruitedCallback(this);
         switchState(Enumeration::UnitState::InHome);
@@ -89,30 +89,30 @@ void Unit::update() {
             recruitingState();
         break;
         case Enumeration::UnitState::InHome:
-            //inHomeState();
+            //ToDo: inHomeState();
         break;
         case Enumeration::UnitState::Idle:
-            //setColor(video::SColor(255, 0, 255, 255)); //ToDo: cambiar por materiales
+            //ToDo: poner material idle
             idleState();
         break;
         case Enumeration::UnitState::Move:
-            //setColor(video::SColor(255, 255, 0, 255)); //ToDo: cambiar por materiales
+            //ToDo: poner material moving
             moveState();
         break;
         case Enumeration::UnitState::AttackMove:
-            //setColor(video::SColor(255, 255, 255, 0)); //ToDo: cambiar por materiales
+            //ToDo: poner material attackMove
             attackMoveState();
         break;
         case Enumeration::UnitState::Attack:
-            //setColor(video::SColor(255, 0, 0, 0)); //ToDo: cambiar por materiales
+            //ToDo: poner material attack
             attackState();
         break;    
         case Enumeration::UnitState::Chase:
-            //setColor(video::SColor(255, 255, 255, 255)); //ToDo: cambiar por materiales
+            //s//ToDo: poner material chase
             chaseState();
         break;
         case Enumeration::UnitState::Retract:
-            //setColor(video::SColor(255, 127, 127, 127)); //ToDo: cambiar por materiales
+            ////ToDo: poner material retracting
             retractState();
         break;
         default: break;
@@ -148,7 +148,7 @@ void Unit::switchState(Enumeration::UnitState newState) {
 
 void Unit::recruitingState(){
     recruitingTimer -> tick();
-    if (!recruitingTimer -> isRunning()){
+    if (recruitingTimer -> isRunning()){
         if (getTeam() == Enumeration::Team::Human){
             Hud::Instance() -> modifyTroopFromQueue(getID(), recruitingTimer -> getElapsedTime() / recruitingTimer -> getMaxDuration());
         }
@@ -204,7 +204,7 @@ void Unit::retractState() {
         //troops -> setActive(false);
         getModel() -> setActive(false);
         switchState(Enumeration::UnitState::InHome);
-        // Aqui peta
+        // ToDo: Aqui peta
         triggerRetractedCallback();        
     }
 }

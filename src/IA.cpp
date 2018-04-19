@@ -246,7 +246,7 @@ bool IA::getFast() {
 
 // Down here so it doesn't clutter the constructor
 void IA::initializeChoices() {
-    //IMPORTANTE::::::::
+    // IMPORTANTE::::::::
     // TIENE QUE ESTAR EN EL ORDEN DE LA ENUMERACION
     // IAChoices QUE HAY EN enumeration.h, SI NO NO IRA BIEN
     // Y NOS LIAREMOS. SI SE PUEDE PASAR ALGUN DIA A ARRAY

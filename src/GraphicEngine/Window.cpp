@@ -78,8 +78,7 @@ Window::Window(i32 width, i32 height) {
 }
 
 Window::~Window() {
-    //ToDo: borrar device
-    //device = nullptr; 
+    //ToDo: destructor
 }
 
 void Window::setGUI(){ 

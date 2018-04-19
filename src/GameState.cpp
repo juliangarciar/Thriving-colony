@@ -167,7 +167,7 @@ void GameState::Input() {
             }
             onMap = false;
 
-            if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_ESCAPE)) {
+            if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_ESCAPE)) { //ToDo: fachada
                 pauseMenu = new PauseMenu();
                 Window::Instance() -> setGUI();
                 pauseMenu -> setHUDEvents();
