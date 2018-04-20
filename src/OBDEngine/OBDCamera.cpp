@@ -1,9 +1,15 @@
 #include "OBDCamera.h"
 
-
-OBDCamera::OBDCamera(TNode* parent) {
+OBDCamera::OBDCamera() {
     //ToDo: esos parametros no deberian estar aqui
-    cameraNode = new TNode(new TCamera(OBDEnums::CameraProjection::ProjectionPerspective, 0.1, 1000, 0, 720, 0, 1280), parent);
+    cameraNode = new TNode(new TCamera(OBDEnums::CameraProjection::ProjectionPerspective, 0.1, 1000, 0, 720, 0, 1280));
+}
+
+OBDCamera::OBDCamera(OBDSceneNode* parent) {
+    //ToDo: esos parametros no deberian estar aqui
+    cameraNode = new TNode(new TCamera(OBDEnums::CameraProjection::ProjectionPerspective, 0.1, 1000, 0, 720, 0, 1280));
+
+    parent->addChild(this);
 }
 
 OBDCamera::~OBDCamera() {
@@ -83,10 +89,10 @@ glm::vec3 OBDCamera::getTargetPosition() {
     return c -> getTargetPosition();
 }
 
-TNode* OBDCamera::getCameraNode(){
-    return cameraNode;
-}
-
 TCamera* OBDCamera::getCameraEntity(){
     return (TCamera*) cameraNode -> getEntity();
+}
+
+TNode *OBDCamera::getFirstNode(){
+    return cameraNode;
 }

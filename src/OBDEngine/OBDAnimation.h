@@ -1,14 +1,21 @@
 #ifndef OBDANIMATION_H
 #define OBDANIMATION_H
 
-#include "OBDTypes.h"
+#include "OBDEntity.h"
 #include "OBDSceneNode.h"
-#include "Graphics/TNode.h"
+
 #include "Graphics/TTransform.h"
 #include "Graphics/TAnimation.h"
 
-class OBDAnimation {
+class OBDAnimation : public OBDEntity {
     public:
+        /**
+         * @brief 
+         * 
+         * @param parent 
+         */
+        OBDAnimation();
+
         /**
          * @brief 
          * 
@@ -43,14 +50,18 @@ class OBDAnimation {
          */
         void translate(f32 tX, f32 tY, f32 tZ);
 
-
+        /**
+         * @brief Get the First Node object
+         * 
+         * @return TNode* 
+         */
+        TNode *getFirstNode();
     private:
-
-        TNode* animationNode;
         TNode* rotationNode;
         TNode* translationNode;
         TNode* scaleNode;
-        
+
+        TNode* animationNode;
 };
 
 #endif

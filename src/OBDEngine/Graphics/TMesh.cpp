@@ -2,6 +2,8 @@
 
 #include "../ResourceManager/ResourceOBJ.h"
 
+#define MAX_LIGHTS 10
+
 TMesh::TMesh(ResourceMesh *r, ResourceMaterial *m) : TEntity() {
 	mesh = r;
 	material = m;
@@ -35,7 +37,7 @@ TMesh::TMesh(ResourceMesh *r, ResourceMaterial *m) : TEntity() {
 	// Lights
 	glGenBuffers(1, &lightID);
 	glBindBuffer(GL_UNIFORM_BUFFER, lightID);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslLight) * cache.getLights()->size(), &cache.getLights()->at(0), GL_DYNAMIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslLight) * MAX_LIGHTS, 0, GL_DYNAMIC_DRAW);
 
 	// Material
 	glGenBuffers(1, &materialID);

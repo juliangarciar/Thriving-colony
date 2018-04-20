@@ -1,13 +1,14 @@
 #ifndef OBDLIGHT_H
 #define OBDLIGHT_H
 
-#include "OBDTypes.h"
+#include "OBDEntity.h"
+#include "OBDSceneNode.h"
 #include "OBDColor.h"
-#include "Graphics/TNode.h"
+
 #include "Graphics/TTransform.h"
 #include "Graphics/TLight.h"
 
-class OBDLight {
+class OBDLight : public OBDEntity {
     public:
         /**
          * @brief 
@@ -19,7 +20,7 @@ class OBDLight {
          * 
          * @param parent 
          */
-        OBDLight(TNode* parent, OBDColor color, u32 intensity);
+        OBDLight(OBDSceneNode* parent, OBDColor color, u32 intensity);
 
         /**
          * @brief 
@@ -143,17 +144,16 @@ class OBDLight {
         /**
          * @brief 
          * 
-         * @return TNode* 
-         */
-        TNode* getLightNode();
-        
-        /**
-         * @brief 
-         * 
          * @return TLight* 
          */
         TLight* getLightEntity();
 
+        /**
+         * @brief Get the First Node object
+         * 
+         * @return TNode* 
+         */
+        TNode *getFirstNode();
     private:
         TNode* lightNode;
 

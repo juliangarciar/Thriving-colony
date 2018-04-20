@@ -1,18 +1,26 @@
 #ifndef OBDMESH_H
 #define OBDMESH_H
 
-#include "OBDTypes.h"
+#include "OBDEntity.h"
 #include "OBDSceneNode.h"
 
 #include "ResourceManager/ResourceOBJ.h"
 #include "ResourceManager/ResourceMTL.h"
 
-#include "Graphics/TNode.h"
 #include "Graphics/TTransform.h"
 #include "Graphics/TMesh.h"
 
-class OBDMesh {
+class OBDMesh : public OBDEntity {
     public:
+        /**
+         * @brief 
+         * 
+         * @param  
+         * @param 
+         * @param 
+         */
+        OBDMesh(ResourceOBJ *, ResourceMTL *);
+
         /**
          * @brief 
          * 
@@ -140,6 +148,20 @@ class OBDMesh {
          * @return GLuint 
          */
         GLuint getID();
+        
+        /**
+         * @brief 
+         * 
+         * @return TMesh* 
+         */
+        TMesh* getMeshEntity();
+
+        /**
+         * @brief Get the First Node object
+         * 
+         * @return TNode* 
+         */
+        TNode *getFirstNode();
     private:
         TNode* meshNode;
         TNode* rotationNode;

@@ -4,8 +4,10 @@ OBDLight::OBDLight(OBDColor color, u32 intensity) {
     lightNode = new TNode(new TLight(color, intensity));
 }
 
-OBDLight::OBDLight(TNode* parent, OBDColor color, u32 intensity) {
-    lightNode = new TNode(new TLight(color, intensity), parent);
+OBDLight::OBDLight(OBDSceneNode* parent, OBDColor color, u32 intensity) {
+    lightNode = new TNode(new TLight(color, intensity));
+
+    parent->addChild(this);
 }
 
 OBDLight::~OBDLight() {
@@ -74,18 +76,12 @@ u32 OBDLight::getSpecularIntensity() {
 
 void OBDLight::setActive(bool active) {
     lightNode -> setActive(active);
+    TLight* l = (TLight*) lightNode -> getEntity();
+    l -> setActive(active);
 }
 
 bool OBDLight::getActive() {
     return lightNode -> getActive();
-}
-
-TNode* OBDLight::getLightNode() {
-    return lightNode;
-}
-
-TLight* OBDLight::getLightEntity() {
-    return (TLight*) lightNode -> getEntity();
 }
 
 void OBDLight::setPosition(glm::vec3 p) {
@@ -96,4 +92,12 @@ void OBDLight::setPosition(glm::vec3 p) {
 glm::vec3 OBDLight::getPosition() {
     TLight* l = (TLight*) lightNode -> getEntity();
     return l -> getPosition();
+}
+
+TLight* OBDLight::getLightEntity() {
+    return (TLight*) lightNode -> getEntity();
+}
+
+TNode *OBDLight::getFirstNode(){
+    return lightNode;
 }

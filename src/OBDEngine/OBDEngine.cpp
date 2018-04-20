@@ -10,7 +10,7 @@ TCache TEntity::cache = TCache();
 OBDEngine::OBDEngine() {
     rootNode = new TNode();
 
-    // Create default layer
+    // Create default layers
     clSceneNode = new OBDSceneNode(rootNode);
     defaultSceneNode = new OBDSceneNode(rootNode);
 
@@ -64,13 +64,13 @@ void OBDEngine::End(){
 }
 
 OBDLight* OBDEngine::createLight(OBDColor color, u32 intensity) {
-    OBDLight* lightNode = new OBDLight(clSceneNode->getSceneNode(), color, intensity);
+    OBDLight* lightNode = new OBDLight(clSceneNode, color, intensity);
     lights . push_back(lightNode);
     return lightNode;
 }
 
 OBDCamera* OBDEngine::createCamera() {
-    OBDCamera* cameraNode = new OBDCamera(clSceneNode->getSceneNode());
+    OBDCamera* cameraNode = new OBDCamera(clSceneNode);
     cameras . push_back(cameraNode);
     return cameraNode;
 }
@@ -118,12 +118,12 @@ OBDShaderProgram *OBDEngine::createShaderProgram(std::string programName, std::s
 }
 
 void OBDEngine::registerLight(OBDLight* lightNode) {
-    clSceneNode -> getSceneNode() -> addChild(lightNode -> getLightNode());
+    clSceneNode -> addChild(lightNode);
     lights . push_back(lightNode);
 }
 
 void OBDEngine::registerCamera(OBDCamera* cameraNode) {
-    clSceneNode -> getSceneNode() -> addChild(cameraNode -> getCameraNode());
+    clSceneNode -> addChild(cameraNode);
     cameras . push_back(cameraNode);
 }
 
@@ -149,6 +149,9 @@ void OBDEngine::draw() {
 
     // Draw our tree
     rootNode -> draw();
+
+    // Clear light cache
+    TEntity::cache.getLights()->clear();
 }
 
 TNode* OBDEngine::getRootNode() {

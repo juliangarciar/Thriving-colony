@@ -64,6 +64,12 @@ bool TNode::getActive(){
     return active;
 }
 
+void TNode::setParent(TNode *p){
+    if (parent != nullptr) parent->removeChild(this);
+    
+    parent = p;
+}
+
 TNode *TNode::getParent(){
     return parent;
 }
