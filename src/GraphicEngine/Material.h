@@ -13,6 +13,7 @@ class Material {
         ~Material();
 
         video::SMaterial *getMaterial();
+        void setColor(f32 a, f32 r, f32 g, f32 b);
     private:
         video::SMaterial *material;
 };

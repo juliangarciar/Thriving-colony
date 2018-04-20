@@ -66,6 +66,10 @@ class Building : public Entity {
          * @return Value finished variable (true if the building is finished or false if it is not).
          */
         bool getFinished();
+
+        void setCanBuildMat();
+
+        void setCantBuildMat();
         
     private:
         /**
@@ -87,6 +91,9 @@ class Building : public Entity {
 
         //True if the building is finished and false if it is not.
         bool finished;
+
+        Material *canBuildMat;
+        Material *cantBuildMat;
 };
 
 #endif

@@ -388,9 +388,17 @@ void Unit::Init() {
         default: break;
     }
     recruitingTimer = new Timer(recruitingTime, false);
-    //Material *m = new Material(tex);
-    //model -> setMaterial(m);
+
     setModel(layer, path);
+
+    baseMat = new Material(new Texture(""));
+    baseMat -> setColor(255, 255, 255, 255);
+
+    damagedMat = new Material(new Texture(""));
+    damagedMat -> setColor(255, 255, 0, 0);
+
+    setBaseMaterial();
+
     troops = new Troop(layer, path, 4, ID);
     preTaxPlayer();
 }
@@ -407,27 +415,27 @@ void Unit::update() {
             inHomeState();
         break;
         case Enumeration::UnitState::Idle:
-            setColor(video::SColor(255, 0, 255, 255)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 0, 255, 255)); //ToDo: cambiar por materiales
             idleState();
         break;
         case Enumeration::UnitState::Move:
-            setColor(video::SColor(255, 255, 0, 255)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 255, 0, 255)); //ToDo: cambiar por materiales
             moveState();
         break;
         case Enumeration::UnitState::AttackMove:
-            setColor(video::SColor(255, 255, 255, 0)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 255, 255, 0)); //ToDo: cambiar por materiales
             attackMoveState();
         break;
         case Enumeration::UnitState::Attack:
-            setColor(video::SColor(255, 0, 0, 0)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 0, 0, 0)); //ToDo: cambiar por materiales
             attackState();
         break;    
         case Enumeration::UnitState::Chase:
-            setColor(video::SColor(255, 255, 255, 255)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 255, 255, 255)); //ToDo: cambiar por materiales
             chaseState();
         break;
         case Enumeration::UnitState::Retract:
-            setColor(video::SColor(255, 127, 127, 127)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 127, 127, 127)); //ToDo: cambiar por materiales
             retractState();
         break;
         default: break;

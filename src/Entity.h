@@ -10,6 +10,7 @@
 #include <GraphicEngine/Model.h>
 #include <GraphicEngine/SceneNode.h>
 #include <IOEngine/Timer.h>
+#include <GraphicEngine/Material.h>
 
 /**
  * @class Entity.
@@ -205,6 +206,10 @@ class Entity {
          */
         void putHostileTargetsToNull();
 
+        void setBaseMaterial();
+
+        void setDamagedMaterial();
+
     protected:
         //Pointer to the model of the entity.
         Model* model;
@@ -234,6 +239,9 @@ class Entity {
 
         //Base color of the entity.
         irr::video::SColor baseColor; //ToDo: cambiar por material
+        Material *baseMat;
+        Material *damagedMat;
+
 
         //Current color of the entity.
         irr::video::SColor currentColor; //ToDo: cambiar color por material

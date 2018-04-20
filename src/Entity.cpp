@@ -24,6 +24,7 @@ Entity::Entity(i32 id, Enumeration::Team t, Enumeration::BreedType b) {
     
     //hitBox = Box2D();
     armyLevel = 0;
+
 }
 
 Entity::~Entity() {
@@ -38,8 +39,7 @@ Entity::~Entity() {
 void Entity::takeDamage(i32 dmg) {
     currentHP = currentHP-dmg;
     tookDamageTimer -> restart();
-    // Tint the model red
-    setColor(video::SColor(255, 125, 125, 0)); //ToDo: sustituir por material
+    setDamagedMaterial();
     if (currentHP <= 0) {
         currentHP = 0;
     }
@@ -55,7 +55,7 @@ void Entity::refreshHitbox() {
 
 void Entity::returnToOriginalColor() {
     if (tookDamageTimer -> tick()) {
-        setColor(baseColor); //ToDo: sustituir por material
+        setBaseMaterial();
     }
 }
 
@@ -187,4 +187,12 @@ void Entity::putHostileTargetsToNull() {
     for (i32 i = 0; i < hostile.size(); i++) {
         hostile.at(i) -> setTarget(nullptr);
     }
+}
+
+void Entity::setBaseMaterial() {
+    model -> setMaterial(baseMat);
+}
+
+void Entity::setDamagedMaterial() {
+    model -> setMaterial(damagedMat);
 }
