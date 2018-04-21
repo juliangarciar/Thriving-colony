@@ -19,12 +19,9 @@ OBDEngine::OBDEngine() {
 }
 
 OBDEngine::~OBDEngine() {
-    //ToDo: recorrer vaciando
+    //ToDo: revisar destructor
     cameras . clear();
     lights . clear();
-
-    // delete defaultSceneNode
-    // delete OBDManager
 
     delete rootNode;
 }
@@ -36,7 +33,7 @@ void OBDEngine::Init() {
     }
 
 	// Black background
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); //ToDo: configurable?
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
     // Enable depth test
     glEnable(GL_DEPTH_TEST);
@@ -100,12 +97,12 @@ OBDMesh* OBDEngine::createMesh(OBDSceneNode* layer, std::string mesh) {
 }
 
 OBDAnimation* OBDEngine::createAnimation(std::string anim) {
-    //ToDo
+    //ToDo: hacer animaciones
     return new OBDAnimation(defaultSceneNode);
 }
 
 OBDAnimation* OBDEngine::createAnimation(OBDSceneNode* layer, std::string anim) {
-    //ToDo
+    //ToDo: hacer animaciones
     return new OBDAnimation(layer);
 }
 
@@ -139,6 +136,10 @@ void OBDEngine::setCurrentShaderProgram(std::string programName){
         TEntity::cache.setAllIDs(currentProgram -> getParamIDs());
         TEntity::cache.setID(OBDEnums::OpenGLIDs::CURRENT_PROGRAM_ID, currentProgram -> getShaderProgram());
     }
+}
+
+void OBDEngine::setClearColor(OBDColor c) {
+	glClearColor(c.r, c.g, c.b, c.a);
 }
 
 void OBDEngine::draw() {

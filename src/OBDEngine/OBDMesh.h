@@ -10,6 +10,8 @@
 #include "Graphics/TTransform.h"
 #include "Graphics/TMesh.h"
 
+class OBDObject;
+
 class OBDMesh : public OBDEntity {
     public:
         /**
@@ -19,7 +21,7 @@ class OBDMesh : public OBDEntity {
          * @param 
          * @param 
          */
-        OBDMesh(ResourceOBJ *, ResourceMTL *);
+        OBDMesh(ResourceMesh, ResourceMaterial);
 
         /**
          * @brief 
@@ -28,7 +30,16 @@ class OBDMesh : public OBDEntity {
          * @param 
          * @param 
          */
-        OBDMesh(OBDSceneNode*, ResourceOBJ *, ResourceMTL *);
+        OBDMesh(OBDObject*, ResourceMesh, ResourceMaterial);
+
+        /**
+         * @brief 
+         * 
+         * @param  
+         * @param 
+         * @param 
+         */
+        OBDMesh(OBDSceneNode*, ResourceMesh, ResourceMaterial);
 
         /**
          * @brief 
@@ -83,28 +94,7 @@ class OBDMesh : public OBDEntity {
          * @brief Set the glslTexture object
          * 
          */
-        void setTexture(std::string, OBDEnums::TextureTypes, ResourceIMG*);
-
-        /**
-         * @brief Get the Mesh Amount object
-         * 
-         * @return u32 
-         */
-        u32 getMeshAmount();
-
-        /**
-         * @brief Get the Mesh object
-         * 
-         * @return TMesh* 
-         */
-        TMesh *getShape(std::string);
-
-        /**
-         * @brief Get the Meshes object
-         * 
-         * @return std::map<std::string, TMesh*> 
-         */
-        std::map<std::string, TMesh*> getMeshes();
+        void setTexture(OBDEnums::TextureTypes, ResourceIMG*);
 
         /**
          * @brief Set the Active object
@@ -122,20 +112,6 @@ class OBDMesh : public OBDEntity {
         bool getActive();
 
         /**
-         * @brief Set the Name object
-         * 
-         * @param n 
-         */
-        void setName(std::string n);
-
-        /**
-         * @brief Get the Name object
-         * 
-         * @return std::string 
-         */
-        std::string getName();
-
-        /**
          * @brief 
          * 
          * @param i 
@@ -148,6 +124,20 @@ class OBDMesh : public OBDEntity {
          * @return GLuint 
          */
         GLuint getID();
+
+        /**
+         * @brief Set the Name object
+         * 
+         * @param n 
+         */
+        void setName(std::string n);
+
+        /**
+         * @brief Get the Name object
+         * 
+         * @return std::string 
+         */
+        std::string getName();
         
         /**
          * @brief 
@@ -167,12 +157,13 @@ class OBDMesh : public OBDEntity {
         TNode* rotationNode;
         TNode* translationNode;
         TNode* scaleNode;
-        
-        std::map<std::string, TMesh*> meshes;
 
         glm::vec3 node_position;
         glm::vec3 node_rotation;
         glm::vec3 node_scale;
+
+        GLuint ID;
+        std::string name;
 };
 
 #endif

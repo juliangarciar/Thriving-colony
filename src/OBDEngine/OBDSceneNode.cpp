@@ -70,6 +70,11 @@ void OBDSceneNode::addChild(OBDEntity *e){
     scaleNode->addChild(e->getFirstNode());
 }
 
+void OBDSceneNode::addChild(TNode *e){
+    e->setParent(scaleNode);
+    scaleNode->addChild(e);
+}
+
 TNode* OBDSceneNode::getFirstNode() {
     return rotationNode;
 }

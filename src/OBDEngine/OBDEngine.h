@@ -142,6 +142,12 @@ class OBDEngine {
         void setCurrentShaderProgram(std::string);
 
         /**
+         * @brief Set the Clean Color object
+         * @param color
+         */
+        void setClearColor(OBDColor);
+
+        /**
          * @brief 
          * 
          */

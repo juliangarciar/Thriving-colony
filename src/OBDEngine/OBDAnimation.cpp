@@ -4,14 +4,14 @@ OBDAnimation::OBDAnimation() {
     rotationNode = new TNode(new TTransform());
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
-    //ToDo
+    //ToDo: hacer animaciones
 }
 
 OBDAnimation::OBDAnimation(OBDSceneNode* parent) {
     rotationNode = new TNode(new TTransform());
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
-    //ToDo
+    //ToDo: hacer animaciones
 
     parent->addChild(this);
 }

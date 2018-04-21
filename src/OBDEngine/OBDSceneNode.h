@@ -84,6 +84,12 @@ class OBDSceneNode : public OBDEntity {
         void addChild(OBDEntity *);
 
         /**
+         * @brief 
+         * 
+         */
+        void addChild(TNode *);
+
+        /**
          * @brief Get the First Node object
          * 
          * @return TNode* 
