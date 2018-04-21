@@ -23,7 +23,7 @@ ComboBox::~ComboBox() {
 }
 
 void ComboBox::addChild(GUIElement *elem) {
-    children . push_back(elem);
+    children.push_back(elem);
 }
 
 void ComboBox::show(){

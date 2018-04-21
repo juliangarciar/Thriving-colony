@@ -20,8 +20,8 @@ OBDEngine::OBDEngine() {
 
 OBDEngine::~OBDEngine() {
     //ToDo: recorrer vaciando
-    cameras . clear();
-    lights . clear();
+    cameras.clear();
+    lights.clear();
 
     // delete defaultSceneNode
     // delete OBDManager
@@ -65,13 +65,13 @@ void OBDEngine::End(){
 
 OBDLight* OBDEngine::createLight(OBDColor color, u32 intensity) {
     OBDLight* lightNode = new OBDLight(clSceneNode->getSceneNode(), color, intensity);
-    lights . push_back(lightNode);
+    lights.push_back(lightNode);
     return lightNode;
 }
 
 OBDCamera* OBDEngine::createCamera() {
     OBDCamera* cameraNode = new OBDCamera(clSceneNode->getSceneNode());
-    cameras . push_back(cameraNode);
+    cameras.push_back(cameraNode);
     return cameraNode;
 }
 
@@ -113,22 +113,22 @@ OBDShaderProgram *OBDEngine::createShaderProgram(std::string programName, std::s
 	ResourceGLSL *s1 = (ResourceGLSL*)OBDManager->getResource(vs, true);
 	ResourceGLSL *s2 = (ResourceGLSL*)OBDManager->getResource(fs, true);
 	OBDShaderProgram *p = new OBDShaderProgram(s1, s2);
-    shaderPrograms . insert(std::pair<std::string, OBDShaderProgram*>(programName, p));
+    shaderPrograms.insert(std::pair<std::string, OBDShaderProgram*>(programName, p));
     return p;
 }
 
 void OBDEngine::registerLight(OBDLight* lightNode) {
     clSceneNode -> getSceneNode() -> addChild(lightNode -> getLightNode());
-    lights . push_back(lightNode);
+    lights.push_back(lightNode);
 }
 
 void OBDEngine::registerCamera(OBDCamera* cameraNode) {
     clSceneNode -> getSceneNode() -> addChild(cameraNode -> getCameraNode());
-    cameras . push_back(cameraNode);
+    cameras.push_back(cameraNode);
 }
 
 void OBDEngine::registerShaderProgram(std::string programName, OBDShaderProgram *r){
-    shaderPrograms . insert(std::pair<std::string, OBDShaderProgram*>(programName, r));
+    shaderPrograms.insert(std::pair<std::string, OBDShaderProgram*>(programName, r));
 }
 
 void OBDEngine::setCurrentShaderProgram(std::string programName){

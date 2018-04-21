@@ -19,7 +19,7 @@ ScrollPanel::~ScrollPanel() {
 }
 
 void ScrollPanel::addChild(GUIElement *elem) {
-    children . push_back(elem);
+    children.push_back(elem);
 }
 
 void ScrollPanel::setPosition(Vector2<i32> position){

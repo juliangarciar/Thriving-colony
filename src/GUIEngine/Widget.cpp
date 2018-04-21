@@ -22,7 +22,7 @@ Widget::~Widget() {
 }
 
 void Widget::addChild(GUIElement *elem) {
-    children . push_back(elem);
+    children.push_back(elem);
 }
 
 void Widget::setPosition(Vector2<i32> position){

@@ -21,7 +21,7 @@ Button::~Button() {
 }
 
 void Button::addChild(GUIElement *elem) {
-    children . push_back(elem);
+    children.push_back(elem);
 }
 
 bool Button::isButtonPressed(){
