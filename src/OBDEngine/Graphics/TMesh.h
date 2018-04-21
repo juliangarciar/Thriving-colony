@@ -4,8 +4,8 @@
 #include <GL/glew.h>
 
 #include "TEntity.h"
-#include "../ResourceManager/Helpers/ResourceMesh.h"
-#include "../ResourceManager/Helpers/ResourceMaterial.h"
+#include "../ResourceManager/ResourceOBJ.h"
+#include "../ResourceManager/ResourceMTL.h"
 #include "TTexture.h"
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
@@ -16,7 +16,7 @@ class TMesh : public TEntity {
          * @brief 
          * 
          */
-        TMesh(ResourceMesh *, ResourceMaterial *);
+        TMesh(ResourceMesh, ResourceMaterial);
 
         /**
          * @brief 
@@ -37,6 +37,13 @@ class TMesh : public TEntity {
         virtual void endDraw();
 
         /**
+         * @brief Set the Material object
+         * 
+         * @param m 
+         */
+        virtual void setMaterial(ResourceMaterial m);
+
+        /**
          * @brief Set the glslTexture object
          * 
          */
@@ -45,19 +52,19 @@ class TMesh : public TEntity {
         /**
          * @brief Get the Mesh object
          * 
-         * @return ResourceMesh* 
+         * @return ResourceMesh
          */
-        ResourceMesh* getMesh();
+        ResourceMesh getMesh();
 
         /**
          * @brief Get the glslMaterial object
          * 
-         * @return ResourceMaterial* 
+         * @return ResourceMaterial
          */
-        ResourceMaterial* getMaterial();
+        ResourceMaterial getMaterial();
     private:
-        ResourceMesh* mesh;
-        ResourceMaterial* material;
+        ResourceMesh mesh;
+        ResourceMaterial material;
         
         std::vector<TTexture*> textures;
         

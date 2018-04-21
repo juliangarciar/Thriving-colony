@@ -7,7 +7,7 @@
 #include "OBDBillboard.h"
 #include "OBDCamera.h"
 #include "OBDLight.h"
-#include "OBDMesh.h"
+#include "OBDObject.h"
 #include "OBDSceneNode.h"
 #include "OBDShaderProgram.h"
 
@@ -73,18 +73,20 @@ class OBDEngine {
          * @brief 
          * 
          * @param 
+         * @param autoload
          * @return OBDMesh* 
          */
-        OBDMesh* createMesh(std::string);
+        OBDObject* createObject(std::string, bool = false);
         
         /**
          * @brief 
          * 
          * @param 
          * @param 
+         * @param autoload
          * @return OBDMesh* 
          */
-        OBDMesh* createMesh(OBDSceneNode*, std::string);
+        OBDObject* createObject(OBDSceneNode*, std::string, bool = false);
         
         /**
          * @brief 
@@ -140,6 +142,12 @@ class OBDEngine {
          * @param program
          */
         void setCurrentShaderProgram(std::string);
+
+        /**
+         * @brief Set the Clean Color object
+         * @param color
+         */
+        void setClearColor(OBDColor);
 
         /**
          * @brief 

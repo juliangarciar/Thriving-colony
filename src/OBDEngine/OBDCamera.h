@@ -1,20 +1,26 @@
 #ifndef OBDCAMERA_H
 #define OBDCAMERA_H
 
-#include "OBDTypes.h"
-#include "OBDEnums.h"
-#include "Graphics/TNode.h"
+#include "OBDEntity.h"
+#include "OBDSceneNode.h"
+
 #include "Graphics/TTransform.h"
 #include "Graphics/TCamera.h"
 
-class OBDCamera {
+class OBDCamera : public OBDEntity {
     public:
+        /**
+         * @brief 
+         * 
+         */
+        OBDCamera();
+
         /**
          * @brief 
          * 
          * @param parent 
          */
-        OBDCamera(TNode* parent);
+        OBDCamera(OBDSceneNode* parent);
 
         /**
          * @brief 
@@ -129,13 +135,6 @@ class OBDCamera {
          * @return glm::vec3 
          */
         glm::vec3 getTargetPosition();
-        
-        /**
-         * @brief 
-         * 
-         * @return TNode* 
-         */
-        TNode* getCameraNode();
 
         /**
          * @brief 
@@ -143,6 +142,13 @@ class OBDCamera {
          * @return TCamera* 
          */
         TCamera* getCameraEntity();
+
+        /**
+         * @brief Get the First Node object
+         * 
+         * @return TNode* 
+         */
+        TNode *getFirstNode();
     private:
         TNode* cameraNode;
 };

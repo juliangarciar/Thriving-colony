@@ -10,7 +10,7 @@ TCache TEntity::cache = TCache();
 OBDEngine::OBDEngine() {
     rootNode = new TNode();
 
-    // Create default layer
+    // Create default layers
     clSceneNode = new OBDSceneNode(rootNode);
     defaultSceneNode = new OBDSceneNode(rootNode);
 
@@ -19,12 +19,9 @@ OBDEngine::OBDEngine() {
 }
 
 OBDEngine::~OBDEngine() {
-    //ToDo: recorrer vaciando
+    //ToDo: revisar destructor
     cameras.clear();
     lights.clear();
-
-    // delete defaultSceneNode
-    // delete OBDManager
 
     delete rootNode;
 }
@@ -36,7 +33,7 @@ void OBDEngine::Init() {
     }
 
 	// Black background
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); //ToDo: configurable?
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
     // Enable depth test
     glEnable(GL_DEPTH_TEST);
@@ -64,13 +61,13 @@ void OBDEngine::End(){
 }
 
 OBDLight* OBDEngine::createLight(OBDColor color, u32 intensity) {
-    OBDLight* lightNode = new OBDLight(clSceneNode->getSceneNode(), color, intensity);
+    OBDLight* lightNode = new OBDLight(clSceneNode, color, intensity);
     lights.push_back(lightNode);
     return lightNode;
 }
 
 OBDCamera* OBDEngine::createCamera() {
-    OBDCamera* cameraNode = new OBDCamera(clSceneNode->getSceneNode());
+    OBDCamera* cameraNode = new OBDCamera(clSceneNode);
     cameras.push_back(cameraNode);
     return cameraNode;
 }
@@ -83,29 +80,29 @@ OBDSceneNode* OBDEngine::createSceneNode(OBDSceneNode* layer) {
     return new OBDSceneNode(layer);
 }
 
-OBDMesh* OBDEngine::createMesh(std::string mesh) {
+OBDObject* OBDEngine::createObject(std::string mesh, bool autoload) {
     ResourceOBJ *obj = (ResourceOBJ*)OBDManager->getResource(mesh, true);
     ResourceMTL *mtl = (ResourceMTL*)OBDManager->getResource(obj->getDefaultMaterialPath(), true);
-    OBDMesh *tempMesh = new OBDMesh(defaultSceneNode, obj, mtl);
-    //ToDo: texture AutoLoad
-    return tempMesh;
+    OBDObject *tempObject = new OBDObject(defaultSceneNode, obj, mtl);
+    if (autoload) tempObject->loadTextures(OBDManager, true);
+    return tempObject;
 }
 
-OBDMesh* OBDEngine::createMesh(OBDSceneNode* layer, std::string mesh) {
+OBDObject* OBDEngine::createObject(OBDSceneNode* layer, std::string mesh, bool autoload) {
     ResourceOBJ *obj = (ResourceOBJ*)OBDManager->getResource(mesh, true);
     ResourceMTL *mtl = (ResourceMTL*)OBDManager->getResource(obj->getDefaultMaterialPath(), true);
-    OBDMesh *tempMesh = new OBDMesh(layer, obj, mtl);
-    //ToDo: texture AutoLoad
-    return tempMesh;
+    OBDObject *tempObject = new OBDObject(layer, obj, mtl);
+    if (autoload) tempObject->loadTextures(OBDManager, true);
+    return tempObject;
 }
 
 OBDAnimation* OBDEngine::createAnimation(std::string anim) {
-    //ToDo
+    //ToDo: hacer animaciones
     return new OBDAnimation(defaultSceneNode);
 }
 
 OBDAnimation* OBDEngine::createAnimation(OBDSceneNode* layer, std::string anim) {
-    //ToDo
+    //ToDo: hacer animaciones
     return new OBDAnimation(layer);
 }
 
@@ -118,12 +115,12 @@ OBDShaderProgram *OBDEngine::createShaderProgram(std::string programName, std::s
 }
 
 void OBDEngine::registerLight(OBDLight* lightNode) {
-    clSceneNode -> getSceneNode() -> addChild(lightNode -> getLightNode());
+    clSceneNode -> addChild(lightNode);
     lights.push_back(lightNode);
 }
 
 void OBDEngine::registerCamera(OBDCamera* cameraNode) {
-    clSceneNode -> getSceneNode() -> addChild(cameraNode -> getCameraNode());
+    clSceneNode -> addChild(cameraNode);
     cameras.push_back(cameraNode);
 }
 
@@ -141,6 +138,10 @@ void OBDEngine::setCurrentShaderProgram(std::string programName){
     }
 }
 
+void OBDEngine::setClearColor(OBDColor c) {
+	glClearColor(c.r, c.g, c.b, c.a);
+}
+
 void OBDEngine::draw() {
     glUseProgram(currentProgram->getShaderProgram());
 
@@ -149,6 +150,9 @@ void OBDEngine::draw() {
 
     // Draw our tree
     rootNode -> draw();
+
+    // Clear light cache
+    TEntity::cache.getLights()->clear();
 }
 
 TNode* OBDEngine::getRootNode() {

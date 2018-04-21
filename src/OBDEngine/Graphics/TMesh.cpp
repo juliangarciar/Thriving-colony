@@ -2,7 +2,9 @@
 
 #include "../ResourceManager/ResourceOBJ.h"
 
-TMesh::TMesh(ResourceMesh *r, ResourceMaterial *m) : TEntity() {
+#define MAX_LIGHTS 10
+
+TMesh::TMesh(ResourceMesh r, ResourceMaterial m) : TEntity() {
 	mesh = r;
 	material = m;
 
@@ -16,43 +18,38 @@ TMesh::TMesh(ResourceMesh *r, ResourceMaterial *m) : TEntity() {
 	activeTextures.alphaTexture = false;
 	activeTextures.bumpTexture = false;
 	
-	currentMaterial.ambientColor = material->getAmbientColor();
-	currentMaterial.diffuseColor = material->getDiffuseColor();
-	currentMaterial.specularColor = material->getSpecularColor();
+	currentMaterial.ambientColor = material.ambientColor;
+	currentMaterial.diffuseColor = material.diffuseColor;
+	currentMaterial.specularColor = material.specularColor;
 
 	// Generate a buffer for the vertices
 	glGenBuffers(1, &VBOID);
 	glBindBuffer(GL_ARRAY_BUFFER, VBOID);
-	glBufferData(GL_ARRAY_BUFFER, mesh->getVBO().size() * sizeof(f32), &mesh->getVBO()[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, mesh.vbo.size() * sizeof(f32), &mesh.vbo[0], GL_STATIC_DRAW);
 	
 	// Generate a buffer for the indices as well
 	glGenBuffers(1, &IBOID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBOID);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndices().size() * sizeof(us32), &mesh->getIndices()[0] , GL_STATIC_DRAW);
-
-	std::cout << cache.getLights()->at(0).ambientComponent.r << " " << cache.getLights()->at(0).ambientComponent.g << " " << cache.getLights()->at(0).ambientComponent.b << std::endl; 
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(us32), &mesh.indices[0] , GL_STATIC_DRAW);
 
 	// Lights
 	glGenBuffers(1, &lightID);
 	glBindBuffer(GL_UNIFORM_BUFFER, lightID);
-	glBindBufferBase(GL_UNIFORM_BUFFER, 1, lightID);
-	glNamedBufferData(lightID, sizeof(glslLight) * cache.getLights()->size(), nullptr, GL_DYNAMIC_DRAW);
-	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslLight) * cache.getLights()->size(), &cache.getLights()->at(0));
-	glBindBufferRange(GL_UNIFORM_BUFFER, cache.getID(OBDEnums::OpenGLIDs::BUFFER_LIGHT), lightID, 0, sizeof(glslLight) * cache.getLights()->size());
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslLight) * MAX_LIGHTS, 0, GL_DYNAMIC_DRAW);
 
 	// Material
 	glGenBuffers(1, &materialID);
 	glBindBuffer(GL_UNIFORM_BUFFER, materialID);
-	glBindBufferBase(GL_UNIFORM_BUFFER, 2, materialID);
-	glNamedBufferData(materialID, sizeof(glslMaterial), nullptr, GL_DYNAMIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslMaterial), &currentMaterial, GL_DYNAMIC_DRAW);
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslMaterial), &currentMaterial);
-	glBindBufferRange(GL_UNIFORM_BUFFER, cache.getID(OBDEnums::OpenGLIDs::BUFFER_MATERIAL), materialID, 0, sizeof(glslMaterial));
+	glBindBufferBase(GL_UNIFORM_BUFFER, 2, materialID);
 
 	// Textures
 	glGenBuffers(1, &textureID);
 	glBindBuffer(GL_UNIFORM_BUFFER, textureID);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslTexture), &activeTextures, GL_DYNAMIC_DRAW);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslTexture), &activeTextures);
 	glBindBufferBase(GL_UNIFORM_BUFFER, 3, textureID);
-	glNamedBufferData(textureID, sizeof(glslTexture), nullptr, GL_DYNAMIC_DRAW);
 }
 
 TMesh::~TMesh() {
@@ -60,7 +57,7 @@ TMesh::~TMesh() {
 	glDeleteBuffers(1, &IBOID);
 }
 
-void TMesh::beginDraw() {    
+void TMesh::beginDraw() { 
 	glm::mat4 pM = cache.getProjectionMatrix();
 	glm::mat4 vM = cache.getViewMatrix();
 	glm::mat4 mM = cache.getModelMatrix();
@@ -74,7 +71,11 @@ void TMesh::beginDraw() {
 	glUniformMatrix4fv(cache.getID(OBDEnums::OpenGLIDs::MATRIX_MV), 1, GL_FALSE, &MV[0][0]);
 	glUniformMatrix4fv(cache.getID(OBDEnums::OpenGLIDs::MATRIX_MVP), 1, GL_FALSE, &MVP[0][0]);
 
-	// 
+	//Send lights
+	glUniform1i(cache.getID(OBDEnums::OpenGLIDs::LIGHT_AMOUNT), cache.getLights()->size());
+	glBindBuffer(GL_UNIFORM_BUFFER, lightID);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslLight) * cache.getLights()->size(), &cache.getLights()->at(0));
+	glBindBufferBase(GL_UNIFORM_BUFFER, 1, lightID);
 
 	int loadedTextures = 0;
 
@@ -127,7 +128,7 @@ void TMesh::beginDraw() {
 	// Draw the triangles!
 	glDrawElements(
 		GL_TRIANGLES,      // mode
-		mesh->getIndices().size(),    // count
+		mesh.indices.size(),    // count
 		GL_UNSIGNED_SHORT,   // type
 		(void*)0           // element array buffer offset
 	);
@@ -139,6 +140,19 @@ void TMesh::beginDraw() {
 
 void TMesh::endDraw() {
 
+}
+
+void TMesh::setMaterial(ResourceMaterial m){
+	material = m;
+	
+	currentMaterial.ambientColor = material.ambientColor;
+	currentMaterial.diffuseColor = material.diffuseColor;
+	currentMaterial.specularColor = material.specularColor;
+
+	//Send material
+	glBindBuffer(GL_UNIFORM_BUFFER, materialID);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslMaterial), &currentMaterial);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 2, materialID);
 }
 
 void TMesh::setTexture(OBDEnums::TextureTypes tt, TTexture* t){
@@ -162,15 +176,16 @@ void TMesh::setTexture(OBDEnums::TextureTypes tt, TTexture* t){
 		default: break;
 	}
 
+	//Send textures
 	glBindBuffer(GL_UNIFORM_BUFFER, textureID);
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslTexture), &activeTextures);
-	glBindBufferRange(GL_UNIFORM_BUFFER, cache.getID(OBDEnums::OpenGLIDs::BUFFER_TEXTURE), textureID, 0, sizeof(glslTexture));
+	glBindBufferBase(GL_UNIFORM_BUFFER, 3, textureID);
 }
 
-ResourceMesh* TMesh::getMesh(){
+ResourceMesh TMesh::getMesh(){
 	return mesh;
 }
 
-ResourceMaterial* TMesh::getMaterial(){
+ResourceMaterial TMesh::getMaterial(){
 	return material;
 }

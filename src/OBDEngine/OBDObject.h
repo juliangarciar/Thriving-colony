@@ -1,7 +1,8 @@
-#ifndef OBDMESH_H
-#define OBDMESH_H
+#ifndef OBDOBJECT_H
+#define OBDOBJECT_H
 
 #include "OBDEntity.h"
+#include "OBDMesh.h"
 #include "OBDSceneNode.h"
 
 #include "ResourceManager/ResourceOBJ.h"
@@ -10,31 +11,24 @@
 #include "Graphics/TTransform.h"
 #include "Graphics/TMesh.h"
 
-class OBDMesh : public OBDEntity {
+class OBDObject : public OBDEntity {
     public:
         /**
-         * @brief 
+         * @brief Construct a new OBDMesh object
          * 
-         * @param  
-         * @param 
-         * @param 
+         * @param obj 
+         * @param mtl 
          */
-        OBDMesh(ResourceMesh, ResourceMaterial);
+        OBDObject(ResourceOBJ *obj, ResourceMTL *mtl);
 
         /**
-         * @brief 
+         * @brief Construct a new OBDMesh object
          * 
-         * @param  
-         * @param 
-         * @param 
+         * @param parent 
+         * @param obj 
+         * @param mtl 
          */
-        OBDMesh(OBDSceneNode*, ResourceMesh, ResourceMaterial);
-
-        /**
-         * @brief 
-         * 
-         */
-        ~OBDMesh();
+        OBDObject(OBDSceneNode* parent, ResourceOBJ *obj, ResourceMTL *mtl);
 
         /**
          * @brief 
@@ -80,6 +74,12 @@ class OBDMesh : public OBDEntity {
         void setScale(glm::vec3 s);
 
         /**
+         * @brief Set the glslTexture object
+         * 
+         */
+        void setTexture(OBDEnums::TextureTypes, ResourceIMG*);
+
+        /**
          * @brief Set the Active object
          * 
          * @param a 
@@ -95,72 +95,39 @@ class OBDMesh : public OBDEntity {
         bool getActive();
 
         /**
-         * @brief Set the ResourceMaterial object
+         * @brief Set the Material object
          * 
+         * @param mtl 
          */
-        void setMaterial(ResourceMaterial);
-
-        /**
-         * @brief Set the glslTexture object
-         * 
-         */
-        void setTexture(OBDEnums::TextureTypes, ResourceIMG*);
+        void setMaterial(ResourceMTL *mtl);
 
         /**
          * @brief 
-         * 
-         * @param i 
-         */
-        void setID(GLuint i);
-
-        /**
-         * @brief 
-         * 
-         * @return GLuint 
-         */
-        GLuint getID();
-
-        /**
-         * @brief Set the Name object
-         * 
-         * @param n 
-         */
-        void setName(std::string n);
-
-        /**
-         * @brief Get the Name object
-         * 
-         * @return std::string 
-         */
-        std::string getName();
-
-        /**
-         * @brief Set the Name object
-         * 
-         * @param n 
-         */
-        void setMaterialName(std::string n);
-
-        /**
-         * @brief Get the Name object
-         * 
-         * @return std::string 
-         */
-        std::string getMaterialName();
-
-        /**
-         * @brief 
-         * @param
-         * @param sync
+         * @param r 
+         * @param sync 
          */
         void loadTextures(ResourceManager*, bool);
-        
+
         /**
-         * @brief 
+         * @brief Get the Mesh Amount object
+         * 
+         * @return u32 
+         */
+        u32 getMeshAmount();
+
+        /**
+         * @brief Get the Mesh object
          * 
          * @return TMesh* 
          */
-        TMesh* getMeshEntity();
+        OBDMesh *getMesh(std::string);
+
+        /**
+         * @brief Get the Meshes object
+         * 
+         * @return std::map<std::string, OBDMesh*> 
+         */
+        std::map<std::string, OBDMesh*> getMeshes();
 
         /**
          * @brief Get the First Node object
@@ -168,22 +135,17 @@ class OBDMesh : public OBDEntity {
          * @return TNode* 
          */
         TNode *getFirstNode();
+
     private:
         TNode* rotationNode;
         TNode* translationNode;
         TNode* scaleNode;
-        TNode* meshNode;
+
+        std::map<std::string, OBDMesh*> meshes;
 
         glm::vec3 node_position;
         glm::vec3 node_rotation;
         glm::vec3 node_scale;
-
-        GLuint ID;
-        std::string name;
-        std::string materialName;
-
-        ResourceMesh mesh;
-        ResourceMaterial material;
 };
 
 #endif

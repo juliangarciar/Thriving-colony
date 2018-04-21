@@ -50,6 +50,8 @@ class OBDEnums {
             BUFFER_MATERIAL,
             BUFFER_TEXTURE,
 
+            LIGHT_AMOUNT,
+
             SAMPLER_AMBIENT,
             SAMPLER_DIFFUSE,
             SAMPLER_SPECULAR,

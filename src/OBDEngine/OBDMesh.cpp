@@ -1,78 +1,145 @@
 #include "OBDMesh.h"
 
-OBDMesh::OBDMesh(OBDSceneNode* parent, ResourceOBJ *obj, ResourceMTL *mtl) {
-    rotationNode = new TNode(new TTransform(), parent->getSceneNode());
+OBDMesh::OBDMesh(ResourceMesh m, ResourceMaterial mat){
+    rotationNode = new TNode(new TTransform());
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
 
-    std::map<std::string, ResourceMesh *> submeshes = *obj->getResource();
-    std::map<std::string, ResourceMaterial *> submats = *mtl->getResource();
+    meshNode = new TNode(new TMesh(m, mat), scaleNode);
 
-    for (std::map<std::string, ResourceMesh *>::iterator it=submeshes.begin(); it!=submeshes.end(); ++it) {
-        std::map<std::string, ResourceMaterial *>::iterator it2;
-        it2 = submats.find(it->second->getDefaultMaterialName());
-        if (it2 == submats.end()){
-            std::cout << "No existe material " << it->second->getDefaultMaterialName() << " para el mesh " << it->first << std::endl;
-            exit(0);
-        }
+    mesh = m;
+    material = mat;
+    name = m.name;
+    materialName = m.defaultMaterialName;
+}
 
-        TMesh *tempMesh = new TMesh(it->second, it2->second);
+OBDMesh::OBDMesh(OBDSceneNode* parent, ResourceMesh m, ResourceMaterial mat){
+    rotationNode = new TNode(new TTransform());
+    translationNode = new TNode(new TTransform(), rotationNode);
+    scaleNode = new TNode(new TTransform(), translationNode);
 
-        meshes.insert(std::pair<std::string, TMesh*>(it->second->getName(), tempMesh));
-    }
+    meshNode = new TNode(new TMesh(m, mat), scaleNode);
 
-    //ToDo: un nodo para cada submesh
-    meshNode = new TNode(meshes.begin()->second, scaleNode);
+    mesh = m;
+    material = mat;
+    name = m.name;
+    materialName = m.defaultMaterialName;
+
+    parent->addChild(this);
 }
 
 OBDMesh::~OBDMesh() {
 
 }
 
-//ToDo: poder cambiar material de cada mesh (o de todos cambiando el MTL)
+void OBDMesh::translate(f32 tX, f32 tY, f32 tZ) {
+    TTransform* t = (TTransform*) translationNode -> getEntity();
+    t -> translate(tX, tY, tZ);
+    node_position += glm::vec3(tX, tY, tZ);
+}
 
-void OBDMesh::rotate(f32 rX, f32 rY, f32 rZ) {
+void OBDMesh::rotate(f32 rX, f32 rY, f32 rZ, f32 angle) {
     TTransform* t = (TTransform*) rotationNode -> getEntity();
-    t -> rotate(rX, rY, rZ, 0);
+    t -> rotate(rX, rY, rZ, angle);
+    node_rotation += glm::vec3(rX, rY, rZ);
 }
 
 void OBDMesh::scale(f32 sX, f32 sY, f32 sZ) {
     TTransform* t = (TTransform*) scaleNode -> getEntity();
     t -> scale(sX, sY, sZ);
-}
-
-void OBDMesh::translate(f32 tX, f32 tY, f32 tZ) {
-    TTransform* t = (TTransform*) translationNode -> getEntity();
-    t -> translate(tX, tY, tZ);
-}
-
-void OBDMesh::setTexture(std::string name, OBDEnums::TextureTypes tt, ResourceIMG *t){
-    meshes[name] -> setTexture(tt, new TTexture(t));
-}
-
-u32 OBDMesh::getMeshAmount(){
-    return meshes.size();
-}
-
-TMesh *OBDMesh::getShape(std::string meshName){
-    return meshes[meshName];
-}
-
-std::map<std::string, TMesh*> OBDMesh::getMeshes(){
-    return meshes;
+    node_scale += glm::vec3(sX, sY, sZ);
 }
 
 void OBDMesh::setPosition(glm::vec3 p) {
     TTransform* t = (TTransform*) translationNode -> getEntity();
-    t -> translate(p.x, p.y, p.z);
+    glm::vec3 o = node_position - p;
+    t -> translate(o.x, o.y, o.z);
+    node_position = p;
 }
 
-void OBDMesh::setRotation(glm::vec3 r) {
+void OBDMesh::setRotation(glm::vec3 r, f32 angle) {
     TTransform* t = (TTransform*) rotationNode -> getEntity();
-    t -> rotate(r.x, r.y, r.z, 0);
+    glm::vec3 o = node_rotation - r;
+    t -> rotate(o.x, o.y, o.z, angle);
+    node_rotation = r;
 }
 
 void OBDMesh::setScale(glm::vec3 s) {
     TTransform* t = (TTransform*) scaleNode -> getEntity();
-    t -> scale(s.x, s.y, s.z);
+    glm::vec3 o = node_scale - s;
+    t -> scale(o.x, o.y, o.z);
+    node_scale = s;
+}
+
+void OBDMesh::setActive(bool a) {
+    meshNode -> setActive(a);
+}
+
+bool OBDMesh::getActive() {
+    return meshNode -> getActive();
+}
+
+void OBDMesh::setMaterial(ResourceMaterial mat){
+    TMesh* m = (TMesh*) meshNode -> getEntity();
+    m->setMaterial(mat);
+}
+
+void OBDMesh::setTexture(OBDEnums::TextureTypes tt, ResourceIMG *t){
+    TMesh* m = (TMesh*) meshNode -> getEntity();
+    m -> setTexture(tt, new TTexture(t));
+}
+
+void OBDMesh::setName(std::string n) {
+	name = n;
+}
+
+std::string OBDMesh::getName() {
+	return name;
+}
+
+void OBDMesh::setMaterialName(std::string n) {
+	name = n;
+}
+
+std::string OBDMesh::getMaterialName() {
+	return materialName;
+}
+
+void OBDMesh::loadTextures(ResourceManager *r, bool sync){
+    if (material.ambientTextureMap != ""){
+        ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.ambientTextureMap, sync);
+        setTexture(OBDEnums::TextureTypes::TEXTURE_AMBIENT, tmp);
+    }
+    if (material.diffuseTextureMap != ""){
+        ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.diffuseTextureMap, sync);
+        setTexture(OBDEnums::TextureTypes::TEXTURE_DIFFUSE, tmp);
+    }
+    if (material.specularTextureMap != ""){
+        ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.specularTextureMap, sync);
+        setTexture(OBDEnums::TextureTypes::TEXTURE_SPECULAR, tmp);
+    }
+    if (material.alphaTextureMap != ""){
+        ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.alphaTextureMap, sync);
+        setTexture(OBDEnums::TextureTypes::TEXTURE_ALPHA, tmp);
+    }
+    if (material.bumpMap != ""){
+        ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.bumpMap, sync);
+        setTexture(OBDEnums::TextureTypes::TEXTURE_BUMP, tmp);
+    }
+}
+
+void OBDMesh::setID(GLuint i) {
+	ID = i;
+}
+
+GLuint OBDMesh::getID() {
+	return ID;
+}
+
+TMesh* OBDMesh::getMeshEntity() {
+    return (TMesh*) meshNode -> getEntity();
+}
+
+TNode *OBDMesh::getFirstNode(){
+    return rotationNode;
 }
