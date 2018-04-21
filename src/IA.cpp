@@ -216,13 +216,12 @@ void IA::chooseBehaviour() {
     // RAndomize the seed
     srand(time(nullptr));
     // Determine a number between 0 and 4, the number of possible behaviours for the AI to choose
-    //behaviour = (Enumeration::IABehaviour)(rand()%(4-0 + 1) + 0);
-    behaviour = Enumeration::IABehaviour::VeryHappy;
-    /*switch (behaviour) {
-        case Enumeration::IABehaviour::VeryHappy: */
+    behaviour = (Enumeration::IABehaviour)(rand()%(4-0 + 1) + 0);
+    switch (behaviour) {
+        case Enumeration::IABehaviour::VeryHappy:
             chosenBehaviour = "Very happy";
             veryHappyBehaviour();
-       /* break;
+        break;
         case Enumeration::IABehaviour::Happy: 
             chosenBehaviour = "Happy";   
             veryHappyBehaviour(); 
@@ -239,7 +238,7 @@ void IA::chooseBehaviour() {
             chosenBehaviour = "Very unhappy";
             veryHappyBehaviour();
         break;
-    }*/
+    }
 }
 
 void IA::veryHappyBehaviour() {
