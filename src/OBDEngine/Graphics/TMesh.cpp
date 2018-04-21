@@ -8,8 +8,6 @@ TMesh::TMesh(ResourceMesh r, ResourceMaterial m) : TEntity() {
 	mesh = r;
 	material = m;
 
-	name= "";
-
 	for (int i = 0; i < OBDEnums::TextureTypes::TEXTURE_SIZE; i++){
 		textures.push_back(NULL);
 	}
@@ -23,6 +21,10 @@ TMesh::TMesh(ResourceMesh r, ResourceMaterial m) : TEntity() {
 	currentMaterial.ambientColor = material.ambientColor;
 	currentMaterial.diffuseColor = material.diffuseColor;
 	currentMaterial.specularColor = material.specularColor;
+
+	std::cout << currentMaterial.ambientColor.x << " " << currentMaterial.ambientColor.y << " " << currentMaterial.ambientColor.z << std::endl;
+	std::cout << currentMaterial.diffuseColor.x << " " << currentMaterial.diffuseColor.y << " " << currentMaterial.diffuseColor.z << std::endl;
+	std::cout << currentMaterial.specularColor.x << " " << currentMaterial.specularColor.y << " " << currentMaterial.specularColor.z << std::endl;
 
 	// Generate a buffer for the vertices
 	glGenBuffers(1, &VBOID);
@@ -43,11 +45,15 @@ TMesh::TMesh(ResourceMesh r, ResourceMaterial m) : TEntity() {
 	glGenBuffers(1, &materialID);
 	glBindBuffer(GL_UNIFORM_BUFFER, materialID);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslMaterial), &currentMaterial, GL_DYNAMIC_DRAW);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslMaterial), &currentMaterial);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 2, materialID);
 
 	// Textures
 	glGenBuffers(1, &textureID);
 	glBindBuffer(GL_UNIFORM_BUFFER, textureID);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslTexture), &activeTextures, GL_DYNAMIC_DRAW);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslTexture), &activeTextures);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 3, textureID);
 }
 
 TMesh::~TMesh() {

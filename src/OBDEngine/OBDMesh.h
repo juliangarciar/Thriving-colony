@@ -10,8 +10,6 @@
 #include "Graphics/TTransform.h"
 #include "Graphics/TMesh.h"
 
-class OBDObject;
-
 class OBDMesh : public OBDEntity {
     public:
         /**
@@ -22,15 +20,6 @@ class OBDMesh : public OBDEntity {
          * @param 
          */
         OBDMesh(ResourceMesh, ResourceMaterial);
-
-        /**
-         * @brief 
-         * 
-         * @param  
-         * @param 
-         * @param 
-         */
-        OBDMesh(OBDObject*, ResourceMesh, ResourceMaterial);
 
         /**
          * @brief 
@@ -153,10 +142,10 @@ class OBDMesh : public OBDEntity {
          */
         TNode *getFirstNode();
     private:
-        TNode* meshNode;
         TNode* rotationNode;
         TNode* translationNode;
         TNode* scaleNode;
+        TNode* meshNode;
 
         glm::vec3 node_position;
         glm::vec3 node_rotation;

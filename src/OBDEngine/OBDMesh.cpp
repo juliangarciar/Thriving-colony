@@ -8,16 +8,6 @@ OBDMesh::OBDMesh(ResourceMesh mesh, ResourceMaterial mat){
     meshNode = new TNode(new TMesh(mesh, mat), scaleNode);
 }
 
-OBDMesh::OBDMesh(OBDObject* parent, ResourceMesh mesh, ResourceMaterial mat){
-    rotationNode = new TNode(new TTransform());
-    translationNode = new TNode(new TTransform(), rotationNode);
-    scaleNode = new TNode(new TTransform(), translationNode);
-
-    meshNode = new TNode(new TMesh(mesh, mat), scaleNode);
-
-    parent->addMesh(this);
-}
-
 OBDMesh::OBDMesh(OBDSceneNode* parent, ResourceMesh mesh, ResourceMaterial mat){
     rotationNode = new TNode(new TTransform());
     translationNode = new TNode(new TTransform(), rotationNode);
@@ -50,13 +40,6 @@ void OBDMesh::scale(f32 sX, f32 sY, f32 sZ) {
     node_scale += glm::vec3(sX, sY, sZ);
 }
 
-//ToDo: setMaterial
-
-void OBDMesh::setTexture(OBDEnums::TextureTypes tt, ResourceIMG *t){
-    TMesh* m = (TMesh*) meshNode -> getEntity();
-    m -> setTexture(tt, new TTexture(t));
-}
-
 void OBDMesh::setPosition(glm::vec3 p) {
     TTransform* t = (TTransform*) translationNode -> getEntity();
     glm::vec3 o = node_position - p;
@@ -84,6 +67,13 @@ void OBDMesh::setActive(bool a) {
 
 bool OBDMesh::getActive() {
     return meshNode -> getActive();
+}
+
+//ToDo: setMaterial
+
+void OBDMesh::setTexture(OBDEnums::TextureTypes tt, ResourceIMG *t){
+    TMesh* m = (TMesh*) meshNode -> getEntity();
+    m -> setTexture(tt, new TTexture(t));
 }
 
 void OBDMesh::setName(std::string n) {

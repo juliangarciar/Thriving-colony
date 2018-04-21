@@ -7,7 +7,7 @@
 #include "OBDBillboard.h"
 #include "OBDCamera.h"
 #include "OBDLight.h"
-#include "OBDMesh.h"
+#include "OBDObject.h"
 #include "OBDSceneNode.h"
 #include "OBDShaderProgram.h"
 
@@ -75,7 +75,7 @@ class OBDEngine {
          * @param 
          * @return OBDMesh* 
          */
-        OBDMesh* createMesh(std::string);
+        OBDObject* createObject(std::string);
         
         /**
          * @brief 
@@ -84,7 +84,7 @@ class OBDEngine {
          * @param 
          * @return OBDMesh* 
          */
-        OBDMesh* createMesh(OBDSceneNode*, std::string);
+        OBDObject* createObject(OBDSceneNode*, std::string);
         
         /**
          * @brief 
