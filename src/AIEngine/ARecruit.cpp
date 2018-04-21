@@ -10,6 +10,9 @@ ARecruit::~ARecruit() {
 }
 
 Enumeration::BehaviourState ARecruit::Update(Enumeration::UnitType type) {
+    if (type == Enumeration::UnitType::DefenseStandardM) {
+        type = Enumeration::UnitType::StandardM;
+    }
     IA::Instance() -> getUnitManager() -> createTroop(type);
     return Enumeration::BehaviourState::Success;
 }

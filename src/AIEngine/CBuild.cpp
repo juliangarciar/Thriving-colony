@@ -24,12 +24,19 @@ Enumeration::BehaviourState CBuild::Update() {
         break;
         case Enumeration::BuildingType::Barrack : 
             if (IA::Instance() -> getTree() -> getNeedBarracks()) {
-                std::cout<<"llega21"<<std::endl;
                 IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildBarrack);
                 actionToDo();
                 return Enumeration::BehaviourState::Success;
             } else {
-                std::cout<<"llega22"<<std::endl;
+                return Enumeration::BehaviourState::Failure;
+            }
+        break;
+        case Enumeration::BuildingType::DefenseBarrack : 
+            if (IA::Instance() -> getUnderAttack() == true && IA::Instance() -> getTree() -> getNeedBarracks()) {
+                IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildBarrack);
+                actionToDo();
+                return Enumeration::BehaviourState::Success;
+            } else {
                 return Enumeration::BehaviourState::Failure;
             }
         break;
@@ -50,6 +57,11 @@ Enumeration::BehaviourState CBuild::Update() {
             } else {
                 return Enumeration::BehaviourState::Failure;
             }
+        break;
+        case Enumeration::BuildingType::LastChoiceHouse : 
+            IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildHome);
+            actionToDo();
+            return Enumeration::BehaviourState::Success;
         break;
         case Enumeration::BuildingType::Market : 
             if (IA::Instance() -> getHappiness() < IA::Instance() -> getTree() -> getHappinessThreshold() && IA::Instance() -> getCityLevel() >= IA::Instance() -> getTree() -> getMarketMilestone()) {

@@ -18,8 +18,16 @@ Enumeration::BehaviourState ABuild::Update(Enumeration::BuildingType type) {
         case Enumeration::BuildingType::Barrack :
             IA::Instance() -> getTree() -> setRequireBarrack(false);
         break;
+        case Enumeration::BuildingType::DefenseBarrack :
+            IA::Instance() -> getTree() -> setRequireBarrack(false);
+            type = Enumeration::BuildingType::Barrack;
+        break;
         case Enumeration::BuildingType::House : 
             IA::Instance() -> getTree() -> setRequireCitizens(false);
+        break;
+        case Enumeration::BuildingType::LastChoiceHouse : 
+            IA::Instance() -> getTree() -> setRequireCitizens(false);
+            type = Enumeration::BuildingType::House;
         break;
         case Enumeration::BuildingType::Quarry : 
             IA::Instance() -> getTree() -> setRequireCrystal(false);
@@ -27,6 +35,9 @@ Enumeration::BehaviourState ABuild::Update(Enumeration::BuildingType type) {
         break;
         case Enumeration::BuildingType::Workshop : 
             IA::Instance() -> getTree() -> setRequireBarrack(false);
+        break;
+        case Enumeration::BuildingType::Tower : 
+            std::cout<<"torre"<<std::endl;
         break;
     }
     IA::Instance() -> getBuildingManager() -> buildBuilding(v, type, false);

@@ -55,7 +55,13 @@ Enumeration::BehaviourState CRecruit::Update() {
             break;
             case Enumeration::UnitType::StandardM : 
                 if (IA::Instance() -> getTree() -> calculateMeleeRate() < IA::Instance() -> getTree() -> getMeleeThreshold()) {
-                    std::cout<<"llega31"<<std::endl;
+                    IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::TrainMeleeFootman);
+                    actionToDo();
+                    return Enumeration::BehaviourState::Success;
+                }
+            break;
+            case Enumeration::UnitType::DefenseStandardM : 
+                if (IA::Instance() -> getUnderAttack() == true) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::TrainMeleeFootman);
                     actionToDo();
                     return Enumeration::BehaviourState::Success;
@@ -70,7 +76,6 @@ Enumeration::BehaviourState CRecruit::Update() {
             break;
         }
     }
-    std::cout<<"llega32"<<std::endl;
     return Enumeration::BehaviourState::Failure;
 }
 

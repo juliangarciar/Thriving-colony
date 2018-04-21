@@ -216,29 +216,30 @@ void IA::chooseBehaviour() {
     // RAndomize the seed
     srand(time(nullptr));
     // Determine a number between 0 and 4, the number of possible behaviours for the AI to choose
-    behaviour = (Enumeration::IABehaviour)(rand()%(4-0 + 1) + 0);
-    switch (behaviour) {
-        case Enumeration::IABehaviour::VeryHappy: 
+    //behaviour = (Enumeration::IABehaviour)(rand()%(4-0 + 1) + 0);
+    behaviour = Enumeration::IABehaviour::VeryHappy;
+    /*switch (behaviour) {
+        case Enumeration::IABehaviour::VeryHappy: */
             chosenBehaviour = "Very happy";
             veryHappyBehaviour();
-        break;
+       /* break;
         case Enumeration::IABehaviour::Happy: 
             chosenBehaviour = "Happy";   
-            happyBehaviour(); 
+            veryHappyBehaviour(); 
         break;
         case Enumeration::IABehaviour::Neutral:
             chosenBehaviour = "Neutral"; 
-            neutralBehaviour();
+            veryHappyBehaviour();
         break;
         case Enumeration::IABehaviour::Unhappy: 
             chosenBehaviour = "Unhappy";
-            unhappyBehaviour();
+            veryHappyBehaviour();
         break;
         case Enumeration::IABehaviour::VeryUnhappy: 
             chosenBehaviour = "Very unhappy";
-            veryUnhappyBehaviour();
+            veryHappyBehaviour();
         break;
-    }
+    }*/
 }
 
 void IA::veryHappyBehaviour() {
@@ -248,8 +249,8 @@ void IA::veryHappyBehaviour() {
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
     std::vector<Behaviour*> aux1;
-    aux1.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Barrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
-    aux1.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    aux1.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::DefenseBarrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
+    aux1.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::DefenseStandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
     auxdef.push_back(new Selector(aux1));
     auxroot.push_back(new Selector(auxdef));
 
@@ -304,6 +305,9 @@ void IA::veryHappyBehaviour() {
     auxcity.push_back(new Selector(auxarmy));
     auxroot.push_back(new Selector(auxcity));
 
+    //Last choice
+    auxroot.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::LastChoiceHouse, Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost));
+
     rootNode = new ActiveSelector(auxroot);
 }
 
@@ -314,8 +318,8 @@ void IA::happyBehaviour() {
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
     std::vector<Behaviour*> aux1;
-    aux1.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Barrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
-    aux1.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    aux1.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::DefenseBarrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
+    aux1.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::DefenseStandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
     auxdef.push_back(new Selector(aux1));
     auxroot.push_back(new Selector(auxdef));
 
@@ -370,6 +374,9 @@ void IA::happyBehaviour() {
     auxcity.push_back(new Selector(auxarmy));
     auxroot.push_back(new Selector(auxcity));
     
+    //Last choice
+    auxroot.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::LastChoiceHouse, Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost));
+
     rootNode = new ActiveSelector(auxroot);
 }
 
@@ -380,8 +387,8 @@ void IA::neutralBehaviour() {
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
     std::vector<Behaviour*> aux1;
-    aux1.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Barrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
-    aux1.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    aux1.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::DefenseBarrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
+    aux1.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::DefenseStandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
     auxdef.push_back(new Selector(aux1));
     auxroot.push_back(new Selector(auxdef));
 
@@ -435,6 +442,9 @@ void IA::neutralBehaviour() {
     auxarmy.push_back(new Selector(auxbuil));
     auxcity.push_back(new Selector(auxarmy));
     auxroot.push_back(new Selector(auxcity));
+
+    //Last choice
+    auxroot.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::LastChoiceHouse, Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost));
 
     rootNode = new ActiveSelector(auxroot);
 }
@@ -446,8 +456,8 @@ void IA::unhappyBehaviour() {
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
     std::vector<Behaviour*> aux1;
-    aux1.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Barrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
-    aux1.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    aux1.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::DefenseBarrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
+    aux1.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::DefenseStandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
     auxdef.push_back(new Selector(aux1));
     auxroot.push_back(new Selector(auxdef));
 
@@ -501,6 +511,9 @@ void IA::unhappyBehaviour() {
     auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Market, Enumeration::BuildingCost::MarketMetalCost, Enumeration::BuildingCost::MarketCrystalCost));
     auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::School, Enumeration::BuildingCost::SchoolMetalCost, Enumeration::BuildingCost::SchoolCrystalCost));
     auxcity.push_back(new Selector(auxser));
+
+    //Last choice
+    auxroot.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::LastChoiceHouse, Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost));
 
     rootNode = new ActiveSelector(auxroot);
 }
@@ -512,8 +525,8 @@ void IA::veryUnhappyBehaviour() {
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
     std::vector<Behaviour*> aux1;
-    aux1.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Barrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
-    aux1.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    aux1.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::DefenseBarrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
+    aux1.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::DefenseStandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
     auxdef.push_back(new Selector(aux1));
     auxroot.push_back(new Selector(auxdef));
 
@@ -567,6 +580,9 @@ void IA::veryUnhappyBehaviour() {
     auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Market, Enumeration::BuildingCost::MarketMetalCost, Enumeration::BuildingCost::MarketCrystalCost));
     auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::School, Enumeration::BuildingCost::SchoolMetalCost, Enumeration::BuildingCost::SchoolCrystalCost));
     auxcity.push_back(new Selector(auxser));
+
+    //Last choice
+    auxroot.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::LastChoiceHouse, Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost));
 
     rootNode = new ActiveSelector(auxroot);
 }

@@ -214,10 +214,12 @@ bool BehaviourTree::getUnderAttack() {
 }
 
 bool BehaviourTree::getShortOnCrystal() {
+    shortOnCrystal = requireCrystal || ((IA::Instance() -> getCityLevel() >= quarryMilestone) && (calculateCrystalProductionRate() < crystalThreshold));
     return shortOnCrystal;
 }
 
 bool BehaviourTree::getShortOnMetal() {
+    shortOnMetal = calculateMetalProductionRate() < metalThreshold;
     return shortOnMetal;
 }
 

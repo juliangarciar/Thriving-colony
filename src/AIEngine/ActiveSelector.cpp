@@ -9,13 +9,13 @@ ActiveSelector::~ActiveSelector() {
 }
 
 Enumeration::BehaviourState ActiveSelector::Update() {
-    if (priority != NULL){
+    if (priority != NULL) {
         if (priority -> Update() == Enumeration::BehaviourState::Success) {
             return Enumeration::BehaviourState::Success;
         }
         return Enumeration::BehaviourState::Failure;
     } else {
-        Selector::Update();
+        return Selector::Update();
     }
 }
 
