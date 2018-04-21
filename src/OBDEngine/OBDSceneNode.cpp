@@ -1,21 +1,23 @@
 #include "OBDSceneNode.h"
 
+OBDSceneNode::OBDSceneNode() {
+    rotationNode = new TNode(new TTransform());
+    translationNode = new TNode(new TTransform(), rotationNode);
+    scaleNode = new TNode(new TTransform(), translationNode);
+}
+
 OBDSceneNode::OBDSceneNode(TNode* parent) {
     rotationNode = new TNode(new TTransform(), parent);
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
-    sceneNode = scaleNode;
-    // o esto o getcameraNode
-    //OBDEngine::Instance() -> registerSceneNode(sceneNode);
 }
 
 OBDSceneNode::OBDSceneNode(OBDSceneNode* parent) {
-    rotationNode = new TNode(new TTransform(), parent->getSceneNode());
+    rotationNode = new TNode(new TTransform());
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
-    sceneNode = scaleNode;
-    // o esto o getcameraNode
-    //OBDEngine::Instance() -> registerSceneNode(sceneNode);
+
+    parent->addChild(this);
 }
 
 OBDSceneNode::~OBDSceneNode() {
@@ -63,6 +65,16 @@ void OBDSceneNode::setScale(glm::vec3 s) {
     node_scale = s;
 }
 
-TNode* OBDSceneNode::getSceneNode() {
-    return sceneNode;
+void OBDSceneNode::addChild(OBDEntity *e){
+    e->getFirstNode()->setParent(scaleNode);
+    scaleNode->addChild(e->getFirstNode());
+}
+
+void OBDSceneNode::addChild(TNode *e){
+    e->setParent(scaleNode);
+    scaleNode->addChild(e);
+}
+
+TNode* OBDSceneNode::getFirstNode() {
+    return rotationNode;
 }

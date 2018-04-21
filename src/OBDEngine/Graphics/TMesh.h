@@ -4,8 +4,8 @@
 #include <GL/glew.h>
 
 #include "TEntity.h"
-#include "../ResourceManager/Helpers/ResourceMesh.h"
-#include "../ResourceManager/Helpers/ResourceMaterial.h"
+#include "../ResourceManager/ResourceOBJ.h"
+#include "../ResourceManager/ResourceMTL.h"
 #include "TTexture.h"
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
@@ -16,7 +16,7 @@ class TMesh : public TEntity {
          * @brief 
          * 
          */
-        TMesh(ResourceMesh *, ResourceMaterial *);
+        TMesh(ResourceMesh, ResourceMaterial);
 
         /**
          * @brief 
@@ -41,7 +41,7 @@ class TMesh : public TEntity {
          * 
          * @param m 
          */
-        virtual void setMaterial(ResourceMaterial *m);
+        virtual void setMaterial(ResourceMaterial m);
 
         /**
          * @brief Set the glslTexture object
@@ -52,27 +52,19 @@ class TMesh : public TEntity {
         /**
          * @brief Get the Mesh object
          * 
-         * @return ResourceMesh* 
+         * @return ResourceMesh
          */
-        ResourceMesh* getMesh();
+        ResourceMesh getMesh();
 
         /**
          * @brief Get the glslMaterial object
          * 
-         * @return ResourceMaterial* 
+         * @return ResourceMaterial
          */
-        ResourceMaterial* getMaterial();
-
-        void setName(std::string n);
-
-        std::string getName();
-
-        void setID(GLuint i);
-
-        GLuint getID();
+        ResourceMaterial getMaterial();
     private:
-        ResourceMesh* mesh;
-        ResourceMaterial* material;
+        ResourceMesh mesh;
+        ResourceMaterial material;
         
         std::vector<TTexture*> textures;
         
@@ -85,9 +77,6 @@ class TMesh : public TEntity {
         GLuint lightID;
         GLuint materialID;
         GLuint textureID;
-
-        GLuint ID;
-        std::string name;
 };
 
 #endif

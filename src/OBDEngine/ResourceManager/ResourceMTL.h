@@ -4,7 +4,24 @@
 #include "Resource.h"
 #include "ResourceManager.h"
 
-#include "Helpers/ResourceMaterial.h"
+struct ResourceMaterial{
+    std::string materialName;
+    
+    glm::vec3 ambientColor;
+    glm::vec3 diffuseColor;
+    glm::vec3 specularColor;
+    
+    f32 specularExponent;
+    f32 opticalDensity;
+    f32 dissolve;
+    i32 illumination;
+
+    std::string ambientTextureMap;
+    std::string diffuseTextureMap;
+    std::string specularTextureMap;
+    std::string alphaTextureMap;
+    std::string bumpMap;
+};
 
 class ResourceMTL : public Resource {
     public:
@@ -17,9 +34,9 @@ class ResourceMTL : public Resource {
         void setIdentifier(const char *);
         const char *getIdentifier();
 
-        std::map<std::string, ResourceMaterial*> *getResource();
+        std::map<std::string, ResourceMaterial> getResource();
     private:
-        std::map<std::string, ResourceMaterial*> materialArray;
+        std::map<std::string, ResourceMaterial> materialArray;
         
 };
 

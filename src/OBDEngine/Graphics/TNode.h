@@ -87,6 +87,12 @@ class TNode {
         bool getActive();
 
         /**
+         * @brief Set the Parent object
+         * @param node
+         */
+        void setParent(TNode *);
+
+        /**
          * @brief 
          * 
          * @return TNode* 

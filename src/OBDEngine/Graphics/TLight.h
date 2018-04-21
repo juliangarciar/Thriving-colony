@@ -59,6 +59,12 @@ class TLight : public TEntity {
         void setPosition(glm::vec3 p);
 
         /**
+         * @brief Set the Active object
+         * 
+         */
+        void setActive(bool);
+
+        /**
          * @brief Get the Position object
          * 
          * @return glm::vec3 
@@ -68,6 +74,8 @@ class TLight : public TEntity {
         OBDEnums::LightTypes lightType;
 
         glslLight components;
+
+        bool active;
 };
 
 #endif

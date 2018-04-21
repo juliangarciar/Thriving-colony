@@ -1,12 +1,19 @@
 #ifndef OBDSCENENODE_H
 #define OBDSCENENODE_H
 
-#include "OBDTypes.h"
-#include "Graphics/TNode.h"
+#include "OBDEntity.h"
+
 #include "Graphics/TTransform.h"
 
-class OBDSceneNode {
+class OBDSceneNode : public OBDEntity {
     public:
+        /**
+         * @brief 
+         * 
+         * @param parent 
+         */
+        OBDSceneNode();
+
         /**
          * @brief 
          * 
@@ -73,12 +80,23 @@ class OBDSceneNode {
         /**
          * @brief 
          * 
+         */
+        void addChild(OBDEntity *);
+
+        /**
+         * @brief 
+         * 
+         */
+        void addChild(TNode *);
+
+        /**
+         * @brief Get the First Node object
+         * 
          * @return TNode* 
          */
-        TNode* getSceneNode();
+        TNode *getFirstNode();
 
     private:
-        TNode* sceneNode;
         TNode* rotationNode;
         TNode* translationNode;
         TNode* scaleNode;

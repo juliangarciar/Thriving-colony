@@ -8,14 +8,16 @@ TLight::TLight(OBDColor c, f32 i) : TEntity(){
     setSpecularComponent(c, i);
     setPosition(glm::vec3(0,0,0));
 
-    cache.getLights()->push_back(components);
-    //ToDo: actualizar array de luces cuando se modifica algun parametro (o usar punteros?)
+    active = true;
 }
 
 TLight::~TLight(){
 }
 
 void TLight::beginDraw(){
+    if (active) {
+        cache.getLights()->push_back(components);
+    }
 }
 
 void TLight::endDraw(){
@@ -31,6 +33,10 @@ void TLight::setDiffuseComponent(OBDColor c, f32 i){
         
 void TLight::setSpecularComponent(OBDColor c, f32 i){
     components.specularComponent = c.getRGB() * (float)i;
+}
+
+void TLight::setActive(bool a){
+    active = a;
 }
 
 void TLight::setPosition(glm::vec3 p) {

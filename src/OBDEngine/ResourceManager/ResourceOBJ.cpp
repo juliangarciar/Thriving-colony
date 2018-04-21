@@ -14,6 +14,7 @@ ResourceOBJ::~ResourceOBJ(){
 void ResourceOBJ::load(const char *path){
     setIdentifier(path);
     objl::Loader loader;
+    
     bool loadout = loader.LoadFile(path);
     if (!loadout) {
         std::cout << "Error al abrir el fichero " << path << std::endl;
@@ -26,7 +27,7 @@ void ResourceOBJ::load(const char *path){
         // Copy one of the loaded meshes to be our current mesh
         objl::Mesh curMesh = loader.LoadedMeshes[i];
 
-        ResourceMesh *tempMesh = new ResourceMesh(curMesh.MeshName);
+        ResourceMesh tempMesh;
 
         std::vector<f32> vbo;
 
@@ -75,18 +76,16 @@ void ResourceOBJ::load(const char *path){
 
         
 
-        tempMesh->setVBO(vbo);
-        tempMesh->setIndices(curMesh.Indices);
-        tempMesh->setDefaultMaterialName(curMesh.MeshMaterial.name);
+        tempMesh.name = curMesh.MeshName;
+        tempMesh.vbo = vbo;
+        tempMesh.indices = curMesh.Indices;
+        tempMesh.defaultMaterialName = curMesh.MeshMaterial.name;
 
-        meshArray.insert(std::pair<std::string, ResourceMesh*>(curMesh.MeshName, tempMesh));
+        meshArray.insert(std::pair<std::string, ResourceMesh>(curMesh.MeshName, tempMesh));
     }
 }
 
 void ResourceOBJ::release(){
-    for (std::map<std::string, ResourceMesh*>::iterator it = meshArray.begin(); it != meshArray.end(); ++it){
-        delete it->second;
-    }
     meshArray.clear();
 }
 
@@ -98,8 +97,8 @@ const char *ResourceOBJ::getIdentifier(){
     return identifier;
 }
 
-std::map<std::string, ResourceMesh*> *ResourceOBJ::getResource(){
-    return &meshArray;
+std::map<std::string, ResourceMesh> ResourceOBJ::getResource(){
+    return meshArray;
 }
 
 std::string ResourceOBJ::getDefaultMaterialPath(){

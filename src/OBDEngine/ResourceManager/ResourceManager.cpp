@@ -16,7 +16,7 @@ ResourceManager::~ResourceManager(){
 }
 
 void ResourceManager::Update(){
-    //ToDo: ¿esto es asi?
+    //ToDo: revisar cola de procesos
     threads.front().join();
     threads.pop();
 }
