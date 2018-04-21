@@ -73,18 +73,20 @@ class OBDEngine {
          * @brief 
          * 
          * @param 
+         * @param autoload
          * @return OBDMesh* 
          */
-        OBDObject* createObject(std::string);
+        OBDObject* createObject(std::string, bool = false);
         
         /**
          * @brief 
          * 
          * @param 
          * @param 
+         * @param autoload
          * @return OBDMesh* 
          */
-        OBDObject* createObject(OBDSceneNode*, std::string);
+        OBDObject* createObject(OBDSceneNode*, std::string, bool = false);
         
         /**
          * @brief 

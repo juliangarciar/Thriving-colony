@@ -1,19 +1,29 @@
 #include "OBDMesh.h"
 
-OBDMesh::OBDMesh(ResourceMesh mesh, ResourceMaterial mat){
+OBDMesh::OBDMesh(ResourceMesh m, ResourceMaterial mat){
     rotationNode = new TNode(new TTransform());
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
 
-    meshNode = new TNode(new TMesh(mesh, mat), scaleNode);
+    meshNode = new TNode(new TMesh(m, mat), scaleNode);
+
+    mesh = m;
+    material = mat;
+    name = m.name;
+    materialName = m.defaultMaterialName;
 }
 
-OBDMesh::OBDMesh(OBDSceneNode* parent, ResourceMesh mesh, ResourceMaterial mat){
+OBDMesh::OBDMesh(OBDSceneNode* parent, ResourceMesh m, ResourceMaterial mat){
     rotationNode = new TNode(new TTransform());
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
 
-    meshNode = new TNode(new TMesh(mesh, mat), scaleNode);
+    meshNode = new TNode(new TMesh(m, mat), scaleNode);
+
+    mesh = m;
+    material = mat;
+    name = m.name;
+    materialName = m.defaultMaterialName;
 
     parent->addChild(this);
 }
@@ -69,7 +79,10 @@ bool OBDMesh::getActive() {
     return meshNode -> getActive();
 }
 
-//ToDo: setMaterial
+void OBDMesh::setMaterial(ResourceMaterial mat){
+    TMesh* m = (TMesh*) meshNode -> getEntity();
+    m->setMaterial(mat);
+}
 
 void OBDMesh::setTexture(OBDEnums::TextureTypes tt, ResourceIMG *t){
     TMesh* m = (TMesh*) meshNode -> getEntity();
@@ -82,6 +95,37 @@ void OBDMesh::setName(std::string n) {
 
 std::string OBDMesh::getName() {
 	return name;
+}
+
+void OBDMesh::setMaterialName(std::string n) {
+	name = n;
+}
+
+std::string OBDMesh::getMaterialName() {
+	return materialName;
+}
+
+void OBDMesh::loadTextures(ResourceManager *r, bool sync){
+    if (material.ambientTextureMap != ""){
+        ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.ambientTextureMap, sync);
+        setTexture(OBDEnums::TextureTypes::TEXTURE_AMBIENT, tmp);
+    }
+    if (material.diffuseTextureMap != ""){
+        ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.diffuseTextureMap, sync);
+        setTexture(OBDEnums::TextureTypes::TEXTURE_DIFFUSE, tmp);
+    }
+    if (material.specularTextureMap != ""){
+        ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.specularTextureMap, sync);
+        setTexture(OBDEnums::TextureTypes::TEXTURE_SPECULAR, tmp);
+    }
+    if (material.alphaTextureMap != ""){
+        ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.alphaTextureMap, sync);
+        setTexture(OBDEnums::TextureTypes::TEXTURE_ALPHA, tmp);
+    }
+    if (material.bumpMap != ""){
+        ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.bumpMap, sync);
+        setTexture(OBDEnums::TextureTypes::TEXTURE_BUMP, tmp);
+    }
 }
 
 void OBDMesh::setID(GLuint i) {

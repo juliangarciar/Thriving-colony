@@ -80,19 +80,19 @@ OBDSceneNode* OBDEngine::createSceneNode(OBDSceneNode* layer) {
     return new OBDSceneNode(layer);
 }
 
-OBDObject* OBDEngine::createObject(std::string mesh) {
+OBDObject* OBDEngine::createObject(std::string mesh, bool autoload) {
     ResourceOBJ *obj = (ResourceOBJ*)OBDManager->getResource(mesh, true);
     ResourceMTL *mtl = (ResourceMTL*)OBDManager->getResource(obj->getDefaultMaterialPath(), true);
     OBDObject *tempObject = new OBDObject(defaultSceneNode, obj, mtl);
-    //ToDo: texture AutoLoad
+    if (autoload) tempObject->loadTextures(OBDManager, true);
     return tempObject;
 }
 
-OBDObject* OBDEngine::createObject(OBDSceneNode* layer, std::string mesh) {
+OBDObject* OBDEngine::createObject(OBDSceneNode* layer, std::string mesh, bool autoload) {
     ResourceOBJ *obj = (ResourceOBJ*)OBDManager->getResource(mesh, true);
     ResourceMTL *mtl = (ResourceMTL*)OBDManager->getResource(obj->getDefaultMaterialPath(), true);
     OBDObject *tempObject = new OBDObject(layer, obj, mtl);
-    //ToDo: texture AutoLoad
+    if (autoload) tempObject->loadTextures(OBDManager, true);
     return tempObject;
 }
 

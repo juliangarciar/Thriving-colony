@@ -5,13 +5,13 @@ OBDObject::OBDObject(ResourceOBJ *obj, ResourceMTL *mtl) {
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
 
-    std::map<std::string, ResourceMesh> submeshes = obj->getResource();
-    std::map<std::string, ResourceMaterial> submats = mtl->getResource();
+    std::map<std::string, ResourceMesh> meshmap = obj->getResource();
+    std::map<std::string, ResourceMaterial> matmap = mtl->getResource();
 
-    for (std::map<std::string, ResourceMesh>::iterator it = submeshes.begin(); it != submeshes.end(); ++it) {
+    for (std::map<std::string, ResourceMesh>::iterator it = meshmap.begin(); it != meshmap.end(); ++it) {
         std::map<std::string, ResourceMaterial>::iterator it2;
-        it2 = submats.find(it->second.defaultMaterialName);
-        if (it2 == submats.end()){
+        it2 = matmap.find(it->second.defaultMaterialName);
+        if (it2 == matmap.end()){
             std::cout << "No existe material " << it->second.defaultMaterialName << " para el mesh " << it->first << std::endl;
             exit(0);
         }
@@ -32,13 +32,13 @@ OBDObject::OBDObject(OBDSceneNode* parent, ResourceOBJ *obj, ResourceMTL *mtl) {
 
     parent->addChild(this);
 
-    std::map<std::string, ResourceMesh> submeshes = obj->getResource();
-    std::map<std::string, ResourceMaterial> submats = mtl->getResource();
+    std::map<std::string, ResourceMesh> meshmap = obj->getResource();
+    std::map<std::string, ResourceMaterial> matmap = mtl->getResource();
 
-    for (std::map<std::string, ResourceMesh>::iterator it = submeshes.begin(); it != submeshes.end(); ++it) {
+    for (std::map<std::string, ResourceMesh>::iterator it = meshmap.begin(); it != meshmap.end(); ++it) {
         std::map<std::string, ResourceMaterial>::iterator it2;
-        it2 = submats.find(it->second.defaultMaterialName);
-        if (it2 == submats.end()){
+        it2 = matmap.find(it->second.defaultMaterialName);
+        if (it2 == matmap.end()){
             std::cout << "No existe material " << it->second.defaultMaterialName << " para el mesh " << it->first << std::endl;
             exit(0);
         }
@@ -98,11 +98,27 @@ bool OBDObject::getActive() {
     return rotationNode -> getActive();
 }
 
+void OBDObject::setMaterial(ResourceMTL *mtl) {
+    std::map<std::string, ResourceMaterial> matmap = mtl->getResource();
+    
+    for (std::map<std::string, OBDMesh*>::iterator it = meshes.begin(); it != meshes.end(); ++it) {
+        if (matmap.find(it->second->getMaterialName()) != matmap.end()){
+            it->second->setMaterial(matmap[it->second->getMaterialName()]);
+        }
+    }
+}
+
+void OBDObject::loadTextures(ResourceManager *r, bool sync){
+    for (std::map<std::string, OBDMesh*>::iterator it = meshes.begin(); it != meshes.end(); ++it) {
+        it->second->loadTextures(r, sync);
+    }
+}
+
 u32 OBDObject::getMeshAmount(){
     return meshes.size();
 }
 
-OBDMesh *OBDObject::getShape(std::string meshName){
+OBDMesh *OBDObject::getMesh(std::string meshName){
     return meshes[meshName];
 }
 

@@ -80,12 +80,6 @@ class OBDMesh : public OBDEntity {
         void setScale(glm::vec3 s);
 
         /**
-         * @brief Set the glslTexture object
-         * 
-         */
-        void setTexture(OBDEnums::TextureTypes, ResourceIMG*);
-
-        /**
          * @brief Set the Active object
          * 
          * @param a 
@@ -99,6 +93,18 @@ class OBDMesh : public OBDEntity {
          * @return false 
          */
         bool getActive();
+
+        /**
+         * @brief Set the ResourceMaterial object
+         * 
+         */
+        void setMaterial(ResourceMaterial);
+
+        /**
+         * @brief Set the glslTexture object
+         * 
+         */
+        void setTexture(OBDEnums::TextureTypes, ResourceIMG*);
 
         /**
          * @brief 
@@ -127,6 +133,27 @@ class OBDMesh : public OBDEntity {
          * @return std::string 
          */
         std::string getName();
+
+        /**
+         * @brief Set the Name object
+         * 
+         * @param n 
+         */
+        void setMaterialName(std::string n);
+
+        /**
+         * @brief Get the Name object
+         * 
+         * @return std::string 
+         */
+        std::string getMaterialName();
+
+        /**
+         * @brief 
+         * @param
+         * @param sync
+         */
+        void loadTextures(ResourceManager*, bool);
         
         /**
          * @brief 
@@ -153,6 +180,10 @@ class OBDMesh : public OBDEntity {
 
         GLuint ID;
         std::string name;
+        std::string materialName;
+
+        ResourceMesh mesh;
+        ResourceMaterial material;
 };
 
 #endif

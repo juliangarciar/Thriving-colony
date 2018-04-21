@@ -70,21 +70,21 @@ vec3 Phong(int lightIndex) {
 
 	// COMPONENTE AMBIENTAL
     if (tex.haveAmbientTexture == true){
-        Ambient = lights[lightIndex].ambientComponent * (material.ambientColor + texture(ambientTexture, vertexUV_out).rgb);
+        Ambient = lights[lightIndex].ambientComponent * texture(ambientTexture, vertexUV_out).rgb;
     } else {
         Ambient = lights[lightIndex].ambientComponent * material.ambientColor;
     }
   	
     // COMPONENTE DIFUSA 
     if (tex.haveDiffuseTexture == true){
-        Diffuse = lights[lightIndex].diffuseComponent * max(dot(s, n), 0.0) * (material.diffuseColor + texture(diffuseTexture, vertexUV_out).rgb);
+        Diffuse = lights[lightIndex].diffuseComponent * max(dot(s, n), 0.0) * texture(diffuseTexture, vertexUV_out).rgb;
     } else {
         Diffuse = lights[lightIndex].diffuseComponent * max(dot(s, n), 0.0) * material.diffuseColor;
     }
 
     // COMPONENTE ESPECULAR  
     if (tex.haveSpecularTexture == true){
-        Specular = lights[lightIndex].specularComponent * pow(max(dot(r, v), 0.0), 1) * (material.specularColor + texture(specularTexture, vertexUV_out).rgb);
+        Specular = lights[lightIndex].specularComponent * pow(max(dot(r, v), 0.0), 1) * texture(specularTexture, vertexUV_out).rgb;
     } else {
         Specular = lights[lightIndex].specularComponent * pow(max(dot(r, v), 0.0), 1) * material.specularColor;
     }

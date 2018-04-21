@@ -95,6 +95,20 @@ class OBDObject : public OBDEntity {
         bool getActive();
 
         /**
+         * @brief Set the Material object
+         * 
+         * @param mtl 
+         */
+        void setMaterial(ResourceMTL *mtl);
+
+        /**
+         * @brief 
+         * @param r 
+         * @param sync 
+         */
+        void loadTextures(ResourceManager*, bool);
+
+        /**
          * @brief Get the Mesh Amount object
          * 
          * @return u32 
@@ -106,7 +120,7 @@ class OBDObject : public OBDEntity {
          * 
          * @return TMesh* 
          */
-        OBDMesh *getShape(std::string);
+        OBDMesh *getMesh(std::string);
 
         /**
          * @brief Get the Meshes object

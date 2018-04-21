@@ -22,10 +22,6 @@ TMesh::TMesh(ResourceMesh r, ResourceMaterial m) : TEntity() {
 	currentMaterial.diffuseColor = material.diffuseColor;
 	currentMaterial.specularColor = material.specularColor;
 
-	std::cout << currentMaterial.ambientColor.x << " " << currentMaterial.ambientColor.y << " " << currentMaterial.ambientColor.z << std::endl;
-	std::cout << currentMaterial.diffuseColor.x << " " << currentMaterial.diffuseColor.y << " " << currentMaterial.diffuseColor.z << std::endl;
-	std::cout << currentMaterial.specularColor.x << " " << currentMaterial.specularColor.y << " " << currentMaterial.specularColor.z << std::endl;
-
 	// Generate a buffer for the vertices
 	glGenBuffers(1, &VBOID);
 	glBindBuffer(GL_ARRAY_BUFFER, VBOID);
