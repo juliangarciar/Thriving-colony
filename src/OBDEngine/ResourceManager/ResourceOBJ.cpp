@@ -73,9 +73,15 @@ void ResourceOBJ::load(const char *path){
         // Calculate the size necessary for the object and the center of the object
         glm::vec3 size(max.x - min.x, max.y - min.y, max.z - min.z);
         glm::vec3 center((min.x + max.x)/2, (min.y + max.y)/2, (min.z + max.z)/2);
+        glm::mat4 transform = glm::translate(glm::mat4(1), center) * glm::scale(glm::mat4(1), size);
 
         
-
+        tempMesh.boundingBox.min = min;
+        tempMesh.boundingBox.max = max;
+        tempMesh.boundingBox.size = size;
+        tempMesh.boundingBox.center = center;
+        //tempMesh.boundingBox.transform = transform;
+        
         tempMesh.name = curMesh.MeshName;
         tempMesh.vbo = vbo;
         tempMesh.indices = curMesh.Indices;
