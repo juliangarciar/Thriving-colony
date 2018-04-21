@@ -131,20 +131,73 @@ class UnitManager{
          */
         bool isDeployingTroop();
 
-        
+        /**
+         * @brief Check if there are no troops in the player's command center.
+         * @return True if there are no troops in the player's command center and false in other case.
+         */
         bool areTroopsDeployed();
+
+        /**
+         * @brief Check if there is any player's troop in the map.
+         * @return True if there is any player's troop in the map and fals in other case.
+         */
         bool areTroopsInMap();
 
-        //GETTERS
+        /**
+         * @brief Get the troop that is at the same position as the mouse cursor.
+         * @return i32 that will be the id of the troop at the position of the mouse cursor or -1 if there is no troop at that point. 
+         */
 		i32 getCollisionID();
+
+        /**
+         * @brief Get the player's amount of troops of the type passed by parameter.
+         * @param The Enumeration::UnitType is the type of unit.
+         * @return i32 that will be the player's amount of troops of the type of unit.
+         */
         i32 getTroopAmount(Enumeration::UnitType);
+
+        /**
+         * @brief Get the player's amount of troops.
+         * @return i32 that will be the player's amount of troops.
+         */
         i32 getTotalTroopAmount();
+
+        /**
+         * @brief Get the id of the troop that is being deployed.
+         * @return i32 that will be the value of currentDeployingTroop variable or -1 if there is no tropp being deployed.
+         */
         i32 getDeployingTroopID();
+
+        /**
+         * @brief Get the current selected troop.
+         * @return A pointer to an Unit object that will be the value of selectedTroop variable.
+         */
         Unit* getSelectedTroop();
+
+        /**
+         * @brief Get the troops that are in the queue to be trained.
+         * @return A pointer to a std::map object that will be the value of inQueueTroops variable.
+         */
         std::map<i32, Unit*> *getInQueueTroops();
+
+        /**
+         * @brief Get the troops that are in the player's command center.
+         * @return A pointer to a std::map object that will be the value of inHallTroops variable.
+         */
         std::map<i32, Unit*> *getInHallTroops();
+
+        /**
+         * @brief Get the troops that are in the map.
+         * @return A pointer to a std::map object that will be the value of inMapTroops variable.
+         */
         std::map<i32, Unit*> *getInMapTroops();
+
+        /**
+         * @breif
+         * @return
+         */
 		std::string getCollisionName();
+        
     private:
         Enumeration::Team team;
         Enumeration::BreedType breed;
