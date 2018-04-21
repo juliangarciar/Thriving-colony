@@ -128,8 +128,8 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 
 	tempBuilding -> setFinishedCallback([&](Building *b){
 		//Tax the player when building is finished
-		b->posTaxPlayer();
-		b->setColor(b->getBaseColor()); //ToDo: cambiar por material
+		b -> posTaxPlayer();
+		b -> setColor(b->getBaseColor()); //ToDo: cambiar por material
 
 		buildingAmounts[(i32)b->getType()]++;
 

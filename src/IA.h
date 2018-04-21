@@ -75,10 +75,14 @@ class IA : public Player {
 
         /**
          * @brief Get the beahaviour tree of the AI.
-         * @return Pointer to a BehaviourTree object that will be the root node of the behaviour tree.
+         * @return Pointer to a BehaviourTree object that will be the value of tree variable.
          */
         BehaviourTree* getTree();
 
+        /**
+         * @brief Get the behaviour trre of the AI.
+         * @return Pointer to a ActiveSelector that will be the value of rootNode variable.
+         */
         ActiveSelector* getRootNode();
         
         /**
@@ -87,10 +91,29 @@ class IA : public Player {
          */
         bool getFast();
 
+        /**
+         * @brief Create a very happy behaviour tree for the AI.
+         */
         void veryHappyBehaviour();
+
+        /**
+         * @brief Create a happy behaviour tree for the AI.
+         */
         void happyBehaviour();
+
+        /**
+         * @brief Create a neutral behaviour tree for the AI.
+         */
         void neutralBehaviour();
+
+        /**
+         * @brief Create a unhappy behaviour tree for the AI.
+         */
         void unhappyBehaviour();
+
+        /**
+         * @brief Create a very unhappy behaviour tree for the AI.
+         */
         void veryUnhappyBehaviour();
 
     protected:
@@ -112,8 +135,6 @@ class IA : public Player {
         BehaviourTree* tree;
 
         //Pointer to the root of the behaviour tree.
-        //RootNode *nodeRootIA;
-
         ActiveSelector *rootNode;
 
         //Type of behaviour.
@@ -122,7 +143,7 @@ class IA : public Player {
         //Behaviour of the AI.
         std::string chosenBehaviour;
 
-        //All choices the Ai can do.
+        //All choices the AI can do.
         std::vector<std::string> *choices;
 
         //Current choice of the AI.

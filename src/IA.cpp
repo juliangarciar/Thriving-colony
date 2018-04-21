@@ -224,19 +224,19 @@ void IA::chooseBehaviour() {
         break;
         case Enumeration::IABehaviour::Happy: 
             chosenBehaviour = "Happy";   
-            veryHappyBehaviour(); 
+            happyBehaviour(); 
         break;
         case Enumeration::IABehaviour::Neutral:
             chosenBehaviour = "Neutral"; 
-            veryHappyBehaviour();
+            neutralBehaviour();
         break;
         case Enumeration::IABehaviour::Unhappy: 
             chosenBehaviour = "Unhappy";
-            veryHappyBehaviour();
+            unhappyBehaviour();
         break;
         case Enumeration::IABehaviour::VeryUnhappy: 
             chosenBehaviour = "Very unhappy";
-            veryHappyBehaviour();
+            veryUnhappyBehaviour();
         break;
     }
 }
