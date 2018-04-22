@@ -2,30 +2,35 @@
 #define STATE_H
 
 /**
- * @class State
- * @brief Crea un objeto tipo State
+ * @class State.
+ * @brief Create a State type object.
  */
 class State {
+
     public:
         /**
-		 * @brief Inicializa
-		 */
+         * @brief Virtual method that will be implemented at classes that will inherit from State class.
+         */
         virtual void Init() = 0;
+
         /**
-		 * @brief Recoge las entradas de teclado y raton
-		 */
+         * @brief Virtual method that will be implemented at classes that will inherit from State class.
+         */
         virtual void Input() = 0;
+
         /**
-		 * @brief Actualiza
-		 */
+         * @brief Virtual method that will be implemented at classes that will inherit from State class.
+         */
         virtual void Update() = 0;
+
         /**
-		 * @brief Renderiza
-		 */
+         * @brief Virtual method that will be implemented at classes that will inherit from State class.
+         */
         virtual void Render() = 0;
+
         /**
-		 * @brief Constructor
-		 */
+         * @brief Virtual method that will be implemented at classes that will inherit from State class.
+         */
         virtual void CleanUp() = 0;
 };
 

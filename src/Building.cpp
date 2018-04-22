@@ -336,8 +336,21 @@ void Building::Init() {
     buildTimer = new Timer(buildTime, true);
 
     //Establece el color base del edificio
-    baseColor = video::SColor(255, 255, 255, 255); //ToDo: reemplazar color por material
+    //baseColor = video::SColor(255, 255, 255, 255); //ToDo: reemplazar color por material
+    baseMat = new Material(tex);
+    baseMat -> setColor(255, 255, 255, 255);
 
+    damagedMat = new Material(tex);
+    damagedMat -> setColor(255, 255, 0, 0);
+    
+    canBuildMat = new Material(tex);
+    canBuildMat -> setColor(128, 0, 255, 0);
+
+    cantBuildMat = new Material(tex);
+    cantBuildMat -> setColor(128, 255, 0, 0);
+
+    setBaseMaterial();
+    
     finished = false;
     
     Material *m = new Material(tex);
@@ -394,4 +407,12 @@ Enumeration::BuildingType Building::getType() {
 
 bool Building::getFinished(){
     return finished;
+}
+
+void Building::setCanBuildMat() {
+    model -> setMaterial(canBuildMat);
+}
+
+void Building::setCantBuildMat() {
+    model -> setMaterial(cantBuildMat);
 }

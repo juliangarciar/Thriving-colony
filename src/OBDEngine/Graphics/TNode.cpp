@@ -28,11 +28,11 @@ TNode::~TNode(){
 }
 
 void TNode::addChild(TNode *c){
-    children . push_back(c);
+    children.push_back(c);
 }
 
 void TNode::removeChild(TNode *c){
-    children . erase(std::remove(children . begin(), children . end(), c), children . end());
+    children.erase(std::remove(children.begin(), children.end(), c), children.end());
 }
 
 void TNode::draw(){

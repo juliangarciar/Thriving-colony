@@ -8,10 +8,8 @@ TMesh::TMesh(ResourceMesh r, ResourceMaterial m) : TEntity() {
 	mesh = r;
 	material = m;
 
-	name= "";
-
 	for (int i = 0; i < OBDEnums::TextureTypes::TEXTURE_SIZE; i++){
-		textures.push_back(NULL);
+		textures.push_back(nullptr);
 	}
 
 	activeTextures.ambientTexture = false;
@@ -43,11 +41,15 @@ TMesh::TMesh(ResourceMesh r, ResourceMaterial m) : TEntity() {
 	glGenBuffers(1, &materialID);
 	glBindBuffer(GL_UNIFORM_BUFFER, materialID);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslMaterial), &currentMaterial, GL_DYNAMIC_DRAW);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslMaterial), &currentMaterial);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 2, materialID);
 
 	// Textures
 	glGenBuffers(1, &textureID);
 	glBindBuffer(GL_UNIFORM_BUFFER, textureID);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslTexture), &activeTextures, GL_DYNAMIC_DRAW);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslTexture), &activeTextures);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 3, textureID);
 }
 
 TMesh::~TMesh() {
@@ -154,6 +156,7 @@ void TMesh::setMaterial(ResourceMaterial m){
 }
 
 void TMesh::setTexture(OBDEnums::TextureTypes tt, TTexture* t){
+	if (textures[(int)tt] != nullptr) delete textures[(int)tt];
 	textures[(int)tt] = t;
 	switch(tt){
 		case OBDEnums::TextureTypes::TEXTURE_AMBIENT:

@@ -7,7 +7,7 @@
 #include "OBDBillboard.h"
 #include "OBDCamera.h"
 #include "OBDLight.h"
-#include "OBDMesh.h"
+#include "OBDObject.h"
 #include "OBDSceneNode.h"
 #include "OBDShaderProgram.h"
 
@@ -73,18 +73,20 @@ class OBDEngine {
          * @brief 
          * 
          * @param 
+         * @param autoload
          * @return OBDMesh* 
          */
-        OBDMesh* createMesh(std::string);
+        OBDObject* createObject(std::string, bool = false);
         
         /**
          * @brief 
          * 
          * @param 
          * @param 
+         * @param autoload
          * @return OBDMesh* 
          */
-        OBDMesh* createMesh(OBDSceneNode*, std::string);
+        OBDObject* createObject(OBDSceneNode*, std::string, bool = false);
         
         /**
          * @brief 
@@ -112,6 +114,11 @@ class OBDEngine {
          * @return OBDShaderProgram* 
          */
         OBDShaderProgram *createShaderProgram(std::string, std::string, std::string);
+
+        /**
+         * @brief
+         */
+        OBDBillboard* createBillboard(OBDSceneNode*, i32, Vector3<f32>);
 
         /**
          * @brief 
@@ -165,6 +172,7 @@ class OBDEngine {
          * 
          */
         OBDSceneNode* getDefaultLayer();
+
     private:
         ResourceManager *OBDManager;
 

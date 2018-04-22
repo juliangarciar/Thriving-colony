@@ -14,6 +14,7 @@ OBDCamera::OBDCamera(OBDSceneNode* parent) {
 
 OBDCamera::~OBDCamera() {
     delete cameraNode;
+    cameraNode = nullptr;
 }
 
 void OBDCamera::setTargetPosition(glm::vec3 p) {

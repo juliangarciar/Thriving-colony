@@ -6,7 +6,7 @@ Window* Window::pinstance = 0;
 Window* Window::Instance() {
     
     if(pinstance == 0) {
-        pinstance = new Window(800, 600);
+        pinstance = new Window(1048, 720);
     }
     
     return pinstance;
@@ -91,6 +91,7 @@ void Window::beginScene(){
     double now = glfwGetTime();
     deltaTime = (double)(now - dtThen); // Time in seconds
     dtThen = now;
+    
 
     driver -> beginScene(true, true, video::SColor(0,0,0,0));
 }
@@ -153,4 +154,12 @@ i32 Window::getRealWindowHeight(){
 
 f32 Window::getDeltaTime() {
     return deltaTime;
+}
+
+void Window::calculateFramerate() {
+    framerate = floor(1.0 / Window::Instance() -> getDeltaTime());
+}
+
+i32 Window::getFrameRate() {
+    return framerate;
 }

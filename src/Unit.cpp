@@ -31,8 +31,6 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
     Init();
 
     // Timers
-    //Esta forma es mejor de hacerlo, igual algun dia lo cambio en el building
-    
     lookForTargetTimer = new Timer (0.5,true);
     // Esto puede ser un timer?
     attackCountdown = 0;
@@ -49,16 +47,15 @@ Unit::Unit(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::BreedType 
 }
 
 Unit::~Unit() {
-    //std::cout << "Deleting troop \n";
-    WorldGeometry::Instance()->clearUnitCell(vectorPos.toVector2(),
-                                             this);
+    WorldGeometry::Instance()->clearUnitCell(vectorPos.toVector2(), this);
+    delete lookForTargetTimer;
     delete pathManager;
     delete troops;
-    //std::cout << "Done \n";
+    delete recruitingTimer;
 }
 
 void Unit::Init() {
-    /* Box2D parameters */
+    // Box2D parameters
     Vector2<f32> topLeft;
     Vector2<f32> bottomRight;
 
@@ -391,12 +388,18 @@ void Unit::Init() {
         default: break;
     }
     recruitingTimer = new Timer(recruitingTime, false);
-    //Material *m = new Material(tex);
-    //this->model->setMaterial(m);
-    /* Juli */
-    setModel(layer, path);
-    troops = new Troop(layer, path, 4, ID);
 
+    setModel(layer, path);
+
+    baseMat = new Material(new Texture(""));
+    baseMat -> setColor(255, 255, 255, 255);
+
+    damagedMat = new Material(new Texture(""));
+    damagedMat -> setColor(255, 255, 0, 0);
+
+    setBaseMaterial();
+
+    troops = new Troop(layer, path, 4, ID);
     preTaxPlayer();
 }
 
@@ -412,27 +415,27 @@ void Unit::update() {
             inHomeState();
         break;
         case Enumeration::UnitState::Idle:
-            setColor(video::SColor(255, 0, 255, 255)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 0, 255, 255)); //ToDo: cambiar por materiales
             idleState();
         break;
         case Enumeration::UnitState::Move:
-            setColor(video::SColor(255, 255, 0, 255)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 255, 0, 255)); //ToDo: cambiar por materiales
             moveState();
         break;
         case Enumeration::UnitState::AttackMove:
-            setColor(video::SColor(255, 255, 255, 0)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 255, 255, 0)); //ToDo: cambiar por materiales
             attackMoveState();
         break;
         case Enumeration::UnitState::Attack:
-            setColor(video::SColor(255, 0, 0, 0)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 0, 0, 0)); //ToDo: cambiar por materiales
             attackState();
         break;    
         case Enumeration::UnitState::Chase:
-            setColor(video::SColor(255, 255, 255, 255)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 255, 255, 255)); //ToDo: cambiar por materiales
             chaseState();
         break;
         case Enumeration::UnitState::Retract:
-            setColor(video::SColor(255, 127, 127, 127)); //ToDo: cambiar por materiales
+            //setColor(video::SColor(255, 127, 127, 127)); //ToDo: cambiar por materiales
             retractState();
         break;
         default: break;
@@ -472,13 +475,9 @@ void Unit::recruitingState(){
         switchState(Enumeration::UnitState::InHome);
     } else {
         if (team == Enumeration::Team::Human){
-            Hud::Instance()->modifyTroopFromQueue(ID, recruitingTimer -> getElapsedTime()/recruitingTimer -> getMaxDuration());
+            Hud::Instance() -> modifyTroopFromQueue(ID, recruitingTimer -> getElapsedTime()/recruitingTimer -> getMaxDuration());
         }
     }
-}
-
-void Unit::inHomeState() {
-    //ToDo: hay que hacer algo mientras esté en base?
 }
 
 void Unit::idleState() {
@@ -526,21 +525,13 @@ void Unit::chaseState() {
 
 void Unit::retractState() {
     moveTroop();
-    std::cout << "0" << std::endl;
     if (readyToEnter){
-        std::cout << "1" << std::endl;
         retractedCallback(this);
-        std::cout << "2" << std::endl;
         troops -> setActive(false);
-        std::cout << "3" << std::endl;
         getModel() -> setActive(false);
-        std::cout << "4" << std::endl;
         switchState(Enumeration::UnitState::InHome);
-        std::cout << "5" << std::endl;
         // Aqui peta
-        triggerRetractedCallback();
-        std::cout << "6" << std::endl;
-                    
+        triggerRetractedCallback();        
     }
 }
 
@@ -565,37 +556,33 @@ void Unit::moveTroop() {
                 setTroopDestination(newDest);
             }
         }
-        /* Update Cell state */
+        // Update Cell state 
         else if(std::floor(steps) == 0){
             Vector3<f32> move = vectorMov;
-            //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
-            //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
             Vector3<f32> newPos = vectorPos + move;
             newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
-            WorldGeometry::Instance()->updateUnitCell(vectorPos.toVector2(),
-                                                    newPos.toVector2(),
-                                                    this);
+            WorldGeometry::Instance()->updateUnitCell(vectorPos.toVector2(), newPos.toVector2(), this);
             WorldGeometry::Instance()->getNeighborUnits(newPos.toVector2());
             setTroopPosition(newPos);
-            troops->moveTroops(move);
+            troops -> moveTroops(move);
             steps = 0;
         } 
         else {
             // far from destination, move
             Vector3<f32> move = vectorMov;
-            //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime();
-            //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime();
             Vector3<f32> newPos = vectorPos + move;
             newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
-            WorldGeometry::Instance()->updateUnitCell(vectorPos.toVector2(),
-                                                    newPos.toVector2(),
-                                                    this);
+            WorldGeometry::Instance()->updateUnitCell(vectorPos.toVector2(), newPos.toVector2(), this);
             WorldGeometry::Instance()->getNeighborUnits(newPos.toVector2());
             setTroopPosition(newPos);
-            troops->moveTroops(move);
+            troops -> moveTroops(move);
             steps--;
         }
     }
+}
+
+void Unit::inHomeState() {
+    //ToDo: Creo que no hacia nada pero  bueno.
 }
 
 void Unit::attack() {
@@ -622,7 +609,7 @@ void Unit::attack() {
                     }
                 }
                 target = nullptr;
-                this -> switchState(Enumeration::UnitState::AttackMove);
+                switchState(Enumeration::UnitState::AttackMove);
             }
         }
     }
@@ -657,12 +644,10 @@ bool Unit::inRangeOfAttack() {
 
 bool Unit::refreshTarget() {
     bool targetUpdated = false;
-
     // Ask for a new target
     if (lookForTargetTimer -> tick()) {
-        Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this); //ToDo: Puff, mas corto mejor no?
+        Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this); //ToDo: La hipocresia
     }
-    
     // return wether or not it got updated
     if (target != nullptr) {
         targetUpdated = true;
@@ -683,7 +668,7 @@ void Unit::triggerRetractedCallback(){
 
 /////SETTERS/////
 void Unit::setUnitCell(Vector2<f32> vectorPosition){
-    WorldGeometry::Instance()->setUnitCell(vectorPosition, this);
+    WorldGeometry::Instance() -> setUnitCell(vectorPosition, this);
 }
 
 void Unit::setMoving(bool movingPnt) {
@@ -697,7 +682,7 @@ void Unit::setAttacking(bool attackingPnt) {
 void Unit::setTroopPosition(Vector3<f32> vectorData) {
     vectorPos.set(vectorData);
     setPosition(vectorData);
-    troops->setPosition(vectorData);
+    troops -> setPosition(vectorData);
 }
 // To do -> adjust units movement
 void Unit::setTroopDestination(Vector3<f32> vectorData) {
@@ -706,20 +691,12 @@ void Unit::setTroopDestination(Vector3<f32> vectorData) {
     }
 
     vectorDes.set(vectorData);
-
     Vector3<f32> desp = vectorDes - vectorPos;
-
     f32 distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2));
-
-    //vectorMov -> x = (desp.x / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
-    //vectorMov -> z = (desp.z / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
     vectorMov.x = (desp.x / distance) * (moveSpeed / 100);
     vectorMov.z = (desp.z / distance) * (moveSpeed / 100);
     f32 movDistance = std::sqrt(std::pow(vectorMov.x, 2) + std::pow(vectorMov.z, 2));
     steps = (distance / movDistance);
-    /*std::cout << "Distance: " << distance << "\n";
-    std::cout << "Mov distance " << movDistance << "\n"; 
-    std::cout << "Steps: " << steps << "\n";*/
     moving = true;
 }
 
@@ -728,15 +705,14 @@ void Unit::setPath(std::list< Vector2<f32> > path){
 }
 
 void Unit::setPathToTarget(Vector3<f32> vectorData){
-    this->pathManager->createPathTo(vectorData.toVector2());
+    this->pathManager -> createPathTo(vectorData.toVector2());
     if(!pathFollow.empty()){
-        Vector2<f32> dummy = this->pathFollow.front();
+        Vector2<f32> dummy = pathFollow.front();
         Vector3<f32> newDest;
         newDest.x = dummy.x;
         newDest.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y);
         newDest.z = dummy.y;
         setTroopDestination(newDest);
-        
         pathFollow.pop_front();
     }
 }

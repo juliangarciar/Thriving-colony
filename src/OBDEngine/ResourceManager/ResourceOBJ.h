@@ -18,8 +18,6 @@ struct ResourceMesh {
     std::vector<us32> indices;
 
     std::string defaultMaterialName;
-
-    BoundingBox boundingBox;
 };
 
 class ResourceOBJ : public Resource {

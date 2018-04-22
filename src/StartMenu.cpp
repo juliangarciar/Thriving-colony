@@ -105,9 +105,10 @@ StartMenu::StartMenu() {
 }
 
 StartMenu::~StartMenu() {
-    delete bgMain;
     delete buttonQuit;
     delete buttonStart;
+    delete buttonOptions;
+    delete bgMain;
 
     delete bgOptions;
     delete languageP;

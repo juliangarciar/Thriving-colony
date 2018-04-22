@@ -26,16 +26,10 @@ Game::Game() {
 }
 
 Game::~Game() {
-    //delete window;
-
-    //delete io;
-
     delete menu;
     delete game;
     delete win;
     delete defeat;
-
-    delete soundSystem;
 }
 
 void Game::Init() {

@@ -21,8 +21,8 @@
  * @brief Create a Game type object. Singleton class.
  */
 class Game {
+    
     public:
-
         /**
 		 * @brief Get the instance of the class. If it doesn't exist, create a new instance.
          * @return Pointer to a Game object that will be the value of pinstance variable.
@@ -73,7 +73,6 @@ class Game {
 		GameState *getGameState();
 
     protected:
-
         /**
 		 * @brief Game constructor.
 		 */
@@ -90,7 +89,6 @@ class Game {
         Game &operator = (const Game & );
 
     private:
-
         //Pointer to the only instance of Game class.
         static Game* pinstance;
 
