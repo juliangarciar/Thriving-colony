@@ -7,6 +7,7 @@
 #include "../OBDColor.h"
 
 class TBillboard : public TEntity {
+    
     public:
         TBillboard(glm::vec3);
 
