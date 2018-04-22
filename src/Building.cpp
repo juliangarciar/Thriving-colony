@@ -14,6 +14,7 @@ Building::Building(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::Br
     entityType = Enumeration::EntityType::Building;
     target = NULL;
 
+
     Init();
 }
 
@@ -355,6 +356,11 @@ void Building::Init() {
     
     Material *m = new Material(tex);
     this->model->setMaterial(m);
+
+    billboard = new Billboard(layer, ID, *position);
+    
+
+    
 }
 
 void Building::update() {
