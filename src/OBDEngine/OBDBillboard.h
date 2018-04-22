@@ -6,6 +6,7 @@
 #include "Graphics/TBillboard.h"
 
 class OBDBillboard : public OBDEntity {
+    
     public:
         /**
          * @brief 
@@ -107,7 +108,6 @@ class OBDBillboard : public OBDEntity {
         TNode* translationNode;
         TNode* scaleNode;
         i32 ID;
-        
 };
 
 #endif
