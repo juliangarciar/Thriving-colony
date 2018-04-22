@@ -116,6 +116,11 @@ class OBDEngine {
         OBDShaderProgram *createShaderProgram(std::string, std::string, std::string);
 
         /**
+         * @brief
+         */
+        OBDBillboard* createBillboard(OBDSceneNode*, i32, Vector3<f32>);
+
+        /**
          * @brief 
          * 
          * @param rec 
@@ -167,6 +172,7 @@ class OBDEngine {
          * 
          */
         OBDSceneNode* getDefaultLayer();
+
     private:
         ResourceManager *OBDManager;
 

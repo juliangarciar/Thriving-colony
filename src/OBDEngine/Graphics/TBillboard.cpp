@@ -29,10 +29,24 @@ void TBillboard::beginDraw() {
         3,                  // tamaño
         GL_FLOAT,           // tipo
         GL_FALSE,           // normalizado?
-        0,                    // Paso
+        0,                  // Paso
         (void*)0            // desfase del buffer
     );
-    // Dibujar el triángulo !
+    // Dibujar el triángulo
     glDrawArrays(GL_TRIANGLES, 0, 3); // Empezar desde el vértice 0S; 3 vértices en total -> 1 triángulo
     glDisableVertexAttribArray(0);
+}
+
+void TBillboard::endDraw() {
+
+}
+
+void TBillboard::setColor(OBDColor* newTopColor, OBDColor* newBottomColor) {
+    if (newTopColor != nullptr) {
+        topColor = newTopColor;
+    }
+
+    if (newBottomColor != nullptr) {
+        bottomColor = newBottomColor;
+    }
 }
