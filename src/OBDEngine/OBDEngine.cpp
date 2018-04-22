@@ -116,11 +116,11 @@ OBDShaderProgram *OBDEngine::createShaderProgram(std::string programName, std::s
     shaderPrograms.insert(std::pair<std::string, OBDShaderProgram*>(programName, p));
     return p;
 }
-/*
-OBDBillboard* OBDEngine::createBillboard(OBDSceneNode* layer, i32 id, Vector3<f32> pos) {
-    OBDBillboard* billboard = new OBDBillboard(layer, id, pos );
+
+OBDBillboard* OBDEngine::createBillboard(OBDSceneNode* layer, i32 id, glm::vec3 pos) {
+    OBDBillboard* billboard = new OBDBillboard(layer, id, pos);
     return billboard;
-}*/
+}
 
 void OBDEngine::registerLight(OBDLight* lightNode) {
     clSceneNode -> addChild(lightNode);

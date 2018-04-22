@@ -4,9 +4,9 @@
 #include "OBDSceneNode.h"
 
 #include "Graphics/TBillboard.h"
-#include "../MathEngine/Vector3.h"
 
 class OBDBillboard : public OBDEntity {
+    
     public:
         /**
          * @brief 
@@ -19,7 +19,7 @@ class OBDBillboard : public OBDEntity {
          * 
          * @param parent 
          */
-        OBDBillboard(OBDSceneNode*, i32, Vector3<f32>);
+        OBDBillboard(OBDSceneNode*, i32, glm::vec3);
 
         /**
          * @brief 
@@ -31,7 +31,7 @@ class OBDBillboard : public OBDEntity {
          * @brief 
          * 
          */
-        void setPosition(Vector3<f32>);
+        void setPosition(glm::vec3);
 
         /**
          * @brief 
@@ -40,10 +40,22 @@ class OBDBillboard : public OBDEntity {
         void setColor(OBDColor*, OBDColor*);
 
         /**
+         * @brief Set the Size object
+         * 
+         */
+        void setSize(f32, f32, f32);
+        
+         /**
+          * @brief Set the Bottom Width object
+          * 
+          */
+        void setBottomWidth(f32);
+
+        /**
          * @brief 
          * 
          */
-        Vector3<f32> getPosition();
+        glm::vec3 getPosition();
 
         /**
          * @brief 
@@ -62,6 +74,27 @@ class OBDBillboard : public OBDEntity {
          */
         OBDColor* getBottomColor();
 
+        /**
+         * @brief Get the Height object
+         * 
+         * @return f32 
+         */
+        f32 getHeight();
+
+        /**
+         * @brief Get the Top width object
+         * 
+         * @return f32 
+         */
+        f32 getTopWidth();
+
+        /**
+         * @brief Get the Bottom Width object
+         * 
+         * @return f32 
+         */
+        f32 getBottomWidth();
+
          /**
          * @brief Get the First Node object
          * 
@@ -75,8 +108,6 @@ class OBDBillboard : public OBDEntity {
         TNode* translationNode;
         TNode* scaleNode;
         i32 ID;
-        Vector3<f32> position;
-        
 };
 
 #endif
