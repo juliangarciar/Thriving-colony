@@ -51,6 +51,15 @@ OBDObject::OBDObject(OBDSceneNode* parent, ResourceOBJ *obj, ResourceMTL *mtl) {
     }
 }
 
+OBDObject::~OBDObject(){
+    for (std::map<std::string, OBDMesh*>::iterator it = meshes.begin(); it != meshes.end(); ++it) {
+        delete it->second;
+    }
+    meshes.clear();
+    delete rotationNode;
+    rotationNode = nullptr;
+}
+
 void OBDObject::translate(f32 tX, f32 tY, f32 tZ) {
     TTransform* t = (TTransform*) translationNode -> getEntity();
     t -> translate(tX, tY, tZ);

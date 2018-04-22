@@ -21,7 +21,7 @@ TTexture::TTexture(ResourceIMG *t){
 }
 
 TTexture::~TTexture(){
-
+	//El ResourceIMG no se libera aqui sino en el gestor de recursos
 }
 
 GLuint TTexture::getTextureID(){

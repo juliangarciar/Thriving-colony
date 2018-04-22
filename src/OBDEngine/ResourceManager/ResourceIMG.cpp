@@ -8,7 +8,7 @@ ResourceIMG::ResourceIMG(){
 }
 
 ResourceIMG::~ResourceIMG(){
-	
+	delete resource;
 }
 
 void ResourceIMG::load(const char *path){

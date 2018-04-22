@@ -12,6 +12,7 @@ ResourceManager::ResourceManager(){
 }
 
 ResourceManager::~ResourceManager(){
+    //ToDo: recorrer resources y liberarlos
     resources.clear();
 }
 
@@ -88,3 +89,5 @@ Resource *ResourceManager::getResource(std::string path, bool sync){
         else return nullptr;
     }
 }
+
+//ToDo: release resource

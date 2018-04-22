@@ -9,7 +9,9 @@ TCache::TCache() {
 }
 
 TCache::~TCache() {
-    
+    lights->clear();
+    delete lights;
+    lights = nullptr;
 }
 
 std::vector<GLuint> TCache::generateAllIDs(GLuint programID){
