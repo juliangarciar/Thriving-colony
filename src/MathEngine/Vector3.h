@@ -3,7 +3,7 @@
 
 #include "Vector2.h"
 #include <irrlicht/irrlicht.h>
-#include <Types.h>
+#include "../Types.h"
 
 #include <irrlicht/irrlicht.h>
 #include <glm/vec3.hpp>
