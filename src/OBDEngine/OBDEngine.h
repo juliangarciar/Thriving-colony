@@ -31,8 +31,10 @@ class OBDEngine {
         /**
          * @brief 
          * 
+         * @param screenWidth 
+         * @param screenHeight 
          */
-        void Init();
+        void Init(i32 screenWidth, i32 screenHeight);
 
         /**
          * @brief 
@@ -118,7 +120,7 @@ class OBDEngine {
         /**
          * @brief
          */
-        OBDBillboard* createBillboard(OBDSceneNode*, i32, Vector3<f32>);
+        //OBDBillboard* createBillboard(OBDSceneNode*, i32, Vector3<f32>);
 
         /**
          * @brief 
@@ -186,6 +188,9 @@ class OBDEngine {
         std::vector<OBDCamera*> cameras;
         std::vector<OBDLight*> lights;
         std::map<std::string, OBDShaderProgram*> shaderPrograms;
+
+        i32 screenWidth;
+        i32 screenHeight;
 };
 
 #endif
