@@ -1,5 +1,5 @@
-#ifndef OBDBILLBOARD_H
-#define OBDBILLBOARD_H
+//#ifndef OBDBILLBOARD_H
+//#define OBDBILLBOARD_H
 //
 //#include "OBDSceneNode.h"
 //
@@ -79,4 +79,4 @@
 //        
 //};
 //
-#endif
+//#endif
