@@ -12,6 +12,7 @@ OBDLight::OBDLight(OBDSceneNode* parent, OBDColor color, u32 intensity) {
 
 OBDLight::~OBDLight() {
     delete lightNode;
+    lightNode = nullptr;
 }
 
 void OBDLight::setAmbientColor(OBDColor c) {

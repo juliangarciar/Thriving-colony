@@ -9,7 +9,7 @@ TTile::TTile(TTexture* _texture, glm::vec2 _position){
     position = _position;
 }
 TTile::~TTile(){
-
+    //ToDo: Revisalo julian
 }
 void TTile::beginDraw(){
     //glActiveTexture(GL_TEXTURE0);

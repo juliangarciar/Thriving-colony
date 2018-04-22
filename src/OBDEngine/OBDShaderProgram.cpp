@@ -32,6 +32,10 @@ OBDShaderProgram::~OBDShaderProgram(){
 	glDeleteShader(vertexShader->getShaderID());
 	glDetachShader(pid, fragmentShader->getShaderID());
 	glDeleteShader(fragmentShader->getShaderID());
+	delete vertexShader;
+	delete fragmentShader;
+	vertexShader = nullptr;
+	fragmentShader = nullptr;
 }
     
 std::vector<GLuint> OBDShaderProgram::getParamIDs(){
