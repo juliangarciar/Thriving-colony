@@ -5,43 +5,50 @@
 #include "WinMenu.h"
 
 /**
- * @class WinState
- * @brief Tiene herencia publica de state y crea un objeto tipo WinState
+ * @class WinState.
+ * @brief Create a WinState type object. Public heritage from State class.
  */
 class WinState : public State {
     
-public:
+    public:
         /**
-         * @brief Constructor
+         * @brief WinState constructor.
          */
         WinState();
+
         /**
-         * @brief Constructor
+         * @brief WinState destructor.
          */
         virtual ~WinState();
 
         /**
-         * @brief Inicializa WinState
+         * @brief Initialize the variables.
          */
         void Init();
+
         /**
-         * @brief Recoge las entradas de teclado y raton
+         * @brief Update the hud variable.
+         * @see update() method of WinMenu class.
          */
         void Input();
+
         /**
-         * @brief Actualiza
+         * @brief Update.
          */
         void Update();
+
         /**
-         * @brief Renderiza
+         * @brief Render.
          */
         void Render();
+
         /**
-         * @brief Constructor
+         * @brief Delete all variables.
          */
         void CleanUp();
 
     private:
+        //Pointer to the hud that will be used.
         WinMenu *hud;
 };
 

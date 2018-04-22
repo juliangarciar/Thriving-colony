@@ -151,6 +151,7 @@ class BuildingManager {
 
 		//
         i32 gridAlignment;
+		
 		//True if there is a building selected to be built and false in other case.
         bool buildingMode;
 		

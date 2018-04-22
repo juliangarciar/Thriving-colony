@@ -199,25 +199,43 @@ class UnitManager{
 		std::string getCollisionName();
         
     private:
+        //Player's team: Enumeration::Team::Human or Enumeration::Team::IA.
         Enumeration::Team team;
+
+        //Player's civilization: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov.
         Enumeration::BreedType breed;
 
+        //Layer were the units are going to be created.
         SceneNode *unitLayer;
+
+        //
 		SceneNode *currentCollision;
 
+        //Pointer to a std::map object with all the units that are being trained.
         std::map<i32, Unit*> *inQueueTroops;
+
+        //Pointer to a std::map object with all the units that are in the command center.
         std::map<i32, Unit*> *inHallTroops;
+
+        //Pointer to a std::map object with all the units that are in the map.
         std::map<i32, Unit*> *inMapTroops;
 
+        //Pointer to an Unit object with the current unit selected. If there is none selected it will be NULL.
         Unit *selectedTroop;
 
+        //True if there is a troop being deployed and false in other case.
         bool deployingTroop;
+
+        //Id of the current troop that is being deployed.
         i32 currentDeployingTroop;
         
+        //Amount of troops created of each type.
         i32 troopsAmount[Enumeration::UnitType::TroopsSize];
 
+        //Id number that is going to be asigned as the key of the next unit created.
         i32 nextTroopId;
 
+        //
         i32 gridAlignment;
 };
 

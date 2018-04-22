@@ -10,7 +10,7 @@
  */
 class DefeatState : public State {
     
-public:
+    public:
         /**
          * @brief DefeatState constructor.
          */

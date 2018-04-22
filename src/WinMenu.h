@@ -5,35 +5,40 @@
 #include <GUIEngine/Label.h>
 
 /**
- * @class WinMenu
- * @brief Crea un objeto tipo WinMenu
+ * @class WinMenu.
+ * @brief Create a WinMenu type object.
  */
 class WinMenu {
     
     public:
         /**
-         * @brief Constructor
+         * @brief WinMenu constructor.
          */
         WinMenu();
+
         /**
-         * @brief Destructor
+         * @brief WinMenu destructor.
          */
         ~WinMenu();
 
         /**
-         * @brief Establece los distintos eventos asociados a cada uno de los botones del HUD 
+         * @brief Set the different events associated to each Hud button. 
          */
         void setHUDEvents();
 
         /**
-         * @brief Actualiza el HUD
+         * @brief Update.
          */
         void update();
 
     private:
+        //Pointer to Button object that closes the game.
         Button *buttonQuit;
+
+        //Pointer to Button object that goes to the main menu.
         Button *buttonStart;
 
+        //Text with the win message.
         Label *winText;
 };
 
