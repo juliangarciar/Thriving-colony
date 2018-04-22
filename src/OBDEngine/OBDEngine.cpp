@@ -26,11 +26,14 @@ OBDEngine::~OBDEngine() {
     delete rootNode;
 }
 
-void OBDEngine::Init() {
+void OBDEngine::Init(i32 sW, i32 sH) {
     if (glewInit() != GLEW_OK) {
         std::cout << "Failed to initialize GLEW" << std::endl;
         exit(0);
     }
+
+    screenWidth = sW;
+    screenHeight = sH;
 
 	// Black background
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -67,7 +70,7 @@ OBDLight* OBDEngine::createLight(OBDColor color, u32 intensity) {
 }
 
 OBDCamera* OBDEngine::createCamera() {
-    OBDCamera* cameraNode = new OBDCamera(clSceneNode);
+    OBDCamera* cameraNode = new OBDCamera(clSceneNode, screenWidth, screenHeight);
     cameras.push_back(cameraNode);
     return cameraNode;
 }

@@ -48,4 +48,9 @@ struct glslTexture {
     bool bumpTexture;
 };
 
+struct OBDLine {
+    glm::vec3 start;
+    glm::vec3 end;
+};
+
 #endif

@@ -1,38 +1,40 @@
-#ifndef OBDSCENENODE_H
-#define OBDSCENENODE_H
+#ifndef OBDTERRAIN_H
+#define OBDTERRAIN_H
 
 #include "OBDEntity.h"
+#include "OBDSceneNode.h"
+
+#include "ResourceManager/ResourceOBJ.h"
+#include "ResourceManager/ResourceMTL.h"
 
 #include "Graphics/TTransform.h"
+#include "Graphics/TMesh.h"
 
-class OBDSceneNode : public OBDEntity {
+class OBDTerrain : public OBDEntity {
     public:
         /**
          * @brief 
          * 
-         * @param parent 
+         * @param  
+         * @param 
+         * @param 
          */
-        OBDSceneNode();
+        OBDTerrain(ResourceMesh, ResourceMaterial);
 
         /**
          * @brief 
          * 
-         * @param parent 
+         * @param  
+         * @param 
+         * @param 
          */
-        OBDSceneNode(TNode*);
-
-        /**
-         * @brief 
-         * 
-         * @param parent 
-         */
-        OBDSceneNode(OBDSceneNode*);
+        OBDTerrain(OBDSceneNode*, ResourceMesh, ResourceMaterial);
 
         /**
          * @brief 
          * 
          */
-        ~OBDSceneNode();
+        ~OBDTerrain();
 
         /**
          * @brief 
@@ -78,16 +80,19 @@ class OBDSceneNode : public OBDEntity {
         void setScale(glm::vec3 s);
 
         /**
-         * @brief 
+         * @brief Set the Active object
          * 
+         * @param a 
          */
-        void addChild(OBDEntity *);
+        void setActive(bool a);
 
         /**
-         * @brief 
+         * @brief Get the Active object
          * 
+         * @return true 
+         * @return false 
          */
-        void addChild(TNode *);
+        bool getActive();
 
         /**
          * @brief Get the First Node object
@@ -95,13 +100,11 @@ class OBDSceneNode : public OBDEntity {
          * @return TNode* 
          */
         TNode *getFirstNode();
-
     private:
-        std::vector<OBDEntity*> children;
-
         TNode* rotationNode;
         TNode* translationNode;
         TNode* scaleNode;
+        TNode* meshNode;
 
         glm::vec3 node_position;
         glm::vec3 node_rotation;
