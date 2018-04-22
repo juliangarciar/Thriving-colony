@@ -57,6 +57,11 @@ class OBDBillboard : public OBDEntity {
          */
         OBDColor* getTopColor();
 
+        /**
+         * @brief
+         */
+        OBDColor* getBottomColor();
+
          /**
          * @brief Get the First Node object
          * 

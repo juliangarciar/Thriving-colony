@@ -21,7 +21,31 @@ TNode *OBDBillboard::getFirstNode() {
     return billboardNode;
 }
 
+void OBDBillboard::setPosition(Vector3<f32> pos) {
+    position = pos;
+    TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
+    aux -> setPosition(pos.x, pos.y, pos.z);
+}
+
 void OBDBillboard::setColor(OBDColor* newTopColor, OBDColor* newBottomColor) {
     TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
     aux -> setColor(newTopColor, newBottomColor);
+}
+
+Vector3<f32> OBDBillboard::getPosition() {
+    return position;
+}
+
+i32 OBDBillboard::getID() {
+    return ID;
+}
+
+OBDColor* OBDBillboard::getTopColor() {
+    TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
+    return aux -> getTopColor();
+}
+
+OBDColor* OBDBillboard::getBottomColor() {
+    TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
+    return aux -> getBottomColor();
 }

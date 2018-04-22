@@ -18,6 +18,12 @@ class TBillboard : public TEntity {
 
         void setColor(OBDColor*, OBDColor*);
 
+        void setPosition(f32, f32, f32);
+
+        OBDColor* getTopColor();
+
+        OBDColor* getBottomColor();
+
     private:
         glm::vec3 worldPosition;
         GLuint vertexbuffer;

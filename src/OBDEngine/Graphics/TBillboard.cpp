@@ -41,6 +41,11 @@ void TBillboard::endDraw() {
 
 }
 
+void TBillboard::setPosition(f32 x, f32 y, f32 z) {
+    glm::vec3 BillboardPos_worldspace(x, y, z);
+    worldPosition = BillboardPos_worldspace;
+}
+
 void TBillboard::setColor(OBDColor* newTopColor, OBDColor* newBottomColor) {
     if (newTopColor != nullptr) {
         topColor = newTopColor;
@@ -49,4 +54,12 @@ void TBillboard::setColor(OBDColor* newTopColor, OBDColor* newBottomColor) {
     if (newBottomColor != nullptr) {
         bottomColor = newBottomColor;
     }
+}
+
+OBDColor* TBillboard::getTopColor() {
+    return topColor;
+}
+
+OBDColor* TBillboard::getBottomColor() {
+    return bottomColor;
 }
