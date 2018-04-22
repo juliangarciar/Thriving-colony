@@ -118,7 +118,7 @@ class OBDEngine {
         /**
          * @brief
          */
-        OBDBillboard* createBillboard(OBDSceneNode*, i32, Vector3<f32>);
+        OBDBillboard* createBillboard(OBDSceneNode*, i32, glm::vec3);
 
         /**
          * @brief 
