@@ -78,7 +78,7 @@ class Unit : public Entity {
         bool inRangeOfAttack();
 
         /**
-         * @breif Switch the current state of the unit to the state passed by parameter.
+         * @brief Switch the current state of the unit to the state passed by parameter.
          * @param The Enumeration::UnitState is the new state of the unit.
          */
         void switchState(Enumeration::UnitState);

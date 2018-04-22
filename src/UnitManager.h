@@ -193,7 +193,7 @@ class UnitManager{
         std::map<i32, Unit*> *getInMapTroops();
 
         /**
-         * @breif
+         * @brief
          * @return
          */
 		std::string getCollisionName();

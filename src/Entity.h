@@ -160,49 +160,49 @@ class Entity {
         irr::video::SColor getCurrentColor(); //ToDo: cambiar por material
 
         /**
-         * @breif
+         * @brief
          * @return
          */
         i32 getCellsX();
 
         /**
-         * @breif
+         * @brief
          * @return
          */
         i32 getCellsY();
 
         /**
-         * @breif
+         * @brief
          * @return
          */
         Box2D getHit();
 
         /**
-         * @breif Get the army level that the entity provides to the player's city.
+         * @brief Get the army level that the entity provides to the player's city.
          * @return i32 that will be the value of the armyLevel variable.
          */
         i32 getArmyLevel();
 
         /**
-         * @breif Get all the enemies that have as target the entity.
+         * @brief Get all the enemies that have as target the entity.
          * @return std::vector<Entity*> that will be the value of the hostile variable.
          */
         std::vector<Entity*> getHostile();
 
         /**
-         * @breif Add an entity to the vector of enemies that have as target the entity.
+         * @brief Add an entity to the vector of enemies that have as target the entity.
          * @param Pointer to the entity that is going to be added to hostile variable.
          */
         void addHostile(Entity*);
 
         /**
-         * @breif Remove an entity from the vector of enemies that have as target the entity.
+         * @brief Remove an entity from the vector of enemies that have as target the entity.
          * @param Pointer to de the entity that is going to be removed from hostile variable.
          */
         void removeHostile(Entity*);
 
         /**
-         * @breif Set all the enemies' target variable stored at hostile variable to NULL.
+         * @brief Set all the enemies' target variable stored at hostile variable to NULL.
          */
         void putHostileTargetsToNull();
 
