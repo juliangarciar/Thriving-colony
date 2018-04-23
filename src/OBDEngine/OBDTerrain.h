@@ -5,6 +5,7 @@
 #include "OBDSceneNode.h"
 
 #include "ResourceManager/ResourceOBJ.h"
+#include "ResourceManager/ResourceOBJ.h"
 #include "ResourceManager/ResourceMTL.h"
 
 #include "Graphics/TTransform.h"
@@ -19,7 +20,7 @@ class OBDTerrain : public OBDEntity {
          * @param 
          * @param 
          */
-        OBDTerrain(ResourceMesh, ResourceMaterial);
+        OBDTerrain(ResourceIMG*);
 
         /**
          * @brief 
@@ -28,7 +29,7 @@ class OBDTerrain : public OBDEntity {
          * @param 
          * @param 
          */
-        OBDTerrain(OBDSceneNode*, ResourceMesh, ResourceMaterial);
+        OBDTerrain(OBDSceneNode*, ResourceIMG*);
 
         /**
          * @brief 
@@ -101,10 +102,12 @@ class OBDTerrain : public OBDEntity {
          */
         TNode *getFirstNode();
     private:
+        void generateTerrain(i32 w, i32 h, i32 c, const char *img);
+
         TNode* rotationNode;
         TNode* translationNode;
         TNode* scaleNode;
-        TNode* meshNode;
+        TNode* terrainNode;
 
         glm::vec3 node_position;
         glm::vec3 node_rotation;
