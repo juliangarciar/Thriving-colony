@@ -2,9 +2,9 @@
 #include <IA.h>
 
 BehaviourTree::BehaviourTree() {
-    requireBarrack = false;
-    requireBarn = false;
-    requireWorkshop = false;
+    requireBarrack = true;
+    requireBarn = true;
+    requireWorkshop = true;
 
     requireCitizens = false;
 

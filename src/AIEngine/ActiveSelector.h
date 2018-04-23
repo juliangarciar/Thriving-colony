@@ -21,7 +21,10 @@ class ActiveSelector : public Selector {
         virtual ~ActiveSelector();
 
         Enumeration::BehaviourState Update();
+
         void setPriority(Behaviour*);
+
+        Behaviour* getPriority();
 
     private:
         Behaviour *priority;

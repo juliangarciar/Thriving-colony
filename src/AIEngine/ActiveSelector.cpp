@@ -22,3 +22,7 @@ Enumeration::BehaviourState ActiveSelector::Update() {
 void ActiveSelector::setPriority(Behaviour* newPriority) {
     priority = newPriority;
 }
+
+Behaviour* ActiveSelector::getPriority() {
+    return priority;
+}
