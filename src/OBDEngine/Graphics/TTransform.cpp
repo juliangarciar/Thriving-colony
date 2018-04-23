@@ -9,12 +9,10 @@ TTransform::~TTransform() {
 }
 
 void TTransform::beginDraw(){
-    cache.getMatrixStack().push(matrix);
-    cache.setModelMatrix(cache.getModelMatrix() * matrix);
+    cache.getMatrixStack().push(matrix * cache.getMatrixStack().top());
 }
 
 void TTransform::endDraw() {
-    cache.setModelMatrix(cache.getMatrixStack().top());
     cache.getMatrixStack().pop();
 }
 

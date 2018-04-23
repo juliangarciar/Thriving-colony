@@ -52,20 +52,6 @@ class TCache {
         GLuint getID(OBDEnums::OpenGLIDs);
 
         /**
-         * @brief Set the Model Matrix object
-         * 
-         * @param a 
-         */
-        void setModelMatrix(glm::mat4);
-
-        /**
-         * @brief Get the Model Matrix object
-         * 
-         * @return glm::mat4 
-         */
-        glm::mat4 getModelMatrix();
-
-        /**
          * @brief Set the View Matrix object
          * 
          * @param a 
@@ -111,7 +97,6 @@ class TCache {
 
         std::vector<GLuint> parameterIDs;
 
-        glm::mat4 modelMatrix;
         glm::mat4 viewMatrix;
         glm::mat4 projectionMatrix;
 
