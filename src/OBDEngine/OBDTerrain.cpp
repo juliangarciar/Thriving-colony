@@ -5,12 +5,43 @@ OBDTerrain::OBDTerrain(ResourceIMG *img){
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
 
-    ResourceMesh mesh;
+    terrain = new ParseTerrain(256, 256, 1); // ToDo
+    terrain ->generateMeshFromBuffer(img->getResource(), img->getWidth(), img->getHeight(), img->getChannels());
+
+    std::vector<f32> vbo;
+    f32 max_y = 0.f;
+
+    int w = terrain->getTerrainWidth();
+    int h = terrain->getTerrainHeight();
+
+    for (int x = 0; x < w; x++) {
+            vbo.push_back(x);
+            vbo.push_back(y);
+            vbo.push_back(z);
+            vbo.push_back(0);
+            vbo.push_back(1);
+            vbo.push_back(0);
+            vbo.push_back(x/w);
+            vbo.push_back(z/h);
+
+            if (y > max_y) max_y = y; 
+        }
+    }
+
+    ResourceMesh tempMesh;
+    tempMesh.boundingBox.min = glm::vec3(0,0,0);
+    tempMesh.boundingBox.max = glm::vec3(w, maxy, h);
+    tempMesh.boundingBox.size = glm::vec3(w, maxy, h);
+    tempMesh.boundingBox.center = glm::vec3(w/2, maxy/2, h/2);
+    
+    tempMesh.name = "terrain";
+    tempMesh.vbo = vbo;
+    tempMesh.indices = indices;
+
     ResourceMaterial material;
 
-    //std::vector<f32> vbo;
 
-    terrainNode = new TNode(new TMesh(m, mat), scaleNode);
+    //terrainNode = new TNode(new TMesh(m, mat), scaleNode);
 }
 
 OBDTerrain::OBDTerrain(OBDSceneNode* parent, ResourceIMG *img){
@@ -18,7 +49,7 @@ OBDTerrain::OBDTerrain(OBDSceneNode* parent, ResourceIMG *img){
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
 
-    terrainNode = new TNode(new TMesh(m, mat), scaleNode);
+    //terrainNode = new TNode(new TMesh(m, mat), scaleNode);
 
     parent->addChild(this);
 }
@@ -32,27 +63,6 @@ void generateTerrain(i32 w, i32 h, i32 c, unsigned char *img){
 
     
 
-    f32 max_y = 0.f;
-
-    for (int x = 0; x < w; x++) {
-        for (int z = 0; z < h; z++) {
-            // Read y component
-            unsigned char y = img[(h * z + x)];
-            //  
-            y = y / 127.5 - 1.0f;
-
-            vbo.push_back(x);
-            vbo.push_back(y);
-            vbo.push_back(z);
-            vbo.push_back(0);
-            vbo.push_back(1);
-            vbo.push_back(0);
-            vbo.push_back(x/w);
-            vbo.push_back(z/h);
-
-            if (y > max_y) max_y = y; 
-        }
-    }
 
     // ToDo: smoothing
     /*for (s32 run = 0; run < smoothFactor; ++run) {
@@ -80,16 +90,6 @@ void generateTerrain(i32 w, i32 h, i32 c, unsigned char *img){
 
     std::vector<us32> indices;
     //ToDo: indices
-
-    ResourceMesh tempMesh;
-    tempMesh.boundingBox.min = glm::vec3(0,0,0);
-    tempMesh.boundingBox.max = glm::vec3(w, maxy, h);
-    tempMesh.boundingBox.size = glm::vec3(w, maxy, h);
-    tempMesh.boundingBox.center = glm::vec3(w/2, maxy/2, h/2);
-    
-    tempMesh.name = "terrain";
-    tempMesh.vbo = vbo;
-    tempMesh.indices = indices;
 }
 
 void OBDTerrain::translate(f32 tX, f32 tY, f32 tZ) {

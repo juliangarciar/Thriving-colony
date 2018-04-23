@@ -1,6 +1,8 @@
 #ifndef OBDTERRAIN_H
 #define OBDTERRAIN_H
 
+#include <parseterrain/ParseTerrain.h>
+
 #include "OBDEntity.h"
 #include "OBDSceneNode.h"
 
@@ -102,7 +104,7 @@ class OBDTerrain : public OBDEntity {
          */
         TNode *getFirstNode();
     private:
-        void generateTerrain(i32 w, i32 h, i32 c, const char *img);
+        ParseTerrain *terrain;
 
         TNode* rotationNode;
         TNode* translationNode;

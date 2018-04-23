@@ -1,5 +1,5 @@
-#ifndef TERRAIN_H__
-#define TERRAIN_H__
+#ifndef PARSETERRAIN_H
+#define PARSETERRAIN_H
 
 #include <cstdint>
 #include <stdint.h>
@@ -19,7 +19,7 @@
  *
  * So we use two buffers that are twice the size of the worse case scenario.
  */
-#define TER_TERRAIN_NUM_INDEX_BUFFERS 3
+#define TERRAIN_NUM_INDEX_BUFFERS 3
 #define TERRAIN(t, w, d) t->height[(w) * t->depth + (d)]
 
 #define MAX fmaxf
@@ -27,30 +27,31 @@
 
 typedef struct {
    float x0, x1, y0, y1, z0, z1;
-} TerClipVolume;
+} ClipVolume;
 
-class TerTerrain {
+class ParseTerrain {
 	public:
-		TerTerrain(unsigned width, unsigned depth, unsigned step);
-		~TerTerrain();
+		ParseTerrain(unsigned width, unsigned depth, unsigned step);
+		~ParseTerrain();
 
 		void generateMeshFromBuffer(unsigned char *img, int width, int height, int channels);
 
 		std::vector<glm::vec3> getTerrainVertices();
 		std::vector<glm::vec3> getTerrainNormals();
+		std::vector<glm::vec2> getTerrainUVs();
+
+		unsigned int getVertexNumber();
+
+		std::vector<unsigned short> getTerrainIndices();
 
 		float getTerrainWidth();
 		float getTerrainHeight();
-
-		//EXTRA
-		float ter_terrain_get_height_at(float x, float z);
-		void ter_terrain_compute_clipped_indices(TerClipVolume *clip, unsigned *count, size_t *offset);
 	private:
-		void ter_terrain_set_height(unsigned w, unsigned d, float h);
-		void ter_terrain_set_heights_from_texture();
+		void terrain_set_height(unsigned w, unsigned d, float h);
+		void terrain_set_heights_from_texture();
 		glm::vec3 calculate_normal(unsigned x, unsigned z);
-		void compute_indices_for_clip_volume(TerClipVolume *clip);
-		void ter_terrain_build_mesh();
+		void compute_indices_for_clip_volume(ClipVolume *clip);
+		void terrain_build_mesh();
 
 		int width, depth;
 		float step;
@@ -62,20 +63,12 @@ class TerTerrain {
 
 		std::vector<glm::vec3> vertices;
 		std::vector<glm::vec3> normals;
+		std::vector<glm::vec2> uvs;
 
-		unsigned *indices;
-		unsigned num_indices;
+		unsigned int num_vertices;
 
-		unsigned vao;
-		unsigned vertex_buf;
-
-		unsigned index_buf[TER_TERRAIN_NUM_INDEX_BUFFERS];
-		unsigned ibuf_idx;
-		unsigned ibuf_used;
-		unsigned ibuf_cur_offset;
-
-		glm::mat4 prev_mvp;
-		bool prev_mvp_valid;
+		std::vector<unsigned short> indices;
+		unsigned short num_indices;
 };
 
 #endif
