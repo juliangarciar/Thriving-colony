@@ -1,4 +1,4 @@
-#include "OBDTerrain.h"
+/*#include "OBDTerrain.h"
 
 OBDTerrain::OBDTerrain(ResourceIMG *img){
     rotationNode = new TNode(new TTransform());
@@ -82,7 +82,7 @@ void generateTerrain(i32 w, i32 h, i32 c, unsigned char *img){
     }*/
 
 
-
+/*
 
 	const f32 tdSize = 1.0f/(f32)(w-1);
     float fx=0.f;
@@ -137,4 +137,4 @@ void OBDTerrain::setActive(bool a) {
 
 bool OBDTerrain::getActive() {
     return terrainNode -> getActive();
-}
+}*/
