@@ -22,6 +22,7 @@ class Unit : public Entity {
     public:
         /**
          * @brief Unit constructor.
+         * 
          * @param The SceneNode is the layer where the unit is going to be created.
          * @param The id32 is the id number that will identify the unit.
          * @param The Enumeration::Team is the team to which belongs the unit: Enumeration::Team::Human or Enumeration::Team::IA. 
@@ -41,7 +42,7 @@ class Unit : public Entity {
         virtual void preTaxPlayer();
 
         /**
-         * #brief Increase the palyer's army size.
+         * @brief Increase the palyer's army size.
          */
         virtual void posTaxPlayer();
 
@@ -51,7 +52,7 @@ class Unit : public Entity {
         void update();
 
         /**
-         * @brief Attack the target if it is not NULL and when the attackCountdown variable is 0 or less.
+         * @brief Attack the target if it is not nullptr and when the attackCountdown variable is 0 or less.
          */
         void attack();
 
@@ -67,18 +68,21 @@ class Unit : public Entity {
 
         /**
          * @brief Look fora new target for the unit.
+         * 
          * @return True when the unit has a target and false in other case.
          */
         bool refreshTarget();
 
         /**
          * @brief Determinate if the target of the unit is in its range of attack.
+         * 
          * @return True when the target is in the range of attack of the unit and false in other case. 
          */
         bool inRangeOfAttack();
 
         /**
          * @brief Switch the current state of the unit to the state passed by parameter.
+         * 
          * @param The Enumeration::UnitState is the new state of the unit.
          */
         void switchState(Enumeration::UnitState);
@@ -135,96 +139,112 @@ class Unit : public Entity {
 
         /**
          * @brief 
+         * 
          * @param
          */
         void setUnitCell(Vector2<f32>);
 
         /**
          * @brief Set to true or false moving variable.
+         * 
          * @param True when the unit is walking and false in other case.
          */
         void setMoving(bool);
 
         /**
          * @brief Set to true or false attacking variable.
+         * 
          * @param True when the unit is attacking to its target and false in other case.
          */
         void setAttacking(bool);
 
         /**
          * @brief Set the position of the unit.
+         * 
          * @param The Vector3 is the position that is going to be assigned to the unit.
          */
         void setTroopPosition(Vector3<f32>);
 
         /**
          * @brief Set the position where the unit is going to walk to.
+         * 
          * @param The Vector3 is the destination that is going to be assigned to the unit.
          */
         void setTroopDestination(Vector3<f32>);
 
         /**
          * @brief
+         * 
          * @param
          */
         void setPath(std::list< Vector2<f32> >);
 
         /**
          * @brief
+         * 
          * @param
          */
         void setPathToTarget(Vector3<f32>);
 
         /**
          * @brief
+         * 
          * @param
          */
         void setRecruitedCallback(std::function<void(Unit*)>);
 
         /**
          * @brief
+         * 
          * @param
          */
         void setRetractedCallback(std::function<void(Unit*)>);
 
         /**
          * @brief 
+         * 
          * @return
          */
         std::string getAttackEvent();
 
         /**
          * @brief 
+         * 
          * @return
          */
         std::string getMoveEvent();
 
         /**
          * @brief 
+         * 
          * @return
          */
         std::string getSelectEvent();
 
         /**
          * @brief Get the destination of the unit.
+         * 
          * @return Vector3 that will be the value of vectorDes variable.
          */
         Vector3<f32> getDestination();
 
         /**
          * @brief 
+         * 
          * @return
          */
         std::list< Vector2<f32> > getPath();
 
         /**
          * @brief Get the type of unit of the troop.
+         * 
          * @return Enumeration::UnitType that will be the value of type variable.
          */
         Enumeration::UnitType getType();
 
         /**
          * @brief Get the current state of the unit.
+         * 
          * @return Enumeration::UnitState that will be the value of state variable.
          */
         Enumeration::UnitState getState();

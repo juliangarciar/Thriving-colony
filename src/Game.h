@@ -25,6 +25,7 @@ class Game {
     public:
         /**
 		 * @brief Get the instance of the class. If it doesn't exist, create a new instance.
+         * 
          * @return Pointer to a Game object that will be the value of pinstance variable.
 		 */
         static Game* Instance();
@@ -56,18 +57,21 @@ class Game {
 
         /**
         * @brief Change the state variable to the state passed by parameter.
+        * 
         * @param The Enumeration::State is the new state to which is going to change the game. 
         */
         void changeState(Enumeration::State);
 
         /**
 		 * @brief Get menu state.
+         * 
          * @return Pointer to a MenuState object that will be the value of menu variable.
 		 */
         MenuState *getMenuState();
 
          /**
 		 * @brief Get game state.
+         * 
          * @return Pointer to a GAmeState object that will be the value of game variable.
 		 */
 		GameState *getGameState();

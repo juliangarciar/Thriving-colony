@@ -15,6 +15,7 @@ class Building : public Entity {
     public:
         /**
          * @brief Buiding constructor.
+         * 
          * @param The SceneNode is the layer where the building will be created.
          * @param The id32 is the id number that will identify the building.
          * @param The Enumeration::Team is the team to which belongs the building: Enumeration::Team::Human or Enumeration::Team::IA.
@@ -29,8 +30,7 @@ class Building : public Entity {
         virtual ~Building();
 
         /**
-         * @brief Subtract the metal and crystal cost of the building to the metal and crystal available of the player (Human or IA) and
-         * add the city level that provided by the building to the player's city level (Human or IA).
+         * @brief Subtract the metal and crystal cost of the building to the metal and crystal available of the player (Human or IA) and add the city level that provided by the building to the player's city level (Human or IA).
          */
         void preTaxPlayer();
 
@@ -51,24 +51,33 @@ class Building : public Entity {
 
         /**
          * @brief Set the callback variable as the function passed by parameter.
+         * 
          * @param The std::function is the function to set as the callback variable of the building and have to be void and get a Building pointer as parameter.
          */
         void setFinishedCallback(std::function<void(Building*)>);
         
         /**
          * @brief Get the type variable of the building.
+         * 
          * @return Value of the type variable.
          */
         Enumeration::BuildingType getType();
 
         /**
          * @brief Get the finished variable of the building.
+         * 
          * @return Value finished variable (true if the building is finished or false if it is not).
          */
         bool getFinished();
-
+        
+        /**
+         * @brief Set the Can Build Mat object
+         */
         void setCanBuildMat();
 
+        /**
+         * @brief Set the Cant Build Mat object
+         */
         void setCantBuildMat();
         
     private:
@@ -91,8 +100,11 @@ class Building : public Entity {
 
         //True if the building is finished and false if it is not.
         bool finished;
-
+        
+        //
         Material *canBuildMat;
+        
+        //
         Material *cantBuildMat;
 };
 

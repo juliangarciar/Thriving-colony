@@ -28,6 +28,7 @@ class DefeatState : public State {
 
         /**
          * @brief Update the hud variable.
+         * 
          * @see update() method of DefeatMenu class.
          */
         void Input();

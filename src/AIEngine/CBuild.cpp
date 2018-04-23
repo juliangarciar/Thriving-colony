@@ -12,7 +12,7 @@ CBuild::~CBuild() {
 }
 
 Enumeration::BehaviourState CBuild::Update() {
-    if (IA::Instance() -> getRootNode() -> getPriority() == NULL) {
+    if (IA::Instance() -> getRootNode() -> getPriority() == nullptr) {
         switch (type) {
             case Enumeration::BuildingType::Barn : 
                 if (IA::Instance() -> getTree() -> getNeedBarn()) {
@@ -119,7 +119,7 @@ Enumeration::BehaviourState CBuild::Update() {
 void CBuild::actionToDo() {
     if (IA::Instance() -> getBuildingManager() -> isSolvent(metal, crystal)) {
         action -> Update(type);
-        IA::Instance() -> getRootNode() -> setPriority(NULL);
+        IA::Instance() -> getRootNode() -> setPriority(nullptr);
     } else {
         IA::Instance() -> getRootNode() -> setPriority(this);
     }

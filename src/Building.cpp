@@ -12,7 +12,7 @@ Building::Building(SceneNode *l, i32 id, Enumeration::Team team, Enumeration::Br
     layer = l;
     type = t;
     entityType = Enumeration::EntityType::Building;
-    target = NULL;
+    target = nullptr;
 
     Init();
 }

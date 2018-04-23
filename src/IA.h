@@ -14,6 +14,7 @@ class IA : public Player {
     public:
         /**
          * @brief Get the instance of the class. If it doesn't exist, create a new instance.
+         * 
          * @return Pointer to a IA object that will be the value of instance variable.
 		 */
         static IA* Instance();
@@ -35,6 +36,7 @@ class IA : public Player {
 
         /**
          * @brief Deteerminate the position where will be built the next building.
+         * 
          * @return Vector3 that will be the position where the next uilding wiil be built.
          */
         Vector3<f32> determinatePositionBuilding();
@@ -51,42 +53,49 @@ class IA : public Player {
         
         /**
          * @brief Set choiceIndex variable as the value passed by parameter.
+         * 
          * @param The i32 is the value that is going to be set to choiceIndex variable.
          */
         void setChoiceIndex(i32);
 
         /**
          * @brief Determinate if the AI's city is under attack.
+         * 
          * @return True if there ir any enemie troop near the AI's city and false in other case.
          */
         bool getUnderAttack();
         
         /**
          * @brief Get the next choice of the AI.
+         * 
          * @return std::string that will be the value of choices variable at choiceIndex position.
          */
         std::string getNextChoice();
 
         /**
          * @brief Get the choosen beahviour of the AI.
+         * 
          * @return std::string that will be the value of chosenBehaviour variable.
          */
         std::string getChosenBehaviour();
 
         /**
          * @brief Get the beahaviour tree of the AI.
+         * 
          * @return Pointer to a BehaviourTree object that will be the value of tree variable.
          */
         BehaviourTree* getTree();
 
         /**
          * @brief Get the behaviour trre of the AI.
+         * 
          * @return Pointer to a ActiveSelector that will be the value of rootNode variable.
          */
         ActiveSelector* getRootNode();
         
         /**
          * @brief Get the speed at which is going to be update the next choose of the AI.
+         * 
          * @return True if it updates fast and false in other case.
          */
         bool getFast();

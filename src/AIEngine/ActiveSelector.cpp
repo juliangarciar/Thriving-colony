@@ -1,7 +1,7 @@
 #include "ActiveSelector.h"
 
 ActiveSelector::ActiveSelector(std::vector<Behaviour*> newChildren) : Selector(newChildren){
-    priority = NULL;
+    priority = nullptr;
 }
 
 ActiveSelector::~ActiveSelector() {
@@ -9,7 +9,7 @@ ActiveSelector::~ActiveSelector() {
 }
 
 Enumeration::BehaviourState ActiveSelector::Update() {
-    if (priority != NULL) {
+    if (priority != nullptr) {
         if (priority -> Update() == Enumeration::BehaviourState::Success) {
             return Enumeration::BehaviourState::Success;
         }

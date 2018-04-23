@@ -21,23 +21,23 @@ class AAttack : public Action {
         virtual ~AAttack();
 
         /**
-         * @brief 
+         * @brief Deploy all AI's troops and send them to the human's city.
          * 
-         * @return Enumeration::BehaviourState 
+         * @return Enumeration::BehaviourState::Success. 
          */
         Enumeration::BehaviourState Update();
 
         /**
-         * @brief 
+         * @brief Do nothing. Need to be implemented because of the heritage.
          * 
-         * @return Enumeration::BehaviourState 
+         * @return Enumeration::BehaviourState::Failure.
          */
         Enumeration::BehaviourState Update(Enumeration::UnitType);
 
         /**
-         * @brief 
+         * @brief Do nothing. Need to be implemented because of the heritage.
          * 
-         * @return Enumeration::BehaviourState 
+         * @return Enumeration::BehaviourState::Failure.
          */
         Enumeration::BehaviourState Update(Enumeration::BuildingType);
 

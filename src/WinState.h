@@ -28,6 +28,7 @@ class WinState : public State {
 
         /**
          * @brief Update the hud variable.
+         * 
          * @see update() method of WinMenu class.
          */
         void Input();

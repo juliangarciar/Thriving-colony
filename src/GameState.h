@@ -56,6 +56,7 @@ class GameState : public State {
         
          /**
         * @brief Get the battle manager.
+        * 
         * @return Pointer to a BattleManager object that will be the value of battleManager variable.
         */
         BattleManager* getBattleManager();

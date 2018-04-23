@@ -165,7 +165,7 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 	if (instabuild) tempBuilding -> triggerFinishedCallback();    
 	
 	WorldGeometry::Instance()->build(tempBuilding);
-	tempBuilding = NULL;
+	tempBuilding = nullptr;
 	nextBuildingId++;
 }
 

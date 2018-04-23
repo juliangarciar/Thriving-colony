@@ -4,23 +4,43 @@
 #include "Action.h"
 
 /**
- * @class ARecruit
- * @brief Crea un objeto tipo ARecruit
+ * @class ARecruit.
+ * @brief Create a ARecruit type object. Public heritage from Action class.
  */
 class ARecruit : public Action {
     
     public:
         /**
-         * @brief Constructor de ARecruit
+         * @brief ARecruit constructor.
          */
+
         ARecruit();
+
         /**
-         * @brief Destructor de ARecruit
+         * @brief ARecruit destructor.
          */
         virtual ~ARecruit();
 
+        /**
+         * @brief Do nothing. Need to be implemented because of the heritage.
+         * 
+         * @return Enumeration::BehaviourState::Failure.
+         */
         Enumeration::BehaviourState Update();
+
+        /**
+         * @brief Recruit a unit of the type passed by parameter.
+         * 
+         * @param The Enumeration::UnitType will be the type of the unit that is going to be created.
+         * @return Enumeration::BehaviourState::Success. 
+         */
         Enumeration::BehaviourState Update(Enumeration::UnitType);
+
+        /**
+         * @brief Do nothing. Need to be implemented because of the heritage.
+         * 
+         * @return Enumeration::BehaviourState::Failure.
+         */
         Enumeration::BehaviourState Update(Enumeration::BuildingType);
 
     private:

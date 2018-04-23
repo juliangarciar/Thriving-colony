@@ -12,7 +12,7 @@ CRecruit::~CRecruit() {
 }
 
 Enumeration::BehaviourState CRecruit::Update() {
-    if (IA::Instance() -> getRootNode() -> getPriority() == NULL) {
+    if (IA::Instance() -> getRootNode() -> getPriority() == nullptr) {
         if (IA::Instance() -> getTree() -> getNeedSoldiers()) {
             switch (type) {
                 case Enumeration::UnitType::AdvancedM : 
@@ -89,7 +89,7 @@ Enumeration::BehaviourState CRecruit::Update() {
 void CRecruit::actionToDo() {
     if (IA::Instance() -> getUnitManager() -> isSolvent(metal, crystal)) {
         action -> Update(type);
-        IA::Instance() -> getRootNode() -> setPriority(NULL);
+        IA::Instance() -> getRootNode() -> setPriority(nullptr);
     } else {
         IA::Instance() -> getRootNode() -> setPriority(this);
     }

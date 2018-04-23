@@ -19,6 +19,7 @@ class StartMenu {
          * @brief StartMenu constructor.
          */
         StartMenu();
+        
         /**
          * @brief StartMenu destructor.
          */
