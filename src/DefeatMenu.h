@@ -22,7 +22,7 @@ class DefeatMenu {
         ~DefeatMenu();
 
         /**
-         * @brief Set the different events associated to each Hud buttons. 
+         * @brief Set the different events associated to each Hud button. 
          */
         void setHUDEvents();
 

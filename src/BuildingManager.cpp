@@ -93,9 +93,9 @@ void BuildingManager::drawBuilding() {
 		}
 		
 		if (collision) {
-			tempBuilding->setColor(video::SColor(20, 255, 0, 0));
+			tempBuilding->setCantBuildMat();
 		} else {
-			tempBuilding->setColor(video::SColor(20, 0, 255, 125));
+			tempBuilding->setCanBuildMat();
 			//If there is no collision and the player press left button of the mouse, build the building
 			if (IO::Instance() -> getMouse() -> leftMouseDown()) {
 				buildingMode = false;
@@ -128,8 +128,8 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 
 	tempBuilding -> setFinishedCallback([&](Building *b){
 		//Tax the player when building is finished
-		b->posTaxPlayer();
-		b->setColor(b->getBaseColor()); //ToDo: cambiar por material
+		b -> posTaxPlayer();
+		b -> setColor(b->getBaseColor()); //ToDo: cambiar por material
 
 		buildingAmounts[(i32)b->getType()]++;
 
@@ -157,6 +157,8 @@ void BuildingManager::buildBuilding(Vector3<f32> pos, Enumeration::BuildingType 
 
 	buildings -> insert(std::pair<i32,Building*>(nextBuildingId, tempBuilding));
 	
+	tempBuilding -> setBaseMaterial();
+
 	// Tax the player when placing the building
 	if (!instabuild) tempBuilding -> preTaxPlayer();
 

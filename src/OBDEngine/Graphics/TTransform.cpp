@@ -9,13 +9,13 @@ TTransform::~TTransform() {
 }
 
 void TTransform::beginDraw(){
-    cache . getMatrixStack().push(matrix);
-    cache . setModelMatrix(cache . getModelMatrix() * matrix);
+    cache.getMatrixStack().push(matrix);
+    cache.setModelMatrix(cache.getModelMatrix() * matrix);
 }
 
 void TTransform::endDraw() {
-    cache . setModelMatrix(cache . getMatrixStack() . top());
-    cache . getMatrixStack().pop();
+    cache.setModelMatrix(cache.getMatrixStack().top());
+    cache.getMatrixStack().pop();
 }
 
 void TTransform::identity() {

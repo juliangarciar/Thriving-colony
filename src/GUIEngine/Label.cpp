@@ -19,7 +19,7 @@ Label::~Label() {
 }
 
 void Label::addChild(GUIElement *elem) {
-    children . push_back(elem);
+    children.push_back(elem);
 }
 
 void Label::setPosition(Vector2<i32> position){

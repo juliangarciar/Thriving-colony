@@ -32,6 +32,8 @@ struct glslLight {
     glm::vec3 specularComponent;
 };
 
+inline bool operator==(const glslLight& l, const glslLight& r){ return (l.position == r.position && l.ambientComponent == r.ambientComponent && l.diffuseComponent == r.diffuseComponent && l.specularComponent == r.specularComponent) == 0; }
+
 struct glslMaterial {
     glm::vec3 ambientColor;
     glm::vec3 diffuseColor;
@@ -44,6 +46,11 @@ struct glslTexture {
     bool specularTexture;
     bool alphaTexture;
     bool bumpTexture;
+};
+
+struct OBDLine {
+    glm::vec3 start;
+    glm::vec3 end;
 };
 
 #endif

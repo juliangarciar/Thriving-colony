@@ -20,13 +20,13 @@ TabPanel::~TabPanel(){
     hide();
 
     for (int i = 0; i < tabs.size(); i++){
-        delete tabs . at(i);
+        delete tabs.at(i);
     }
-    tabs . clear();
+    tabs.clear();
 }
 
 void TabPanel::addChild(GUIElement *elem) {
-    children . push_back(elem);
+    children.push_back(elem);
 }
 
 Tab *TabPanel::createTab(std::string title){ 
@@ -34,7 +34,7 @@ Tab *TabPanel::createTab(std::string title){
     layer->setLayout(new nanogui::GroupLayout());
 
     Tab *t = new Tab(layer);
-    tabs . push_back(t);
+    tabs.push_back(t);
     return t;
 } 
 

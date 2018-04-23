@@ -10,7 +10,7 @@ class TLight : public TEntity {
          * @brief 
          * 
          */
-        TLight(OBDColor, f32, bool = true);
+        TLight(OBDColor, f32);
 
         /**
          * @brief 
@@ -52,26 +52,17 @@ class TLight : public TEntity {
         void setSpecularComponent(OBDColor, f32);
 
         /**
-         * @brief set the light to active or inactive
-         * 
-         * @param bool new light active state
-         */
-        void setActive(bool);
-
-        /**
-         * @brief returns wether or not the light is active
-         * 
-         * @return true if the light is active
-         * @return false otherwise
-         */
-        bool getActive();
-
-        /**
          * @brief Set the Position object
          * 
          * @param p 
          */
         void setPosition(glm::vec3 p);
+
+        /**
+         * @brief Set the Active object
+         * 
+         */
+        void setActive(bool);
 
         /**
          * @brief Get the Position object

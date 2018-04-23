@@ -1,13 +1,14 @@
 #ifndef OBDLIGHT_H
 #define OBDLIGHT_H
 
-#include "OBDTypes.h"
+#include "OBDEntity.h"
+#include "OBDSceneNode.h"
 #include "OBDColor.h"
-#include "Graphics/TNode.h"
+
 #include "Graphics/TTransform.h"
 #include "Graphics/TLight.h"
 
-class OBDLight {
+class OBDLight : public OBDEntity {
     public:
         /**
          * @brief 
@@ -19,40 +20,13 @@ class OBDLight {
          * 
          * @param parent 
          */
-        OBDLight(TNode* parent, OBDColor color, u32 intensity);
+        OBDLight(OBDSceneNode* parent, OBDColor color, u32 intensity);
 
         /**
          * @brief 
          * 
          */
         ~OBDLight();
-
-        /**
-         * @brief 
-         * 
-         * @param tX 
-         * @param tY 
-         * @param tZ 
-         */
-        void rotate(f32 rX, f32 rY, f32 rZ, f32 angle);
-
-        /**
-         * @brief 
-         * 
-         * @param sX 
-         * @param sY 
-         * @param sZ 
-         */
-        void scale(f32 sX, f32 sY, f32 sZ);
-
-        /**
-         * @brief 
-         * 
-         * @param tX 
-         * @param tY 
-         * @param tZ 
-         */
-        void translate(f32 tX, f32 tY, f32 tZ);
 
         /**
          * @brief 
@@ -170,34 +144,18 @@ class OBDLight {
         /**
          * @brief 
          * 
-         * @return TNode* 
-         */
-        TNode* getLightNode();
-        
-        /**
-         * @brief 
-         * 
          * @return TLight* 
          */
         TLight* getLightEntity();
 
         /**
-         * @brief 
+         * @brief Get the First Node object
          * 
+         * @return TNode* 
          */
-        void setRotation(glm::vec3 r, f32 angle);
-
-        /**
-         * @brief 
-         * 
-         */
-        void setScale(glm::vec3 s);
-
+        TNode *getFirstNode();
     private:
         TNode* lightNode;
-        TNode* rotationNode;
-        TNode* translationNode;
-        TNode* scaleNode;
 
         OBDColor ambientColor;
         u32 ambientIntensity;

@@ -8,6 +8,7 @@ Material::Material(Texture *tex) {
     material->setTexture(0, tex->getTexture());
     material->Lighting = true;
     material->NormalizeNormals = true;
+    setColor(255, 255, 255, 255);
 }
 
 Material::~Material() {
@@ -16,4 +17,13 @@ Material::~Material() {
 
 video::SMaterial * Material::getMaterial() {
     return material;
+}
+
+void Material::setColor(f32 a, f32 r, f32 g, f32 b) {
+    //material -> setColor(video::SColor(a, r, g, b));
+    material->AmbientColor = video::SColor(a, r, g, b);
+    material->DiffuseColor = video::SColor(a, r, g, b);
+    material->SpecularColor = video::SColor(a, r, g, b);
+    material->EmissiveColor = video::SColor(a, r, g, b);
+    
 }

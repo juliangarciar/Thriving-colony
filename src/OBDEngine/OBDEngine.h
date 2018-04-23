@@ -7,9 +7,10 @@
 #include "OBDBillboard.h"
 #include "OBDCamera.h"
 #include "OBDLight.h"
-#include "OBDMesh.h"
+#include "OBDObject.h"
 #include "OBDSceneNode.h"
 #include "OBDShaderProgram.h"
+#include "OBDTile.h"
 
 #include "ResourceManager/ResourceManager.h"
 #include "Graphics/TNode.h"
@@ -31,8 +32,10 @@ class OBDEngine {
         /**
          * @brief 
          * 
+         * @param screenWidth 
+         * @param screenHeight 
          */
-        void Init();
+        void Init(i32 screenWidth, i32 screenHeight);
 
         /**
          * @brief 
@@ -73,18 +76,20 @@ class OBDEngine {
          * @brief 
          * 
          * @param 
+         * @param autoload
          * @return OBDMesh* 
          */
-        OBDMesh* createMesh(std::string);
+        OBDObject* createObject(std::string, bool = false);
         
         /**
          * @brief 
          * 
          * @param 
          * @param 
+         * @param autoload
          * @return OBDMesh* 
          */
-        OBDMesh* createMesh(OBDSceneNode*, std::string);
+        OBDObject* createObject(OBDSceneNode*, std::string, bool = false);
         
         /**
          * @brief 
@@ -112,6 +117,14 @@ class OBDEngine {
          * @return OBDShaderProgram* 
          */
         OBDShaderProgram *createShaderProgram(std::string, std::string, std::string);
+        OBDTile* createTile(ResourceIMG* _texture, glm::vec2 _position);
+        /**
+         * @brief
+         * @param a 
+         * @param b 
+         * @param c 
+         */
+        OBDBillboard* createBillboard(OBDSceneNode*, i32, glm::vec3);
 
         /**
          * @brief 
@@ -142,6 +155,12 @@ class OBDEngine {
         void setCurrentShaderProgram(std::string);
 
         /**
+         * @brief Set the Clean Color object
+         * @param color
+         */
+        void setClearColor(OBDColor);
+
+        /**
          * @brief 
          * 
          */
@@ -159,6 +178,7 @@ class OBDEngine {
          * 
          */
         OBDSceneNode* getDefaultLayer();
+
     private:
         ResourceManager *OBDManager;
 
@@ -172,6 +192,9 @@ class OBDEngine {
         std::vector<OBDCamera*> cameras;
         std::vector<OBDLight*> lights;
         std::map<std::string, OBDShaderProgram*> shaderPrograms;
+
+        i32 screenWidth;
+        i32 screenHeight;
 };
 
 #endif

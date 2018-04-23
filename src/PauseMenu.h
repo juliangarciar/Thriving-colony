@@ -6,35 +6,43 @@
 #include <GUIEngine/Panel.h>
 
 /**
- * @class PauseMenu
- * @brief Crea un objeto tipo PauseMenu
+ * @class PauseMenu.
+ * @brief Create a PauseMenu type object.
  */
 class PauseMenu {
     
     public:
         /**
-         * @brief Constructor
+         * @brief PauseMenu constructor.
          */
         PauseMenu();
+
         /**
-         * @brief Destructor
+         * @brief PauseMenu destructor
          */
         ~PauseMenu();
 
         /**
-         * @brief Establece los distintos eventos asociados a cada uno de los botones del HUD 
+         * @brief Set the different events associated to each PauseMenu buttons. 
          */
         void setHUDEvents();
 
         /**
-         * @brief Actualiza el HUD 
+         * @brief Update.
          */
         void update();
 
     private:
+        //POinter to Button object that closes the game.
         Button *buttonQuit;
+
+        //Pointer to Button object that resumes the game.
         Button *buttonResume;
+
+        //Pointer to Button object that goes to the main menu.
         Button *buttonMenu;
+
+        //Panel where all buttons are shown.
         Panel* bgMenu;
 };
 

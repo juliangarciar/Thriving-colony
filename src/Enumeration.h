@@ -33,8 +33,10 @@ class Enumeration {
             MainBuilding,
             Barn,
             Barrack,
+            DefenseBarrack,
             Hospital,
             House,
+            LastChoiceHouse,
             Market,
             Quarry,
             Siderurgy,
@@ -50,6 +52,7 @@ class Enumeration {
             StandardR,
             AdvancedR,
             StandardM,
+            DefenseStandardM,
             AdvancedM,
             Launcher,
             Desintegrator,
@@ -267,6 +270,13 @@ class Enumeration {
             Mounted = 10,
             Siege = 7,
             Creatures = 15
+        };
+
+        enum BehaviourState {
+            Invalid,
+            Success,
+            Failure,
+            Running
         };
 
     private:

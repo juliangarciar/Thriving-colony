@@ -2,15 +2,14 @@
 
 #include "../ResourceManager/ResourceOBJ.h"
 
-TMesh::TMesh(ResourceMesh *r, ResourceMaterial *m) : TEntity() {
+#define MAX_LIGHTS 10
+
+TMesh::TMesh(ResourceMesh r, ResourceMaterial m) : TEntity() {
 	mesh = r;
 	material = m;
-	
-	active = true;
-	name= "";
 
 	for (int i = 0; i < OBDEnums::TextureTypes::TEXTURE_SIZE; i++){
-		textures.push_back(NULL);
+		textures.push_back(nullptr);
 	}
 
 	activeTextures.ambientTexture = false;
@@ -19,34 +18,38 @@ TMesh::TMesh(ResourceMesh *r, ResourceMaterial *m) : TEntity() {
 	activeTextures.alphaTexture = false;
 	activeTextures.bumpTexture = false;
 	
-	currentMaterial.ambientColor = material->getAmbientColor();
-	currentMaterial.diffuseColor = material->getDiffuseColor();
-	currentMaterial.specularColor = material->getSpecularColor();
+	currentMaterial.ambientColor = material.ambientColor;
+	currentMaterial.diffuseColor = material.diffuseColor;
+	currentMaterial.specularColor = material.specularColor;
 
 	// Generate a buffer for the vertices
 	glGenBuffers(1, &VBOID);
 	glBindBuffer(GL_ARRAY_BUFFER, VBOID);
-	glBufferData(GL_ARRAY_BUFFER, mesh->getVBO().size() * sizeof(f32), &mesh->getVBO()[0], GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, mesh.vbo.size() * sizeof(f32), &mesh.vbo[0], GL_STATIC_DRAW);
 	
 	// Generate a buffer for the indices as well
 	glGenBuffers(1, &IBOID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBOID);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->getIndices().size() * sizeof(us32), &mesh->getIndices()[0] , GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(us32), &mesh.indices[0] , GL_STATIC_DRAW);
 
 	// Lights
 	glGenBuffers(1, &lightID);
 	glBindBuffer(GL_UNIFORM_BUFFER, lightID);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslLight) * cache.getLights()->size(), &cache.getLights()->at(0), GL_DYNAMIC_DRAW);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslLight) * MAX_LIGHTS, 0, GL_DYNAMIC_DRAW);
 
 	// Material
 	glGenBuffers(1, &materialID);
 	glBindBuffer(GL_UNIFORM_BUFFER, materialID);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslMaterial), &currentMaterial, GL_DYNAMIC_DRAW);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslMaterial), &currentMaterial);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 2, materialID);
 
 	// Textures
 	glGenBuffers(1, &textureID);
 	glBindBuffer(GL_UNIFORM_BUFFER, textureID);
 	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslTexture), &activeTextures, GL_DYNAMIC_DRAW);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslTexture), &activeTextures);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 3, textureID);
 }
 
 TMesh::~TMesh() {
@@ -55,8 +58,6 @@ TMesh::~TMesh() {
 }
 
 void TMesh::beginDraw() { 
-	if (!active) return;
-	   
 	glm::mat4 pM = cache.getProjectionMatrix();
 	glm::mat4 vM = cache.getViewMatrix();
 	glm::mat4 mM = cache.getModelMatrix();
@@ -127,7 +128,7 @@ void TMesh::beginDraw() {
 	// Draw the triangles!
 	glDrawElements(
 		GL_TRIANGLES,      // mode
-		mesh->getIndices().size(),    // count
+		mesh.indices.size(),    // count
 		GL_UNSIGNED_SHORT,   // type
 		(void*)0           // element array buffer offset
 	);
@@ -141,12 +142,12 @@ void TMesh::endDraw() {
 
 }
 
-void TMesh::setMaterial(ResourceMaterial *m){
+void TMesh::setMaterial(ResourceMaterial m){
 	material = m;
 	
-	currentMaterial.ambientColor = material->getAmbientColor();
-	currentMaterial.diffuseColor = material->getDiffuseColor();
-	currentMaterial.specularColor = material->getSpecularColor();
+	currentMaterial.ambientColor = material.ambientColor;
+	currentMaterial.diffuseColor = material.diffuseColor;
+	currentMaterial.specularColor = material.specularColor;
 
 	//Send material
 	glBindBuffer(GL_UNIFORM_BUFFER, materialID);
@@ -155,6 +156,7 @@ void TMesh::setMaterial(ResourceMaterial *m){
 }
 
 void TMesh::setTexture(OBDEnums::TextureTypes tt, TTexture* t){
+	if (textures[(int)tt] != nullptr) delete textures[(int)tt];
 	textures[(int)tt] = t;
 	switch(tt){
 		case OBDEnums::TextureTypes::TEXTURE_AMBIENT:
@@ -181,34 +183,10 @@ void TMesh::setTexture(OBDEnums::TextureTypes tt, TTexture* t){
 	glBindBufferBase(GL_UNIFORM_BUFFER, 3, textureID);
 }
 
-ResourceMesh* TMesh::getMesh(){
+ResourceMesh TMesh::getMesh(){
 	return mesh;
 }
 
-ResourceMaterial* TMesh::getMaterial(){
+ResourceMaterial TMesh::getMaterial(){
 	return material;
-}
-
-void TMesh::setActive(bool a) {
-	active = a;
-}
-
-bool TMesh::getActive() {
-	return active;
-}
-
-void TMesh::setName(std::string n) {
-	name = n;
-}
-
-std::string TMesh::getName() {
-	return name;
-}
-
-void TMesh::setID(GLuint i) {
-	ID = i;
-}
-
-GLuint TMesh::getID() {
-	return ID;
 }

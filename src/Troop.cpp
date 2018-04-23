@@ -72,7 +72,6 @@ Vector2<f32> Troop::separation(){
     return dummy;
 }
 
-
 Vector3<f32> Troop::calculateFlocking(){
     Vector3<f32> dummy = Vector3<f32>();
     Vector2<f32> _alignment = alignment(); 
@@ -94,6 +93,7 @@ void Troop::setPosition(Vector3<f32> vectorPos){
         modelVector[i]->setPosition(positionVector[i]);
     }
 }
+
 void Troop::moveTroops(Vector3<f32> vectorMov){
     //WorldGeometry::Instance()->getNeighborUnits(positionVector[0].toVector2());
     for(i32 i = 0; i < max; i++){

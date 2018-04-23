@@ -12,11 +12,12 @@ ResourceManager::ResourceManager(){
 }
 
 ResourceManager::~ResourceManager(){
+    //ToDo: recorrer resources y liberarlos
     resources.clear();
 }
 
 void ResourceManager::Update(){
-    //ToDo: ¿esto es asi?
+    //ToDo: revisar cola de procesos
     threads.front().join();
     threads.pop();
 }
@@ -88,3 +89,5 @@ Resource *ResourceManager::getResource(std::string path, bool sync){
         else return nullptr;
     }
 }
+
+//ToDo: release resource

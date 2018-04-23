@@ -1,7 +1,7 @@
 #ifndef VECTOR2_H
 #define VECTOR2_H
 
-#include <Types.h>
+#include "../Types.h"
 
 #include <irrlicht/irrlicht.h>
 #include <glm/vec2.hpp>
