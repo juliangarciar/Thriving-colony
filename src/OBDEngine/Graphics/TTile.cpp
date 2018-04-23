@@ -1,45 +1,53 @@
 #include "TTile.h"
 #include "TTexture.h"
+#include "../ResourceManager/ResourceIMG.h"
+
+#define MAX_LIGHTS 10
 
 TTile::TTile(){
     texture = nullptr;
 }
-TTile::TTile(TTexture* _texture, glm::vec2 _position){
-    texture = _texture;
+TTile::TTile(ResourceIMG* _texture, glm::vec2 _position){
+    texture = new TTexture(_texture);
+    textureID = texture->getTextureID();
     position = _position;
 }
 TTile::~TTile(){
     //ToDo: Revisalo julian
+    delete texture;
 }
 void TTile::beginDraw(){
-    //glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureID);
-    //glUniform1i
-    glPushMatrix();
-        glTranslatef(position[0], position[1], 0);
+    
+    //glPushMatrix();
+        //glTranslatef(position[1], position[0], 5.0);
 
         glBegin(GL_QUADS);
             glTexCoord2d(0.0, 0.0);
-            glVertex3f(0.0, 0.0, 0.0);
+            glVertex3f(float(position[0]), float(position[1]), 0.0);
 
             glTexCoord2d(1.0, 0.0);
-            glVertex3f(1.0, 0.0, 0.0);
+            glVertex3f(float(position[0] + 1), float(position[1]), 0.0);
 
             glTexCoord2d(1.0, 1.0);
-            glVertex3f(1.0, 1.0, 0.0);
+            glVertex3f(float(position[0] + 1), float(position[1] + 1), 0.0);
 
             glTexCoord2d(0.0, 1.0);
-            glVertex3f(0.0, 1.0, 0.0);
+            glVertex3f(0.0, float(position[1] + 1), 0.0);
         glEnd();
-    glPopMatrix();
+    //glPopMatrix();
 }
 void TTile::endDraw(){
 
 }
-void TTile::setTexture(TTexture* _texture){
-    texture = _texture;
-    glBindBuffer(GL_UNIFORM_BUFFER, textureID);
-    //glBufferBufferRange(GL_UNIFORM_BUFFER, cache.getID(OBDEnums::OpenGLIDs::BUFFER_TEXTURE), textureID, 0, glslTexture);
+void TTile::setTexture(ResourceIMG* _texture){
+    if(texture == nullptr)
+        texture = new TTexture(_texture);
+    else{
+        delete texture;
+        texture = new TTexture(_texture);
+    }
+    textureID = texture->getTextureID();
 }
 void TTile::setPosition(glm::vec2 _position){
     position = _position;

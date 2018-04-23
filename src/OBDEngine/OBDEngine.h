@@ -10,6 +10,7 @@
 #include "OBDObject.h"
 #include "OBDSceneNode.h"
 #include "OBDShaderProgram.h"
+#include "OBDTile.h"
 
 #include "ResourceManager/ResourceManager.h"
 #include "Graphics/TNode.h"
@@ -116,7 +117,7 @@ class OBDEngine {
          * @return OBDShaderProgram* 
          */
         OBDShaderProgram *createShaderProgram(std::string, std::string, std::string);
-
+        OBDTile* createTile(ResourceIMG* _texture, glm::vec2 _position);
         /**
          * @brief
          * @param a 

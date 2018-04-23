@@ -122,6 +122,12 @@ OBDBillboard* OBDEngine::createBillboard(OBDSceneNode* layer, i32 id, glm::vec3 
     return billboard;
 }
 
+OBDTile* OBDEngine::createTile(ResourceIMG* _texture, glm::vec2 _position){
+    OBDTile* tmp = new OBDTile(_texture, _position);
+    defaultSceneNode->addChild(tmp);
+    return tmp;
+}
+
 void OBDEngine::registerLight(OBDLight* lightNode) {
     clSceneNode -> addChild(lightNode);
     lights.push_back(lightNode);
