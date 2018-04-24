@@ -27,12 +27,6 @@ class Rect2D {
          * Crea un objeto zona de impresion
          * @param rect: Zona a imprimir
          */
-        Rect2D(core::rect<T> rect);
-        
-        /**
-         * Crea un objeto zona de impresion
-         * @param rect: Zona a imprimir
-         */
         Rect2D(const Rect2D<T>& rect);
         
         virtual ~Rect2D();
@@ -45,18 +39,9 @@ class Rect2D {
          * @param rH: Alto
          */
         void setRect2D(T rX, T rY, T rW, T rH);
-        
-        /**
-         * Establece la zona de corte
-         * @param rect: Zona de core
-         */
-        void setRect2D(core::rect<T> rect);
 
         //Get Fixed Rect 2D
         Rect2D<T> getFixed();
-        
-        //Return
-        core::rect<T> getRect2D();
         
         friend std::ostream& operator << (std::ostream &o,const Rect2D<f32> &p);
         friend std::ostream& operator << (std::ostream &o,const Rect2D<i32> &p);

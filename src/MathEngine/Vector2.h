@@ -31,7 +31,7 @@ class Vector2 {
         Vector2<T> operator /(const f32 &num) const;
 
         //Irrlicht
-        Vector2(irr::core::vector2di v);
+/*        Vector2(irr::core::vector2di v);
         Vector2(irr::core::vector2df v);
         void set(irr::core::vector2di v);
         void set(irr::core::vector2df v);
@@ -41,7 +41,7 @@ class Vector2 {
         //glm
         Vector2(glm::vec2 v);
         void set(glm::vec2 v);
-        glm::vec2 getVec2();
+        glm::vec2 getVec2();*/
     private:
 };
 

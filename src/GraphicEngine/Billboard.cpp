@@ -3,7 +3,7 @@
 
 Billboard::Billboard(SceneNode* parent, i32 id, Vector3<f32> pos) {
     scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
-    billboardNode = smgr -> addBillboardSceneNode(parent -> getSceneNode(), core::dimension2d<f32>(100.00, 10.00), pos.getVectorF(), id, video::SColor(255, 0, 0, 0), video::SColor(255, 0, 0, 0));
+    billboardNode = smgr -> addBillboardSceneNode(parent -> getSceneNode(), core::dimension2d<f32>(100.00, 10.00), core::vector3df(pos.x, pos.y, pos.z), id, video::SColor(255, 0, 0, 0), video::SColor(255, 0, 0, 0));
     setActive(true);
 }
 
@@ -28,11 +28,11 @@ void Billboard::setName(const wchar_t *name) {
 }
 
 void Billboard::setPosition(Vector3<f32> pos) {
-    billboardNode -> setPosition(pos.getVectorF());
+    billboardNode -> setPosition(core::vector3df(pos.x, pos.y, pos.z));
 }
 
 void Billboard::setScale(Vector3<f32> s) {
-    billboardNode -> setScale(s.getVectorF()); 
+    billboardNode -> setScale(core::vector3df(s.x, s.y, s.z)); 
 }
 
 void Billboard::rotate(f32 x, f32 y){

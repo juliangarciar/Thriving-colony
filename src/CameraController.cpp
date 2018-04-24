@@ -154,8 +154,8 @@ void CameraController::Update(f32 deltaTime) {
 
 		camPos.y = mapHeight + camHeight;
 
-		camera -> setTargetPosition(tarPos.getVectorF());
-		camera -> setCameraPosition(camPos.getVectorF());
+		camera -> setTargetPosition(tarPos);
+		camera -> setCameraPosition(camPos);
     }
 }
 
@@ -274,7 +274,7 @@ void CameraController::RotateAndInclinate(){
         rotateDegrees.y = (rotateDegrees.y > maxInclination) ? maxInclination : rotateDegrees.y;
 
         // reset cursor position to center
-        IO::Instance() -> getMouse() -> setPosition(screenCenter.getVectorF()); 
+        IO::Instance() -> getMouse() -> setPosition(screenCenter); 
 
 		// refresh distance to target
 		distanceToTarget = camPos.getDistanceTo(tarPos);

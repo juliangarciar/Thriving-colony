@@ -38,7 +38,7 @@ class Vector3 {
         Vector3<T> operator *(const f32 &num) const;
         Vector3<T> operator /(const Vector3<T> &p) const;
         Vector3<T> operator /(const f32 &num) const;
-
+/*
         //Irrlicht
         Vector3(irr::core::vector3di v);
         Vector3(irr::core::vector3df v);
@@ -51,7 +51,7 @@ class Vector3 {
         Vector3(glm::vec3 v);
         void set(glm::vec3 v);
         glm::vec3 getVec3();
-
+*/
     private:
 };
 

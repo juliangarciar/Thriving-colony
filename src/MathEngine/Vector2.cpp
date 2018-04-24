@@ -77,7 +77,7 @@ template <class T>
 Vector2<T> Vector2<T>::operator / (const f32 &num) const {
     return Vector2<T>(this -> x / num, this -> y / num);
 }
-
+/*
 /////////////////////////////////////////IRRLICHT////////////////////////////////////////
 template <class T>
 Vector2<T>::Vector2(irr::core::vector2di v) {
@@ -132,6 +132,6 @@ glm::vec2 Vector2<T>::getVec2() {
     return glm::vec2(x, y);
 }
 //////////////////////////////////////////////////////////////////////////////////////////
-
+*/
 template class Vector2<i32>;
 template class Vector2<f32>;

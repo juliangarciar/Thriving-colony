@@ -5,7 +5,6 @@
 #include <Types.h>
 #include <Enumeration.h>
 #include <Building.h>
-#include <MathEngine/Box3D.h>
 #include <GraphicEngine/SceneNode.h>
 #include <GraphicEngine/Terrain.h>
 #include <GraphicEngine/Model.h>
