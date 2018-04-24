@@ -60,7 +60,7 @@ TMesh::~TMesh() {
 void TMesh::beginDraw() { 
 	glm::mat4 pM = cache.getProjectionMatrix();
 	glm::mat4 vM = cache.getViewMatrix();
-	glm::mat4 mM = cache.getModelMatrix();
+	glm::mat4 mM = cache.getMatrixStack().top();
 
 	// Matrices
 	glm::mat4 MV = vM * mM;
