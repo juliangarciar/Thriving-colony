@@ -254,5 +254,9 @@ BuildingData BuildingManager::getBuildingData(std::string type){
 	std::map<std::string, BuildingData>::iterator it = baseBuildings.find(type);
 	if (it != baseBuildings.end()){
 		return it->second;
+	} else {
+		std::cout << "El tipo de edificio " << type << " no es valido." << std::endl;
+		exit(0);
+		return BuildingData();
 	}
 }

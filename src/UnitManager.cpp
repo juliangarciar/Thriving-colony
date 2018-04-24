@@ -463,6 +463,17 @@ i32 UnitManager::getTotalTroopAmount() {
     return inQueueTroops -> size() + inHallTroops -> size() + inMapTroops -> size();
 } 
 
+UnitData UnitManager::getUnitData(std::string type){
+	std::map<std::string, UnitData>::iterator it = baseUnits.find(type);
+	if (it != baseUnits.end()){
+		return it->second;
+	} else {
+		std::cout << "El tipo de unidad " << type << " no es valido." << std::endl;
+		exit(0);
+		return UnitData();
+	}
+}
+
 /*
 void UnitManager::deployTroopAtPosition(i32 index, Vector3<f32> vectorData) {
     Unit *u = inHallTroops -> at(index);

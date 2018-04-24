@@ -49,6 +49,7 @@ class UnitManager{
         std::map<i32, Unit*> *getInHallTroops();
         std::map<i32, Unit*> *getInMapTroops();
 		std::string getCollisionName();
+		UnitData getUnitData(std::string);
     private:
         Enumeration::Team team;
 

@@ -25,20 +25,20 @@
 			"intensity": 100000
 		}
 	],
-	"hud":{
-		"BarnButton": true,
-		"BarrackButton": true,
-		"HospitalButton": true,
-		"HouseButton": true,
-		"MarketButton": true,
-		"QuarryButton": true,
-		"SiderurgyButton": true,
-		"SchoolButton": true,
-		"TowerButton": true,
-		"WallButton": true,
-		"WorkshopButton": true,
-		"ExpandTerrainButton": true
-	},
+	"buildables":[
+		{"type": "Barn", "isBuildable": true},
+		{"type": "Barrack", "isBuildable": true},
+		{"type": "Hospital", "isBuildable": true},
+		{"type": "House", "isBuildable": true},
+		{"type": "Market", "isBuildable": true},
+		{"type": "Quarry", "isBuildable": true},
+		{"type": "Siderurgy", "isBuildable": true},
+		{"type": "School", "isBuildable": true},
+		{"type": "Tower", "isBuildable": true},
+		{"type": "Wall", "isBuildable": true},
+		{"type": "Workshop", "isBuildable": true}
+	],
+	"expandableTerrain": true,
 	"player":
 	{
 		"initial_metal": 1200,
@@ -46,24 +46,23 @@
 		"siderurgy_productivity": 10,
 		"quarry_productivity": 5,
 		"building_radious": 2000,
-		"buildings":[
-			{
-				"type": "MainBuilding", 
-				"position": {
-					"x": 8040,
-					"z": 8040
-				},
-				"scale": {
-					"x": 0,
-					"y": 0,
-					"z": 0
-				},
-				"rotation": {
-					"x": 0,
-					"y": 0,
-					"z": 0
-				}
+		"mainBuilding": {
+			"position": {
+				"x": 8040,
+				"z": 8040
 			},
+			"scale": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"rotation": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		},
+		"buildings":[
 			{
 				"type": "Siderurgy", 
 				"position": {
@@ -90,24 +89,23 @@
 		"siderurgy_productivity": 15,
 		"quarry_productivity": 10,
 		"building_radious": 2000,
-		"buildings":[
-			{
-				"type": "MainBuilding", 
-				"position": {
-					"x": 1960,
-					"z": 1960
-				},
-				"scale": {
-					"x": 0,
-					"y": 0,
-					"z": 0
-				},
-				"rotation": {
-					"x": 0,
-					"y": 0,
-					"z": 0
-				}
+		"mainBuilding": {
+			"position": {
+				"x": 1960,
+				"z": 1960
 			},
+			"scale": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"rotation": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		},
+		"buildings":[
 			{
 				"type": "Siderurgy", 
 				"position": {
@@ -129,7 +127,6 @@
 				}
 			}
 		]
-		
 	},
 	"trees": [
 		{
