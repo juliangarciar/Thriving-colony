@@ -3,13 +3,16 @@
 
 #include <irrlicht/irrlicht.h>
 
+#include <GraphicEngine/Texture.h>
+
 class SkyDome {
 
     public:
-        SkyDome(irr::scene::ISceneManager *scene, irr::video::ITexture* tex);
+        SkyDome(Texture*);
         ~SkyDome();
         
     private:
+		Texture *t;
         irr::scene::ISceneNode* skydome;
 };
 

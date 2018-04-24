@@ -14,10 +14,6 @@ Troop::Troop(SceneNode* scene, const char* path, i32 qnty, i32 ID){
     for(i32 i = 0; i < max; i++){
         modelVector[i] = new Model(scene, ID, path);
         positionVector[i] = Vector2<f32>();
-        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
-            modelVector[i] -> getModel() -> getMesh(), irr::video::SColor(255, 125, 125, 0)
-        );
-        //modelVector[i]->setScale(Vector3<f32>(1,1,1));
         modelVector[i]->setActive(true);
     }
     alignmentWeight = 1.0;

@@ -44,12 +44,20 @@ SceneNode *SceneNode::getNodeCollision(Mouse *cursor){
 
 	scene::ISceneNode *n = collisionManager -> getSceneNodeAndCollisionPointFromRay(ray, point, triangle, 0, node);
 
-	if (n) {
+	if (n && n != nullptr) {
 		collisionNode = new SceneNode(n);
 		return collisionNode;
 	}
 
 	return nullptr;
+}
+
+i32 SceneNode::getID(){
+	return node->getID();
+}
+
+std::string SceneNode::getName(){
+	return node->getName();
 }
 
 scene::ISceneNode *SceneNode::getSceneNode(){

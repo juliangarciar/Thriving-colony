@@ -209,15 +209,15 @@ i32 BuildingManager::getAmount(std::string type){
 }
 
 i32 BuildingManager::getCollisionID() {
-	if (currentCollision != nullptr && currentCollision -> getSceneNode() != nullptr) {
-		return currentCollision -> getSceneNode() -> getID();
+	if (currentCollision != nullptr) {
+		return currentCollision -> getID();
 	}
 	return -1;
 }
 
 std::string BuildingManager::getCollisionName() {
-	if (currentCollision != nullptr && currentCollision -> getSceneNode() != nullptr) {
-		return currentCollision -> getSceneNode() -> getName();
+	if (currentCollision != nullptr) {
+		return currentCollision -> getName();
 	}
 	return nullptr;
 }

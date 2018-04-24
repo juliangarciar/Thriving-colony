@@ -69,10 +69,7 @@ void Map::Init() {
     //cellSpace = new CellSpacePartition(10240, 10240, 128, 128, 4);
 
     //Skydome
-    Window* w = Window::Instance();
-    w -> getVideoDriver() -> setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, false);
-    skydome = new SkyDome(w -> getSceneManager(), w -> getVideoDriver() -> getTexture(j["map"]["skybox_texture"].get<std::string>().c_str()));
-    w -> getVideoDriver() -> setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, true);
+    skydome = new SkyDome(new Texture(j["map"]["skybox_texture"].get<std::string>().c_str()));
 
     loadProgress(50);
 

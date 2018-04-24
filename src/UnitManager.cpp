@@ -410,14 +410,14 @@ void UnitManager::deleteUnit(i32 id) {
 
 i32 UnitManager::getCollisionID() {
 	if (currentCollision != nullptr) {
-		return currentCollision -> getSceneNode() -> getID();
+		return currentCollision -> getID();
 	}
 	return -1;
 }
 
 std::string UnitManager::getCollisionName() {
 	if (currentCollision != nullptr) {
-		return currentCollision -> getSceneNode() -> getName();
+		return currentCollision -> getName();
 	}
 	return nullptr;
 }
