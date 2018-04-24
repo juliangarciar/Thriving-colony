@@ -6,6 +6,7 @@
 #include "IOEngine/IO.h"
 #include "GraphicEngine/Window.h"
 
+//ToDo: llevarse datos a JSON
 CameraController::CameraController() {
 	Window *w = Window::Instance();
 

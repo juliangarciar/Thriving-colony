@@ -24,9 +24,10 @@ SceneNode::SceneNode(scene::ISceneNode *n){
 }
 
 SceneNode::~SceneNode() {
-	//ToDo: borrar node y collisionNode
-	//node = nullptr;
-	//collisionNode = nullptr;
+	delete node;
+	if (collisionNode != nullptr) delete collisionNode;
+	node = nullptr;
+	collisionNode = nullptr;
 }
  
 SceneNode *SceneNode::getNodeCollision(Mouse *cursor){
