@@ -5,20 +5,21 @@
 #include <GL/glew.h>
 
 class TTexture;
-
+class ResourceIMG;
 class TTile : public TEntity{
     public:
         TTile();
-        TTile(TTexture* _texture, glm::vec2 _position);
+        TTile(ResourceIMG * _texture, glm::vec2 _position);
         ~TTile();
         void beginDraw();
         void endDraw();
-        void setTexture(TTexture* _texture);
+        void setTexture(ResourceIMG* _texture);
         void setPosition(glm::vec2 _position);
         glm::vec2 getPosition();
     private:
         TTexture* texture;
         GLuint textureID;
+        GLuint lightID;
         glm::vec2 position;
 };
 #endif

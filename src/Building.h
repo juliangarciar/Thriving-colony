@@ -6,6 +6,7 @@
 #include <Types.h>
 #include <IOEngine/Timer.h>
 
+
 /**
  * @class Building.
  * @brief Create a Building type object. Public heritage from Entity class.
@@ -106,6 +107,7 @@ class Building : public Entity {
         
         //
         Material *cantBuildMat;
+        Billboard* billboard;
 };
 
 #endif

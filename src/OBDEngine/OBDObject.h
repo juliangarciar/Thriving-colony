@@ -31,6 +31,12 @@ class OBDObject : public OBDEntity {
         OBDObject(OBDSceneNode* parent, ResourceOBJ *obj, ResourceMTL *mtl);
 
         /**
+         * @brief Destroy the OBDObject object
+         * 
+         */
+        ~OBDObject();
+
+        /**
          * @brief 
          * 
          * @param tX 

@@ -26,11 +26,14 @@ OBDEngine::~OBDEngine() {
     delete rootNode;
 }
 
-void OBDEngine::Init() {
+void OBDEngine::Init(i32 sW, i32 sH) {
     if (glewInit() != GLEW_OK) {
         std::cout << "Failed to initialize GLEW" << std::endl;
         exit(0);
     }
+
+    screenWidth = sW;
+    screenHeight = sH;
 
 	// Black background
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -67,7 +70,7 @@ OBDLight* OBDEngine::createLight(OBDColor color, u32 intensity) {
 }
 
 OBDCamera* OBDEngine::createCamera() {
-    OBDCamera* cameraNode = new OBDCamera(clSceneNode);
+    OBDCamera* cameraNode = new OBDCamera(clSceneNode, screenWidth, screenHeight);
     cameras.push_back(cameraNode);
     return cameraNode;
 }
@@ -96,6 +99,24 @@ OBDObject* OBDEngine::createObject(OBDSceneNode* layer, std::string mesh, bool a
     return tempObject;
 }
 
+OBDShaderProgram *OBDEngine::createShaderProgram(std::string programName, std::string vs, std::string fs){
+	ResourceGLSL *s1 = (ResourceGLSL*)OBDManager->getResource(vs, true);
+	ResourceGLSL *s2 = (ResourceGLSL*)OBDManager->getResource(fs, true);
+	OBDShaderProgram *p = new OBDShaderProgram(s1, s2);
+    shaderPrograms.insert(std::pair<std::string, OBDShaderProgram*>(programName, p));
+    return p;
+}
+
+OBDTerrain *OBDEngine::createTerrain(std::string heightMap){
+	return new OBDTerrain(defaultSceneNode, heightMap);
+}
+
+OBDTerrain *OBDEngine::createTerrain(OBDSceneNode* layer, std::string heightMap){
+	return new OBDTerrain(layer, heightMap);
+}
+
+//////SANDBOX//////
+
 OBDAnimation* OBDEngine::createAnimation(std::string anim) {
     //ToDo: hacer animaciones
     return new OBDAnimation(defaultSceneNode);
@@ -106,13 +127,18 @@ OBDAnimation* OBDEngine::createAnimation(OBDSceneNode* layer, std::string anim) 
     return new OBDAnimation(layer);
 }
 
-OBDShaderProgram *OBDEngine::createShaderProgram(std::string programName, std::string vs, std::string fs){
-	ResourceGLSL *s1 = (ResourceGLSL*)OBDManager->getResource(vs, true);
-	ResourceGLSL *s2 = (ResourceGLSL*)OBDManager->getResource(fs, true);
-	OBDShaderProgram *p = new OBDShaderProgram(s1, s2);
-    shaderPrograms.insert(std::pair<std::string, OBDShaderProgram*>(programName, p));
-    return p;
+OBDBillboard* OBDEngine::createBillboard(OBDSceneNode* layer, i32 id, glm::vec3 pos) {
+    OBDBillboard* billboard = new OBDBillboard(layer, id, pos);
+    return billboard;
 }
+
+OBDTile* OBDEngine::createTile(ResourceIMG* _texture, glm::vec2 _position){
+    OBDTile* tmp = new OBDTile(_texture, _position);
+    defaultSceneNode->addChild(tmp);
+    return tmp;
+}
+
+/////////////////
 
 void OBDEngine::registerLight(OBDLight* lightNode) {
     clSceneNode -> addChild(lightNode);

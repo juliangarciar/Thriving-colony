@@ -97,6 +97,8 @@ class OBDSceneNode : public OBDEntity {
         TNode *getFirstNode();
 
     private:
+        std::vector<OBDEntity*> children;
+
         TNode* rotationNode;
         TNode* translationNode;
         TNode* scaleNode;

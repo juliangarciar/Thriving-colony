@@ -9,7 +9,7 @@ TMesh::TMesh(ResourceMesh r, ResourceMaterial m) : TEntity() {
 	material = m;
 
 	for (int i = 0; i < OBDEnums::TextureTypes::TEXTURE_SIZE; i++){
-		textures.push_back(NULL);
+		textures.push_back(nullptr);
 	}
 
 	activeTextures.ambientTexture = false;
@@ -60,7 +60,7 @@ TMesh::~TMesh() {
 void TMesh::beginDraw() { 
 	glm::mat4 pM = cache.getProjectionMatrix();
 	glm::mat4 vM = cache.getViewMatrix();
-	glm::mat4 mM = cache.getModelMatrix();
+	glm::mat4 mM = cache.getMatrixStack().top();
 
 	// Matrices
 	glm::mat4 MV = vM * mM;
@@ -156,6 +156,7 @@ void TMesh::setMaterial(ResourceMaterial m){
 }
 
 void TMesh::setTexture(OBDEnums::TextureTypes tt, TTexture* t){
+	if (textures[(int)tt] != nullptr) delete textures[(int)tt];
 	textures[(int)tt] = t;
 	switch(tt){
 		case OBDEnums::TextureTypes::TEXTURE_AMBIENT:

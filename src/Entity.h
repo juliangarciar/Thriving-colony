@@ -11,6 +11,7 @@
 #include <GraphicEngine/SceneNode.h>
 #include <IOEngine/Timer.h>
 #include <GraphicEngine/Material.h>
+#include <GraphicEngine/Billboard.h>
 
 /**
  * @class Entity.
@@ -324,6 +325,10 @@ class Entity {
 
         //
         i32 kCellsY;
+
+        Billboard* billboard;
+
+
         
       private:
 };

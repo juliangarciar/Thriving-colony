@@ -3,6 +3,7 @@
 
 #include "OBDTypes.h"
 #include "OBDEnums.h"
+
 #include "OBDAnimation.h"
 #include "OBDBillboard.h"
 #include "OBDCamera.h"
@@ -10,6 +11,8 @@
 #include "OBDObject.h"
 #include "OBDSceneNode.h"
 #include "OBDShaderProgram.h"
+#include "OBDTerrain.h"
+#include "OBDTile.h"
 
 #include "ResourceManager/ResourceManager.h"
 #include "Graphics/TNode.h"
@@ -31,8 +34,10 @@ class OBDEngine {
         /**
          * @brief 
          * 
+         * @param screenWidth 
+         * @param screenHeight 
          */
-        void Init();
+        void Init(i32 screenWidth, i32 screenHeight);
 
         /**
          * @brief 
@@ -87,7 +92,33 @@ class OBDEngine {
          * @return OBDMesh* 
          */
         OBDObject* createObject(OBDSceneNode*, std::string, bool = false);
+
+        /**
+         * @brief Create a Shader Program object
+         * 
+         * @param a 
+         * @param b 
+         * @param c 
+         * @return OBDShaderProgram* 
+         */
+        OBDShaderProgram *createShaderProgram(std::string, std::string, std::string);
+
+		/**
+		 * @brief Create a Terrain object
+		 * @param terrain path
+		 * @return OBDTerrain* 
+		 */
+		OBDTerrain *createTerrain(std::string);
+
+		/**
+		 * @brief Create a Terrain object
+		 * @param terrain path
+		 * @return OBDTerrain* 
+		 */
+		OBDTerrain *createTerrain(OBDSceneNode*, std::string);
         
+		////////////SANDBOX////////////
+
         /**
          * @brief 
          * 
@@ -105,15 +136,24 @@ class OBDEngine {
          */
         OBDAnimation* createAnimation(OBDSceneNode*, std::string);
 
+		/**
+		 * @brief Julian, genera comentarios, primer aviso xD
+		 * 
+		 * @param _texture 
+		 * @param _position 
+		 * @return OBDTile* 
+		 */
+        OBDTile* createTile(ResourceIMG* _texture, glm::vec2 _position);
+
         /**
-         * @brief Create a Shader Program object
-         * 
+         * @brief
          * @param a 
          * @param b 
          * @param c 
-         * @return OBDShaderProgram* 
          */
-        OBDShaderProgram *createShaderProgram(std::string, std::string, std::string);
+        OBDBillboard* createBillboard(OBDSceneNode*, i32, glm::vec3);
+
+		/////////////////////////////
 
         /**
          * @brief 
@@ -167,6 +207,7 @@ class OBDEngine {
          * 
          */
         OBDSceneNode* getDefaultLayer();
+
     private:
         ResourceManager *OBDManager;
 
@@ -180,6 +221,9 @@ class OBDEngine {
         std::vector<OBDCamera*> cameras;
         std::vector<OBDLight*> lights;
         std::map<std::string, OBDShaderProgram*> shaderPrograms;
+
+        i32 screenWidth;
+        i32 screenHeight;
 };
 
 #endif
