@@ -3,7 +3,7 @@
 
 Billboard::Billboard(SceneNode* parent, i32 id, Vector3<f32> pos) {
     scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
-    billboardNode = smgr -> addBillboardSceneNode(parent -> getSceneNode(), core::dimension2d<f32>(1000.00, 1000.00), pos.getVectorF(), id, video::SColor(255, 255, 255, 255), video::SColor(255, 128, 128, 128));
+    billboardNode = smgr -> addBillboardSceneNode(parent -> getSceneNode(), core::dimension2d<f32>(100.00, 10.00), pos.getVectorF(), id, video::SColor(255, 0, 0, 0), video::SColor(255, 0, 0, 0));
     setActive(true);
 }
 

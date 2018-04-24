@@ -1,6 +1,6 @@
 #include "OBDTerrain.h"
-
-OBDTerrain::OBDTerrain(ResourceIMG *img){
+/*
+OBDTerrain::OBDTerrain(ResourceIMG *img){/*
     rotationNode = new TNode(new TTransform());
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
@@ -10,25 +10,25 @@ OBDTerrain::OBDTerrain(ResourceIMG *img){
 
     //std::vector<f32> vbo;
 
-    terrainNode = new TNode(new TMesh(m, mat), scaleNode);
-}
+    terrainNode = new TNode(new TMesh(m, mat), scaleNode);*/
+/*}
 
-OBDTerrain::OBDTerrain(OBDSceneNode* parent, ResourceIMG *img){
+OBDTerrain::OBDTerrain(OBDSceneNode* parent, ResourceIMG *img){/*
     rotationNode = new TNode(new TTransform());
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
 
     terrainNode = new TNode(new TMesh(m, mat), scaleNode);
 
-    parent->addChild(this);
-}
+    parent->addChild(this);*/
+/*}
 
-OBDTerrain::~OBDTerrain() {
+OBDTerrain::~OBDTerrain() {/*
     delete rotationNode;
     rotationNode = nullptr;
-}
+*///}
 
-void generateTerrain(i32 w, i32 h, i32 c, unsigned char *img){
+void generateTerrain(i32 w, i32 h, i32 c, unsigned char *img){/*
 
     
 
@@ -72,7 +72,7 @@ void generateTerrain(i32 w, i32 h, i32 c, unsigned char *img){
     }*/
 
 
-
+/*
 
 	const f32 tdSize = 1.0f/(f32)(w-1);
     float fx=0.f;
@@ -89,7 +89,7 @@ void generateTerrain(i32 w, i32 h, i32 c, unsigned char *img){
     
     tempMesh.name = "terrain";
     tempMesh.vbo = vbo;
-    tempMesh.indices = indices;
+    tempMesh.indices = indices;*/
 }
 
 void OBDTerrain::translate(f32 tX, f32 tY, f32 tZ) {

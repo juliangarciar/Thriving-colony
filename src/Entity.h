@@ -289,7 +289,9 @@ class Entity {
         //
         i32 kCellsY;
 
-        Billboard* billboard;
+        
+        Billboard* barBg;
+        Billboard* bar;
 
 
         
