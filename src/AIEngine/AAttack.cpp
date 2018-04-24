@@ -1,5 +1,6 @@
 #include "AAttack.h"
 #include "../IA.h"
+#include "../Human.h"
 #include "../Map.h"
 
 AAttack::AAttack() : Action() {
@@ -11,14 +12,10 @@ AAttack::~AAttack() {
 }
 
 Enumeration::BehaviourState AAttack::Update() {
-    IA::Instance() -> getUnitManager() -> deployAllTroops(Vector3<f32>(Enumeration::HumanCityHall::human_x, Map::Instance() -> getTerrain() -> getY(Enumeration::HumanCityHall::human_x, Enumeration::HumanCityHall::human_z), Enumeration::HumanCityHall::human_z));
+    IA::Instance() -> getUnitManager() -> deployAllTroops(Human::Instance()->getHallPosition().toVector2());
     return Enumeration::BehaviourState::Success;
 }
 
-Enumeration::BehaviourState AAttack::Update(Enumeration::UnitType) {
-    return Enumeration::BehaviourState::Failure;
-}
-
-Enumeration::BehaviourState AAttack::Update(Enumeration::BuildingType) {
+Enumeration::BehaviourState AAttack::Update(std::string) {
     return Enumeration::BehaviourState::Failure;
 }

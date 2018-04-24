@@ -37,9 +37,11 @@ IA::~IA() {
     choices -> clear();
     delete choices;
     delete rootNode;
+    delete updateFastTimer;
+    delete updateSlowTimer;
 }
 
-void IA::Init() {
+void IA::Init(std::string _race) {
     Player::Init();
     // Choose a behaviour
     chooseBehaviour();
@@ -49,41 +51,44 @@ void IA::Init() {
     //nodeRootIA = new RootNode();
     //nodeRootIA -> init(behaviour);
 
-    buildings = new BuildingManager(Enumeration::Team::IA, Enumeration::BreedType::Drorania);
-    units = new UnitManager(Enumeration::Team::IA, Enumeration::BreedType::Kaonov);
+    buildings = new BuildingManager(Enumeration::Team::IA, _race);
+    units = new UnitManager(Enumeration::Team::IA, _race);
 
     // Choices for the debugging system
     choiceIndex = 0;
     initializeChoices();
+
+    updateFastTimer = new Timer(1.00, true);
+	updateFastTimer -> setCallback([&](){
+		//nodeRootIA -> question();
+		rootNode -> Update();
+		updateFastTimer -> restart();
+		updateSlowTimer -> restart();
+	});
+    updateSlowTimer = new Timer(3.00, true);
+	updateSlowTimer -> setCallback([&](){
+		//nodeRootIA -> question();
+		rootNode -> Update();
+		updateFastTimer -> restart();
+		updateSlowTimer -> restart();
+	});
 }
 
 void IA::Update() {
     buildings -> updateBuildingManager();
     units -> updateUnitManager();
     Vector3<f32> tarPos = Map::Instance() -> getCamera() -> getTarPos();
-    Vector3<f32> *IAPos = buildings -> getBuilding(0) -> getPosition();
+    Vector2<f32> IAPos = buildings -> getBuilding(0) -> getPosition();
     fast = false;
-    if (((IAPos -> x + 2000 > tarPos.x && IAPos -> x - 2000 < tarPos.x) && (IAPos -> z + 2000 > tarPos.z && IAPos -> z - 2000 < tarPos.z)) || underAttack) {
+    if (((IAPos . x + 2000 > tarPos.x && IAPos . x - 2000 < tarPos.x) && (IAPos . y + 2000 > tarPos.z && IAPos . y - 2000 < tarPos.z)) || underAttack) {
         fast = true;
     }
     if (fast == true) {
-        if (updateFastTimer -> tick()) {
-            //nodeRootIA -> question();
-            rootNode -> Update();
-            updateFastTimer -> restart();
-            updateSlowTimer -> restart();
-        }
+		updateFastTimer -> tick();
     } else {
-        if (updateSlowTimer -> tick()) {
-            //nodeRootIA -> question();
-            rootNode -> Update();
-            updateFastTimer -> restart();
-            updateSlowTimer -> restart();
-        }
+		updateSlowTimer -> tick();
     }
-    if (updateTimer -> tick()) {
-        gainResources();
-    }
+	updateTimer -> tick();
 }
 
 void IA::CleanUp() {
@@ -109,8 +114,8 @@ BehaviourTree* IA::getTree() {
 * Goes over the vector of buildings looking up, right, down and left of every building built
 * until find the first empty position
 */
-Vector3<f32> IA::determinatePositionBuilding() {
-    Vector3<f32> v;
+Vector2<f32> IA::determinatePositionBuilding() {
+    Vector2<f32> v;
     bool found = false;
     bool occupied = false;
     std::map<i32, Building*> *b = buildings -> getBuildings();
@@ -121,55 +126,56 @@ Vector3<f32> IA::determinatePositionBuilding() {
          * These coordinates determine the position of the main building
          * the y component of it is determined based on the map
          */
+		//ToDo: parametrizar
         f32 startingX = 2000;
         f32 startingZ = 2000;
-        v.set(startingX, 0, startingZ);
-        v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.z);
+        v.set(startingX, startingZ);
+        v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.y);
     } else {
         
         //When there are some buildings
-        Vector3<f32> *v2 = 0;
-        Vector3<f32> *v3 = 0;
+        Vector2<f32> v2;
+        Vector2<f32> v3;
         for (std::map<i32,Building*>::iterator it = b -> begin(); it != b -> end() && found == false; ++it){
             v2 = it -> second -> getPosition();
             occupied = false;
-            v = Vector3<f32>(v2 -> x, v2 -> y, v2 -> z + 300);
+            v = Vector2<f32>(v2 . x, v2 . y + 300);
             for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                 v3 = it2 -> second -> getPosition();
-                if (v3 -> x == v.x && v3 -> z == v.z) {
+                if (v3 . x == v.x && v3 . y == v.y) {
                     occupied = true;
                 }
             }
             if (occupied == false ) {
                 found = true;
             } else {
-                v = Vector3<f32>(v2 -> x + 300, v2 -> y, v2 -> z);
+                v = Vector2<f32>(v2 . x + 300, v2 . y);
                 occupied = false;
                 for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                     v3 = it2 -> second -> getPosition();
-                    if (v3 -> x == v.x && v3 -> z == v.z) {
+                    if (v3 . x == v.x && v3 . y == v.y) {
                         occupied = true;
                     }
                 }
                 if (occupied == false ) {
                     found = true;
                 } else {
-                    v = Vector3<f32>(v2 -> x, v2 -> y, v2 -> z - 300);
+                    v = Vector2<f32>(v2 . x, v2 . y - 300);
                     occupied = false;
                     for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                         v3 = it2 -> second -> getPosition();
-                        if (v3 -> x == v.x && v3 -> z == v.z) {
+                        if (v3 . x == v.x && v3 . y == v.y) {
                             occupied = true;
                         }
                     }
                     if (occupied == false ) {
                         found = true;
                     } else {
-                        v = Vector3<f32>(v2 -> x - 300, v2 -> y, v2 -> z);
+                        v = Vector2<f32>(v2 . x - 300, v2 . y);
                         occupied = false;
                         for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
                             v3 = it2 -> second -> getPosition();
-                            if (v3 -> x == v.x && v3 -> z == v.z) {
+                            if (v3 . x == v.x && v3 . y == v.y) {
                                 occupied = true;
                             }
                         }
@@ -180,14 +186,14 @@ Vector3<f32> IA::determinatePositionBuilding() {
                 }
             }
         }
-        v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.z);
+        v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.y);
     }
     return v;
 }
 
 bool IA::getUnderAttack() {
     underAttack = false;
-    Vector3<f32> *pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
+    Vector2<f32> pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
     i32 requesterRange = 1000;
     
     f32 xaux = 0;
@@ -200,8 +206,8 @@ bool IA::getUnderAttack() {
         for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
             if (it -> second != nullptr) {
             // Calculate distance between troop requesting target and posible targets
-                xaux = it -> second -> getPosition() -> x - pos -> x;
-                yaux = it -> second -> getPosition() -> y - pos -> y;
+                xaux = it -> second -> getPosition() . x - pos . x;
+                yaux = it -> second -> getPosition() . y - pos . y;
                 dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
 
             if (dist <= requesterRange) {
@@ -248,8 +254,8 @@ void IA::veryHappyBehaviour() {
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
     std::vector<Behaviour*> aux1;
-    aux1.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::DefenseBarrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
-    aux1.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::DefenseStandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    aux1.push_back(new CBuild(new ABuild(), "DefenseBarrack", buildings->getBuildingData("Barrack").metalCost, buildings->getBuildingData("Barrack").crystalCost));
+    aux1.push_back(new CRecruit(new ARecruit(), "DefenseStandardM", buildings->getBuildingData("StandardM").metalCost, buildings->getBuildingData("StandardM").crystalCost));
     auxdef.push_back(new Selector(aux1));
     auxroot.push_back(new Selector(auxdef));
 
@@ -263,49 +269,49 @@ void IA::veryHappyBehaviour() {
     std::vector<Behaviour*> auxcity;
     //Services
     std::vector<Behaviour*> auxser;
-    auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Hospital, Enumeration::BuildingCost::HospitalMetalCost, Enumeration::BuildingCost::HospitalCrystalCost));
-    auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Market, Enumeration::BuildingCost::MarketMetalCost, Enumeration::BuildingCost::MarketCrystalCost));
-    auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::School, Enumeration::BuildingCost::SchoolMetalCost, Enumeration::BuildingCost::SchoolCrystalCost));
+    auxser.push_back(new CBuild(new ABuild(), "Hospital", buildings->getBuildingData("Hospital").metalCost, buildings->getBuildingData("Hospital").crystalCost));
+    auxser.push_back(new CBuild(new ABuild(), "Market", buildings->getBuildingData("Market").metalCost, buildings->getBuildingData("Market").crystalCost));
+    auxser.push_back(new CBuild(new ABuild(), "School", buildings->getBuildingData("School").metalCost, buildings->getBuildingData("School").crystalCost));
     auxcity.push_back(new Selector(auxser));
     //Resources
     std::vector<Behaviour*> auxres;
-    auxres.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Quarry, Enumeration::BuildingCost::QuarryMetalCost, Enumeration::BuildingCost::QuarryCrystalCost));
-    auxres.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Siderurgy, Enumeration::BuildingCost::SiderurgyMetalCost, Enumeration::BuildingCost::SiderurgyCrystalCost));
+    auxres.push_back(new CBuild(new ABuild(), "Quarry", buildings->getBuildingData("Quarry").metalCost, buildings->getBuildingData("Quarry").crystalCost));
+    auxres.push_back(new CBuild(new ABuild(), "Siderurgy", buildings->getBuildingData("Siderurgy").metalCost, buildings->getBuildingData("Siderurgy").crystalCost));
     auxcity.push_back(new Selector(auxres));
     //Houses
-    auxcity.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::House, Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost));
+    auxcity.push_back(new CBuild(new ABuild(), "House", buildings->getBuildingData("Home").metalCost, buildings->getBuildingData("Home").crystalCost));
     //Army
     std::vector<Behaviour*> auxarmy;
     //Units
     std::vector<Behaviour*> auxunits;
     //Melees
     std::vector<Behaviour*> auxmel;
-    auxmel.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::Idol, Enumeration::UnitCost::CreatureMetalCost, Enumeration::UnitCost::CreatureCrystalCost));
-    auxmel.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::AdvancedM, Enumeration::UnitCost::MountedMeleeMetalCost, Enumeration::UnitCost::MountedMeleeCrystalCost));
-    auxmel.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    auxmel.push_back(new CRecruit(new ARecruit(), "Idol", buildings->getBuildingData("Idol").metalCost, buildings->getBuildingData("Idol").crystalCost));
+    auxmel.push_back(new CRecruit(new ARecruit(), "AdvancedM", buildings->getBuildingData("AdvancedM").metalCost, buildings->getBuildingData("AdvancedM").crystalCost));
+    auxmel.push_back(new CRecruit(new ARecruit(), "StandardM", buildings->getBuildingData("StandardM").metalCost, buildings->getBuildingData("StandardM").crystalCost));
     auxunits.push_back(new Selector(auxmel));
     //Ranged
     std::vector<Behaviour*> auxran;
-    auxran.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::AdvancedR, Enumeration::UnitCost::MountedRangedMetalCost, Enumeration::UnitCost::MountedRangedCrystalCost));
-    auxran.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardR, Enumeration::UnitCost::RangedFootmenMetalCost, Enumeration::UnitCost::RangedFootmenCrystalCost));
+    auxran.push_back(new CRecruit(new ARecruit(), "AdvancedR", buildings->getBuildingData("AdvancedR").metalCost, buildings->getBuildingData("AdvancedR").crystalCost));
+    auxran.push_back(new CRecruit(new ARecruit(), "StandardR", buildings->getBuildingData("StandardR").metalCost, buildings->getBuildingData("StandardR").crystalCost));
     auxunits.push_back(new Selector(auxran));
     //Siege
     std::vector<Behaviour*> auxsie;
-    auxsie.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::Desintegrator, Enumeration::UnitCost::RamMetalCost, Enumeration::UnitCost::RamCrystalCost));
-    auxsie.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::Launcher, Enumeration::UnitCost::CatapultMetalCost, Enumeration::UnitCost::CatapultCrystalCost));
+    auxsie.push_back(new CRecruit(new ARecruit(), "Desintegrator", buildings->getBuildingData("Desintegrator").metalCost, buildings->getBuildingData("Desintegrator").crystalCost));
+    auxsie.push_back(new CRecruit(new ARecruit(), "Launcher", buildings->getBuildingData("Launcher").metalCost, buildings->getBuildingData("Launcher").crystalCost));
     auxunits.push_back(new Selector(auxsie));
     auxarmy.push_back(new Selector(auxunits));
     //Buildings
     std::vector<Behaviour*> auxbuil;
-    auxbuil.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Barrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
-    auxbuil.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Barn, Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost));
-    auxbuil.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Workshop, Enumeration::BuildingCost::WorkshopMetalCost, Enumeration::BuildingCost::WorkshopCrystalCost));
+    auxbuil.push_back(new CBuild(new ABuild(), "Barrack", buildings->getBuildingData("Barrack").metalCost, buildings->getBuildingData("Barrack").crystalCost));
+    auxbuil.push_back(new CBuild(new ABuild(), "Barn", buildings->getBuildingData("Barn").metalCost, buildings->getBuildingData("Barn").crystalCost));
+    auxbuil.push_back(new CBuild(new ABuild(), "Workshop", buildings->getBuildingData("Workshop").metalCost, buildings->getBuildingData("Workshop").crystalCost));
     auxarmy.push_back(new Selector(auxbuil));
     auxcity.push_back(new Selector(auxarmy));
     auxroot.push_back(new Selector(auxcity));
 
     //Last choice
-    auxroot.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::LastChoiceHouse, Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost));
+    auxroot.push_back(new CBuild(new ABuild(), "LastChoiceHouse", buildings->getBuildingData("Home").metalCost, buildings->getBuildingData("Home").crystalCost));
 
     rootNode = new ActiveSelector(auxroot);
 }
@@ -317,8 +323,8 @@ void IA::happyBehaviour() {
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
     std::vector<Behaviour*> aux1;
-    aux1.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::DefenseBarrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
-    aux1.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::DefenseStandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    aux1.push_back(new CBuild(new ABuild(), "DefenseBarrack", buildings->getBuildingData("Barrack").metalCost, buildings->getBuildingData("Barrack").crystalCost));
+    aux1.push_back(new CRecruit(new ARecruit(), "DefenseStandardM", buildings->getBuildingData("StandardM").metalCost, buildings->getBuildingData("StandardM").crystalCost));
     auxdef.push_back(new Selector(aux1));
     auxroot.push_back(new Selector(auxdef));
 
@@ -331,17 +337,17 @@ void IA::happyBehaviour() {
     //City
     std::vector<Behaviour*> auxcity;
     //Houses
-    auxcity.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::House, Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost));
+    auxcity.push_back(new CBuild(new ABuild(), "House", buildings->getBuildingData("Home").metalCost, buildings->getBuildingData("Home").crystalCost));
     //Services
     std::vector<Behaviour*> auxser;
-    auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Hospital, Enumeration::BuildingCost::HospitalMetalCost, Enumeration::BuildingCost::HospitalCrystalCost));
-    auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Market, Enumeration::BuildingCost::MarketMetalCost, Enumeration::BuildingCost::MarketCrystalCost));
-    auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::School, Enumeration::BuildingCost::SchoolMetalCost, Enumeration::BuildingCost::SchoolCrystalCost));
+    auxser.push_back(new CBuild(new ABuild(), "Hospital", buildings->getBuildingData("Hospital").metalCost, buildings->getBuildingData("Hospital").crystalCost));
+    auxser.push_back(new CBuild(new ABuild(), "Market", buildings->getBuildingData("Market").metalCost, buildings->getBuildingData("Market").crystalCost));
+    auxser.push_back(new CBuild(new ABuild(), "School", buildings->getBuildingData("School").metalCost, buildings->getBuildingData("School").crystalCost));
     auxcity.push_back(new Selector(auxser));
     //Resources
     std::vector<Behaviour*> auxres;
-    auxres.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Quarry, Enumeration::BuildingCost::QuarryMetalCost, Enumeration::BuildingCost::QuarryCrystalCost));
-    auxres.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Siderurgy, Enumeration::BuildingCost::SiderurgyMetalCost, Enumeration::BuildingCost::SiderurgyCrystalCost));
+    auxres.push_back(new CBuild(new ABuild(), "Quarry", buildings->getBuildingData("Quarry").metalCost, buildings->getBuildingData("Quarry").crystalCost));
+    auxres.push_back(new CBuild(new ABuild(), "Siderurgy", buildings->getBuildingData("Siderurgy").metalCost, buildings->getBuildingData("Siderurgy").crystalCost));
     auxcity.push_back(new Selector(auxres));
     //Army
     std::vector<Behaviour*> auxarmy;
@@ -349,32 +355,32 @@ void IA::happyBehaviour() {
     std::vector<Behaviour*> auxunits;
     //Melees
     std::vector<Behaviour*> auxmel;
-    auxmel.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::Idol, Enumeration::UnitCost::CreatureMetalCost, Enumeration::UnitCost::CreatureCrystalCost));
-    auxmel.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::AdvancedM, Enumeration::UnitCost::MountedMeleeMetalCost, Enumeration::UnitCost::MountedMeleeCrystalCost));
-    auxmel.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    auxmel.push_back(new CRecruit(new ARecruit(), "Idol", buildings->getBuildingData("Idol").metalCost, buildings->getBuildingData("Idol").crystalCost));
+    auxmel.push_back(new CRecruit(new ARecruit(), "AdvancedM", buildings->getBuildingData("AdvancedM").metalCost, buildings->getBuildingData("AdvancedM").crystalCost));
+    auxmel.push_back(new CRecruit(new ARecruit(), "StandardM", buildings->getBuildingData("StandardM").metalCost, buildings->getBuildingData("StandardM").crystalCost));
     auxunits.push_back(new Selector(auxmel));
     //Ranged
     std::vector<Behaviour*> auxran;
-    auxran.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::AdvancedR, Enumeration::UnitCost::MountedRangedMetalCost, Enumeration::UnitCost::MountedRangedCrystalCost));
-    auxran.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardR, Enumeration::UnitCost::RangedFootmenMetalCost, Enumeration::UnitCost::RangedFootmenCrystalCost));
+    auxran.push_back(new CRecruit(new ARecruit(), "AdvancedR", buildings->getBuildingData("AdvancedR").metalCost, buildings->getBuildingData("AdvancedR").crystalCost));
+    auxran.push_back(new CRecruit(new ARecruit(), "StandardR", buildings->getBuildingData("StandardR").metalCost, buildings->getBuildingData("StandardR").crystalCost));
     auxunits.push_back(new Selector(auxran));
     //Siege
     std::vector<Behaviour*> auxsie;
-    auxsie.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::Desintegrator, Enumeration::UnitCost::RamMetalCost, Enumeration::UnitCost::RamCrystalCost));
-    auxsie.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::Launcher, Enumeration::UnitCost::CatapultMetalCost, Enumeration::UnitCost::CatapultCrystalCost));
+    auxsie.push_back(new CRecruit(new ARecruit(), "Desintegrator", buildings->getBuildingData("Desintegrator").metalCost, buildings->getBuildingData("Desintegrator").crystalCost));
+    auxsie.push_back(new CRecruit(new ARecruit(), "Launcher", buildings->getBuildingData("Launcher").metalCost, buildings->getBuildingData("Launcher").crystalCost));
     auxunits.push_back(new Selector(auxsie));
     auxarmy.push_back(new Selector(auxunits));
     //Buildings
     std::vector<Behaviour*> auxbuil;
-    auxbuil.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Barrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
-    auxbuil.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Barn, Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost));
-    auxbuil.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Workshop, Enumeration::BuildingCost::WorkshopMetalCost, Enumeration::BuildingCost::WorkshopCrystalCost));
+    auxbuil.push_back(new CBuild(new ABuild(), "Barrack", buildings->getBuildingData("Barrack").metalCost, buildings->getBuildingData("Barrack").crystalCost));
+    auxbuil.push_back(new CBuild(new ABuild(), "Barn", buildings->getBuildingData("Barn").metalCost, buildings->getBuildingData("Barn").crystalCost));
+    auxbuil.push_back(new CBuild(new ABuild(), "Workshop", buildings->getBuildingData("Workshop").metalCost, buildings->getBuildingData("Workshop").crystalCost));
     auxarmy.push_back(new Selector(auxbuil));
     auxcity.push_back(new Selector(auxarmy));
     auxroot.push_back(new Selector(auxcity));
     
     //Last choice
-    auxroot.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::LastChoiceHouse, Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost));
+    auxroot.push_back(new CBuild(new ABuild(), "LastChoiceHouse", buildings->getBuildingData("Home").metalCost, buildings->getBuildingData("Home").crystalCost));
 
     rootNode = new ActiveSelector(auxroot);
 }
@@ -386,8 +392,8 @@ void IA::neutralBehaviour() {
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
     std::vector<Behaviour*> aux1;
-    aux1.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::DefenseBarrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
-    aux1.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::DefenseStandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    aux1.push_back(new CBuild(new ABuild(), "DefenseBarrack", buildings->getBuildingData("Barrack").metalCost, buildings->getBuildingData("Barrack").crystalCost));
+    aux1.push_back(new CRecruit(new ARecruit(), "DefenseStandardM", buildings->getBuildingData("StandardM").metalCost, buildings->getBuildingData("StandardM").crystalCost));
     auxdef.push_back(new Selector(aux1));
     auxroot.push_back(new Selector(auxdef));
 
@@ -401,16 +407,16 @@ void IA::neutralBehaviour() {
     std::vector<Behaviour*> auxcity;
     //Resources
     std::vector<Behaviour*> auxres;
-    auxres.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Quarry, Enumeration::BuildingCost::QuarryMetalCost, Enumeration::BuildingCost::QuarryCrystalCost));
-    auxres.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Siderurgy, Enumeration::BuildingCost::SiderurgyMetalCost, Enumeration::BuildingCost::SiderurgyCrystalCost));
+    auxres.push_back(new CBuild(new ABuild(), "Quarry", buildings->getBuildingData("Quarry").metalCost, buildings->getBuildingData("Quarry").crystalCost));
+    auxres.push_back(new CBuild(new ABuild(), "Siderurgy", buildings->getBuildingData("Siderurgy").metalCost, buildings->getBuildingData("Siderurgy").crystalCost));
     auxcity.push_back(new Selector(auxres));
     //Houses
-    auxcity.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::House, Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost));
+    auxcity.push_back(new CBuild(new ABuild(), "House", buildings->getBuildingData("Home").metalCost, buildings->getBuildingData("Home").crystalCost));
     //Services
     std::vector<Behaviour*> auxser;
-    auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Hospital, Enumeration::BuildingCost::HospitalMetalCost, Enumeration::BuildingCost::HospitalCrystalCost));
-    auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Market, Enumeration::BuildingCost::MarketMetalCost, Enumeration::BuildingCost::MarketCrystalCost));
-    auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::School, Enumeration::BuildingCost::SchoolMetalCost, Enumeration::BuildingCost::SchoolCrystalCost));
+    auxser.push_back(new CBuild(new ABuild(), "Hospital", buildings->getBuildingData("Hospital").metalCost, buildings->getBuildingData("Hospital").crystalCost));
+    auxser.push_back(new CBuild(new ABuild(), "Market", buildings->getBuildingData("Market").metalCost, buildings->getBuildingData("Market").crystalCost));
+    auxser.push_back(new CBuild(new ABuild(), "School", buildings->getBuildingData("School").metalCost, buildings->getBuildingData("School").crystalCost));
     auxcity.push_back(new Selector(auxser));
     //Army
     std::vector<Behaviour*> auxarmy;
@@ -418,32 +424,32 @@ void IA::neutralBehaviour() {
     std::vector<Behaviour*> auxunits;
     //Melees
     std::vector<Behaviour*> auxmel;
-    auxmel.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::Idol, Enumeration::UnitCost::CreatureMetalCost, Enumeration::UnitCost::CreatureCrystalCost));
-    auxmel.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::AdvancedM, Enumeration::UnitCost::MountedMeleeMetalCost, Enumeration::UnitCost::MountedMeleeCrystalCost));
-    auxmel.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    auxmel.push_back(new CRecruit(new ARecruit(), "Idol", buildings->getBuildingData("Idol").metalCost, buildings->getBuildingData("Idol").crystalCost));
+    auxmel.push_back(new CRecruit(new ARecruit(), "AdvancedM", buildings->getBuildingData("AdvancedM").metalCost, buildings->getBuildingData("AdvancedM").crystalCost));
+    auxmel.push_back(new CRecruit(new ARecruit(), "StandardM", buildings->getBuildingData("StandardM").metalCost, buildings->getBuildingData("StandardM").crystalCost));
     auxunits.push_back(new Selector(auxmel));
     //Ranged
     std::vector<Behaviour*> auxran;
-    auxran.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::AdvancedR, Enumeration::UnitCost::MountedRangedMetalCost, Enumeration::UnitCost::MountedRangedCrystalCost));
-    auxran.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardR, Enumeration::UnitCost::RangedFootmenMetalCost, Enumeration::UnitCost::RangedFootmenCrystalCost));
+    auxran.push_back(new CRecruit(new ARecruit(), "AdvancedR", buildings->getBuildingData("AdvancedR").metalCost, buildings->getBuildingData("AdvancedR").crystalCost));
+    auxran.push_back(new CRecruit(new ARecruit(), "StandardR", buildings->getBuildingData("StandardR").metalCost, buildings->getBuildingData("StandardR").crystalCost));
     auxunits.push_back(new Selector(auxran));
     //Siege
     std::vector<Behaviour*> auxsie;
-    auxsie.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::Desintegrator, Enumeration::UnitCost::RamMetalCost, Enumeration::UnitCost::RamCrystalCost));
-    auxsie.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::Launcher, Enumeration::UnitCost::CatapultMetalCost, Enumeration::UnitCost::CatapultCrystalCost));
+    auxsie.push_back(new CRecruit(new ARecruit(), "Desintegrator", buildings->getBuildingData("Desintegrator").metalCost, buildings->getBuildingData("Desintegrator").crystalCost));
+    auxsie.push_back(new CRecruit(new ARecruit(), "Launcher", buildings->getBuildingData("Launcher").metalCost, buildings->getBuildingData("Launcher").crystalCost));
     auxunits.push_back(new Selector(auxsie));
     auxarmy.push_back(new Selector(auxunits));
     //Buildings
     std::vector<Behaviour*> auxbuil;
-    auxbuil.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Barrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
-    auxbuil.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Barn, Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost));
-    auxbuil.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Workshop, Enumeration::BuildingCost::WorkshopMetalCost, Enumeration::BuildingCost::WorkshopCrystalCost));
+    auxbuil.push_back(new CBuild(new ABuild(), "Barrack", buildings->getBuildingData("Barrack").metalCost, buildings->getBuildingData("Barrack").crystalCost));
+    auxbuil.push_back(new CBuild(new ABuild(), "Barn", buildings->getBuildingData("Barn").metalCost, buildings->getBuildingData("Barn").crystalCost));
+    auxbuil.push_back(new CBuild(new ABuild(), "Workshop", buildings->getBuildingData("Workshop").metalCost, buildings->getBuildingData("Workshop").crystalCost));
     auxarmy.push_back(new Selector(auxbuil));
     auxcity.push_back(new Selector(auxarmy));
     auxroot.push_back(new Selector(auxcity));
 
     //Last choice
-    auxroot.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::LastChoiceHouse, Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost));
+    auxroot.push_back(new CBuild(new ABuild(), "LastChoiceHouse", buildings->getBuildingData("Home").metalCost, buildings->getBuildingData("Home").crystalCost));
 
     rootNode = new ActiveSelector(auxroot);
 }
@@ -455,8 +461,8 @@ void IA::unhappyBehaviour() {
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
     std::vector<Behaviour*> aux1;
-    aux1.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::DefenseBarrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
-    aux1.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::DefenseStandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    aux1.push_back(new CBuild(new ABuild(), "DefenseBarrack", buildings->getBuildingData("Barrack").metalCost, buildings->getBuildingData("Barrack").crystalCost));
+    aux1.push_back(new CRecruit(new ARecruit(), "DefenseStandardM", buildings->getBuildingData("StandardM").metalCost, buildings->getBuildingData("StandardM").crystalCost));
     auxdef.push_back(new Selector(aux1));
     auxroot.push_back(new Selector(auxdef));
 
@@ -470,8 +476,8 @@ void IA::unhappyBehaviour() {
     std::vector<Behaviour*> auxcity;
     //Resources
     std::vector<Behaviour*> auxres;
-    auxres.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Quarry, Enumeration::BuildingCost::QuarryMetalCost, Enumeration::BuildingCost::QuarryCrystalCost));
-    auxres.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Siderurgy, Enumeration::BuildingCost::SiderurgyMetalCost, Enumeration::BuildingCost::SiderurgyCrystalCost));
+    auxres.push_back(new CBuild(new ABuild(), "Quarry", buildings->getBuildingData("Quarry").metalCost, buildings->getBuildingData("Quarry").crystalCost));
+    auxres.push_back(new CBuild(new ABuild(), "Siderurgy", buildings->getBuildingData("Siderurgy").metalCost, buildings->getBuildingData("Siderurgy").crystalCost));
     auxcity.push_back(new Selector(auxres));
     //Army
     std::vector<Behaviour*> auxarmy;
@@ -479,40 +485,40 @@ void IA::unhappyBehaviour() {
     std::vector<Behaviour*> auxunits;
     //Melees
     std::vector<Behaviour*> auxmel;
-    auxmel.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::Idol, Enumeration::UnitCost::CreatureMetalCost, Enumeration::UnitCost::CreatureCrystalCost));
-    auxmel.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::AdvancedM, Enumeration::UnitCost::MountedMeleeMetalCost, Enumeration::UnitCost::MountedMeleeCrystalCost));
-    auxmel.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    auxmel.push_back(new CRecruit(new ARecruit(), "Idol", buildings->getBuildingData("Idol").metalCost, buildings->getBuildingData("Idol").crystalCost));
+    auxmel.push_back(new CRecruit(new ARecruit(), "AdvancedM", buildings->getBuildingData("AdvancedM").metalCost, buildings->getBuildingData("AdvancedM").crystalCost));
+    auxmel.push_back(new CRecruit(new ARecruit(), "StandardM", buildings->getBuildingData("StandardM").metalCost, buildings->getBuildingData("StandardM").crystalCost));
     auxunits.push_back(new Selector(auxmel));
     //Ranged
     std::vector<Behaviour*> auxran;
-    auxran.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::AdvancedR, Enumeration::UnitCost::MountedRangedMetalCost, Enumeration::UnitCost::MountedRangedCrystalCost));
-    auxran.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardR, Enumeration::UnitCost::RangedFootmenMetalCost, Enumeration::UnitCost::RangedFootmenCrystalCost));
+    auxran.push_back(new CRecruit(new ARecruit(), "AdvancedR", buildings->getBuildingData("AdvancedR").metalCost, buildings->getBuildingData("AdvancedR").crystalCost));
+    auxran.push_back(new CRecruit(new ARecruit(), "StandardR", buildings->getBuildingData("StandardR").metalCost, buildings->getBuildingData("StandardR").crystalCost));
     auxunits.push_back(new Selector(auxran));
     //Siege
     std::vector<Behaviour*> auxsie;
-    auxsie.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::Desintegrator, Enumeration::UnitCost::RamMetalCost, Enumeration::UnitCost::RamCrystalCost));
-    auxsie.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::Launcher, Enumeration::UnitCost::CatapultMetalCost, Enumeration::UnitCost::CatapultCrystalCost));
+    auxsie.push_back(new CRecruit(new ARecruit(), "Desintegrator", buildings->getBuildingData("Desintegrator").metalCost, buildings->getBuildingData("Desintegrator").crystalCost));
+    auxsie.push_back(new CRecruit(new ARecruit(), "Launcher", buildings->getBuildingData("Launcher").metalCost, buildings->getBuildingData("Launcher").crystalCost));
     auxunits.push_back(new Selector(auxsie));
     auxarmy.push_back(new Selector(auxunits));
     //Buildings
     std::vector<Behaviour*> auxbuil;
-    auxbuil.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Barrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
-    auxbuil.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Barn, Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost));
-    auxbuil.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Workshop, Enumeration::BuildingCost::WorkshopMetalCost, Enumeration::BuildingCost::WorkshopCrystalCost));
+    auxbuil.push_back(new CBuild(new ABuild(), "Barrack", buildings->getBuildingData("Barrack").metalCost, buildings->getBuildingData("Barrack").crystalCost));
+    auxbuil.push_back(new CBuild(new ABuild(), "Barn", buildings->getBuildingData("Barn").metalCost, buildings->getBuildingData("Barn").crystalCost));
+    auxbuil.push_back(new CBuild(new ABuild(), "Workshop", buildings->getBuildingData("Workshop").metalCost, buildings->getBuildingData("Workshop").crystalCost));
     auxarmy.push_back(new Selector(auxbuil));
     auxcity.push_back(new Selector(auxarmy));
     auxroot.push_back(new Selector(auxcity));
     //Houses
-    auxcity.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::House, Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost));
+    auxcity.push_back(new CBuild(new ABuild(), "House", buildings->getBuildingData("Home").metalCost, buildings->getBuildingData("Home").crystalCost));
     //Services
     std::vector<Behaviour*> auxser;
-    auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Hospital, Enumeration::BuildingCost::HospitalMetalCost, Enumeration::BuildingCost::HospitalCrystalCost));
-    auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Market, Enumeration::BuildingCost::MarketMetalCost, Enumeration::BuildingCost::MarketCrystalCost));
-    auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::School, Enumeration::BuildingCost::SchoolMetalCost, Enumeration::BuildingCost::SchoolCrystalCost));
+    auxser.push_back(new CBuild(new ABuild(), "Hospital", buildings->getBuildingData("Hospital").metalCost, buildings->getBuildingData("Hospital").crystalCost));
+    auxser.push_back(new CBuild(new ABuild(), "Market", buildings->getBuildingData("Market").metalCost, buildings->getBuildingData("Market").crystalCost));
+    auxser.push_back(new CBuild(new ABuild(), "School", buildings->getBuildingData("School").metalCost, buildings->getBuildingData("School").crystalCost));
     auxcity.push_back(new Selector(auxser));
 
     //Last choice
-    auxroot.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::LastChoiceHouse, Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost));
+    auxroot.push_back(new CBuild(new ABuild(), "LastChoiceHouse", buildings->getBuildingData("Home").metalCost, buildings->getBuildingData("Home").crystalCost));
 
     rootNode = new ActiveSelector(auxroot);
 }
@@ -524,8 +530,8 @@ void IA::veryUnhappyBehaviour() {
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
     std::vector<Behaviour*> aux1;
-    aux1.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::DefenseBarrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
-    aux1.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::DefenseStandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    aux1.push_back(new CBuild(new ABuild(), "DefenseBarrack", buildings->getBuildingData("Barrack").metalCost, buildings->getBuildingData("Barrack").crystalCost));
+    aux1.push_back(new CRecruit(new ARecruit(), "DefenseStandardM", buildings->getBuildingData("StandardM").metalCost, buildings->getBuildingData("StandardM").crystalCost));
     auxdef.push_back(new Selector(aux1));
     auxroot.push_back(new Selector(auxdef));
 
@@ -543,45 +549,45 @@ void IA::veryUnhappyBehaviour() {
     std::vector<Behaviour*> auxunits;
     //Melees
     std::vector<Behaviour*> auxmel;
-    auxmel.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::Idol, Enumeration::UnitCost::CreatureMetalCost, Enumeration::UnitCost::CreatureCrystalCost));
-    auxmel.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::AdvancedM, Enumeration::UnitCost::MountedMeleeMetalCost, Enumeration::UnitCost::MountedMeleeCrystalCost));
-    auxmel.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardM, Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost));
+    auxmel.push_back(new CRecruit(new ARecruit(), "Idol", buildings->getBuildingData("Idol").metalCost, buildings->getBuildingData("Idol").crystalCost));
+    auxmel.push_back(new CRecruit(new ARecruit(), "AdvancedM", buildings->getBuildingData("AdvancedM").metalCost, buildings->getBuildingData("AdvancedM").crystalCost));
+    auxmel.push_back(new CRecruit(new ARecruit(), "StandardM", buildings->getBuildingData("StandardM").metalCost, buildings->getBuildingData("StandardM").crystalCost));
     auxunits.push_back(new Selector(auxmel));
     //Ranged
     std::vector<Behaviour*> auxran;
-    auxran.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::AdvancedR, Enumeration::UnitCost::MountedRangedMetalCost, Enumeration::UnitCost::MountedRangedCrystalCost));
-    auxran.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::StandardR, Enumeration::UnitCost::RangedFootmenMetalCost, Enumeration::UnitCost::RangedFootmenCrystalCost));
+    auxran.push_back(new CRecruit(new ARecruit(), "AdvancedR", buildings->getBuildingData("AdvancedR").metalCost, buildings->getBuildingData("AdvancedR").crystalCost));
+    auxran.push_back(new CRecruit(new ARecruit(), "StandardR", buildings->getBuildingData("StandardR").metalCost, buildings->getBuildingData("StandardR").crystalCost));
     auxunits.push_back(new Selector(auxran));
     //Siege
     std::vector<Behaviour*> auxsie;
-    auxsie.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::Desintegrator, Enumeration::UnitCost::RamMetalCost, Enumeration::UnitCost::RamCrystalCost));
-    auxsie.push_back(new CRecruit(new ARecruit(), Enumeration::UnitType::Launcher, Enumeration::UnitCost::CatapultMetalCost, Enumeration::UnitCost::CatapultCrystalCost));
+    auxsie.push_back(new CRecruit(new ARecruit(), "Desintegrator", buildings->getBuildingData("Desintegrator").metalCost, buildings->getBuildingData("Desintegrator").crystalCost));
+    auxsie.push_back(new CRecruit(new ARecruit(), "Launcher", buildings->getBuildingData("Launcher").metalCost, buildings->getBuildingData("Launcher").crystalCost));
     auxunits.push_back(new Selector(auxsie));
     auxarmy.push_back(new Selector(auxunits));
     //Buildings
     std::vector<Behaviour*> auxbuil;
-    auxbuil.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Barrack, Enumeration::BuildingCost::BarrackMetalCost, Enumeration::BuildingCost::BarrackCrystalCost));
-    auxbuil.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Barn, Enumeration::BuildingCost::BarnMetalCost, Enumeration::BuildingCost::BarnCrystalCost));
-    auxbuil.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Workshop, Enumeration::BuildingCost::WorkshopMetalCost, Enumeration::BuildingCost::WorkshopCrystalCost));
+    auxbuil.push_back(new CBuild(new ABuild(), "Barrack", buildings->getBuildingData("Barrack").metalCost, buildings->getBuildingData("Barrack").crystalCost));
+    auxbuil.push_back(new CBuild(new ABuild(), "Barn", buildings->getBuildingData("Barn").metalCost, buildings->getBuildingData("Barn").crystalCost));
+    auxbuil.push_back(new CBuild(new ABuild(), "Workshop", buildings->getBuildingData("Workshop").metalCost, buildings->getBuildingData("Workshop").crystalCost));
     auxarmy.push_back(new Selector(auxbuil));
     auxcity.push_back(new Selector(auxarmy));
     auxroot.push_back(new Selector(auxcity));
     //Houses
-    auxcity.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::House, Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost));
+    auxcity.push_back(new CBuild(new ABuild(), "House", buildings->getBuildingData("Home").metalCost, buildings->getBuildingData("Home").crystalCost));
     //Resources
     std::vector<Behaviour*> auxres;
-    auxres.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Quarry, Enumeration::BuildingCost::QuarryMetalCost, Enumeration::BuildingCost::QuarryCrystalCost));
-    auxres.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Siderurgy, Enumeration::BuildingCost::SiderurgyMetalCost, Enumeration::BuildingCost::SiderurgyCrystalCost));
+    auxres.push_back(new CBuild(new ABuild(), "Quarry", buildings->getBuildingData("Quarry").metalCost, buildings->getBuildingData("Quarry").crystalCost));
+    auxres.push_back(new CBuild(new ABuild(), "Siderurgy", buildings->getBuildingData("Siderurgy").metalCost, buildings->getBuildingData("Siderurgy").crystalCost));
     auxcity.push_back(new Selector(auxres));
     //Services
     std::vector<Behaviour*> auxser;
-    auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Hospital, Enumeration::BuildingCost::HospitalMetalCost, Enumeration::BuildingCost::HospitalCrystalCost));
-    auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::Market, Enumeration::BuildingCost::MarketMetalCost, Enumeration::BuildingCost::MarketCrystalCost));
-    auxser.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::School, Enumeration::BuildingCost::SchoolMetalCost, Enumeration::BuildingCost::SchoolCrystalCost));
+    auxser.push_back(new CBuild(new ABuild(), "Hospital", buildings->getBuildingData("Hospital").metalCost, buildings->getBuildingData("Hospital").crystalCost));
+    auxser.push_back(new CBuild(new ABuild(), "Market", buildings->getBuildingData("Market").metalCost, buildings->getBuildingData("Market").crystalCost));
+    auxser.push_back(new CBuild(new ABuild(), "School", buildings->getBuildingData("School").metalCost, buildings->getBuildingData("School").crystalCost));
     auxcity.push_back(new Selector(auxser));
 
     //Last choice
-    auxroot.push_back(new CBuild(new ABuild(), Enumeration::BuildingType::LastChoiceHouse, Enumeration::BuildingCost::HomeMetalCost, Enumeration::BuildingCost::HomeCrystalCost));
+    auxroot.push_back(new CBuild(new ABuild(), "LastChoiceHouse", buildings->getBuildingData("Home").metalCost, buildings->getBuildingData("Home").crystalCost));
 
     rootNode = new ActiveSelector(auxroot);
 }

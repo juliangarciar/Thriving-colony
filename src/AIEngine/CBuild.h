@@ -13,7 +13,7 @@ class CBuild : public Condition {
         /**
          * @brief Constructor de CBuild
          */
-        CBuild(Action*, Enumeration::BuildingType, Enumeration::BuildingCost, Enumeration::BuildingCost);
+        CBuild(Action*, std::string, i32, i32);
         /**
          * @brief Destructor de CBuild
          */
@@ -23,9 +23,9 @@ class CBuild : public Condition {
         void actionToDo();
 
     private:
-        Enumeration::BuildingType type;
-        Enumeration::BuildingCost metal;
-        Enumeration::BuildingCost crystal;
+        std::string type;
+        i32 metal;
+        i32 crystal;
 };
 
 #endif

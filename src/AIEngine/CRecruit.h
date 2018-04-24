@@ -13,7 +13,7 @@ class CRecruit : public Condition {
         /**
          * @brief Constructor de CRecruit
          */
-        CRecruit(Action*, Enumeration::UnitType, Enumeration::UnitCost, Enumeration::UnitCost);
+        CRecruit(Action*, std::string, i32, i32);
         /**
          * @brief Destructor de CRecruit
          */
@@ -23,9 +23,10 @@ class CRecruit : public Condition {
         void actionToDo();
 
     private:
-        Enumeration::UnitType type;
-        Enumeration::UnitCost metal;
-        Enumeration::UnitCost crystal;
+        std::string type;
+        i32 metal;
+        i32 crystal;
+		i32 citizens;
 };
 
 #endif

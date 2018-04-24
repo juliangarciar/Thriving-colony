@@ -18,11 +18,10 @@ class BuildingManager {
 	public:
 		/**
 		 * @brief BuildingManager constructor.
-		 * 
-		 * @param The Enumeration::Team is the team to which belongs the building manager: Enumeration::Team::Human or Enumeration::Team::IA.
-         * @param The Enumeration::BreedType is the civilization to which belongs the building manager: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov.
+		 * @param Enumeration::Team is the team to which belongs the building manager: Enumeration::Team::Human or Enumeration::Team::IA.
+		 * @param std::string is the breed
 		 */
-		BuildingManager(Enumeration::Team, Enumeration::BreedType);
+		BuildingManager(Enumeration::Team, std::string);
 
 		/**
 		 * @brief BuildingManager destructor.
@@ -30,88 +29,85 @@ class BuildingManager {
 		virtual ~BuildingManager();
 
 		/**
-		 * @brief Check if the mouse pointer is on any building while buildingMode variable is false. The value of the currentCollision variable is modified to a new SceneNode with the new position of the mouse data.
+		 * @brief Check if the mouse pointer is on any building while buildingMode variable is false. 
+		 * The value of the currentCollision variable is modified to a new SceneNode with the new position of the mouse data.
 		 */
 		void testRaycastCollisions();
 
 		/**
-		 * @brief Update the hitbox of each building at buildings variable.
-		 * 
-		 * @see Use getNodeCollision(Mouse*) at SceneNode class.
-		 */
-		void recalculateHitbox();
-
-		/**
-		 * @brief Set the value of the buildingMode variable to true if the building can be paid and the value of the buildingMode variable is false. Change the value of tempBuilding value to a new Building.
-		 * 
-		 * @param The Enumeration::BuildingType is the type of building of the new Building at temBuilding.
+		 * @brief Set the value of the buildingMode variable to true if the building can be paid and the value of the buildingMode variable is false.
+		 * Change the value of tempBuilding value to a new Building.
+		 * @param std::string is the type of building of the new Building at temBuilding.
 		 * @return True if the value of the buildingMode variable is modified and false if it is not.
 		 */
-		bool setBuildingMode(Enumeration::BuildingType);
+		bool setBuildingMode(std::string);
 
 		/**
-		 * @brief Create a new building at the point where the mouse is if it is not occupied and the left botton of the mouse is pressed. If the right botton of the mouse is pressed, delete the tempBuilding variable and set it to nullptr. Set buildingMode to false.
+		 * @brief Create a new building at the point where the mouse is if it is not occupied and the left botton of the mouse is pressed.
+		 * If the right botton of the mouse is pressed, delete the tempBuilding variable and set it to MULL.
+		 * Set buildingMode to false.
 		 */
 		void drawBuilding();
 
 		/**
-		 * @brief Set all the variables needed for the building at tempBuilding variable to be displayed and insert it at the buildings variable as its key as the value of the nextBuildingId. Set the tempBuilding variable to nullptr and add 1 to the nextBuildingId variable.
-		 * 
-		 * @param The Vector3<f32> is the position where the building is going to be created.
-		 * @param The Enumeration::BuildingType is the building type.
-		 * @param The bool will be true if the building is going to have an instant build and false if not.
+		 * @brief create and build building
+		 * @param Vector3<f32> is the position where the building is going to be created.
+		 * @param std::string is the building type.
+		 * @param i32 is the buildingTime (if < 0 it takes the original).
 		 */
-		void buildBuilding(Vector3<f32>, Enumeration::BuildingType, bool = false);
+		void createBuilding(Vector2<f32>, std::string, i32 = -1);
+
+		/**
+		 * @brief Set all the variables needed for the building at tempBuilding variable to be displayed and insert it at the buildings variable as its key as the value of the nextBuildingId.
+		 * Set the tempBuilding variable to nullptr and add 1 to the nextBuildingId variable.
+		 * @param Vector3<f32> is the position where the building is going to be created.
+		 */
+		void buildBuilding(Vector2<f32>);
 
 		/**
 		 * @brief Check if the player's metalAmount and crystalAmount variables are higher than the ones passed by parameter.
-		 * 
-		 * @param metalCost is the metal cost of the building.
-		 * @param crystalCost is the crystal cost of the building.
+		 * @param metalCost is the metal cost of the building
+		 * @param crystalCost is the crystal cost of the building
 		 * @return True if both player's variables are higher than the both passed by parameter and false in other case.
 		 */
 		bool isSolvent(i32 metalCost, i32 crystalCost);
 
 		/**
-		 * @brief Responsible for managing calls to isSolvent() for the human player, registering the type of the desired building and sending the aforementhioned method the prices. It has its own method to avoid cluttering the setBuildingMode() method, as it used to be there in the first place.
-		 * 
-		 * @param The Enumeration::BuildingType is the building type.
+		 * @brief Responsible for managing calls to isSolvent() for the human player, registering the type
+ 		 * of the desired building and sending the aforementhioned method the prices. It has its own method
+ 		 * to avoid cluttering the setBuildingMode() method, as it used to be there in the first place.
+		 * @param std::string is the building type.
 		 * @return True when isSolvent() returns true and false in other case.
 		 */
-		bool checkCanPay(Enumeration::BuildingType);
+		bool checkCanPay(std::string);
 		
 		/**
 		 * @brief Check if the building with the key passed by parameter is finished or not.
-		 * 
-		 * @param The i32 is the key of the building that is going to be checked.
+		 * @param i32 is the key of the building that is going to be checked.
 		 * @return True when it is finished and false in other case.
 		 */
 		bool checkFinished(i32);
 
 		/**
 		 * @brief Call the update method of every building stored at buildings variable.
-		 * 
 		 * @see update() method at Building class.
 		 */
 		void updateBuildingManager();
 		
 		/**
 		 * @brief Get the ID number of the mesh of currentCollision variable.
-		 * 
 		 * @return i32 with the ID of the mesh if the currentCollision variable if it is not nullptr and -1 in other case.
 		 */
 		i32 getCollisionID();
 
 		/**
 		 * @brief Get the name of the mesh of currentCollision variable.
-		 * 
 		 * @return std::string with the name of the mesh if currentCollision variable is not nullptr and nullpntr in other case.
 		 */
 		std::string getCollisionName();
 		
 		/**
 		 * @brief Get the building stored in buildings variable associated to key passed by parameter.
-		 * 
 		 * @param i32 is the key associated to the building that is going to be returned.
 		 * @return A pointer to an object of Building type if the i32 passed by parameter matches with the key of one building stored in the buildings variable or nullptr in other case.
 		 */
@@ -119,21 +115,18 @@ class BuildingManager {
 
 		/**
 		 * @brief Get all player's buildings built.
-		 * 
 		 * @return Value of the buildings variable.
 		 */
 		std::map<i32, Building*>* getBuildings();
 
 		/**
 		 * @brief Get the layer where the buildings are built.
-		 * 
 		 * @return Value of the buildingLayer variable.
 		 */
 		SceneNode* getBuildingLayer();
 
 		/**
 		 * @brief Delete the building stored in the buildings variable wich key is the one passed by parameter. Modifies happiness variable of class Player.
-		 * 
 		 * @param i32 is the key associated to the building that is going to be deleted.
 		 * @see decreaseHappiness(i32) of class Player.
 		 */
@@ -141,42 +134,45 @@ class BuildingManager {
 
 		/**
 		 * @brief Get the amount of one type of building that the player has built.
-		 * 
-		 * @param Enumeration::BuildingType is the type of building that is going to be checked.
+		 * @param std::string is the type of building that is going to be checked.
 		 * @return i32 that is the amount of buildings of this type.
 		 */
-		i32 getAmount(Enumeration::BuildingType);
+		i32 getAmount(std::string);
+
+		/**
+		 * @brief Get the Building Data object
+		 * 
+		 * @return BuildingData 
+		 */
+		BuildingData getBuildingData(std::string);
 
 	private:
 		//Player's team: Enumeration::Team::Human or Enumeration::Team::IA.
 		Enumeration::Team team;
 
-		//Player's civilization: Enumeration::BreedType::Drorania or Enumeration::BreedType::Kaonov.
-		Enumeration::BreedType breed;
-
 		//Id number that is going to be asigned as the key of the next building built.
 		i32 nextBuildingId;
 
-		//
-        i32 gridAlignment;
-		
 		//True if there is a building selected to be built and false in other case.
         bool buildingMode;
 		
 		//Layer were the buildings will be built.
 		SceneNode *buildingLayer;
 
-		//
+		//Current colliding layer
 		SceneNode *currentCollision;
-
-		//All buildings built stored with their id as key.
-		std::map<i32, Building*> *buildings;
 		
 		//Temporary building that is used when a building is selected to be built.
 		Building *tempBuilding;
 
+		//List of buildings
+		std::map<std::string, BuildingData> baseBuildings;
+
 		//Amount of buildings built of each type.
-		i32 buildingAmounts[Enumeration::BuildingType::BuildingsSize];
+		std::map<std::string, i32> buildingAmounts;
+
+		//All buildings built stored with their id as key.
+		std::map<i32, Building*> *inMapBuildings;
 };
 
 #endif

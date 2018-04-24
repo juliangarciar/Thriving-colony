@@ -32,14 +32,7 @@ class AAttack : public Action {
          * 
          * @return Enumeration::BehaviourState::Failure.
          */
-        Enumeration::BehaviourState Update(Enumeration::UnitType);
-
-        /**
-         * @brief Do nothing. Need to be implemented because of the heritage.
-         * 
-         * @return Enumeration::BehaviourState::Failure.
-         */
-        Enumeration::BehaviourState Update(Enumeration::BuildingType);
+        Enumeration::BehaviourState Update(std::string);
 
     private:
 };

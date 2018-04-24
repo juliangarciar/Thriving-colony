@@ -1,11 +1,21 @@
 #include "Model.h"
 #include "Window.h"
 #include <cmath>
+#include "../Map.h"
+
 using namespace irr;
 #define PI 3.14159265
-Model::Model(i32 id, const wchar_t *path) {
+Model::Model(i32 id, std::string path) {
+    const char* c = path.c_str();
+    std::wstringstream o;
+    o << c;
+
     scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
-    meshNode = smgr -> addMeshSceneNode(smgr -> getMesh(path));
+    meshNode = smgr -> addMeshSceneNode(smgr -> getMesh(o.str().c_str()));
+    if (!meshNode) {
+        std::cout << "ERROR: no se puede cargar el modelo: " << c << std::endl;
+        exit(0);
+    }
     meshNode -> setID(id);
     
     selector = smgr -> createTriangleSelectorFromBoundingBox(meshNode);
@@ -13,13 +23,19 @@ Model::Model(i32 id, const wchar_t *path) {
         meshNode -> setTriangleSelector(selector);
         selector -> drop(); // We're done with this selector, so drop it now.
     }
-    
-
 }
 
-Model::Model(SceneNode *parent, i32 id, const wchar_t *path) {
+Model::Model(SceneNode *parent, i32 id, std::string path) {
+    const char* c = path.c_str();
+    std::wstringstream o;
+    o << c;
+
     scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
-    meshNode = smgr -> addMeshSceneNode(smgr -> getMesh(path));
+    meshNode = smgr -> addMeshSceneNode(smgr -> getMesh(o.str().c_str()));
+    if (!meshNode) {
+        std::cout << "ERROR: no se puede cargar el modelo: " << path << std::endl;
+        exit(0);
+    }
     meshNode -> setID(id);
 
     selector = smgr -> createTriangleSelectorFromBoundingBox(meshNode);
@@ -28,20 +44,18 @@ Model::Model(SceneNode *parent, i32 id, const wchar_t *path) {
         selector -> drop(); // We're done with this selector, so drop it now.
     }
     
-
     parent -> getSceneNode() -> addChild(meshNode);
 }
 
 Model::~Model() {
-    meshNode -> remove();
-    //selector -> drop();
+    //ToDo: remove model
 }
 
 void Model::setID(i32 id) {
     meshNode -> setID(id);
 }
 
-void Model::setName(const wchar_t *name) {
+void Model::setName(const char *name) {
     meshNode -> setName(core::stringw(name).c_str());
 }
 

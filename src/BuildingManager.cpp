@@ -58,10 +58,11 @@ void BuildingManager::testRaycastCollisions() {
 }
 
 bool BuildingManager::setBuildingMode(std::string type) {
-	if (baseBuildings.find(type) != baseBuildings.end() && checkCanPay(type)) {
+	std::map<std::string, BuildingData>::iterator it = baseBuildings.find(type);
+	if (it != baseBuildings.end() && checkCanPay(type)) {
 		if (!buildingMode) {
 			buildingMode = true;
-			tempBuilding = new Building(buildingLayer, 0, team, baseBuildings[type]);
+			tempBuilding = new Building(buildingLayer, 0, team, it->second);
 			return true;
 		}
 	}
@@ -80,8 +81,8 @@ void BuildingManager::drawBuilding() {
 		tempBuilding -> setPosition(dummy);
 
 		if(team == Enumeration::Team::Human){
-			Vector2<f32> tmp = Human::Instance()->getHallPosition();
-			f32 distance = std::sqrt(std::pow(tmp.x - dummy.x, 2) + std::pow(tmp.y - dummy.y, 2));
+			Vector3<f32> tmp = Human::Instance()->getHallPosition();
+			f32 distance = std::sqrt(std::pow(tmp.x - dummy.x, 2) + std::pow(tmp.z - dummy.y, 2));
 			if(Human::Instance()->getBuildingRadious() < distance){
 				collision = true;
 			}
@@ -112,8 +113,9 @@ void BuildingManager::drawBuilding() {
 }
 
 void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 buildTime){
-	if (baseBuildings.find(type) != baseBuildings.end()){
-		BuildingData b = baseBuildings[type];
+	std::map<std::string, BuildingData>::iterator it = baseBuildings.find(type);
+	if (it != baseBuildings.end()){
+		BuildingData b = it->second;
 		if (buildTime >= 0) b.buildingTime = buildTime;
 		tempBuilding = new Building(buildingLayer, 0, team, b);
 		buildBuilding(pos);
@@ -181,8 +183,9 @@ bool BuildingManager::isSolvent(i32 metalCost, i32 crystalCost) {
  * to avoid cluttering the setBuildingMode() method, as it used to be there in the first place.
  */
 bool BuildingManager::checkCanPay(std::string type) {
-	if (baseBuildings.find(type) != baseBuildings.end()){
-		return isSolvent(baseBuildings[type].metalCost, baseBuildings[type].crystalCost);
+	std::map<std::string, BuildingData>::iterator it = baseBuildings.find(type);
+	if (it != baseBuildings.end()){
+		return isSolvent(it->second.metalCost, it->second.crystalCost);
 	}
 	return false;
 }
@@ -198,7 +201,8 @@ bool BuildingManager::checkFinished(i32 _id) {
 }
 
 i32 BuildingManager::getAmount(std::string type){
-	if (baseBuildings.find(type) != baseBuildings.end()){
+	std::map<std::string, BuildingData>::iterator it = baseBuildings.find(type);
+	if (it != baseBuildings.end()){
 		return buildingAmounts[type];
 	} 
 	return 0;
@@ -244,4 +248,11 @@ Building *BuildingManager::getBuilding(i32 id){
 		return it->second;
 	else 
 		return nullptr;
+}
+
+BuildingData BuildingManager::getBuildingData(std::string type){
+	std::map<std::string, BuildingData>::iterator it = baseBuildings.find(type);
+	if (it != baseBuildings.end()){
+		return it->second;
+	}
 }

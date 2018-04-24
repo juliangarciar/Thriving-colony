@@ -22,7 +22,7 @@ class IA : public Player {
         /**
 		 * @brief Initialize all variables.
 		 */
-        void Init();
+        void Init(std::string _race);
 
         /**
          * @brief Update buildings, units variables and choice the next step when is time.
@@ -37,9 +37,9 @@ class IA : public Player {
         /**
          * @brief Deteerminate the position where will be built the next building.
          * 
-         * @return Vector3 that will be the position where the next uilding wiil be built.
+         * @return Vector2 that will be the position where the next uilding wiil be built.
          */
-        Vector3<f32> determinatePositionBuilding();
+        Vector2<f32> determinatePositionBuilding();
 
         /**
          * @brief Initialize all choices that can do the AI player.
@@ -54,7 +54,7 @@ class IA : public Player {
         /**
          * @brief Set choiceIndex variable as the value passed by parameter.
          * 
-         * @param The i32 is the value that is going to be set to choiceIndex variable.
+         * @param i32 is the value that is going to be set to choiceIndex variable.
          */
         void setChoiceIndex(i32);
 
@@ -160,6 +160,12 @@ class IA : public Player {
 
         //Determine if the choice of the Ai is updated fast or not. True will be the fast mode and false the slow.
         bool fast;
+
+        //Timer used to update fast the AI's choices.
+        Timer* updateFastTimer;
+
+        //Timer used to update slow tha AI's choices.
+        Timer* updateSlowTimer;
 };
 
 #endif

@@ -8,8 +8,6 @@ Player::Player() {
 
 Player::~Player() {
     delete updateTimer;
-    delete updateFastTimer;
-    delete updateSlowTimer;
 }
 
 void Player::Init() {
@@ -24,8 +22,10 @@ void Player::Init() {
     underAttack = false;
 
     updateTimer = new Timer(1.00, true);
-    updateFastTimer = new Timer(1.00, true);
-    updateSlowTimer = new Timer(3.00, true);
+
+	updateTimer -> setCallback([&](){
+        gainResources();
+	});
 }
 
 /**
@@ -138,11 +138,11 @@ i32 Player::getCrystalAmount() {
 }
 
 i32 Player::getMetalProduction() {
-    return buildings->getAmount(Enumeration::BuildingType::Siderurgy) * siderurgyProductivity;
+    return buildings->getAmount("Siderurgy") * siderurgyProductivity;
 }
 
 i32 Player::getCrystalProduction() {
-    return buildings->getAmount(Enumeration::BuildingType::Quarry) * quarryProductivity;
+    return buildings->getAmount("Quarry") * quarryProductivity;
 }
 
 i32 Player::getArmyLevel() {

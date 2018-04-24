@@ -18,8 +18,8 @@ void GameState::Init() {
     IO::Instance() -> getResourceManager()->loadResource("media/map/map.json");
  
     //Init players
-    human -> Init(); 
-    ia -> Init();
+    human -> Init("Drorania"); 
+    ia -> Init("Kaonov");
 
     //Init HUD
     hud -> Init();
@@ -35,7 +35,7 @@ void GameState::Init() {
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::DeployTroopsIA, [&]() {
         Vector3<f32> p = ia -> getHallPosition();
         p.x = p.x + 200; //ToDo: hacer bien
-        ia -> getUnitManager() -> deployAllTroops(p);
+        ia -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
     });
 
     //Human events
@@ -45,7 +45,7 @@ void GameState::Init() {
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::DeployTroopsHuman, [&]() {
         Vector3<f32> p = human -> getHallPosition();
         p.x = p.x + 200; //ToDo: hacer bien
-        human -> getUnitManager() -> deployAllTroops(p);
+        human -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
     });
 
     //Hud events
@@ -150,12 +150,14 @@ void GameState::Input() {
                     i32 idTroop = human -> getUnitManager() -> getDeployingTroopID();
                     if (idTroop > 0){
                         if (IO::Instance() -> getMouse() -> rightMousePressed()){
-                            human -> getUnitManager() -> deploySelectedTroop(map->getMouseCollitionPoint());
+							Vector3<f32> p = map->getMouseCollitionPoint();
+                            human -> getUnitManager() -> deploySelectedTroop(Vector2<f32>(p.x, p.z));
                             human -> getUnitManager() -> selectTroop(idTroop);
                         }
                     } else if (idTroop == 0) {
                         if (IO::Instance() -> getMouse() -> rightMousePressed()){
-                            human -> getUnitManager() -> deployAllTroops(map->getMouseCollitionPoint());
+							Vector3<f32> p = map->getMouseCollitionPoint();
+                            human -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
                         }
                     } else {
                         //std::cout << "Ninguna tropa seleccionada" << std::endl;
@@ -213,10 +215,10 @@ void GameState::Update(){
         }*/
 
         //Win/Lose
-        if (ia -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
+        if (ia -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
             g -> changeState(Enumeration::State::WinState);
         }
-        if (human -> getBuildingManager() -> getAmount(Enumeration::BuildingType::MainBuilding) == 0) {
+        if (human -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
             g -> changeState(Enumeration::State::DefeatState);
         }
     }

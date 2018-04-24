@@ -34,7 +34,7 @@ Building::Building(SceneNode *_layer,
     /* Set the timer */
     buildTimer = new Timer(baseData.buildingTime, false, false);
     buildTimer -> setCallback([&]{
-		returnToOriginalMaterial();
+		setBaseMaterial();
         adjustCityStats();
         if (callback != nullptr) callback(this);
     });
@@ -45,24 +45,23 @@ Building::Building(SceneNode *_layer,
 	Texture *t = new Texture(baseData.texturePath.c_str());
 
     /* Set the model and texture */
-    baseMat = new Material(tex);
+    baseMat = new Material(t);
     baseMat -> setColor(255, 255, 255, 255);
 
-    damagedMat = new Material(tex);
+    damagedMat = new Material(t);
     damagedMat -> setColor(255, 255, 0, 0);
     
-    canBuildMat = new Material(tex);
+    canBuildMat = new Material(t);
     canBuildMat -> setColor(128, 0, 255, 0);
 
-    cantBuildMat = new Material(tex);
+    cantBuildMat = new Material(t);
     cantBuildMat -> setColor(128, 255, 0, 0);
 
     setBaseMaterial();
 
-
-    barBg = new Billboard(layer, ID, *position);
-    bar = new Billboard(layer, ID, *position);
-    Vector3<f32> bp = Vector3<f32>(position->x, position->y + 200.00, position->z);
+    Vector3<f32> bp = Vector3<f32>(getPosition().x, 200.00, getPosition().y);
+    barBg = new Billboard(layer, ID, bp);
+    bar = new Billboard(layer, ID, bp);
     barBg -> setPosition(bp);
     bp.z -= 1;
     bar -> setPosition(bp);

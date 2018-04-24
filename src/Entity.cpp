@@ -1,8 +1,9 @@
 #include "Entity.h"
-#include "GraphicEngine/Window.h"
+#include "Map.h"
 #include <MathEngine/Vector3.h>
 #include <GraphicEngine/Model.h>
 #include <GraphicEngine/SceneNode.h>
+#include <GraphicEngine/Window.h>
 
 Entity::Entity(SceneNode* _layer,
     i32 _id,
@@ -118,7 +119,8 @@ void Entity::setID(i32 id){
 
 void Entity::setPosition(Vector2<f32> vectorData) {
     vectorPos = vectorData;
-    model -> setPosition(vectorData);
+
+    model -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y), vectorData.y));
 
     hitBox.moveHitbox(vectorData.x, vectorData.y);
     //ToDo: revisar lo de ajustar hitbox (Julian lo tienes al final de este archivo)

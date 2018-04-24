@@ -29,19 +29,11 @@ class ARecruit : public Action {
         Enumeration::BehaviourState Update();
 
         /**
-         * @brief Recruit a unit of the type passed by parameter.
-         * 
-         * @param The Enumeration::UnitType will be the type of the unit that is going to be created.
-         * @return Enumeration::BehaviourState::Success. 
-         */
-        Enumeration::BehaviourState Update(Enumeration::UnitType);
-
-        /**
          * @brief Do nothing. Need to be implemented because of the heritage.
          * 
          * @return Enumeration::BehaviourState::Failure.
          */
-        Enumeration::BehaviourState Update(Enumeration::BuildingType);
+        Enumeration::BehaviourState Update(std::string);
 
     private:
 };

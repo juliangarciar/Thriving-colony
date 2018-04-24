@@ -32,7 +32,7 @@ class ActiveSelector : public Selector {
         /**
          * @brief Set the priority to a new priority choice.
          * 
-         * @param The Behaviour is the new value for priority variable.
+         * @param Behaviour is the new value for priority variable.
          */
         void setPriority(Behaviour*);
 

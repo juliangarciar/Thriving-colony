@@ -15,10 +15,6 @@ Enumeration::BehaviourState ADeployTroops::Update() {
     return Enumeration::BehaviourState::Success;
 }
 
-Enumeration::BehaviourState ADeployTroops::Update(Enumeration::UnitType) {
-    return Enumeration::BehaviourState::Failure;
-}
-
-Enumeration::BehaviourState ADeployTroops::Update(Enumeration::BuildingType) {
+Enumeration::BehaviourState ADeployTroops::Update(std::string) {
     return Enumeration::BehaviourState::Failure;
 }

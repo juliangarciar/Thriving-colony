@@ -14,10 +14,6 @@ Enumeration::BehaviourState ARetreat::Update() {
     return Enumeration::BehaviourState::Success;
 }
 
-Enumeration::BehaviourState ARetreat::Update(Enumeration::UnitType) {
-    return Enumeration::BehaviourState::Failure;
-}
-
-Enumeration::BehaviourState ARetreat::Update(Enumeration::BuildingType) {
+Enumeration::BehaviourState ARetreat::Update(std::string) {
     return Enumeration::BehaviourState::Failure;
 }
