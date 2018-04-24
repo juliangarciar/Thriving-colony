@@ -19,7 +19,7 @@ TextBox::~TextBox() {
 }
 
 void TextBox::addChild(GUIElement *elem) {
-    children . push_back(elem);
+    children.push_back(elem);
 }
 
 void TextBox::setPosition(Vector2<i32> position){

@@ -1,8 +1,9 @@
 #include "Entity.h"
-#include "GraphicEngine/Window.h"
+#include "Map.h"
 #include <MathEngine/Vector3.h>
 #include <GraphicEngine/Model.h>
 #include <GraphicEngine/SceneNode.h>
+#include <GraphicEngine/Window.h>
 
 Entity::Entity(SceneNode* _layer,
     i32 _id,
@@ -46,7 +47,7 @@ Entity::Entity(SceneNode* _layer,
     //set Timer
     tookDamageTimer = new Timer(0.1);
     tookDamageTimer -> setCallback([&](){
-        returnToOriginalMaterial();
+        setBaseMaterial();
     });
 
     //Set model
@@ -110,11 +111,6 @@ void Entity::takeDamage(i32 dmg) {
     }
 }
 
-void Entity::returnToOriginalMaterial() {
-    tookDamageTimer -> stop();
-    //ToDo: volver al material original
-}
-
 //SETTERS
 void Entity::setID(i32 id){
     ID = id;
@@ -123,7 +119,8 @@ void Entity::setID(i32 id){
 
 void Entity::setPosition(Vector2<f32> vectorData) {
     vectorPos = vectorData;
-    model -> setPosition(vectorData);
+
+    model -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y), vectorData.y));
 
     hitBox.moveHitbox(vectorData.x, vectorData.y);
     //ToDo: revisar lo de ajustar hitbox (Julian lo tienes al final de este archivo)
@@ -216,6 +213,15 @@ i32 Entity::getCellsX() const{
 
 i32 Entity::getCellsY() const{
     return kCellsY;
+}
+
+//ToDo: anadido por rafa
+void Entity::setBaseMaterial() {
+    model -> setMaterial(baseMat);
+}
+
+void Entity::setDamagedMaterial() {
+    model -> setMaterial(damagedMat);
 }
 
     //position -> set(vectorData);

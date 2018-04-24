@@ -5,7 +5,6 @@
 #include <Types.h>
 #include <Enumeration.h>
 #include <Building.h>
-#include <MathEngine/Box3D.h>
 #include <GraphicEngine/SceneNode.h>
 #include <GraphicEngine/Terrain.h>
 #include <GraphicEngine/Model.h>
@@ -138,6 +137,13 @@ class BuildingManager {
 		 * @return i32 that is the amount of buildings of this type.
 		 */
 		i32 getAmount(std::string);
+
+		/**
+		 * @brief Get the Building Data object
+		 * 
+		 * @return BuildingData 
+		 */
+		BuildingData getBuildingData(std::string);
 
 	private:
 		//Player's team: Enumeration::Team::Human or Enumeration::Team::IA.

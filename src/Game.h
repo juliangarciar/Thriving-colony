@@ -2,16 +2,20 @@
 #define GAME_H
 
 #include <IOEngine/IO.h>
+
 #include <GraphicEngine/Window.h>
+
 #include <SoundEngine/SoundSystem.h>
+
 #include <Enumeration.h>
 #include <Types.h>
+
 #include "State.h"
 #include "MenuState.h"
 #include "GameState.h"
 #include "WinState.h"
 #include "DefeatState.h"
-#include "Human.h"
+
 /**
  * @class Game.
  * @brief Create a Game type object. Singleton class.
@@ -21,6 +25,7 @@ class Game {
     public:
         /**
 		 * @brief Get the instance of the class. If it doesn't exist, create a new instance.
+         * 
          * @return Pointer to a Game object that will be the value of pinstance variable.
 		 */
         static Game* Instance();
@@ -52,23 +57,24 @@ class Game {
 
         /**
         * @brief Change the state variable to the state passed by parameter.
+        * 
         * @param Enumeration::State is the new state to which is going to change the game. 
         */
         void changeState(Enumeration::State);
 
         /**
 		 * @brief Get menu state.
+         * 
          * @return Pointer to a MenuState object that will be the value of menu variable.
 		 */
         MenuState *getMenuState();
 
          /**
 		 * @brief Get game state.
+         * 
          * @return Pointer to a GAmeState object that will be the value of game variable.
 		 */
 		GameState *getGameState();
-        /* Added by Juli */
-        void setRaces(std::string _iaRace, std::string _humanRace);
 
     protected:
         /**
@@ -117,8 +123,6 @@ class Game {
         //Pointer to the sound system of the game.
         SoundSystem *soundSystem;
         
-        std::string humanRace;
-        std::string iaRace;
 };
 
 #endif

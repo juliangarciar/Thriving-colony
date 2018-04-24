@@ -160,7 +160,8 @@ void UnitManager::updateUnitManager() {
     if (selectedTroop != nullptr) {
         if (IO::Instance() -> getKeyboard() -> keyPressed(82)) { //82 = R, R de retracted
             if (team == Enumeration::Team::Human){
-                selectedTroop -> setTroopDestination(Human::Instance()->getHallPosition());
+				Vector3<f32> p = Human::Instance()->getHallPosition();
+                selectedTroop -> setTroopDestination(Vector2<f32>(p.x, p.z));
             }
             selectedTroop -> switchState(Enumeration::UnitState::Retract);
         }
@@ -229,11 +230,13 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
             
             //Vector3<f32> correctPosition = Vector3<f32>(-384.f, 0, 0);
             //temp -> setTroopPosition(IA::Instance()->getHallPosition() + correctPosition);temp -> setPathToTarget(p);temp -> setPathToTarget(p);
-            target = WorldGeometry::Instance()->positionToCell(IA::Instance()->getHallPosition());
+            Vector3<f32> p = IA::Instance()->getHallPosition();
+			target = WorldGeometry::Instance()->positionToCell(Vector2<f32>(p.x, p.z));
         } else {
             //Vector3<f32> correctPosition = Vector3<f32>(-384.f, 0, 0);
             //temp -> setTroopPosition(Human::Instance()->getHallPosition() + correctPosition);
-            target = WorldGeometry::Instance()->positionToCell(Human::Instance()->getHallPosition());
+			Vector3<f32> p = Human::Instance()->getHallPosition();
+            target = WorldGeometry::Instance()->positionToCell(Vector2<f32>(p.x, p.z));
         }
         std::cout << "Mid method \n";
         target = WorldGeometry::Instance()->getValidCell(target, origin, nullptr);
@@ -269,10 +272,12 @@ void UnitManager::deployAllTroops(Vector2<f32> p){
         Cell* target;
         if (team == Enumeration::Team::IA){
             //temp -> setTroopPosition(IA::Instance()->getHallPosition());
-            target = WorldGeometry::Instance()->positionToCell(IA::Instance()->getHallPosition());
+			Vector3<f32> p = IA::Instance()->getHallPosition();
+            target = WorldGeometry::Instance()->positionToCell(Vector2<f32>(p.x, p.z));
         } else {
             //temp -> setTroopPosition(Human::Instance()->getHallPosition());
-            target = WorldGeometry::Instance()->positionToCell(Human::Instance()->getHallPosition());
+			Vector3<f32> p = Human::Instance()->getHallPosition();
+            target = WorldGeometry::Instance()->positionToCell(Vector2<f32>(p.x, p.z));
         }
         target = WorldGeometry::Instance()->getValidCell(target, origin, nullptr);
         Vector2<f32> dummy = target->getPosition();
@@ -298,10 +303,12 @@ void UnitManager::retractAllTroops() {
         Unit *temp = it -> second;
         if (team == Enumeration::Team::IA){
             //temp -> setTroopDestination(IA::Instance()->getHallPosition());
-            temp -> setPathToTarget(IA::Instance()->getHallPosition());
+			Vector3<f32> p = IA::Instance()->getHallPosition();
+            temp -> setPathToTarget(Vector2<f32>(p.x, p.z));
         } else {
             //temp -> setTroopDestination(Human::Instance()->getHallPosition());
-            temp -> setPathToTarget(Human::Instance()->getHallPosition());
+			Vector3<f32> p = Human::Instance()->getHallPosition();
+            temp -> setPathToTarget(Vector2<f32>(p.x, p.z));
         }
         temp -> switchState(Enumeration::UnitState::Retract);
     }
@@ -403,14 +410,14 @@ void UnitManager::deleteUnit(i32 id) {
 
 i32 UnitManager::getCollisionID() {
 	if (currentCollision != nullptr) {
-		return currentCollision -> getSceneNode() -> getID();
+		return currentCollision -> getID();
 	}
 	return -1;
 }
 
 std::string UnitManager::getCollisionName() {
 	if (currentCollision != nullptr) {
-		return currentCollision -> getSceneNode() -> getName();
+		return currentCollision -> getName();
 	}
 	return nullptr;
 }
@@ -455,6 +462,17 @@ bool UnitManager::areTroopsInMap(){
 i32 UnitManager::getTotalTroopAmount() {
     return inQueueTroops -> size() + inHallTroops -> size() + inMapTroops -> size();
 } 
+
+UnitData UnitManager::getUnitData(std::string type){
+	std::map<std::string, UnitData>::iterator it = baseUnits.find(type);
+	if (it != baseUnits.end()){
+		return it->second;
+	} else {
+		std::cout << "El tipo de unidad " << type << " no es valido." << std::endl;
+		exit(0);
+		return UnitData();
+	}
+}
 
 /*
 void UnitManager::deployTroopAtPosition(i32 index, Vector3<f32> vectorData) {

@@ -14,7 +14,7 @@ Slider::~Slider() {
 }
 
 void Slider::addChild(GUIElement *elem) {
-    children . push_back(elem);
+    children.push_back(elem);
 }
 
 void Slider::setPosition(Vector2<i32> position){

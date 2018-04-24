@@ -29,12 +29,14 @@ class CameraController {
 
         /**
          * @brief Set camera and target positions and the distance to the target.
+         * 
          * @param Vector3 that will be the target position.
          */
-        void Init(Vector2<float>);
+        void Init(Vector3<float>);
 
         /**
 	* @brief Update target and camera position based on the changes done since the last update.
+        * 
         * @param f32 that will be the delta time to do the interpolation.
 	*/
         void Update(f32);
@@ -61,18 +63,21 @@ class CameraController {
 
         /**
 	 * @brief Get the current active camera.
+         * 
          * @return A pointer to an object of Camera type.
 	 */
         Camera *getCamera();
         
         /**
          * @brief Set the value of zoomDistanceFromTarget variable.
+         * 
          * @param i32 is the value that will be assigned to zoomDistanceFromTarget variable.
          */
         void setZoomDistanceFromTarget(i32);
         
         /**
          * @brief Set the value of rotateDegrees variable.
+         * 
          * @param i32 x is the value that will be assigned to the x component of rotateDegrees variable.
          * @param i32 y is the value that will be assigned to the y component of rotateDegrees variable. 
          */
@@ -80,12 +85,14 @@ class CameraController {
 
         /**
          * @brief Get the position of the current target.
+         * 
          * @return Vector3 with the value of tarPos variable.
          */
         Vector3<f32> getTarPos();
 
         /**
          * @brief Get the current position of the camera.
+         * 
          * @return Vector3 with the value of camPos variable.
          */
         Vector3<f32> getCameraPosition();  

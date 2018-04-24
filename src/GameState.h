@@ -2,12 +2,14 @@
 #define GAMESTATE_H
 
 #include "State.h"
+
+#include "Hud.h"
+#include "PauseMenu.h"
 #include "Human.h"
 #include "IA.h"
 #include "Map.h"
 #include "BattleManager.h"
-#include "Hud.h"
-#include "PauseMenu.h"
+
 #include <Types.h>
 
 /**
@@ -54,6 +56,7 @@ class GameState : public State {
         
          /**
         * @brief Get the battle manager.
+        * 
         * @return Pointer to a BattleManager object that will be the value of battleManager variable.
         */
         BattleManager* getBattleManager();
@@ -63,8 +66,6 @@ class GameState : public State {
          */
         void cleanGamePaused();
 
-        /* Added by Juli */
-        void setRaces(std::string _iaRace, std::string _humanRace);
     private:
         //Pointer to the human player's object.
         Human *human;
@@ -86,10 +87,6 @@ class GameState : public State {
 
         //True when the game is paused and false in other case.
         bool gamePaused;
-
-        /* Added by Julian */
-        std::string humanRace;
-        std::string iaRace;
 };
 
 #endif

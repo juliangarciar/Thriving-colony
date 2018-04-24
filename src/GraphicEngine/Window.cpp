@@ -6,7 +6,7 @@ Window* Window::pinstance = 0;
 Window* Window::Instance() {
     
     if(pinstance == 0) {
-        pinstance = new Window(800, 600);
+        pinstance = new Window(1048, 720);
     }
     
     return pinstance;

@@ -11,7 +11,7 @@
  */
 class MenuState : public State {
     
-public:
+    public:
         /**
          * @brief MenuState constructor.
          */
@@ -29,6 +29,7 @@ public:
 
         /**
          * @brief Update the hud variable.
+         * 
          * @see update() method of StartMenu class.
          */
         void Input();

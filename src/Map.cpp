@@ -69,10 +69,7 @@ void Map::Init() {
     //cellSpace = new CellSpacePartition(10240, 10240, 128, 128, 4);
 
     //Skydome
-    Window* w = Window::Instance();
-    w -> getVideoDriver() -> setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, false);
-    skydome = new SkyDome(w -> getSceneManager(), w -> getVideoDriver() -> getTexture(j["map"]["skybox_texture"].get<std::string>().c_str()));
-    w -> getVideoDriver() -> setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, true);
+    skydome = new SkyDome(new Texture(j["map"]["skybox_texture"].get<std::string>().c_str()));
 
     loadProgress(50);
 
@@ -85,7 +82,7 @@ void Map::Init() {
 
     Vector2<f32> humanPosition(j["player"]["mainBuilding"]["position"]["x"], j["player"]["mainBuilding"]["position"]["z"]);
     Human::Instance() -> getBuildingManager() -> createBuilding(humanPosition, "MainBuilding", 0);
-    Human::Instance() -> setHallPosition(humanPosition);
+    Human::Instance() -> setHallPosition(Vector3<f32>(humanPosition.x, terrain->getY(humanPosition.x, humanPosition.y), humanPosition.y));
     humanStartPos = humanPosition;
 
     for (auto& element : j["player"]["buildings"]){
@@ -104,7 +101,7 @@ void Map::Init() {
 
     Vector2<f32> iaPosition(j["IA"]["mainBuilding"]["position"]["x"], j["IA"]["mainBuilding"]["position"]["z"]);
     IA::Instance() -> getBuildingManager() -> createBuilding(iaPosition, "MainBuilding", 0);
-    IA::Instance() -> setHallPosition(iaPosition);
+    IA::Instance() -> setHallPosition(Vector3<f32>(iaPosition.x, terrain->getY(iaPosition.x, iaPosition.y), iaPosition.y));
     iaStartPos = iaPosition;
     
     for(auto& element : j["IA"]["buildings"]){
@@ -118,7 +115,7 @@ void Map::Init() {
     camera = new CameraController();
     camera -> setZoomDistanceFromTarget(j["camera"]["zoomDistanceFromTarget"].get<int>());
     camera -> setRotateDegrees(j["camera"]["delta_x"].get<int>(), j["camera"]["delta_y"].get<int>());
-    camera -> Init(Human::Instance() -> getHallPosition());
+    camera -> Init(Vector3<f32>(humanStartPos.x, terrain->getY(humanStartPos.x,humanStartPos.y), humanStartPos.y));
 
     loadProgress(100);
 }

@@ -1,7 +1,7 @@
 #include "AStar.h"
 #include <WorldEngine/WorldGeometry.h>
 #include <WorldEngine/Cell.h>
-#include <MathEngine/PriorityQueue.h>
+#include <priorityqueue/PriorityQueue.h>
 #define MAX 16384
 AStar::AStar(Cell* source, Cell* target){
     worldGeometry = WorldGeometry::Instance();

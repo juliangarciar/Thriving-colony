@@ -126,7 +126,7 @@ template <class T>
 Vector3<T> Vector3<T>::operator / (const f32 &p) const {
     return Vector3<T>(this -> x/p, this -> y/p, this -> z/p);
 }
-
+/*
 /////////////////////////////////////IRRLICHT//////////////////////////////////////
 template <class T>
 Vector3<T>::Vector3(irr::core::vector3di v) {
@@ -187,6 +187,6 @@ glm::vec3 Vector3<T>::getVec3() {
     return glm::vec3(x, y, z);
 }
 //////////////////////////////////////////////////////////////////////////////////
-
+*/
 template class Vector3<i32>;
 template class Vector3<f32>; 

@@ -65,6 +65,14 @@ Unit::Unit(SceneNode* _layer,
         switchState(Enumeration::UnitState::InHome);
     });
     pathManager = new PathManager(this);
+
+    baseMat = new Material(new Texture(""));
+    baseMat -> setColor(255, 255, 255, 255);
+
+    damagedMat = new Material(new Texture(""));
+    damagedMat -> setColor(255, 255, 0, 0);
+
+    setBaseMaterial();
 }
 
 Unit::~Unit() {
@@ -519,8 +527,8 @@ i32 Unit::getArmyLevel(){
                 attackEvent = "event:/UnitAttack/Drorania_melee_S";
                 moveEvent = "event:/UnitMovement/Drorania_melee_S";
                 selectEvent = "event:/UnitSelect/Drorania_melee_S";
-                metalCost = Enumeration::UnitCost::MeleeFootmenMetalCost;
-                crystalCost = Enumeration::UnitCost::MeleeFootmenCrystalCost;
+                metalCost = i32::MeleeFootmenMetalCost;
+                crystalCost = i32::MeleeFootmenCrystalCost;
                 path = L"media/unitModels/Drorania/Melee_Soldier_Drorania.obj";
                 setModel(layer, path);
                 //troops = new Troop(layer, path, 4, ID);
@@ -540,8 +548,8 @@ i32 Unit::getArmyLevel(){
                 attackEvent = "event:/UnitAttack/Kaonov_melee_S";
                 moveEvent = "event:/UnitMovement/Kaonov_melee_S";
                 selectEvent = "event:/UnitSelect/Kaonov_melee_S";
-                metalCost = Enumeration::UnitCost::MeleeFootmenMetalCost;
-                crystalCost = Enumeration::UnitCost::MeleeFootmenCrystalCost;
+                metalCost = i32::MeleeFootmenMetalCost;
+                crystalCost = i32::MeleeFootmenCrystalCost;
                 path = L"media/unitModels/Kaonov/kaonov_melee_soldier.obj";
                 setModel(layer, path);
                 //troops = new Troop(layer, path, 4, ID);
@@ -564,8 +572,8 @@ i32 Unit::getArmyLevel(){
                 attackEvent = "event:/UnitAttack/Drorania_melee_A";
                 moveEvent = "event:/UnitMovement/Drorania_melee_A";
                 selectEvent = "event:/UnitSelect/Drorania_melee_A";
-                metalCost = Enumeration::UnitCost::MountedMeleeMetalCost;
-                crystalCost = Enumeration::UnitCost::MountedMeleeCrystalCost;
+                metalCost = i32::MountedMeleeMetalCost;
+                crystalCost = i32::MountedMeleeCrystalCost;
                 path = L"media/unitModels/Drorania/criatura_drorania.obj";
                 //tex = new Texture("./media/textures/Drorania/Unit/drorania_criature.jpg");
                 setModel(layer, path);
@@ -586,8 +594,8 @@ i32 Unit::getArmyLevel(){
                 attackEvent = "event:/UnitAttack/Kaonov_melee_A";
                 moveEvent = "event:/UnitMovement/Kaonov_melee_A";
                 selectEvent = "event:/UnitSelect/Kaonov_melee_A";
-                metalCost = Enumeration::UnitCost::MountedMeleeMetalCost;
-                crystalCost = Enumeration::UnitCost::MountedMeleeCrystalCost;
+                metalCost = i32::MountedMeleeMetalCost;
+                crystalCost = i32::MountedMeleeCrystalCost;
                 path = L"media/unitModels/Kaonov/creature_kaonov.obj";
                 setModel(layer, path);
                 //troops = new Troop(layer, path, 4, ID);
@@ -610,8 +618,8 @@ i32 Unit::getArmyLevel(){
                 attackEvent = "event:/UnitAttack/Drorania_ranged_S";
                 moveEvent = "event:/UnitMovement/Drorania_ranged_S";
                 selectEvent = "event:/UnitSelect/Drorania_ranged_S";
-                metalCost = Enumeration::UnitCost::RangedFootmenMetalCost;
-                crystalCost = Enumeration::UnitCost::RangedFootmenCrystalCost;
+                metalCost = i32::RangedFootmenMetalCost;
+                crystalCost = i32::RangedFootmenCrystalCost;
                 path = L"media/unitModels/Drorania/rank_soldier_drorania.obj";
                 //tex = new Texture("./media/textures/Drorania/Unit/drorania_rank_soldier.jpg");
                 setModel(layer, path);
@@ -631,8 +639,8 @@ i32 Unit::getArmyLevel(){
                 attackEvent = "event:/UnitAttack/Kaonov_ranged_S";
                 moveEvent = "event:/UnitMovement/Kaonov_ranged_S";
                 selectEvent = "event:/UnitSelect/Kaonov_ranged_S";
-                metalCost = Enumeration::UnitCost::RangedFootmenMetalCost;
-                crystalCost = Enumeration::UnitCost::RangedFootmenCrystalCost;
+                metalCost = i32::RangedFootmenMetalCost;
+                crystalCost = i32::RangedFootmenCrystalCost;
                 path = L"media/unitModels/Kaonov/kaonov_rank_soldier.obj";
                 setModel(layer, path);
                 //troops = new Troop(layer, path, 4, ID);
@@ -655,8 +663,8 @@ i32 Unit::getArmyLevel(){
                 attackEvent = "event:/UnitAttack/Drorania_ranged_A";
                 moveEvent = "event:/UnitMovement/Drorania_ranged_A";
                 selectEvent = "event:/UnitSelect/Drorania_ranged_A";
-                metalCost = Enumeration::UnitCost::MountedRangedMetalCost;
-                crystalCost = Enumeration::UnitCost::MountedRangedCrystalCost;
+                metalCost = i32::MountedRangedMetalCost;
+                crystalCost = i32::MountedRangedCrystalCost;
                 path = L"media/unitModels/Drorania/criatura_drorania.obj";
                 //tex = new Texture("./media/textures/Drorania/Unit/drorania_criature.jpg");
                 setModel(layer, path);
@@ -676,8 +684,8 @@ i32 Unit::getArmyLevel(){
                 attackEvent = "event:/UnitAttack/Kaonov_ranged_A";
                 moveEvent = "event:/UnitMovement/Kaonov_ranged_A";
                 selectEvent = "event:/UnitSelect/Kaonov_ranged_A";
-                metalCost = Enumeration::UnitCost::MountedRangedMetalCost;
-                crystalCost = Enumeration::UnitCost::MountedRangedCrystalCost;
+                metalCost = i32::MountedRangedMetalCost;
+                crystalCost = i32::MountedRangedCrystalCost;
                 path = L"media/unitModels/Kaonov/creature_kaonov.obj";
                 setModel(layer, path);
                 //troops = new Troop(layer, path, 0, ID);
@@ -701,8 +709,8 @@ i32 Unit::getArmyLevel(){
                 attackEvent = "event:/UnitAttack/Drorania_melee_A";
                 moveEvent = "event:/UnitMovement/Drorania_melee_A";
                 selectEvent = "event:/UnitSelect/Drorania_melee_A";
-                metalCost = Enumeration::UnitCost::CreatureMetalCost;
-                crystalCost = Enumeration::UnitCost::CreatureCrystalCost;
+                metalCost = i32::CreatureMetalCost;
+                crystalCost = i32::CreatureCrystalCost;
                 path = L"media/unitModels/Drorania/Ente_Drorania.obj";
                 //tex = new Texture("./media/textures/Drorania/Unit/drorania_entity.jpg");
                 setModel(layer, path);
@@ -723,8 +731,8 @@ i32 Unit::getArmyLevel(){
                 attackEvent = "event:/UnitAttack/Kaonov_melee_A";
                 moveEvent = "event:/UnitMovement/Kaonov_melee_A";
                 selectEvent = "event:/UnitSelect/Kaonov_melee_A";
-                metalCost = Enumeration::UnitCost::CreatureMetalCost;
-                crystalCost = Enumeration::UnitCost::CreatureCrystalCost;
+                metalCost = i32::CreatureMetalCost;
+                crystalCost = i32::CreatureCrystalCost;
                 path = L"media/unitModels/Kaonov/entinity_kaonov.obj";
                 setModel(layer, path);
                 //troops = new Troop(layer, path, 0, ID);
@@ -748,8 +756,8 @@ i32 Unit::getArmyLevel(){
                 attackEvent = "event:/UnitAttack/Drorania_ranged_S";
                 moveEvent = "event:/UnitMovement/Drorania_ranged_S";
                 selectEvent = "event:/UnitSelect/Drorania_ranged_S";
-                metalCost = Enumeration::UnitCost::CatapultMetalCost;
-                crystalCost = Enumeration::UnitCost::CatapultCrystalCost;
+                metalCost = i32::CatapultMetalCost;
+                crystalCost = i32::CatapultCrystalCost;
                 path = L"media/unitModels/Drorania/dorania_cannon.obj";
                 setModel(layer, path);
                 //troops = new Troop(layer, path, 0, ID);
@@ -770,8 +778,8 @@ i32 Unit::getArmyLevel(){
                 attackEvent = "event:/UnitAttack/Kaonov_ranged_S";
                 moveEvent = "event:/UnitMovement/Kaonov_ranged_S";
                 selectEvent = "event:/UnitSelect/Kaonov_ranged_S";
-                metalCost = Enumeration::UnitCost::CatapultMetalCost;
-                crystalCost = Enumeration::UnitCost::CatapultCrystalCost;
+                metalCost = i32::CatapultMetalCost;
+                crystalCost = i32::CatapultCrystalCost;
                 path = L"media/unitModels/Kaonov/kaonov_cannon.obj";
                 setModel(layer, path);
                 //troops = new Troop(layer, path, 0, ID);
@@ -795,8 +803,8 @@ i32 Unit::getArmyLevel(){
                 attackEvent = "event:/UnitAttack/Drorania_ranged_A";
                 moveEvent = "event:/UnitMovement/Drorania_ranged_A";
                 selectEvent = "event:/UnitSelect/Drorania_ranged_A";
-                metalCost = Enumeration::UnitCost::RamMetalCost;
-                crystalCost = Enumeration::UnitCost::RamCrystalCost;
+                metalCost = i32::RamMetalCost;
+                crystalCost = i32::RamCrystalCost;
                 path = L"media/unitModels/Drorania/drorania_walls_desintegrator.obj";
                 setModel(layer, path);
                 //troops = new Troop(layer, path, 0, ID);
@@ -816,8 +824,8 @@ i32 Unit::getArmyLevel(){
                 attackEvent = "event:/UnitAttack/Kaonov_ranged_A";
                 moveEvent = "event:/UnitMovement/Kaonov_ranged_A";
                 selectEvent = "event:/UnitSelect/Kaonov_ranged_A";
-                metalCost = Enumeration::UnitCost::RamMetalCost;
-                crystalCost = Enumeration::UnitCost::RamCrystalCost;
+                metalCost = i32::RamMetalCost;
+                crystalCost = i32::RamCrystalCost;
                 path = L"media/unitModels/Kaonov/kaonov_walls_desintegrator.obj";
                 setModel(layer, path);
                 //troops = new Troop(layer, path, 0, ID);

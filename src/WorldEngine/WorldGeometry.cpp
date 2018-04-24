@@ -7,7 +7,7 @@
 #include <MathEngine/Box2D.h>
 #include <Building.h>
 #include <Unit.h>
-#include <MathEngine/PriorityQueue.h>
+#include <priorityqueue/PriorityQueue.h>
 #include <cstdlib> 
 
 #define MAP 10240

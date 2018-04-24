@@ -1,13 +1,20 @@
 #include "OBDCamera.h"
 
+OBDCamera::OBDCamera(i32 sW, i32 sH) {
+    //ToDo: near y far no deberian estar aqui
+    cameraNode = new TNode(new TCamera(OBDEnums::CameraProjection::ProjectionPerspective, 0.1, 1000, 0, sH, 0, sW));
+}
 
-OBDCamera::OBDCamera(TNode* parent) {
-    cameraNode = new TNode(new TCamera(OBDEnums::CameraProjection::ProjectionPerspective, 0.1, 1000, 0, 720, 0, 1280), parent); 
-    //ToDo: esos parametros no deberian estar aqui
+OBDCamera::OBDCamera(OBDSceneNode* parent, i32 sW, i32 sH) {
+    //ToDo: near y far no deberian estar aqui
+    cameraNode = new TNode(new TCamera(OBDEnums::CameraProjection::ProjectionPerspective, 0.1, 1000, 0, sH, 0, sW));
+
+    parent->addChild(this);
 }
 
 OBDCamera::~OBDCamera() {
     delete cameraNode;
+    cameraNode = nullptr;
 }
 
 void OBDCamera::setTargetPosition(glm::vec3 p) {
@@ -21,8 +28,7 @@ void OBDCamera::setCameraPosition(glm::vec3 p) {
 }
 
 void OBDCamera::setActive(bool active) {
-    TCamera* c = (TCamera*) cameraNode -> getEntity();
-    c -> setActive(active);
+    cameraNode -> setActive(active);
 }
 
 void OBDCamera::setNearValue(f32 n) {
@@ -51,8 +57,7 @@ void OBDCamera::setFov(f32 fov){
 }
 
 bool OBDCamera::getActive() {
-    TCamera* c = (TCamera*) cameraNode -> getEntity();
-    return c -> getActive();
+    return cameraNode -> getActive();
 }
 
 f32 OBDCamera::getNear() {
@@ -85,10 +90,28 @@ glm::vec3 OBDCamera::getTargetPosition() {
     return c -> getTargetPosition();
 }
 
-TNode* OBDCamera::getCameraNode(){
-    return cameraNode;
+glm::vec3 OBDCamera::getWorldCoordinatesFromScreen(glm::vec3 world){
+    TCamera* c = (TCamera*) cameraNode -> getEntity();
+    return c->getWorldCoordinatesFromScreen(world);
+}
+ 
+glm::vec3 OBDCamera::getScreenCoordinatesFromWorld(glm::vec3 screen){
+    TCamera* c = (TCamera*) cameraNode -> getEntity();
+    return c->getScreenCoordinatesFromWorld(screen);
+}
+
+OBDLine OBDCamera::getRaycastFromScreenCoordinates(glm::vec2 world){
+    TCamera* c = (TCamera*) cameraNode -> getEntity();
+    OBDLine l;
+    l.start = c->getWorldCoordinatesFromScreen(glm::vec3(world.x, world.y, -1));
+    l.end = c->getWorldCoordinatesFromScreen(glm::vec3(world.x, world.y, 1));
+    return l;
 }
 
 TCamera* OBDCamera::getCameraEntity(){
     return (TCamera*) cameraNode -> getEntity();
+}
+
+TNode *OBDCamera::getFirstNode(){
+    return cameraNode;
 }

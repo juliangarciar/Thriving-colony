@@ -19,7 +19,7 @@ ProgressBar::~ProgressBar() {
 }
 
 void ProgressBar::addChild(GUIElement *elem) {
-    children . push_back(elem);
+    children.push_back(elem);
 }
 
 void ProgressBar::setPosition(Vector2<i32> position){

@@ -1,11 +1,17 @@
 #include "SkyDome.h"
+#include "Window.h"
 
-SkyDome::SkyDome(irr::scene::ISceneManager *scene, irr::video::ITexture* tex) {
-    skydome = scene->addSkyDomeSceneNode(tex, 16, 8, 0.95f, 2.0f); //ToDo: aqui no deberian haber datos
+SkyDome::SkyDome(Texture* tex) {
+	t = tex;
+    Window* w = Window::Instance();
+    w -> getVideoDriver() -> setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, false);
+    skydome = w -> getSceneManager() -> addSkyDomeSceneNode(tex->getTexture(), 16, 8, 0.95f, 2.0f); //ToDo: datos parametrizados
+    w -> getVideoDriver() -> setTextureCreationFlag(video::ETCF_CREATE_MIP_MAPS, true);
 }
 
 SkyDome::~SkyDome() {
     skydome -> remove();
     delete skydome;
     skydome = nullptr;
+	delete t;
 }

@@ -19,7 +19,7 @@ CheckBox::~CheckBox() {
 }
 
 void CheckBox::addChild(GUIElement *elem) {
-    children . push_back(elem);
+    children.push_back(elem);
 }
 
 void CheckBox::show(){

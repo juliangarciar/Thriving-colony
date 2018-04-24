@@ -57,6 +57,17 @@ class Building : public Entity {
          * @return std::string 
          */
         std::string getType();
+        
+        //ToDo: anadido por rafa
+        /**
+         * @brief Set the Can Build Mat object
+         */
+        void setCanBuildMat();
+
+        /**
+         * @brief Set the Cant Build Mat object
+         */
+        void setCantBuildMat();
     private:
         /**
          * @brief Subtract the metal and crystal cost of the building to the metal and crystal available of the player (Human or IA) and
@@ -80,6 +91,12 @@ class Building : public Entity {
 
         //Finish building callback
         std::function<void(Building*)> callback;
+        
+        //ToDo: anadido por rafa
+        Material *canBuildMat;
+        
+        //
+        Material *cantBuildMat;
 };
 
 #endif

@@ -31,16 +31,39 @@ Building::Building(SceneNode *_layer,
                 buildingType(baseData.type),
                 callback(nullptr)
 {
-    /* Set the model and texture */
-    getModel()->setMaterial(new Material(new Texture(baseData.texturePath.c_str())));
-
     /* Set the timer */
     buildTimer = new Timer(baseData.buildingTime, false, false);
     buildTimer -> setCallback([&]{
-		returnToOriginalMaterial();
+		setBaseMaterial();
         adjustCityStats();
         if (callback != nullptr) callback(this);
     });
+
+	//ToDo: hacia abajo anadido por rafa
+    f32 billBoardOffset = 200.00;
+
+	Texture *t = new Texture(baseData.texturePath.c_str());
+
+    /* Set the model and texture */
+    baseMat = new Material(t);
+    baseMat -> setColor(255, 255, 255, 255);
+
+    damagedMat = new Material(t);
+    damagedMat -> setColor(255, 255, 0, 0);
+    
+    canBuildMat = new Material(t);
+    canBuildMat -> setColor(128, 0, 255, 0);
+
+    cantBuildMat = new Material(t);
+    cantBuildMat -> setColor(128, 255, 0, 0);
+
+    setBaseMaterial();
+
+	Vector3<f32> pos(getPosition().x, Map::Instance()->getTerrain()->getY(getPosition().x,getPosition().y) + billBoardOffset, getPosition().y);
+
+    barBg = new Billboard(layer, ID, pos, Color(0,0,0,255), Color(0,0,0,255));
+	bar = new Billboard(layer, ID, pos, Color(0, 255, 0, 255), Color(0, 255, 0, 255));
+    barBg -> setSize(105.00, 15.00);
 }
 
 Building::~Building() {
@@ -88,4 +111,13 @@ bool Building::getFinished(){
 
 std::string Building::getType(){
     return buildingType;
+}
+
+//ToDo: hacia abajo anadido por rafa
+void Building::setCanBuildMat() {
+    model -> setMaterial(canBuildMat);
+}
+
+void Building::setCantBuildMat() {
+    model -> setMaterial(cantBuildMat);
 }

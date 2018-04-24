@@ -57,6 +57,7 @@ bool Human::getUnderAttack() {
             if (it  -> second != nullptr) {
             // Calculate distance between troop requesting target and posible targets
                 xaux = it -> second -> getPosition().x - pos.x;
+
                 yaux = it -> second -> getPosition().y - pos.y;
                 dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
 

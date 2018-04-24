@@ -54,10 +54,9 @@ CameraController::~CameraController() {
 	delete camera;
 }
 
-void CameraController::Init(Vector2<float> v){
-	Vector3<f32> tmp(v.x, Map::Instance() -> getTerrain() -> getY(v.x, v.y), v.y);
+void CameraController::Init(Vector3<float> v){
 	//Set camera and target positions
-	tarPos = tmp;
+	tarPos = v;
 	camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
 
     camera -> setTargetPosition(tarPos);
@@ -142,7 +141,10 @@ void CameraController::Update(f32 deltaTime) {
 		}
 	}
 
-	if (centerCameraMode) tarPos = userPos;
+	if (centerCameraMode){
+		//std::cout << userPos << std::endl;
+		tarPos = userPos;
+	}
 
     if (movementMode || rotationOrInclinationMode || zoomMode || centerCameraMode){
 		camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
@@ -152,13 +154,16 @@ void CameraController::Update(f32 deltaTime) {
 
 		camPos.y = mapHeight + camHeight;
 
-		camera -> setTargetPosition(tarPos.getVectorF());
-		camera -> setCameraPosition(camPos.getVectorF());
+		camera -> setTargetPosition(tarPos);
+		camera -> setCameraPosition(camPos);
     }
 }
 
 void CameraController::Move() {
 	Window *w = Window::Instance();
+
+    /*direction = (receiver -> keyDown(KEY_KEY_W) << 0) | (receiver -> keyDown(KEY_KEY_A) << 1)
+		| receiver -> keyDown(KEY_KEY_S) << 2 | receiver -> keyDown(KEY_KEY_D) << 3;*/
 
 	direction = 0;
 	movementMode = false;
@@ -269,7 +274,7 @@ void CameraController::RotateAndInclinate(){
         rotateDegrees.y = (rotateDegrees.y > maxInclination) ? maxInclination : rotateDegrees.y;
 
         // reset cursor position to center
-        IO::Instance() -> getMouse() -> setPosition(screenCenter.getVectorF()); 
+        IO::Instance() -> getMouse() -> setPosition(screenCenter); 
 
 		// refresh distance to target
 		distanceToTarget = camPos.getDistanceTo(tarPos);
@@ -280,8 +285,8 @@ void CameraController::CenterCamera(){
 	centerCameraMode = false;
 	if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_SPACE)) { //ToDo: fachada
 		if(Human::Instance() -> getUnitManager() -> getSelectedTroop() != nullptr) {
-			userPos.x = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition().x;
-			userPos.z = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition().y;
+			userPos.x = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition() . x;
+			userPos.z = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition() . y;
 			userPos.y = Map::Instance() -> getTerrain() -> getY(userPos.x, userPos.z);
 		} else {
 			userPos.x = Human::Instance() -> getHallPosition().x;

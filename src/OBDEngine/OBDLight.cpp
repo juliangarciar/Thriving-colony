@@ -1,39 +1,18 @@
 #include "OBDLight.h"
 
 OBDLight::OBDLight(OBDColor color, u32 intensity) {
-    rotationNode = new TNode(new TTransform());
-    translationNode = new TNode(new TTransform(), rotationNode);
-    scaleNode = new TNode(new TTransform(), translationNode);
-    lightNode = new TNode(new TLight(color, intensity), scaleNode);
+    lightNode = new TNode(new TLight(color, intensity));
 }
 
-OBDLight::OBDLight(TNode* parent, OBDColor color, u32 intensity) {
-    rotationNode = new TNode(new TTransform(), parent);
-    translationNode = new TNode(new TTransform(), rotationNode);
-    scaleNode = new TNode(new TTransform(), translationNode);
-    lightNode = new TNode(new TLight(color, intensity), scaleNode);
+OBDLight::OBDLight(OBDSceneNode* parent, OBDColor color, u32 intensity) {
+    lightNode = new TNode(new TLight(color, intensity));
+
+    parent->addChild(this);
 }
 
 OBDLight::~OBDLight() {
-    delete rotationNode;
-    delete translationNode;
-    delete scaleNode;
     delete lightNode;
-}
-
-void OBDLight::rotate(f32 rX, f32 rY, f32 rZ) {
-    TTransform* t = (TTransform*) rotationNode -> getEntity();
-    t -> rotate(rX, rY, rZ, 0);
-}
-
-void OBDLight::scale(f32 sX, f32 sY, f32 sZ) {
-    TTransform* t = (TTransform*) scaleNode -> getEntity();
-    t -> scale(sX, sY, sZ);
-}
-
-void OBDLight::translate(f32 tX, f32 tY, f32 tZ) {
-    TTransform* t = (TTransform*) translationNode -> getEntity();
-    t -> translate(tX, tY, tZ);
+    lightNode = nullptr;
 }
 
 void OBDLight::setAmbientColor(OBDColor c) {
@@ -97,21 +76,13 @@ u32 OBDLight::getSpecularIntensity() {
 }
 
 void OBDLight::setActive(bool active) {
+    lightNode -> setActive(active);
     TLight* l = (TLight*) lightNode -> getEntity();
     l -> setActive(active);
 }
 
 bool OBDLight::getActive() {
-    TLight* l = (TLight*) lightNode -> getEntity();
-    return l -> getActive();
-}
-
-TNode* OBDLight::getLightNode() {
-    return rotationNode;
-}
-
-TLight* OBDLight::getLightEntity() {
-    return (TLight*) lightNode -> getEntity();
+    return lightNode -> getActive();
 }
 
 void OBDLight::setPosition(glm::vec3 p) {
@@ -124,12 +95,10 @@ glm::vec3 OBDLight::getPosition() {
     return l -> getPosition();
 }
 
-void OBDLight::setRotation(glm::vec3 r) {
-    TTransform* t = (TTransform*) rotationNode -> getEntity();
-    t -> rotate(r.x, r.y, r.z, 0);
+TLight* OBDLight::getLightEntity() {
+    return (TLight*) lightNode -> getEntity();
 }
 
-void OBDLight::setScale(glm::vec3 s) {
-    TTransform* t = (TTransform*) scaleNode -> getEntity();
-    t -> scale(s.x, s.y, s.z);
+TNode *OBDLight::getFirstNode(){
+    return lightNode;
 }

@@ -7,6 +7,8 @@
 #include <MathEngine/Box2D.h>
 #include <GraphicEngine/Model.h>
 #include <GraphicEngine/SceneNode.h>
+#include <GraphicEngine/Material.h>
+#include <GraphicEngine/Billboard.h>
 #include <IOEngine/Timer.h>
 
 /**
@@ -89,11 +91,6 @@ class Entity {
          * @breif Set all the enemies' target variable stored at hostile variable to nullptr.
          */
         void putHostileTargetsToNull();
-
-        /**
-	     * @brief Set the material of the model to its original material
-	     */
-        void returnToOriginalMaterial();
 
         /**
          * @brief Set a new id to the entity.
@@ -239,6 +236,17 @@ class Entity {
          * @return
          */
         i32 getCellsY() const;
+
+		//ToDo: anadido por rafa
+        /**
+         * @brief Set the Base Material object
+         */
+        void setBaseMaterial();
+
+        /**
+         * @brief Set the Damaged Material object
+         */
+        void setDamagedMaterial();
     protected:
         //Layer for the model
         SceneNode* layer;
@@ -303,5 +311,12 @@ class Entity {
         //CellSpace info
         i32 kCellsX;
         i32 kCellsY;
+        //
+        Material *baseMat;
+
+        //
+        Material *damagedMat;
+        Billboard* barBg;
+        Billboard* bar;
 };
 #endif

@@ -1,15 +1,19 @@
 #include "TCache.h"
 
 TCache::TCache() {
-    //glm::mat4 identityMatrix = glm::mat4(1.0f);
+    glm::mat4 identityMatrix = glm::mat4(1.0f);
     for (int i = 0; i < (int)OBDEnums::OpenGLIDs::PARAMS; i++){
         parameterIDs.push_back(0);
     }
     lights = new std::vector<glslLight>();
+	matrixStack.push(glm::mat4(1.0f));
+
 }
 
 TCache::~TCache() {
-    
+    lights->clear();
+    delete lights;
+    lights = nullptr;
 }
 
 std::vector<GLuint> TCache::generateAllIDs(GLuint programID){
@@ -30,12 +34,13 @@ std::vector<GLuint> TCache::generateAllIDs(GLuint programID){
 	glUniformBlockBinding(programID, paramIDs[OBDEnums::OpenGLIDs::BUFFER_MATERIAL], 2);
 	glUniformBlockBinding(programID, paramIDs[OBDEnums::OpenGLIDs::BUFFER_TEXTURE], 3);
 
+	paramIDs[OBDEnums::OpenGLIDs::LIGHT_AMOUNT] = glGetUniformLocation(programID, "lightAmount");
+
     paramIDs[OBDEnums::OpenGLIDs::SAMPLER_AMBIENT] = glGetUniformLocation(programID, "textureAmbient");
 	paramIDs[OBDEnums::OpenGLIDs::SAMPLER_DIFFUSE] = glGetUniformLocation(programID, "textureDiffuse");
 	paramIDs[OBDEnums::OpenGLIDs::SAMPLER_SPECULAR] = glGetUniformLocation(programID, "textureSpecular");
 	paramIDs[OBDEnums::OpenGLIDs::SAMPLER_ALPHA] = glGetUniformLocation(programID, "textureAlpha");
 	paramIDs[OBDEnums::OpenGLIDs::SAMPLER_BUMP] = glGetUniformLocation(programID, "textureBump");
-
 
     return std::vector<GLuint>(paramIDs, paramIDs + OBDEnums::OpenGLIDs::PARAMS);
 }
@@ -50,14 +55,6 @@ void TCache::setID(OBDEnums::OpenGLIDs s, GLuint i){
 
 GLuint TCache::getID(OBDEnums::OpenGLIDs s){
     return parameterIDs[(int)s];
-}
-
-void TCache::setModelMatrix(glm::mat4 m){
-    modelMatrix = m;
-}
-
-glm::mat4 TCache::getModelMatrix(){
-    return modelMatrix;
 }
 
 void TCache::setViewMatrix(glm::mat4 m){

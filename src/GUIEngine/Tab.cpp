@@ -14,7 +14,7 @@ Tab::~Tab(){
 }
 
 void Tab::addChild(GUIElement *elem) {
-    children . push_back(elem);
+    children.push_back(elem);
 }
 
 void Tab::setPosition(Vector2<i32> position){

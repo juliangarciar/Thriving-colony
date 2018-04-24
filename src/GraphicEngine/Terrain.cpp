@@ -36,7 +36,7 @@ void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture) {
 
 void Terrain::setSize(Vector3<f32> s){
 	Window *sc = Window::Instance();
-	terrain -> setScale(s.getVectorF());
+	terrain -> setScale(core::vector3df(s.x, s.y, s.z));
 	selector = sc -> getSceneManager() -> createTerrainTriangleSelector(terrain);
     terrain -> setTriangleSelector(selector);
 }
@@ -50,7 +50,7 @@ Vector3<f32> Terrain::getPointCollision(Mouse *cursor){
     scene::ISceneCollisionManager* collisionManager = Window::Instance() -> getSceneManager() -> getSceneCollisionManager();
     const core::line3d<f32> ray = collisionManager -> getRayFromScreenCoordinates(pos);
     if (collisionManager -> getCollisionPoint (ray, selector, point, triangle, node)) {
-		return Vector3<f32>(point);
+		return Vector3<f32>(point.X, point.Y, point.Z);
     }
 	return Vector3<f32>();
 }

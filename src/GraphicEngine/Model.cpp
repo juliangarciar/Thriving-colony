@@ -60,16 +60,11 @@ void Model::setName(const char *name) {
 }
 
 void Model::setPosition(Vector3<f32> pos) {
-    meshNode -> setPosition(pos.getVectorF());
-}
-
-void Model::setPosition(Vector2<f32> pos){
-    Vector3<f32> tmp(pos.x, Map::Instance() -> getTerrain() -> getY(pos.x, pos.y), pos.y);
-    meshNode->setPosition(tmp.getVectorF());
+    meshNode -> setPosition(core::vector3df(pos.x, pos.y, pos.z));
 }
 
 void Model::setScale(Vector3<f32> s) {
-    meshNode -> setScale(s.getVectorF()); 
+    meshNode -> setScale(core::vector3df(s.x, s.y, s.z)); 
 }
 
 void Model::rotate(f32 x, f32 y){
@@ -91,14 +86,7 @@ void Model::setMaterial(Material *m){
 }
 
 Vector3<f32> Model::getPosition() {
-    return Vector3<f32>(meshNode -> getPosition());
-}
-Box3D<f32> Model::getBoundingBox() {
-    meshNode->getMesh()->getMeshBuffer(0)->recalculateBoundingBox();
-    core::aabbox3df box = meshNode->getMesh()->getMeshBuffer(0)->getBoundingBox();
-    meshNode->getMesh()->setBoundingBox(box);
-    
-    return Box3D<f32>(meshNode -> getTransformedBoundingBox());
+    return Vector3<f32>(meshNode -> getPosition().X, meshNode -> getPosition().Y, meshNode -> getPosition().Z);
 }
 
 i32 Model::getID() {

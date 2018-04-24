@@ -94,7 +94,13 @@ class Enumeration {
             BuildWorkshop,
             BuildTower,
             BuildWall
+        };
 
+        enum BehaviourState {
+            Invalid,
+            Success,
+            Failure,
+            Running
         };
         
         //Margins of the map.

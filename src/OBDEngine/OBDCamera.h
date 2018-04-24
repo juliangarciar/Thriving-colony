@@ -1,20 +1,29 @@
 #ifndef OBDCAMERA_H
 #define OBDCAMERA_H
 
-#include "OBDTypes.h"
-#include "OBDEnums.h"
-#include "Graphics/TNode.h"
+#include "OBDEntity.h"
+#include "OBDSceneNode.h"
+
 #include "Graphics/TTransform.h"
 #include "Graphics/TCamera.h"
 
-class OBDCamera {
+class OBDCamera : public OBDEntity {
     public:
+        /**
+         * @brief 
+         * @param screenWidth
+         * @param screenHeight
+         */
+        OBDCamera(i32, i32);
+
         /**
          * @brief 
          * 
          * @param parent 
+         * @param screenWidth
+         * @param screenHeight
          */
-        OBDCamera(TNode* parent);
+        OBDCamera(OBDSceneNode* parent, i32, i32);
 
         /**
          * @brief 
@@ -129,20 +138,41 @@ class OBDCamera {
          * @return glm::vec3 
          */
         glm::vec3 getTargetPosition();
-        
+
         /**
-         * @brief 
+         * @brief Get World Coordinates From Screen
          * 
-         * @return TNode* 
+         * @return glm::vec3 
          */
-        TNode* getCameraNode();
+        glm::vec3 getWorldCoordinatesFromScreen(glm::vec3);
+
+        /**
+         * @brief Get Screen Coordinates From World
+         * 
+         * @return glm::vec3 
+         */
+        glm::vec3 getScreenCoordinatesFromWorld(glm::vec3);
+
+        /**
+         * @brief Get World Coordinates From Screen
+         * 
+         * @return glm::vec3 
+         */
+        OBDLine getRaycastFromScreenCoordinates(glm::vec2);
 
         /**
          * @brief 
-         * 
+         * s
          * @return TCamera* 
          */
         TCamera* getCameraEntity();
+
+        /**
+         * @brief Get the First Node object
+         * 
+         * @return TNode* 
+         */
+        TNode *getFirstNode();
     private:
         TNode* cameraNode;
 };

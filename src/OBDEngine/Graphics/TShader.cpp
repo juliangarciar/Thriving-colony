@@ -13,7 +13,7 @@ TShader::TShader(ResourceGLSL *s){
     
     // Compile shader Shader
     const char *shaderSourcePointer = s->getShaderCode()->c_str();
-    glShaderSource(shaderID, 1, &shaderSourcePointer , nullptr);
+    glShaderSource(shaderID, 1, &shaderSourcePointer , NULL);
     glCompileShader(shaderID);
 
     // Check shader Shader
@@ -21,7 +21,7 @@ TShader::TShader(ResourceGLSL *s){
     glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &shaderInfoLogLength);
     if (shaderInfoLogLength > 0){
         std::vector<char> shaderErrorMessage(shaderInfoLogLength+1);
-        glGetShaderInfoLog(shaderID, shaderInfoLogLength, nullptr, &shaderErrorMessage[0]);
+        glGetShaderInfoLog(shaderID, shaderInfoLogLength, NULL, &shaderErrorMessage[0]);
         std::cout << &shaderErrorMessage[0] << std::endl;
         exit(0);
     }

@@ -15,6 +15,7 @@ WinMenu::WinMenu() {
 WinMenu::~WinMenu() {
     delete buttonQuit;
     delete buttonStart;
+    delete winText;
 }
 
 void WinMenu::setHUDEvents(){

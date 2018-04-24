@@ -1,9 +1,10 @@
 #include "Troop.h"
-#include "GraphicEngine/Model.h"
-#include "GraphicEngine/SceneNode.h"
-#include "MathEngine/Vector3.h"
-#include "MathEngine/Vector2.h"
+#include "Map.h"
+#include <GraphicEngine/Model.h>
+#include <GraphicEngine/SceneNode.h>
 #include <GraphicEngine/Window.h>
+#include <MathEngine/Vector3.h>
+#include <MathEngine/Vector2.h>
 #include <WorldEngine/WorldGeometry.h>
 
 Troop::Troop(SceneNode* scene, const char* path, i32 qnty, i32 ID){
@@ -13,10 +14,6 @@ Troop::Troop(SceneNode* scene, const char* path, i32 qnty, i32 ID){
     for(i32 i = 0; i < max; i++){
         modelVector[i] = new Model(scene, ID, path);
         positionVector[i] = Vector2<f32>();
-        Window::Instance() -> getSceneManager() -> getMeshManipulator() -> setVertexColors(
-            modelVector[i] -> getModel() -> getMesh(), irr::video::SColor(255, 125, 125, 0)
-        );
-        //modelVector[i]->setScale(Vector3<f32>(1,1,1));
         modelVector[i]->setActive(true);
     }
     alignmentWeight = 1.0;
@@ -91,9 +88,10 @@ void Troop::setPosition(Vector2<f32> vectorPos){
     positionVector[3] = Vector2<f32>(vectorPos.x + 25, vectorPos.y -25);
 
     for(i32 i = 0; i < max; i++){
-        modelVector[i]->setPosition(positionVector[i]);
+        modelVector[i]->setPosition(Vector3<f32>(positionVector[i].x, Map::Instance() -> getTerrain() -> getY(positionVector[i].x, positionVector[i].y), positionVector[i].y));
     }
 }
+
 void Troop::moveTroops(Vector2<f32> vectorMov){
     //WorldGeometry::Instance()->getNeighborUnits(positionVector[0].toVector2());
     for(i32 i = 0; i < max; i++){
@@ -101,7 +99,7 @@ void Troop::moveTroops(Vector2<f32> vectorMov){
         positionVector[i] = positionVector[i] + vectorMov + calculateFlocking();
     /* Work on rotation */
         //modelVector[i]->rotate(vectorMov.x, vectorMov.z);
-        modelVector[i]->setPosition(positionVector[i]);
+        modelVector[i]->setPosition(Vector3<f32>(positionVector[i].x, Map::Instance() -> getTerrain() -> getY(positionVector[i].x, positionVector[i].y), positionVector[i].y));
     }
 }
 

@@ -10,7 +10,7 @@
  */
 class DefeatState : public State {
     
-public:
+    public:
         /**
          * @brief DefeatState constructor.
          */
@@ -28,6 +28,7 @@ public:
 
         /**
          * @brief Update the hud variable.
+         * 
          * @see update() method of DefeatMenu class.
          */
         void Input();

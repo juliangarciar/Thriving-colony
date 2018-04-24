@@ -25,7 +25,7 @@ Panel::~Panel() {
 }
 
 void Panel::addChild(GUIElement *elem) {
-    children . push_back(elem);
+    children.push_back(elem);
 }
 
 void Panel::show(){

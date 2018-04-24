@@ -12,15 +12,17 @@ class SceneNode {
 	public:
 		SceneNode();
 		SceneNode(SceneNode *parent);
-		SceneNode(scene::ISceneNode *node);
 
 		virtual ~SceneNode();
 
-		//void addChild(scene::ISceneNode);
 		SceneNode *getNodeCollision(Mouse *cursor);
+
+		i32 getID();
+		std::string getName();
 		
 		scene::ISceneNode *getSceneNode();
 	private:
+		SceneNode(scene::ISceneNode *node);
 		scene::ISceneNode *node;
 
 		SceneNode *collisionNode;

@@ -19,6 +19,7 @@ class StartMenu {
          * @brief StartMenu constructor.
          */
         StartMenu();
+        
         /**
          * @brief StartMenu destructor.
          */
@@ -70,10 +71,10 @@ class StartMenu {
 
         //Text of the civilization for the human player.
         Label *racesP;
-        Label *racesO;
+
         //List of available civilizations.
         ComboBox *racesCb;
-        ComboBox *racesIA;
+
         //Text of the map for the game.
         Label *mapsP;
 
@@ -85,10 +86,6 @@ class StartMenu {
 
         //Pointer to Button object that goes to the main menu.
         Button *buttonBack;
-
-        /* Added by Juli */
-        std::string humanRace;
-        std::string iaRace;
 };
 
 #endif
