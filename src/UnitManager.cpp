@@ -8,15 +8,45 @@
 #include "Map.h"
 #include "Hud.h"
 #include "IOEngine/IO.h"
+#include <OBDEngine/ResourceManager/ResourceJSON.h>
+#include "EntityData.h"
 
 //Constructor
-UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
-    gridAlignment = 20;
+UnitManager::UnitManager(Enumeration::Team t, std::string b) {
+    IO::Instance() -> getResourceManager()->loadResource("media/gameConfig/UnitData/"+b+"Units.json");
+    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/gameConfig/UnitData/"+b+"Units.json");
+    json j = *r -> getJSON();
+
+    for (auto& element : j["Units"]){
+        UnitData tmp;
+            tmp.type = element["unitName"].get<std::string>();
+            tmp.troopModel = element["troopPath"]["modelPath"].get<std::string>();
+            tmp.troopTexture = element["troopPath"]["texturePath"].get<std::string>();
+            tmp.flagModel = element["flagPath"]["modelPath"].get<std::string>();
+            tmp.flagTexture = element["flagPath"]["texturePath"].get<std::string>();
+            tmp.metalCost = element["metalCost"].get<i32>();
+            tmp.crystalCost = element["crystalCost"].get<i32>();
+            tmp.maxHP = element["maxHP"].get<i32>();
+            tmp.viewRadius = element["viewRadious"].get<i32>();
+            tmp.attackRange = element["attackRange"].get<i32>();
+            tmp.attackDamage = element["attackDamage"].get<i32>();
+            tmp.attackSpeed = element["attackSpeed"].get<i32>();
+            tmp.happinessVariation = element["happiness"].get<i32>();
+            tmp.citizensVariation = element["citizens"].get<i32>();
+            tmp.recruitingTime = element["recruitingTime"].get<i32>();
+            tmp.armyLevel = element["armyLevel"].get<i32>();
+            tmp.moveSpeed = element["moveSpeed"].get<i32>();
+            tmp.troops = element["troops"].get<i32>();
+            tmp.attackEvent = element["attackEvent"].get<std::string>();
+            tmp.moveEvent = element["moveEvent"].get<std::string>();
+            tmp.selectEvent = element["selectEvent"].get<std::string>();
+        baseUnits.insert(std::pair<std::string, UnitData>(tmp.type, tmp));
+    }
+
     selectedTroop = 0; 
     nextTroopId = 1;
 
     team = t;
-    breed = b;
 
     unitLayer = new SceneNode();
 
@@ -28,90 +58,98 @@ UnitManager::UnitManager(Enumeration::Team t, Enumeration::BreedType b) {
     currentDeployingTroop = -1;
 
     selectedTroop = nullptr;
-
-	for (i32 i = 0; i < Enumeration::UnitType::TroopsSize; i++){
-		troopsAmount[i] = 0;
-	}
 }
 
+//Destroyer
 UnitManager::~UnitManager() {
+    //std::cout << "Deleting unit manager \n";
     for (std::map<i32, Unit*>::iterator it = inQueueTroops -> begin(); it != inQueueTroops -> end(); ++it){
         delete it -> second;
     }
     inQueueTroops -> clear();
     delete inQueueTroops;
+    //std::cout << "Queue troops deleted \n";
 
     for (std::map<i32, Unit*>::iterator it = inHallTroops -> begin(); it != inHallTroops -> end(); ++it){
         delete it -> second;
     }
     inHallTroops -> clear();
     delete inHallTroops;
+    //std::cout << "Hall troops deleted \n";
 
     for (std::map<i32, Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
 		delete it -> second;
     }
     inMapTroops -> clear();
     delete inMapTroops;
+    //std::cout << "Map troops deleted \n";
 
     delete unitLayer;
     /* This is the cause of error */
     //if (selectedTroop != nullptr) delete selectedTroop;
     //std::cout << "Unit manager deleted \n";
 }
-
+/* This method is just so fucking weird, I just can't get it */
 //Create a new troops
 //In order to add a new unit, you must specify which one
-bool UnitManager::createTroop(Enumeration::UnitType type) {
-    if (checkCanPay(type)) {
-        Unit *newUnit = new Unit(unitLayer, nextTroopId, team, breed, type);
-        if (newUnit == nullptr) {
-            return false;
-        }
-        newUnit -> setID(nextTroopId);
-        // Distinto tamaño para distintas unidades?
-        //newUnit -> getModel() -> setScale(Vector3<f32>(25,25,25));
-        newUnit -> getModel() -> setActive(false);
-        newUnit -> setRecruitedCallback([&] (Unit* u){
-            //std::cout << "Se ha terminado de reclutar la unidad " << u->getID() << std::endl;
-            //Delete in Queue
-            inQueueTroops->erase(inQueueTroops->find(u->getID()));
-
-            //Add in Hall
-            inHallTroops->insert(std::pair<i32, Unit*>(u->getID(), u));
-
-            //Añadir al HUD
-            if (team == Enumeration::Team::Human){
-                Hud::Instance()->removeTroopFromQueue(u->getID());
-                Hud::Instance()->addTroopToHall(u->getID(), u->getType());
-
-                //Mostrar texto de reclutamiento
-                IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showRecruitedText);  
+bool UnitManager::createTroop(std::string type) {
+    if (baseUnits.find(type) != baseUnits.end()){
+        if (checkCanPay(type)) {
+            Unit *newUnit = new Unit(unitLayer, nextTroopId, team, baseUnits[type]);
+            if (newUnit == nullptr) {
+                return false;
             }
-        });
-        newUnit -> setRetractedCallback([&] (Unit *u){
-            //std::cout << "Se ha terminado de guardar la unidad " << u->getID() << std::endl;
-            //Add in Hall
-            inHallTroops->insert(std::pair<i32, Unit*>(u->getID(), u));
-            //Delete in Map
-            u -> getModel() -> setActive(false);
-            inMapTroops->erase(inMapTroops->find(u->getID()));
+            /* What? */
+            //newUnit -> setID(nextTroopId);
+            // Distinto tamaño para distintas unidades?
+            //newUnit -> getModel() -> setScale(Vector3<f32>(25,25,25));
+            newUnit -> getModel() -> setActive(false);
+            newUnit -> setRecruitedCallback([&] (Unit* u){
+                //std::cout << "Se ha terminado de reclutar la unidad " << u->getID() << std::endl;
+                //Delete in Queue
+                inQueueTroops->erase(inQueueTroops->find(u->getID()));
+
+                //Add in Hall
+                inHallTroops->insert(std::pair<i32, Unit*>(u->getID(), u));
+
+                //Añadir al HUD
+                if (team == Enumeration::Team::Human){
+                    Hud::Instance()->removeTroopFromQueue(u->getID());
+                    Hud::Instance()->addTroopToHall(u->getID(), u->getType());
+
+                    //Mostrar texto de reclutamiento
+                    IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showRecruitedText);  
+                }
+            });
+            newUnit -> setRetractedCallback([&] (Unit *u){
+                //std::cout << "Se ha terminado de guardar la unidad " << u->getID() << std::endl;
+                //Add in Hall
+                /* What? This method is duplicated */
+                inHallTroops->insert(std::pair<i32, Unit*>(u->getID(), u));
+                //Delete in Map
+                u -> getModel() -> setActive(false);
+                inMapTroops->erase(inMapTroops->find(u->getID()));
 
 
-            //Añadir al HUD
+                //Añadir al HUD
+                if (team == Enumeration::Team::Human){
+                    Hud::Instance()->addTroopToHall(u->getID(), u->getType());
+                }
+            });
+
+            //std::cout << "Se ha empezado a reclutar la unidad " << newUnit->getID() << std::endl;
+            inQueueTroops -> insert(std::pair<i32, Unit*>(newUnit->getID(), newUnit));
             if (team == Enumeration::Team::Human){
-                Hud::Instance()->addTroopToHall(u->getID(), u->getType());
+                Hud::Instance()->addTroopToQueue(newUnit->getID(), newUnit->getType());
             }
-        });
 
-        //std::cout << "Se ha empezado a reclutar la unidad " << newUnit->getID() << std::endl;
-        inQueueTroops -> insert(std::pair<i32, Unit*>(newUnit->getID(), newUnit));
-        if (team == Enumeration::Team::Human){
-            Hud::Instance()->addTroopToQueue(newUnit->getID(), newUnit->getType());
+            troopsAmount[type]++;
+            nextTroopId++;
+            return true;
         }
-
-        troopsAmount[type]++;
-        nextTroopId++;
-        return true;
+    } else {
+        std::cout << "No existe ese tipo de tropa" << std::endl;
+        exit(0);
     }
     return false;
 }
@@ -168,48 +206,58 @@ void UnitManager::startDeployingAllTroops() {
         deployingTroop = true;
         currentDeployingTroop = 0;
     }
-}
-
-void UnitManager::deploySelectedTroop(Vector3<f32> p) {
+} 
+/* Check this method -> Optimize, also change deployAllTroops */
+void UnitManager::deploySelectedTroop(Vector2<f32> p) {
     if (deployingTroop && currentDeployingTroop >= 0) { 
+        std::cout << "Buscandome\n";
         Unit *temp = inHallTroops -> find(currentDeployingTroop) -> second;
 
         //Delete in hall
-        inHallTroops -> erase(temp->getID());
-
+        std::cout << "Borrandome\n";
+        inHallTroops->erase(temp->getID());
+        std::cout << "Me borro del hall\n";
         //Insert in map
         inMapTroops -> insert(std::pair<i32, Unit*>(temp -> getModel() -> getID(), temp));
-
-        temp -> switchState(Enumeration::UnitState::AttackMove);
-        Cell* origin = WorldGeometry::Instance() -> positionToCell(p.toVector2());
+        std::cout << "Entro en maptroopsl\n";
+        temp -> switchState(Enumeration::UnitState::AttackMove); // ToDo: why attack move?
+        //Vector3<f32> dummy = Vector3<f32>(0, 0, 0);
+        Cell* origin = WorldGeometry::Instance()->positionToCell(p);
         Cell* target;
-        
+        std::cout << "Shit \n";
         if (team == Enumeration::Team::IA){
-            target = WorldGeometry::Instance() -> positionToCell(IA::Instance() -> getHallPosition().toVector2());
+            
+            //Vector3<f32> correctPosition = Vector3<f32>(-384.f, 0, 0);
+            //temp -> setTroopPosition(IA::Instance()->getHallPosition() + correctPosition);temp -> setPathToTarget(p);temp -> setPathToTarget(p);
+            target = WorldGeometry::Instance()->positionToCell(IA::Instance()->getHallPosition());
         } else {
-            target = WorldGeometry::Instance() -> positionToCell(Human::Instance() -> getHallPosition().toVector2());
+            //Vector3<f32> correctPosition = Vector3<f32>(-384.f, 0, 0);
+            //temp -> setTroopPosition(Human::Instance()->getHallPosition() + correctPosition);
+            target = WorldGeometry::Instance()->positionToCell(Human::Instance()->getHallPosition());
         }
-        target = WorldGeometry::Instance() -> getValidCell(target, origin, NULL);
-        Vector3<f32> dummy;
-        dummy.x = target->getPosition().x;
-        dummy.z = target->getPosition().y;
-        dummy.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.z);
+        std::cout << "Mid method \n";
+        target = WorldGeometry::Instance()->getValidCell(target, origin, nullptr);
+        Vector2<f32> dummy = target->getPosition();
         temp -> setTroopPosition(dummy);
-        temp -> setUnitCell(dummy.toVector2());
-        temp -> setPosition(dummy);
+        temp -> setUnitCell(dummy);
+        std::cout << "Mid method 2\n";
+        //temp -> setPosition(dummy);
         temp -> getModel() -> setActive(true);
         temp -> setPathToTarget(p);
+        std::cout << "Mid method 3\n";
         if (team == Enumeration::Team::Human){
             Hud::Instance()->removeTroopFromHall(temp->getID());
         }
+        std::cout << "Mid method 4\n";
+        //std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
 
         currentDeployingTroop = -1;
         deployingTroop = false;
+        std::cout << "Fin \n";
     }
 }
-
 /* Porbably add the new deploy system used above */
-void UnitManager::deployAllTroops(Vector3<f32> p){
+void UnitManager::deployAllTroops(Vector2<f32> p){
     for (std::map<i32,Unit*>::iterator it = inHallTroops -> begin(); it != inHallTroops -> end(); ++it) {
         Unit *temp = it -> second;
 
@@ -217,29 +265,29 @@ void UnitManager::deployAllTroops(Vector3<f32> p){
         inMapTroops -> insert(std::pair<i32, Unit*>(temp -> getModel() -> getID(), temp));
 
         temp -> switchState(Enumeration::UnitState::AttackMove); // ToDo: why attack move?
-        Cell* origin = WorldGeometry::Instance() -> positionToCell(p.toVector2());
+        Cell* origin = WorldGeometry::Instance()->positionToCell(p);
         Cell* target;
         if (team == Enumeration::Team::IA){
-            target = WorldGeometry::Instance() -> positionToCell(IA::Instance() -> getHallPosition().toVector2());
+            //temp -> setTroopPosition(IA::Instance()->getHallPosition());
+            target = WorldGeometry::Instance()->positionToCell(IA::Instance()->getHallPosition());
         } else {
-            target = WorldGeometry::Instance() -> positionToCell(Human::Instance() -> getHallPosition().toVector2());
+            //temp -> setTroopPosition(Human::Instance()->getHallPosition());
+            target = WorldGeometry::Instance()->positionToCell(Human::Instance()->getHallPosition());
         }
-        target = WorldGeometry::Instance() -> getValidCell(target, origin, NULL);
-        Vector3<f32> dummy;
-        dummy.x = target -> getPosition().x;
-        dummy.z = target -> getPosition().y;
-        dummy.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.z);
+        target = WorldGeometry::Instance()->getValidCell(target, origin, nullptr);
+        Vector2<f32> dummy = target->getPosition();
         temp -> setTroopPosition(dummy);
-        temp -> setPosition(dummy);
+        temp -> setUnitCell(dummy);
+        //temp -> setPosition(dummy);
         temp -> getModel() -> setActive(true);
         temp -> setPathToTarget(p);
         if (team == Enumeration::Team::Human){
-            Hud::Instance() -> removeTroopFromHall(temp -> getID());
+            Hud::Instance()->removeTroopFromHall(temp->getID());
         }
+        //std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
     }
-    
     //Delete in hall
-    inHallTroops -> clear();
+    inHallTroops->clear();
     
     currentDeployingTroop = -1;
     deployingTroop = false;
@@ -248,16 +296,18 @@ void UnitManager::deployAllTroops(Vector3<f32> p){
 void UnitManager::retractAllTroops() {
     for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
         Unit *temp = it -> second;
-        if (team == Enumeration::Team::IA) {
+        if (team == Enumeration::Team::IA){
+            //temp -> setTroopDestination(IA::Instance()->getHallPosition());
             temp -> setPathToTarget(IA::Instance()->getHallPosition());
         } else {
+            //temp -> setTroopDestination(Human::Instance()->getHallPosition());
             temp -> setPathToTarget(Human::Instance()->getHallPosition());
         }
         temp -> switchState(Enumeration::UnitState::Retract);
     }
 }
 
-
+//Select a troop
 void UnitManager::selectTroop(i32 troopID) {
     std::map<i32,Unit*>::iterator it = inMapTroops -> find(troopID);
     if (it != inMapTroops -> end()) {
@@ -267,6 +317,7 @@ void UnitManager::selectTroop(i32 troopID) {
     }
 }
 
+//Select a troop
 void UnitManager::unSelectTroop() {
     if (selectedTroop != nullptr){
         selectedTroop = nullptr;
@@ -274,20 +325,19 @@ void UnitManager::unSelectTroop() {
     }
 }
 
+//Pass the order to the selected unit
 void UnitManager::moveOrder() {
     if (selectedTroop != nullptr) {
-        selectedTroop -> setTroopDestination(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
-        if (selectedTroop -> getState() != Enumeration::UnitState::Retract) {
-            if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
-            // ToDo: change attack iddle to pathfinding mode
-                selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
+        selectedTroop -> setTroopDestination(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
+        if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
+            // ToDo by Julian -> change attack iddle to pathfinding mode
+            selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
 
-                selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
-            } else {
-                selectedTroop -> switchState(Enumeration::UnitState::Move);
+            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
+        } else {
+            selectedTroop -> switchState(Enumeration::UnitState::Move);
 
-                selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()));
-            }
+            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
         }
         //MOVEMENT VOICE
         //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
@@ -298,10 +348,8 @@ void UnitManager::startBattle(i32 enemyID) {
     //ToDo: crear batalla
 }
 
-// Checks if the player, either the human or the AI can afford to build a specific building 
-// ToDo: ESTE METODO Y EL DE DEBAJO ESTAN REPETIDO AQUI Y EN BUILDING MANAGER IGUAL
-// DEBERIAN HEREDAR DE UNA CLASE MANAGER QUE TUVIESE AQUELLAS COSAS QUE FUESEN IGUALES
-bool UnitManager::isSolvent(i32 metalCost, i32 crystalCost) {
+// Checks if the player, either the human or the AI can afford to build a specific building
+bool UnitManager::isSolvent(i32 metalCost, i32 crystalCost, i32 citizensCost) {
     i32 metalAmt = 0;
     i32 crystalAmt = 0;
     i32 citizensAmt = 0;
@@ -316,7 +364,7 @@ bool UnitManager::isSolvent(i32 metalCost, i32 crystalCost) {
     }
     bool canPayMetal = metalAmt >= metalCost;
     bool canPayCrystal = crystalAmt >= crystalCost;
-    bool hasCitizens = citizensAmt >= 10;
+    bool hasCitizens = citizensAmt >= citizensCost;
 
     return (canPayMetal && canPayCrystal && hasCitizens);
 }
@@ -326,43 +374,16 @@ bool UnitManager::isSolvent(i32 metalCost, i32 crystalCost) {
  * of the desired building and sending the aforementhioned method the prices. It has its own method
  * to avoid cluttering the setBuildingMode() method, as it used to be there in the first place.
  */
-bool UnitManager::checkCanPay(Enumeration::UnitType type) {
-    //ESto esta aqui para no hacer clutter arriba
-    bool canPay = false;
-    //CHECK IF YOU CAN PAY THE BUILDING
-    switch (type) {
-        case Enumeration::UnitType::StandardM:
-            canPay = isSolvent(Enumeration::UnitCost::MeleeFootmenMetalCost, Enumeration::UnitCost::MeleeFootmenCrystalCost);
-        break;
-        case Enumeration::UnitType::AdvancedM:
-            canPay = isSolvent(Enumeration::UnitCost::MountedMeleeMetalCost, Enumeration::UnitCost::MountedMeleeCrystalCost);
-        break;
-        case Enumeration::UnitType::Idol:
-            canPay = isSolvent(Enumeration::UnitCost::CreatureMetalCost, Enumeration::UnitCost::CreatureCrystalCost);
-        break;
-        case Enumeration::UnitType::Launcher:
-            canPay = isSolvent(Enumeration::UnitCost::CatapultMetalCost, Enumeration::UnitCost::CatapultCrystalCost);
-        break;
-        case Enumeration::UnitType::Desintegrator:
-            canPay = isSolvent(Enumeration::UnitCost::RamMetalCost, Enumeration::UnitCost::RamCrystalCost);
-        break;
-        case Enumeration::UnitType::StandardR:
-            canPay = isSolvent(Enumeration::UnitCost::RangedFootmenMetalCost, Enumeration::UnitCost::RangedFootmenCrystalCost);
-        break;
-        case Enumeration::UnitType::AdvancedR:
-            canPay = isSolvent(Enumeration::UnitCost::MountedRangedMetalCost, Enumeration::UnitCost::MountedRangedCrystalCost);
-        break;
-        default: break;
-    }
-    return canPay;
+bool UnitManager::checkCanPay(std::string type) {
+	if (baseUnits.find(type) != baseUnits.end()){
+		return isSolvent(baseUnits[type].metalCost, baseUnits[type].crystalCost, baseUnits[type].citizensVariation);
+	}
+	return false;
 }
 
 bool UnitManager::isTroopSelected() {
-    if (selectedTroop != nullptr) {
-        return true;
-    } else {
-        return false;
-    }
+    if (selectedTroop != nullptr) return true;
+    else return false;
 }
 
 bool UnitManager::isDeployingTroop(){
@@ -370,7 +391,7 @@ bool UnitManager::isDeployingTroop(){
 }
 
 void UnitManager::deleteUnit(i32 id) {
-    if (inMapTroops -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
+    if (team == Enumeration::Team::Human) {
         Human::Instance() -> decreaseArmyLevel(inMapTroops -> find(id) -> second -> getArmyLevel());
     } else {
         IA::Instance() -> decreaseArmyLevel(inMapTroops -> find(id) -> second -> getArmyLevel());
@@ -418,8 +439,8 @@ Unit* UnitManager::getSelectedTroop() {
     return selectedTroop;
 }
 
-i32 UnitManager::getTroopAmount(Enumeration::UnitType t){
-    return troopsAmount[(i32)t];
+i32 UnitManager::getTroopAmount(std::string t){
+    return troopsAmount[t];
 }
 
 bool UnitManager::areTroopsDeployed(){
@@ -430,6 +451,26 @@ bool UnitManager::areTroopsInMap(){
     return (inMapTroops -> size() != 0);
 }
 
+//Returns the amount of troops
 i32 UnitManager::getTotalTroopAmount() {
     return inQueueTroops -> size() + inHallTroops -> size() + inMapTroops -> size();
-}
+} 
+
+/*
+void UnitManager::deployTroopAtPosition(i32 index, Vector3<f32> vectorData) {
+    Unit *u = inHallTroops -> at(index);
+    u -> setPosition(vectorData);
+    inMapTroops -> insert(std::pair<i32, Unit*>(u -> getModel() -> getID(), u));
+    inHallTroops -> erase(inHallTroops -> begin() + index);
+
+    //temp -> setPosition(Vector3<f32>(8000, 0, 8000));
+    //temp -> setTroopDestination(terrain -> getPointCollision(g -> getMouse()));
+    //u -> setTroopPosition(Vector3<f32>(Enumeration::HumanCityHall::human_x, terrain -> getY(Enumeration::HumanCityHall::human_x, Enumeration::HumanCityHall::human_z), Enumeration::HumanCityHall::human_z)); //ToDo
+
+    //selectedTroop -> setTroopDestination(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
+    //Game::Instance() -> getSoundSystem() -> playVoice(selectedTroop -> getMoveEvent());
+    //selectedTroop -> setTroopDestination(g -> getGameState() -> getTerrain() -> getPointCollision(g -> getMouse()));
+} 
+        //Unit *newUnit = new Unit(unitLayer, std::rand(), L"media/buildingModels/dummy.obj", team, breed, unitData, Vector3<f32>());
+        //newUnit -> getModel() -> setScale(Vector3<f32>(128, 128, 128));
+*/
