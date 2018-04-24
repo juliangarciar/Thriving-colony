@@ -107,7 +107,6 @@ class Building : public Entity {
         
         //
         Material *cantBuildMat;
-        Billboard* billboard;
 };
 
 #endif

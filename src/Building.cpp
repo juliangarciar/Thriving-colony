@@ -36,6 +36,8 @@ void Building::Init() {
     
     f32 buildTime = 0;
 
+    f32 billBoardOffset = 200.00;
+
     switch (type) {
         case Enumeration::BuildingType::Barn:
 
@@ -357,13 +359,20 @@ void Building::Init() {
     Material *m = new Material(tex);
     this->model->setMaterial(m);
 
-    billboard = new Billboard(layer, ID, *position);
-    
+    barBg = new Billboard(layer, ID, *position);
+    bar = new Billboard(layer, ID, *position);
+    Vector3<f32> bp = Vector3<f32>(position->x, position->y + 200.00, position->z);
+    barBg -> setPosition(bp);
+    bp.z -= 1;
+    bar -> setPosition(bp);
+    bar -> setColor(irr::video::SColor(255, 0, 255, 0),irr::video::SColor(255, 0, 255, 0));
 
     
 }
 
 void Building::update() {
+    Vector3<f32> bp = Vector3<f32>(position->x, position->y + 200.00, position->z);
+    barBg -> setPosition(bp);
     if (!finished){
         if (buildTimer -> tick()) {
             finished = true;
