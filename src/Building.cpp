@@ -359,14 +359,12 @@ void Building::Init() {
     Material *m = new Material(tex);
     this->model->setMaterial(m);
 
-    barBg = new Billboard(layer, ID, *position);
-    bar = new Billboard(layer, ID, *position);
-    Vector3<f32> bp = Vector3<f32>(position->x, position->y + 200.00, position->z);
-    barBg -> setPosition(bp);
-    bp.z -= 1;
+    bar = new Billboard(layer, ID, *position,new Color(0, 255, 0, 255),new Color(0, 255, 0, 255));
+    barBg = new Billboard(layer, ID, *position, new Color(0,0,0,255), new Color(0,0,0,255));
+    Vector3<f32> bp = Vector3<f32>(position->x, position->y + billBoardOffset, position->z);
     bar -> setPosition(bp);
-    bar -> setColor(irr::video::SColor(255, 0, 255, 0),irr::video::SColor(255, 0, 255, 0));
-
+    barBg -> setPosition(bp);
+    barBg -> setSize(105.00, 15.00);
     
 }
 

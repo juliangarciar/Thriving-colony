@@ -1,9 +1,9 @@
 #include "Billboard.h"
 
 
-Billboard::Billboard(SceneNode* parent, i32 id, Vector3<f32> pos) {
+Billboard::Billboard(SceneNode* parent, i32 id, Vector3<f32> pos, Color* top, Color* bot) {
     scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
-    billboardNode = smgr -> addBillboardSceneNode(parent -> getSceneNode(), core::dimension2d<f32>(100.00, 10.00), pos.getVectorF(), id, video::SColor(255, 0, 0, 0), video::SColor(255, 0, 0, 0));
+    billboardNode = smgr -> addBillboardSceneNode(parent -> getSceneNode(), core::dimension2d<f32>(100.00, 10.00), pos.getVectorF(), id, *top -> getColor(), *bot -> getColor());
     setActive(true);
 }
 
@@ -11,8 +11,8 @@ Billboard::~Billboard() {
     delete billboardNode;
 }
 
-void Billboard::setColor(video::SColor top, video::SColor bot) {
-    billboardNode -> setColor(top, bot);
+void Billboard::setColor(Color* top, Color* bot) {
+    billboardNode -> setColor(*top -> getColor(), *bot -> getColor());
 }
 
 void Billboard::setSize(f32 w, f32 h) {
