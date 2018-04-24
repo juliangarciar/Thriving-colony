@@ -59,14 +59,11 @@ Building::Building(SceneNode *_layer,
 
     setBaseMaterial();
 
-    Vector3<f32> bp = Vector3<f32>(getPosition().x, 200.00, getPosition().y);
-    barBg = new Billboard(layer, ID, bp);
-    bar = new Billboard(layer, ID, bp);
-    barBg -> setPosition(bp);
-    bp.z -= 1;
-    bar -> setPosition(bp);
-    bar -> setColor(irr::video::SColor(255, 0, 255, 0),irr::video::SColor(255, 0, 255, 0));
+	Vector3<f32> pos(getPosition().x, Map::Instance()->getTerrain()->getY(getPosition().x,getPosition().y) + billBoardOffset, getPosition().y);
 
+    barBg = new Billboard(layer, ID, pos, Color(0,0,0,255), Color(0,0,0,255));
+	bar = new Billboard(layer, ID, pos, Color(0, 255, 0, 255), Color(0, 255, 0, 255));
+    barBg -> setSize(105.00, 15.00);
 }
 
 Building::~Building() {
