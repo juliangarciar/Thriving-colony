@@ -5,8 +5,10 @@ OBDTerrain::OBDTerrain(std::string path){
 	translationNode = new TNode(new TTransform(), rotationNode);
 	scaleNode = new TNode(new TTransform(), translationNode);
 
-	terrain = new ParseTerrain(256, 256, 1); // ToDo
-	terrain ->generateMeshFromImage(path.c_str());
+	// ToDo: revisar parametros
+	terrain = ter_terrain_new(256, 256, 1);
+	ter_terrain_set_heights_from_texture(terrain, path.c_str(), 0, 1);
+	ter_terrain_build_mesh(terrain);
 
 	generateTerrain();
 
@@ -18,8 +20,10 @@ OBDTerrain::OBDTerrain(OBDSceneNode* parent, std::string path){
 	translationNode = new TNode(new TTransform(), rotationNode);
 	scaleNode = new TNode(new TTransform(), translationNode);
 
-	terrain = new ParseTerrain(256, 256, 1); // ToDo
-	terrain ->generateMeshFromImage(path.c_str());
+	// ToDo: revisar parametros
+	terrain = ter_terrain_new(256, 256, 1);
+	ter_terrain_set_heights_from_texture(terrain, path.c_str(), 0, 1);
+	ter_terrain_build_mesh(terrain);
 
 	generateTerrain();
 
@@ -34,18 +38,18 @@ OBDTerrain::~OBDTerrain() {
 }
 
 void OBDTerrain::generateTerrain(){
-	int w = terrain->getTerrainWidth();
-	int h = terrain->getTerrainHeight();
-	int d = terrain->getTerrainDepth();
+	int w = ter_terrain_get_width(terrain);
+	int h = ter_terrain_get_height(terrain);
+	int d = ter_terrain_get_depth(terrain);
 
 	mesh.boundingBox.min = glm::vec3(0,0,0);
-	mesh.boundingBox.max = glm::vec3(w, h, h);
-	mesh.boundingBox.size = glm::vec3(w, h, h);
-	mesh.boundingBox.center = glm::vec3(w/2, h/2, h/2);
+	mesh.boundingBox.max = glm::vec3(w, h, d);
+	mesh.boundingBox.size = glm::vec3(w, h, d);
+	mesh.boundingBox.center = glm::vec3(w/2, h/2, d/2);
 	
 	mesh.name = "terrain";
-	mesh.vbo = terrain->getTerrainVertices();
-	mesh.indices = terrain->getTerrainIndices();
+	mesh.vbo = std::vector<float>(terrain->vertices, terrain->vertices+(terrain->num_vertices*8));
+	mesh.indices = std::vector<unsigned short>(terrain->vertices, terrain->vertices+terrain->num_indices);
 
 	material.ambientColor = glm::vec3(1,1,1);
 }

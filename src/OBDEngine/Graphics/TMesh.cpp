@@ -23,8 +23,6 @@ TMesh::TMesh(ResourceMesh r, ResourceMaterial m) : TEntity() {
 	currentMaterial.specularColor = material.specularColor;
 
 	// Generate a buffer for the vertices
-	std::cout << mesh.vbo.size() << std::endl;
-
 	glGenBuffers(1, &VBOID);
 	glBindBuffer(GL_ARRAY_BUFFER, VBOID);
 	glBufferData(GL_ARRAY_BUFFER, mesh.vbo.size() * sizeof(f32), &mesh.vbo[0], GL_STATIC_DRAW);

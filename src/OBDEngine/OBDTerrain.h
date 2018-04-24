@@ -1,7 +1,7 @@
 #ifndef OBDTERRAIN_H
 #define OBDTERRAIN_H
 
-#include <parseterrain/ParseTerrain.h>
+#include <ter-terrain/ter-terrain.h>
 
 #include "OBDEntity.h"
 #include "OBDSceneNode.h"
@@ -106,7 +106,7 @@ class OBDTerrain : public OBDEntity {
 		ResourceMesh mesh;
 		ResourceMaterial material;
 
-		ParseTerrain *terrain;
+		TerTerrain *terrain;
 
 		TNode* rotationNode;
 		TNode* translationNode;
