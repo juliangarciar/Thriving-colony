@@ -1,13 +1,13 @@
 #include "OBDCamera.h"
 
 OBDCamera::OBDCamera(i32 sW, i32 sH) {
-    //ToDo: near y far no deberian estar aqui
-    cameraNode = new TNode(new TCamera(OBDEnums::CameraProjection::ProjectionPerspective, 0.1, 1000, 0, sH, 0, sW));
+    //ToDo: near, far y fov no deberian estar aqui
+    cameraNode = new TNode(new TCamera(OBDEnums::CameraProjection::ProjectionPerspective, 0.1, 1000, 0, sH, 0, sW, 45));
 }
 
 OBDCamera::OBDCamera(OBDSceneNode* parent, i32 sW, i32 sH) {
-    //ToDo: near y far no deberian estar aqui
-    cameraNode = new TNode(new TCamera(OBDEnums::CameraProjection::ProjectionPerspective, 0.1, 1000, 0, sH, 0, sW));
+    //ToDo: near, far y fov no deberian estar aqui
+    cameraNode = new TNode(new TCamera(OBDEnums::CameraProjection::ProjectionPerspective, 0.1, 1000, 0, sH, 0, sW, 45));
 
     parent->addChild(this);
 }
@@ -41,6 +41,11 @@ void OBDCamera::setFarValue(f32 f) {
     c -> setFar(f);
 }
 
+void OBDCamera::setFov(f32 fov){
+    TCamera* c = (TCamera*) cameraNode -> getEntity();
+    c -> setFov(fov);
+}
+
 void OBDCamera::setPerspectiveProjection() {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     c -> setProjection(OBDEnums::CameraProjection::ProjectionPerspective);
@@ -49,11 +54,6 @@ void OBDCamera::setPerspectiveProjection() {
 void OBDCamera::setParallelProjection() {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     c -> setProjection(OBDEnums::CameraProjection::ProjectionOrtographic);
-}
-
-void OBDCamera::setFov(f32 fov){
-    TCamera* c = (TCamera*) cameraNode -> getEntity();
-    c -> setFov(fov);
 }
 
 bool OBDCamera::getActive() {
@@ -70,14 +70,14 @@ f32 OBDCamera::getFar() {
     return c -> getFar();
 }
 
-OBDEnums::CameraProjection OBDCamera::getProjectionMode() {
-    TCamera* c = (TCamera*) cameraNode -> getEntity();
-    return c -> getProjection();
-}
-
 f32 OBDCamera::getFov() {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     return c -> getFov();
+}
+
+OBDEnums::CameraProjection OBDCamera::getProjectionMode() {
+    TCamera* c = (TCamera*) cameraNode -> getEntity();
+    return c -> getProjection();
 }
 
 glm::vec3 OBDCamera::getCameraPosition() {

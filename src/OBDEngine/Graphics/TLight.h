@@ -16,7 +16,7 @@ class TLight : public TEntity {
          * @brief 
          * 
          */
-        ~TLight();
+        virtual ~TLight();
 
         /**
          * @brief 

@@ -27,7 +27,7 @@ class OBDAnimation : public OBDEntity {
          * @brief 
          * 
          */
-        ~OBDAnimation();
+        virtual ~OBDAnimation();
 
         /**
          * @brief 

@@ -11,7 +11,7 @@ class TBillboard : public TEntity {
     public:
         TBillboard(glm::vec3);
 
-        ~TBillboard();
+        virtual ~TBillboard();
 
         void beginDraw();
 

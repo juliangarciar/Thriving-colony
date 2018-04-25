@@ -25,7 +25,7 @@ class OBDBillboard : public OBDEntity {
          * @brief 
          * 
          */
-        ~OBDBillboard();
+        virtual ~OBDBillboard();
 
         /**
          * @brief 

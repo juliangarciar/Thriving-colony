@@ -6,7 +6,8 @@ Camera::Camera() {
 }
 
 Camera::~Camera() {
-    
+    delete c;
+	c = nullptr;
 }
 
 //Posicion de la camara
@@ -21,13 +22,13 @@ void Camera::setTargetPosition(Vector3<f32> position){
 
 //Distancia del objetivo
 void Camera::setShadowDistance(f32 zoom){
-	
+	c->setFarValue(zoom);
 }
 
 Vector3<f32> Camera::getCameraPosition(){
-    
+    return Vector3<f32>(c->getCameraPosition().x, c->getCameraPosition().y, c->getCameraPosition().z);
 }
 
 Vector3<f32> Camera::getTargetPosition(){
-    
+    return Vector3<f32>(c->getTargetPosition().x, c->getTargetPosition().y, c->getTargetPosition().z);
 }

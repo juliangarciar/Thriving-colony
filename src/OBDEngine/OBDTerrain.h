@@ -34,7 +34,7 @@ class OBDTerrain : public OBDEntity {
 		 * @brief 
 		 * 
 		 */
-		~OBDTerrain();
+		virtual ~OBDTerrain();
 
 		/**
 		 * @brief 

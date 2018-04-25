@@ -72,8 +72,10 @@ void TMesh::beginDraw() {
 	glUniformMatrix4fv(cache.getID(OBDEnums::OpenGLIDs::MATRIX_MVP), 1, GL_FALSE, &MVP[0][0]);
 
 	//Send lights
-	if (cache.getLights()->size()){
-		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::LIGHT_AMOUNT), cache.getLights()->size());
+	if (cache.getLights()->size()){   
+		i32 lightNumber = cache.getLights()->size();
+    	if (lightNumber > MAX_LIGHTS) lightNumber = MAX_LIGHTS;
+		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::LIGHT_AMOUNT), lightNumber);
 		glBindBuffer(GL_UNIFORM_BUFFER, lightID);
 		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslLight) * cache.getLights()->size(), &cache.getLights()->at(0));
 		glBindBufferBase(GL_UNIFORM_BUFFER, 1, lightID);
@@ -129,10 +131,10 @@ void TMesh::beginDraw() {
 
 	// Draw the triangles!
 	glDrawElements(
-		GL_TRIANGLES,      // mode
-		mesh.indices.size(),    // count
-		GL_UNSIGNED_SHORT,   // type
-		(void*)0           // element array buffer offset
+		GL_TRIANGLES,			// mode
+		mesh.indices.size(),	// count
+		GL_UNSIGNED_SHORT,		// type
+		(void*)0				// element array buffer offset
 	);
 
 	glDisableVertexAttribArray(0);

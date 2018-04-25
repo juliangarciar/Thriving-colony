@@ -32,7 +32,7 @@ class OBDSceneNode : public OBDEntity {
          * @brief 
          * 
          */
-        ~OBDSceneNode();
+        virtual ~OBDSceneNode();
 
         /**
          * @brief 

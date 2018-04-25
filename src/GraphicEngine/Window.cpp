@@ -16,9 +16,19 @@ Window::Window(i32 width, i32 height) {
 
     windowWidth = width;
     windowHeight = height;
-    
-    glfwInit();
+
+    if(!glfwInit()) {
+		std::cout << "Failed to initialize GLFW" << std::endl;
+		exit(0);
+	}
+
     glfwSetTime(0);
+
+	glfwWindowHint(GLFW_SAMPLES, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Create an application window with the following settings:
     window = glfwCreateWindow(windowWidth, windowHeight, "Thriving Colony", nullptr, nullptr);
@@ -28,10 +38,14 @@ Window::Window(i32 width, i32 height) {
         exit(0);
     }
 
+    std::cout << "Using OpenGL version: " <<  glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MAJOR) << "." << glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MINOR) << std::endl;
+
     glfwMakeContextCurrent(window);
 
     e = new OBDEngine();
 	e -> Init(windowWidth, windowHeight);
+	e -> createShaderProgram("defaultProgram", "../media/shaders/vertexShader.glsl", "../media/shaders/fragmentShader.glsl");
+	e -> setCurrentShaderProgram("defaultProgram");
    
     // create gui manager    
     gui = new nanogui::Screen();
@@ -42,12 +56,6 @@ Window::Window(i32 width, i32 height) {
     glfwSetCharCallback(window,
         [](GLFWwindow *w, u32 codepoint) {
             Window::Instance() -> getGUIEnvironment() -> charCallbackEvent(codepoint);
-        }
-    );
-
-    glfwSetDropCallback(window,
-        [](GLFWwindow *w, i32 count, const char **filenames) {
-            Window::Instance() -> getGUIEnvironment() -> dropCallbackEvent(count, filenames);
         }
     );
 
@@ -80,6 +88,7 @@ void Window::endScene(){
     gui -> drawWidgets();
     glEnable(GL_DEPTH_TEST);
 	glfwSwapBuffers(window);
+    glfwPollEvents();
 }
 
 void Window::close(){
@@ -87,7 +96,6 @@ void Window::close(){
 }
 
 bool Window::isOpen(){
-    glfwPollEvents();
     return (!glfwWindowShouldClose(window) && !closeWindow);
 }
 

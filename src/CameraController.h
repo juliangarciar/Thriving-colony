@@ -15,16 +15,15 @@
  * @brief Create a CameraController type object.
  */
 class CameraController {
-    
     public:
         /**
-	* @brief CameraController constructor
-	*/
+		* @brief CameraController constructor
+		*/
         CameraController();
 
         /**
-	* @brief CameraController destructor
-	*/
+		* @brief CameraController destructor
+		*/
         ~CameraController();
 
         /**
@@ -35,25 +34,25 @@ class CameraController {
         void Init(Vector3<float>);
 
         /**
-	* @brief Update target and camera position based on the changes done since the last update.
+		* @brief Update target and camera position based on the changes done since the last update.
         * 
         * @param f32 that will be the delta time to do the interpolation.
-	*/
+		*/
         void Update(f32);
 
         /**
-	 * @brief Move the camera up, down, right or left if the mouse cursor is on the up, down, right or left edge of the window.
-	 */
+		 * @brief Move the camera up, down, right or left if the mouse cursor is on the up, down, right or left edge of the window.
+		 */
         void Move();
 
         /**
-	 * @brief Rotate the camera if the middle bottom of the mouse is pressed.
-	 */
+		 * @brief Rotate the camera if the middle bottom of the mouse is pressed.
+		 */
         void RotateAndInclinate();
 
         /**
-	 * @brief Zoom in or out when the wheel of the mouse is used.
-	 */
+		 * @brief Zoom in or out when the wheel of the mouse is used.
+		 */
         void Zoom();
 
         /**
@@ -62,10 +61,10 @@ class CameraController {
         void CenterCamera();
 
         /**
-	 * @brief Get the current active camera.
+		 * @brief Get the current active camera.
          * 
          * @return A pointer to an object of Camera type.
-	 */
+		 */
         Camera *getCamera();
         
         /**

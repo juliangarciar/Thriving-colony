@@ -1,6 +1,8 @@
 #ifndef TERRAIN_H
 #define TERRAIN_H
 
+#include <OBDEngine/OBDTerrain.h>
+
 #include <Types.h>
 #include <IOEngine/Mouse.h>
 #include <GraphicEngine/Texture.h>
@@ -21,8 +23,7 @@ class Terrain{
 
         f32 getY(f32, f32);
     private:
-       
-	   
+       OBDTerrain *t;
 };
 
 #endif

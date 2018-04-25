@@ -34,7 +34,7 @@ class OBDObject : public OBDEntity {
          * @brief Destroy the OBDObject object
          * 
          */
-        ~OBDObject();
+        virtual ~OBDObject();
 
         /**
          * @brief 

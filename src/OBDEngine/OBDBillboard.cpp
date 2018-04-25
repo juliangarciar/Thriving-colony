@@ -16,6 +16,10 @@ OBDBillboard::OBDBillboard(OBDSceneNode* parent, i32 id, glm::vec3 pos) {
     parent -> addChild(this);
 }
 
+OBDBillboard::~OBDBillboard(){
+	
+}
+
 void OBDBillboard::setPosition(glm::vec3 pos) {
     TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
     aux -> setPosition(pos);

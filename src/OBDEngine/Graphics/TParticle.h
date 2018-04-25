@@ -10,7 +10,7 @@ class TParticle : public TEntity {
     public:
         TParticle(glm::vec3);
 
-        ~TParticle();
+        virtual ~TParticle();
 
         void beginDraw();
 

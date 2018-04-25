@@ -44,10 +44,12 @@ void OBDEngine::Init(i32 sW, i32 sH) {
 
 	// Cull triangles which normal is not towards the camera
 	glEnable(GL_CULL_FACE);
-    //Back face culling
+
+    //Backface culling
     glCullFace(GL_BACK);
     glPolygonMode(GL_FRONT, GL_FILL);
     
+	//Gen VAO
     GLuint VAO = TEntity::cache.getID(OBDEnums::OpenGLIDs::VAO_BUFFER);
 	glGenVertexArrays(1, &VAO);
 	glBindVertexArray(VAO);

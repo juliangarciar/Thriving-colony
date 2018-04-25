@@ -26,7 +26,7 @@ class OBDLight : public OBDEntity {
          * @brief 
          * 
          */
-        ~OBDLight();
+        virtual ~OBDLight();
 
         /**
          * @brief 

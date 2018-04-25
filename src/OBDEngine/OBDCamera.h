@@ -29,7 +29,7 @@ class OBDCamera : public OBDEntity {
          * @brief 
          * 
          */
-        ~OBDCamera();
+        virtual ~OBDCamera();
 
         /**
           * @brief 
