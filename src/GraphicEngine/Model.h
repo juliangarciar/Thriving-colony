@@ -1,12 +1,12 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include <irrlicht/irrlicht.h>
+#include <cmath>
+#include <OBDEngine/OBDObject.h>
+
 #include <Types.h>
 #include <GraphicEngine/SceneNode.h>
 #include <GraphicEngine/Material.h>
-
-using namespace irr;
 
 class Model {
     public:
@@ -24,11 +24,10 @@ class Model {
         void rotate(f32 x, f32 y);
         i32 getID();
         Vector3<f32> getPosition();
-		scene::IMeshSceneNode *getModel();
+		//scene::IMeshSceneNode *getModel();
         
     private:
-        scene::IMeshSceneNode *meshNode;
-        scene::ITriangleSelector *selector = 0;
+        OBDObject *obj;
 };
 
 #endif

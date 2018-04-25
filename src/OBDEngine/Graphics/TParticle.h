@@ -1,7 +1,7 @@
 #ifndef TPARTICLE_H
 #define TPARTICLE_H
 
-#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 #include "TEntity.h"
 

@@ -2,7 +2,7 @@
 #define TTILE_H
 
 #include "TEntity.h"
-#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 class TTexture;
 class ResourceIMG;

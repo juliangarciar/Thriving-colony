@@ -101,4 +101,6 @@ void main(){
         finalColor = finalColor + vec4(Phong(i), 1);
     }
     FragColor = finalColor;
+
+	FragColor = vec4(1, 1, 1, 1);
 }

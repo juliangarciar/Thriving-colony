@@ -1,10 +1,7 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-#include <irrlicht/irrlicht.h>
 #include <Types.h>
-
-using namespace irr;
 
 class Texture {
 
@@ -12,10 +9,10 @@ class Texture {
         Texture(const char *path);
         ~Texture();
         
-        video::ITexture *getTexture();
+        //video::ITexture *getTexture();
         
     private:
-        video::ITexture *texture;
+	
 };
 
 #endif

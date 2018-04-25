@@ -3,7 +3,7 @@
 
 #include "../Types.h"
 
-#include <irrlicht/irrlicht.h>
+#include <cmath>
 #include <glm/vec2.hpp>
 
 #define PI 3.14159265
@@ -29,19 +29,6 @@ class Vector2 {
         Vector2<T> operator +(const f32 &num) const;
         Vector2<T> operator -(const Vector2<T> &p) const;
         Vector2<T> operator /(const f32 &num) const;
-
-        //Irrlicht
-/*        Vector2(irr::core::vector2di v);
-        Vector2(irr::core::vector2df v);
-        void set(irr::core::vector2di v);
-        void set(irr::core::vector2df v);
-        irr::core::vector2di getVectorI();
-        irr::core::vector2df getVectorF();
-
-        //glm
-        Vector2(glm::vec2 v);
-        void set(glm::vec2 v);
-        glm::vec2 getVec2();*/
     private:
 };
 

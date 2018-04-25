@@ -11,12 +11,16 @@ OBDObject::OBDObject(ResourceOBJ *obj, ResourceMTL *mtl) {
     for (std::map<std::string, ResourceMesh>::iterator it = meshmap.begin(); it != meshmap.end(); ++it) {
         std::map<std::string, ResourceMaterial>::iterator it2;
         it2 = matmap.find(it->second.defaultMaterialName);
-        if (it2 == matmap.end()){
-            std::cout << "No existe material " << it->second.defaultMaterialName << " para el mesh " << it->first << std::endl;
-            exit(0);
-        }
 
-        OBDMesh *tempMesh = new OBDMesh(it->second, it2->second);
+		ResourceMaterial mat;
+        if (it2 != matmap.end()){
+			mat = it2->second;
+        } else {
+			mat.ambientColor = glm::vec3(1, 1, 1);
+            std::cout << "No existe material " << it->second.defaultMaterialName << " para el mesh " << it->first << ". Utilizando un material vacio" << std::endl;
+		}
+
+        OBDMesh *tempMesh = new OBDMesh(it->second, mat);
         tempMesh->getFirstNode()->setParent(scaleNode);
         scaleNode->addChild(tempMesh->getFirstNode());
 
@@ -38,12 +42,16 @@ OBDObject::OBDObject(OBDSceneNode* parent, ResourceOBJ *obj, ResourceMTL *mtl) {
     for (std::map<std::string, ResourceMesh>::iterator it = meshmap.begin(); it != meshmap.end(); ++it) {
         std::map<std::string, ResourceMaterial>::iterator it2;
         it2 = matmap.find(it->second.defaultMaterialName);
-        if (it2 == matmap.end()){
-            std::cout << "No existe material " << it->second.defaultMaterialName << " para el mesh " << it->first << std::endl;
-            exit(0);
-        }
 
-        OBDMesh *tempMesh = new OBDMesh(it->second, it2->second);
+		ResourceMaterial mat;
+        if (it2 != matmap.end()){
+			mat = it2->second;
+        } else {
+			mat.ambientColor = glm::vec3(1, 1, 1);
+            std::cout << "No existe material " << it->second.defaultMaterialName << " para el mesh " << it->first << ". Utilizando un material vacio" << std::endl;
+		}
+
+        OBDMesh *tempMesh = new OBDMesh(it->second, mat);
         tempMesh->getFirstNode()->setParent(scaleNode);
         scaleNode->addChild(tempMesh->getFirstNode());
 

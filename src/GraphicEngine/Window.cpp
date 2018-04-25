@@ -1,5 +1,4 @@
 #include "Window.h"
-using namespace irr;
 
 Window* Window::pinstance = 0;
 
@@ -31,24 +30,8 @@ Window::Window(i32 width, i32 height) {
 
     glfwMakeContextCurrent(window);
 
-    irr::SIrrlichtCreationParameters params;
-    params.DeviceType = E_DEVICE_TYPE::EIDT_GLFW3;
-    params.DriverType = video::E_DRIVER_TYPE::EDT_OPENGL;
-    params.WindowId = window;
-    params.IgnoreInput = true;
-    params.WindowSize = core::dimension2du(windowWidth, windowHeight);
-    device = createDeviceEx(params);
-    if (!device) {
-        std::cout << "Failed to initialize Irrlicht" << std::endl;
-        exit(0); 
-    }
-
-    // create video driver
-	driver = device -> getVideoDriver();
-    driver -> setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
-
-    // create scene manager
-	scene = device -> getSceneManager();
+    e = new OBDEngine();
+	e -> Init(windowWidth, windowHeight);
    
     // create gui manager    
     gui = new nanogui::Screen();
@@ -64,7 +47,7 @@ Window::Window(i32 width, i32 height) {
 
     glfwSetDropCallback(window,
         [](GLFWwindow *w, i32 count, const char **filenames) {
-            //Window::Instance() -> getGUIEnvironment() -> dropCallbackEvent(count, filenames);
+            Window::Instance() -> getGUIEnvironment() -> dropCallbackEvent(count, filenames);
         }
     );
 
@@ -90,17 +73,13 @@ void Window::beginScene(){
     double now = glfwGetTime();
     deltaTime = (double)(now - dtThen); // Time in seconds
     dtThen = now;
-    
-
-    driver -> beginScene(true, true, video::SColor(0,0,0,0));
 }
 
 void Window::endScene(){
-    scene -> drawAll();
+	e->draw();
     gui -> drawWidgets();
     glEnable(GL_DEPTH_TEST);
-
-    driver -> endScene();
+	glfwSwapBuffers(window);
 }
 
 void Window::close(){
@@ -113,20 +92,11 @@ bool Window::isOpen(){
 }
 
 void Window::onClose(){
-    device -> drop();
     glfwTerminate();
 }
 
-IrrlichtDevice* Window::getDevice() {
-    return device;
-}
-
-video::IVideoDriver* Window::getVideoDriver() {
-    return driver;
-}
-
-scene::ISceneManager* Window::getSceneManager() {
-    return scene;
+OBDEngine *Window::getEngine(){
+	return e;
 }
 
 nanogui::Screen* Window::getGUIEnvironment(){
@@ -143,12 +113,10 @@ i32 Window::getInitialWindowHeight(){
 
 i32 Window::getRealWindowWidth(){
     return windowWidth;
-    //return driver -> getViewPort().getWidth(); 
 }
 
 i32 Window::getRealWindowHeight(){
     return windowHeight;
-    //return driver -> getViewPort().getHeight(); 
 }
 
 f32 Window::getDeltaTime() {
@@ -156,7 +124,7 @@ f32 Window::getDeltaTime() {
 }
 
 void Window::calculateFramerate() {
-    framerate = floor(1.0 / Window::Instance() -> getDeltaTime());
+    framerate = floor(1.0 / deltaTime);
 }
 
 i32 Window::getFrameRate() {

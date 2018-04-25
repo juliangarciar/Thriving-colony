@@ -1,16 +1,13 @@
 #ifndef BILLBOARD_H
 #define BILLBOARD_H
-#include <irrlicht/irrlicht.h>
+
 #include <Types.h>
 #include <MathEngine/Vector3.h>
 #include <MathEngine/Color.h>
 #include "SceneNode.h"
 #include "Window.h"
 
-using namespace irr;
-
 class Billboard {
-    
     public:
         Billboard(SceneNode* parent, i32 id, Vector3<f32> pos, Color top, Color bot);
         ~Billboard();
@@ -26,7 +23,7 @@ class Billboard {
         void rotate(f32 x, f32 y);
 
     private:
-        scene::IBillboardSceneNode* billboardNode;
+
 };
 
 #endif

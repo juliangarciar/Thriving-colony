@@ -1,14 +1,11 @@
 #include "Light.h"
 #include "Window.h"
 
-using namespace irr;
-
+//ToDo: color
 Light::Light(Vector3<f32> pos, f32 intensity) {
-    light = Window::Instance()->getSceneManager()->addLightSceneNode(0, core::vector3df(pos.x, pos.y, pos.z),
-    	video::SColorf(1.0f,1.0f,1.0f,1.0f), intensity); //ToDo: aqui no deberian haber datos
+    l = Window::Instance()->getEngine()->createLight(OBDColor(1, 1, 1), intensity);
 }
 
 Light::~Light(){
-    light->remove();
-    light = nullptr;
+    
 }

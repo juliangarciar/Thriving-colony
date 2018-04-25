@@ -1,20 +1,17 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <irrlicht/irrlicht.h>
+#include <OBDEngine/OBDEngine.h>
 #include <GLFW/glfw3.h>
 #include <nanogui/nanogui.h>
 
 #include <Types.h>
 #include <MathEngine/Vector2.h>
 
-using namespace irr;
-
 class Window {
     public:
         static Window* Instance();
-
-        void setEventReceiver(IEventReceiver *receiver);
+		
         void handleGUIEvents();
 
         void setGUI();
@@ -28,9 +25,8 @@ class Window {
         
         void onClose();
 
-        IrrlichtDevice* getDevice();
-        video::IVideoDriver* getVideoDriver();
-        scene::ISceneManager* getSceneManager();
+		OBDEngine *getEngine();
+
         nanogui::Screen* getGUIEnvironment();
 
         i32 getInitialWindowWidth();
@@ -75,9 +71,8 @@ class Window {
 
         bool closeWindow;
 
-        IrrlichtDevice* device;
-        video::IVideoDriver* driver;
-        scene::ISceneManager* scene;
+		OBDEngine *e;
+
         nanogui::Screen* gui;
 
         i32 windowWidth;

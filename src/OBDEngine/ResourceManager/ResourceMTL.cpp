@@ -21,6 +21,11 @@ void ResourceMTL::load(const char *path){
         exit(0);
     }
 
+	std::string p(path);
+
+	size_t last = p.rfind("/");
+	std::string ret = p.substr(0,last+1);
+
     for (int i = 0; i < loader.LoadedMaterials.size(); i++) {
         // Copy one of the loaded meshes to be our current mesh
         mtl_objl::Material curMat = loader.LoadedMaterials[i];
@@ -35,11 +40,11 @@ void ResourceMTL::load(const char *path){
         tempMat.opticalDensity = curMat.Ni;
         tempMat.dissolve = curMat.d;
         tempMat.illumination = curMat.illum;
-        tempMat.ambientTextureMap = curMat.map_Ka;
-        tempMat.diffuseTextureMap = curMat.map_Kd;
-        tempMat.specularTextureMap = curMat.map_Ks;
-        tempMat.alphaTextureMap = curMat.map_d;
-        tempMat.bumpMap = curMat.map_bump;
+        if (curMat.map_Ka != "") tempMat.ambientTextureMap = ret+curMat.map_Ka;
+        if (curMat.map_Kd != "") tempMat.diffuseTextureMap = ret+curMat.map_Kd;
+        if (curMat.map_Ks != "") tempMat.specularTextureMap = ret+curMat.map_Ks;
+        if (curMat.map_d != "") tempMat.alphaTextureMap = ret+curMat.map_d;
+        if (curMat.map_bump != "") tempMat.bumpMap = ret+curMat.map_bump;
         
         materialArray.insert(std::pair<std::string, ResourceMaterial>(curMat.name, tempMat));
     }
