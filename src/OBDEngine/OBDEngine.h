@@ -50,7 +50,7 @@ class OBDEngine {
          * 
          * @return OBDLight* 
          */
-        OBDLight* createLight(OBDColor color, u32 intensity);
+        OBDLight* createLight(OBDColor color, f32 intensity);
 
         /**
          * @brief 

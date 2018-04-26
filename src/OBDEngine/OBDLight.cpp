@@ -1,10 +1,10 @@
 #include "OBDLight.h"
 
-OBDLight::OBDLight(OBDColor color, u32 intensity) {
+OBDLight::OBDLight(OBDColor color, f32 intensity) {
     lightNode = new TNode(new TLight(color, intensity));
 }
 
-OBDLight::OBDLight(OBDSceneNode* parent, OBDColor color, u32 intensity) {
+OBDLight::OBDLight(OBDSceneNode* parent, OBDColor color, f32 intensity) {
     lightNode = new TNode(new TLight(color, intensity));
 
     parent->addChild(this);

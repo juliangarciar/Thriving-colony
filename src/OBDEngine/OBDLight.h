@@ -13,14 +13,14 @@ class OBDLight : public OBDEntity {
         /**
          * @brief 
          */
-        OBDLight(OBDColor color, u32 intensity);
+        OBDLight(OBDColor color, f32 intensity);
 
         /**
          * @brief 
          * 
          * @param parent 
          */
-        OBDLight(OBDSceneNode* parent, OBDColor color, u32 intensity);
+        OBDLight(OBDSceneNode* parent, OBDColor color, f32 intensity);
 
         /**
          * @brief 

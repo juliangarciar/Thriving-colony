@@ -48,6 +48,10 @@ void OBDEngine::Init(i32 sW, i32 sH) {
     //Backface culling
     glCullFace(GL_BACK);
     glPolygonMode(GL_FRONT, GL_FILL);
+	
+	// Enable blending
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
 	//Gen VAO
     GLuint VAO = TEntity::cache.getID(OBDEnums::OpenGLIDs::VAO_BUFFER);
@@ -60,7 +64,7 @@ void OBDEngine::End(){
 	glDeleteVertexArrays(1, &VAO);
 }
 
-OBDLight* OBDEngine::createLight(OBDColor color, u32 intensity) {
+OBDLight* OBDEngine::createLight(OBDColor color, f32 intensity) {
     OBDLight* lightNode = new OBDLight(clSceneNode, color, intensity);
     lights.push_back(lightNode);
     return lightNode;
