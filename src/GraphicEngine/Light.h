@@ -5,10 +5,11 @@
 
 #include <Types.h>
 #include <MathEngine/Vector3.h>
+#include <MathEngine/Color.h>
 
 class Light {
     public:
-        Light(Vector3<f32> position, f32 intensity);
+        Light(Vector3<f32> position, Color c, f32 intensity);
         ~Light();
 
 		void setPosition(Vector3<f32> position);
