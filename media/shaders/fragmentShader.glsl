@@ -87,21 +87,23 @@ void main(){
 
 	//Color ambiental
     if (tex.haveAmbientTexture == true){
-        ambientColor = texture(textureAmbient, vertexUV_out).rgb;
+        ambientColor = texture(textureAmbient, vertexUV_out).rgb * material.ambientColor;
     } else {
         ambientColor = material.ambientColor;
     }
   	
     //Color difusa
     if (tex.haveDiffuseTexture == true){
-        diffuseColor = texture(textureDiffuse, vertexUV_out).rgb;
+        diffuseColor = texture(textureDiffuse, vertexUV_out).rgb * material.diffuseColor;
+		//Also multiply diffuse and ambient
+		ambientColor = texture(textureDiffuse, vertexUV_out).rgb * ambientColor;
     } else {
         diffuseColor = material.diffuseColor;
     }
 
 	//Color especular
     if (tex.haveSpecularTexture == true){
-        specularColor = texture(textureSpecular, vertexUV_out).rgb;
+        specularColor = texture(textureSpecular, vertexUV_out).rgb * material.specularColor;
     } else {
         specularColor = material.specularColor;
     }

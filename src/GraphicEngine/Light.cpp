@@ -11,3 +11,7 @@ Light::~Light(){
     delete l;
 	l = nullptr;
 }
+
+void Light::setPosition(Vector3<f32> pos){
+	l->setPosition(glm::vec3(pos.x, pos.y, pos.z));
+}
