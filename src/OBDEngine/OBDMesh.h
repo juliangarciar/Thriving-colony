@@ -3,12 +3,13 @@
 
 #include "OBDEntity.h"
 #include "OBDSceneNode.h"
+#include "OBDTexture.h"
 
 #include "ResourceManager/ResourceOBJ.h"
 #include "ResourceManager/ResourceMTL.h"
 
-#include "Graphics/TTransform.h"
 #include "Graphics/TMesh.h"
+#include "Graphics/TTransform.h"
 
 class OBDMesh : public OBDEntity {
     public:
@@ -104,7 +105,7 @@ class OBDMesh : public OBDEntity {
          * @brief Set the glslTexture object
          * 
          */
-        void setTexture(OBDEnums::TextureTypes, ResourceIMG*);
+        void setTexture(OBDTexture*);
 
         /**
          * @brief 

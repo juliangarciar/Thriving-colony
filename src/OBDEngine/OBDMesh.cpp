@@ -85,9 +85,9 @@ void OBDMesh::setMaterial(ResourceMaterial mat){
     m->setMaterial(mat);
 }
 
-void OBDMesh::setTexture(OBDEnums::TextureTypes tt, ResourceIMG *t){
+void OBDMesh::setTexture(OBDTexture* t){
     TMesh* m = (TMesh*) meshNode -> getEntity();
-    m -> setTexture(tt, new TTexture(t));
+    m -> setTexture(t->getType(), t->getTexture());
 }
 
 void OBDMesh::setName(std::string n) {
@@ -107,25 +107,26 @@ std::string OBDMesh::getMaterialName() {
 }
 
 void OBDMesh::loadTextures(ResourceManager *r, bool sync){
+    TMesh* m = (TMesh*) meshNode -> getEntity();
     if (material.ambientTextureMap != ""){
         ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.ambientTextureMap, sync);
-        setTexture(OBDEnums::TextureTypes::TEXTURE_AMBIENT, tmp);
+        m -> setTexture(OBDEnums::TextureTypes::TEXTURE_AMBIENT, new TTexture(tmp));
     }
     if (material.diffuseTextureMap != ""){
         ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.diffuseTextureMap, sync);
-        setTexture(OBDEnums::TextureTypes::TEXTURE_DIFFUSE, tmp);
+        m -> setTexture(OBDEnums::TextureTypes::TEXTURE_DIFFUSE, new TTexture(tmp));
     }
     if (material.specularTextureMap != ""){
         ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.specularTextureMap, sync);
-        setTexture(OBDEnums::TextureTypes::TEXTURE_SPECULAR, tmp);
+        m -> setTexture(OBDEnums::TextureTypes::TEXTURE_SPECULAR, new TTexture(tmp));
     }
     if (material.alphaTextureMap != ""){
         ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.alphaTextureMap, sync);
-        setTexture(OBDEnums::TextureTypes::TEXTURE_ALPHA, tmp);
+        m -> setTexture(OBDEnums::TextureTypes::TEXTURE_ALPHA, new TTexture(tmp));
     }
     if (material.bumpMap != ""){
         ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.bumpMap, sync);
-        setTexture(OBDEnums::TextureTypes::TEXTURE_BUMP, tmp);
+        m -> setTexture(OBDEnums::TextureTypes::TEXTURE_BUMP, new TTexture(tmp));
     }
 }
 

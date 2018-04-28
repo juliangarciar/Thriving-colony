@@ -80,12 +80,6 @@ class OBDObject : public OBDEntity {
         void setScale(glm::vec3 s);
 
         /**
-         * @brief Set the glslTexture object
-         * 
-         */
-        void setTexture(OBDEnums::TextureTypes, ResourceIMG*);
-
-        /**
          * @brief Set the Active object
          * 
          * @param a 
