@@ -1,8 +1,6 @@
 #ifndef TPARTICLE_H
 #define TPARTICLE_H
 
-#include <GLFW/glfw3.h>
-
 #include "TEntity.h"
 
 class TParticle : public TEntity {

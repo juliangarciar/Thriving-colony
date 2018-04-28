@@ -1,6 +1,8 @@
 #ifndef OBDTYPES_H
 #define OBDTYPES_H
 
+#include <GLFW/glfw3.h>
+
 #include <glm/glm.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -41,11 +43,11 @@ struct glslMaterial {
 };
 
 struct glslTexture {
-    bool ambientTexture;
-    bool diffuseTexture;
-    bool specularTexture;
-    bool alphaTexture;
-    bool bumpTexture;
+    GLint ambientTexture;
+    GLint diffuseTexture;
+    GLint specularTexture;
+    GLint alphaTexture;
+    GLint bumpTexture;
 };
 
 struct OBDLine {

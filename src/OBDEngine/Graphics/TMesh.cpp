@@ -12,11 +12,11 @@ TMesh::TMesh(ResourceMesh r, ResourceMaterial m) : TEntity() {
 		textures.push_back(nullptr);
 	}
 
-	activeTextures.ambientTexture = false;
-	activeTextures.diffuseTexture = false;
-	activeTextures.specularTexture = false;
-	activeTextures.alphaTexture = false;
-	activeTextures.bumpTexture = false;
+	activeTextures.ambientTexture = 0;
+	activeTextures.diffuseTexture = 0;
+	activeTextures.specularTexture = 0;
+	activeTextures.alphaTexture = 0;
+	activeTextures.bumpTexture = 0;
 	
 	currentMaterial.ambientColor = material.ambientColor;
 	currentMaterial.diffuseColor = material.diffuseColor;
@@ -83,35 +83,35 @@ void TMesh::beginDraw() {
 
 	int loadedTextures = 0;
 
-	if (activeTextures.ambientTexture){
+	if (activeTextures.ambientTexture == 1){
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
 		glBindTexture(GL_TEXTURE_2D, textures[OBDEnums::TextureTypes::TEXTURE_AMBIENT]->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_AMBIENT), loadedTextures);
 		loadedTextures++;
 	}
 
-	if (activeTextures.diffuseTexture){
+	if (activeTextures.diffuseTexture == 1){
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
 		glBindTexture(GL_TEXTURE_2D, textures[OBDEnums::TextureTypes::TEXTURE_DIFFUSE]->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_DIFFUSE), loadedTextures);
 		loadedTextures++;
 	}
 
-	if (activeTextures.specularTexture){
+	if (activeTextures.specularTexture == 1){
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
 		glBindTexture(GL_TEXTURE_2D, textures[OBDEnums::TextureTypes::TEXTURE_SPECULAR]->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_SPECULAR), loadedTextures);
 		loadedTextures++;
 	}
 
-	if (activeTextures.alphaTexture){
+	if (activeTextures.alphaTexture == 1){
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
 		glBindTexture(GL_TEXTURE_2D, textures[OBDEnums::TextureTypes::TEXTURE_ALPHA]->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_ALPHA), loadedTextures);
 		loadedTextures++;
 	}
 
-	if (activeTextures.bumpTexture){
+	if (activeTextures.bumpTexture == 1){
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
 		glBindTexture(GL_TEXTURE_2D, textures[OBDEnums::TextureTypes::TEXTURE_BUMP]->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_BUMP), loadedTextures);
@@ -164,19 +164,19 @@ void TMesh::setTexture(OBDEnums::TextureTypes tt, TTexture* t){
 	textures[(int)tt] = t;
 	switch(tt){
 		case OBDEnums::TextureTypes::TEXTURE_AMBIENT:
-			activeTextures.ambientTexture = true;
+			activeTextures.ambientTexture = 1;
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_DIFFUSE:
-			activeTextures.diffuseTexture = true;
+			activeTextures.diffuseTexture = 1;
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_SPECULAR:
-			activeTextures.specularTexture = true;
+			activeTextures.specularTexture = 1;
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_ALPHA:
-			activeTextures.alphaTexture = true;
+			activeTextures.alphaTexture = 1;
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_BUMP:
-			activeTextures.bumpTexture = true;
+			activeTextures.bumpTexture = 1;
 		break;
 		default: break;
 	}

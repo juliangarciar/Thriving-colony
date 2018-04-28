@@ -1,7 +1,6 @@
 #ifndef OBDSHADERPROGRAM_H
 #define OBDSHADERPROGRAM_H
 
-#include <GLFW/glfw3.h>
 #include "OBDTypes.h"
 #include "OBDEnums.h"
 

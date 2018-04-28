@@ -1,8 +1,6 @@
 #ifndef TBILLBOARD_H
 #define TBILLBOARD_H
 
-#include <GLFW/glfw3.h>
-
 #include "TEntity.h"
 #include "../OBDColor.h"
 

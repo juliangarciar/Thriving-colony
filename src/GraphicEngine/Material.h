@@ -3,13 +3,14 @@
 
 #include "Texture.h"
 #include <Types.h>
+#include <MathEngine/Color.h>
 
 class Material {
     public:
         Material(Texture *tex);
         ~Material();
 		
-        void setColor(f32 a, f32 r, f32 g, f32 b);
+        void setColor(Color c);
 
         //video::SMaterial *getMaterial();
     private:

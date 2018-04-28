@@ -18,11 +18,11 @@ struct myMaterial {
 };
 
 struct myTexture {
-    bool haveAmbientTexture;
-    bool haveDiffuseTexture;
-    bool haveSpecularTexture;
-    bool haveAlphaTexture;
-    bool haveBumpTexture;
+    int haveAmbientTexture;
+    int haveDiffuseTexture;
+    int haveSpecularTexture;
+    int haveAlphaTexture;
+    int haveBumpTexture;
 };
 
 // Interpolated values from the vertex shaders
@@ -86,14 +86,14 @@ void main(){
     vec3 specularColor;
 
 	//Color ambiental
-    if (tex.haveAmbientTexture == true){
+    if (tex.haveAmbientTexture == 1){
         ambientColor = texture(textureAmbient, vertexUV_out).rgb * material.ambientColor;
     } else {
         ambientColor = material.ambientColor;
     }
   	
     //Color difusa
-    if (tex.haveDiffuseTexture == true){
+    if (tex.haveDiffuseTexture == 1){
         diffuseColor = texture(textureDiffuse, vertexUV_out).rgb * material.diffuseColor;
 		//Also multiply diffuse and ambient
 		ambientColor = texture(textureDiffuse, vertexUV_out).rgb * ambientColor;
@@ -102,7 +102,7 @@ void main(){
     }
 
 	//Color especular
-    if (tex.haveSpecularTexture == true){
+    if (tex.haveSpecularTexture == 1){
         specularColor = texture(textureSpecular, vertexUV_out).rgb * material.specularColor;
     } else {
         specularColor = material.specularColor;
@@ -116,8 +116,8 @@ void main(){
 
     FragColor.rgb = finalColor;
 
-	if (tex.haveAlphaTexture == true){
-		FragColor.a = texture(textureAlpha, vertexUV_out).r;
+	if (tex.haveAlphaTexture == 1){
+		FragColor.a = 1-texture(textureAlpha, vertexUV_out).r;
 	} else {
 		FragColor.a = 1;
 	}

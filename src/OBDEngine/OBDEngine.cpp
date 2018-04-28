@@ -1,7 +1,5 @@
 #include "OBDEngine.h"
 
-#include <GLFW/glfw3.h>
-
 #include "ResourceManager/ResourceOBJ.h"
 #include "ResourceManager/ResourceGLSL.h"
 
