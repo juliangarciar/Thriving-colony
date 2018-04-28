@@ -22,10 +22,8 @@ video::SMaterial * Material::getMaterial() {
 }
 
 void Material::setColor(f32 a, f32 r, f32 g, f32 b) {
-    //material -> setColor(video::SColor(a, r, g, b));
     material->AmbientColor = video::SColor(a, r, g, b);
     material->DiffuseColor = video::SColor(a, r, g, b);
     material->SpecularColor = video::SColor(a, r, g, b);
     material->EmissiveColor = video::SColor(a, r, g, b);
-    
 }
