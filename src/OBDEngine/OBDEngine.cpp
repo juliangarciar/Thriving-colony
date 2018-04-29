@@ -62,8 +62,8 @@ void OBDEngine::End(){
 	glDeleteVertexArrays(1, &VAO);
 }
 
-OBDLight* OBDEngine::createLight(OBDColor color, f32 intensity) {
-    OBDLight* lightNode = new OBDLight(clSceneNode, color, intensity);
+OBDLight* OBDEngine::createLight(OBDColor color, f32 intensity, f32 ambient, f32 attenuation) {
+    OBDLight* lightNode = new OBDLight(clSceneNode, color, intensity, ambient, attenuation);
     lights.push_back(lightNode);
     return lightNode;
 }

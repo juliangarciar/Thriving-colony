@@ -4,22 +4,24 @@
 
 // Data structs
 struct myLight {
-    vec3 position;
+    vec4 position;
+    vec4 intensity;
 
-    vec3 ambientComponent;
-    vec3 diffuseComponent;
-    vec3 specularComponent;
+	float ambientCoeficient;
+	float attenuationCoeficient;
 };
 
 struct myMaterial {
-    vec3 ambientColor;
-    vec3 diffuseColor;
-    vec3 specularColor;
+    vec4 ambientColor;
+    vec4 diffuseColor;
+    vec4 specularColor;
+
+	float shininess;
 };
 
 struct myTexture {
-    int haveAmbientTexture;
     int haveDiffuseTexture;
+    int haveAmbientOclusionsTexture;
     int haveSpecularTexture;
     int haveAlphaTexture;
     int haveBumpTexture;
@@ -50,75 +52,82 @@ layout (std140) uniform TextureBuffer {
 
 // Uniforms
 uniform int lightAmount;
+uniform vec3 cameraPosition;
 
 // Samplers
-uniform sampler2D textureAmbient;
 uniform sampler2D textureDiffuse;
+uniform sampler2D textureOclusions;
 uniform sampler2D textureSpecular;
 uniform sampler2D textureAlpha;
 uniform sampler2D textureBump;
 
 // FUNCION QUE CALCULA EL MODELO DE REFLEXION DE PHONG
-vec3 Phong(myLight light, vec3 ambientColor, vec3 diffuseColor, vec3 specularColor) {
+vec3 Phong(myLight light, vec3 surfaceColor, vec3 specularColor) {
     vec3 Ambient;
     vec3 Diffuse;
     vec3 Specular;
 
-    // CALCULAR LOS DIFERENTES VECTORES	 
-    vec3 s = normalize(light.position - vertexPosition_out);
-	vec3 r = reflect(-s, vertexNormal_out);
+    // Realizar diferentes calculos
+	vec3 dist = light.position.xyz - vertexPosition_out; //3D distance
+	float d = sqrt(pow(dist.x, 2) + pow(dist.y, 2) + pow(dist.z, 2)); //1D Distance
+
+    vec3 surfaceToLight = normalize(dist);
+    vec3 surfaceToCamera = normalize(cameraPosition - vertexPosition_out);
 
 	// COMPONENTE AMBIENTAL
-    Ambient = light.ambientComponent * ambientColor;
+    Ambient = light.intensity.rgb * surfaceColor * light.ambientCoeficient;
   	
-    // COMPONENTE DIFUSA 
-    Diffuse = light.diffuseComponent * max(dot(s, vertexNormal_out), 0.0) * diffuseColor;
+    // COMPONENTE DIFUSA
+	float diffuseCoefficient = max(0.0, dot(vertexNormal_out, surfaceToLight));
+    Diffuse = light.intensity.rgb * surfaceColor * diffuseCoefficient;
 
     // COMPONENTE ESPECULAR
-    Specular = light.specularComponent * pow(max(dot(r, normalizedVertexPosition_out), 0.0), 1) * specularColor;
+	float specularCoefficient = 0.0;
+	if (diffuseCoefficient > 0.0) {
+		specularCoefficient = pow(max(0.0, dot(surfaceToCamera, reflect(-surfaceToLight, vertexNormal_out))), material.shininess);
+	}
+    Specular = light.intensity.rgb * specularColor * specularCoefficient;
 
-    return Ambient + Diffuse + Specular;  
+	float attenuation = 1.0 / (1.0 + light.attenuationCoeficient * pow(d, 2)); //Attenuation
+    return Ambient + (Diffuse + Specular) * attenuation;  
 } 
 
 void main(){
-    vec3 ambientColor;
-    vec3 diffuseColor;
-    vec3 specularColor;
-
-	//Color ambiental
-    if (tex.haveAmbientTexture == 1){
-        ambientColor = texture(textureAmbient, vertexUV_out).rgb * material.ambientColor;
-    } else {
-        ambientColor = material.ambientColor;
-    }
+    vec4 surfaceColor;
+    vec4 specularColor;
   	
     //Color difusa
     if (tex.haveDiffuseTexture == 1){
-        diffuseColor = texture(textureDiffuse, vertexUV_out).rgb * material.diffuseColor;
-		//Also multiply diffuse and ambient
-		ambientColor = texture(textureDiffuse, vertexUV_out).rgb * ambientColor;
+        surfaceColor = texture(textureDiffuse, vertexUV_out) * material.diffuseColor;
     } else {
-        diffuseColor = material.diffuseColor;
+        surfaceColor = material.diffuseColor;
+    }
+
+	//Color oclusiones ambientales
+    if (tex.haveAmbientOclusionsTexture == 1){
+        surfaceColor = surfaceColor * (texture(textureOclusions, vertexUV_out) * material.ambientColor);
+    } else {
+        surfaceColor = surfaceColor * material.ambientColor;
     }
 
 	//Color especular
     if (tex.haveSpecularTexture == 1){
-        specularColor = texture(textureSpecular, vertexUV_out).rgb * material.specularColor;
+        specularColor = texture(textureSpecular, vertexUV_out) * material.specularColor;
     } else {
         specularColor = material.specularColor;
     }
 
     // Output color = addition of all the colors of the texture at the specified UV
-    vec3 finalColor = vec3(0,0,0);
+    vec4 finalColor = vec4(0,0,0,0);
     for (int i = 0; i < lightAmount; i++){
-        finalColor = finalColor + Phong(lights[i], ambientColor, diffuseColor, specularColor);
+        finalColor.rgb = finalColor.rgb + Phong(lights[i], surfaceColor.rgb, specularColor.rgb);
     }
 
-    FragColor.rgb = finalColor;
-
 	if (tex.haveAlphaTexture == 1){
-		FragColor.a = 1-texture(textureAlpha, vertexUV_out).r;
+		finalColor.a = 1-texture(textureAlpha, vertexUV_out).r;
 	} else {
-		FragColor.a = 1;
+		finalColor.a = 1;
 	}
+
+    FragColor = finalColor;
 }

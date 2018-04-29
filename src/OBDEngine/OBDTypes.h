@@ -27,24 +27,26 @@ typedef unsigned short us32;
 typedef float f32;
 
 struct glslLight {
-    glm::vec3 position;
+    glm::vec4 position;
+    glm::vec4 intensity;
 
-    glm::vec3 ambientComponent;
-    glm::vec3 diffuseComponent;
-    glm::vec3 specularComponent;
+	GLfloat ambientCoeficient;
+	GLfloat attenuationCoeficient;
 };
 
-inline bool operator==(const glslLight& l, const glslLight& r){ return (l.position == r.position && l.ambientComponent == r.ambientComponent && l.diffuseComponent == r.diffuseComponent && l.specularComponent == r.specularComponent) == 0; }
+inline bool operator==(const glslLight& l, const glslLight& r){ return (l.position == r.position && l.intensity == r.intensity && l.ambientCoeficient == r.ambientCoeficient && l.attenuationCoeficient == r.attenuationCoeficient) == 0; }
 
 struct glslMaterial {
-    glm::vec3 ambientColor;
-    glm::vec3 diffuseColor;
-    glm::vec3 specularColor;
+    glm::vec4 ambientColor;
+    glm::vec4 diffuseColor;
+    glm::vec4 specularColor;
+
+	GLfloat shininess;
 };
 
 struct glslTexture {
-    GLint ambientTexture;
     GLint diffuseTexture;
+    GLint oclusionsTexture;
     GLint specularTexture;
     GLint alphaTexture;
     GLint bumpTexture;

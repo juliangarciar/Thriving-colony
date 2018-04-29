@@ -23,6 +23,7 @@ TCamera::~TCamera(){
 void TCamera::beginDraw(){
     cache.setProjectionMatrix(pMat);
     cache.setViewMatrix(vMat);
+	cache.setCameraPosition(cameraPosition);
 }
 
 void TCamera::endDraw(){

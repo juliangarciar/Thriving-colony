@@ -79,6 +79,27 @@ class OBDObject : public OBDEntity {
          */
         void setScale(glm::vec3 s);
 
+		/**
+		 * @brief Get the Position object
+		 * 
+		 * @return glm::vec3 
+		 */
+		glm::vec3 getPosition();
+
+		/**
+		 * @brief Get the Rotation object
+		 * 
+		 * @return glm::vec3 
+		 */
+		glm::vec3 getRotation();
+
+		/**
+		 * @brief Get the Scale object
+		 * 
+		 * @return glm::vec3 
+		 */
+		glm::vec3 getScale();
+
         /**
          * @brief Set the Active object
          * 

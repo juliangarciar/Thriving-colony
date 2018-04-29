@@ -1,11 +1,11 @@
 #include "TLight.h"
 
-TLight::TLight(OBDColor c, f32 i) : TEntity(){
+TLight::TLight(OBDColor c, f32 i, f32 am, f32 at) : TEntity(){
     lightType = OBDEnums::LightTypes::LIGHT_POINT; //ToDo: varios tipos?
 
-    setAmbientComponent(c, i);
-    setDiffuseComponent(c, i);
-    setSpecularComponent(c, i);
+    setColor(c, i);
+    setAmbientCoeficient(am);
+    setAttenuationCoeficient(at);
     setPosition(glm::vec3(0,0,0));
 
     active = true;
@@ -23,16 +23,17 @@ void TLight::beginDraw(){
 void TLight::endDraw(){
 }
         
-void TLight::setAmbientComponent(OBDColor c, f32 i){
-    components.ambientComponent = c.getRGB() * (float)i;
+void TLight::setColor(OBDColor c, f32 i){
+	glm::vec3 o = c.getRGB() * (float)i;
+    components.intensity = glm::vec4(o, 1);
 }
-        
-void TLight::setDiffuseComponent(OBDColor c, f32 i){
-    components.diffuseComponent = c.getRGB() * (float)i;
+
+void TLight::setAmbientCoeficient(f32 c){
+	components.ambientCoeficient = c;
 }
-        
-void TLight::setSpecularComponent(OBDColor c, f32 i){
-    components.specularComponent = c.getRGB() * (float)i;
+
+void TLight::setAttenuationCoeficient(f32 c){
+	components.attenuationCoeficient = c;
 }
 
 void TLight::setActive(bool a){
@@ -40,7 +41,7 @@ void TLight::setActive(bool a){
 }
 
 void TLight::setPosition(glm::vec3 p) {
-    components.position = p;
+    components.position = glm::vec4(p, 1);
 }
 
 glm::vec3 TLight::getPosition() {

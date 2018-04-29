@@ -16,8 +16,8 @@ struct ResourceMaterial{
     f32 dissolve;
     i32 illumination;
 
-    std::string ambientTextureMap;
     std::string diffuseTextureMap;
+    std::string ambientOclusionsTextureMap;
     std::string specularTextureMap;
     std::string alphaTextureMap;
     std::string bumpMap;

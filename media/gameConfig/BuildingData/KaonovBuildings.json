@@ -14,8 +14,8 @@
 			"cityLevel": 15,
 			"cellsX": 2,
 			"cellsY": 2,
-			"modelPath": "media/buildingModels/barn.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_barn_Base_Color.jpg"
+			"modelPath": "media/models/Kaonov/Buildings/kaonov_barn/kaonov_barn.obj",
+			"texturePath": "media/textures/Kaonov/kaonov_barn.jpg"
 		},
 		{
 			"buildingName": "Barrack",
@@ -28,12 +28,12 @@
 			"attackSpeed": 0,
 			"happinessVariation": 0,
 			"citizensVariation": 0,
-			"buildingTime": 40,
+			"buildingTime": 4,
 			"cityLevel": 10,
 			"cellsX": 4,
 			"cellsY": 4,
-			"modelPath": "media/buildingModels/barrack.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_barrack_Base_Color.jpg"
+			"modelPath": "media/models/Kaonov/Buildings/kaonov_barrack/kaonov_barrack.obj",
+			"texturePath": "media/textures/Kaonov/kaonov_barrack.jpg"
 		},
 		{
 			"buildingName": "Hospital",
@@ -50,8 +50,8 @@
 			"cityLevel": 5,
 			"cellsX": 4,
 			"cellsY": 4,
-			"modelPath": "media/buildingModels/hospital.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_hospital_Base_Color.jpg"
+			"modelPath": "media/models/Kaonov/Buildings/kaonov_hospital/kaonov_hospital.obj",
+			"texturePath": "media/textures/Kaonov/kaonov_hospital.jpg"
 		},
 		{
 			"buildingName": "House",
@@ -68,8 +68,8 @@
 			"cityLevel": 5,
 			"cellsX": 1,
 			"cellsY": 1,
-			"modelPath": "media/buildingModels/house.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_house_Base_Color.jpg"
+			"modelPath": "media/models/Kaonov/Buildings/kaonov_house/kaonov_house.obj",
+			"texturePath": "media/textures/Kaonov/kaonov_house.jpg"
 		},
 		{
 			"buildingName": "MainBuilding",
@@ -86,8 +86,8 @@
 			"cityLevel": 0,
 			"cellsX": 5,
 			"cellsY": 5,
-			"modelPath": "media/buildingModels/command_center.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_crystal_command_center_Base_Color.jpg"
+			"modelPath": "media/models/Kaonov/Buildings/kaonov_command_center/kaonov_command_center.obj",
+			"texturePath": "media/textures/Kaonov/kaonov_command_center.jpg"
 		},
 		{
 			"buildingName": "Market",
@@ -104,8 +104,8 @@
 			"cityLevel": 5,
 			"cellsX": 3,
 			"cellsY": 4,
-			"modelPath": "media/buildingModels/market.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_market_Base_Color.jpg"
+			"modelPath": "media/models/Kaonov/Buildings/kaonov_market/kaonov_market.obj",
+			"texturePath": "media/textures/Kaonov/kaonov_market.jpg"
 		},
 		{
 			"buildingName": "Quarry",
@@ -122,8 +122,8 @@
 			"cityLevel": 15,
 			"cellsX": 4,
 			"cellsY": 4,
-			"modelPath": "media/buildingModels/quarry.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_quarry_Base_Color.jpg"
+			"modelPath": "media/models/Kaonov/Buildings/kaonov_quarry/kaonov_quarry.obj",
+			"texturePath": "media/textures/Kaonov/kaonov_quarry.jpg"
 		},
 		{
 			"buildingName": "Siderurgy",
@@ -140,8 +140,8 @@
 			"cityLevel": 5,
 			"cellsX": 5,
 			"cellsY": 3,
-			"modelPath": "media/buildingModels/siderurgy.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_siderurgy_Base_Color.jpg"
+			"modelPath": "media/models/Kaonov/Buildings/kaonov_siderurgy/kaonov_siderurgy.obj",
+			"texturePath": "media/textures/Kaonov/kaonov_siderurgy.jpg"
 		},
 		{
 			"buildingName": "School",
@@ -158,8 +158,8 @@
 			"cityLevel": 5,
 			"cellsX": 3,
 			"cellsY": 4,
-			"modelPath": "media/buildingModels/school.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_school_Base_Color.jpg"
+			"modelPath": "media/models/Kaonov/Buildings/kaonov_school/kaonov_school.obj",
+			"texturePath": "media/textures/Kaonov/kaonov_school.jpg"
 		},
 		{
 			"buildingName": "Tower",
@@ -176,8 +176,8 @@
 			"cityLevel": 5,
 			"cellsX": 1,
 			"cellsY": 1,
-			"modelPath": "media/buildingModels/tower.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_turret_tower_Base_Color.jpg"
+			"modelPath": "media/models/Kaonov/Buildings/kaonov_tower/kaonov_tower.obj",
+			"texturePath": "media/textures/Kaonov/kaonov_tower.jpg"
 		},
 		{
 			"buildingName": "Wall",
@@ -194,8 +194,8 @@
 			"cityLevel": 1,
 			"cellsX": 2,
 			"cellsY": 1,
-			"modelPath": "media/buildingModels/wall.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_wall_Base_Color.jpg"
+			"modelPath": "media/models/Kaonov/Buildings/kaonov_wall/kaonov_wall.obj",
+			"texturePath": "media/textures/Kaonov/kaonov_wall.jpg"
 		},
 		{
 			"buildingName": "Workshop",
@@ -212,8 +212,8 @@
 			"cityLevel": 15,
 			"cellsX": 3,
 			"cellsY": 4,
-			"modelPath": "media/buildingModels/workshop.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_workshop_Base_Color.jpg"
+			"modelPath": "media/models/Kaonov/Buildings/kaonov_workshop/kaonov_workshop.obj",
+			"texturePath": "media/textures/Kaonov/kaonov_workshop.jpg"
 		}
 	]
 }

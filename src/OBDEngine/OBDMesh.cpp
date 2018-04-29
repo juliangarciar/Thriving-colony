@@ -72,6 +72,18 @@ void OBDMesh::setScale(glm::vec3 s) {
     node_scale = s;
 }
 
+glm::vec3 OBDMesh::getPosition(){
+	return node_position;
+}
+
+glm::vec3 OBDMesh::getRotation(){
+	return node_rotation;
+}
+
+glm::vec3 OBDMesh::getScale(){
+	return node_scale;
+}
+
 void OBDMesh::setActive(bool a) {
     meshNode -> setActive(a);
 }
@@ -108,13 +120,13 @@ std::string OBDMesh::getMaterialName() {
 
 void OBDMesh::loadTextures(ResourceManager *r, bool sync){
     TMesh* m = (TMesh*) meshNode -> getEntity();
-    if (material.ambientTextureMap != ""){
-        ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.ambientTextureMap, sync);
-        m -> setTexture(OBDEnums::TextureTypes::TEXTURE_AMBIENT, new TTexture(tmp));
-    }
     if (material.diffuseTextureMap != ""){
         ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.diffuseTextureMap, sync);
         m -> setTexture(OBDEnums::TextureTypes::TEXTURE_DIFFUSE, new TTexture(tmp));
+    }
+    if (material.ambientOclusionsTextureMap != ""){
+        ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.ambientOclusionsTextureMap, sync);
+        m -> setTexture(OBDEnums::TextureTypes::TEXTURE_OCLUSIONS, new TTexture(tmp));
     }
     if (material.specularTextureMap != ""){
         ResourceIMG *tmp = (ResourceIMG*)r->getResource(material.specularTextureMap, sync);

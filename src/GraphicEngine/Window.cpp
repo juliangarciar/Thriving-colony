@@ -25,8 +25,8 @@ Window::Window(i32 width, i32 height) {
     glfwSetTime(0);
 
 	glfwWindowHint(GLFW_SAMPLES, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
@@ -44,7 +44,7 @@ Window::Window(i32 width, i32 height) {
 
     e = new OBDEngine();
 	e -> Init(windowWidth, windowHeight);
-	e -> createShaderProgram("defaultProgram", "../media/shaders/vertexShader.glsl", "../media/shaders/fragmentShader.glsl");
+	e -> createShaderProgram("defaultProgram", "media/shaders/vertexShader.glsl", "media/shaders/fragmentShader.glsl");
 	e -> setCurrentShaderProgram("defaultProgram");
    
     // create gui manager    

@@ -12,15 +12,16 @@ TMesh::TMesh(ResourceMesh r, ResourceMaterial m) : TEntity() {
 		textures.push_back(nullptr);
 	}
 
-	activeTextures.ambientTexture = 0;
+	activeTextures.oclusionsTexture = 0;
 	activeTextures.diffuseTexture = 0;
 	activeTextures.specularTexture = 0;
 	activeTextures.alphaTexture = 0;
 	activeTextures.bumpTexture = 0;
 	
-	currentMaterial.ambientColor = material.ambientColor;
-	currentMaterial.diffuseColor = material.diffuseColor;
-	currentMaterial.specularColor = material.specularColor;
+	currentMaterial.ambientColor = glm::vec4(material.ambientColor, 1);
+	currentMaterial.diffuseColor = glm::vec4(material.diffuseColor, 1);
+	currentMaterial.specularColor = glm::vec4(material.specularColor, 1);
+	currentMaterial.shininess = material.specularExponent;
 
 	// Generate a buffer for the vertices
 	glGenBuffers(1, &VBOID);
@@ -71,6 +72,9 @@ void TMesh::beginDraw() {
 	glUniformMatrix4fv(cache.getID(OBDEnums::OpenGLIDs::MATRIX_MV), 1, GL_FALSE, &MV[0][0]);
 	glUniformMatrix4fv(cache.getID(OBDEnums::OpenGLIDs::MATRIX_MVP), 1, GL_FALSE, &MVP[0][0]);
 
+	// Camera
+	glUniform3fv(cache.getID(OBDEnums::OpenGLIDs::CAMERA_POSITION), 1, &cache.getCameraPosition()[0]);
+
 	//Send lights
 	if (cache.getLights()->size()){   
 		i32 lightNumber = cache.getLights()->size();
@@ -83,17 +87,17 @@ void TMesh::beginDraw() {
 
 	int loadedTextures = 0;
 
-	if (activeTextures.ambientTexture == 1){
-		glActiveTexture(GL_TEXTURE0 + loadedTextures);
-		glBindTexture(GL_TEXTURE_2D, textures[OBDEnums::TextureTypes::TEXTURE_AMBIENT]->getTextureID());
-		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_AMBIENT), loadedTextures);
-		loadedTextures++;
-	}
-
 	if (activeTextures.diffuseTexture == 1){
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
 		glBindTexture(GL_TEXTURE_2D, textures[OBDEnums::TextureTypes::TEXTURE_DIFFUSE]->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_DIFFUSE), loadedTextures);
+		loadedTextures++;
+	}
+
+	if (activeTextures.oclusionsTexture == 1){
+		glActiveTexture(GL_TEXTURE0 + loadedTextures);
+		glBindTexture(GL_TEXTURE_2D, textures[OBDEnums::TextureTypes::TEXTURE_OCLUSIONS]->getTextureID());
+		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_OCLUSIONS), loadedTextures);
 		loadedTextures++;
 	}
 
@@ -149,9 +153,10 @@ void TMesh::endDraw() {
 void TMesh::setMaterial(ResourceMaterial m){
 	material = m;
 	
-	currentMaterial.ambientColor = material.ambientColor;
-	currentMaterial.diffuseColor = material.diffuseColor;
-	currentMaterial.specularColor = material.specularColor;
+	currentMaterial.ambientColor = glm::vec4(material.ambientColor, 1);
+	currentMaterial.diffuseColor = glm::vec4(material.diffuseColor, 1);
+	currentMaterial.specularColor = glm::vec4(material.specularColor, 1);
+	currentMaterial.shininess = material.specularExponent;
 
 	//Send material
 	glBindBuffer(GL_UNIFORM_BUFFER, materialID);
@@ -163,11 +168,11 @@ void TMesh::setTexture(OBDEnums::TextureTypes tt, TTexture* t){
 	if (textures[(int)tt] != nullptr) delete textures[(int)tt];
 	textures[(int)tt] = t;
 	switch(tt){
-		case OBDEnums::TextureTypes::TEXTURE_AMBIENT:
-			activeTextures.ambientTexture = 1;
-		break;
 		case OBDEnums::TextureTypes::TEXTURE_DIFFUSE:
 			activeTextures.diffuseTexture = 1;
+		break;
+		case OBDEnums::TextureTypes::TEXTURE_OCLUSIONS:
+			activeTextures.oclusionsTexture = 1;
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_SPECULAR:
 			activeTextures.specularTexture = 1;

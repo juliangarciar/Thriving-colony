@@ -35,9 +35,10 @@ std::vector<GLuint> TCache::generateAllIDs(GLuint programID){
 	glUniformBlockBinding(programID, paramIDs[OBDEnums::OpenGLIDs::BUFFER_TEXTURE], 3);
 
 	paramIDs[OBDEnums::OpenGLIDs::LIGHT_AMOUNT] = glGetUniformLocation(programID, "lightAmount");
+	paramIDs[OBDEnums::OpenGLIDs::CAMERA_POSITION] = glGetUniformLocation(programID, "cameraPosition");
 
-    paramIDs[OBDEnums::OpenGLIDs::SAMPLER_AMBIENT] = glGetUniformLocation(programID, "textureAmbient");
 	paramIDs[OBDEnums::OpenGLIDs::SAMPLER_DIFFUSE] = glGetUniformLocation(programID, "textureDiffuse");
+    paramIDs[OBDEnums::OpenGLIDs::SAMPLER_OCLUSIONS] = glGetUniformLocation(programID, "textureOclusions");
 	paramIDs[OBDEnums::OpenGLIDs::SAMPLER_SPECULAR] = glGetUniformLocation(programID, "textureSpecular");
 	paramIDs[OBDEnums::OpenGLIDs::SAMPLER_ALPHA] = glGetUniformLocation(programID, "textureAlpha");
 	paramIDs[OBDEnums::OpenGLIDs::SAMPLER_BUMP] = glGetUniformLocation(programID, "textureBump");
@@ -71,6 +72,14 @@ void TCache::setProjectionMatrix(glm::mat4 m){
 
 glm::mat4 TCache::getProjectionMatrix(){
     return projectionMatrix;
+}
+
+void TCache::setCameraPosition(glm::vec3 m){
+    cameraPosition = m;
+}
+
+glm::vec3 TCache::getCameraPosition(){
+    return cameraPosition;
 }
 
 std::vector<glslLight> *TCache::getLights(){

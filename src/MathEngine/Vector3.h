@@ -38,7 +38,7 @@ class Vector3 {
 };
 
 template<class T> inline std::ostream& operator<<(std::ostream& out, const Vector3<T>& val){
-    out << "x: " << val.x << " y " << val.y << " z " << val.z;
+    out << "x: " << val.x << " - y: " << val.y << " - z: " << val.z;
     return out;
 }
 

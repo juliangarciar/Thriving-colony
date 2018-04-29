@@ -78,6 +78,20 @@ class TCache {
         glm::mat4 getProjectionMatrix();
 
         /**
+         * @brief Set the Camera Position
+         * 
+         * @param a 
+         */
+        void setCameraPosition(glm::vec3);
+
+        /**
+         * @brief Get the Camera Position
+         * 
+         * @return glm::vec3 
+         */
+        glm::vec3 getCameraPosition();
+
+        /**
          * @brief Get the Lights object
          * 
          * @return std::vector<glslLight>* 
@@ -97,6 +111,7 @@ class TCache {
 
         glm::mat4 viewMatrix;
         glm::mat4 projectionMatrix;
+		glm::vec3 cameraPosition;
 
         std::vector<glslLight> *lights;
 };

@@ -46,16 +46,16 @@ Building::Building(SceneNode *_layer,
 
     /* Set the model and texture */
     baseMat = new Material(t);
-    baseMat -> setColor(255, 255, 255, 255);
+    baseMat -> setColor(Color(255, 255, 255, 255));
 
     damagedMat = new Material(t);
-    damagedMat -> setColor(255, 255, 0, 0);
+    damagedMat -> setColor(Color(255, 255, 0, 0));
     
     canBuildMat = new Material(t);
-    canBuildMat -> setColor(128, 0, 255, 0);
+    canBuildMat -> setColor(Color(128, 0, 255, 0));
 
     cantBuildMat = new Material(t);
-    cantBuildMat -> setColor(128, 255, 0, 0);
+    cantBuildMat -> setColor(Color(128, 255, 0, 0));
 
     setBaseMaterial();
 

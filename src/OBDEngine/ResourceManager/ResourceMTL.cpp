@@ -40,8 +40,8 @@ void ResourceMTL::load(const char *path){
         tempMat.opticalDensity = curMat.Ni;
         tempMat.dissolve = curMat.d;
         tempMat.illumination = curMat.illum;
-        if (curMat.map_Ka != "") tempMat.ambientTextureMap = ret+curMat.map_Ka;
         if (curMat.map_Kd != "") tempMat.diffuseTextureMap = ret+curMat.map_Kd;
+        if (curMat.map_Ka != "") tempMat.ambientOclusionsTextureMap = ret+curMat.map_Ka;
         if (curMat.map_Ks != "") tempMat.specularTextureMap = ret+curMat.map_Ks;
         if (curMat.map_d != "") tempMat.alphaTextureMap = ret+curMat.map_d;
         if (curMat.map_bump != "") tempMat.bumpMap = ret+curMat.map_bump;

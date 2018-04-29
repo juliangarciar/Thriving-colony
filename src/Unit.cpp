@@ -67,10 +67,10 @@ Unit::Unit(SceneNode* _layer,
     pathManager = new PathManager(this);
 
     baseMat = new Material(new Texture(""));
-    baseMat -> setColor(255, 255, 255, 255);
+    baseMat -> setColor(Color(255, 255, 255, 255));
 
     damagedMat = new Material(new Texture(""));
-    damagedMat -> setColor(255, 255, 0, 0);
+    damagedMat -> setColor(Color(255, 255, 0, 0));
 
     setBaseMaterial();
 }

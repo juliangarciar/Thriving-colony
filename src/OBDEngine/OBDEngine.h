@@ -46,11 +46,15 @@ class OBDEngine {
         void End();
 
         /**
-         * @brief 
+         * @brief Create a Light object
          * 
+         * @param color 
+         * @param intensity 
+         * @param ambient 
+         * @param attenuation 
          * @return OBDLight* 
          */
-        OBDLight* createLight(OBDColor color, f32 intensity);
+        OBDLight* createLight(OBDColor color, f32 intensity, f32 ambient, f32 attenuation);
 
         /**
          * @brief 

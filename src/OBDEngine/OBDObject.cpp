@@ -88,14 +88,14 @@ void OBDObject::scale(f32 sX, f32 sY, f32 sZ) {
 
 void OBDObject::setPosition(glm::vec3 p) {
     TTransform* t = (TTransform*) translationNode -> getEntity();
-    glm::vec3 o = node_position - p;
+    glm::vec3 o = p - node_position;
     t -> translate(o.x, o.y, o.z);
     node_position = p;
 }
 
 void OBDObject::setRotation(glm::vec3 r, f32 angle) {
     TTransform* t = (TTransform*) rotationNode -> getEntity();
-    glm::vec3 o = node_rotation - r;
+    glm::vec3 o = r - node_rotation - r;
     t -> rotate(o.x, o.y, o.z, angle);
     node_rotation = r;
 }
@@ -105,6 +105,18 @@ void OBDObject::setScale(glm::vec3 s) {
     glm::vec3 o = node_scale - s;
     t -> scale(o.x, o.y, o.z);
     node_scale = s;
+}
+
+glm::vec3 OBDObject::getPosition(){
+	return node_position;
+}
+
+glm::vec3 OBDObject::getRotation(){
+	return node_rotation;
+}
+
+glm::vec3 OBDObject::getScale(){
+	return node_scale;
 }
 
 void OBDObject::setActive(bool a) {
