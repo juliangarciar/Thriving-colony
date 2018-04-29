@@ -17,7 +17,7 @@ class OBDParticleSystem : public OBDEntity {
         /**
          * @brief 
          * 
-         * @param parent 
+         * @param
          */
         OBDParticleSystem(OBDSceneNode*, i32, glm::vec3);
 
@@ -39,6 +39,8 @@ class OBDParticleSystem : public OBDEntity {
         TNode* rotationNode;
         TNode* translationNode;
         TNode* scaleNode;
+
+        i32 ID;
 };
 
 #endif
