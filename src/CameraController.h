@@ -9,6 +9,7 @@
 #include <GraphicEngine/Terrain.h>
 #include <IOEngine/Keyboard.h>
 #include <IOEngine/Mouse.h>
+#include <IOEngine/Timer.h>
 
 /**
  * @class CameraController.
@@ -96,6 +97,13 @@ class CameraController {
          * @return Vector3 with the value of camPos variable.
          */
         Vector3<f32> getCameraPosition();  
+
+        /**
+         * @brief 
+         * 
+         * @param deltaTime 
+         */
+        void input(f32 deltaTime);
         
     private:
         //Pointer to the current active camera.
@@ -174,6 +182,8 @@ class CameraController {
         Vector2<i32> cursorPosSaved;
         
         //Center point of the current window size.
-        Vector2<i32> screenCenter; //ToDo: Esto no va aqui
+        Vector2<i32> screenCenter;
+
+        Timer* updateTimer;
 };
 #endif

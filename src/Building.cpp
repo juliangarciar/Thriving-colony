@@ -67,6 +67,12 @@ Building::Building(SceneNode *_layer,
 }
 
 Building::~Building() {
+    //delete model;
+    //if (model != nullptr) delete model;
+    delete canBuildMat;
+    delete cantBuildMat;
+    delete baseMat;
+    delete damagedMat;
     delete buildTimer;
 }
 

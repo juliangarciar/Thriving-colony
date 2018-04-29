@@ -48,10 +48,18 @@ CameraController::CameraController() {
 
 	//ToDo: deberia actualizarse al redimensionar la pantalla
     screenCenter = Vector2<i32>(w->getInitialWindowWidth()/2, w->getInitialWindowHeight()/2);
+
+	int fractionsOfASecond = 50;
+	updateTimer = new Timer(1/fractionsOfASecond, true);
+
+	updateTimer -> setCallback([&](){
+        input(Window::Instance() -> getDeltaTime());
+	});
 }
 
 CameraController::~CameraController() {
 	delete camera;
+	delete updateTimer;
 }
 
 void CameraController::Init(Vector3<float> v){
@@ -67,6 +75,8 @@ void CameraController::Init(Vector3<float> v){
 }
 
 void CameraController::Update(f32 deltaTime) {
+	updateTimer -> tick();
+/*
 	tarPos.set(camera -> getTargetPosition());
 	camPos.set(camera -> getCameraPosition());
 
@@ -139,6 +149,101 @@ void CameraController::Update(f32 deltaTime) {
 		} else {
 			tarPos.z += tarIncr.z;
 		}
+	}
+	}
+
+	if (centerCameraMode){
+		//std::cout << userPos << std::endl;
+		tarPos = userPos;
+	}
+
+    if (movementMode || rotationOrInclinationMode || zoomMode || centerCameraMode){
+		camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
+
+		i32 camHeight = camPos.y - tarPos.y;
+		i32 mapHeight = Map::Instance() -> getTerrain() -> getY(camPos.x, camPos.z);
+
+		camPos.y = mapHeight + camHeight;
+
+		camera -> setTargetPosition(tarPos);
+		camera -> setCameraPosition(camPos);
+    }*/
+}
+
+void CameraController::input(f32 deltaTime) {
+	tarPos.set(camera -> getTargetPosition());
+	camPos.set(camera -> getCameraPosition());
+
+	if (movementMode) {
+    	Vector3<f32> tarIncr;
+		i32 d = rotateDegrees.x; 
+		switch (direction) {
+			// up stands for update (delta)
+			case 1: //arriba
+				tarIncr.x = (f32)1;
+				tarIncr.z = (f32)1;
+				d += 0;
+			break;
+			case 8: //derecha
+				tarIncr.x = (f32)1;
+				tarIncr.z = (f32)-1;
+				d += 90;
+			break;
+			case 4: //abajo
+				tarIncr.x = (f32)-1;
+				tarIncr.z = (f32)-1;
+				d += 180;
+			break;
+			case 2: // izquierda
+				tarIncr.x = (f32)-1;
+				tarIncr.z = (f32)1;
+				d += 270;
+			break;
+			case 9: // arriba derecha
+				tarIncr.x = (f32)1 * recipsqrt2;
+				tarIncr.z = (f32)1 * recipsqrt2;
+				d+= 45;
+			break;
+			case 12: //abajo derecha
+				tarIncr.x = (f32)1 * recipsqrt2;
+				tarIncr.z = (f32)-1 * recipsqrt2;
+				d += 135;
+			break;
+			case 6: //abajo izquierda
+				tarIncr.x = (f32)-1 * recipsqrt2;
+				tarIncr.z = (f32)1 * recipsqrt2;
+				d += 225;
+			break;
+			case 3: // arriba izquierda
+				tarIncr.x = (f32)1 * recipsqrt2;
+				tarIncr.z = (f32)1 * recipsqrt2;
+				d += 315;
+			break;
+		}
+
+		tarIncr = Vector3<f32>().rotateFromPoint(
+			sqrtf(powf(tarIncr.x, 2) + powf(tarIncr.z, 2)), 
+			d,
+			0
+		) * camSpeed * deltaTime;
+
+		// border collision + apply update
+		if (tarPos.x < Enumeration::MapMargins::mapMarginTop) {
+			if (tarIncr.x > 0) tarPos.x += tarIncr.x;
+		} else if (tarPos.x > Enumeration::MapMargins::mapMarginRight) {
+			if (tarIncr.x < 0) tarPos.x += tarIncr.x;
+		} else {
+			tarPos.x += tarIncr.x;
+		}
+
+		if (tarPos.z < Enumeration::MapMargins::mapMarginTop) {
+			if (tarIncr.z > 0) tarPos.z += tarIncr.z;
+		} else if (tarPos.z > Enumeration::MapMargins::mapMarginBottom) {
+			if (tarIncr.z < 0) tarPos.z += tarIncr.z;
+		} else {
+			tarPos.z += tarIncr.z;
+		}
+	
 	}
 
 	if (centerCameraMode){
