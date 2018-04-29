@@ -153,30 +153,30 @@ class Unit : public Entity {
         /**
          * @brief Set the position of the unit.
          * 
-         * @param The Vector3 is the position that is going to be assigned to the unit.
+         * @param The Vector2 is the position that is going to be assigned to the unit.
          */
-        void setTroopPosition(Vector3<f32>);
+        void setTroopPosition(Vector2<f32>);
 
         /**
          * @brief Set the position where the unit is going to walk to.
          * 
-         * @param The Vector3 is the destination that is going to be assigned to the unit.
+         * @param The Vector2 is the destination that is going to be assigned to the unit.
          */
-        void setTroopDestination(Vector3<f32>);
+        void setTroopDestination(Vector2<f32>);
 
         /**
          * @brief
          * 
          * @param
          */
-        void setPath(std::list< Vector2<f32> >);
+        void setPath(std::list<Vector2<f32> >);
 
         /**
          * @brief
          * 
          * @param
          */
-        void setPathToTarget(Vector3<f32>);
+        void setPathToTarget(Vector2<f32>);
 
         /**
          * @brief
@@ -216,9 +216,9 @@ class Unit : public Entity {
         /**
          * @brief Get the destination of the unit.
          * 
-         * @return Vector3 that will be the value of vectorDes variable.
+         * @return Vector2 that will be the value of vectorDes variable.
          */
-        Vector3<f32> getDestination();
+        Vector2<f32> getDestination();
 
         /**
          * @brief 
@@ -230,9 +230,9 @@ class Unit : public Entity {
         /**
          * @brief Get the type of unit of the troop.
          * 
-         * @return Enumeration::UnitType that will be the value of type variable.
+         * @return std::string that will be the value of type variable.
          */
-        Enumeration::UnitType getType();
+        std::string getType();
 
         /**
          * @brief Get the current state of the unit.
