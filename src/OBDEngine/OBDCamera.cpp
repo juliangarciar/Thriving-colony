@@ -90,21 +90,21 @@ glm::vec3 OBDCamera::getTargetPosition() {
     return c -> getTargetPosition();
 }
 
-glm::vec3 OBDCamera::getWorldCoordinatesFromScreen(glm::vec3 world){
+glm::vec3 OBDCamera::getWorldCoordinatesFromScreen(glm::vec3 screen){
     TCamera* c = (TCamera*) cameraNode -> getEntity();
-    return c->getWorldCoordinatesFromScreen(world);
+    return c->getWorldCoordinatesFromScreen(screen);
 }
  
-glm::vec3 OBDCamera::getScreenCoordinatesFromWorld(glm::vec3 screen){
+glm::vec3 OBDCamera::getScreenCoordinatesFromWorld(glm::vec3 world){
     TCamera* c = (TCamera*) cameraNode -> getEntity();
-    return c->getScreenCoordinatesFromWorld(screen);
+    return c->getScreenCoordinatesFromWorld(world);
 }
 
-OBDLine OBDCamera::getRaycastFromScreenCoordinates(glm::vec2 world){
+OBDLine OBDCamera::getRaycastFromScreenCoordinates(glm::vec2 screen){
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     OBDLine l;
-    l.start = c->getWorldCoordinatesFromScreen(glm::vec3(world.x, world.y, -1));
-    l.end = c->getWorldCoordinatesFromScreen(glm::vec3(world.x, world.y, 1));
+    l.start = c->getWorldCoordinatesFromScreen(glm::vec3(screen.x, screen.y, 0));
+    l.end = c->getWorldCoordinatesFromScreen(glm::vec3(screen.x, screen.y, 1));
     return l;
 }
 
