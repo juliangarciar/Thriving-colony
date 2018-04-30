@@ -56,7 +56,7 @@ glm::vec3 TCamera::getCameraPosition() {
 }
 
 glm::vec3 TCamera::getWorldCoordinatesFromScreen(glm::vec3 world){
-    return glm::project(world, vMat, pMat, glm::vec4(0.0f, 0.0f, float(bottom), float(right)));
+    return glm::unProject(world, vMat, pMat, glm::vec4(0.0f, 0.0f, float(bottom), float(right)));
 }
 
 glm::vec3 TCamera::getScreenCoordinatesFromWorld(glm::vec3 screen){
