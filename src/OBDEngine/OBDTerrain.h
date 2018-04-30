@@ -100,6 +100,15 @@ class OBDTerrain : public OBDEntity {
 		 * @return TNode* 
 		 */
 		TNode *getFirstNode();
+
+		/**
+		 * @brief 
+		 * 
+		 * @param x 
+		 * @param z 
+		 * @return f32 
+		 */
+		f32 getY(f32 x, f32 z);
 	private:
 		void generateTerrain();
 

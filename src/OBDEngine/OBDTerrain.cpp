@@ -51,7 +51,10 @@ void OBDTerrain::generateTerrain(){
 	mesh.vbo = std::vector<float>(terrain->vertices, terrain->vertices+(terrain->num_vertices*8));
 	mesh.indices = std::vector<unsigned short>(terrain->vertices, terrain->vertices+terrain->num_indices);
 
+	std::cout << terrain->num_triangles << std::endl;
+
 	material.ambientColor = glm::vec3(1,1,1);
+	material.diffuseColor = glm::vec3(1,1,1);
 }
 
 void OBDTerrain::translate(f32 tX, f32 tY, f32 tZ) {
@@ -103,4 +106,9 @@ bool OBDTerrain::getActive() {
 
 TNode *OBDTerrain::getFirstNode(){
     return rotationNode;
+}
+
+f32 OBDTerrain::getY(f32 x, f32 z){
+	//ToDo
+	return terrain->height * node_scale.y;
 }

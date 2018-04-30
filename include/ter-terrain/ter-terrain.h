@@ -11,37 +11,35 @@
  *
  * So we use two buffers that are twice the size of the worse case scenario.
  */
-#define TER_TERRAIN_NUM_INDEX_BUFFERS 3
-#define TER_TERRAIN_MAX_IB_BYTES (((TER_TERRAIN_VX - 1) * (TER_TERRAIN_VZ * 2) + (TER_TERRAIN_VX - 2) + (TER_TERRAIN_VZ - 2)) * sizeof(unsigned) * 2)
-#define TER_TERRAIN_MAX_IB_INDICES (TER_TERRAIN_MAX_IB_BYTES / sizeof(unsigned))
 
 #define TERRAIN(t, w, d) t->heights[(w) * t->depth + (d)]
 
 typedef struct {
-   float x0, x1, y0, y1, z0, z1;
+   float x0, y0, z0;
+   float x1, y1, z1;
 } TerClipVolume;
 
 typedef struct {
+	glm::vec3 a;
+	glm::vec3 b;
+	glm::vec3 c;
+} TerTriangle;
+
+typedef struct {
    int width, height, depth;
+   
    float step;
+   
    float *heights;
 
    float *vertices;
    unsigned num_vertices;
 
-   unsigned *indices;
+   short *indices;
    unsigned num_indices;
 
-   unsigned vao;
-   unsigned vertex_buf;
-
-   unsigned index_buf[TER_TERRAIN_NUM_INDEX_BUFFERS];
-   unsigned ibuf_idx;
-   unsigned ibuf_used;
-   unsigned ibuf_cur_offset;
-
-   glm::mat4 prev_mvp;
-   bool prev_mvp_valid;
+   TerTriangle *triangles;
+   unsigned num_triangles;
 } TerTerrain;
 
 TerTerrain *ter_terrain_new(unsigned width, unsigned depth, float step);
@@ -52,6 +50,8 @@ void ter_terrain_set_height(TerTerrain *t, unsigned w, unsigned d, float h);
 float ter_terrain_get_height_at(TerTerrain *t, float x, float z);
 
 void ter_terrain_set_heights_from_texture(TerTerrain *t, const char *path, float offset, float scale);
+
+void ter_terrain_set_triangles_from_indices(TerTerrain *t);
    
 void ter_terrain_build_mesh(TerTerrain *t);
 
