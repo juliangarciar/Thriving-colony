@@ -323,7 +323,7 @@ class Unit : public Entity {
         std::string selectEvent;
 
         //
-Troop* troops;
+        Troop* troops;
 };
 
 #endif
