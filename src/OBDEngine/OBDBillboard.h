@@ -19,7 +19,7 @@ class OBDBillboard : public OBDEntity {
          * 
          * @param parent 
          */
-        OBDBillboard(OBDSceneNode*, i32, glm::vec3, GLuintTBillboard* aux = (TBillboard*)(billboardNode -> getEntity()););
+        OBDBillboard(OBDSceneNode*, i32, glm::vec3, GLuint);
 
         /**
          * @brief 

@@ -3,9 +3,13 @@
 
 #include "OBDSceneNode.h"
 
-#include "Graphics/TBillboard.h"
+#include "Graphics/TParticle.h"
 
-class OBDParticleEmiter : public OBDEntity {
+enum ParticleEmiterType {
+    Point
+};
+
+class OBDParticleEmiter {
     
     public:
         /**
@@ -19,7 +23,7 @@ class OBDParticleEmiter : public OBDEntity {
          * 
          * @param parent 
          */
-        OBDParticleEmiter(OBDSceneNode*, i32, glm::vec3);
+        OBDParticleEmiter(i32, i32, std::vector<TParticle*>);
 
         /**
          * @brief 
@@ -27,18 +31,15 @@ class OBDParticleEmiter : public OBDEntity {
          */
         ~OBDParticleEmiter();
 
-         /**
-         * @brief Get the First Node object
+        /**
+         * @brief Get the Type object
          * 
-         * @return TNode* 
+         * @return ParticleEmiterType 
          */
-        TNode *getFirstNode();
+        virtual ParticleEmiterType getType() {return ParticleEmiterType::Point;};
 
     private:
-        TNode* particleSystemNode;
-        TNode* rotationNode;
-        TNode* translationNode;
-        TNode* scaleNode;
+        ParticleEmiterType type;
 };
 
 #endif

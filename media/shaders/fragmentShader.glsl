@@ -56,8 +56,6 @@ uniform sampler2D specularTexture;
 uniform sampler2D alphaTexture;
 uniform sampler2D bumpTexture;
 
-uniform vec3 color;
-
 // FUNCION QUE CALCULA EL MODELO DE REFLEXION DE PHONG
 vec3 Phong(int lightIndex) {
     vec3 Ambient;
@@ -102,6 +100,5 @@ void main(){
     for (int i = 0; i < lightNumber; i++){
         finalColor = finalColor + vec4(Phong(i), 1);
     }
-    //FragColor = finalColor;
-    FragColor = color;
+    FragColor = finalColor;
 }
