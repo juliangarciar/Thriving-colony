@@ -100,15 +100,6 @@ void TCamera::setRight(f32 r){
 	recalculateProjectionMatrix();
 }
 
-glm::vec3 TCamera::getWorldCoordinatesFromScreen(glm::vec3 screen){
-    screen.y = bottom - screen.y; //Invert y
-    return glm::unProject(screen, vMat, pMat, glm::vec4(0.0f, 0.0f, float(bottom), float(right)));
-}
-
-glm::vec3 TCamera::getScreenCoordinatesFromWorld(glm::vec3 world){
-    return glm::project(world, vMat, pMat, glm::vec4(0.0f, 0.0f, float(bottom), float(right)));
-}
-
 glm::vec3 TCamera::getTargetPosition() {
     return targetPosition;
 }

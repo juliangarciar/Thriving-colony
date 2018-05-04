@@ -47,6 +47,13 @@ class TMesh : public TEntity {
          */
         virtual void setTexture(OBDEnums::TextureTypes, TTexture*);
 
+		/**
+		 * @brief Get the Model Matrix object
+		 * 
+		 * @return glm::mat4 
+		 */
+		glm::mat4 getModelMatrix();
+
         /**
          * @brief Get the Mesh object
          * 
@@ -65,6 +72,8 @@ class TMesh : public TEntity {
         ResourceMaterial material;
         
         std::vector<TTexture*> textures;
+
+		glm::mat4 modelMatrix;
         
         glslTexture activeTextures;
 	    glslMaterial currentMaterial;

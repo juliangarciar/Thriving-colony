@@ -62,16 +62,16 @@ void TCache::setViewMatrix(glm::mat4 m){
     viewMatrix = m;
 }
 
-glm::mat4 TCache::getViewMatrix(){
-    return viewMatrix;
+glm::mat4 *TCache::getViewMatrix(){
+    return &viewMatrix;
 }
 
 void TCache::setProjectionMatrix(glm::mat4 m){
     projectionMatrix = m;
 }
 
-glm::mat4 TCache::getProjectionMatrix(){
-    return projectionMatrix;
+glm::mat4 *TCache::getProjectionMatrix(){
+    return &projectionMatrix;
 }
 
 void TCache::setCameraPosition(glm::vec3 m){

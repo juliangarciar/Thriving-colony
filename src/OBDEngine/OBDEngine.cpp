@@ -25,8 +25,11 @@ OBDEngine::~OBDEngine() {
 }
 
 void OBDEngine::Init(i32 sW, i32 sH) {
-    screenWidth = sW;
-    screenHeight = sH;
+    windowWidth = sW;
+    windowHeight = sH;
+
+	// Viewport
+	viewport = glm::vec4(0.0f, 0.0f, windowWidth, windowHeight);
 
 	// Black background
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -62,6 +65,19 @@ void OBDEngine::End(){
 	glDeleteVertexArrays(1, &VAO);
 }
 
+void OBDEngine::draw() {
+    glUseProgram(currentProgram->getShaderProgram());
+
+    // Clear the screen
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Draw our tree
+    rootNode -> draw();
+
+    // Clear light cache
+    TEntity::cache.getLights()->clear();
+}
+
 OBDLight* OBDEngine::createLight(OBDColor color, f32 intensity, f32 ambient, f32 attenuation) {
     OBDLight* lightNode = new OBDLight(clSceneNode, color, intensity, ambient, attenuation);
     lights.push_back(lightNode);
@@ -69,7 +85,7 @@ OBDLight* OBDEngine::createLight(OBDColor color, f32 intensity, f32 ambient, f32
 }
 
 OBDCamera* OBDEngine::createCamera() {
-    OBDCamera* cameraNode = new OBDCamera(clSceneNode, screenWidth, screenHeight);
+    OBDCamera* cameraNode = new OBDCamera(clSceneNode, windowWidth, windowHeight);
     cameras.push_back(cameraNode);
     return cameraNode;
 }
@@ -114,31 +130,6 @@ OBDTerrain *OBDEngine::createTerrain(OBDSceneNode* layer, std::string heightMap)
 	return new OBDTerrain(layer, heightMap);
 }
 
-//////SANDBOX//////
-
-OBDAnimation* OBDEngine::createAnimation(std::string anim) {
-    //ToDo: hacer animaciones
-    return new OBDAnimation(defaultSceneNode);
-}
-
-OBDAnimation* OBDEngine::createAnimation(OBDSceneNode* layer, std::string anim) {
-    //ToDo: hacer animaciones
-    return new OBDAnimation(layer);
-}
-
-OBDBillboard* OBDEngine::createBillboard(OBDSceneNode* layer, i32 id, glm::vec3 pos) {
-    OBDBillboard* billboard = new OBDBillboard(layer, id, pos);
-    return billboard;
-}
-
-OBDTile* OBDEngine::createTile(ResourceIMG* _texture, glm::vec2 _position){
-    OBDTile* tmp = new OBDTile(_texture, _position);
-    defaultSceneNode->addChild(tmp);
-    return tmp;
-}
-
-/////////////////
-
 void OBDEngine::registerLight(OBDLight* lightNode) {
     clSceneNode -> addChild(lightNode);
     lights.push_back(lightNode);
@@ -163,21 +154,46 @@ void OBDEngine::setCurrentShaderProgram(std::string programName){
     }
 }
 
+void OBDEngine::setWindowSize(i32 w, i32 h){
+	windowWidth = w;
+	windowHeight = h;
+	viewport = glm::vec4(0.0f, 0.0f, windowWidth, windowHeight);
+}
+
 void OBDEngine::setClearColor(OBDColor c) {
 	glClearColor(c.r, c.g, c.b, c.a);
 }
 
-void OBDEngine::draw() {
-    glUseProgram(currentProgram->getShaderProgram());
+glm::vec3 OBDEngine::getWorldCoordinatesFromScreen(glm::vec3 screen){
+    screen.y = windowWidth - screen.y; //Invert y
+    return glm::unProject(screen, *TEntity::cache.getViewMatrix(), *TEntity::cache.getProjectionMatrix(), viewport);
+}
+ 
+glm::vec3 OBDEngine::getScreenCoordinatesFromWorld(glm::vec3 world){
+    return glm::project(world, *TEntity::cache.getViewMatrix(), *TEntity::cache.getProjectionMatrix(), viewport);
+}
 
-    // Clear the screen
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+OBDLine OBDEngine::getRaycastFromScreenCoordinates(glm::vec2 screen){
+    OBDLine l;
+    l.start = getWorldCoordinatesFromScreen(glm::vec3(screen.x, screen.y, 0));
+    l.end = getWorldCoordinatesFromScreen(glm::vec3(screen.x, screen.y, 1));
+    return l;
+}
 
-    // Draw our tree
-    rootNode -> draw();
+glm::vec3 OBDEngine::getRelativeWorldCoordinatesFromScreen(glm::vec3 screen, glm::mat4 model){
+    screen.y = windowHeight - screen.y; //Invert y
+    return glm::unProject(screen, *TEntity::cache.getViewMatrix() * model, *TEntity::cache.getProjectionMatrix(), viewport);
+}
+ 
+glm::vec3 OBDEngine::getRelativeScreenCoordinatesFromWorld(glm::vec3 world, glm::mat4 model){
+    return glm::project(world, *TEntity::cache.getViewMatrix() * model, *TEntity::cache.getProjectionMatrix(), viewport);
+}
 
-    // Clear light cache
-    TEntity::cache.getLights()->clear();
+OBDLine OBDEngine::getRelativeRaycastFromScreenCoordinates(glm::vec2 screen, glm::mat4 model){
+    OBDLine l;
+    l.start = getRelativeWorldCoordinatesFromScreen(glm::vec3(screen.x, screen.y, 0), model);
+    l.end = getRelativeWorldCoordinatesFromScreen(glm::vec3(screen.x, screen.y, 1), model);
+    return l;
 }
 
 TNode* OBDEngine::getRootNode() {
@@ -187,3 +203,28 @@ TNode* OBDEngine::getRootNode() {
 OBDSceneNode* OBDEngine::getDefaultLayer() {
     return defaultSceneNode;
 }
+
+//////SANDBOX//////
+
+OBDAnimation* OBDEngine::createAnimation(std::string anim) {
+    //ToDo: hacer animaciones
+    return new OBDAnimation(defaultSceneNode);
+}
+
+OBDAnimation* OBDEngine::createAnimation(OBDSceneNode* layer, std::string anim) {
+    //ToDo: hacer animaciones
+    return new OBDAnimation(layer);
+}
+
+OBDBillboard* OBDEngine::createBillboard(OBDSceneNode* layer, i32 id, glm::vec3 pos) {
+    OBDBillboard* billboard = new OBDBillboard(layer, id, pos);
+    return billboard;
+}
+
+OBDTile* OBDEngine::createTile(ResourceIMG* _texture, glm::vec2 _position){
+    OBDTile* tmp = new OBDTile(_texture, _position);
+    defaultSceneNode->addChild(tmp);
+    return tmp;
+}
+
+/////////////////

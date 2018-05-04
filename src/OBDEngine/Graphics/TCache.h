@@ -61,7 +61,7 @@ class TCache {
          * 
          * @return glm::mat4 
          */
-        glm::mat4 getViewMatrix();
+        glm::mat4 *getViewMatrix();
 
         /**
          * @brief Set the Projection Matrix object
@@ -75,7 +75,7 @@ class TCache {
          * 
          * @return glm::mat4 
          */
-        glm::mat4 getProjectionMatrix();
+        glm::mat4 *getProjectionMatrix();
 
         /**
          * @brief Set the Camera Position

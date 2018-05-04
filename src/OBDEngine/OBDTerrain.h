@@ -2,6 +2,7 @@
 #define OBDTERRAIN_H
 
 #include <ter-terrain/ter-terrain.h>
+#include <ter-terrain/octree.h>
 
 #include "OBDEntity.h"
 #include "OBDSceneNode.h"
@@ -95,11 +96,26 @@ class OBDTerrain : public OBDEntity {
 		bool getActive();
 
 		/**
+		 * @brief Get the Terrain Mesh object
+		 * 
+		 * @return TMesh* 
+		 */
+		TMesh *getTerrainMesh();
+
+		/**
 		 * @brief Get the First Node object
 		 * 
 		 * @return TNode* 
 		 */
 		TNode *getFirstNode();
+
+		/**
+		 * @brief Get the Ray Collision object
+		 * 
+		 * @param line
+		 * @return glm::vec3 
+		 */
+		glm::vec3 getRayCollision(OBDLine);
 
 		/**
 		 * @brief 
@@ -110,12 +126,14 @@ class OBDTerrain : public OBDEntity {
 		 */
 		f32 getY(f32 x, f32 z);
 	private:
-		void generateTerrain();
+		void generateTerrain(const char *path);
 
 		ResourceMesh mesh;
 		ResourceMaterial material;
 
 		TerTerrain *terrain;
+		std::vector<glm::vec3> vertex_vector;
+		SDF *octree;
 
 		TNode* rotationNode;
 		TNode* translationNode;

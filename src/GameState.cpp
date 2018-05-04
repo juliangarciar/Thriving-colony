@@ -160,7 +160,7 @@ void GameState::Input() {
                             human -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
                         }
                     } else {
-                        //std::cout << "Ninguna tropa seleccionada" << std::endl;
+                        //Ninguna tropa seleccionada
                     }
                 } else 
                     IO::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);

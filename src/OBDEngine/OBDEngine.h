@@ -46,6 +46,12 @@ class OBDEngine {
         void End();
 
         /**
+         * @brief 
+         * 
+         */
+        void draw();
+
+        /**
          * @brief Create a Light object
          * 
          * @param color 
@@ -120,6 +126,103 @@ class OBDEngine {
 		 * @return OBDTerrain* 
 		 */
 		OBDTerrain *createTerrain(OBDSceneNode*, std::string);
+
+        /**
+         * @brief 
+         * 
+         * @param rec 
+         */
+        void registerCamera(OBDCamera* rec);
+
+        /**
+         * @brief 
+         * 
+         * @param lightNode 
+         */
+        void registerLight(OBDLight* lightNode);
+
+        /**
+         * @brief 
+         * 
+         * @param shaderProgram 
+         * @param shaderProgram 
+         */
+        void registerShaderProgram(std::string, OBDShaderProgram *);
+
+        /**
+         * @brief Set the current shader program
+         * @param program
+         */
+        void setCurrentShaderProgram(std::string);
+
+		/**
+		 * @brief Set the Window Size object
+		 * @param width
+		 * @param height
+		 */
+		void setWindowSize(i32, i32);
+
+        /**
+         * @brief Set the Clean Color object
+         * @param color
+         */
+        void setClearColor(OBDColor);
+
+        /**
+         * @brief 
+         * 
+         * @return TNode* 
+         */
+        TNode* getRootNode();
+
+        /**
+         * @brief 
+         * 
+         */
+        OBDSceneNode* getDefaultLayer();
+
+        /**
+         * @brief Get World Coordinates From Screen
+         * 
+         * @return glm::vec3 
+         */
+        glm::vec3 getWorldCoordinatesFromScreen(glm::vec3);
+
+        /**
+         * @brief Get Screen Coordinates From World
+         * 
+         * @return glm::vec3 
+         */
+        glm::vec3 getScreenCoordinatesFromWorld(glm::vec3);
+
+        /**
+         * @brief Get World Coordinates From Screen
+         * 
+         * @return glm::vec3 
+         */
+        OBDLine getRaycastFromScreenCoordinates(glm::vec2);
+
+        /**
+         * @brief Get World Coordinates From Screen
+         * 
+         * @return glm::vec3 
+         */
+        glm::vec3 getRelativeWorldCoordinatesFromScreen(glm::vec3, glm::mat4);
+
+        /**
+         * @brief Get Screen Coordinates From World
+         * 
+         * @return glm::vec3 
+         */
+        glm::vec3 getRelativeScreenCoordinatesFromWorld(glm::vec3, glm::mat4);
+
+        /**
+         * @brief Get World Coordinates From Screen
+         * 
+         * @return glm::vec3 
+         */
+        OBDLine getRelativeRaycastFromScreenCoordinates(glm::vec2, glm::mat4);
+
         
 		////////////SANDBOX////////////
 
@@ -158,60 +261,6 @@ class OBDEngine {
         OBDBillboard* createBillboard(OBDSceneNode*, i32, glm::vec3);
 
 		/////////////////////////////
-
-        /**
-         * @brief 
-         * 
-         * @param rec 
-         */
-        void registerCamera(OBDCamera* rec);
-
-        /**
-         * @brief 
-         * 
-         * @param lightNode 
-         */
-        void registerLight(OBDLight* lightNode);
-
-        /**
-         * @brief 
-         * 
-         * @param shaderProgram 
-         * @param shaderProgram 
-         */
-        void registerShaderProgram(std::string, OBDShaderProgram *);
-
-        /**
-         * @brief Set the current shader program
-         * @param program
-         */
-        void setCurrentShaderProgram(std::string);
-
-        /**
-         * @brief Set the Clean Color object
-         * @param color
-         */
-        void setClearColor(OBDColor);
-
-        /**
-         * @brief 
-         * 
-         */
-        void draw();
-
-        /**
-         * @brief 
-         * 
-         * @return TNode* 
-         */
-        TNode* getRootNode();
-
-        /**
-         * @brief 
-         * 
-         */
-        OBDSceneNode* getDefaultLayer();
-
     private:
         ResourceManager *OBDManager;
 
@@ -226,8 +275,10 @@ class OBDEngine {
         std::vector<OBDLight*> lights;
         std::map<std::string, OBDShaderProgram*> shaderPrograms;
 
-        i32 screenWidth;
-        i32 screenHeight;
+		glm::vec4 viewport;
+
+        i32 windowWidth;
+        i32 windowHeight;
 };
 
 #endif

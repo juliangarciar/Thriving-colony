@@ -138,28 +138,7 @@ class OBDCamera : public OBDEntity {
          * @return glm::vec3 
          */
         glm::vec3 getTargetPosition();
-
-        /**
-         * @brief Get World Coordinates From Screen
-         * 
-         * @return glm::vec3 
-         */
-        glm::vec3 getWorldCoordinatesFromScreen(glm::vec3);
-
-        /**
-         * @brief Get Screen Coordinates From World
-         * 
-         * @return glm::vec3 
-         */
-        glm::vec3 getScreenCoordinatesFromWorld(glm::vec3);
-
-        /**
-         * @brief Get World Coordinates From Screen
-         * 
-         * @return glm::vec3 
-         */
-        OBDLine getRaycastFromScreenCoordinates(glm::vec2);
-
+		
         /**
          * @brief 
          * s

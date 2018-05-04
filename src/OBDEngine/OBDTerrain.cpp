@@ -5,12 +5,7 @@ OBDTerrain::OBDTerrain(std::string path){
 	translationNode = new TNode(new TTransform(), rotationNode);
 	scaleNode = new TNode(new TTransform(), translationNode);
 
-	// ToDo: revisar parametros
-	terrain = ter_terrain_new(256, 256, 1);
-	ter_terrain_set_heights_from_texture(terrain, path.c_str(), 0, 1);
-	ter_terrain_build_mesh(terrain);
-
-	generateTerrain();
+	generateTerrain(path.c_str());
 
 	terrainNode = new TNode(new TMesh(mesh, material), scaleNode);
 }
@@ -20,12 +15,7 @@ OBDTerrain::OBDTerrain(OBDSceneNode* parent, std::string path){
 	translationNode = new TNode(new TTransform(), rotationNode);
 	scaleNode = new TNode(new TTransform(), translationNode);
 
-	// ToDo: revisar parametros
-	terrain = ter_terrain_new(256, 256, 1);
-	ter_terrain_set_heights_from_texture(terrain, path.c_str(), 0, 1);
-	ter_terrain_build_mesh(terrain);
-
-	generateTerrain();
+	generateTerrain(path.c_str());
 
 	terrainNode = new TNode(new TMesh(mesh, material), scaleNode);
 
@@ -37,7 +27,12 @@ OBDTerrain::~OBDTerrain() {
 	rotationNode = nullptr;
 }
 
-void OBDTerrain::generateTerrain(){
+void OBDTerrain::generateTerrain(const char *path){
+	// ToDo: revisar parametros
+	terrain = ter_terrain_new(256, 256, 1);
+	ter_terrain_set_heights_from_texture(terrain, path, 0, 1);
+	ter_terrain_build_mesh(terrain);
+
 	int w = ter_terrain_get_width(terrain);
 	int h = ter_terrain_get_height(terrain);
 	int d = ter_terrain_get_depth(terrain);
@@ -51,10 +46,14 @@ void OBDTerrain::generateTerrain(){
 	mesh.vbo = std::vector<float>(terrain->vertices, terrain->vertices+(terrain->num_vertices*8));
 	mesh.indices = std::vector<unsigned short>(terrain->vertices, terrain->vertices+terrain->num_indices);
 
-	std::cout << terrain->num_triangles << std::endl;
-
 	material.ambientColor = glm::vec3(1,1,1);
 	material.diffuseColor = glm::vec3(1,1,1);
+
+	vertex_vector = std::vector<glm::vec3>(terrain->glm_vertices, terrain->glm_vertices + terrain->num_vertices);
+
+	octree = new SDF(vertex_vector, terrain->triangled_indices, terrain->triangle_centroids);
+	octree->init();
+	octree->build();
 }
 
 void OBDTerrain::translate(f32 tX, f32 tY, f32 tZ) {
@@ -101,7 +100,13 @@ void OBDTerrain::setActive(bool a) {
 }
 
 bool OBDTerrain::getActive() {
-	return terrainNode -> getActive();
+	TMesh* t = (TMesh*) terrainNode -> getEntity();
+	return t;
+}
+
+TMesh *OBDTerrain::getTerrainMesh(){
+	TMesh* t = (TMesh*) terrainNode -> getEntity();
+	return t;
 }
 
 TNode *OBDTerrain::getFirstNode(){
@@ -110,5 +115,15 @@ TNode *OBDTerrain::getFirstNode(){
 
 f32 OBDTerrain::getY(f32 x, f32 z){
 	//ToDo
-	return terrain->height * node_scale.y;
+	return 2000;
+}
+
+glm::vec3 OBDTerrain::getRayCollision(OBDLine line){
+	glm::vec3 dir = glm::normalize(line.end - line.start);
+	std::vector<glm::vec3> res = octree->query(line.start, dir);
+	for (int i = 0; i < res.size(); i++) std::cout << res[i].x << " " << res[i].y << " " << res[i].z << std::endl;
+	/*vector<cLine> rayList;
+	rayList.push_back(cLine(line.start, line.end, 0));
+	vector<int> c = octree->findRayIntersectsSorted(rayList);*/
+	return glm::vec3();
 }

@@ -61,6 +61,7 @@ Window::Window(i32 width, i32 height) {
 
     glfwSetFramebufferSizeCallback(window,
         [](GLFWwindow *w, i32 width, i32 height) {
+			Window::Instance() -> getEngine() -> setWindowSize(width, height);
             Window::Instance() -> getGUIEnvironment() -> resizeCallbackEvent(width, height);
         }
     );

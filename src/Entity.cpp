@@ -223,16 +223,3 @@ void Entity::setBaseMaterial() {
 void Entity::setDamagedMaterial() {
     model -> setMaterial(damagedMat);
 }
-
-    //position -> set(vectorData);
-    /* Adjust the hitbox properly */
-    //Vector2<f32> topLeft;
-    //Vector2<f32> bottomRight;
-    //topLeft.x = vectorData.x - 120.f;
-    //topLeft.y = vectorData.z - 120.f;
-    //bottomRight.x = vectorData.x + 120.f;
-    //bottomRight.y = vectorData.z + 120.f;
-    //hitBox = Box2D(topLeft, bottomRight);
-    //std::cout << "Moving HitBox to: \n";
-    //std::cout << hitBox.TopLeft().x << "," << hitBox.TopLeft().y << "\n";
-    //std::cout << hitBox.BottomRight().x << "," << hitBox.BottomRight().y << "\n";

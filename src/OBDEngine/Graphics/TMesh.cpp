@@ -59,14 +59,14 @@ TMesh::~TMesh() {
 }
 
 void TMesh::beginDraw() { 
-	glm::mat4 pM = cache.getProjectionMatrix();
-	glm::mat4 vM = cache.getViewMatrix();
-	glm::mat4 mM = cache.getMatrixStack().top();
+	glm::mat4 pM = *cache.getProjectionMatrix();
+	glm::mat4 vM = *cache.getViewMatrix();
+	modelMatrix = cache.getMatrixStack().top();
 
 	// Matrices
-	glm::mat4 MV = vM * mM;
-	glm::mat4 MVP = pM * vM * mM;
-	glUniformMatrix4fv(cache.getID(OBDEnums::OpenGLIDs::MATRIX_MODEL), 1, GL_FALSE, &mM[0][0]);
+	glm::mat4 MV = vM * modelMatrix;
+	glm::mat4 MVP = pM * vM * modelMatrix;
+	glUniformMatrix4fv(cache.getID(OBDEnums::OpenGLIDs::MATRIX_MODEL), 1, GL_FALSE, &modelMatrix[0][0]);
 	glUniformMatrix4fv(cache.getID(OBDEnums::OpenGLIDs::MATRIX_VIEW), 1, GL_FALSE, &vM[0][0]);
 	glUniformMatrix4fv(cache.getID(OBDEnums::OpenGLIDs::MATRIX_PROJECTION), 1, GL_FALSE, &pM[0][0]);
 	glUniformMatrix4fv(cache.getID(OBDEnums::OpenGLIDs::MATRIX_MV), 1, GL_FALSE, &MV[0][0]);
@@ -190,6 +190,10 @@ void TMesh::setTexture(OBDEnums::TextureTypes tt, TTexture* t){
 	glBindBuffer(GL_UNIFORM_BUFFER, textureID);
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslTexture), &activeTextures);
 	glBindBufferBase(GL_UNIFORM_BUFFER, 3, textureID);
+}
+
+glm::mat4 TMesh::getModelMatrix(){
+	return modelMatrix;
 }
 
 ResourceMesh TMesh::getMesh(){

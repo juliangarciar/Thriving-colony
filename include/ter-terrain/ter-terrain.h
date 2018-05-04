@@ -1,6 +1,7 @@
 #ifndef __DRV_TERRAIN_H__
 #define __DRV_TERRAIN_H__
 
+#include <array>
 #include <vector>
 #include <glm/glm.hpp>
 
@@ -20,12 +21,6 @@ typedef struct {
 } TerClipVolume;
 
 typedef struct {
-	glm::vec3 a;
-	glm::vec3 b;
-	glm::vec3 c;
-} TerTriangle;
-
-typedef struct {
    int width, height, depth;
    
    float step;
@@ -33,30 +28,29 @@ typedef struct {
    float *heights;
 
    float *vertices;
-   unsigned num_vertices;
+   glm::vec3 *glm_vertices;
+   unsigned int num_vertices;
 
-   short *indices;
-   unsigned num_indices;
+   unsigned int *indices;
+   unsigned int num_indices;
 
-   TerTriangle *triangles;
-   unsigned num_triangles;
+   std::vector< std::array<unsigned int, 3> > triangled_indices;
+   std::vector<glm::vec3> triangle_centroids;
 } TerTerrain;
 
-TerTerrain *ter_terrain_new(unsigned width, unsigned depth, float step);
+TerTerrain *ter_terrain_new(unsigned int width, unsigned int depth, float step);
 void ter_terrain_free(TerTerrain *t);
 
-void ter_terrain_set_height(TerTerrain *t, unsigned w, unsigned d, float h);
+void ter_terrain_set_height(TerTerrain *t, unsigned int w, unsigned int d, float h);
 
 float ter_terrain_get_height_at(TerTerrain *t, float x, float z);
 
 void ter_terrain_set_heights_from_texture(TerTerrain *t, const char *path, float offset, float scale);
-
-void ter_terrain_set_triangles_from_indices(TerTerrain *t);
    
 void ter_terrain_build_mesh(TerTerrain *t);
 
 void ter_terrain_compute_clipped_indices(TerTerrain *t, TerClipVolume *clip,
-                                         unsigned *count, size_t *offset);
+                                         unsigned int *count, size_t *offset);
 
 float ter_terrain_get_width(TerTerrain *t);
 float ter_terrain_get_height(TerTerrain *t);

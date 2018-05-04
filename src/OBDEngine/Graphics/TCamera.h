@@ -112,20 +112,6 @@ class TCamera : public TEntity {
          * @param tZ 
          */
         void setCameraPosition(glm::vec3 p);
-
-        /**
-         * @brief Get the World Coordinates From Screen object
-         * 
-         * @return glm::vec3 
-         */
-        glm::vec3 getWorldCoordinatesFromScreen(glm::vec3);
-
-        /**
-         * @brief Get the Screen Coordinates From World object
-         * 
-         * @return glm::vec3 
-         */
-        glm::vec3 getScreenCoordinatesFromWorld(glm::vec3);
         
 
         /**
@@ -197,7 +183,6 @@ class TCamera : public TEntity {
          * @return glm::vec3 
          */
         glm::vec3 getCameraPosition();
-
     private:
         /**
          * @brief 

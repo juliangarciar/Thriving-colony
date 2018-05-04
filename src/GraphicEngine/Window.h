@@ -55,7 +55,6 @@ class Window {
          * @return i32 framerate
          */
         i32 getFrameRate();
-        
     protected:
         Window(i32 width, i32 height);
         virtual ~Window();
