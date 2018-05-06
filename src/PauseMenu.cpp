@@ -24,12 +24,10 @@ PauseMenu::PauseMenu() {
 }
 
 PauseMenu::~PauseMenu() {
-    std::cout << "Destructor de PauseMenu init" << std::endl;
     delete buttonQuit;
     delete buttonResume;
     delete buttonMenu;
     delete bgMenu;
-    std::cout << "Destructor de PauseMenu finish" << std::endl;
 }
 
 void PauseMenu::setHUDEvents(){

@@ -232,7 +232,6 @@ void GameState::Render() {
 }
 
 void GameState::CleanUp() {
-    std::cout << "CleanUp de GameState init" << std::endl;
     delete battleManager;
     delete pauseMenu;
 
@@ -240,7 +239,6 @@ void GameState::CleanUp() {
     ia -> CleanUp();
     map -> CleanUp();
     hud -> CleanUp();
-    std::cout << "CleanUp de GameState finish" << std::endl;
 }
 
 BattleManager* GameState::getBattleManager() {

@@ -7,8 +7,6 @@ BattleManager::BattleManager() {
 }
 
 BattleManager::~BattleManager() {
-     std::cout << "Destructor de BattleManager init" << std::endl;
-     std::cout << "Destructor de BattleManager finish" << std::endl;
 }
 
 void BattleManager::askForTarget(Entity* requester) {

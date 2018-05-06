@@ -96,11 +96,17 @@ void Window::beginScene(){
 }
 
 void Window::endScene(){
+    std::cout << "Window::endScene init" << std::endl;
+    std::cout << "1" << std::endl;
+    // DA ERROR AQUI
     scene -> drawAll();
+    std::cout << "2" << std::endl;
     gui -> drawWidgets();
+    std::cout << "3" << std::endl;
     glEnable(GL_DEPTH_TEST);
-
+    std::cout << "4" << std::endl;
     driver -> endScene();
+    std::cout << "Window::endScene finish" << std::endl;
 }
 
 void Window::close(){
