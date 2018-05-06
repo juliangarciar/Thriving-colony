@@ -42,13 +42,15 @@ BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
 }
 
 BuildingManager::~BuildingManager() {
+	std::cout << "Destructor de BuildingManager init" << std::endl;
 	delete tempBuilding;
-	delete buildingLayer;
 	for (std::map<i32,Building*>::iterator it = inMapBuildings -> begin(); it != inMapBuildings -> end(); ++it) {
 		delete it -> second;
     }
+	delete buildingLayer;
 	inMapBuildings -> clear();
 	delete inMapBuildings;
+	std::cout << "Destructor de BuildingManager finish" << std::endl;
 }
 
 void BuildingManager::testRaycastCollisions() {
