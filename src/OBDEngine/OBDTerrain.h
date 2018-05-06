@@ -143,6 +143,8 @@ class OBDTerrain : public OBDEntity {
 		glm::vec3 node_position;
 		glm::vec3 node_rotation;
 		glm::vec3 node_scale;
+
+		glm::mat4 inverse_model;
 };
 
 #endif

@@ -23,8 +23,6 @@ typedef struct {
 typedef struct {
    int width, height, depth;
    
-   float step;
-   
    float *heights;
 
    float *vertices;
@@ -38,22 +36,16 @@ typedef struct {
    std::vector<glm::vec3> triangle_centroids;
 } TerTerrain;
 
-TerTerrain *ter_terrain_new(unsigned int width, unsigned int depth, float step);
+TerTerrain *ter_terrain_new();
+
 void ter_terrain_free(TerTerrain *t);
 
-void ter_terrain_set_height(TerTerrain *t, unsigned int w, unsigned int d, float h);
-
-float ter_terrain_get_height_at(TerTerrain *t, float x, float z);
-
-void ter_terrain_set_heights_from_texture(TerTerrain *t, const char *path, float offset, float scale);
+void ter_terrain_set_heights_from_texture(TerTerrain *t, const char *path, int step, float y_scale);
    
 void ter_terrain_build_mesh(TerTerrain *t);
 
-void ter_terrain_compute_clipped_indices(TerTerrain *t, TerClipVolume *clip,
-                                         unsigned int *count, size_t *offset);
+void ter_terrain_set_height_at(TerTerrain *t, unsigned int x, unsigned int z, float h);
 
-float ter_terrain_get_width(TerTerrain *t);
-float ter_terrain_get_height(TerTerrain *t);
-float ter_terrain_get_depth(TerTerrain *t);
+float ter_terrain_get_height_at(TerTerrain *t, unsigned int x, unsigned int z);
 
 #endif

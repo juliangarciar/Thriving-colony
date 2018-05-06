@@ -50,8 +50,7 @@ void TTransform::translate(f32 tX, f32 tY, f32 tZ) {
 }
 
 void TTransform::rotate(f32 rX, f32 rY, f32 rZ, f32 angle) {
-    matrix = glm::rotate(matrix , angle,glm::vec3(rX, rY, rZ));
-
+    matrix = glm::rotate(matrix, glm::radians(angle), glm::vec3(rX, rY, rZ));
 }
 
 void TTransform::scale(f32 sX, f32 sY, f32 sZ) {

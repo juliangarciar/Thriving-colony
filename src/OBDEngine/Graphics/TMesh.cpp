@@ -85,6 +85,16 @@ void TMesh::beginDraw() {
 		glBindBufferBase(GL_UNIFORM_BUFFER, 1, lightID);
 	}
 
+	//Send material
+	glBindBuffer(GL_UNIFORM_BUFFER, materialID);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslMaterial), &currentMaterial);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 2, materialID);
+
+	//Send textures
+	glBindBuffer(GL_UNIFORM_BUFFER, textureID);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslTexture), &activeTextures);
+	glBindBufferBase(GL_UNIFORM_BUFFER, 3, textureID);
+
 	int loadedTextures = 0;
 
 	if (activeTextures.diffuseTexture == 1){
@@ -137,17 +147,26 @@ void TMesh::beginDraw() {
 	glDrawElements(
 		GL_TRIANGLES,			// mode
 		mesh.indices.size(),	// count
-		GL_UNSIGNED_SHORT,		// type
+		GL_UNSIGNED_INT,		// type
 		(void*)0				// element array buffer offset
 	);
+}
+
+void TMesh::endDraw() {
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glActiveTexture(GL_TEXTURE3);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	glActiveTexture(GL_TEXTURE4);
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
 	glDisableVertexAttribArray(2);
-}
-
-void TMesh::endDraw() {
-
 }
 
 void TMesh::setMaterial(ResourceMaterial m){
@@ -157,11 +176,6 @@ void TMesh::setMaterial(ResourceMaterial m){
 	currentMaterial.diffuseColor = glm::vec4(material.diffuseColor, 1);
 	currentMaterial.specularColor = glm::vec4(material.specularColor, 1);
 	currentMaterial.shininess = material.specularExponent;
-
-	//Send material
-	glBindBuffer(GL_UNIFORM_BUFFER, materialID);
-	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslMaterial), &currentMaterial);
-	glBindBufferBase(GL_UNIFORM_BUFFER, 2, materialID);
 }
 
 void TMesh::setTexture(OBDEnums::TextureTypes tt, TTexture* t){
@@ -185,11 +199,6 @@ void TMesh::setTexture(OBDEnums::TextureTypes tt, TTexture* t){
 		break;
 		default: break;
 	}
-
-	//Send textures
-	glBindBuffer(GL_UNIFORM_BUFFER, textureID);
-	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslTexture), &activeTextures);
-	glBindBufferBase(GL_UNIFORM_BUFFER, 3, textureID);
 }
 
 glm::mat4 TMesh::getModelMatrix(){

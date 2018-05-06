@@ -29,14 +29,16 @@ OBDTerrain::~OBDTerrain() {
 
 void OBDTerrain::generateTerrain(const char *path){
 	// ToDo: revisar parametros
-	terrain = ter_terrain_new(256, 256, 1);
-	ter_terrain_set_heights_from_texture(terrain, path, 0, 1);
+	terrain = ter_terrain_new();
+	ter_terrain_set_heights_from_texture(terrain, path, 1, 40);
 	ter_terrain_build_mesh(terrain);
 
 	//Mesh
-	int w = ter_terrain_get_width(terrain);
-	int h = ter_terrain_get_height(terrain);
-	int d = ter_terrain_get_depth(terrain);
+	int w = terrain->width;
+	int h = terrain->height;
+	int d = terrain->depth;
+
+	std::cout << w << " " << h << " " << d << std::endl;
 
 	mesh.boundingBox.min = glm::vec3(0,0,0);
 	mesh.boundingBox.max = glm::vec3(w, h, d);
@@ -50,6 +52,8 @@ void OBDTerrain::generateTerrain(const char *path){
 	//Material
 	material.ambientColor = glm::vec3(1,1,1);
 	material.diffuseColor = glm::vec3(1,1,1);
+	material.specularColor = glm::vec3(1,1,1);
+	material.specularExponent = 90;
 
 	//Octree
 	vertex_vector = std::vector<glm::vec3>(terrain->glm_vertices, terrain->glm_vertices + terrain->num_vertices);
@@ -117,16 +121,26 @@ TNode *OBDTerrain::getFirstNode(){
 }
 
 f32 OBDTerrain::getY(f32 x, f32 z){
-	//ToDo
-	return 2000;
+	OBDLine line;
+	line.start = glm::inverse(getTerrainMesh()->getModelMatrix()) * glm::vec4(glm::vec3(x, -10000, z), 1); //ToDo: Revisar
+	line.end = glm::inverse(getTerrainMesh()->getModelMatrix()) * glm::vec4(glm::vec3(x, 10000, z), 1); //ToDo: Revisar
+	glm::vec3 dir = glm::normalize(line.end - line.start);
+	std::vector<glm::vec3> res = octree->query(line.start, dir);
+
+	if (res.size() > 0) {
+		glm::vec4 r(res[0], 1);
+		r = getTerrainMesh()->getModelMatrix() * r;
+		return r.y;
+	}
+	return 0;
 }
 
 glm::vec3 OBDTerrain::getRayCollision(OBDLine line){
 	glm::vec3 dir = glm::normalize(line.end - line.start);
 	std::vector<glm::vec3> res = octree->query(line.start, dir);
-	for (int i = 0; i < res.size(); i++) std::cout << res[i].x << " " << res[i].y << " " << res[i].z << std::endl;
-	/*vector<cLine> rayList;
-	rayList.push_back(cLine(line.start, line.end, 0));
-	vector<int> c = octree->findRayIntersectsSorted(rayList);*/
+	if (res.size() > 0) {
+		glm::vec4 r(res[0], 1);
+		return (getTerrainMesh()->getModelMatrix() * r);
+	}
 	return glm::vec3();
 }
