@@ -15,7 +15,7 @@ struct ResourceMesh {
     std::string name;
 
     std::vector<f32> vbo;
-    std::vector<us32> indices;
+    std::vector<u32> indices;
 
     std::string defaultMaterialName;
 

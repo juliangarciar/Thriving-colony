@@ -31,7 +31,7 @@ TMesh::TMesh(ResourceMesh r, ResourceMaterial m) : TEntity() {
 	// Generate a buffer for the indices as well
 	glGenBuffers(1, &IBOID);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBOID);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(us32), &mesh.indices[0] , GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(u32), &mesh.indices[0] , GL_STATIC_DRAW);
 
 	// Lights
 	glGenBuffers(1, &lightID);

@@ -33,6 +33,7 @@ void OBDTerrain::generateTerrain(const char *path){
 	ter_terrain_set_heights_from_texture(terrain, path, 0, 1);
 	ter_terrain_build_mesh(terrain);
 
+	//Mesh
 	int w = ter_terrain_get_width(terrain);
 	int h = ter_terrain_get_height(terrain);
 	int d = ter_terrain_get_depth(terrain);
@@ -43,12 +44,14 @@ void OBDTerrain::generateTerrain(const char *path){
 	mesh.boundingBox.center = glm::vec3(w/2, h/2, d/2);
 	
 	mesh.name = "terrain";
-	mesh.vbo = std::vector<float>(terrain->vertices, terrain->vertices+(terrain->num_vertices*8));
-	mesh.indices = std::vector<unsigned short>(terrain->vertices, terrain->vertices+terrain->num_indices);
+	mesh.vbo = std::vector<f32>(terrain->vertices, terrain->vertices+(terrain->num_vertices*8));
+	mesh.indices = std::vector<u32>(terrain->indices, terrain->indices+terrain->num_indices);
 
+	//Material
 	material.ambientColor = glm::vec3(1,1,1);
 	material.diffuseColor = glm::vec3(1,1,1);
 
+	//Octree
 	vertex_vector = std::vector<glm::vec3>(terrain->glm_vertices, terrain->glm_vertices + terrain->num_vertices);
 
 	octree = new SDF(vertex_vector, terrain->triangled_indices, terrain->triangle_centroids);

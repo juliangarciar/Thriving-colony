@@ -69,7 +69,7 @@ void ResourceOBJ::load(const char *path){
         
         tempMesh.name = curMesh.MeshName;
         tempMesh.vbo = vbo;
-        tempMesh.indices = curMesh.Indices;
+        tempMesh.indices = std::vector<u32>(curMesh.Indices.begin(), curMesh.Indices.end());
         tempMesh.defaultMaterialName = curMesh.MeshMaterial.name;
 
         meshArray.insert(std::pair<std::string, ResourceMesh>(curMesh.MeshName, tempMesh));
