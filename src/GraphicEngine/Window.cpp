@@ -95,11 +95,11 @@ void Window::beginScene(){
     driver -> beginScene(true, true, video::SColor(0,0,0,0));
 }
 
-void Window::endScene(){
+void Window::endScene(bool b){
     std::cout << "Window::endScene init" << std::endl;
     std::cout << "1" << std::endl;
     // DA ERROR AQUI
-    scene -> drawAll();
+    if (b) scene -> drawAll();
     std::cout << "2" << std::endl;
     gui -> drawWidgets();
     std::cout << "3" << std::endl;

@@ -49,7 +49,7 @@ void Game::Render() {
     std::cout << "RenderInit" << std::endl;
     window -> beginScene();
     state -> Render();
-    window -> endScene();
+    window -> endScene(stateData == Enumeration::State::GameState);
     std::cout << "Render finish" << std::endl;
 }
 
