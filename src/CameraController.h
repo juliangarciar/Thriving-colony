@@ -89,7 +89,7 @@ class CameraController {
 		* 
 		* @return Vector3 with the value of tarPos variable.
 		*/
-		Vector3<f32> getTarPos();
+		Vector3<f32> getTargetPosition();
 
 		/**
 		* @brief Get the current position of the camera.
