@@ -133,7 +133,6 @@ Vector2<f32> IA::determinatePositionBuilding() {
         v.set(startingX, startingZ);
         v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.y);
     } else {
-        
         //When there are some buildings
         Vector2<f32> v2;
         Vector2<f32> v3;

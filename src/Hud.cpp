@@ -254,9 +254,8 @@ void Hud::Init(){
     os = std::stringstream();
     
     iaResources = new Panel("IA Resources");
-    //iaResources -> hide();
     iaResources -> setVerticalLayout();
-    iaResources -> setPosition(Vector2<i32>(1100, 0));
+    iaResources -> setPosition(Vector2<i32>(800, 0));
     iaResources -> setSize(Vector2<i32> (200, 270));
     melees = 
         IA::Instance() -> getUnitManager() -> getTroopAmount("StandardM") + 
@@ -447,7 +446,7 @@ void Hud::Init(){
             workshopTroopQueueWidget = new Widget(workshopScroll);
             workshopTroopQueueWidget -> setVerticalLayout();
         }
-        tabs->changeActiveTab(0);
+    tabs->changeActiveTab(0);
     tabContainer->refreshLayout();
     tabContainer->center();
 

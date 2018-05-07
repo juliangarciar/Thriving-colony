@@ -48,7 +48,7 @@ Model::Model(SceneNode *parent, i32 id, std::string path) {
 }
 
 Model::~Model() {
-    //ToDo: remove model
+    meshNode -> getParent() -> removeChild(meshNode);
 }
 
 void Model::setID(i32 id) {
