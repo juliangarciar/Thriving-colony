@@ -67,9 +67,6 @@ void CameraController::Init(Vector3<float> v){
 }
 
 void CameraController::Update(f32 deltaTime) {
-	tarPos.set(camera -> getTargetPosition());
-	camPos.set(camera -> getCameraPosition());
-
 	if (movementMode) {
     	Vector3<f32> tarIncr;
 		i32 d = rotateDegrees.x; 
@@ -142,7 +139,6 @@ void CameraController::Update(f32 deltaTime) {
 	}
 
 	if (centerCameraMode){
-		//std::cout << userPos << std::endl;
 		tarPos = userPos;
 	}
 
@@ -161,9 +157,6 @@ void CameraController::Update(f32 deltaTime) {
 
 void CameraController::Move() {
 	Window *w = Window::Instance();
-
-    /*direction = (receiver -> keyDown(KEY_KEY_W) << 0) | (receiver -> keyDown(KEY_KEY_A) << 1)
-		| receiver -> keyDown(KEY_KEY_S) << 2 | receiver -> keyDown(KEY_KEY_D) << 3;*/
 
 	direction = 0;
 	movementMode = false;
