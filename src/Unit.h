@@ -246,7 +246,8 @@ class Unit : public Entity {
          * @return i32 that will be the value of the armyLevel variable.
          */
         i32 getArmyLevel();
-
+        /* New */
+        std::vector< Vector2<f32> > getTroopsPosition();        
     private:
         /**
          * @brief Initialize the variables.

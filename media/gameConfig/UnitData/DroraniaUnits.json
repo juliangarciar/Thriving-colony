@@ -22,7 +22,7 @@
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Drorania/flag.obj",
-				"texturePath": ""
+				"texturePath": "media/textures/placeholder.bmp"
 			},
 			"troops": 4
 		},
@@ -49,7 +49,7 @@
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Drorania/flag.obj",
-				"texturePath": ""
+				"texturePath": "media/textures/placeholder.bmp"
 			},
 			"troops": 4
 		},
@@ -71,12 +71,12 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/unitModels/Troops/Drorania/criatura_drorania.obj",
+				"modelPath": "media/unitModels/Troops/Drorania/Melee_Soldier_Drorania.obj",
 				"texturePath": "media/textures/Drorania/drorania_barn.jpg"
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Drorania/flag.obj",
-				"texturePath": ""
+				"texturePath": "media/textures/placeholder.bmp"
 			},
 			"troops": 4
 		},
@@ -103,7 +103,7 @@
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Drorania/flag.obj",
-				"texturePath": ""
+				"texturePath": "media/textures/placeholder.bmp"
 			},
 			"troops": 4
 		},
@@ -130,7 +130,7 @@
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Drorania/flag.obj",
-				"texturePath": ""
+				"texturePath": "media/textures/placeholder.bmp"
 			},
 			"troops": 4
 		},
@@ -157,7 +157,7 @@
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Drorania/flag.obj",
-				"texturePath": ""
+				"texturePath": "media/textures/placeholder.bmp"
 			},
 			"troops": 4
 		},
@@ -184,7 +184,7 @@
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Drorania/flag.obj",
-				"texturePath": ""
+				"texturePath": "media/textures/placeholder.bmp"
 			},
 			"troops": 4
 		}

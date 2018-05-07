@@ -22,7 +22,7 @@
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
-				"texturePath": ""
+				"texturePath": "media/textures/placeholder.bmp"
 			},
 			"troops": 4
 		},
@@ -49,7 +49,7 @@
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
-				"texturePath": ""
+				"texturePath": "media/textures/placeholder.bmp"
 			},
 			"troops": 4
 		},
@@ -76,7 +76,7 @@
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
-				"texturePath": ""
+				"texturePath": "media/textures/placeholder.bmp"
 			},
 			"troops": 4
 		},
@@ -103,7 +103,7 @@
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
-				"texturePath": ""
+				"texturePath": "media/textures/placeholder.bmp"
 			},
 			"troops": 4
 		},
@@ -130,7 +130,7 @@
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
-				"texturePath": ""
+				"texturePath": "media/textures/placeholder.bmp"
 			},
 			"troops": 4
 		},
@@ -157,7 +157,7 @@
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
-				"texturePath": ""
+				"texturePath": "media/textures/placeholder.bmp"
 			},
 			"troops": 4
 		},
@@ -184,7 +184,7 @@
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
-				"texturePath": ""
+				"texturePath": "media/textures/placeholder.bmp"
 			},
 			"troops": 4
 		}

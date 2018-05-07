@@ -2,6 +2,7 @@
 #define TROOP_H
 
 #include <vector>
+#include <string>
 #include "Types.h"
 
 template<class T>
@@ -25,7 +26,7 @@ class Troop{
          * @param qnty
          * @param ID 
          */
-        Troop(SceneNode *, const char *, i32 qnty, i32 ID);
+        Troop(SceneNode *, std::string, i32 qnty, i32 ID);
 
         /**
          * @brief Troop destructor.
@@ -52,7 +53,9 @@ class Troop{
          * @param data 
          */
         void setActive(bool data);
-    
+        /* NEW */
+        std::vector<Vector2<f32>> getTroopsPosition();
+        void setNearTroopsPosition(std::vector< Vector2<f32> >);
     private:
         //
         i32 max;
@@ -64,7 +67,7 @@ class Troop{
         std::vector<Model*> modelVector;
         //
         std::vector<Vector2<f32>> positionVector; 
-    
+        std::vector<Vector2<f32>> nearUnitsPosition; 
         //
         f32 alignmentWeight;
 

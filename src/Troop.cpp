@@ -7,14 +7,15 @@
 #include <MathEngine/Vector2.h>
 #include <WorldEngine/WorldGeometry.h>
 
-Troop::Troop(SceneNode* scene, const char* path, i32 qnty, i32 ID){
+
+Troop::Troop(SceneNode* scene, std::string path, i32 qnty, i32 ID){
     max = qnty;
     modelVector = std::vector< Model* >(max);
     positionVector = std::vector< Vector2<f32> >(max);
     for(i32 i = 0; i < max; i++){
         modelVector[i] = new Model(scene, ID, path);
         positionVector[i] = Vector2<f32>();
-        modelVector[i]->setActive(true);
+        //modelVector[i]->setActive(true);
     }
     alignmentWeight = 1.0;
     cohesionWeight = 1.0;
@@ -30,6 +31,7 @@ Troop::~Troop(){
 
 Vector2<f32> Troop::alignment(){
     Vector2<f32> dummy = Vector2<f32>();
+    
     return dummy;
 }
 
@@ -82,10 +84,10 @@ Vector2<f32> Troop::calculateFlocking(){
 }
 
 void Troop::setPosition(Vector2<f32> vectorPos){
-    positionVector[0] = Vector2<f32>(vectorPos.x - 25, vectorPos.y -25);
-    positionVector[1] = Vector2<f32>(vectorPos.x - 25, vectorPos.y +25);
-    positionVector[2] = Vector2<f32>(vectorPos.x + 25, vectorPos.y +25);
-    positionVector[3] = Vector2<f32>(vectorPos.x + 25, vectorPos.y -25);
+    positionVector[0] = Vector2<f32>(vectorPos.x - 25, vectorPos.y - 25);
+    positionVector[1] = Vector2<f32>(vectorPos.x - 25, vectorPos.y + 25);
+    positionVector[2] = Vector2<f32>(vectorPos.x + 25, vectorPos.y + 25);
+    positionVector[3] = Vector2<f32>(vectorPos.x + 25, vectorPos.y - 25);
 
     for(i32 i = 0; i < max; i++){
         modelVector[i]->setPosition(Vector3<f32>(positionVector[i].x, Map::Instance() -> getTerrain() -> getY(positionVector[i].x, positionVector[i].y), positionVector[i].y));
@@ -107,4 +109,12 @@ void Troop::setActive(bool data){
     for(std::size_t i = 0; i < modelVector.size(); i++){
         modelVector[i] -> setActive(data);
     }
+}
+
+std::vector<Vector2<f32>> Troop::getTroopsPosition(){
+    return positionVector;
+}
+
+void Troop::setNearTroopsPosition(std::vector< Vector2<f32> > nearUnits){
+    nearUnitsPosition = nearUnits;
 }
