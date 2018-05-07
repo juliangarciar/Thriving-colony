@@ -4,9 +4,10 @@
 //ToDo: no deberian haber datos aqui
 Terrain::Terrain(const char* heightMap) {
 	t = Window::Instance()->getEngine()->createTerrain(heightMap);
+	t->rotate(0, 0, 1, 180.f);
 	//t->rotate(0, 1, 0, 270.f);
-	//t->rotate(0, 0, 1, 180.f);
-	//t->translate(0, 0, -256);
+	//t->rotate(0, 1, 0, 270.f);
+	t->translate(0, 0, -256);
 }
 
 Terrain::~Terrain() {

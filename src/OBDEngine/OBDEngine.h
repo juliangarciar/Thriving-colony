@@ -223,6 +223,13 @@ class OBDEngine {
          */
         OBDLine getRelativeRaycastFromScreenCoordinates(glm::vec2, glm::mat4);
 
+		/**
+		 * @brief Get the Resource Manager object
+		 * 
+		 * @return ResourceManager* 
+		 */
+		ResourceManager *getResourceManager();
+
         
 		////////////SANDBOX////////////
 

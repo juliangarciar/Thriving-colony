@@ -96,6 +96,12 @@ class OBDTerrain : public OBDEntity {
 		bool getActive();
 
 		/**
+		 * @brief Set the Texture object
+		 * 
+		 */
+		void setTexture(ResourceIMG *);
+
+		/**
 		 * @brief Get the Terrain Mesh object
 		 * 
 		 * @return TMesh* 

@@ -204,6 +204,10 @@ OBDSceneNode* OBDEngine::getDefaultLayer() {
     return defaultSceneNode;
 }
 
+ResourceManager *OBDEngine::getResourceManager(){
+	return OBDManager;
+}
+
 //////SANDBOX//////
 
 OBDAnimation* OBDEngine::createAnimation(std::string anim) {
