@@ -167,7 +167,7 @@ class OBDParticleEmiter {
          */
         void setMinStartColor(OBDColor);
 
-    private:
+    protected:
         ParticleEmiterType type;
 
         glm::vec3 direction;

@@ -1,8 +1,6 @@
 #ifndef TPARTICLE_H
 #define TPARTICLE_H
 
-#include <GL/glew.h>
-
 #include "../OBDColor.h"
 
 struct TParticle {
