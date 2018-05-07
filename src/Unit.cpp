@@ -55,7 +55,6 @@ Unit::Unit(SceneNode* _layer,
     lookForTargetTimer = new Timer (0.5, true);
     lookForTargetTimer -> setCallback([&](){
         // Ask for a new target
-        //ToDo: La hipocresia
         //Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
     });
 
@@ -73,6 +72,7 @@ Unit::Unit(SceneNode* _layer,
     damagedMat -> setColor(Color(255, 255, 0, 0));
 
     setBaseMaterial();
+
 }
 
 Unit::~Unit() {

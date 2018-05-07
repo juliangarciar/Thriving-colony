@@ -131,7 +131,7 @@ void Map::Input() {
 
 void Map::Update(){
     //Update camera
-    camera -> Update(Window::Instance() -> getDeltaTime());
+    camera -> Update();
 }
 
 void Map::Render() {

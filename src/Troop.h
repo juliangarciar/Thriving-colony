@@ -17,21 +17,63 @@ class SceneNode;
 class Troop{
 
     public:
+        /**
+         * @brief Troop constructor.
+         * 
+         * @param SceneNode
+         * @param const char
+         * @param qnty
+         * @param ID 
+         */
         Troop(SceneNode *, const char *, i32 qnty, i32 ID);
+
+        /**
+         * @brief Troop destructor.
+         */
         ~Troop();
+
+        /**
+         * @brief Set the Position object
+         * 
+         * @param vectorPos 
+         */
         void setPosition(Vector2<f32> vectorPos);
+
+        /**
+         * @brief 
+         * 
+         * @param vectorMov 
+         */
         void moveTroops(Vector2<f32> vectorMov);
+
+        /**
+         * @brief Set the Active object
+         * 
+         * @param data 
+         */
         void setActive(bool data);
     
     private:
+        //
         i32 max;
-        i32 actualIndex;
-        std::vector< Model* > modelVector;
-        std::vector< Vector2<f32> > positionVector; 
 
+        //
+        i32 actualIndex;
+
+        //
+        std::vector<Model*> modelVector;
+        //
+        std::vector<Vector2<f32>> positionVector; 
+    
+        //
         f32 alignmentWeight;
+
+        //
         f32 cohesionWeight;
+
+        //
         f32 separationWeight;
+
         /* Flocking */
         Vector2<f32> alignment();
         Vector2<f32> cohesion();
@@ -39,4 +81,4 @@ class Troop{
         Vector2<f32> calculateFlocking();
 };
 
-#endif /* TROOP_H */
+#endif
