@@ -15,7 +15,7 @@
 			"cellsX": 2,
 			"cellsY": 2,
 			"modelPath": "media/models/Drorania/Buildings/drorania_barn/drorania_barn.obj",
-			"texturePath": "media/textures/Drorania/drorania_barn.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Barrack",
@@ -33,7 +33,7 @@
 			"cellsX": 4,
 			"cellsY": 4,
 			"modelPath": "media/models/Drorania/Buildings/drorania_barrack/drorania_barrack.obj",
-			"texturePath": "media/textures/Drorania/drorania_barrack.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Hospital",
@@ -51,7 +51,7 @@
 			"cellsX": 4,
 			"cellsY": 4,
 			"modelPath": "media/models/Drorania/Buildings/drorania_hospital/drorania_hospital.obj",
-			"texturePath": "media/textures/Drorania/drorania_hospital.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "House",
@@ -69,7 +69,7 @@
 			"cellsX": 1,
 			"cellsY": 1,
 			"modelPath": "media/models/Drorania/Buildings/drorania_house/drorania_house.obj",
-			"texturePath": "media/textures/Drorania/drorania_house.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "MainBuilding",
@@ -87,7 +87,7 @@
 			"cellsX": 5,
 			"cellsY": 5,
 			"modelPath": "media/models/Drorania/Buildings/drorania_command_center/drorania_command_center.obj",
-			"texturePath": "media/textures/Drorania/drorania_command_center.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Market",
@@ -105,7 +105,7 @@
 			"cellsX": 3,
 			"cellsY": 4,
 			"modelPath": "media/models/Drorania/Buildings/drorania_market/drorania_market.obj",
-			"texturePath": "media/textures/Drorania/drorania_market.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Quarry",
@@ -123,7 +123,7 @@
 			"cellsX": 4,
 			"cellsY": 4,
 			"modelPath": "media/models/Drorania/Buildings/drorania_quarry/drorania_quarry.obj",
-			"texturePath": "media/textures/Drorania/drorania_quarry.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Siderurgy",
@@ -141,7 +141,7 @@
 			"cellsX": 5,
 			"cellsY": 3,
 			"modelPath": "media/models/Drorania/Buildings/drorania_siderurgy/drorania_siderurgy.obj",
-			"texturePath": "media/textures/Drorania/drorania_siderurgy.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "School",
@@ -159,7 +159,7 @@
 			"cellsX": 3,
 			"cellsY": 4,
 			"modelPath": "media/models/Drorania/Buildings/drorania_school/drorania_school.obj",
-			"texturePath": "media/textures/Drorania/drorania_school.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Tower",
@@ -177,7 +177,7 @@
 			"cellsX": 1,
 			"cellsY": 1,
 			"modelPath": "media/models/Drorania/Buildings/drorania_tower/drorania_tower.obj",
-			"texturePath": "media/textures/Drorania/drorania_tower.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Wall",
@@ -195,7 +195,7 @@
 			"cellsX": 2,
 			"cellsY": 1,
 			"modelPath": "media/models/Drorania/Buildings/drorania_wall/drorania_wall.obj",
-			"texturePath": "media/textures/Drorania/drorania_wall.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Workshop",
@@ -213,7 +213,7 @@
 			"cellsX": 3,
 			"cellsY": 4,
 			"modelPath": "media/models/Drorania/Buildings/drorania_workshop/drorania_workshop.obj",
-			"texturePath": "media/textures/Drorania/drorania_workshop.jpg"
+			"texturePath": ""
 		}
 	]
 }

@@ -18,7 +18,7 @@
 			"crystalCost": 0,
 			"troopPath":{
 				"modelPath": "media/unitModels/Troops/Kaonov/kaonov_melee_soldier.obj",
-				"texturePath": "media/textures/Kaonov/Kaonov_barn.jpg"
+				"texturePath": ""
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
@@ -45,7 +45,7 @@
 			"crystalCost": 0,
 			"troopPath":{
 				"modelPath": "media/unitModels/Troops/Kaonov/creature_kaonov.obj",
-				"texturePath": "media/textures/Kaonov/Kaonov_barn.jpg"
+				"texturePath": ""
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
@@ -72,7 +72,7 @@
 			"crystalCost": 0,
 			"troopPath":{
 				"modelPath": "media/unitModels/Troops/Kaonov/kaonov_melee_soldier.obj",
-				"texturePath": "media/textures/Kaonov/Kaonov_barn.jpg"
+				"texturePath": ""
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
@@ -99,7 +99,7 @@
 			"crystalCost": 0,
 			"troopPath":{
 				"modelPath": "media/unitModels/Troops/Kaonov/creature_kaonov.obj",
-				"texturePath": "media/textures/Kaonov/Kaonov_barn.jpg"
+				"texturePath": ""
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
@@ -126,7 +126,7 @@
 			"crystalCost": 0,
 			"troopPath":{
 				"modelPath": "media/unitModels/Troops/Kaonov/kaonov_cannon.obj",
-				"texturePath": "media/textures/Kaonov/Kaonov_barn.jpg"
+				"texturePath": ""
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
@@ -153,7 +153,7 @@
 			"crystalCost": 0,
 			"troopPath":{
 				"modelPath": "media/unitModels/Troops/Kaonov/kaonov_walls_desintegrator.obj",
-				"texturePath": "media/textures/Kaonov/Kaonov_barn.jpg"
+				"texturePath": ""
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
@@ -180,7 +180,7 @@
 			"crystalCost": 0,
 			"troopPath":{
 				"modelPath": "media/unitModels/Troops/Kaonov/entinity_kaonov.obj",
-				"texturePath": "media/textures/Kaonov/Kaonov_barn.jpg"
+				"texturePath": ""
 			},
 			"flagPath": {
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",

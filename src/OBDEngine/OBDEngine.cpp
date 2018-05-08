@@ -130,6 +130,11 @@ OBDTerrain *OBDEngine::createTerrain(OBDSceneNode* layer, std::string heightMap)
 	return new OBDTerrain(layer, heightMap);
 }
 
+OBDTexture *OBDEngine::createTexture(OBDEnums::TextureTypes t, std::string fs){
+	ResourceIMG *s = (ResourceIMG*)OBDManager->getResource(fs, true);
+	return new OBDTexture(t, s);
+}
+
 void OBDEngine::registerLight(OBDLight* lightNode) {
     clSceneNode -> addChild(lightNode);
     lights.push_back(lightNode);

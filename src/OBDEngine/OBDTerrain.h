@@ -6,6 +6,7 @@
 
 #include "OBDEntity.h"
 #include "OBDSceneNode.h"
+#include "OBDTexture.h"
 
 #include "ResourceManager/ResourceIMG.h"
 #include "ResourceManager/ResourceOBJ.h"
@@ -95,11 +96,11 @@ class OBDTerrain : public OBDEntity {
 		 */
 		bool getActive();
 
-		/**
-		 * @brief Set the Texture object
-		 * 
-		 */
-		void setTexture(ResourceIMG *);
+        /**
+         * @brief Set the glslTexture object
+         * 
+         */
+        void setTexture(OBDTexture*);
 
 		/**
 		 * @brief Get the Terrain Mesh object

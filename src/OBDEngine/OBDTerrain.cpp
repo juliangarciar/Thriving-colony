@@ -30,15 +30,13 @@ OBDTerrain::~OBDTerrain() {
 void OBDTerrain::generateTerrain(const char *path){
 	// ToDo: revisar parametros
 	terrain = ter_terrain_new();
-	ter_terrain_set_heights_from_texture(terrain, path, 1, 40);
+	ter_terrain_set_heights_from_texture(terrain, path, -0.5, 100, 1);
 	ter_terrain_build_mesh(terrain);
 
 	//Mesh
 	int w = terrain->width;
 	int h = terrain->height;
 	int d = terrain->depth;
-
-	std::cout << w << " " << h << " " << d << std::endl;
 
 	mesh.boundingBox.min = glm::vec3(0,0,0);
 	mesh.boundingBox.max = glm::vec3(w, h, d);
@@ -109,6 +107,11 @@ void OBDTerrain::setActive(bool a) {
 bool OBDTerrain::getActive() {
 	TMesh* t = (TMesh*) terrainNode -> getEntity();
 	return t;
+}
+
+void OBDTerrain::setTexture(OBDTexture* t){
+    TMesh* m = (TMesh*) terrainNode -> getEntity();
+    m -> setTexture(t->getType(), t->getTexture());
 }
 
 TMesh *OBDTerrain::getTerrainMesh(){

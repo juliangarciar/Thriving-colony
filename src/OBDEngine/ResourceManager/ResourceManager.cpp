@@ -71,23 +71,33 @@ void ResourceManager::push(std::string path){
 }
 
 void ResourceManager::loadResource(std::string path, bool sync){
-    if (sync){
-        load(path, true);
-    } else {
-        push(path);
-    }
+	if (path.find(".") != std::string::npos){
+		if (sync){
+			load(path, true);
+		} else {
+			push(path);
+		}
+	} else {
+        std::cout << "Error: no se puede leer el archivo " << path << std::endl;
+        exit(0);
+	}
 }
 
 Resource *ResourceManager::getResource(std::string path, bool sync){
-    std::map<std::string, Resource*>::iterator it;
-    it = resources.find(path);
-    if (it != resources.end()){
-        return it -> second;
-    } else {
-        loadResource(path, sync);
-        if (sync) return getResource(path);
-        else return nullptr;
-    }
+	if (path.find(".") != std::string::npos){
+		std::map<std::string, Resource*>::iterator it;
+		it = resources.find(path);
+		if (it != resources.end()){
+			return it -> second;
+		} else {
+			loadResource(path, sync);
+			if (sync) return getResource(path);
+			else return nullptr;
+		}
+	} else {
+        std::cout << "Error: no se puede leer el archivo " << path << std::endl;
+        exit(0);
+	}
 }
 
 //ToDo: release resource

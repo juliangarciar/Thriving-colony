@@ -15,7 +15,7 @@
 			"cellsX": 2,
 			"cellsY": 2,
 			"modelPath": "media/models/Kaonov/Buildings/kaonov_barn/kaonov_barn.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_barn.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Barrack",
@@ -33,7 +33,7 @@
 			"cellsX": 4,
 			"cellsY": 4,
 			"modelPath": "media/models/Kaonov/Buildings/kaonov_barrack/kaonov_barrack.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_barrack.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Hospital",
@@ -51,7 +51,7 @@
 			"cellsX": 4,
 			"cellsY": 4,
 			"modelPath": "media/models/Kaonov/Buildings/kaonov_hospital/kaonov_hospital.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_hospital.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "House",
@@ -69,7 +69,7 @@
 			"cellsX": 1,
 			"cellsY": 1,
 			"modelPath": "media/models/Kaonov/Buildings/kaonov_house/kaonov_house.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_house.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "MainBuilding",
@@ -87,7 +87,7 @@
 			"cellsX": 5,
 			"cellsY": 5,
 			"modelPath": "media/models/Kaonov/Buildings/kaonov_command_center/kaonov_command_center.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_command_center.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Market",
@@ -105,7 +105,7 @@
 			"cellsX": 3,
 			"cellsY": 4,
 			"modelPath": "media/models/Kaonov/Buildings/kaonov_market/kaonov_market.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_market.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Quarry",
@@ -123,7 +123,7 @@
 			"cellsX": 4,
 			"cellsY": 4,
 			"modelPath": "media/models/Kaonov/Buildings/kaonov_quarry/kaonov_quarry.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_quarry.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Siderurgy",
@@ -141,7 +141,7 @@
 			"cellsX": 5,
 			"cellsY": 3,
 			"modelPath": "media/models/Kaonov/Buildings/kaonov_siderurgy/kaonov_siderurgy.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_siderurgy.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "School",
@@ -159,7 +159,7 @@
 			"cellsX": 3,
 			"cellsY": 4,
 			"modelPath": "media/models/Kaonov/Buildings/kaonov_school/kaonov_school.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_school.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Tower",
@@ -177,7 +177,7 @@
 			"cellsX": 1,
 			"cellsY": 1,
 			"modelPath": "media/models/Kaonov/Buildings/kaonov_tower/kaonov_tower.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_tower.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Wall",
@@ -195,7 +195,7 @@
 			"cellsX": 2,
 			"cellsY": 1,
 			"modelPath": "media/models/Kaonov/Buildings/kaonov_wall/kaonov_wall.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_wall.jpg"
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Workshop",
@@ -213,7 +213,7 @@
 			"cellsX": 3,
 			"cellsY": 4,
 			"modelPath": "media/models/Kaonov/Buildings/kaonov_workshop/kaonov_workshop.obj",
-			"texturePath": "media/textures/Kaonov/kaonov_workshop.jpg"
+			"texturePath": ""
 		}
 	]
 }

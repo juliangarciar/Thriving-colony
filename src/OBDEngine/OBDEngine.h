@@ -13,6 +13,7 @@
 #include "OBDShaderProgram.h"
 #include "OBDTerrain.h"
 #include "OBDTile.h"
+#include "OBDTexture.h"
 
 #include "ResourceManager/ResourceManager.h"
 #include "Graphics/TNode.h"
@@ -126,6 +127,13 @@ class OBDEngine {
 		 * @return OBDTerrain* 
 		 */
 		OBDTerrain *createTerrain(OBDSceneNode*, std::string);
+
+		/**
+		 * @brief Create a Texture object
+		 * 
+		 * @return OBDTexture* 
+		 */
+		OBDTexture *createTexture(OBDEnums::TextureTypes, std::string);
 
         /**
          * @brief 

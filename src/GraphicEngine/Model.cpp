@@ -13,7 +13,7 @@ Model::Model(SceneNode *parent, i32 id, std::string path) {
 }
 
 Model::~Model() {
-    meshNode -> getParent() -> removeChild(meshNode);
+	
 }
 
 void Model::setID(i32 id) {
@@ -25,6 +25,7 @@ void Model::setName(const char *name) {
 }
 
 void Model::setPosition(Vector3<f32> pos) {
+	if (pos.z > 0) pos.z *= -1;
     obj->setPosition(glm::vec3(pos.x, pos.y, pos.z));
 }
 
@@ -46,7 +47,7 @@ void Model::setMaterial(Material *m){
 }
 
 Vector3<f32> Model::getPosition() {
-    return Vector3<f32>(obj->getPosition().x, obj->getPosition().y, obj->getPosition().z);
+    return Vector3<f32>(obj->getPosition().x, obj->getPosition().y, -obj->getPosition().z);
 }
 
 i32 Model::getID() {

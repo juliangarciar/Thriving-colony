@@ -2,6 +2,7 @@
 #define TEXTURE_H
 
 #include <Types.h>
+#include <OBDEngine/OBDTexture.h>
 
 class Texture {
 
@@ -9,10 +10,10 @@ class Texture {
         Texture(const char *path);
         ~Texture();
         
-        //video::ITexture *getTexture();
+        OBDTexture *getTexture();
         
     private:
-	
+		OBDTexture *texture;
 };
 
 #endif

@@ -59,14 +59,14 @@ void IA::Init(std::string _race) {
     choiceIndex = 0;
     initializeChoices();
 
-    updateFastTimer = new Timer(1.00, true);
+    updateFastTimer = new Timer(100.00, true);
 	updateFastTimer -> setCallback([&](){
 		//nodeRootIA -> question();
 		rootNode -> Update();
 		updateFastTimer -> restart();
 		updateSlowTimer -> restart();
 	});
-    updateSlowTimer = new Timer(3.00, true);
+    updateSlowTimer = new Timer(300.00, true);
 	updateSlowTimer -> setCallback([&](){
 		//nodeRootIA -> question();
 		rootNode -> Update();

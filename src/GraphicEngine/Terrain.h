@@ -24,6 +24,8 @@ class Terrain{
         f32 getY(f32, f32);
     private:
        OBDTerrain *t;
+
+	   f32 yscale;
 };
 
 #endif

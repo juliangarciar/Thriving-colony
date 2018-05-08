@@ -40,7 +40,7 @@ TerTerrain *ter_terrain_new();
 
 void ter_terrain_free(TerTerrain *t);
 
-void ter_terrain_set_heights_from_texture(TerTerrain *t, const char *path, int step, float y_scale);
+void ter_terrain_set_heights_from_texture(TerTerrain *t, const char *path, float y_offset, float y_scale, int step);
    
 void ter_terrain_build_mesh(TerTerrain *t);
 
