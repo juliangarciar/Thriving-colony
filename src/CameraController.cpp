@@ -50,10 +50,10 @@ CameraController::CameraController() {
     screenCenter = Vector2<i32>(w->getInitialWindowWidth()/2, w->getInitialWindowHeight()/2);
 
 	int fractionsOfASecond = 50;
-	updateTimer = new Timer(1/fractionsOfASecond, true);
+	updateTimer = new Timer(1/fractionsOfASecond, true, false);
 
 	updateTimer -> setCallback([&](){
-        input(Window::Instance() -> getDeltaTime());
+        updateCamera(Window::Instance() -> getDeltaTime());
 	});
 }
 
@@ -72,108 +72,15 @@ void CameraController::Init(Vector3<float> v){
 
 	// Set distance to target
 	distanceToTarget = camPos.getDistanceTo(tarPos);
+
+	updateTimer -> start();
 }
 
-void CameraController::Update(f32 deltaTime) {
+void CameraController::Update() {
 	updateTimer -> tick();
-/*
-	tarPos.set(camera -> getTargetPosition());
-	camPos.set(camera -> getCameraPosition());
-
-	if (movementMode) {
-    	Vector3<f32> tarIncr;
-		i32 d = rotateDegrees.x; 
-		switch (direction) {
-			// up stands for update (delta)
-			case 1: //arriba
-				tarIncr.x = (f32)1;
-				tarIncr.z = (f32)1;
-				d += 0;
-			break;
-			case 8: //derecha
-				tarIncr.x = (f32)1;
-				tarIncr.z = (f32)-1;
-				d += 90;
-			break;
-			case 4: //abajo
-				tarIncr.x = (f32)-1;
-				tarIncr.z = (f32)-1;
-				d += 180;
-			break;
-			case 2: // izquierda
-				tarIncr.x = (f32)-1;
-				tarIncr.z = (f32)1;
-				d += 270;
-			break;
-			case 9: // arriba derecha
-				tarIncr.x = (f32)1 * recipsqrt2;
-				tarIncr.z = (f32)1 * recipsqrt2;
-				d+= 45;
-			break;
-			case 12: //abajo derecha
-				tarIncr.x = (f32)1 * recipsqrt2;
-				tarIncr.z = (f32)-1 * recipsqrt2;
-				d += 135;
-			break;
-			case 6: //abajo izquierda
-				tarIncr.x = (f32)-1 * recipsqrt2;
-				tarIncr.z = (f32)1 * recipsqrt2;
-				d += 225;
-			break;
-			case 3: // arriba izquierda
-				tarIncr.x = (f32)1 * recipsqrt2;
-				tarIncr.z = (f32)1 * recipsqrt2;
-				d += 315;
-			break;
-		}
-
-		tarIncr = Vector3<f32>().rotateFromPoint(
-			sqrtf(powf(tarIncr.x, 2) + powf(tarIncr.z, 2)), 
-			d,
-			0
-		) * camSpeed * deltaTime;
-
-		// border collision + apply update
-		if (tarPos.x < Enumeration::MapMargins::mapMarginTop) {
-			if (tarIncr.x > 0) tarPos.x += tarIncr.x;
-		} else if (tarPos.x > Enumeration::MapMargins::mapMarginRight) {
-			if (tarIncr.x < 0) tarPos.x += tarIncr.x;
-		} else {
-			tarPos.x += tarIncr.x;
-		}
-
-		if (tarPos.z < Enumeration::MapMargins::mapMarginTop) {
-			if (tarIncr.z > 0) tarPos.z += tarIncr.z;
-		} else if (tarPos.z > Enumeration::MapMargins::mapMarginBottom) {
-			if (tarIncr.z < 0) tarPos.z += tarIncr.z;
-		} else {
-			tarPos.z += tarIncr.z;
-		}
-	}
-	}
-
-	if (centerCameraMode){
-		//std::cout << userPos << std::endl;
-		tarPos = userPos;
-	}
-
-    if (movementMode || rotationOrInclinationMode || zoomMode || centerCameraMode){
-		camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
-
-		i32 camHeight = camPos.y - tarPos.y;
-		i32 mapHeight = Map::Instance() -> getTerrain() -> getY(camPos.x, camPos.z);
-
-		camPos.y = mapHeight + camHeight;
-
-		camera -> setTargetPosition(tarPos);
-		camera -> setCameraPosition(camPos);
-    }*/
 }
 
-void CameraController::input(f32 deltaTime) {
-	tarPos.set(camera -> getTargetPosition());
-	camPos.set(camera -> getCameraPosition());
-
+void CameraController::updateCamera(f32 deltaTime) {
 	if (movementMode) {
     	Vector3<f32> tarIncr;
 		i32 d = rotateDegrees.x; 
@@ -243,11 +150,9 @@ void CameraController::input(f32 deltaTime) {
 		} else {
 			tarPos.z += tarIncr.z;
 		}
-	
 	}
 
 	if (centerCameraMode){
-		//std::cout << userPos << std::endl;
 		tarPos = userPos;
 	}
 
@@ -266,9 +171,6 @@ void CameraController::input(f32 deltaTime) {
 
 void CameraController::Move() {
 	Window *w = Window::Instance();
-
-    /*direction = (receiver -> keyDown(KEY_KEY_W) << 0) | (receiver -> keyDown(KEY_KEY_A) << 1)
-		| receiver -> keyDown(KEY_KEY_S) << 2 | receiver -> keyDown(KEY_KEY_D) << 3;*/
 
 	direction = 0;
 	movementMode = false;
@@ -415,7 +317,7 @@ void CameraController::setRotateDegrees(i32 x, i32 y){
 	rotateDegrees.y = y; 
 }
 
-Vector3<f32> CameraController::getTarPos() {
+Vector3<f32> CameraController::getTargetPosition() {
 	return tarPos;
 }
 

@@ -72,6 +72,8 @@ Building::~Building() {
     delete baseMat;
     delete damagedMat;
     delete buildTimer;
+    delete barBg;
+    delete bar;
 }
 
 void Building::update() {

@@ -78,7 +78,7 @@ void IA::Init(std::string _race) {
 void IA::Update() {
     buildings -> updateBuildingManager();
     units -> updateUnitManager();
-    Vector3<f32> tarPos = Map::Instance() -> getCamera() -> getTarPos();
+    Vector3<f32> tarPos = Map::Instance() -> getCamera() -> getTargetPosition();
     Vector2<f32> IAPos = buildings -> getBuilding(0) -> getPosition();
     fast = false;
     if (((IAPos . x + 2000 > tarPos.x && IAPos . x - 2000 < tarPos.x) && (IAPos . y + 2000 > tarPos.z && IAPos . y - 2000 < tarPos.z)) || underAttack) {
@@ -133,7 +133,6 @@ Vector2<f32> IA::determinatePositionBuilding() {
         v.set(startingX, startingZ);
         v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.y);
     } else {
-        
         //When there are some buildings
         Vector2<f32> v2;
         Vector2<f32> v3;

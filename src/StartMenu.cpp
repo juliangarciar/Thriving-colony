@@ -50,14 +50,6 @@ StartMenu::StartMenu() {
     resolution -> clear();
     delete resolution;
     
-    // me irl
-    // No va bien
-    /*
-    volumeSlider = new Slider(bgOptions);
-    //bgOptions -> addChild(volumeSlider);
-    volumeSlider -> setRange(std::pair<f32, f32>(0,100));
-    volumeSlider -> setPosition(Vector2<i32>(400, 300));
-    */
     buttonAccept = new Button(bgOptions, "Accept changes");
     bgOptions -> hide();
     //Play
@@ -115,7 +107,6 @@ StartMenu::~StartMenu() {
     delete languageCb,
     delete resolutionP;
     delete resolutionCb;
-    //delete volumeSlider;
     delete buttonAccept;
 
     delete bgPlay;
