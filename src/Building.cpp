@@ -67,7 +67,13 @@ Building::Building(SceneNode *_layer,
 }
 
 Building::~Building() {
+    delete canBuildMat;
+    delete cantBuildMat;
+    delete baseMat;
+    delete damagedMat;
     delete buildTimer;
+    delete barBg;
+    delete bar;
 }
 
 void Building::update() {

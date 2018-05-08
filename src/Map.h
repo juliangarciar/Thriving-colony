@@ -19,6 +19,7 @@ class Map {
     public:
         /**
          * @brief Get the instance of the class. If it doesn't exist, create a new instance.
+         * 
          * @return Pointer to a Map object that will be the value of instance variable.
 		 */
         static Map* Instance();
@@ -35,6 +36,7 @@ class Map {
 
         /**
 		 * @brief Update the camera.
+         * 
          * @see void Update(f32) method from CameraController class.
 		 */
         void Update();
@@ -51,30 +53,34 @@ class Map {
 
         /**
         * @brief Get the terrain.
+        * 
         * @return Pointer to a Terrain object that will be the value of the terrain variable.
         */
         Terrain* getTerrain();
 
         /**
          * @brief Get the position of the human player's command center.
-         * @return Vector3 that will be the value of humanStartPos variable.
+         * @return Vector2 that will be the value of humanStartPos variable.
          */
         Vector2<f32> getHumanStartPosition();
 
         /**
          * @brief Get the position of the AI player's command center.
-         * @return Vector3 that will be the value of iaStartPos variable.
+         * 
+         * @return Vector2 that will be the value of iaStartPos variable.
          */
         Vector2<f32> getIAStartPosition();
 
         /**
          * @brief Get the postion of the terrain correspondent to the position of the mouse cursor.
+         * 
          * @return Vector3 that will be the value of collisionPoint variable.
          */
         Vector3<f32> getMouseCollitionPoint();
 
         /**
          * @brief Get the current active camera.
+         * 
          * @return Pointer to a CameraController object that will be the value of camera variable.
          */
         CameraController* getCamera();
@@ -93,6 +99,7 @@ class Map {
     private:
         /**
          * @brief Show at the terminal the progress of the map loading.
+         * 
          * @param i32 is the value of the current progress.
          */
         void loadProgress(i32);
