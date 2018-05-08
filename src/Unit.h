@@ -7,13 +7,11 @@
 #include <Types.h>
 #include <Entity.h>
 #include <PathPlanner/PathManager.h>
-#include <Troop.h>
 #include <EntityData.h>
 #include <Enumeration.h>
 
 //class PathManager;
-//class Troop;
-
+class UnitFighter;
 /**
  * @class Unit.
  * @brief Create a Unit type object. Public heritage from Entity class.
@@ -324,7 +322,7 @@ class Unit : public Entity {
         std::string selectEvent;
 
         //
-        Troop* troops;
+        std::vector< UnitFighter* > unitFighters;
 };
 
 #endif

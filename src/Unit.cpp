@@ -8,6 +8,7 @@
 #include <WorldEngine/WorldGeometry.h>
 #include <functional>
 #include <cmath>
+#include "UnitFighter.h"
 
 Unit::Unit(SceneNode* _layer, 
     i32 _id, 
@@ -50,7 +51,7 @@ Unit::Unit(SceneNode* _layer,
                         attackEvent(baseData.attackEvent),
                         moveEvent(baseData.moveEvent),
                         selectEvent(baseData.selectEvent),
-                        troops(nullptr)         
+                        unitFighters()         
 {
     lookForTargetTimer = new Timer (0.5, true);
     lookForTargetTimer -> setCallback([&](){
@@ -68,23 +69,25 @@ Unit::Unit(SceneNode* _layer,
     Texture *t = new Texture(baseData.flagTexture.c_str());
 
 
+    unitFighters = std::vector< UnitFighter* >(nullptr, )
+
     baseMat = new Material(t);
     baseMat -> setColor(255, 255, 255, 255);
 
     damagedMat = new Material(t);
     damagedMat -> setColor(255, 255, 0, 0);
 
-
-    troops = new Troop(_layer, baseData.troopModel, baseData.troops, _id);
     setBaseMaterial();
-
 }
 
 Unit::~Unit() {
     WorldGeometry::Instance()->clearUnitCell(getPosition(), this);
     delete lookForTargetTimer;
     delete pathManager;
-    delete troops;
+    for(std::size_t i = 0; i < unitFighters.size(); i++){
+        delete unitFighters[i];
+    }
+    unitFighters.clear();
     delete recruitingTimer;
 }
 
@@ -256,14 +259,12 @@ void Unit::moveTroop() {
             Vector2<f32> newPos = vectorPos + vectorMov;
             WorldGeometry::Instance()->updateUnitCell(vectorPos, newPos, this);
             
-            std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(newPos);
-            std::vector< Vector2<f32> > nearTroopsPosition;
-            for(int i = 0; i < nearUnits.size(); i++){
-                nearTroopsPosition.insert(nearTroopsPosition.end(), nearUnits[i]->getTroopsPosition().begin(), nearUnits[i]->getTroopsPosition().end());
-            }
+            //std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(newPos);
+            //std::vector< Vector2<f32> > nearTroopsPosition;
+            //for(int i = 0; i < nearUnits.size(); i++){
+            //    nearTroopsPosition.insert(nearTroopsPosition.end(), nearUnits[i]->getTroopsPosition().begin(), nearUnits[i]->getTroopsPosition().end());
+            //}
             setPosition(newPos);
-            troops->setNearTroopsPosition(nearTroopsPosition);
-            troops -> moveTroops(vectorMov);
 
             steps = 0;
             //std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
@@ -272,10 +273,10 @@ void Unit::moveTroop() {
             Vector2<f32> newPos = vectorPos + vectorMov;
             WorldGeometry::Instance()->updateUnitCell(vectorPos, newPos, this);
 
-            std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(newPos);
+            //std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(newPos);
             
             setPosition(newPos);
-            troops -> moveTroops(vectorMov);
+            //troops -> moveTroops(vectorMov);
 
             steps--;
             //std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
@@ -379,7 +380,6 @@ void Unit::setTroopPosition(Vector2<f32> vectorData) {
     //vectorPos.set(vectorData);
     //vectorPos = vectorData;
     setPosition(vectorData);
-    troops->setPosition(vectorData);
 }
 // To do -> adjust units movement
 void Unit::setTroopDestination(Vector2<f32> vectorData) {
@@ -466,8 +466,4 @@ Enumeration::UnitState Unit::getState() {
 
 i32 Unit::getArmyLevel(){
     return armyLevel;
-}
-
-std::vector< Vector2<f32> > Unit::getTroopsPosition(){
-    return troops->getTroopsPosition();
 }
