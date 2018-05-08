@@ -317,7 +317,7 @@ void CameraController::setRotateDegrees(i32 x, i32 y){
 	rotateDegrees.y = y; 
 }
 
-Vector3<f32> CameraController::getTargetPosition() {
+Vector3<f32> CameraController::getTarPos() {
 	return tarPos;
 }
 
