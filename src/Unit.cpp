@@ -69,7 +69,10 @@ Unit::Unit(SceneNode* _layer,
     Texture *t = new Texture(baseData.flagTexture.c_str());
 
 
-    unitFighters = std::vector< UnitFighter* >(nullptr, )
+    unitFighters = std::vector< UnitFighter* >(baseData.troops, nullptr);
+    for(std::size_t i = 0; i < unitFighters.size(); i++){
+        unitFighters[i] = new UnitFighter(_layer, _id, baseData.troopModel, baseData.moveSpeed);
+    }
 
     baseMat = new Material(t);
     baseMat -> setColor(255, 255, 255, 255);

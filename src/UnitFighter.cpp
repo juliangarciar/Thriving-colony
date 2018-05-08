@@ -50,7 +50,8 @@ const f32 UnitFighter::getSpeed() const{
 //}
 /* Maybe we can calculate it in only one method */
 Vector2<f32> UnitFighter::calculateFlocking(){
-
+    Vector2<f32> _flock;
+    return _flock;
 }
 Vector2<f32> UnitFighter::calculateDirection(){
     
