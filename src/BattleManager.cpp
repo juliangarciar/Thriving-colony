@@ -7,7 +7,6 @@ BattleManager::BattleManager() {
 }
 
 BattleManager::~BattleManager() {
-
 }
 
 void BattleManager::askForTarget(Entity* requester) {

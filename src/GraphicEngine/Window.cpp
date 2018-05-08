@@ -95,11 +95,10 @@ void Window::beginScene(){
     driver -> beginScene(true, true, video::SColor(0,0,0,0));
 }
 
-void Window::endScene(){
-    scene -> drawAll();
+void Window::endScene(bool b){
+    if (b) scene -> drawAll();
     gui -> drawWidgets();
     glEnable(GL_DEPTH_TEST);
-
     driver -> endScene();
 }
 
