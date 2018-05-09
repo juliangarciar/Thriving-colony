@@ -27,7 +27,8 @@ Vector3<f32> Terrain::getPointCollision(Mouse *cursor){
 
 f32 Terrain::getY(f32 x, f32 z) {
 	if (z > 0) z *= -1;
-	return t->getY(x, z);
+	f32 y = t->getY(x, z);
+	return y;
 }
 
 /*scene::ITerrainSceneNode* Terrain::getTerrain() {

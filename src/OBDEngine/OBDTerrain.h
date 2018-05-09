@@ -133,14 +133,15 @@ class OBDTerrain : public OBDEntity {
 		 */
 		f32 getY(f32 x, f32 z);
 	private:
-		void generateTerrain(const char *path);
+		void generateTerrain(const char *path, float y_offset, float y_scale, int step);
+		void refreshModelMatrix();
 
 		ResourceMesh mesh;
 		ResourceMaterial material;
 
 		TerTerrain *terrain;
-		std::vector<glm::vec3> vertex_vector;
 		SDF *octree;
+		std::vector<glm::vec3> vertex_vector;
 
 		TNode* rotationNode;
 		TNode* translationNode;
@@ -151,7 +152,8 @@ class OBDTerrain : public OBDEntity {
 		glm::vec3 node_rotation;
 		glm::vec3 node_scale;
 
-		glm::mat4 inverse_model;
+		glm::mat4 model_matrix;
+		glm::mat4 inverse_model_matrix;
 };
 
 #endif
