@@ -268,7 +268,6 @@ void Unit::moveTroop() {
             //    nearTroopsPosition.insert(nearTroopsPosition.end(), nearUnits[i]->getTroopsPosition().begin(), nearUnits[i]->getTroopsPosition().end());
             //}
             setPosition(newPos);
-
             steps = 0;
             //std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
         } 
@@ -283,6 +282,9 @@ void Unit::moveTroop() {
 
             steps--;
             //std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
+        }
+        for(std::size_t i = 0; i < unitFighters.size(); i++){
+            unitFighters[i]->update();
         }
     }
 }
@@ -383,6 +385,9 @@ void Unit::setTroopPosition(Vector2<f32> vectorData) {
     //vectorPos.set(vectorData);
     //vectorPos = vectorData;
     setPosition(vectorData);
+    for(std::size_t i = 0; i < unitFighters.size(); i++){
+        unitFighters[i]->setPosition(vectorData);
+    }
 }
 // To do -> adjust units movement
 void Unit::setTroopDestination(Vector2<f32> vectorData) {
@@ -399,7 +404,9 @@ void Unit::setTroopDestination(Vector2<f32> vectorData) {
     vectorMov.y = (desp.y / distance) * (moveSpeed / 100);
     f32 movDistance = std::sqrt(std::pow(vectorMov.x, 2) + std::pow(vectorMov.y, 2));
     steps = distance / movDistance;
-
+    for(std::size_t i = 0; i < unitFighters.size(); i++){
+        unitFighters[i]->setDestiny(vectorData);
+    }
     /*vectorDes.set(vectorData);
     Vector3<f32> desp = vectorDes - vectorPos;
     f32 distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2));

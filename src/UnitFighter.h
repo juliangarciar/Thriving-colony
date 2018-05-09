@@ -38,7 +38,7 @@ class UnitFighter{
         /* Check in the future */
         std::vector<UnitFighter*> nearFighters;
         
-        void hasArrived() const;
+        bool hasArrived() const;
         Vector2<f32> alignment();
         Vector2<f32> cohesion();
         Vector2<f32> separation();

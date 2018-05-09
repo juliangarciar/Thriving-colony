@@ -52,6 +52,11 @@ Vector2<T> Vector2<T>::getFromPolarCoordinates(f32 r, f32 phi) {
 }
 
 template <class T>
+T Vector2<T>::dotProduct(){
+    return std::sqrt(std::pow(x, 2) + std::pow(y, 2));
+}
+
+template <class T>
 T Vector2<T>::calculateDistance(Vector2<T> b){
     
     T disX, disY;

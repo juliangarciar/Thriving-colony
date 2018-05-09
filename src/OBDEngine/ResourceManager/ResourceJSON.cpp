@@ -13,7 +13,7 @@ void ResourceJSON::load(const char *path){
     try{
         std::ifstream i;
         i.open(path);
-        j << i;
+        i >> j;
         i.close();
     }catch(std::ifstream::failure e){
         std::cout << "Error al abrir el fichero " << path << std::endl;
