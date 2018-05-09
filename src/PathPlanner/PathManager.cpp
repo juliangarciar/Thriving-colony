@@ -16,9 +16,12 @@ bool PathManager::createPathTo(Vector2<f32> targetPos){
     if(end->isBlocked()){
         end = WorldGeometry::Instance()->getValidCell(end, origin, nullptr);
     }
-    AStar* astar = new AStar(origin, end);
+    //AStar* astar = new AStar(origin, end);
 
-    astar->Search();
-    propietary->setPath(astar->getPath());
+    //astar->Search();
+    std::list< Vector2<f32> > tmp;
+    tmp.push_back(end->getPosition());
+    //propietary->setPath(astar->getPath());
+    propietary->setPath(tmp);
     return true;
 }

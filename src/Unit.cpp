@@ -34,7 +34,7 @@ Unit::Unit(SceneNode* _layer,
                         ),
                         state(Enumeration::UnitState::Recruiting),
                         type(baseData.type),
-                        moveSpeed(baseData.moveSpeed),
+                        moveSpeed(baseData.moveSpeed / 10.0f),
                         attackSpeed(baseData.attackSpeed),
                         attackDamage(baseData.attackDamage),
                         finished(false),
@@ -71,7 +71,7 @@ Unit::Unit(SceneNode* _layer,
 
     unitFighters = std::vector< UnitFighter* >(baseData.troops, nullptr);
     for(std::size_t i = 0; i < unitFighters.size(); i++){
-        unitFighters[i] = new UnitFighter(_layer, _id, baseData.troopModel, baseData.moveSpeed);
+        unitFighters[i] = new UnitFighter(_layer, _id, baseData.troopModel, baseData.moveSpeed / 10.0f);
     }
 
     baseMat = new Material(t);
@@ -135,6 +135,16 @@ void Unit::update() {
             retractState();
         break;
         default: break;
+    }
+    std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(vectorPos);
+    std::vector< UnitFighter* > dummyFighters;
+    std::vector< UnitFighter* > dummySpace;
+    for(std::size_t i = 0; i < nearUnits.size(); i++){
+        dummySpace = nearUnits[i]->getUnitFighters();
+        dummyFighters.insert(dummyFighters.end(), dummySpace.begin(), dummySpace.end());
+    }
+    for(std::size_t i = 0; i < unitFighters.size(); i++){
+        unitFighters[i]->update(dummyFighters);
     }
 }
 
@@ -229,12 +239,12 @@ void Unit::retractState() {
 }
 /* ToDo: delta time */
 void Unit::moveTroop() {
-    std::cout << "Esto en:" << getPosition().x << "," << getPosition().y << "\n";
+    //std::cout << "Esto en:" << getPosition().x << "," << getPosition().y << "\n";
     if(team == 0){
-        std::cout << "Soy humano \n";
+        //std::cout << "Soy humano \n";
     }
     else{
-        std::cout << "Soy ia \n";
+        //std::cout << "Soy ia \n";
     }
     if (moving) {
         // close to destination, stop
@@ -283,9 +293,6 @@ void Unit::moveTroop() {
             steps--;
             //std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
         }
-        for(std::size_t i = 0; i < unitFighters.size(); i++){
-            unitFighters[i]->update();
-        }
     }
 }
 
@@ -318,7 +325,7 @@ void Unit::attack() {
         }
     }
 }
-
+/* Soberana mierda */
 void Unit::chaseTarget() {
     if (moving) {
         // If i can attack, then do so
@@ -328,7 +335,7 @@ void Unit::chaseTarget() {
         } else { //If i am too far away to attack, then move closer.
             Vector2<f32> newPos = getPosition() + vectorMov;
             //newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
-            setTroopPosition(newPos);
+            //setTroopPosition(newPos);
         }
     }
 }
@@ -386,7 +393,7 @@ void Unit::setTroopPosition(Vector2<f32> vectorData) {
     //vectorPos = vectorData;
     setPosition(vectorData);
     for(std::size_t i = 0; i < unitFighters.size(); i++){
-        unitFighters[i]->setPosition(vectorData);
+        unitFighters[i]->setPosition(vectorData + (12 * i));
     }
 }
 // To do -> adjust units movement
@@ -405,7 +412,7 @@ void Unit::setTroopDestination(Vector2<f32> vectorData) {
     f32 movDistance = std::sqrt(std::pow(vectorMov.x, 2) + std::pow(vectorMov.y, 2));
     steps = distance / movDistance;
     for(std::size_t i = 0; i < unitFighters.size(); i++){
-        unitFighters[i]->setDestiny(vectorData);
+        unitFighters[i]->setDestiny(vectorData + (12 * i));
     }
     /*vectorDes.set(vectorData);
     Vector3<f32> desp = vectorDes - vectorPos;
@@ -476,4 +483,7 @@ Enumeration::UnitState Unit::getState() {
 
 i32 Unit::getArmyLevel(){
     return armyLevel;
+}
+std::vector< UnitFighter* > Unit::getUnitFighters(){
+    return unitFighters;
 }

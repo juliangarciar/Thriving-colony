@@ -46,11 +46,11 @@ void Game::Update() {
 }
 
 void Game::Render() {
-    std::cout << "RenderInit" << std::endl;
+    //std::cout << "RenderInit" << std::endl;
     window -> beginScene();
     state -> Render();
     window -> endScene(stateData == Enumeration::State::GameState);
-    std::cout << "Render finish" << std::endl;
+    //std::cout << "Render finish" << std::endl;
 }
 
 void Game::CleanUp() {

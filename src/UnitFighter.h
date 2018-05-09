@@ -15,8 +15,8 @@ class UnitFighter{
         // Setters
         void setPosition(Vector2<f32> _pos);
         void setDestiny(Vector2<f32> _dest);
-        //void setSpeed(Vector2<f32> _spd);
         void move();
+        //void update();
         void update(std::vector<UnitFighter*> &_nearFighters);
         //void setNearFighters(std::vector<UnitFighter*> &_nearFighters);
 
@@ -38,11 +38,12 @@ class UnitFighter{
         /* Check in the future */
         std::vector<UnitFighter*> nearFighters;
         
-        bool hasArrived() const;
+        bool hasArrived();
+        /* Maybe we can calculate flocking in only one method */
         Vector2<f32> alignment();
         Vector2<f32> cohesion();
         Vector2<f32> separation();
         Vector2<f32> calculateFlocking();
-        Vector2<f32> calculateDirection();
+        void calculateDirection();
 };
 #endif /* UNITFIGHTER_H */

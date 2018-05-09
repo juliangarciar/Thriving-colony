@@ -82,6 +82,16 @@ template <class T>
 Vector2<T> Vector2<T>::operator / (const f32 &num) const {
     return Vector2<T>(this -> x / num, this -> y / num);
 }
+template <class T>
+Vector2<T> Vector2<T>::operator * (const f32 &num) const{
+    return Vector2<T>(this->x * num, this->y * num);
+}
+template <class T>
+Vector2<T> Vector2<T>::operator += (const Vector2<T> &p){
+    this->x = this->x + p.x; 
+    this->y = this->y + p.y;
+    return *this;
+}
 /*
 /////////////////////////////////////////IRRLICHT////////////////////////////////////////
 template <class T>
