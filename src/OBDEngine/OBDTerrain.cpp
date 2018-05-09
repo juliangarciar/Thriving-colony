@@ -1,5 +1,7 @@
 #include "OBDTerrain.h"
 
+#define EPSILON 0.0005
+
 OBDTerrain::OBDTerrain(std::string path){
 	node_position = glm::vec3(0);
 	node_rotation = glm::vec3(0);
@@ -157,25 +159,17 @@ TNode *OBDTerrain::getFirstNode(){
 
 f32 OBDTerrain::getY(f32 x, f32 z){
 	OBDLine line;
-	line.start = inverse_model_matrix * glm::vec4(glm::vec3(x, -10000, z), 1); //ToDo: Revisar
-	line.end = inverse_model_matrix * glm::vec4(glm::vec3(x, 10000, z), 1); //ToDo: Revisar
-
-	//std::cout << "S-> " << line.start.x << " " << line.start.y << " " << line.start.z << std::endl;
-	//std::cout << "E-> " << line.end.x << " " << line.end.y << " " << line.end.z << std::endl;
+	line.start = inverse_model_matrix * glm::vec4(glm::vec3(x+EPSILON, -10000, z+EPSILON), 1); //ToDo: Revisar
+	line.end = inverse_model_matrix * glm::vec4(glm::vec3(x+EPSILON, 10000, z+EPSILON), 1); //ToDo: Revisar
 
 	glm::vec3 dir = glm::normalize(line.end - line.start);
 	std::vector<glm::vec3> res = octree->query(line.start, dir);
-	
-	//std::cout << "GetY " << x << " " << z << " = ";
 
 	if (res.size() > 0) {
 		glm::vec4 r(res[0], 1);
 		r = model_matrix * r;
-		//std::cout << std::endl << std::endl;
 		return r.y;
 	}
-
-	std::cout << "0" << std::endl << std::endl;
 
 	return 0;
 }

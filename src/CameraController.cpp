@@ -157,6 +157,7 @@ void CameraController::updateCamera(f32 deltaTime) {
 	}
 
     if (movementMode || rotationOrInclinationMode || zoomMode || centerCameraMode){
+		tarPos.y = Map::Instance() -> getTerrain() -> getY(tarPos.x, tarPos.z);
 		camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
 
 		i32 camHeight = camPos.y - tarPos.y;

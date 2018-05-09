@@ -1,6 +1,10 @@
 #include "OBDMesh.h"
 
 OBDMesh::OBDMesh(ResourceMesh m, ResourceMaterial mat){
+	node_position = glm::vec3(0);
+	node_rotation = glm::vec3(0);
+	node_scale = glm::vec3(0);
+
     rotationNode = new TNode(new TTransform());
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
@@ -14,6 +18,10 @@ OBDMesh::OBDMesh(ResourceMesh m, ResourceMaterial mat){
 }
 
 OBDMesh::OBDMesh(OBDSceneNode* parent, ResourceMesh m, ResourceMaterial mat){
+	node_position = glm::vec3(0);
+	node_rotation = glm::vec3(0);
+	node_scale = glm::vec3(0);
+	
     rotationNode = new TNode(new TTransform());
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);

@@ -1,6 +1,10 @@
 #include "OBDObject.h"
 
 OBDObject::OBDObject(ResourceOBJ *obj, ResourceMTL *mtl) {
+	node_position = glm::vec3(0);
+	node_rotation = glm::vec3(0);
+	node_scale = glm::vec3(0);
+	
     rotationNode = new TNode(new TTransform());
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
@@ -30,6 +34,10 @@ OBDObject::OBDObject(ResourceOBJ *obj, ResourceMTL *mtl) {
 }
 
 OBDObject::OBDObject(OBDSceneNode* parent, ResourceOBJ *obj, ResourceMTL *mtl) {
+	node_position = glm::vec3(0);
+	node_rotation = glm::vec3(0);
+	node_scale = glm::vec3(0);
+
     rotationNode = new TNode(new TTransform());
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
