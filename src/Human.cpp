@@ -39,7 +39,6 @@ void Human::CleanUp() {
 // Add a call to clean the cells the buildings inhabit
     delete buildings;
     delete units;
-    delete updateTimer;
 }
 
 bool Human::getUnderAttack() {
