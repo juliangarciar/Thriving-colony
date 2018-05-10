@@ -10,12 +10,6 @@ class OBDParticleSystem : public OBDEntity {
         /**
          * @brief 
          * 
-         */
-        OBDParticleSystem();
-
-        /**
-         * @brief 
-         * 
          * @param
          */
         OBDParticleSystem(OBDSceneNode*, i32, glm::vec3, glm::vec3, glm::vec3);
