@@ -16,10 +16,10 @@ class ParticleAffector {
         ParticleAffector();
         ~ParticleAffector();
 
-        scene::IParticleAffectorSceneNode* getParticleAffectorNode();
+        scene::IParticleAffector* getParticleAffectorNode();
 
     private:
-        scene::IParticleAffectorSceneNode* particleAffectorNode;
+        scene::IParticleAffector* particleAffectorNode;
 };
 
 #endif

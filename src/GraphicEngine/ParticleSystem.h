@@ -7,6 +7,7 @@
 #include <MathEngine/Color.h>
 #include "SceneNode.h"
 #include "Window.h"
+#include "ParticleAffector.h"
 
 using namespace irr;
 
@@ -17,7 +18,12 @@ class ParticleSystem {
         ~ParticleSystem();
         void addAffector(ParticleAffector* pa);
         void clearParticles();
-        void createAttractionAffector(Vcetor3<f32> point, f32 speed = 1.0f,	bool attract = true, bool affectX = true, bool affectY = true, bool affectZ = true); 	
+        void createAttractionAffector(Vector3<f32> point, f32 speed = 1.0f,	bool attract = true, bool affectX = true, bool affectY = true, bool affectZ = true); 	
+        void createFadeOutParticleAffector(i32 colorR = 0, i32 colorG = 0, i32 colorB = 0, i32 colorA = 0, i32 timeNeededToFadeOut = 1000);
+        void createGravityAffector(Vector3<f32> gravity, i32 timeForceLost = 1000); 	
+        void createPointEmitter(Vector3<f32> direction, i32	minParticlesPerSecond = 5, i32 maxParticlesPerSecond = 10, i32 minStartColorR =255, i32 minStartColorG = 0, i32 minStartColorB = 0, i32 minStartColorA = 0, i32 maxStartColorR = 255, i32 maxStartColorG = 255, i32 maxStartColorB = 255, i32 maxStartColorA = 255, i32	lifeTimeMin = 2000, i32 lifeTimeMax = 4000, i32 maxAngleDegrees = 0, Vector2<f32> minStartSize, Vector2<f32> maxStartSize);
+        void createRotationAffector(Vector3<f32> speed, Vector3<f32> pivotPoint);
+        void createScaleParticleAffector(Vector2<f32> scaleTo); 	 	
 
     private:
         scene::IParticleSystemSceneNode* particleSystemNode;

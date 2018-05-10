@@ -8,6 +8,6 @@ ParticleAffector::~ParticleAffector() {
 
 }
 
-scene::IParticleAffectorSceneNode* ParticleAffector::getParticleAffectorNode() {
+scene::IParticleAffector* ParticleAffector::getParticleAffectorNode() {
     return particleAffectorNode;
 }
