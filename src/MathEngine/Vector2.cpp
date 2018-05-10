@@ -52,6 +52,11 @@ Vector2<T> Vector2<T>::getFromPolarCoordinates(f32 r, f32 phi) {
 }
 
 template <class T>
+T Vector2<T>::dotProduct(){
+    return std::sqrt(std::pow(x, 2) + std::pow(y, 2));
+}
+
+template <class T>
 T Vector2<T>::calculateDistance(Vector2<T> b){
     
     T disX, disY;
@@ -76,6 +81,16 @@ Vector2<T> Vector2<T>::operator - (const Vector2<T> &p) const {
 template <class T>
 Vector2<T> Vector2<T>::operator / (const f32 &num) const {
     return Vector2<T>(this -> x / num, this -> y / num);
+}
+template <class T>
+Vector2<T> Vector2<T>::operator * (const f32 &num) const{
+    return Vector2<T>(this->x * num, this->y * num);
+}
+template <class T>
+Vector2<T> Vector2<T>::operator += (const Vector2<T> &p){
+    this->x = this->x + p.x; 
+    this->y = this->y + p.y;
+    return *this;
 }
 
 template class Vector2<i32>;

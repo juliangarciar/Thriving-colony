@@ -9,7 +9,7 @@ class TEntity {
     public:
         virtual void beginDraw() = 0;
         virtual void endDraw() = 0;
-
+        //virtual ~TEntity() = 0;
         static TCache cache;
 };
 

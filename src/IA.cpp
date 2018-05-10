@@ -115,6 +115,7 @@ BehaviourTree* IA::getTree() {
 * Goes over the vector of buildings looking up, right, down and left of every building built
 * until find the first empty position
 */
+/* ToDo: Cambiar algoritmo de construccion */
 Vector2<f32> IA::determinatePositionBuilding() {
     Vector2<f32> v;
     bool found = false;
@@ -122,7 +123,7 @@ Vector2<f32> IA::determinatePositionBuilding() {
     std::map<i32, Building*> *b = buildings -> getBuildings();
 
     // If it is the first building start always on the same position
-    if (b -> size() == 0) {
+    if (b -> size() == 0) { 
         /**
          * These coordinates determine the position of the main building
          * the y component of it is determined based on the map

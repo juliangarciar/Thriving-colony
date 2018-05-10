@@ -8,6 +8,7 @@
 #include <WorldEngine/WorldGeometry.h>
 #include <functional>
 #include <cmath>
+#include "UnitFighter.h"
 
 Unit::Unit(SceneNode* _layer, 
     i32 _id, 
@@ -50,7 +51,7 @@ Unit::Unit(SceneNode* _layer,
                         attackEvent(baseData.attackEvent),
                         moveEvent(baseData.moveEvent),
                         selectEvent(baseData.selectEvent),
-                        troops(nullptr)         
+                        unitFighters()         
 {
     lookForTargetTimer = new Timer (0.5, true);
     lookForTargetTimer -> setCallback([&](){
@@ -65,21 +66,39 @@ Unit::Unit(SceneNode* _layer,
     });
     pathManager = new PathManager(this);
 
+<<<<<<< HEAD
     baseMat = new Material(new Texture(""));
     baseMat -> setColor(Color(255, 255, 255, 255));
 
     damagedMat = new Material(new Texture(""));
     damagedMat -> setColor(Color(255, 255, 0, 0));
+=======
+    Texture *t = new Texture(baseData.flagTexture.c_str());
+
+
+    unitFighters = std::vector< UnitFighter* >(baseData.troops, nullptr);
+    for(std::size_t i = 0; i < unitFighters.size(); i++){
+        unitFighters[i] = new UnitFighter(_layer, _id, baseData.troopModel, baseData.moveSpeed);
+    }
+
+    baseMat = new Material(t);
+    baseMat -> setColor(255, 255, 255, 255);
+
+    damagedMat = new Material(t);
+    damagedMat -> setColor(255, 255, 0, 0);
+>>>>>>> EvilMind
 
     setBaseMaterial();
-
 }
 
 Unit::~Unit() {
     WorldGeometry::Instance()->clearUnitCell(getPosition(), this);
     delete lookForTargetTimer;
     delete pathManager;
-    delete troops;
+    for(std::size_t i = 0; i < unitFighters.size(); i++){
+        delete unitFighters[i];
+    }
+    unitFighters.clear();
     delete recruitingTimer;
 }
 
@@ -124,6 +143,16 @@ void Unit::update() {
             retractState();
         break;
         default: break;
+    }
+    std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(vectorPos);
+    std::vector< UnitFighter* > dummyFighters;
+    std::vector< UnitFighter* > dummySpace;
+    for(std::size_t i = 0; i < nearUnits.size(); i++){
+        dummySpace = nearUnits[i]->getUnitFighters();
+        dummyFighters.insert(dummyFighters.end(), dummySpace.begin(), dummySpace.end());
+    }
+    for(std::size_t i = 0; i < unitFighters.size(); i++){
+        unitFighters[i]->update(dummyFighters);
     }
 }
 
@@ -216,8 +245,18 @@ void Unit::retractState() {
         triggerRetractedCallback();        
     }
 }
-
+/* ToDo: delta time */
 void Unit::moveTroop() {
+<<<<<<< HEAD
+=======
+    //std::cout << "Esto en:" << getPosition().x << "," << getPosition().y << "\n";
+    if(team == 0){
+        //std::cout << "Soy humano \n";
+    }
+    else{
+        //std::cout << "Soy ia \n";
+    }
+>>>>>>> EvilMind
     if (moving) {
         // close to destination, stop
         if (steps == 0) {
@@ -241,43 +280,27 @@ void Unit::moveTroop() {
         }
         // Update Cell state 
         else if(std::floor(steps) == 0){
-            //Vector2<f32> move = vectorMov;
-            //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
-            //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime() * steps;
             Vector2<f32> newPos = vectorPos + vectorMov;
-            //newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
             WorldGeometry::Instance()->updateUnitCell(vectorPos, newPos, this);
-            WorldGeometry::Instance()->getNeighborUnits(newPos);
-            setTroopPosition(newPos);
-            //troops->moveTroops(vectorMov);
-            /*Vector3<f32> move = vectorMov;
-            Vector3<f32> newPos = vectorPos + move;
-            newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
-            WorldGeometry::Instance()->updateUnitCell(vectorPos.toVector2(), newPos.toVector2(), this);
-            WorldGeometry::Instance()->getNeighborUnits(newPos.toVector2());
-            setTroopPosition(newPos);*/
-            //troops -> moveTroops(newPos);
+            
+            //std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(newPos);
+            //std::vector< Vector2<f32> > nearTroopsPosition;
+            //for(int i = 0; i < nearUnits.size(); i++){
+            //    nearTroopsPosition.insert(nearTroopsPosition.end(), nearUnits[i]->getTroopsPosition().begin(), nearUnits[i]->getTroopsPosition().end());
+            //}
+            setPosition(newPos);
             steps = 0;
             //std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
         } 
         else {
-            // far from destination, move
-            //Vector2<f32> move = vectorMov;
-            //move.x *= 1 + Game::Instance() -> getWindow() -> getDeltaTime();
-            //move.z *= 1 + Game::Instance() -> getWindow() -> getDeltaTime();
             Vector2<f32> newPos = vectorPos + vectorMov;
-            //newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
             WorldGeometry::Instance()->updateUnitCell(vectorPos, newPos, this);
-            WorldGeometry::Instance()->getNeighborUnits(newPos);
-            setTroopPosition(newPos);
-            //troops->moveTroops(vectorMov);
-            /*Vector3<f32> move = vectorMov;
-            Vector3<f32> newPos = vectorPos + move;
-            newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
-            WorldGeometry::Instance()->updateUnitCell(vectorPos.toVector2(), newPos.toVector2(), this);
-            WorldGeometry::Instance()->getNeighborUnits(newPos.toVector2());
-            setTroopPosition(newPos);*/
-            //troops -> moveTroops(newPos);
+
+            //std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(newPos);
+            
+            setPosition(newPos);
+            //troops -> moveTroops(vectorMov);
+
             steps--;
             //std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
         }
@@ -313,7 +336,7 @@ void Unit::attack() {
         }
     }
 }
-
+/* Soberana mierda */
 void Unit::chaseTarget() {
     if (moving) {
         // If i can attack, then do so
@@ -323,7 +346,7 @@ void Unit::chaseTarget() {
         } else { //If i am too far away to attack, then move closer.
             Vector2<f32> newPos = getPosition() + vectorMov;
             //newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
-            setTroopPosition(newPos);
+            //setTroopPosition(newPos);
         }
     }
 }
@@ -380,7 +403,9 @@ void Unit::setTroopPosition(Vector2<f32> vectorData) {
     //vectorPos.set(vectorData);
     //vectorPos = vectorData;
     setPosition(vectorData);
-    //troops->setPosition(vectorData);
+    for(std::size_t i = 0; i < unitFighters.size(); i++){
+        unitFighters[i]->setPosition(vectorData + (16 * i));
+    }
 }
 // To do -> adjust units movement
 void Unit::setTroopDestination(Vector2<f32> vectorData) {
@@ -397,7 +422,9 @@ void Unit::setTroopDestination(Vector2<f32> vectorData) {
     vectorMov.y = (desp.y / distance) * (moveSpeed / 100);
     f32 movDistance = std::sqrt(std::pow(vectorMov.x, 2) + std::pow(vectorMov.y, 2));
     steps = distance / movDistance;
-
+    for(std::size_t i = 0; i < unitFighters.size(); i++){
+        unitFighters[i]->setDestiny(vectorData + (16 * i));
+    }
     /*vectorDes.set(vectorData);
     Vector3<f32> desp = vectorDes - vectorPos;
     f32 distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2));
@@ -468,361 +495,6 @@ Enumeration::UnitState Unit::getState() {
 i32 Unit::getArmyLevel(){
     return armyLevel;
 }
-
-// Basic stats of each unit are here
-    /*
-        //Metal and crystal costs of each unit.
-        enum UnitCost {
-            MeleeFootmenMetalCost = 125,
-            MeleeFootmenCrystalCost = 0,
-
-            RangedFootmenMetalCost = 150,
-            RangedFootmenCrystalCost = 0,
-
-            MountedMeleeMetalCost = 235,
-            MountedMeleeCrystalCost = 75,
-
-            MountedRangedMetalCost = 245,
-            MountedRangedCrystalCost = 75,
-
-            CreatureMetalCost = 215,
-            CreatureCrystalCost = 60,
-
-            CatapultMetalCost = 265,
-            CatapultCrystalCost = 160,
-
-            RamMetalCost = 295,
-            RamCrystalCost = 160,
-        };
-
-        //Army level provided by each type of unit.
-        enum ArmyLevel {
-            Footmen = 5,
-            Mounted = 10,
-            Siege = 7,
-            Creatures = 15
-        };
-    switch (type) {
-        // Basic melee soldier
-        case StandardM:
-            if (breed == Enumeration::BreedType::Drorania) {
-                moveSpeed = 420;
-                attackDamage = 15;
-                attackRange = 100;
-                attackSpeed = 1;
-                viewRadius = 450;
-                maxHP = 80;
-                currentHP = 80;
-                recruitingTime = 5;
-                happiness = -10;
-                citizens = -10;
-                armyLevel = Enumeration::ArmyLevel::Footmen;
-                attackEvent = "event:/UnitAttack/Drorania_melee_S";
-                moveEvent = "event:/UnitMovement/Drorania_melee_S";
-                selectEvent = "event:/UnitSelect/Drorania_melee_S";
-                metalCost = i32::MeleeFootmenMetalCost;
-                crystalCost = i32::MeleeFootmenCrystalCost;
-                path = L"media/unitModels/Drorania/Melee_Soldier_Drorania.obj";
-                setModel(layer, path);
-                //troops = new Troop(layer, path, 4, ID);
-                //tex = new Texture("./media/textures/Drorania/Unit/drorania_melee_soldier.jpg");
-            } else if (breed == Enumeration::BreedType::Kaonov) {
-                moveSpeed = 420;
-                attackDamage = 1000;
-                attackRange = 100;
-                attackSpeed = 1;
-                viewRadius = 450;
-                maxHP = 80;
-                currentHP = 80;
-                recruitingTime = 5;
-                happiness = -10;
-                citizens = -10;
-                armyLevel = Enumeration::ArmyLevel::Footmen;
-                attackEvent = "event:/UnitAttack/Kaonov_melee_S";
-                moveEvent = "event:/UnitMovement/Kaonov_melee_S";
-                selectEvent = "event:/UnitSelect/Kaonov_melee_S";
-                metalCost = i32::MeleeFootmenMetalCost;
-                crystalCost = i32::MeleeFootmenCrystalCost;
-                path = L"media/unitModels/Kaonov/kaonov_melee_soldier.obj";
-                setModel(layer, path);
-                //troops = new Troop(layer, path, 4, ID);
-            }
-        break;
-        //Advanced melee soldier (mounted)
-        case AdvancedM:
-            if (breed == Enumeration::BreedType::Drorania) {
-                moveSpeed = 530;
-                attackDamage = 21;
-                attackRange = 140;
-                attackSpeed = 1;
-                viewRadius = 450;
-                maxHP = 140;
-                currentHP = 140;
-                recruitingTime = 10;
-                happiness = -10;
-                citizens = -10;
-                armyLevel = Enumeration::ArmyLevel::Mounted;
-                attackEvent = "event:/UnitAttack/Drorania_melee_A";
-                moveEvent = "event:/UnitMovement/Drorania_melee_A";
-                selectEvent = "event:/UnitSelect/Drorania_melee_A";
-                metalCost = i32::MountedMeleeMetalCost;
-                crystalCost = i32::MountedMeleeCrystalCost;
-                path = L"media/unitModels/Drorania/criatura_drorania.obj";
-                //tex = new Texture("./media/textures/Drorania/Unit/drorania_criature.jpg");
-                setModel(layer, path);
-                //troops = new Troop(layer, path, 4, ID);
-            } else if (breed == Enumeration::BreedType::Kaonov) {
-                //This should be changed
-                moveSpeed = 530;
-                attackDamage = 21;
-                attackRange = 140;
-                attackSpeed = 1;
-                viewRadius = 450;
-                maxHP = 140;
-                currentHP = 140;
-                recruitingTime = 10;
-                happiness = -10;
-                citizens = -10;
-                armyLevel = Enumeration::ArmyLevel::Mounted;
-                attackEvent = "event:/UnitAttack/Kaonov_melee_A";
-                moveEvent = "event:/UnitMovement/Kaonov_melee_A";
-                selectEvent = "event:/UnitSelect/Kaonov_melee_A";
-                metalCost = i32::MountedMeleeMetalCost;
-                crystalCost = i32::MountedMeleeCrystalCost;
-                path = L"media/unitModels/Kaonov/creature_kaonov.obj";
-                setModel(layer, path);
-                //troops = new Troop(layer, path, 4, ID);
-            }
-        break;
-        //Standard ranged unit
-        case StandardR:
-            if (breed == Enumeration::BreedType::Drorania) {
-                moveSpeed = 350;
-                attackDamage = 13;
-                attackRange = 350;
-                attackSpeed = 1;
-                viewRadius = 450;
-                maxHP = 60;
-                currentHP = 60;
-                recruitingTime = 5;
-                happiness = -10;
-                citizens = -10;
-                armyLevel = Enumeration::ArmyLevel::Footmen;
-                attackEvent = "event:/UnitAttack/Drorania_ranged_S";
-                moveEvent = "event:/UnitMovement/Drorania_ranged_S";
-                selectEvent = "event:/UnitSelect/Drorania_ranged_S";
-                metalCost = i32::RangedFootmenMetalCost;
-                crystalCost = i32::RangedFootmenCrystalCost;
-                path = L"media/unitModels/Drorania/rank_soldier_drorania.obj";
-                //tex = new Texture("./media/textures/Drorania/Unit/drorania_rank_soldier.jpg");
-                setModel(layer, path);
-                //troops = new Troop(layer, path, 4, ID);
-            } else if (breed == Enumeration::BreedType::Kaonov) {
-                moveSpeed = 350;
-                attackDamage = 13;
-                attackRange = 350;
-                attackSpeed = 1;
-                viewRadius = 450;
-                maxHP = 60;
-                currentHP = 60;
-                recruitingTime = 5;
-                happiness = -10;
-                citizens = -10;
-                armyLevel = Enumeration::ArmyLevel::Footmen;
-                attackEvent = "event:/UnitAttack/Kaonov_ranged_S";
-                moveEvent = "event:/UnitMovement/Kaonov_ranged_S";
-                selectEvent = "event:/UnitSelect/Kaonov_ranged_S";
-                metalCost = i32::RangedFootmenMetalCost;
-                crystalCost = i32::RangedFootmenCrystalCost;
-                path = L"media/unitModels/Kaonov/kaonov_rank_soldier.obj";
-                setModel(layer, path);
-                //troops = new Troop(layer, path, 4, ID);
-            }   
-        break;
-        //Advanced ranged soldier (mounted)
-        case AdvancedR:
-            if (breed == Enumeration::BreedType::Drorania) {
-                moveSpeed = 530;
-                attackDamage = 18;
-                attackRange = 700;
-                attackSpeed = 1;
-                viewRadius = 450;
-                maxHP = 110;
-                currentHP = 110;
-                recruitingTime = 10;
-                happiness = -10;
-                citizens = -10;
-                armyLevel = Enumeration::ArmyLevel::Mounted;
-                attackEvent = "event:/UnitAttack/Drorania_ranged_A";
-                moveEvent = "event:/UnitMovement/Drorania_ranged_A";
-                selectEvent = "event:/UnitSelect/Drorania_ranged_A";
-                metalCost = i32::MountedRangedMetalCost;
-                crystalCost = i32::MountedRangedCrystalCost;
-                path = L"media/unitModels/Drorania/criatura_drorania.obj";
-                //tex = new Texture("./media/textures/Drorania/Unit/drorania_criature.jpg");
-                setModel(layer, path);
-                //troops = new Troop(layer, path, 0, ID);
-            } else if (breed == Enumeration::BreedType::Kaonov) {
-                moveSpeed = 530;
-                attackDamage = 18;
-                attackRange = 700;
-                attackSpeed = 1;
-                viewRadius = 450;
-                maxHP = 110;
-                currentHP = 110;
-                recruitingTime = 10;
-                happiness = -10;
-                citizens = -10;
-                armyLevel = Enumeration::ArmyLevel::Mounted;
-                attackEvent = "event:/UnitAttack/Kaonov_ranged_A";
-                moveEvent = "event:/UnitMovement/Kaonov_ranged_A";
-                selectEvent = "event:/UnitSelect/Kaonov_ranged_A";
-                metalCost = i32::MountedRangedMetalCost;
-                crystalCost = i32::MountedRangedCrystalCost;
-                path = L"media/unitModels/Kaonov/creature_kaonov.obj";
-                setModel(layer, path);
-                //troops = new Troop(layer, path, 0, ID);
-            }
-        break;
-        //Idol (to be defined)
-        case Idol:
-            if (breed == Enumeration::BreedType::Drorania) {
-                moveSpeed = 250;
-                attackDamage = 27;
-                attackRange = 140;
-                attackSpeed = 1;
-                viewRadius = 450;
-                maxHP = 180;
-                currentHP = 180;
-                recruitingTime = 20;
-                happiness = -10;
-                citizens = -10;
-                armyLevel = Enumeration::ArmyLevel::Creatures;
-                //ToDo: CHANGE
-                attackEvent = "event:/UnitAttack/Drorania_melee_A";
-                moveEvent = "event:/UnitMovement/Drorania_melee_A";
-                selectEvent = "event:/UnitSelect/Drorania_melee_A";
-                metalCost = i32::CreatureMetalCost;
-                crystalCost = i32::CreatureCrystalCost;
-                path = L"media/unitModels/Drorania/Ente_Drorania.obj";
-                //tex = new Texture("./media/textures/Drorania/Unit/drorania_entity.jpg");
-                setModel(layer, path);
-                //troops = new Troop(layer, path, 0, ID);
-            } else if (breed == Enumeration::BreedType::Kaonov) {
-                moveSpeed = 250;
-                attackDamage = 27;
-                attackRange = 140;
-                attackSpeed = 1;
-                viewRadius = 450;
-                maxHP = 180;
-                currentHP = 180;
-                recruitingTime = 20;
-                happiness = -10;
-                citizens = -10;
-                armyLevel = Enumeration::ArmyLevel::Creatures;
-                //ToDo: CHANGE
-                attackEvent = "event:/UnitAttack/Kaonov_melee_A";
-                moveEvent = "event:/UnitMovement/Kaonov_melee_A";
-                selectEvent = "event:/UnitSelect/Kaonov_melee_A";
-                metalCost = i32::CreatureMetalCost;
-                crystalCost = i32::CreatureCrystalCost;
-                path = L"media/unitModels/Kaonov/entinity_kaonov.obj";
-                setModel(layer, path);
-                //troops = new Troop(layer, path, 0, ID);
-            }
-        break;
-        //Rock launcher
-        case Launcher:
-            if (breed == Enumeration::BreedType::Drorania) {
-                moveSpeed = 250;
-                attackDamage = 27;
-                attackRange = 900;
-                attackSpeed = 1;
-                viewRadius = 450;
-                maxHP = 180;
-                currentHP = 180;
-                recruitingTime = 15;
-                happiness = -10;
-                citizens = -10;
-                armyLevel = Enumeration::ArmyLevel::Siege;
-                //ToDo: CHANGE
-                attackEvent = "event:/UnitAttack/Drorania_ranged_S";
-                moveEvent = "event:/UnitMovement/Drorania_ranged_S";
-                selectEvent = "event:/UnitSelect/Drorania_ranged_S";
-                metalCost = i32::CatapultMetalCost;
-                crystalCost = i32::CatapultCrystalCost;
-                path = L"media/unitModels/Drorania/dorania_cannon.obj";
-                setModel(layer, path);
-                //troops = new Troop(layer, path, 0, ID);
-            } 
-            else if (breed == Enumeration::BreedType::Kaonov) {
-                moveSpeed = 250;
-                attackDamage = 27;
-                attackRange = 900;
-                attackSpeed = 1;
-                viewRadius = 450;
-                maxHP = 180;
-                currentHP = 180;
-                recruitingTime = 15;
-                happiness = -10;
-                citizens = -10;
-                armyLevel = Enumeration::ArmyLevel::Siege;
-                //ToDo: CHANGE
-                attackEvent = "event:/UnitAttack/Kaonov_ranged_S";
-                moveEvent = "event:/UnitMovement/Kaonov_ranged_S";
-                selectEvent = "event:/UnitSelect/Kaonov_ranged_S";
-                metalCost = i32::CatapultMetalCost;
-                crystalCost = i32::CatapultCrystalCost;
-                path = L"media/unitModels/Kaonov/kaonov_cannon.obj";
-                setModel(layer, path);
-                //troops = new Troop(layer, path, 0, ID);
-            }
-        break;
-        //Wall desintegrator
-        case Desintegrator:
-            if (breed == Enumeration::BreedType::Drorania) {
-                moveSpeed = 250;
-                attackDamage = 41;
-                attackRange = 120;
-                attackSpeed = 1;
-                viewRadius = 450;
-                maxHP = 220;
-                currentHP = 220;
-                recruitingTime = 20;
-                happiness = -10;
-                citizens = -10;
-                armyLevel = Enumeration::ArmyLevel::Siege;
-                //ToDo: CHANGE
-                attackEvent = "event:/UnitAttack/Drorania_ranged_A";
-                moveEvent = "event:/UnitMovement/Drorania_ranged_A";
-                selectEvent = "event:/UnitSelect/Drorania_ranged_A";
-                metalCost = i32::RamMetalCost;
-                crystalCost = i32::RamCrystalCost;
-                path = L"media/unitModels/Drorania/drorania_walls_desintegrator.obj";
-                setModel(layer, path);
-                //troops = new Troop(layer, path, 0, ID);
-            } else if (breed == Enumeration::BreedType::Kaonov) {
-                moveSpeed = 250;
-                attackDamage = 41;
-                attackRange = 120;
-                attackSpeed = 1;
-                viewRadius = 450;
-                maxHP = 220;
-                currentHP = 220;
-                recruitingTime = 20;
-                happiness = -10;
-                citizens = -10;
-                armyLevel = Enumeration::ArmyLevel::Siege;
-                //ToDo: CHANGE
-                attackEvent = "event:/UnitAttack/Kaonov_ranged_A";
-                moveEvent = "event:/UnitMovement/Kaonov_ranged_A";
-                selectEvent = "event:/UnitSelect/Kaonov_ranged_A";
-                metalCost = i32::RamMetalCost;
-                crystalCost = i32::RamCrystalCost;
-                path = L"media/unitModels/Kaonov/kaonov_walls_desintegrator.obj";
-                setModel(layer, path);
-                //troops = new Troop(layer, path, 0, ID);
-            }
-        break;
-        default: break;
-    }*/
+std::vector< UnitFighter* > Unit::getUnitFighters(){
+    return unitFighters;
+}

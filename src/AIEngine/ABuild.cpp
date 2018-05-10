@@ -14,6 +14,7 @@ Enumeration::BehaviourState ABuild::Update() {
 }
 
 Enumeration::BehaviourState ABuild::Update(std::string type) {
+    /* Cambiar */
     Vector2<f32> v = IA::Instance() -> determinatePositionBuilding();
     if (type == "Barn"){
             IA::Instance() -> getTree() -> setRequireBarn(false);

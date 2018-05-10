@@ -7,13 +7,11 @@
 #include <Types.h>
 #include <Entity.h>
 #include <PathPlanner/PathManager.h>
-#include <Troop.h>
 #include <EntityData.h>
 #include <Enumeration.h>
 
 //class PathManager;
-//class Troop;
-
+class UnitFighter;
 /**
  * @class Unit.
  * @brief Create a Unit type object. Public heritage from Entity class.
@@ -246,7 +244,9 @@ class Unit : public Entity {
          * @return i32 that will be the value of the armyLevel variable.
          */
         i32 getArmyLevel();
-
+        /* New */
+        std::vector< Vector2<f32> > getTroopsPosition();        
+        std::vector< UnitFighter* > getUnitFighters();
     private:
         /**
          * @brief Initialize the variables.
@@ -323,7 +323,7 @@ class Unit : public Entity {
         std::string selectEvent;
 
         //
-        Troop* troops;
+        std::vector< UnitFighter* > unitFighters;
 };
 
 #endif

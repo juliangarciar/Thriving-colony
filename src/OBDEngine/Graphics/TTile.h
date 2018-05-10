@@ -19,7 +19,7 @@ class TTile : public TEntity{
     private:
         TTexture* texture;
         GLuint textureID;
-        GLuint lightID;
+        //GLuint lightID;
         glm::vec2 position;
 };
 #endif
