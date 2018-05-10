@@ -75,6 +75,11 @@ Entity::~Entity() {
     if (model != nullptr) delete model;
     hostile.clear();
     delete tookDamageTimer;
+    /* Revisar */
+    //delete barBg;
+    //delete bar;
+    delete baseMat;
+    delete damagedMat;
 }
 
 void Entity::update(){

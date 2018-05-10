@@ -70,13 +70,13 @@ Building::Building(SceneNode *_layer,
 }
 
 Building::~Building() {
+    /* QUe pasa */
     delete canBuildMat;
     delete cantBuildMat;
-    delete baseMat;
-    delete damagedMat;
     delete buildTimer;
-    delete barBg;
-    delete bar;
+    /* Error aqui */
+    //delete barBg;
+    //delete bar;
 }
 
 void Building::update() {
@@ -123,6 +123,7 @@ std::string Building::getType(){
 }
 
 //ToDo: hacia abajo anadido por rafa
+// ToDo : esto es una mierda rafa
 void Building::setCanBuildMat() {
     model -> setMaterial(canBuildMat);
 }

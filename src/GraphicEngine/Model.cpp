@@ -13,7 +13,7 @@ Model::Model(SceneNode *parent, i32 id, std::string path) {
 }
 
 Model::~Model() {
-	
+	delete obj;
 }
 
 void Model::setID(i32 id) {

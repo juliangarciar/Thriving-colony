@@ -75,10 +75,10 @@ Unit::Unit(SceneNode* _layer,
     }
 
     baseMat = new Material(t);
-    baseMat -> setColor(255, 255, 255, 255);
+    baseMat -> setColor(Color(255, 255, 255, 255));
 
     damagedMat = new Material(t);
-    damagedMat -> setColor(255, 255, 0, 0);
+    damagedMat -> setColor(Color(255, 255, 0, 0));
 
     setBaseMaterial();
 }
