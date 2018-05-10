@@ -66,13 +66,6 @@ Unit::Unit(SceneNode* _layer,
     });
     pathManager = new PathManager(this);
 
-<<<<<<< HEAD
-    baseMat = new Material(new Texture(""));
-    baseMat -> setColor(Color(255, 255, 255, 255));
-
-    damagedMat = new Material(new Texture(""));
-    damagedMat -> setColor(Color(255, 255, 0, 0));
-=======
     Texture *t = new Texture(baseData.flagTexture.c_str());
 
 
@@ -86,7 +79,6 @@ Unit::Unit(SceneNode* _layer,
 
     damagedMat = new Material(t);
     damagedMat -> setColor(255, 255, 0, 0);
->>>>>>> EvilMind
 
     setBaseMaterial();
 }
@@ -247,16 +239,6 @@ void Unit::retractState() {
 }
 /* ToDo: delta time */
 void Unit::moveTroop() {
-<<<<<<< HEAD
-=======
-    //std::cout << "Esto en:" << getPosition().x << "," << getPosition().y << "\n";
-    if(team == 0){
-        //std::cout << "Soy humano \n";
-    }
-    else{
-        //std::cout << "Soy ia \n";
-    }
->>>>>>> EvilMind
     if (moving) {
         // close to destination, stop
         if (steps == 0) {
