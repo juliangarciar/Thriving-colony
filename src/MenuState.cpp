@@ -24,7 +24,6 @@ void MenuState::Update() {
 }
 
 void MenuState::Render() {
-
 }
 
 void MenuState::CleanUp() {

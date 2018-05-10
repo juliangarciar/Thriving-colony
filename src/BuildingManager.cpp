@@ -43,10 +43,10 @@ BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
 
 BuildingManager::~BuildingManager() {
 	delete tempBuilding;
-	delete buildingLayer;
 	for (std::map<i32,Building*>::iterator it = inMapBuildings -> begin(); it != inMapBuildings -> end(); ++it) {
 		delete it -> second;
     }
+	delete buildingLayer;
 	inMapBuildings -> clear();
 	delete inMapBuildings;
 }

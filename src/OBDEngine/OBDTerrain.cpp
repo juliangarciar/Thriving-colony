@@ -45,6 +45,12 @@ OBDTerrain::OBDTerrain(OBDSceneNode* parent, std::string path){
 OBDTerrain::~OBDTerrain() {
 	delete rotationNode;
 	rotationNode = nullptr;
+
+	delete terrain;
+	delete octree;
+
+	terrain = nullptr;
+	octree = nullptr;
 }
 
 void OBDTerrain::generateTerrain(const char *path, float y_offset, float y_scale, int step){
