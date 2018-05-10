@@ -226,7 +226,7 @@ OBDAnimation* OBDEngine::createAnimation(OBDSceneNode* layer, std::string anim) 
 }
 
 OBDBillboard* OBDEngine::createBillboard(OBDSceneNode* layer, i32 id, glm::vec3 pos) {
-    OBDBillboard* billboard = new OBDBillboard(layer, id, pos);
+    OBDBillboard* billboard = new OBDBillboard(layer, id, pos, currentProgram -> getShaderProgram());
     return billboard;
 }
 
