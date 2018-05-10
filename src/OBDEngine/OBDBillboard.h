@@ -107,6 +107,7 @@ class OBDBillboard : public OBDEntity {
         TNode* rotationNode;
         TNode* translationNode;
         TNode* scaleNode;
+        
         i32 ID;
 };
 

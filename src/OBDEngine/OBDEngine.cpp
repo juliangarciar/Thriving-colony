@@ -1,6 +1,6 @@
 #include "OBDEngine.h"
 
-#include <GL/glew.h>
+#include <glfw/glfw3.h>
 
 #include "ResourceManager/ResourceOBJ.h"
 #include "ResourceManager/ResourceGLSL.h"
@@ -27,8 +27,8 @@ OBDEngine::~OBDEngine() {
 }
 
 void OBDEngine::Init(i32 sW, i32 sH) {
-    if (glewInit() != GLEW_OK) {
-        std::cout << "Failed to initialize GLEW" << std::endl;
+    if (glfwInit() != GLFW_OK) {
+        std::cout << "Failed to initialize GLFW" << std::endl;
         exit(0);
     }
 

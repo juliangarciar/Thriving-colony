@@ -98,14 +98,14 @@ class OBDParticleEmiter {
          * 
          * @return OBDColor 
          */
-        OBDColor getMaxStartColor();
+        OBDColor* getMaxStartColor();
 
         /**
          * @brief Get the Min Start Color object
          * 
          * @return OBDColor 
          */
-        OBDColor getMinStartColor();
+        OBDColor* getMinStartColor();
 
         /**
          * @brief Set the Direction object
@@ -159,13 +159,13 @@ class OBDParticleEmiter {
          * @brief Set the Max Start Color object
          * 
          */
-        void setMaxStartColor(OBDColor);
+        void setMaxStartColor(OBDColor*);
 
         /**
          * @brief Set the Min Start Color object
          * 
          */
-        void setMinStartColor(OBDColor);
+        void setMinStartColor(OBDColor*);
 
     protected:
         ParticleEmiterType type;
@@ -180,8 +180,8 @@ class OBDParticleEmiter {
         i32 maxParticlesPerSecond;
         i32 minParticlesPerSecond;
 
-        OBDColor maxStartColor;
-        OBDColor minStartColor;
+        OBDColor* maxStartColor;
+        OBDColor* minStartColor;
 };
 
 #endif

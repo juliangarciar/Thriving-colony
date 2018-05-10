@@ -35,10 +35,13 @@ class TBillboard : public TEntity {
 
     private:
         glm::vec3 position;
+
         GLuint vertexbuffer;
         GLuint program;
+
         OBDColor* topColor;
         OBDColor* bottomColor;
+        
         f32 height;
         f32 topWidth;
         f32 bottomWidth;

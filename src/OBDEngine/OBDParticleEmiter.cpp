@@ -5,7 +5,8 @@ OBDParticleEmiter::OBDParticleEmiter() {
 }
 
 OBDParticleEmiter::~OBDParticleEmiter() {
-
+    delete maxStartColor;
+    delete minStartColor;
 }
 
 void OBDParticleEmiter::emit(i32 now, i32 lastCall, std::vector<TParticle*> particles) {
@@ -48,11 +49,11 @@ i32 OBDParticleEmiter::getMinParticlesPerSecond() {
     return minParticlesPerSecond;
 }
 
-OBDColor OBDParticleEmiter::getMaxStartColor() {
+OBDColor* OBDParticleEmiter::getMaxStartColor() {
     return maxStartColor;
 }
 
-OBDColor OBDParticleEmiter::getMinStartColor() {
+OBDColor* OBDParticleEmiter::getMinStartColor() {
     return minStartColor;
 }
 
@@ -88,10 +89,10 @@ void OBDParticleEmiter::setMinParticlesPerSecond(i32 newMinParticlesPerSecond) {
     minParticlesPerSecond = newMinParticlesPerSecond;
 }
 
-void OBDParticleEmiter::setMaxStartColor(OBDColor newMaxStartColor) {
+void OBDParticleEmiter::setMaxStartColor(OBDColor* newMaxStartColor) {
     maxStartColor = newMaxStartColor;
 }
 
-void OBDParticleEmiter::setMinStartColor(OBDColor newMinStartColor) {
+void OBDParticleEmiter::setMinStartColor(OBDColor* newMinStartColor) {
     minStartColor = newMinStartColor;
 }
