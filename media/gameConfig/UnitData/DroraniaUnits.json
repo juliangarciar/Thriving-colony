@@ -3,7 +3,7 @@
 			"unitName": "StandardR",
 			"moveSpeed": 350,
 			"attackDamage": 13,
-			"attackRange": 350,
+			"attackRange": 250,
 			"attackSpeed": 1,
 			"viewRadious": 450,
 			"maxHP": 60,
@@ -55,7 +55,7 @@
 		},
 		{
 			"unitName": "StandardM",
-			"moveSpeed": 420,
+			"moveSpeed": 250,
 			"attackDamage": 150,
 			"attackRange": 1000,
 			"attackSpeed": 1,

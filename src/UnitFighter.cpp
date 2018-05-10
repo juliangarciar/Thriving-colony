@@ -25,13 +25,9 @@ void UnitFighter::move(){
     if(!hasArrived()){
         calculateDirection();
         /* Add flocking */
-        Vector2<f32> flock = calculateFlocking();
-        vectorSpeed = vectorDirection * (speed / 100.0f) + flock;
+        vectorSpeed = vectorDirection * (speed / 100.0f);
         vectorPosition += vectorSpeed;
         fighterModel->setPosition(Vector3<f32>(vectorPosition.x, Map::Instance()->getTerrain()->getY(vectorPosition.x, vectorPosition.y), vectorPosition.y));
-        //std::cout << "SpeedX: " << vectorSpeed.x <<  " SpeedY: " << vectorSpeed.y << "\n";
-        //std::cout << "Flocking " << flock.x << " , " << flock.y << "\n";
-   
     }
     else{
         isMoving = false;
@@ -45,9 +41,6 @@ void UnitFighter::update(std::vector<UnitFighter*> &_nearFighters){
         move();
     }
 }
-//void UnitFighter::setNearFighters(std::vector<UnitFighter*> &_nearFighters){
-//    
-//}
 Vector2<f32> UnitFighter::getVectorPosition() const{
     return vectorPosition;
 }
@@ -60,15 +53,9 @@ Vector2<f32> UnitFighter::getVectorDestiny() const{
 const f32 UnitFighter::getSpeed() const{
     return speed;
 }
-//f32 UnitFighter::getSpeed() const{
-//    f32 tmp(speed);
-//    return tmp;
-//}
 bool UnitFighter::hasArrived(){
     if((vectorPosition - vectorDestiny).dotProduct() < 1.0f){
         vectorSpeed = Vector2<f32>(0, 0);
-        //vectorDirection = Vector2<f32>(0, 0);
-        //vectorDestiny = Vector2<f32>(0, 0);
         return true;
     }
     return false;
@@ -86,11 +73,11 @@ Vector2<f32> UnitFighter::calculateFlocking(){
         if(nearFighters[i] != this){
             other = nearFighters[i]->getVectorPosition();
             distance = std::sqrt(std::pow(other.x - vectorPosition.x, 2) + 
-                                std::pow(other.y - vectorPosition.y, 2));
+                                 std::pow(other.y - vectorPosition.y, 2));
 
             //std::cout << distance << "\n";
-            if(distance < 80.0f){
-                std::cout << "Ops \n";
+            if(distance < 20.0f){
+                //std::cout << "Ops \n";
                 /* Alignment */
                 alignment += nearFighters[i]->getVectorSpeed();
                 /* Cohesion */
@@ -131,18 +118,33 @@ Vector2<f32> UnitFighter::calculateFlocking(){
     
     separation = separation / distance;
 
-    flock = alignment * 1.8f + cohesion * 1.6f + separation * 1.6f;
+    flock = alignment * 1.1f + cohesion * 0.7f + separation * 1.2f;
 
-    std::cout << "Flocking " << flock.x << " , " << flock.y << "\n";
+    //std::cout << "Flocking " << flock.x << " , " << flock.y << "\n";
+
+    /* Normalize */
+
     return flock;
 }
 void UnitFighter::calculateDirection(){
-    
+    Vector2<f32> flocking = calculateFlocking();
+
     f32 incX = vectorDestiny.x - vectorPosition.x;
     f32 incY = vectorDestiny.y - vectorPosition.y;
     /* Calculate speed */
     f32 distance = std::sqrt(std::pow(incX, 2) + 
-                            std::pow(incY ,2));
+                             std::pow(incY ,2));
     
     vectorDirection = Vector2<f32>(incX / distance, incY / distance);
+
+    distance = std::sqrt(std::pow(flocking.x, 2) + 
+                         std::pow(flocking.y, 2));
+
+    if(distance != 0){
+        flocking = flocking / distance;
+        vectorDirection += flocking;
+        distance = std::sqrt(std::pow(vectorDirection.x, 2) + 
+                             std::pow(vectorDirection.y, 2));
+        vectorDirection = vectorDirection / distance;    
+    }   
 }

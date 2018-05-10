@@ -40,9 +40,9 @@ class UnitFighter{
         
         bool hasArrived();
         /* Maybe we can calculate flocking in only one method */
-        Vector2<f32> alignment();
-        Vector2<f32> cohesion();
-        Vector2<f32> separation();
+        //Vector2<f32> alignment();
+        //Vector2<f32> cohesion();
+        //Vector2<f32> separation();
         Vector2<f32> calculateFlocking();
         void calculateDirection();
 };
