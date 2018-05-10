@@ -20,7 +20,7 @@ class Window {
         void setGUI();
 
         void beginScene();
-        void endScene();
+        void endScene(bool b);
 
         void close();
 
