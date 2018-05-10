@@ -13,6 +13,7 @@ class Human : public Player {
     public:
         /**
          * @brief Get the instance of the class. If it doesn't exist, create a new instance.
+         * 
          * @return Pointer to a Human object that will be the value of instance variable.
 		 */
         static Human* Instance();
@@ -34,6 +35,7 @@ class Human : public Player {
 
         /**
          * @brief Determinate if the player's city is under attack.
+         * 
          * @return True if there ir any enemie troop near the player's city and false in other case.
          */
         bool getUnderAttack();

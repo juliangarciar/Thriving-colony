@@ -21,8 +21,16 @@ Enumeration::BehaviourState CBuild::Update() {
                 } else {
                     return Enumeration::BehaviourState::Failure;
                 }
-        } else if (type == "Barrack" || type == "DefenseBarrack"){
+        } else if (type == "Barrack"){
                 if (IA::Instance() -> getTree() -> getNeedBarracks()) {
+                    IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildBarrack);
+                    actionToDo();
+                    return Enumeration::BehaviourState::Success;
+                } else {
+                    return Enumeration::BehaviourState::Failure;
+                }
+        } else if (type == "DefenseBarrack") {
+                if (IA::Instance() -> getUnderAttack() == true && IA::Instance() -> getTree() -> getNeedBarracks()) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildBarrack);
                     actionToDo();
                     return Enumeration::BehaviourState::Success;

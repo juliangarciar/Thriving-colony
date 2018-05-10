@@ -11,6 +11,7 @@
  * @brief Create a IA type object. Public heritage from Player class. Singleton class.
  */
 class IA : public Player {
+    
     public:
         /**
          * @brief Get the instance of the class. If it doesn't exist, create a new instance.

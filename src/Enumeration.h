@@ -6,6 +6,7 @@
  * @brief Set the enumerations that are going to be needed.
  */
 class Enumeration {
+    
     public:
         //Teams.
         enum Team {

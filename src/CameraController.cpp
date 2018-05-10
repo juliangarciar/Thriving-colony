@@ -48,10 +48,18 @@ CameraController::CameraController() {
 
 	//ToDo: deberia actualizarse al redimensionar la pantalla
     screenCenter = Vector2<i32>(w->getInitialWindowWidth()/2, w->getInitialWindowHeight()/2);
+
+	int fractionsOfASecond = 50;
+	updateTimer = new Timer(1/fractionsOfASecond, true, false);
+
+	updateTimer -> setCallback([&](){
+        updateCamera(Window::Instance() -> getDeltaTime());
+	});
 }
 
 CameraController::~CameraController() {
 	delete camera;
+	delete updateTimer;
 }
 
 void CameraController::Init(Vector3<float> v){
@@ -64,12 +72,15 @@ void CameraController::Init(Vector3<float> v){
 
 	// Set distance to target
 	distanceToTarget = camPos.getDistanceTo(tarPos);
+
+	updateTimer -> start();
 }
 
-void CameraController::Update(f32 deltaTime) {
-	tarPos.set(camera -> getTargetPosition());
-	camPos.set(camera -> getCameraPosition());
+void CameraController::Update() {
+	updateTimer -> tick();
+}
 
+void CameraController::updateCamera(f32 deltaTime) {
 	if (movementMode) {
     	Vector3<f32> tarIncr;
 		i32 d = rotateDegrees.x; 
@@ -142,7 +153,6 @@ void CameraController::Update(f32 deltaTime) {
 	}
 
 	if (centerCameraMode){
-		//std::cout << userPos << std::endl;
 		tarPos = userPos;
 	}
 
@@ -161,9 +171,6 @@ void CameraController::Update(f32 deltaTime) {
 
 void CameraController::Move() {
 	Window *w = Window::Instance();
-
-    /*direction = (receiver -> keyDown(KEY_KEY_W) << 0) | (receiver -> keyDown(KEY_KEY_A) << 1)
-		| receiver -> keyDown(KEY_KEY_S) << 2 | receiver -> keyDown(KEY_KEY_D) << 3;*/
 
 	direction = 0;
 	movementMode = false;
@@ -310,7 +317,7 @@ void CameraController::setRotateDegrees(i32 x, i32 y){
 	rotateDegrees.y = y; 
 }
 
-Vector3<f32> CameraController::getTarPos() {
+Vector3<f32> CameraController::getTargetPosition() {
 	return tarPos;
 }
 
