@@ -167,6 +167,12 @@ class OBDParticleEmiter {
          */
         void setMinStartColor(OBDColor*);
 
+        /**
+         * @brief Set the Active object
+         * 
+         */
+        void setActive(bool);
+
     protected:
         ParticleEmiterType type;
 
@@ -182,6 +188,8 @@ class OBDParticleEmiter {
 
         OBDColor* maxStartColor;
         OBDColor* minStartColor;
+
+        bool active;
 };
 
 #endif

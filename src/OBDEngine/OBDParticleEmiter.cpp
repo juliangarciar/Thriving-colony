@@ -2,6 +2,7 @@
 
 OBDParticleEmiter::OBDParticleEmiter() {
     type = ParticleEmiterType::Point;
+    active = true;
 }
 
 OBDParticleEmiter::~OBDParticleEmiter() {
@@ -95,4 +96,8 @@ void OBDParticleEmiter::setMaxStartColor(OBDColor* newMaxStartColor) {
 
 void OBDParticleEmiter::setMinStartColor(OBDColor* newMinStartColor) {
     minStartColor = newMinStartColor;
+}
+
+void OBDParticleEmiter::setActive(bool newActive) {
+    active = newActive;
 }

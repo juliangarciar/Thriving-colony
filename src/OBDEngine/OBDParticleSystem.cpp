@@ -21,24 +21,20 @@ OBDParticleSystem::OBDParticleSystem(OBDSceneNode* parent, i32 id, glm::vec3 pos
 }
 
 OBDParticleSystem::~OBDParticleSystem() {
-    for (i32 i = 0; i < emiters.size(); i++) {
-        delete emiters[i];
-    }
-    emiters.clear();
-
+    delete emiter;
     for (i32 i = 0; i < affectors.size(); i++) {
         delete affectors[i];
     }
     affectors.clear();
-
     delete particleSystemNode;
     delete rotationNode;
     delete translationNode;
     delete scaleNode;
 }
 
-void OBDParticleSystem::addEmiter(OBDParticleEmiter* newEmiter) {
-    emiters.push_back(newEmiter);
+void OBDParticleSystem::aetEmiter(OBDParticleEmiter* newEmiter) {
+    delete emiter;
+    emiter = newEmiter;
 }
 
 void OBDParticleSystem::addAffector(OBDParticleAffector* newAffector) {

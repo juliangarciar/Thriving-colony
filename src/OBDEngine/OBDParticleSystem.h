@@ -43,7 +43,7 @@ class OBDParticleSystem : public OBDEntity {
          * @brief 
          * 
          */
-        void addEmiter(OBDParticleEmiter*);
+        void setEmiter(OBDParticleEmiter*);
         
         /**
          * @brief 
@@ -51,7 +51,7 @@ class OBDParticleSystem : public OBDEntity {
          */
         void addAffector(OBDParticleAffector*);
 
-         /**
+        /**
          * @brief Get the First Node object
          * 
          * @return TNode* 
@@ -66,7 +66,7 @@ class OBDParticleSystem : public OBDEntity {
 
         i32 ID;
 
-        std::vector<OBDParticleEmiter*> emiters;
+        OBDParticleEmiter* emiter;
         std::vector<OBDParticleAffector*> affectors;
 };
 
