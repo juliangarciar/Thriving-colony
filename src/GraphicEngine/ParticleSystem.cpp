@@ -40,3 +40,23 @@ void ParticleSystem::createRotationAffector(Vector3<f32> speed, Vector3<f32> piv
 void ParticleSystem::createScaleParticleAffector(Vector2<f32> scaleTo) {
     particleSystemNode -> addAffector(particleSystemNode -> createScaleParticleAffector(core::dimension2df(scaleTo.x, scaleTo.y)));
 }
+
+void ParticleSystem::createSphereEmitter(Vector3<f32> center, f32 radius, Vector3<f32> direction, i32 minParticlesPerSecond = 5, i32 maxParticlesPerSecond = 10, i32 minStartColorR = 255, i32 minStartColorG = 0, minStartColorB = 0, minStartColorA = 0, i32 maxStartColorR = 255, i32 maxStartColorG = 255, i32 maxStartColorB = 255, i32 maxStartColorA = 255, i32 lifeTimeMin = 2000, i32 lifeTimeMax = 4000, i32 maxAngleDegrees = 0, Vector2<f32> minStartSize, Vector2<f32> maxStartSize) {
+    particleSystemNode -> createSphereEmitter(core::vector3df(center.x, center.y, center.z), radius, core::vector3df(direction.x, direction.y, direction.z), minParticlesPerSecond, maxParticlesPerSecond, video::SColor(minStartColorR, minStartColorG, minStartColorB, minStartColorA), video::SColor(maxStartColorR, maxStartColorG, maxStartColorB, maxStartColorA), lifeTimeMin, lifeTimeMax, maxAngleDegrees, core::dimension2df(minStartSize.x, minStartSize.y), core::dimension2df(maxStartSize.x, maxStartSize.y));
+}
+
+void ParticleSystem::doParticleSystem(i32 time) {
+    particleSystemNode -> doParticleSystem(time);
+}
+
+void ParticleSystem::removeAllAffectors() {
+    particleSystemNode -> removeAllAffectors();
+}
+
+void ParticleSystem::setParticlesAreGlobal(bool global) {
+    particleSystemNode -> setParticlesAreGlobal(global);
+}
+
+void ParticleSystem::setParticleSize(Vector2<f32> size) {
+    particleSystemNode -> setParticleSize(core::dimension2df(size.x, size.y));
+}
