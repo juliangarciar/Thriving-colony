@@ -265,6 +265,8 @@ class UnitManager{
 
         //Id number that is going to be asigned as the key of the next unit created.
         i32 nextTroopId;
+
+        
 };
 
 #endif

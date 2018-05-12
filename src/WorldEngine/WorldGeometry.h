@@ -130,10 +130,15 @@ class WorldGeometry{
          * @return const std::vector< std::vector<f32> >& Self-explanatory
          */
         const std::vector< std::vector<f32> >& getCellsDistance();
+
+        //New method
+        const Vector2<f32> getSquadPosition(i32 _size, i32 _index) const; 
     private:
         static WorldGeometry* pinstance;
         std::vector<Cell*> mCells;
         Quadtree* quadTree;
         std::vector< std::vector<f32> > cellsDistance;
+        //UnitFighters positions
+        std::vector< std::vector< Vector2<f32> > > squadPosition;
 };
 #endif

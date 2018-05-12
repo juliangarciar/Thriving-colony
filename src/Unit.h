@@ -247,6 +247,10 @@ class Unit : public Entity {
         /* New */
         std::vector< Vector2<f32> > getTroopsPosition();        
         std::vector< UnitFighter* > getUnitFighters();
+        void calculateDirection();
+        bool hasArrived();
+        void updateFlockingSensor();
+        void takeDamage(i32 _damage);
     private:
         /**
          * @brief Initialize the variables.
@@ -286,6 +290,7 @@ class Unit : public Entity {
         //Timer that controls the time that has to pass since the last time that the unit looked for a new target.
         Timer* lookForTargetTimer;
 
+        Timer* flockingSensorTimer;
         //Timer that controls the time that has to pass since the last time that the unit attack its target.
         f32 attackCountdown;
 
@@ -305,10 +310,10 @@ class Unit : public Entity {
         Vector2<f32> vectorDes;
 
         //
-        Vector2<f32> vectorMov;
-
+        Vector2<f32> vectorSpd;
+        Vector2<f32> vectorDir;
         //
-        f32 steps;
+        // f32 steps;
 
         //True when the unit is ready to get into the command center and false in other case.
         bool readyToEnter;
@@ -324,6 +329,9 @@ class Unit : public Entity {
 
         //
         std::vector< UnitFighter* > unitFighters;
+        std::vector< UnitFighter* > nearUnitFighters;
+        f32 maxPositionDesviation;
+        i32 unitFighterHP;
 };
 
 #endif

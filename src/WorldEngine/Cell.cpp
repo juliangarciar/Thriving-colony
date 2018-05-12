@@ -29,7 +29,8 @@ void Cell::setInhabitingUnit(Unit* unitPtr){
 void Cell::clearInhabitingUnit(Unit* unitPtr){
     for(std::size_t i = 0; i < inhabitingUnits.size(); i++){
         if(inhabitingUnits[i] == unitPtr){
-            inhabitingUnits.erase(inhabitingUnits.begin() + i);
+            inhabitingUnits[i] == nullptr;
+            //inhabitingUnits.erase(inhabitingUnits.begin() + i);
             return;
         }
     }
@@ -55,6 +56,11 @@ Building* Cell::getInhabitingBuilding(){
     return inhabitingBuilding;
 }
 const std::vector<Unit*>& Cell::getInhabitingUnits(){
+    for(std::size_t i = 0; i < inhabitingUnits.size(); i++){
+        if(inhabitingUnits[i] == nullptr){
+            inhabitingUnits.erase(inhabitingUnits.begin() + i);
+        }
+    }
     return inhabitingUnits;
 }
 const std::vector<Cell*>& Cell::getNeighbors(){

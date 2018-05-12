@@ -73,6 +73,7 @@ Building::~Building() {
     delete damagedMat;
     delete buildTimer;
     delete barBg;
+    
     delete bar;
 }
 
@@ -126,4 +127,13 @@ void Building::setCanBuildMat() {
 
 void Building::setCantBuildMat() {
     model -> setMaterial(cantBuildMat);
+}
+void Building::takeDamage(i32 _damage) {
+    currentHP = currentHP - _damage;
+    tookDamageTimer -> restart();
+    // Tint the model red
+    //ToDo: cambiar a material daño recibido
+    if (currentHP <= 0) {
+        currentHP = 0;
+    }
 }

@@ -42,7 +42,7 @@ UnitManager::UnitManager(Enumeration::Team t, std::string b) {
             tmp.selectEvent = element["selectEvent"].get<std::string>();
         baseUnits.insert(std::pair<std::string, UnitData>(tmp.type, tmp));
     }
-
+    
     selectedTroop = 0; 
     nextTroopId = 1;
 

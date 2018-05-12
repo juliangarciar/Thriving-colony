@@ -57,7 +57,7 @@ class Entity {
          * 
          * @param i32 is the damage that is going to be subtracted to currentHP variable.
 	    */
-        void takeDamage(i32);
+        virtual void takeDamage(i32) = 0;
 
         /**
          * @breif Add an entity to the vector of enemies that have as target the entity.

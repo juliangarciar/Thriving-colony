@@ -75,6 +75,8 @@ Window::Window(i32 width, i32 height) {
     );
 
     dtThen = glfwGetTime();
+    // Init last delta time
+    lastDeltaTime = 0.014;
 }
 
 Window::~Window() {
@@ -88,6 +90,7 @@ void Window::setGUI(){
 
 void Window::beginScene(){
     double now = glfwGetTime();
+    lastDeltaTime = deltaTime;
     deltaTime = (double)(now - dtThen); // Time in seconds
     dtThen = now;
     
@@ -157,8 +160,16 @@ i32 Window::getRealWindowHeight(){
     //return driver -> getViewPort().getHeight(); 
 }
 
-f32 Window::getDeltaTime() {
+f32 Window::getDeltaTime() const{
     return deltaTime;
+}
+
+f32 Window::getLastDeltaTime() const{
+    return lastDeltaTime;
+}
+
+f32 Window::getDeltaTimeVariance() const{
+    return deltaTime / 0.016f;
 }
 
 void Window::calculateFramerate() {

@@ -9,6 +9,7 @@
 #include <functional>
 #include <cmath>
 #include "UnitFighter.h"
+#include "Game.h"
 
 Unit::Unit(SceneNode* _layer, 
     i32 _id, 
@@ -45,18 +46,19 @@ Unit::Unit(SceneNode* _layer,
                         pathManager(nullptr),
                         pathFollow(),
                         vectorDes(0,0),
-                        vectorMov(0,0),
-                        steps(0),
+                        vectorSpd(0,0),
                         readyToEnter(false),
                         attackEvent(baseData.attackEvent),
                         moveEvent(baseData.moveEvent),
                         selectEvent(baseData.selectEvent),
-                        unitFighters()         
+                        unitFighters(baseData.troops, nullptr),
+                        maxPositionDesviation(baseData.moveSpeed * 0.1f) ,
+                        unitFighterHP(baseData.maxHP / baseData.troops)        
 {
     lookForTargetTimer = new Timer (0.5, true);
     lookForTargetTimer -> setCallback([&](){
         // Ask for a new target
-        //Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
+        Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
     });
 
     recruitingTimer = new Timer(baseData.recruitingTime, false);
@@ -64,12 +66,18 @@ Unit::Unit(SceneNode* _layer,
         recruitedCallback(this);
         switchState(Enumeration::UnitState::InHome);
     });
+
+    flockingSensorTimer = new Timer(1, true, true);
+    flockingSensorTimer->setCallback([&]{
+        //if(state != Enumeration::UnitState::InHome){
+        //    updateFlockingSensor();
+        //}
+    });
     pathManager = new PathManager(this);
 
     Texture *t = new Texture(baseData.flagTexture.c_str());
 
 
-    unitFighters = std::vector< UnitFighter* >(baseData.troops, nullptr);
     for(std::size_t i = 0; i < unitFighters.size(); i++){
         unitFighters[i] = new UnitFighter(_layer, _id, baseData.troopModel, baseData.moveSpeed);
     }
@@ -92,8 +100,8 @@ Unit::~Unit() {
     }
     unitFighters.clear();
     delete recruitingTimer;
+    delete flockingSensorTimer;
 }
-
 void Unit::Init() {
     //ToDo: esto ya no es necesario
     preTaxPlayer();
@@ -136,6 +144,7 @@ void Unit::update() {
         break;
         default: break;
     }
+    /*This should be moved from there */
     std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(vectorPos);
     std::vector< UnitFighter* > dummyFighters;
     std::vector< UnitFighter* > dummySpace;
@@ -143,9 +152,15 @@ void Unit::update() {
         dummySpace = nearUnits[i]->getUnitFighters();
         dummyFighters.insert(dummyFighters.end(), dummySpace.begin(), dummySpace.end());
     }
+    nearUnitFighters = dummyFighters;
     for(std::size_t i = 0; i < unitFighters.size(); i++){
-        unitFighters[i]->update(dummyFighters);
+        unitFighters[i]->setNearFighters(nearUnitFighters);
+        unitFighters[i]->update();
     }
+
+    //for(std::size_t i = 0; i < unitFighters.size(); i++){
+    //    unitFighters[i]->update();
+    //}
 }
 
 void Unit::preTaxPlayer() {
@@ -218,10 +233,10 @@ void Unit::attackState() {
 void Unit::chaseState() {
     //If I have a target, then chase it
     if (getTarget() != nullptr) {
-        Vector2<f32> tpos = Vector2<f32>();
-        tpos.x = getTarget() -> getPosition().x;
-        tpos.y = getTarget() -> getPosition().y;
-        this  -> setTroopDestination(tpos);
+        //Vector2<f32> tpos = Vector2<f32>();
+        //tpos.x = getTarget() -> getPosition().x;
+        //tpos.y = getTarget() -> getPosition().y;
+        //this  -> setTroopDestination(tpos);
         chaseTarget();    
     }
 }
@@ -237,61 +252,36 @@ void Unit::retractState() {
         triggerRetractedCallback();        
     }
 }
-/* ToDo: delta time */
+
 void Unit::moveTroop() {
-    //std::cout << "Esto en:" << getPosition().x << "," << getPosition().y << "\n";
-    if(team == 0){
-        //std::cout << "Soy humano \n";
-    }
-    else{
-        //std::cout << "Soy ia \n";
-    }
+
     if (moving) {
         // close to destination, stop
-        if (steps == 0) {
+        if (hasArrived()) {
             if(pathFollow.empty()){
                 moving = false;
                 if (state == Enumeration::UnitState::Retract) {
                     readyToEnter = true;
                     Human::Instance() -> getUnitManager() -> unSelectTroop();
                     //triggerRetractedCallback();
-                    return;
                 }
-                switchState(Enumeration::Idle);
+                else{
+                    switchState(Enumeration::Idle);
+                }
             }
             else{
-                //Vector2<f32> newDest = this->pathFollow.front();
-                //Vector2<f32> newDest(dummy.x, dummy.y);
-                //setTroopDestination(newDest);
                 setTroopDestination(this->pathFollow.front());
                 pathFollow.pop_front();
             }
         }
-        // Update Cell state 
-        else if(std::floor(steps) == 0){
-            Vector2<f32> newPos = vectorPos + vectorMov;
-            WorldGeometry::Instance()->updateUnitCell(vectorPos, newPos, this);
-            
-            //std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(newPos);
-            //std::vector< Vector2<f32> > nearTroopsPosition;
-            //for(int i = 0; i < nearUnits.size(); i++){
-            //    nearTroopsPosition.insert(nearTroopsPosition.end(), nearUnits[i]->getTroopsPosition().begin(), nearUnits[i]->getTroopsPosition().end());
-            //}
-            setPosition(newPos);
-            steps = 0;
-            //std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
-        } 
-        else {
-            Vector2<f32> newPos = vectorPos + vectorMov;
-            WorldGeometry::Instance()->updateUnitCell(vectorPos, newPos, this);
-
-            //std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(newPos);
-            
-            setPosition(newPos);
-            //troops -> moveTroops(vectorMov);
-
-            steps--;
-            //std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
+        else{
+            calculateDirection();
+            Vector2<f32> _oldPosition = vectorPos;
+            vectorSpd = vectorDir * moveSpeed;
+            vectorPos += vectorSpd;
+            vectorPos = _oldPosition + (vectorPos - _oldPosition) * Window::Instance()->getDeltaTimeVariance();
+            WorldGeometry::Instance()->updateUnitCell(_oldPosition, vectorPos, this);
+            setPosition(vectorPos);
         }
     }
 }
@@ -325,7 +315,7 @@ void Unit::attack() {
         }
     }
 }
-/* Soberana mierda */
+/*  Anyadir timer quizas */
 void Unit::chaseTarget() {
     if (moving) {
         // If i can attack, then do so
@@ -333,9 +323,7 @@ void Unit::chaseTarget() {
             moving = false;
             switchState(Enumeration::UnitState::Attack);
         } else { //If i am too far away to attack, then move closer.
-            Vector2<f32> newPos = getPosition() + vectorMov;
-            //newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
-            //setTroopPosition(newPos);
+            setPathToTarget(getTarget()->getPosition());
         }
     }
 }
@@ -356,7 +344,7 @@ bool Unit::inRangeOfAttack() {
 
 bool Unit::refreshTarget() {
     bool targetUpdated = false;
-    lookForTargetTimer -> tick();
+    lookForTargetTimer -> tick(); 
     // return wether or not it got updated
     if (getTarget() != nullptr) {
         targetUpdated = true;
@@ -389,38 +377,35 @@ void Unit::setAttacking(bool attackingPnt) {
 }
 /* Weird method */
 void Unit::setTroopPosition(Vector2<f32> vectorData) {
-    //vectorPos.set(vectorData);
-    //vectorPos = vectorData;
     setPosition(vectorData);
-    for(std::size_t i = 0; i < unitFighters.size(); i++){
-        unitFighters[i]->setPosition(vectorData + (16 * i));
+    std::size_t size = unitFighters.size();
+    for(std::size_t i = 0; i < size; i++){
+        unitFighters[i]->setPosition(vectorData + WorldGeometry::Instance()->getSquadPosition(size - 1, i));
     }
 }
 // To do -> adjust units movement
-void Unit::setTroopDestination(Vector2<f32> vectorData) {
+// Adjust
+// Crazycura incoming
+void Unit::setTroopDestination(Vector2<f32> _vectorData) {
+    /* Esto que es */
     if (state == Enumeration::UnitState::Move) {
         setTarget(nullptr);
     }
-    //vectorDes.set(vectorData);
-    vectorDes = vectorData;
-    Vector2<f32> desp = vectorDes - getPosition();
-    f32 distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.y, 2));
-    //vectorMov -> x = (desp.x / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
-    //vectorMov -> z = (desp.z / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
-    vectorMov.x = (desp.x / distance) * (moveSpeed / 100);
-    vectorMov.y = (desp.y / distance) * (moveSpeed / 100);
-    f32 movDistance = std::sqrt(std::pow(vectorMov.x, 2) + std::pow(vectorMov.y, 2));
-    steps = distance / movDistance;
-    for(std::size_t i = 0; i < unitFighters.size(); i++){
-        unitFighters[i]->setDestiny(vectorData + (16 * i));
+    // Okey lets tune this
+    vectorDes = _vectorData;
+    //moving = true;
+    //Vector2<f32> _vectorDestiny = _vectorData - getPosition();
+    //f32 distance = std::sqrt(std::pow(_vectorDestiny.x, 2) + std::pow(_vectorDestiny.y, 2));
+    //vectorSpd = (_vectorDestiny / distance) * (moveSpeed / 100);
+
+    //f32 movDistance = std::sqrt(std::pow(vectorSpd.x, 2) + std::pow(vectorSpd.y, 2));
+    //steps = distance / movDistance;
+
+    // This is working as intended
+    std::size_t size = unitFighters.size();
+    for(std::size_t i = 0; i < size; i++){
+        unitFighters[i]->setDestiny(_vectorData + WorldGeometry::Instance()->getSquadPosition(size - 1, i));
     }
-    /*vectorDes.set(vectorData);
-    Vector3<f32> desp = vectorDes - vectorPos;
-    f32 distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2));
-    vectorMov.x = (desp.x / distance) * (moveSpeed / 100);
-    vectorMov.z = (desp.z / distance) * (moveSpeed / 100);
-    f32 movDistance = std::sqrt(std::pow(vectorMov.x, 2) + std::pow(vectorMov.z, 2));
-    steps = (distance / movDistance);*/
     moving = true;
 }
 
@@ -429,18 +414,10 @@ void Unit::setPath(std::list< Vector2<f32> > path){
 }
 
 void Unit::setPathToTarget(Vector2<f32> vectorData){
-    std::cout << "Analizando camino \n";
     this->pathManager->createPathTo(vectorData);
     if(!pathFollow.empty()){
-        //Vector2<f32> dummy = this->pathFollow.front();
-        //Vector2<f32> newDest;
-        //newDest.x = dummy.x;
-        //newDest.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y);
-        //newDest.y = dummy.y;
         setTroopDestination(this->pathFollow.front());
-        std::cout << "Lo tengo " << pathFollow.size() << "\n";
         pathFollow.pop_front();
-        std::cout << "Salgo ya " << "\n";
     }
 }
 
@@ -484,6 +461,60 @@ Enumeration::UnitState Unit::getState() {
 i32 Unit::getArmyLevel(){
     return armyLevel;
 }
+
 std::vector< UnitFighter* > Unit::getUnitFighters(){
     return unitFighters;
+}
+
+void Unit::calculateDirection(){
+    Vector2<f32> _incVector = vectorDes - vectorPos;
+    /* Normlize */
+    f32 distance = std::sqrt(std::pow(_incVector.x, 2) + 
+                             std::pow(_incVector.y ,2));
+    
+    if(distance != 0){
+        vectorDir = _incVector / distance;        
+    }   
+    else{
+        vectorDir = Vector2<f32>(0, 0);
+    }
+}
+bool Unit::hasArrived(){
+    if((vectorPos - vectorDes).dotProduct() < maxPositionDesviation){
+        vectorSpd = Vector2<f32>(0, 0);
+        return true;
+    }
+    return false;
+}
+/* Check how to do this */
+void Unit::updateFlockingSensor(){
+    std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(vectorPos);
+    std::vector< UnitFighter* > dummyFighters;
+    std::vector< UnitFighter* > dummySpace;
+    for(std::size_t i = 0; i < nearUnits.size(); i++){
+        dummySpace = nearUnits[i]->getUnitFighters();
+        dummyFighters.insert(dummyFighters.end(), dummySpace.begin(), dummySpace.end());
+    }
+    nearUnitFighters = dummyFighters;
+    for(std::size_t i = 0; i < unitFighters.size(); i++){
+        unitFighters[i]->setNearFighters(nearUnitFighters);
+    }
+}
+
+void Unit::takeDamage(i32 _damage){
+    currentHP = currentHP - _damage;
+    i32 _qnty = std::floor(currentHP / unitFighterHP);
+    if(currentHP % unitFighterHP != 0){
+        _qnty++;
+    }
+    while(_qnty != unitFighters.size()){
+        delete unitFighters[unitFighters.size() - 1];
+        unitFighters.erase(unitFighters.end());
+    }
+    tookDamageTimer -> restart();
+    // Tint the model red
+    //ToDo: cambiar a material daño recibido
+    if (currentHP <= 0) {
+        currentHP = 0;
+    }
 }

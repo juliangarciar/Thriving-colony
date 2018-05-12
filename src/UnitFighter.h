@@ -7,6 +7,7 @@
 #include <vector>
 
 //class Model;
+class Timer;
 class UnitFighter{
     public:
         UnitFighter(SceneNode* _parent, i32 _id, std::string _path, f32 _speed);
@@ -16,16 +17,14 @@ class UnitFighter{
         void setPosition(Vector2<f32> _pos);
         void setDestiny(Vector2<f32> _dest);
         void move();
-        //void update();
-        void update(std::vector<UnitFighter*> &_nearFighters);
-        //void setNearFighters(std::vector<UnitFighter*> &_nearFighters);
+        void update();
+        void setNearFighters(std::vector<UnitFighter*>& _nearFighters);
 
         // Getters
         Vector2<f32> getVectorPosition() const;
         Vector2<f32> getVectorSpeed() const;
         Vector2<f32> getVectorDestiny() const;
         const f32 getSpeed() const;
-        //f32 getSpeed() const;
     private:
         Model* fighterModel;
         const f32 speed;
@@ -34,15 +33,13 @@ class UnitFighter{
         Vector2<f32> vectorSpeed;
         Vector2<f32> vectorDestiny;
         Vector2<f32> vectorDirection;
-
+        const f32 maxDesviation;
+        f32 maxTime;
+        Timer* unitFighterClock;
         /* Check in the future */
         std::vector<UnitFighter*> nearFighters;
         
         bool hasArrived();
-        /* Maybe we can calculate flocking in only one method */
-        //Vector2<f32> alignment();
-        //Vector2<f32> cohesion();
-        //Vector2<f32> separation();
         Vector2<f32> calculateFlocking();
         void calculateDirection();
 };

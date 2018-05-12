@@ -56,6 +56,7 @@ class IO {
         EventSystem *events;
 
         ResourceManager *resourceManager;
+        
 };
 
 #endif

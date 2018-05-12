@@ -1,7 +1,7 @@
 {
 	"Units": [{
 			"unitName": "StandardR",
-			"moveSpeed": 350,
+			"moveSpeed": 3,
 			"attackDamage": 13,
 			"attackRange": 350,
 			"attackSpeed": 1,
@@ -28,7 +28,7 @@
 		},
 		{
 			"unitName": "AdvancedR",
-			"moveSpeed": 530,
+			"moveSpeed": 3,
 			"attackDamage": 18,
 			"attackRange": 700,
 			"attackSpeed": 1,
@@ -55,7 +55,7 @@
 		},
 		{
 			"unitName": "StandardM",
-			"moveSpeed": 420,
+			"moveSpeed": 3,
 			"attackDamage": 15,
 			"attackRange": 100,
 			"attackSpeed": 1,
@@ -82,7 +82,7 @@
 		},
 		{
 			"unitName": "AdvancedM",
-			"moveSpeed": 530,
+			"moveSpeed": 3,
 			"attackDamage": 21,
 			"attackRange": 140,
 			"attackSpeed": 1,
@@ -109,7 +109,7 @@
 		},
 		{
 			"unitName": "Launcher",
-			"moveSpeed": 250,
+			"moveSpeed": 3,
 			"attackDamage": 27,
 			"attackRange": 900,
 			"attackSpeed": 1,
@@ -136,7 +136,7 @@
 		},
 		{
 			"unitName": "Desintegrator",
-			"moveSpeed": 250,
+			"moveSpeed": 3,
 			"attackDamage": 41,
 			"attackRange": 120,
 			"attackSpeed": 1,
@@ -163,7 +163,7 @@
 		},
 		{
 			"unitName": "Idol",
-			"moveSpeed": 250,
+			"moveSpeed": 3,
 			"attackDamage": 27,
 			"attackRange": 140,
 			"attackSpeed": 1,

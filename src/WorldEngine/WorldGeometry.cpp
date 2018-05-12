@@ -27,6 +27,53 @@ WorldGeometry::WorldGeometry(){
     mCells = std::vector< Cell* >(n);
     cellsDistance = std::vector< std::vector<f32> >(n);
     quadTree = nullptr;
+    // Suciedad maxima pero esta guapo en realidad
+    squadPosition = std::vector< std::vector< Vector2<f32> > >(8);
+    squadPosition[0] = std::vector< Vector2<f32> >(1);
+    squadPosition[0][0] = Vector2<f32>(0, 0);
+    squadPosition[1] = std::vector< Vector2<f32> >(2);
+    squadPosition[1][0] = Vector2<f32>(-20, 0);
+    squadPosition[1][1] = Vector2<f32>(20, 0);
+    squadPosition[2] = std::vector< Vector2<f32> >(3);
+    squadPosition[2][0] = Vector2<f32>(-20, 0);
+    squadPosition[2][1] = Vector2<f32>(0, 0);
+    squadPosition[2][2] = Vector2<f32>(20, 0);
+    squadPosition[3] = std::vector< Vector2<f32> >(4);
+    squadPosition[3][0] = Vector2<f32>(-20, 20);
+    squadPosition[3][1] = Vector2<f32>(20, 20);
+    squadPosition[3][2] = Vector2<f32>(-20, -20);
+    squadPosition[3][3] = Vector2<f32>(20, -20);
+    squadPosition[4] = std::vector< Vector2<f32> >(5);
+    squadPosition[4][0] = Vector2<f32>(-20, 20);
+    squadPosition[4][1] = Vector2<f32>(20, 20);
+    squadPosition[4][2] = Vector2<f32>(0, 0);
+    squadPosition[4][3] = Vector2<f32>(-20, -20);
+    squadPosition[4][4] = Vector2<f32>(20, -20);
+    squadPosition[5] = std::vector< Vector2<f32> >(6);
+    squadPosition[5][0] = Vector2<f32>(-30, 30);
+    squadPosition[5][1] = Vector2<f32>(0, 30);
+    squadPosition[5][2] = Vector2<f32>(30, 30);
+    squadPosition[5][3] = Vector2<f32>(-30, -30);
+    squadPosition[5][4] = Vector2<f32>(0, -30);
+    squadPosition[5][5] = Vector2<f32>(30, -30);
+    squadPosition[6] = std::vector< Vector2<f32> >(7);
+    squadPosition[6][0] = Vector2<f32>(-30, 30);
+    squadPosition[6][1] = Vector2<f32>(0, 30);
+    squadPosition[6][2] = Vector2<f32>(30, 30);
+    squadPosition[6][3] = Vector2<f32>(0, 0);
+    squadPosition[6][4] = Vector2<f32>(-30, -30);
+    squadPosition[6][5] = Vector2<f32>(0, -30);
+    squadPosition[6][6] = Vector2<f32>(30, -30);
+    squadPosition[7] = std::vector< Vector2<f32> >(8);
+    squadPosition[7][0] = Vector2<f32>(-30, 30);
+    squadPosition[7][1] = Vector2<f32>(0, 30);
+    squadPosition[7][2] = Vector2<f32>(30, 30);
+    squadPosition[7][3] = Vector2<f32>(-30, 0);
+    squadPosition[7][4] = Vector2<f32>(30, 0);
+    squadPosition[7][5] = Vector2<f32>(-30, -30);
+    squadPosition[7][6] = Vector2<f32>(0, -30);
+    squadPosition[7][7] = Vector2<f32>(30, -30);
+    // Fin de la jodida suciedad
 }
 WorldGeometry::~WorldGeometry(){
     mCells.clear();
@@ -159,6 +206,7 @@ void WorldGeometry::Init(){
             }
         }
     }
+    
 }
 void WorldGeometry::Clear(){
     mCells.clear();
@@ -317,9 +365,6 @@ std::vector< Unit* > WorldGeometry::getNeighborUnits(Vector2<f32> positionVector
                                 neighborCells[i]->getInhabitingUnits().end());
         }
     }
-    if(!neighborUnits.empty()){
-        //std::cout << "UNIDADES CERCANAS DETECTADAS -->" << neighborUnits.size() << "\n";
-    }
     return neighborUnits;
 }
 const std::vector<Cell*>& WorldGeometry::getNeighbors(i32 index){
@@ -330,4 +375,7 @@ const std::vector<Cell*>& WorldGeometry::getCells(){
 }
 const std::vector< std::vector<f32> >& WorldGeometry::getCellsDistance(){
     return cellsDistance;
+}
+const Vector2<f32> WorldGeometry::getSquadPosition(i32 _size, i32 _index) const{
+    return squadPosition[_size][_index];
 }

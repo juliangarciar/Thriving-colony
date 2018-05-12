@@ -39,8 +39,10 @@ class Window {
         i32 getRealWindowWidth();
         i32 getRealWindowHeight();
 
-        f32 getDeltaTime();
-
+        f32 getDeltaTime() const;
+        f32 getLastDeltaTime() const;
+        f32 getDeltaTimeVariance() const;
+        
         GLFWwindow *getWindow() {
             return window;
         }
@@ -85,6 +87,8 @@ class Window {
         
         double dtThen;
         double deltaTime;
+        double lastDeltaTime;
+
         i32 framerate;
 };
 

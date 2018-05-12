@@ -199,7 +199,7 @@ void GameState::Update(){
         hud -> Update();
 
         //NEW SOUND SYSTEM
-        SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");
+        //SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");
         SoundSystem::Instance() -> update();
         
         //If human is building something

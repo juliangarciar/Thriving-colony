@@ -68,6 +68,7 @@ class Building : public Entity {
          * @brief Set the Cant Build Mat object
          */
         void setCantBuildMat();
+        void takeDamage(i32 _damage);
 
     private:
         /**
