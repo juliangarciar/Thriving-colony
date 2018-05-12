@@ -9,10 +9,6 @@ ParticleSystem::~ParticleSystem() {
     clearParticles();
 }
 
-void ParticleSystem::addAffector(ParticleAffector* pa) {
-    particleSystemNode -> addAffector(pa -> getParticleAffectorNode());
-}
-
 void ParticleSystem::clearParticles() {
     particleSystemNode -> clearParticles();
 }
@@ -29,8 +25,8 @@ void ParticleSystem::createGravityAffector(Vector3<f32> gravity, i32 timeForceLo
     particleSystemNode -> addAffector(particleSystemNode -> createGravityAffector(core::vector3df(gravity.x, gravity.y, gravity.z), timeForceLost));
 }
 
-void ParticleSystem::createPointEmitter(Vector3<f32> direction, i32	minParticlesPerSecond, i32 maxParticlesPerSecond, i32 minStartColorR, i32 minStartColorG, i32 minStartColorB, i32 minStartColorA, i32 maxStartColorR, i32 maxStartColorG, i32 maxStartColorB, i32 maxStartColorA , i32	lifeTimeMin, i32 lifeTimeMax, i32 maxAngleDegrees, Vector2<f32> minStartSize, Vector2<f32> maxStartSize) {
-    particleSystemNode -> createPointEmitter(core::vector3df(direction.x, direction.y, direction.z), minParticlesPerSecond, maxParticlesPerSecond, video::SColor(minStartColorR, minStartColorG, minStartColorB, minStartColorA), video::SColor(maxStartColorR, maxStartColorG, maxStartColorB, maxStartColorA), lifeTimeMin, lifeTimeMax, maxAngleDegrees, core::dimension2df(minStartSize.x, minStartSize.y), core::dimension2df(maxStartSize.x, maxStartSize.y));
+void ParticleSystem::createPointEmitter(Vector3<f32> direction, i32	minParticlesPerSecond, i32 maxParticlesPerSecond, Color minStartColor, Color maxStartColor, i32	lifeTimeMin, i32 lifeTimeMax, i32 maxAngleDegrees, Vector2<f32> minStartSize, Vector2<f32> maxStartSize) {
+    particleSystemNode -> createPointEmitter(core::vector3df(direction.x, direction.y, direction.z), minParticlesPerSecond, maxParticlesPerSecond, video::SColor(minStartColor.r, minStartColor.g, minStartColor.b, minStartColor.a), video::SColor(maxStartColor.r, maxStartColor.g, maxStartColor.b, maxStartColor.a), lifeTimeMin, lifeTimeMax, maxAngleDegrees, core::dimension2df(minStartSize.x, minStartSize.y), core::dimension2df(maxStartSize.x, maxStartSize.y));
 }
 
 void ParticleSystem::createRotationAffector(Vector3<f32> speed, Vector3<f32> pivotPoint) {
@@ -41,8 +37,8 @@ void ParticleSystem::createScaleParticleAffector(Vector2<f32> scaleTo) {
     particleSystemNode -> addAffector(particleSystemNode -> createScaleParticleAffector(core::dimension2df(scaleTo.x, scaleTo.y)));
 }
 
-void ParticleSystem::createSphereEmitter(Vector3<f32> center, f32 radius, Vector3<f32> direction, i32 minParticlesPerSecond = 5, i32 maxParticlesPerSecond = 10, i32 minStartColorR = 255, i32 minStartColorG = 0, i32 minStartColorB = 0, i32 minStartColorA = 0, i32 maxStartColorR = 255, i32 maxStartColorG = 255, i32 maxStartColorB = 255, i32 maxStartColorA = 255, i32 lifeTimeMin = 2000, i32 lifeTimeMax = 4000, i32 maxAngleDegrees = 0, Vector2<f32> minStartSize, Vector2<f32> maxStartSize) {
-    particleSystemNode -> createSphereEmitter(core::vector3df(center.x, center.y, center.z), radius, core::vector3df(direction.x, direction.y, direction.z), minParticlesPerSecond, maxParticlesPerSecond, video::SColor(minStartColorR, minStartColorG, minStartColorB, minStartColorA), video::SColor(maxStartColorR, maxStartColorG, maxStartColorB, maxStartColorA), lifeTimeMin, lifeTimeMax, maxAngleDegrees, core::dimension2df(minStartSize.x, minStartSize.y), core::dimension2df(maxStartSize.x, maxStartSize.y));
+void ParticleSystem::createSphereEmitter(Vector3<f32> center, f32 radius, Vector3<f32> direction, i32 minParticlesPerSecond, i32 maxParticlesPerSecond, Color minStartColor, Color maxStartColor, i32 lifeTimeMin, i32 lifeTimeMax, i32 maxAngleDegrees, Vector2<f32> minStartSize, Vector2<f32> maxStartSize) {
+    particleSystemNode -> createSphereEmitter(core::vector3df(center.x, center.y, center.z), radius, core::vector3df(direction.x, direction.y, direction.z), minParticlesPerSecond, maxParticlesPerSecond, video::SColor(minStartColor.r, minStartColor.g, minStartColor.b, minStartColor.a), video::SColor(maxStartColor.r, maxStartColor.g, maxStartColor.b, maxStartColor.a), lifeTimeMin, lifeTimeMax, maxAngleDegrees, core::dimension2df(minStartSize.x, minStartSize.y), core::dimension2df(maxStartSize.x, maxStartSize.y));
 }
 
 void ParticleSystem::doParticleSystem(i32 time) {
