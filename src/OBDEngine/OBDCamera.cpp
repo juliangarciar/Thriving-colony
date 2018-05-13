@@ -100,11 +100,11 @@ glm::vec3 OBDCamera::getScreenCoordinatesFromWorld(glm::vec3 screen){
     return c->getScreenCoordinatesFromWorld(screen);
 }
 
-OBDLine OBDCamera::getRaycastFromScreenCoordinates(glm::vec2 world){
+OBDLine OBDCamera::getRaycastFromScreenCoordinates(glm::vec2 screen){
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     OBDLine l;
-    l.start = c->getWorldCoordinatesFromScreen(glm::vec3(world.x, world.y, -1));
-    l.end = c->getWorldCoordinatesFromScreen(glm::vec3(world.x, world.y, 1));
+    l.start = c->getWorldCoordinatesFromScreen(glm::vec3(screen.x, screen.y, -1));
+    l.end = c->getWorldCoordinatesFromScreen(glm::vec3(screen.x, screen.y, 1));
     return l;
 }
 

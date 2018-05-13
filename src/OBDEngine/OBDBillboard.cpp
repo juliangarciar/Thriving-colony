@@ -4,16 +4,23 @@ OBDBillboard::OBDBillboard() {
 
 }
 
-OBDBillboard::OBDBillboard(OBDSceneNode* parent, i32 id, glm::vec3 pos) {
+OBDBillboard::OBDBillboard(OBDSceneNode* parent, i32 id, glm::vec3 pos, GLuint shader) {
     rotationNode = new TNode(new TTransform());
     translationNode = new TNode(new TTransform(), rotationNode);
     scaleNode = new TNode(new TTransform(), translationNode);
     
     ID = id;
 
-    billboardNode = new TNode(new TBillboard(pos));
+    billboardNode = new TNode(new TBillboard(pos, shader));
 
     parent -> addChild(this);
+}
+
+OBDBillboard::~OBDBillboard() {
+    delete billboardNode;
+    delete rotationNode;
+    delete translationNode;
+    delete scaleNode;
 }
 
 void OBDBillboard::setPosition(glm::vec3 pos) {

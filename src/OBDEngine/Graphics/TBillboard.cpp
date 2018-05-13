@@ -1,10 +1,13 @@
 #include "TBillboard.h"
+#include "TShader.h"
 
-TBillboard::TBillboard(glm::vec3 pos) : TEntity() {
+TBillboard::TBillboard(glm::vec3 pos, GLuint shader) : TEntity() {
     position = pos;
     height = 2;
     topWidth = 5;
     bottomWidth = 10;
+
+    program = shader;
     
     bottomColor = new OBDColor(255, 255, 255);
     topColor = new OBDColor();
@@ -32,6 +35,9 @@ void TBillboard::beginDraw() {
         position.x + topWidth / 2, position.y + 0.0f + height, position.z
     };
 
+    /*glm::vec3 _color = glm::vec3(1,0,1);
+    GLuint colorID = glGetUniformLocation(program, "color");
+    glUniform3f(colorID, 1, GL_FALSE, _color[0]);*/
     glGenBuffers(1, &vertexbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);

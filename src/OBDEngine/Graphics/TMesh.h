@@ -1,7 +1,7 @@
 #ifndef TMESH_H
 #define TMESH_H
 
-#include <GL/glew.h>
+#include <glfw/glfw3.h>
 
 #include "TEntity.h"
 #include "../ResourceManager/ResourceOBJ.h"

@@ -1,22 +1,21 @@
 #ifndef TPARTICLE_H
 #define TPARTICLE_H
 
-#include <GL/glew.h>
+#include "../OBDColor.h"
 
-#include "TEntity.h"
+struct TParticle {
 
-class TParticle : public TEntity {
+    OBDColor color;
+    OBDColor startColor;
+
+    i32 endTime;
+    i32 startTime;
     
-    public:
-        TParticle(glm::vec3);
-
-        ~TParticle();
-
-        void beginDraw();
-
-        void endDraw();
-
-    private:
+    glm::vec3 position;
+    glm::vec3 startDirection;
+    glm::vec3 direction;
+    glm::vec2 size;
+    glm::vec2 startSize;
 };
 
 #endif

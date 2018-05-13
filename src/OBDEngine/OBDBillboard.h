@@ -19,7 +19,7 @@ class OBDBillboard : public OBDEntity {
          * 
          * @param parent 
          */
-        OBDBillboard(OBDSceneNode*, i32, glm::vec3);
+        OBDBillboard(OBDSceneNode*, i32, glm::vec3, GLuint);
 
         /**
          * @brief 
@@ -107,6 +107,7 @@ class OBDBillboard : public OBDEntity {
         TNode* rotationNode;
         TNode* translationNode;
         TNode* scaleNode;
+        
         i32 ID;
 };
 

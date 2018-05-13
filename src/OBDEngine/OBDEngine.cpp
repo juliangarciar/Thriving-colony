@@ -1,6 +1,6 @@
 #include "OBDEngine.h"
 
-#include <GL/glew.h>
+#include <glfw/glfw3.h>
 
 #include "ResourceManager/ResourceOBJ.h"
 #include "ResourceManager/ResourceGLSL.h"
@@ -27,8 +27,8 @@ OBDEngine::~OBDEngine() {
 }
 
 void OBDEngine::Init(i32 sW, i32 sH) {
-    if (glewInit() != GLEW_OK) {
-        std::cout << "Failed to initialize GLEW" << std::endl;
+    if (glfwInit() != GLFW_OK) {
+        std::cout << "Failed to initialize GLFW" << std::endl;
         exit(0);
     }
 
@@ -128,7 +128,7 @@ OBDAnimation* OBDEngine::createAnimation(OBDSceneNode* layer, std::string anim) 
 }
 
 OBDBillboard* OBDEngine::createBillboard(OBDSceneNode* layer, i32 id, glm::vec3 pos) {
-    OBDBillboard* billboard = new OBDBillboard(layer, id, pos);
+    OBDBillboard* billboard = new OBDBillboard(layer, id, pos, currentProgram -> getShaderProgram());
     return billboard;
 }
 
@@ -136,6 +136,12 @@ OBDTile* OBDEngine::createTile(ResourceIMG* _texture, glm::vec2 _position){
     OBDTile* tmp = new OBDTile(_texture, _position);
     defaultSceneNode->addChild(tmp);
     return tmp;
+}
+
+OBDSkybox* OBDEngine::createSkybox(TTexture* texture) {
+    OBDSkybox* skybox = new OBDSkybox(texture);
+    defaultSceneNode -> addChild(skybox);
+    return skybox;
 }
 
 /////////////////

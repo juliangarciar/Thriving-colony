@@ -30,6 +30,8 @@ struct glslLight {
     glm::vec3 ambientComponent;
     glm::vec3 diffuseComponent;
     glm::vec3 specularComponent;
+
+    i32 type;
 };
 
 inline bool operator==(const glslLight& l, const glslLight& r){ return (l.position == r.position && l.ambientComponent == r.ambientComponent && l.diffuseComponent == r.diffuseComponent && l.specularComponent == r.specularComponent) == 0; }

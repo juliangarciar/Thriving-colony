@@ -9,6 +9,8 @@ struct myLight {
     vec3 ambientComponent;
     vec3 diffuseComponent;
     vec3 specularComponent;
+
+    i32 type;
 };
 
 struct myMaterial {
@@ -64,7 +66,13 @@ vec3 Phong(int lightIndex) {
 
     // CALCULAR LOS DIFERENTES VECTORES	 
 	vec3 n = normalize(vertexNormal_out);
-    vec3 s = normalize(lights[lightIndex].position - vertexPosition_out);
+	if (lights[lightIndex].type == 0) {
+		// Vector luz cuando es puntual
+    		vec3 s = normalize(lights[lightIndex].position - vertexPosition_out);
+	} else {
+		//Vector luz cuando es direccional
+		vec3 s = - lights[lightIndex].position;
+	}
 	vec3 v = normalize(-vertexPosition_out);
 	vec3 r = reflect(-s, n);
 
