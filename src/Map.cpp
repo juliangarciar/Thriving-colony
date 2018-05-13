@@ -64,9 +64,9 @@ void Map::Init() {
     Hud::Instance()->setButtonStatus("expandableTerrain", j["expandableTerrain"].get<bool>());
     loadProgress(40);
 
-    //ToDo: julian revisa esto, si no tiene nada que sacar del JSON llevatelo a GameState
-    //WorldGeometry* newSystem = WorldGeometry::Instance();
-    //cellSpace = new CellSpacePartition(10240, 10240, 128, 128, 4);
+    //ToDo: leer del mapa JSON el tamaño de celulas y de mapa
+    WorldGeometry* newSystem = WorldGeometry::Instance();
+    newSystem->Init(i32(80), i32(10240), i32(10240));
 
     //Skydome
     skydome = new SkyDome(new Texture(j["map"]["skybox_texture"].get<std::string>().c_str()));

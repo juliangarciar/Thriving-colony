@@ -3,9 +3,8 @@
 
 #include <vector>
 #include <Types.h>
+#include <MathEngine/Vector2.h>
 
-template <class T>
-class Vector2;
 class Cell;
 class Quadtree;
 class Unit;
@@ -32,7 +31,7 @@ class WorldGeometry{
          * @brief Inits the container data (called only from the instance generator)
          * 
          */
-        void Init();
+        void Init(i32 _cellSize, i32 _mapX, i32 _mapY, i32 _quadDepth = 5);
         /**
          * @brief Clears the container in order to create a new game
          * 
@@ -139,9 +138,17 @@ class WorldGeometry{
         static WorldGeometry* pinstance;
         std::vector<Cell*> mCells;
         Quadtree* quadTree;
+
         std::vector< std::vector<f32> > cellsDistance;
-        //UnitFighters positions
         std::vector< std::vector< Vector2<f32> > > squadPosition;
+
         const i32 maxGameUnits;
+        // Can't be const
+        i32 cellSize;
+        i32 maxCellsX;
+        i32 maxCellsY;
+        i32 maxCells;
+        Vector2<i32> mapAxis;
+        i32 mapArea;
 };
 #endif

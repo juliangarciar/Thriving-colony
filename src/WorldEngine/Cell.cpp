@@ -27,6 +27,7 @@ void Cell::clearInhabitingBuilding(){
 }
 void Cell::setInhabitingUnit(Unit* unitPtr){
     inhabitingUnits.push_back(unitPtr);
+    blocked = true;
 }
 void Cell::clearInhabitingUnit(Unit* unitPtr){
     for(std::size_t i = 0; i < inhabitingUnits.size(); i++){
@@ -35,6 +36,9 @@ void Cell::clearInhabitingUnit(Unit* unitPtr){
             //inhabitingUnits.erase(inhabitingUnits.begin() + i);
             return;
         }
+    }
+    if(inhabitingUnits.size() == 0){
+        blocked = false;
     }
 }
 void Cell::setNeighbor(Cell* cellPtr){

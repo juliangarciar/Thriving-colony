@@ -87,6 +87,7 @@ void BuildingManager::drawBuilding() {
 				collision = true;
 			}
 			else{
+				std::cout << "Celula " << WorldGeometry::Instance()->positionToCell(collisionPoint) << "\n";
 				collision = WorldGeometry::Instance()->checkBuildingSpace(tempBuilding);
 			}
 		}

@@ -115,7 +115,9 @@ BehaviourTree* IA::getTree() {
 * Goes over the vector of buildings looking up, right, down and left of every building built
 * until find the first empty position
 */
+
 /* ToDo: Cambiar algoritmo de construccion */
+
 Vector2<f32> IA::determinatePositionBuilding() {
     Vector2<f32> v;
     bool found = false;

@@ -2,7 +2,6 @@
 #include "Cell.h"
 #include "Quadtree.h"
 #include <MathEngine/Vector2.h>
-//#include <MathEngine/Vector3.h>
 #include <Map.h>
 #include <MathEngine/Box2D.h>
 #include <Building.h>
@@ -10,28 +9,36 @@
 #include <priorityqueue/PriorityQueue.h>
 #include <cstdlib> 
 
-#define MAP 10240
-#define CELL 80
-
 WorldGeometry* WorldGeometry::pinstance = 0;
 WorldGeometry* WorldGeometry::Instance(){
     if(pinstance == 0){
         pinstance = new WorldGeometry();
-        pinstance->Init();
     }
     return pinstance;
 }
 WorldGeometry::WorldGeometry():maxGameUnits(10){
+
+}
+WorldGeometry::~WorldGeometry(){
+    mCells.clear();
+    cellsDistance.clear();
+    delete quadTree;
+}
+void WorldGeometry::Init(i32 _cellSize, i32 _mapX, i32 _mapY, i32 _quadDepth){
 /* Calculates the maximun N cells and reserve memory */
-    i32 n = (MAP * MAP) / (CELL * CELL);
-    mCells = std::vector< Cell* >(n);
-    cellsDistance = std::vector< std::vector<f32> >(n);
+    cellSize = _cellSize;
+    mapAxis = Vector2<i32>(_mapX, _mapY);
+    mapArea = mapAxis.x * mapAxis.y;
+    maxCellsX = mapAxis.x / cellSize;
+    maxCellsY = mapAxis.y / cellSize;
+    maxCells = maxCellsX * maxCellsY;
+    mCells = std::vector< Cell* >(maxCells);
+    cellsDistance = std::vector< std::vector<f32> >(maxCells);
     quadTree = nullptr;
 
     squadPosition = std::vector< std::vector< Vector2<f32> > >(maxGameUnits);
     f32 gradesPerUnit;
-    //const f32 PI = 3.14159265;
-    const f32 radious = CELL / 2;
+    const f32 radious = cellSize / 2;
 
     for(i32 i = 0; i < maxGameUnits; i++){
         squadPosition[i] = std::vector< Vector2<f32> >(i + 1);
@@ -44,33 +51,26 @@ WorldGeometry::WorldGeometry():maxGameUnits(10){
             squadPosition[i][j] = Vector2<f32>(radious * std::cos(gradesPerUnit), radious * std::sin(gradesPerUnit)); 
         }
     }
-}
-WorldGeometry::~WorldGeometry(){
-    mCells.clear();
-    cellsDistance.clear();
-    delete quadTree;
-}
-void WorldGeometry::Init(){
 /* Especifies the N cells each axis has */
-    i32 maxCells = MAP / CELL;
+    //i32 maxCells = MAP / cellSize;
     
-    for (i32 y = 0; y < maxCells; y++)
+    for (i32 y = 0; y < maxCellsY; y++)
     {
-        for (i32 x = 0; x < maxCells; x++)
+        for (i32 x = 0; x < maxCellsX; x++)
         {
         /* Calculates the index */
-            i32 index = y * maxCells + x;
+            i32 index = y * maxCellsY + x;
         /* Especifies the center where the cell is allocated */
-            f32 dX = x * CELL + CELL / 2;
-            f32 dY = y * CELL + CELL / 2;
+            f32 dX = x * cellSize + cellSize / 2;
+            f32 dY = y * cellSize + cellSize / 2;
             Vector2<f32> tmp = Vector2<f32>(dX, dY);
         /* Creates the hitbox */
             Vector2<f32> topLeft;
-            topLeft.x = tmp.x - CELL / 2;
-            topLeft.y = tmp.y - CELL / 2;
+            topLeft.x = tmp.x - cellSize / 2;
+            topLeft.y = tmp.y - cellSize / 2;
             Vector2<f32> botRight;
-            botRight.x = tmp.x + CELL / 2;
-            botRight.y = tmp.y + CELL / 2;
+            botRight.x = tmp.x + cellSize / 2;
+            botRight.y = tmp.y + cellSize / 2;
             Box2D hitBox = Box2D(topLeft, botRight);
         /* Creates the cell, and copy it to the WorldGeometry vector */
             Cell* cell = new Cell(tmp, hitBox, index);
@@ -79,14 +79,14 @@ void WorldGeometry::Init(){
         }
     }
 /* Creates the hitbox for the Quadtree, and creates it */
-    Vector2<f32> topLeft = Vector2<f32>(0, 0);
-    Vector2<f32> botRight = Vector2<f32>(MAP, MAP);
-    Box2D hitBox = Box2D(topLeft, botRight);
-    Vector2<f32> center = botRight / 2;
+    Vector2<f32> topLeft(0, 0);
+    Vector2<f32> botRight(mapAxis.x, mapAxis.y);
+    Box2D hitBox(topLeft, botRight);
+    Vector2<f32> center(botRight / 2);
     //std::cout << "Quadtree center: " << center.x << "," << center.y << "\n";
-    quadTree = new Quadtree(center, hitBox, 1);
+    quadTree = new Quadtree(center, hitBox, _quadDepth);
 /* Adds each cell in the quadtree */
-    for(i32 i = 0; i < mCells.size(); i++){
+    for(i32 i = 0; i < maxCells; i++){
         quadTree->insertCell(mCells[i]);
     }
 /* Calculate neighbors for each cell (this method cost a lot of time) */
@@ -94,16 +94,16 @@ void WorldGeometry::Init(){
     //    quadTree->assignNeighbors(mCells[i]);
     //}
 /* Calculate neighbors for each cell (faster version) */
-    for(i32 y = 0; y < maxCells; y++){
-        for(i32 x = 0; x < maxCells; x++){
-            Cell* tmp = mCells.at(maxCells * y + x);
+    for(i32 y = 0; y < maxCellsY; y++){
+        for(i32 x = 0; x < maxCellsX; x++){
+            Cell* tmp = mCells.at(maxCellsY * y + x);
             if(y == 0){
                 if(x == 0){
                     tmp->setNeighbor(mCells.at(tmp->getIndex() + 1));
-                    tmp->setNeighbor(mCells.at(maxCells));
-                    tmp->setNeighbor(mCells.at(maxCells + 1));
+                    tmp->setNeighbor(mCells.at(maxCellsX));
+                    tmp->setNeighbor(mCells.at(maxCellsX + 1));
                 }
-                else if(x == maxCells - 1){
+                else if(x == maxCellsX - 1){
                     tmp->setNeighbor(mCells.at(tmp->getIndex() - 1));
                     tmp->setNeighbor(mCells.at(2 * tmp->getIndex() - 1));
                     tmp->setNeighbor(mCells.at(2 * tmp->getIndex()));
@@ -116,55 +116,55 @@ void WorldGeometry::Init(){
                     tmp->setNeighbor(mCells.at(2 * tmp->getIndex() + 1));
                 }
             }
-            else if(y == maxCells - 1){
+            else if(y == maxCellsY - 1){
                 if(x == 0){
                     tmp->setNeighbor(mCells.at(tmp->getIndex() + 1));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCells));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCells + 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX + 1));
                 }
-                else if(x == maxCells - 1){
+                else if(x == maxCellsX - 1){
                     tmp->setNeighbor(mCells.at(tmp->getIndex() - 1));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCells));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCells - 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX - 1));
                 }
                 else{
                     tmp->setNeighbor(mCells.at(tmp->getIndex() - 1));
                     tmp->setNeighbor(mCells.at(tmp->getIndex() + 1));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCells - 1));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCells));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCells + 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX - 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX + 1));
                 }
             }
             else{
                 if(x == 0){
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCells));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCells + 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX + 1));
                     tmp->setNeighbor(mCells.at(tmp->getIndex() + 1));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCells));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCells + 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX + 1));
                 }
-                else if(x == maxCells - 1){
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCells - 1));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCells));
+                else if(x == maxCellsX - 1){
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX - 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
                     tmp->setNeighbor(mCells.at(tmp->getIndex() - 1));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCells - 1));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCells));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX - 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX));
                 }
                 else{
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCells - 1));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCells));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCells + 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX - 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX + 1));
                     tmp->setNeighbor(mCells.at(tmp->getIndex() - 1));
                     tmp->setNeighbor(mCells.at(tmp->getIndex() + 1));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCells - 1));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCells));
-                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCells + 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX - 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX + 1));
                 }
             }
         }
     }
 /* Pre-calculate the distance between each cell and his neighbors */
-    for(i32 j = 0; j < mCells.size(); j++){
+    for(i32 j = 0; j < maxCells; j++){
         std::vector<Cell*> neighbors = mCells[j]->getNeighbors();
         i32 size = neighbors.size();
         cellsDistance[j] = std::vector<f32>(size);
@@ -172,7 +172,7 @@ void WorldGeometry::Init(){
             cellsDistance[j][k] = calculateDistance(mCells[j]->getPosition(), neighbors[k]->getPosition());
             /* Debug intended */
             if(cellsDistance[j][k] == 0){
-                //std::cout << "Weird stuff happens at init at: " << j << "," << k << "\n";
+                std::cout << "Weird stuff happens at init at: " << j << "," << k << "\n";
             }
         }
     }
@@ -214,17 +214,17 @@ Vector2<f32> WorldGeometry::correctBuildingPosition(Vector2<f32> targetPos, Buil
             storage = dummy->getHitbox().TopLeft();
             correctOne.x = storage.x;
             correctOne.y = storage.y;
-            storage.x -= CELL / 2;
-            storage.y -= CELL / 2;
-            storage.x -= (buildingPtr -> getCellsX() / 2) * (CELL / 2);
-            storage.y -= (buildingPtr -> getCellsY() / 2) * (CELL / 2);
+            storage.x -= cellSize / 2;
+            storage.y -= cellSize / 2;
+            storage.x -= (buildingPtr -> getCellsX() / 2) * (cellSize / 2);
+            storage.y -= (buildingPtr -> getCellsY() / 2) * (cellSize / 2);
         }
         else{
             storage = dummy->getHitbox().Center();
             correctOne.x = storage.x;
             correctOne.y = storage.y;
-            storage.x -= (buildingPtr -> getCellsX() - 1) * (CELL / 2);
-            storage.y -= (buildingPtr -> getCellsY() - 1) * (CELL / 2);
+            storage.x -= (buildingPtr -> getCellsX() - 1) * (cellSize / 2);
+            storage.y -= (buildingPtr -> getCellsY() - 1) * (cellSize / 2);
         }
     }
     return correctOne;
@@ -240,14 +240,13 @@ Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin, 
     i32 sourceIndex = sourceCell->getIndex();
     //i32 targetIndex = targetCell->getIndex();
     /* Check what's needed and what's not */
-    i32 MAX = 16384;
-    std::vector<f32> GCosts = std::vector<f32>(MAX, 0);
-    std::vector<f32> FCosts = std::vector<f32>(MAX, 0);
+    std::vector<f32> GCosts = std::vector<f32>(maxCells, 0);
+    std::vector<f32> FCosts = std::vector<f32>(maxCells, 0);
 
-    std::vector< Cell* > shortestPath = std::vector<Cell*>(MAX, nullptr);
-    std::vector< Cell* > searchFrontier = std::vector<Cell*>(MAX, nullptr);
+    std::vector< Cell* > shortestPath = std::vector<Cell*>(maxCells, nullptr);
+    std::vector< Cell* > searchFrontier = std::vector<Cell*>(maxCells, nullptr);
     /* Priority queue, that orders the weights of each iterated Cell */
-    IndexedPriorityQLow<float> pq(FCosts, MAX);
+    IndexedPriorityQLow<float> pq(FCosts, maxCells);
     pq.insert(sourceIndex);
     /* Algorithm start */ 
     while(!pq.empty()){
@@ -299,16 +298,17 @@ Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin, 
     return validCell;
 }
 Cell* WorldGeometry::positionToCell(Vector2<f32> position) const{
-    int dummy = (i32)((MAP / CELL) * position.x / MAP) + 
-                ((i32)((MAP / CELL) * position.y / MAP) * (MAP / CELL));
-    if(dummy < 0 || dummy > mCells.size()){
-        return nullptr;
-    }
-    i32 idx = dummy;
+    std::cout << "Position: " << position.x << " , " << position.y << "\n";
+    int idx = (i32)((mapAxis.x / cellSize) * position.x / mapAxis.x) + 
+                ((i32)((mapAxis.y / cellSize) * position.y / mapAxis.y) * (mapAxis.y * cellSize));
+    //if(dummy < 0 || dummy > maxCells){
+    //    return nullptr;
+    //}
+    
     //std::cout << "Indice de celula: " << idx << "\n";
-    if (idx == mCells.size()) 
-        idx = mCells.size() - 1;
-
+    if (idx >= maxCells) 
+        idx = maxCells - 1;
+    std::cout << "Ye: " << idx << "\n";
     return mCells.at(idx);
 }
 Cell* WorldGeometry::indexToCell(i32 index){
