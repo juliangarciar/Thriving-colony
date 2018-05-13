@@ -56,7 +56,7 @@ namespace aabb
         glm::vec3 rayInverseDirection;
 
 		/**signo*/
-		glm::vec<3, int> raySign;
+		glm::ivec3 raySign;
 	};
 
     /*! \brief The axis-aligned bounding box object.

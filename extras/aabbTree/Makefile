@@ -24,7 +24,7 @@ CPPFLAGS = -I/usr/include -I$(PROJECTROOT)/include -I/usr/include/glib-2.0 -I/us
 # Compiler params
 CPPFLAGS += -g -Wall -MMD -MP -D_CRT_SECURE_NO_WARNINGS -DDEBUG -std=c++11 -fPIC
 # Lib paths
-LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L$(PROJECTROOT)/lib -Wl,-R -Wl,$(PROJECTROOT)/lib
+LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L$(PROJECTROOT)/lib -Wl,-R -Wl,$(PROJECTROOT)/lib -L. -lmy
 # Libs
 LIBS = -lm
 

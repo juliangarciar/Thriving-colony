@@ -168,7 +168,7 @@ void OBDEngine::setClearColor(OBDColor c) {
 }
 
 glm::vec3 OBDEngine::getWorldCoordinatesFromScreen(glm::vec3 screen){
-    screen.y = windowWidth - screen.y; //Invert y
+    screen.y = windowHeight - screen.y; //Invert y
     return glm::unProject(screen, *TEntity::cache.getViewMatrix(), *TEntity::cache.getProjectionMatrix(), viewport);
 }
  
