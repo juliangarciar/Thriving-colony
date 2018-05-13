@@ -76,8 +76,8 @@ void BuildingManager::drawBuilding() {
         Vector2<f32> collisionPoint = Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2();
 		// Change 2nd parameter
 		bool collision = false;
-		Vector2<f32> dummy = collisionPoint;
-		//Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(collisionPoint, tempBuilding);
+		//Vector2<f32> dummy = collisionPoint;
+		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(collisionPoint, tempBuilding);
 
 		tempBuilding -> setPosition(dummy);
 

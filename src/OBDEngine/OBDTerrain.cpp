@@ -4,7 +4,7 @@
 
 OBDTerrain::OBDTerrain(OBDSceneNode* parent, std::string path) : OBDEntity(parent) {
 	//Generate mesh and material
-	generateTerrain(path.c_str(), -0.5f, 100, 1);
+	generateTerrain(path.c_str(), 0, 100, 1);
 
 	terrainNode = new TNode(new TMesh(mesh, material), scaleNode);
 }

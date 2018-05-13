@@ -74,8 +74,9 @@ void OBDEntity::setPosition(glm::vec3 p) {
 
 void OBDEntity::setRotation(glm::vec3 r) {
 	TTransform* t = (TTransform*) rotationNode -> getEntity();
+	r = glm::vec3(r.x/360, r.y/360, r.z/360);
 	glm::vec3 o = r - node_rotation;
-	t -> rotate(glm::vec3(o.x/360, o.y/360, o.z/360), 360);
+	t -> rotate(o, 360);
 	node_rotation = r;
 }
 
@@ -95,7 +96,7 @@ glm::vec3 OBDEntity::getPosition(){
 }
 
 glm::vec3 OBDEntity::getRotation(){
-	return node_rotation;
+	return glm::vec3(node_rotation.x * 360, node_rotation.y * 360, node_rotation.y * 360);
 }
 
 glm::vec3 OBDEntity::getScale(){
