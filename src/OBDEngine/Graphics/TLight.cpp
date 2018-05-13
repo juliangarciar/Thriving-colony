@@ -1,7 +1,7 @@
 #include "TLight.h"
 
 TLight::TLight(OBDColor c, f32 i, f32 am, f32 at) : TEntity(){
-    lightType = OBDEnums::LightTypes::LIGHT_POINT; //ToDo: varios tipos?
+    setType(OBDEnums::LightTypes::LIGHT_POINT); //ToDo: varios tipos?
 
     setColor(c, i);
     setAmbientCoeficient(am);
@@ -46,4 +46,8 @@ void TLight::setPosition(glm::vec3 p) {
 
 glm::vec3 TLight::getPosition() {
     return components.position;
+}
+
+void TLight::setType(OBDEnums::LightTypes newType) {
+    components.type = (i32)newType;
 }

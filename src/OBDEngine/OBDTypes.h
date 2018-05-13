@@ -31,6 +31,8 @@ struct glslLight {
 
 	GLfloat ambientCoeficient;
 	GLfloat attenuationCoeficient;
+	
+    i32 type;
 };
 
 inline bool operator==(const glslLight& l, const glslLight& r){ return (l.position == r.position && l.intensity == r.intensity && l.ambientCoeficient == r.ambientCoeficient && l.attenuationCoeficient == r.attenuationCoeficient) == 0; }

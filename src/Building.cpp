@@ -77,6 +77,7 @@ Building::~Building() {
     /* Error aqui */
     //delete barBg;
     //delete bar;
+    //delete particle;
 }
 
 void Building::update() {

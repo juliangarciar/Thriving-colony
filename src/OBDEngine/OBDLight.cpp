@@ -53,3 +53,8 @@ TLight* OBDLight::getLightEntity() {
 TNode *OBDLight::getFirstNode(){
     return lightNode;
 }
+
+void OBDLight::setType(OBDEnums::LightTypes newType) {
+    TLight* l = (TLight*) lightNode -> getEntity();
+    l -> setType(newType);
+}

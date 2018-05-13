@@ -18,6 +18,12 @@ class OBDParticleBoxEmiter : public OBDParticleEmiter {
          */
         ~OBDParticleBoxEmiter();
 
+        /**
+         * @brief 
+         * 
+         */
+        void emit(i32, i32, std::vector<TParticle*>);
+
     private:
 };
 

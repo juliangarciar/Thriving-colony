@@ -9,6 +9,8 @@ struct myLight {
 
 	float ambientCoeficient;
 	float attenuationCoeficient;
+
+	int type;
 };
 
 struct myMaterial {
@@ -73,6 +75,16 @@ vec3 Phong(myLight light, vec3 surfaceColor, vec3 specularColor) {
 
     vec3 surfaceToLight = normalize(dist);
     vec3 surfaceToCamera = normalize(cameraPosition - vertexPosition_out);
+
+    // TODO: rafa esto ha cambiado
+	/*
+	if (lights[lightIndex].type == 0) {
+		// Vector luz cuando es puntual
+    		vec3 s = normalize(lights[lightIndex].position - vertexPosition_out);
+	} else {
+		//Vector luz cuando es direccional
+		vec3 s = - lights[lightIndex].position;
+	}*/
 
 	// COMPONENTE AMBIENTAL
     Ambient = light.intensity.rgb * surfaceColor * light.ambientCoeficient;

@@ -6,6 +6,7 @@
 
 #include "OBDAnimation.h"
 #include "OBDBillboard.h"
+#include "OBDSkybox.h"
 #include "OBDCamera.h"
 #include "OBDLight.h"
 #include "OBDObject.h"
@@ -252,6 +253,14 @@ class OBDEngine {
          * @param c 
          */
         OBDBillboard* createBillboard(OBDSceneNode*, glm::vec3);
+
+        /**
+         * @brief Create a Skybox object
+         * 
+         * @param texture 
+         * @return OBDSkybox* 
+         */
+        OBDSkybox* createSkybox(TTexture* texture);
 
 		/////////////////////////////
     private:

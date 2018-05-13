@@ -3,6 +3,7 @@
 
 #include "OBDSceneNode.h"
 #include "OBDParticleEmiter.h"
+#include "OBDParticleAffector.h"
 
 class OBDParticleSystem : public OBDEntity {
     
@@ -21,20 +22,33 @@ class OBDParticleSystem : public OBDEntity {
         ~OBDParticleSystem();
 
         /**
-         * @brief Set the Particle Size object
+         * @brief 
          * 
          */
-        void setParticleSize(glm::vec2);
+        void cleanEmiters();
 
         /**
          * @brief 
          * 
          */
-        void cleanParticles();
+        void cleanAffectors();
+
+        /**
+         * @brief 
+         * 
+         */
+        void setEmiter(OBDParticleEmiter*);
+        
+        /**
+         * @brief 
+         * 
+         */
+        void addAffector(OBDParticleAffector*);
     private:
         TNode* particleSystemNode;
 
-        OBDParticleEmiter emiter;
+        std::vector<OBDParticleEmiter*> emiters;
+        std::vector<OBDParticleAffector*> affectors;
 };
 
 #endif
