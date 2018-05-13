@@ -7,15 +7,8 @@
 #include "Graphics/TTransform.h"
 #include "Graphics/TCamera.h"
 
-class OBDCamera : public OBDEntity {
+class OBDCamera {
     public:
-        /**
-         * @brief 
-         * @param screenWidth
-         * @param screenHeight
-         */
-        OBDCamera(i32, i32);
-
         /**
          * @brief 
          * 

@@ -1,6 +1,8 @@
 #ifndef SCENE_NODE_H
 #define SCENE_NODE_H
 
+#include <OBDEngine/OBDSceneNode.h>
+
 #include <Types.h>
 #include <MathEngine/Vector3.h>
 #include <IOEngine/Mouse.h>
@@ -17,12 +19,12 @@ class SceneNode {
 		i32 getID();
 		std::string getName();
 		
-		//scene::ISceneNode *getSceneNode();
+		OBDSceneNode *getSceneNode();
 	private:
-		//SceneNode(scene::ISceneNode *node);
+		SceneNode(OBDSceneNode *node);
 		SceneNode *collisionNode;
 
-		
+		OBDSceneNode *node;
 };
 
 #endif

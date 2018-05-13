@@ -92,7 +92,7 @@ class OBDEngine {
          * @param autoload
          * @return OBDMesh* 
          */
-        OBDObject* createObject(std::string, bool = false);
+        OBDObject* createObject(u32, std::string, bool = false);
         
         /**
          * @brief 
@@ -102,7 +102,7 @@ class OBDEngine {
          * @param autoload
          * @return OBDMesh* 
          */
-        OBDObject* createObject(OBDSceneNode*, std::string, bool = false);
+        OBDObject* createObject(OBDSceneNode*, u32, std::string, bool = false);
 
         /**
          * @brief Create a Shader Program object
@@ -210,27 +210,6 @@ class OBDEngine {
          */
         OBDLine getRaycastFromScreenCoordinates(glm::vec2);
 
-        /**
-         * @brief Get World Coordinates From Screen
-         * 
-         * @return glm::vec3 
-         */
-        glm::vec3 getRelativeWorldCoordinatesFromScreen(glm::vec3, glm::mat4);
-
-        /**
-         * @brief Get Screen Coordinates From World
-         * 
-         * @return glm::vec3 
-         */
-        glm::vec3 getRelativeScreenCoordinatesFromWorld(glm::vec3, glm::mat4);
-
-        /**
-         * @brief Get World Coordinates From Screen
-         * 
-         * @return glm::vec3 
-         */
-        OBDLine getRelativeRaycastFromScreenCoordinates(glm::vec2, glm::mat4);
-
 		/**
 		 * @brief Get the Resource Manager object
 		 * 
@@ -270,10 +249,9 @@ class OBDEngine {
         /**
          * @brief
          * @param a 
-         * @param b 
          * @param c 
          */
-        OBDBillboard* createBillboard(OBDSceneNode*, i32, glm::vec3);
+        OBDBillboard* createBillboard(OBDSceneNode*, glm::vec3);
 
 		/////////////////////////////
     private:

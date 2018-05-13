@@ -8,6 +8,8 @@ TMesh::TMesh(ResourceMesh r, ResourceMaterial m) : TEntity() {
 	mesh = r;
 	material = m;
 
+	modelMatrix = glm::mat4(1.0f);
+
 	for (int i = 0; i < OBDEnums::TextureTypes::TEXTURE_SIZE; i++){
 		textures.push_back(nullptr);
 	}

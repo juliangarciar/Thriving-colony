@@ -1,14 +1,6 @@
 #include "OBDObject.h"
 
-OBDObject::OBDObject(ResourceOBJ *obj, ResourceMTL *mtl) {
-	node_position = glm::vec3(0);
-	node_rotation = glm::vec3(0);
-	node_scale = glm::vec3(0);
-	
-    rotationNode = new TNode(new TTransform());
-    translationNode = new TNode(new TTransform(), rotationNode);
-    scaleNode = new TNode(new TTransform(), translationNode);
-
+OBDObject::OBDObject(OBDSceneNode* p, u32 id, ResourceOBJ *obj, ResourceMTL *mtl) : OBDEntity(p) {
     std::map<std::string, ResourceMesh> meshmap = obj->getResource();
     std::map<std::string, ResourceMaterial> matmap = mtl->getResource();
 
@@ -24,115 +16,58 @@ OBDObject::OBDObject(ResourceOBJ *obj, ResourceMTL *mtl) {
             std::cout << "No existe material " << it->second.defaultMaterialName << " para el mesh " << it->first << ". Utilizando un material vacio" << std::endl;
 		}
 
-        OBDMesh *tempMesh = new OBDMesh(it->second, mat);
+        OBDMesh *tempMesh = new OBDMesh(id, it->second, mat);
         tempMesh->getFirstNode()->setParent(scaleNode);
         scaleNode->addChild(tempMesh->getFirstNode());
 
         meshes.insert(std::pair<std::string, OBDMesh*>(it->second.name, tempMesh));
     }
 
-}
+	ID = id;
 
-OBDObject::OBDObject(OBDSceneNode* parent, ResourceOBJ *obj, ResourceMTL *mtl) {
-	node_position = glm::vec3(0);
-	node_rotation = glm::vec3(0);
-	node_scale = glm::vec3(0);
+	parent = nullptr;
+	refreshModelMatrix(parent_model_matrix);
+	refreshBoundingBox();
+	parent = p;
 
-    rotationNode = new TNode(new TTransform());
-    translationNode = new TNode(new TTransform(), rotationNode);
-    scaleNode = new TNode(new TTransform(), translationNode);
-
-    parent->addChild(this);
-
-    std::map<std::string, ResourceMesh> meshmap = obj->getResource();
-    std::map<std::string, ResourceMaterial> matmap = mtl->getResource();
-
-    for (std::map<std::string, ResourceMesh>::iterator it = meshmap.begin(); it != meshmap.end(); ++it) {
-        std::map<std::string, ResourceMaterial>::iterator it2;
-        it2 = matmap.find(it->second.defaultMaterialName);
-
-		ResourceMaterial mat;
-        if (it2 != matmap.end()){
-			mat = it2->second;
-        } else {
-			mat.ambientColor = glm::vec3(1, 1, 1);
-            std::cout << "No existe material " << it->second.defaultMaterialName << " para el mesh " << it->first << ". Utilizando un material vacio" << std::endl;
-		}
-
-        OBDMesh *tempMesh = new OBDMesh(it->second, mat);
-        tempMesh->getFirstNode()->setParent(scaleNode);
-        scaleNode->addChild(tempMesh->getFirstNode());
-
-        meshes.insert(std::pair<std::string, OBDMesh*>(it->second.name, tempMesh));
-    }
+	p -> insertBoundingBox(ID, boundingBox);
 }
 
 OBDObject::~OBDObject(){
     for (std::map<std::string, OBDMesh*>::iterator it = meshes.begin(); it != meshes.end(); ++it) {
         delete it->second;
     }
+
     meshes.clear();
-    delete rotationNode;
-    rotationNode = nullptr;
+	
+	if (parent != nullptr) parent -> removeBoundingBox(ID);
 }
 
-void OBDObject::translate(f32 tX, f32 tY, f32 tZ) {
-    TTransform* t = (TTransform*) translationNode -> getEntity();
-    t -> translate(tX, tY, tZ);
-    node_position += glm::vec3(tX, tY, tZ);
+void OBDObject::loadTextures(ResourceManager *r, bool sync){
+    for (std::map<std::string, OBDMesh*>::iterator it = meshes.begin(); it != meshes.end(); ++it) {
+        it->second->loadTextures(r, sync);
+    }
 }
 
-void OBDObject::rotate(f32 rX, f32 rY, f32 rZ, f32 angle) {
-    TTransform* t = (TTransform*) rotationNode -> getEntity();
-    t -> rotate(rX, rY, rZ, angle);
-    node_rotation += glm::vec3(rX, rY, rZ);
+void OBDObject::refreshBoundingBox(){
+	meshes.begin()->second->refreshBoundingBox();
+	aabb::AABB matrix = meshes.begin()->second->getBoundingBox();
+    for (std::map<std::string, OBDMesh*>::iterator i = meshes.begin(); i != meshes.end(); ++i) {
+		i->second->refreshBoundingBox();
+		matrix.merge(matrix, i->second->getBoundingBox());
+	}
+	boundingBox = matrix;
+
+	if (parent != nullptr){
+		parent -> refreshBoundingBox(ID, boundingBox);
+	}
 }
 
-void OBDObject::scale(f32 sX, f32 sY, f32 sZ) {
-    TTransform* t = (TTransform*) scaleNode -> getEntity();
-    t -> scale(sX, sY, sZ);
-    node_scale += glm::vec3(sX, sY, sZ);
-}
-
-void OBDObject::setPosition(glm::vec3 p) {
-    TTransform* t = (TTransform*) translationNode -> getEntity();
-    glm::vec3 o = p - node_position;
-    t -> translate(o.x, o.y, o.z);
-    node_position = p;
-}
-
-void OBDObject::setRotation(glm::vec3 r, f32 angle) {
-    TTransform* t = (TTransform*) rotationNode -> getEntity();
-    glm::vec3 o = r - node_rotation - r;
-    t -> rotate(o.x, o.y, o.z, angle);
-    node_rotation = r;
-}
-
-void OBDObject::setScale(glm::vec3 s) {
-    TTransform* t = (TTransform*) scaleNode -> getEntity();
-    glm::vec3 o = node_scale - s;
-    t -> scale(o.x, o.y, o.z);
-    node_scale = s;
-}
-
-glm::vec3 OBDObject::getPosition(){
-	return node_position;
-}
-
-glm::vec3 OBDObject::getRotation(){
-	return node_rotation;
-}
-
-glm::vec3 OBDObject::getScale(){
-	return node_scale;
-}
-
-void OBDObject::setActive(bool a) {
-    rotationNode -> setActive(a);
-}
-
-bool OBDObject::getActive() {
-    return rotationNode -> getActive();
+void OBDObject::refreshModelMatrix(glm::mat4 parent){
+	OBDEntity::refreshModelMatrix(parent);
+    for (std::map<std::string, OBDMesh*>::iterator i = meshes.begin(); i != meshes.end(); ++i) {
+		i->second->refreshModelMatrix(model_matrix);
+	}
 }
 
 void OBDObject::setMaterial(ResourceMTL *mtl) {
@@ -142,12 +77,6 @@ void OBDObject::setMaterial(ResourceMTL *mtl) {
         if (matmap.find(it->second->getMaterialName()) != matmap.end()){
             it->second->setMaterial(matmap[it->second->getMaterialName()]);
         }
-    }
-}
-
-void OBDObject::loadTextures(ResourceManager *r, bool sync){
-    for (std::map<std::string, OBDMesh*>::iterator it = meshes.begin(); it != meshes.end(); ++it) {
-        it->second->loadTextures(r, sync);
     }
 }
 
@@ -163,6 +92,10 @@ std::map<std::string, OBDMesh*> OBDObject::getMeshes(){
     return meshes;
 }
 
-TNode *OBDObject::getFirstNode(){
-    return rotationNode;
+aabb::AABB OBDObject::getBoundingBox(){
+	return boundingBox;
+}
+
+u32 OBDObject::getID() {
+	return ID;
 }

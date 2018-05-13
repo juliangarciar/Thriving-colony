@@ -1,13 +1,9 @@
 #include "OBDLight.h"
 
-OBDLight::OBDLight(OBDColor color, f32 intensity, f32 ambient, f32 attenuation) {
-    lightNode = new TNode(new TLight(color, intensity, ambient, attenuation));
-}
-
 OBDLight::OBDLight(OBDSceneNode* parent, OBDColor color, f32 intensity, f32 ambient, f32 attenuation) {
     lightNode = new TNode(new TLight(color, intensity, ambient, attenuation));
 
-    parent->addChild(this);
+    parent->addChild(lightNode);
 }
 
 OBDLight::~OBDLight() {

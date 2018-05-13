@@ -2,13 +2,12 @@
 #include "Window.h"
 
 Model::Model(i32 id, std::string path) {
-   obj = Window::Instance()->getEngine()->createObject(path, true);
+   obj = Window::Instance()->getEngine()->createObject(id, path, true);
    std::cout << "Se ha cargado un edificio " << path << std::endl;
 }
 
 Model::Model(SceneNode *parent, i32 id, std::string path) {
-	//ToDo
-   obj = Window::Instance()->getEngine()->createObject(path, true);
+   obj = Window::Instance()->getEngine()->createObject(parent->getSceneNode(), id, path, true);
    std::cout << "Se ha cargado un edificio " << path << std::endl;
 }
 
@@ -26,16 +25,22 @@ void Model::setName(const char *name) {
 
 void Model::setPosition(Vector3<f32> pos) {
 	if (pos.z > 0) pos.z *= -1;
+	std::cout << "P " << pos.x << " " << pos.y << " " << pos.z << std::endl;
     obj->setPosition(glm::vec3(pos.x, pos.y, pos.z));
+	obj->refreshModelMatrix(glm::mat4(1.0f));
+	obj->refreshBoundingBox();
 }
 
 void Model::setScale(Vector3<f32> s) {
     obj->setScale(glm::vec3(s.x, s.y, s.z));
+	obj->refreshModelMatrix(glm::mat4(1.0f));
+	obj->refreshBoundingBox();
 }
 
 void Model::rotate(f32 x, f32 y){
     double param = atan(y / x) * 180 / PI;
-    
+
+	obj->refreshBoundingBox();
 }
 
 void Model::setActive(bool a) {
@@ -51,7 +56,7 @@ Vector3<f32> Model::getPosition() {
 }
 
 i32 Model::getID() {
-    
+    return obj->getID();
 }
 
 /*scene::IMeshSceneNode *Model::getModel() {

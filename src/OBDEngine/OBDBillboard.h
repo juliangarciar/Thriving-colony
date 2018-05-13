@@ -5,21 +5,16 @@
 
 #include "Graphics/TBillboard.h"
 
-class OBDBillboard : public OBDEntity {
-    
+class OBDBillboard {
     public:
         /**
          * @brief 
          * 
+         * @param parent
+         * @param position
+         * @param shaderID
          */
-        OBDBillboard();
-
-        /**
-         * @brief 
-         * 
-         * @param parent 
-         */
-        OBDBillboard(OBDSceneNode*, i32, glm::vec3, GLuint);
+        OBDBillboard(OBDSceneNode*, glm::vec3, GLuint);
 
         /**
          * @brief 
@@ -61,12 +56,6 @@ class OBDBillboard : public OBDEntity {
          * @brief 
          * 
          */
-        i32 getID();
-
-        /**
-         * @brief 
-         * 
-         */
         OBDColor* getTopColor();
 
         /**
@@ -96,18 +85,14 @@ class OBDBillboard : public OBDEntity {
         f32 getBottomWidth();
 
          /**
-         * @brief Get the First Node object
+         * @brief Get the Node object
          * 
          * @return TNode* 
          */
-        TNode *getFirstNode();
+        TNode *getNode();
 
     private:
         TNode* billboardNode;
-        TNode* rotationNode;
-        TNode* translationNode;
-        TNode* scaleNode;
-        i32 ID;
 };
 
 #endif

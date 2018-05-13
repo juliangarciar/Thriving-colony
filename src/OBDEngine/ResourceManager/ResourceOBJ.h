@@ -4,13 +4,6 @@
 #include "Resource.h"
 #include "ResourceManager.h"
 
-struct BoundingBox {
-    glm::vec3 min;
-    glm::vec3 max;
-    glm::vec3 size;
-    glm::vec3 center;
-};
-
 struct ResourceMesh {
     std::string name;
 
@@ -19,7 +12,8 @@ struct ResourceMesh {
 
     std::string defaultMaterialName;
 
-    BoundingBox boundingBox;
+    glm::vec3 aabbMin;
+	glm::vec3 aabbMax;
 };
 
 class ResourceOBJ : public Resource {

@@ -1,129 +1,38 @@
 #include "OBDMesh.h"
 
-OBDMesh::OBDMesh(ResourceMesh m, ResourceMaterial mat){
-	node_position = glm::vec3(0);
-	node_rotation = glm::vec3(0);
-	node_scale = glm::vec3(0);
-
-    rotationNode = new TNode(new TTransform());
-    translationNode = new TNode(new TTransform(), rotationNode);
-    scaleNode = new TNode(new TTransform(), translationNode);
-
+OBDMesh::OBDMesh(u32 id, ResourceMesh m, ResourceMaterial mat) : OBDEntity() {
     meshNode = new TNode(new TMesh(m, mat), scaleNode);
 
     mesh = m;
     material = mat;
+	ID = id;
     name = m.name;
     materialName = m.defaultMaterialName;
+
+	refreshModelMatrix(parent_model_matrix);
+	refreshBoundingBox();
 }
 
-OBDMesh::OBDMesh(OBDSceneNode* parent, ResourceMesh m, ResourceMaterial mat){
-	node_position = glm::vec3(0);
-	node_rotation = glm::vec3(0);
-	node_scale = glm::vec3(0);
-	
-    rotationNode = new TNode(new TTransform());
-    translationNode = new TNode(new TTransform(), rotationNode);
-    scaleNode = new TNode(new TTransform(), translationNode);
-
+OBDMesh::OBDMesh(OBDSceneNode* p, u32 id, ResourceMesh m, ResourceMaterial mat) : OBDEntity(parent) {
     meshNode = new TNode(new TMesh(m, mat), scaleNode);
 
     mesh = m;
     material = mat;
+	ID = id;
     name = m.name;
     materialName = m.defaultMaterialName;
 
-    parent->addChild(this);
+	refreshModelMatrix(parent_model_matrix);
+	refreshBoundingBox();
+
+	p -> insertBoundingBox(ID, boundingBox);
 }
 
 OBDMesh::~OBDMesh() {
     delete rotationNode;
     rotationNode = nullptr;
-}
-
-void OBDMesh::translate(f32 tX, f32 tY, f32 tZ) {
-    TTransform* t = (TTransform*) translationNode -> getEntity();
-    t -> translate(tX, tY, tZ);
-    node_position += glm::vec3(tX, tY, tZ);
-}
-
-void OBDMesh::rotate(f32 rX, f32 rY, f32 rZ, f32 angle) {
-    TTransform* t = (TTransform*) rotationNode -> getEntity();
-    t -> rotate(rX, rY, rZ, angle);
-    node_rotation += glm::vec3(rX, rY, rZ);
-}
-
-void OBDMesh::scale(f32 sX, f32 sY, f32 sZ) {
-    TTransform* t = (TTransform*) scaleNode -> getEntity();
-    t -> scale(sX, sY, sZ);
-    node_scale += glm::vec3(sX, sY, sZ);
-}
-
-void OBDMesh::setPosition(glm::vec3 p) {
-    TTransform* t = (TTransform*) translationNode -> getEntity();
-    glm::vec3 o = node_position - p;
-    t -> translate(o.x, o.y, o.z);
-    node_position = p;
-}
-
-void OBDMesh::setRotation(glm::vec3 r, f32 angle) {
-    TTransform* t = (TTransform*) rotationNode -> getEntity();
-    glm::vec3 o = node_rotation - r;
-    t -> rotate(o.x, o.y, o.z, angle);
-    node_rotation = r;
-}
-
-void OBDMesh::setScale(glm::vec3 s) {
-    TTransform* t = (TTransform*) scaleNode -> getEntity();
-    glm::vec3 o = node_scale - s;
-    t -> scale(o.x, o.y, o.z);
-    node_scale = s;
-}
-
-glm::vec3 OBDMesh::getPosition(){
-	return node_position;
-}
-
-glm::vec3 OBDMesh::getRotation(){
-	return node_rotation;
-}
-
-glm::vec3 OBDMesh::getScale(){
-	return node_scale;
-}
-
-void OBDMesh::setActive(bool a) {
-    meshNode -> setActive(a);
-}
-
-bool OBDMesh::getActive() {
-    return meshNode -> getActive();
-}
-
-void OBDMesh::setMaterial(ResourceMaterial mat){
-    TMesh* m = (TMesh*) meshNode -> getEntity();
-    m->setMaterial(mat);
-}
-
-void OBDMesh::setTexture(OBDTexture* t){
-    TMesh* m = (TMesh*) meshNode -> getEntity();
-    m -> setTexture(t->getType(), t->getTexture());
-}
-
-void OBDMesh::setName(std::string n) {
-	name = n;
-}
-
-std::string OBDMesh::getName() {
-	return name;
-}
-
-void OBDMesh::setMaterialName(std::string n) {
-	name = n;
-}
-
-std::string OBDMesh::getMaterialName() {
-	return materialName;
+	
+	if (parent != nullptr) parent -> removeBoundingBox(ID);
 }
 
 void OBDMesh::loadTextures(ResourceManager *r, bool sync){
@@ -150,18 +59,55 @@ void OBDMesh::loadTextures(ResourceManager *r, bool sync){
     }
 }
 
-void OBDMesh::setID(GLuint i) {
-	ID = i;
+void OBDMesh::refreshBoundingBox(){
+    TMesh* m = (TMesh*) meshNode -> getEntity();
+	glm::vec4 mmin = model_matrix * glm::vec4(mesh.aabbMin, 1);
+	glm::vec4 mmax = model_matrix * glm::vec4(mesh.aabbMax, 1);
+
+	glm::vec3 min(mmin);
+	glm::vec3 max(mmax);
+	
+	boundingBox = aabb::AABB(min, max);
+
+	if (parent != nullptr){
+		parent -> refreshBoundingBox(ID, boundingBox);
+	}
 }
 
-GLuint OBDMesh::getID() {
+void OBDMesh::setName(std::string a) {
+	name = a;
+}
+
+void OBDMesh::setMaterial(ResourceMaterial mat){
+    TMesh* m = (TMesh*) meshNode -> getEntity();
+    m->setMaterial(mat);
+}
+
+void OBDMesh::setTexture(OBDTexture* t){
+    TMesh* m = (TMesh*) meshNode -> getEntity();
+    m -> setTexture(t->getType(), t->getTexture());
+}
+
+void OBDMesh::setMaterialName(std::string n) {
+	name = n;
+}
+
+std::string OBDMesh::getName() {
+    return name;
+}
+
+u32 OBDMesh::getID() {
 	return ID;
+}
+
+std::string OBDMesh::getMaterialName() {
+	return materialName;
 }
 
 TMesh* OBDMesh::getMeshEntity() {
     return (TMesh*) meshNode -> getEntity();
 }
 
-TNode *OBDMesh::getFirstNode(){
-    return rotationNode;
+aabb::AABB OBDMesh::getBoundingBox(){
+	return boundingBox;
 }

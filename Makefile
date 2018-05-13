@@ -26,7 +26,7 @@ CPPFLAGS += -O3 -ffast-math -g -Wall -Wno-macro-redefined -Wno-unsequenced -Wno-
 # Lib paths
 LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L$(PROJECTROOT)/lib -Wl,-R -Wl,$(PROJECTROOT)/lib
 # Libs
-LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lXrandr -lXinerama -lXi -lpthread -ldl -lrt -lglfw -lGLEW -lglib-2.0 -lIrrlicht -lnanogui -lfmod -lfmodstudio -lterterrain
+LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lXrandr -lXinerama -lXi -lpthread -ldl -lrt -lglfw -lGLEW -lglib-2.0 -lIrrlicht -lnanogui -lfmod -lfmodstudio -lterterrain -laabbtree
 
 ######## DON'T EDIT ANYTHING BELOW THIS LINE
 EXECUTABLE := $(BINPATH)/$(TARGET)

@@ -4,18 +4,13 @@
 #include "OBDTypes.h"
 #include "OBDEnums.h"
 
-#include "Graphics/TTexture.h"
+#include "ResourceManager/ResourceMTL.h"
 
-class OBDTexture {
+class OBDMaterial {
 	public:
-		OBDTexture(OBDEnums::TextureTypes, ResourceIMG*);
-		~OBDTexture();
-
-		OBDEnums::TextureTypes getType();
-		TTexture *getTexture();
+		OBDMaterial(ResourceMTL*);
+		~OBDMaterial();
 	private:
-		OBDEnums::TextureTypes type;
-		TTexture *tex;
 };
 
 #endif

@@ -16,19 +16,11 @@ class OBDObject : public OBDEntity {
         /**
          * @brief Construct a new OBDMesh object
          * 
-         * @param obj 
-         * @param mtl 
-         */
-        OBDObject(ResourceOBJ *obj, ResourceMTL *mtl);
-
-        /**
-         * @brief Construct a new OBDMesh object
-         * 
          * @param parent 
          * @param obj 
          * @param mtl 
          */
-        OBDObject(OBDSceneNode* parent, ResourceOBJ *obj, ResourceMTL *mtl);
+        OBDObject(OBDSceneNode* parent, u32, ResourceOBJ *obj, ResourceMTL *mtl);
 
         /**
          * @brief Destroy the OBDObject object
@@ -38,82 +30,10 @@ class OBDObject : public OBDEntity {
 
         /**
          * @brief 
-         * 
-         * @param tX 
-         * @param tY 
-         * @param tZ 
-         */
-        void rotate(f32 rX, f32 rY, f32 rZ, f32 angle);
-
-        /**
-         * @brief 
-         * 
-         */
-        void scale(f32 sX, f32 sY, f32 sZ);
-
-        /**
-         * @brief 
-         * 
-         */
-        void translate(f32 tX, f32 tY, f32 tZ);
-
-        /**
-         * @brief Set the Position
-         * 
-         * @param p 
-         */
-        void setPosition(glm::vec3 p);
-
-        /**
-         * @brief Set the Rotation
-         * 
          * @param r 
-         * @param angle 
+         * @param sync 
          */
-        void setRotation(glm::vec3 r, f32 angle);
-
-        /**
-         * @brief Set the Scale
-         * 
-         * @param s 
-         */
-        void setScale(glm::vec3 s);
-
-		/**
-		 * @brief Get the Position object
-		 * 
-		 * @return glm::vec3 
-		 */
-		glm::vec3 getPosition();
-
-		/**
-		 * @brief Get the Rotation object
-		 * 
-		 * @return glm::vec3 
-		 */
-		glm::vec3 getRotation();
-
-		/**
-		 * @brief Get the Scale object
-		 * 
-		 * @return glm::vec3 
-		 */
-		glm::vec3 getScale();
-
-        /**
-         * @brief Set the Active object
-         * 
-         * @param a 
-         */
-        void setActive(bool a);
-
-        /**
-         * @brief Get the Active object
-         * 
-         * @return true 
-         * @return false 
-         */
-        bool getActive();
+        void loadTextures(ResourceManager*, bool);
 
         /**
          * @brief Set the Material object
@@ -122,19 +42,17 @@ class OBDObject : public OBDEntity {
          */
         void setMaterial(ResourceMTL *mtl);
 
-        /**
-         * @brief 
-         * @param r 
-         * @param sync 
-         */
-        void loadTextures(ResourceManager*, bool);
+		/**
+		 * @brief 
+		 * 
+		 */
+		void refreshBoundingBox();
 
-        /**
-         * @brief Get the Mesh Amount object
-         * 
-         * @return u32 
-         */
-        u32 getMeshAmount();
+		/**
+		 * @brief 
+		 * 
+		 */
+		void refreshModelMatrix(glm::mat4);
 
         /**
          * @brief Get the Mesh object
@@ -150,23 +68,32 @@ class OBDObject : public OBDEntity {
          */
         std::map<std::string, OBDMesh*> getMeshes();
 
-        /**
-         * @brief Get the First Node object
-         * 
-         * @return TNode* 
-         */
-        TNode *getFirstNode();
+		/**
+		 * @brief Get the Bounding Box object
+		 * 
+		 * @return aabb::AABB 
+		 */
+		aabb::AABB getBoundingBox();
 
+        /**
+         * @brief 
+         * 
+         * @return u32 
+         */
+        u32 getID();
+
+        /**
+         * @brief Get the Mesh Amount object
+         * 
+         * @return u32 
+         */
+        u32 getMeshAmount();
     private:
-        TNode* rotationNode;
-        TNode* translationNode;
-        TNode* scaleNode;
+		aabb::AABB boundingBox;
 
         std::map<std::string, OBDMesh*> meshes;
-
-        glm::vec3 node_position;
-        glm::vec3 node_rotation;
-        glm::vec3 node_scale;
+		
+        u32 ID;
 };
 
 #endif

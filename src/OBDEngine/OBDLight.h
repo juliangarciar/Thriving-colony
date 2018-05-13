@@ -8,18 +8,8 @@
 #include "Graphics/TTransform.h"
 #include "Graphics/TLight.h"
 
-class OBDLight : public OBDEntity {
+class OBDLight {
     public:
-        /**
-         * @brief Construct a new OBDLight object
-         * 
-         * @param color 
-         * @param intensity 
-         * @param ambient 
-         * @param attenuation 
-         */
-        OBDLight(OBDColor color, f32 intensity, f32 ambient, f32 attenuation);
-
         /**
          * @brief Construct a new OBDLight object
          * 
@@ -67,18 +57,18 @@ class OBDLight : public OBDEntity {
         void setPosition(glm::vec3 p);
 
         /**
-         * @brief Get the Position object
-         * 
-         * @return glm::vec3 
-         */
-        glm::vec3 getPosition();
-
-        /**
          * @brief set the light to active or inactive
          * 
          * @param bool new light active state
          */
         void setActive(bool);
+
+        /**
+         * @brief Get the Position object
+         * 
+         * @return glm::vec3 
+         */
+        glm::vec3 getPosition();
 
         /**
          * @brief returns wether or not the light is active

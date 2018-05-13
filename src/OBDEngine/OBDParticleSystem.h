@@ -12,7 +12,7 @@ class OBDParticleSystem : public OBDEntity {
          * 
          * @param
          */
-        OBDParticleSystem(OBDSceneNode*, i32, glm::vec3, glm::vec3, glm::vec3);
+        OBDParticleSystem(OBDSceneNode*);
 
         /**
          * @brief 
@@ -31,21 +31,8 @@ class OBDParticleSystem : public OBDEntity {
          * 
          */
         void cleanParticles();
-
-         /**
-         * @brief Get the First Node object
-         * 
-         * @return TNode* 
-         */
-        TNode *getFirstNode();
-
     private:
         TNode* particleSystemNode;
-        TNode* rotationNode;
-        TNode* translationNode;
-        TNode* scaleNode;
-
-        i32 ID;
 
         OBDParticleEmiter emiter;
 };

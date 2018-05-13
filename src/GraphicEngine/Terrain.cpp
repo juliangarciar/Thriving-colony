@@ -4,7 +4,9 @@
 //ToDo: no deberian haber datos aqui
 Terrain::Terrain(const char* heightMap) {
 	t = Window::Instance()->getEngine()->createTerrain(heightMap);
-	t->translate(-256, 0, 0);
+	t->rotate(glm::vec3(0, 1, 0), 180);
+	t->translate(glm::vec3(256, 0, 0));
+	t->refreshModelMatrix(glm::mat4(1.0f));
 }
 
 Terrain::~Terrain() {
@@ -17,11 +19,15 @@ void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture) {
 
 void Terrain::setSize(Vector3<f32> s){
 	t->setScale(glm::vec3(s.x, s.y, s.z));
+	t->refreshModelMatrix(glm::mat4(1.0f));
 }
 
 Vector3<f32> Terrain::getPointCollision(Mouse *cursor){
-	OBDLine l = Window::Instance()->getEngine()->getRelativeRaycastFromScreenCoordinates(glm::vec2(cursor->getPosition().x, cursor->getPosition().y), t->getTerrainMesh()->getModelMatrix());
+	OBDLine l = Window::Instance()->getEngine()->getRaycastFromScreenCoordinates(glm::vec2(cursor->getPosition().x, cursor->getPosition().y));
+	std::cout << "LStart " << l.start.x << " " << l.start.y << " " << l.start.z << std::endl;
+	std::cout << "LEnd " << l.end.x << " " << l.end.y << " " << l.end.z << std::endl;
 	glm::vec3 c = t->getRayCollision(l);
+	std::cout << "Collision " << c.x << " " << c.y << " " << c.z << std::endl;
 	return Vector3<f32>(c.x, c.y, -c.z);
 }
 

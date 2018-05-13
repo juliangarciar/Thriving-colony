@@ -62,7 +62,7 @@ bool BuildingManager::setBuildingMode(std::string type) {
 	if (it != baseBuildings.end() && checkCanPay(type)) {
 		if (!buildingMode) {
 			buildingMode = true;
-			tempBuilding = new Building(buildingLayer, 0, team, it->second);
+			tempBuilding = new Building(buildingLayer, nextBuildingId++, team, it->second);
 			return true;
 		}
 	}
@@ -76,8 +76,8 @@ void BuildingManager::drawBuilding() {
         Vector2<f32> collisionPoint = Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2();
 		// Change 2nd parameter
 		bool collision = false;
-		//Vector2<f32> dummy = collisionPoint
-		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(collisionPoint, tempBuilding);
+		Vector2<f32> dummy = collisionPoint;
+		//Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(collisionPoint, tempBuilding);
 
 		tempBuilding -> setPosition(dummy);
 
@@ -119,7 +119,7 @@ void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 bui
 	if (it != baseBuildings.end()){
 		BuildingData b = it->second;
 		if (buildTime >= 0) b.buildingTime = buildTime;
-		tempBuilding = new Building(buildingLayer, 0, team, b);
+		tempBuilding = new Building(buildingLayer, nextBuildingId++, team, b);
 		buildBuilding(pos);
 	}
 }
@@ -128,8 +128,6 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
 	if (tempBuilding != nullptr){
 		//Establece la posicion inicial del edificio
 		tempBuilding -> setPosition(pos);
-		//Establece la ID inicial del edificio
-		tempBuilding -> setID(nextBuildingId);
 		//Establece un callback que se ejecutará al acabar de construir
 		tempBuilding -> setFinishedCallback([&](Building *b){
 			buildingAmounts[b -> getType()]++;
@@ -144,7 +142,7 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
 		});
 
 		//Insert building in a map
-		inMapBuildings -> insert(std::pair<i32,Building*>(nextBuildingId, tempBuilding));
+		inMapBuildings -> insert(std::pair<i32,Building*>(tempBuilding->getID(), tempBuilding));
 		
 		//Start the construction of the building
 		tempBuilding -> startBuilding();
@@ -155,7 +153,6 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
 
 		//Finish everything
 		tempBuilding = nullptr;
-		nextBuildingId++;
 	} else {
 		std::cout << "Error, se ha intentado construir un edificio inexistente" << std::endl;
 		exit(0);

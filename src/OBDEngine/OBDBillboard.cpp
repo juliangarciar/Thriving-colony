@@ -1,23 +1,14 @@
 #include "OBDBillboard.h"
 
-OBDBillboard::OBDBillboard() {
+OBDBillboard::OBDBillboard(OBDSceneNode* parent, glm::vec3 position, GLuint shaderID) {
+    billboardNode = new TNode(new TBillboard(position, shaderID));
 
-}
-
-OBDBillboard::OBDBillboard(OBDSceneNode* parent, i32 id, glm::vec3 pos, GLuint shader) {
-    rotationNode = new TNode(new TTransform());
-    translationNode = new TNode(new TTransform(), rotationNode);
-    scaleNode = new TNode(new TTransform(), translationNode);
-    
-    ID = id;
-
-    billboardNode = new TNode(new TBillboard(pos, shader));
-
-    parent -> addChild(this);
+	parent->addChild(billboardNode);
 }
 
 OBDBillboard::~OBDBillboard(){
-	
+	delete billboardNode;
+	billboardNode = nullptr;
 }
 
 void OBDBillboard::setPosition(glm::vec3 pos) {
@@ -45,10 +36,6 @@ glm::vec3 OBDBillboard::getPosition() {
     return aux -> getPosition();
 }
 
-i32 OBDBillboard::getID() {
-    return ID;
-}
-
 OBDColor* OBDBillboard::getTopColor() {
     TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
     return aux -> getTopColor();
@@ -72,8 +59,4 @@ f32 OBDBillboard::getTopWidth() {
 f32 OBDBillboard::getBottomWidth() {
     TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
     return aux -> getBottomWidth();
-}
-
-TNode *OBDBillboard::getFirstNode() {
-    return billboardNode;
 }

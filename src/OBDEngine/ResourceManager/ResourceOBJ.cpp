@@ -49,23 +49,33 @@ void ResourceOBJ::load(const char *path){
 
             glm::vec3 act(curMesh.Vertices[j].Position.X,curMesh.Vertices[j].Position.Y,curMesh.Vertices[j].Position.Z);
             
-            if((act.x <= min.x) && (act.y <= min.y) && (act.z <= min.z)){
-                min = act;
-            }
+            if(act.x <= min.x){
+				min.x = act.x;
+			}
 
-            if((act.x >= max.x) && (act.y >= max.y) && (act.z >= max.z)){
-                max = act;
+			if (act.y <= min.y){
+                min.y = act.y;
+            }
+			
+			if (act.z <= min.z) {
+				min.z = act.z;
+			}
+
+            if(act.x >= max.x){
+				max.x = act.x;
+			}
+			
+			if (act.y >= max.y) {
+				max.y = act.y;
+			}
+
+			if (act.z >= max.z){
+                max.z = act.z;
             }
         }
-        
-        // Calculate the size necessary for the object and the center of the object
-        glm::vec3 size(max.x - min.x, max.y - min.y, max.z - min.z);
-        glm::vec3 center((min.x + max.x)/2, (min.y + max.y)/2, (min.z + max.z)/2);
 
-        tempMesh.boundingBox.min = min;
-        tempMesh.boundingBox.max = max;
-        tempMesh.boundingBox.size = size;
-        tempMesh.boundingBox.center = center;
+        tempMesh.aabbMin = min;
+        tempMesh.aabbMax = max;
         
         tempMesh.name = curMesh.MeshName;
         tempMesh.vbo = vbo;
