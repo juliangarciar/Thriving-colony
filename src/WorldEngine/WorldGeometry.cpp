@@ -35,7 +35,6 @@ void WorldGeometry::Init(i32 _cellSize, i32 _mapX, i32 _mapY, i32 _quadDepth){
     mCells = std::vector< Cell* >(maxCells);
     cellsDistance = std::vector< std::vector<f32> >(maxCells);
     quadTree = nullptr;
-    std::cout << "Init: " << cellSize << "," << mapAxis.x << "," << mapAxis.y << "," << maxCellsX << "," << maxCellsY << "," << maxCells << "\n"; 
     squadPosition = std::vector< std::vector< Vector2<f32> > >(maxGameUnits);
     f32 gradesPerUnit;
     const f32 radious = cellSize / 2;
@@ -51,9 +50,7 @@ void WorldGeometry::Init(i32 _cellSize, i32 _mapX, i32 _mapY, i32 _quadDepth){
             squadPosition[i][j] = Vector2<f32>(radious * std::cos(gradesPerUnit), radious * std::sin(gradesPerUnit)); 
         }
     }
-/* Especifies the N cells each axis has */
-    //i32 maxCells = MAP / cellSize;
-    
+/* Especifies the N cells each axis has */    
     for (i32 y = 0; y < maxCellsY; y++)
     {
         for (i32 x = 0; x < maxCellsX; x++)
@@ -83,86 +80,85 @@ void WorldGeometry::Init(i32 _cellSize, i32 _mapX, i32 _mapY, i32 _quadDepth){
     Vector2<f32> botRight(mapAxis.x, mapAxis.y);
     Box2D hitBox(topLeft, botRight);
     Vector2<f32> center(botRight / 2);
-    //std::cout << "Quadtree center: " << center.x << "," << center.y << "\n";
-    quadTree = new Quadtree(center, hitBox, 6);
+    quadTree = new Quadtree(center, hitBox, 1);
 /* Adds each cell in the quadtree */
     for(i32 i = 0; i < maxCells; i++){
         quadTree->insertCell(mCells[i]);
     }
 /* Calculate neighbors for each cell (this method cost a lot of time) */
-    for(i32 i = 0; i < mCells.size(); i++){
-        quadTree->assignNeighbors(mCells[i]);
-    }
-/* Calculate neighbors for each cell (faster version) */
-    //for(i32 y = 0; y < maxCellsY; y++){
-    //    for(i32 x = 0; x < maxCellsX; x++){
-    //        Cell* tmp = mCells.at(maxCellsY * y + x);
-    //        if(y == 0){
-    //            if(x == 0){
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() + 1));
-    //                tmp->setNeighbor(mCells.at(maxCellsX));
-    //                tmp->setNeighbor(mCells.at(maxCellsX + 1));
-    //            }
-    //            else if(x == maxCellsX - 1){
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - 1));
-    //                tmp->setNeighbor(mCells.at(2 * tmp->getIndex() - 1));
-    //                tmp->setNeighbor(mCells.at(2 * tmp->getIndex()));
-    //            }
-    //            else{
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - 1));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() + 1));
-    //                tmp->setNeighbor(mCells.at(2 * tmp->getIndex() - 1));
-    //                tmp->setNeighbor(mCells.at(2 * tmp->getIndex()));
-    //                tmp->setNeighbor(mCells.at(2 * tmp->getIndex() + 1));
-    //            }
-    //        }
-    //        else if(y == maxCellsY - 1){
-    //            if(x == 0){
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() + 1));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX + 1));
-    //            }
-    //            else if(x == maxCellsX - 1){
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - 1));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX - 1));
-    //            }
-    //            else{
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - 1));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() + 1));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX - 1));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX + 1));
-    //            }
-    //        }
-    //        else{
-    //            if(x == 0){
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX + 1));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() + 1));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX + 1));
-    //            }
-    //            else if(x == maxCellsX - 1){
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX - 1));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - 1));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX - 1));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX));
-    //            }
-    //            else{
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX - 1));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX + 1));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() - 1));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() + 1));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX - 1));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX));
-    //                tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX + 1));
-    //            }
-    //        }
-    //    }
+    //for(i32 i = 0; i < mCells.size(); i++){
+    //    quadTree->assignNeighbors(mCells[i]);
     //}
+/* Calculate neighbors for each cell (faster version) */
+    for(i32 y = 0; y < maxCellsY; y++){
+        for(i32 x = 0; x < maxCellsX; x++){
+            Cell* tmp = mCells.at(maxCellsY * y + x);
+            if(y == 0){
+                if(x == 0){
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + 1));
+                    tmp->setNeighbor(mCells.at(maxCellsX));
+                    tmp->setNeighbor(mCells.at(maxCellsX + 1));
+                }
+                else if(x == maxCellsX - 1){
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - 1));
+                    tmp->setNeighbor(mCells.at(2 * tmp->getIndex() - 1));
+                    tmp->setNeighbor(mCells.at(2 * tmp->getIndex()));
+                }
+                else{
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + 1));
+                    tmp->setNeighbor(mCells.at(2 * tmp->getIndex() - 1));
+                    tmp->setNeighbor(mCells.at(2 * tmp->getIndex()));
+                    tmp->setNeighbor(mCells.at(2 * tmp->getIndex() + 1));
+                }
+            }
+            else if(y == maxCellsY - 1){
+                if(x == 0){
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX + 1));
+                }
+                else if(x == maxCellsX - 1){
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX - 1));
+                }
+                else{
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX - 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX + 1));
+                }
+            }
+            else{
+                if(x == 0){
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX + 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX + 1));
+                }
+                else if(x == maxCellsX - 1){
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX - 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX - 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX));
+                }
+                else{
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX - 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - maxCellsX + 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() - 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX - 1));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX));
+                    tmp->setNeighbor(mCells.at(tmp->getIndex() + maxCellsX + 1));
+                }
+            }
+        }
+    }
 /* Pre-calculate the distance between each cell and his neighbors */
     for(i32 j = 0; j < maxCells; j++){
         std::vector<Cell*> neighbors = mCells[j]->getNeighbors();
@@ -171,9 +167,9 @@ void WorldGeometry::Init(i32 _cellSize, i32 _mapX, i32 _mapY, i32 _quadDepth){
         for(i32 k = 0; k < size; k++){
             cellsDistance[j][k] = calculateDistance(mCells[j]->getPosition(), neighbors[k]->getPosition());
             /* Debug intended */
-            if(cellsDistance[j][k] == 0){
-                std::cout << "Weird stuff happens at init at: " << j << "," << k << "\n";
-            }
+            //if(cellsDistance[j][k] == 0){
+            //    std::cout << "Weird stuff happens at init at: " << j << "," << k << "\n";
+            //}
         }
     }
     
@@ -298,20 +294,17 @@ Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin, 
     return validCell;
 }
 Cell* WorldGeometry::positionToCell(Vector2<f32> position) const{
-    //std::cout << "Position: " << position.x << " , " << position.y << "\n";
     i32 idx = (i32)((maxCellsX) * position.x / mapAxis.x) + 
                 ((i32)((maxCellsY) * position.y / mapAxis.y) * maxCellsX);
 
     if(idx < 0 || idx > mCells.size()){
         return nullptr;
     }
-    //std::cout << "Indice de celula: " << idx << "\n";
     if (idx >= maxCells){
         idx = maxCells - 1;
     }
     
     Cell* tmp = mCells.at(idx); 
-    //std::cout << "Ye: " << tmp->getIndex() << "\n";
     
     return tmp;
 }
@@ -394,7 +387,7 @@ const Vector2<f32> WorldGeometry::getSquadPosition(i32 _size, i32 _index) const{
 // Line collision test (faster, but less precise)
 bool WorldGeometry::checkCollision(Vector2<f32> _orig, Vector2<f32> _end) const{
     // Test precision
-    const f32 speed(20.0f);
+    const f32 speed(10.0f);
     f32 totalDistance(0.0f);
     Vector2<f32> vectorOrig(_orig);
     Vector2<f32> vectorDirection(_end - _orig);
@@ -409,7 +402,7 @@ bool WorldGeometry::checkCollision(Vector2<f32> _orig, Vector2<f32> _end) const{
         
         // Iterate line collision
         while(totalDistance < vectorDistance){
-            //std::cout << "Check collision: " << totalDistance << "\n";
+            std::cout << "Check collision: " << totalDistance << "\n";
             vectorOrig += vectorDirection;
             totalDistance += speed;
             if(positionToCell(vectorOrig) != nullptr && positionToCell(vectorOrig)->isBlocked()){

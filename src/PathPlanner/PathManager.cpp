@@ -34,7 +34,7 @@ bool PathManager::createPathTo(Vector2<f32> targetPos){
     if(finalPath.back() != finalPos)
         finalPath.push_back(finalPos);
     
-    //smoothPath(finalPath);
+    smoothPath(finalPath);
     propietary->setPath(finalPath);
 
     return true;
