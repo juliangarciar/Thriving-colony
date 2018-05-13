@@ -77,8 +77,8 @@ class Window {
         i32 windowWidth;
         i32 windowHeight;
         
-        double dtThen;
-        double deltaTime;
+        f64 dtThen;
+        f64 deltaTime;
         i32 framerate;
 };
 

@@ -17,7 +17,7 @@ OBDTerrain::~OBDTerrain() {
 	octree = nullptr;
 }
 
-void OBDTerrain::generateTerrain(const char *path, float y_offset, float y_scale, int step){
+void OBDTerrain::generateTerrain(const char *path, f32 y_offset, f32 y_scale, int step){
 	// ToDo: revisar parametros
 	terrain = new TerTerrain();
 	terrain->setHeightsFromTexture(path, y_offset, y_scale, step);

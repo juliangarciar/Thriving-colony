@@ -61,7 +61,7 @@ class OBDTerrain : public OBDEntity {
 		 */
 		TMesh *getTerrainMesh();
 	private:
-		void generateTerrain(const char *path, float y_offset, float y_scale, int step);
+		void generateTerrain(const char *path, f32 y_offset, f32 y_scale, int step);
 
 		ResourceMesh mesh;
 		ResourceMaterial material;

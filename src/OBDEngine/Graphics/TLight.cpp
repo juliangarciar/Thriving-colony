@@ -24,7 +24,7 @@ void TLight::endDraw(){
 }
         
 void TLight::setColor(OBDColor c, f32 i){
-	glm::vec3 o = c.getRGB() * (float)i;
+	glm::vec3 o = c.getRGB() * (f32)i;
     components.intensity = glm::vec4(o, 1);
 }
 

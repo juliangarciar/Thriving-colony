@@ -79,8 +79,8 @@ void Window::setGUI(){
 }
 
 void Window::beginScene(){
-    double now = glfwGetTime();
-    deltaTime = (double)(now - dtThen); // Time in seconds
+    f64 now = glfwGetTime();
+    deltaTime = (f64)(now - dtThen); // Time in seconds
     dtThen = now;
 }
 
