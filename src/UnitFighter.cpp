@@ -4,7 +4,7 @@
 #include "GraphicEngine/Window.h"
 #include "IOEngine/Timer.h"
 
-UnitFighter::UnitFighter(SceneNode* _parent, i32 _id, std::string _path, f32 _speed):speed(_speed), maxDesviation(_speed * 0.1f), maxTime(0), unitFighterClock(nullptr){
+UnitFighter::UnitFighter(SceneNode* _parent, i32 _id, std::string _path, f32 _speed):speed(_speed), maxDesviation(_speed * 0.5f), maxTime(0), unitFighterClock(nullptr){
     fighterModel = new Model(_parent, _id, _path);
     vectorPosition = Vector2<f32>(0, 0);
     vectorSpeed = Vector2<f32>(0, 0);
@@ -28,7 +28,7 @@ void UnitFighter::setDestiny(Vector2<f32> _dest){
     vectorDestiny = _dest;
     Vector2<f32> vectorDistance = (vectorDestiny - vectorPosition);
     maxTime = (std::sqrt(std::pow(vectorDistance.x, 2) + std::pow(vectorDistance.y, 2))) / speed * 0.016f ;
-    maxTime += 0.01f * maxTime;
+    maxTime += 0.1f * maxTime;
     unitFighterClock->changeDuration(maxTime);
     unitFighterClock->restart();
 
@@ -52,9 +52,7 @@ void UnitFighter::move(){
 /* Check this method */
 void UnitFighter::update(){
     if(isMoving){
-        //std::cout << "Im a fighter and im movin \n";
         //nearFighters = _nearFighters;
-        //std::cout << "Unitfighters count: " << nearFighters.size() << "\n";
         move();
     }
 }

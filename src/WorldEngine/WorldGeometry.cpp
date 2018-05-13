@@ -21,59 +21,29 @@ WorldGeometry* WorldGeometry::Instance(){
     }
     return pinstance;
 }
-WorldGeometry::WorldGeometry(){
+WorldGeometry::WorldGeometry():maxGameUnits(10){
 /* Calculates the maximun N cells and reserve memory */
     i32 n = (MAP * MAP) / (CELL * CELL);
     mCells = std::vector< Cell* >(n);
     cellsDistance = std::vector< std::vector<f32> >(n);
     quadTree = nullptr;
-    // Suciedad maxima pero esta guapo en realidad
-    squadPosition = std::vector< std::vector< Vector2<f32> > >(8);
-    squadPosition[0] = std::vector< Vector2<f32> >(1);
-    squadPosition[0][0] = Vector2<f32>(0, 0);
-    squadPosition[1] = std::vector< Vector2<f32> >(2);
-    squadPosition[1][0] = Vector2<f32>(-20, 0);
-    squadPosition[1][1] = Vector2<f32>(20, 0);
-    squadPosition[2] = std::vector< Vector2<f32> >(3);
-    squadPosition[2][0] = Vector2<f32>(-20, 0);
-    squadPosition[2][1] = Vector2<f32>(0, 0);
-    squadPosition[2][2] = Vector2<f32>(20, 0);
-    squadPosition[3] = std::vector< Vector2<f32> >(4);
-    squadPosition[3][0] = Vector2<f32>(-20, 20);
-    squadPosition[3][1] = Vector2<f32>(20, 20);
-    squadPosition[3][2] = Vector2<f32>(-20, -20);
-    squadPosition[3][3] = Vector2<f32>(20, -20);
-    squadPosition[4] = std::vector< Vector2<f32> >(5);
-    squadPosition[4][0] = Vector2<f32>(-20, 20);
-    squadPosition[4][1] = Vector2<f32>(20, 20);
-    squadPosition[4][2] = Vector2<f32>(0, 0);
-    squadPosition[4][3] = Vector2<f32>(-20, -20);
-    squadPosition[4][4] = Vector2<f32>(20, -20);
-    squadPosition[5] = std::vector< Vector2<f32> >(6);
-    squadPosition[5][0] = Vector2<f32>(-30, 30);
-    squadPosition[5][1] = Vector2<f32>(0, 30);
-    squadPosition[5][2] = Vector2<f32>(30, 30);
-    squadPosition[5][3] = Vector2<f32>(-30, -30);
-    squadPosition[5][4] = Vector2<f32>(0, -30);
-    squadPosition[5][5] = Vector2<f32>(30, -30);
-    squadPosition[6] = std::vector< Vector2<f32> >(7);
-    squadPosition[6][0] = Vector2<f32>(-30, 30);
-    squadPosition[6][1] = Vector2<f32>(0, 30);
-    squadPosition[6][2] = Vector2<f32>(30, 30);
-    squadPosition[6][3] = Vector2<f32>(0, 0);
-    squadPosition[6][4] = Vector2<f32>(-30, -30);
-    squadPosition[6][5] = Vector2<f32>(0, -30);
-    squadPosition[6][6] = Vector2<f32>(30, -30);
-    squadPosition[7] = std::vector< Vector2<f32> >(8);
-    squadPosition[7][0] = Vector2<f32>(-30, 30);
-    squadPosition[7][1] = Vector2<f32>(0, 30);
-    squadPosition[7][2] = Vector2<f32>(30, 30);
-    squadPosition[7][3] = Vector2<f32>(-30, 0);
-    squadPosition[7][4] = Vector2<f32>(30, 0);
-    squadPosition[7][5] = Vector2<f32>(-30, -30);
-    squadPosition[7][6] = Vector2<f32>(0, -30);
-    squadPosition[7][7] = Vector2<f32>(30, -30);
-    // Fin de la jodida suciedad
+
+    squadPosition = std::vector< std::vector< Vector2<f32> > >(maxGameUnits);
+    f32 gradesPerUnit;
+    //const f32 PI = 3.14159265;
+    const f32 radious = CELL / 2;
+
+    for(i32 i = 0; i < maxGameUnits; i++){
+        squadPosition[i] = std::vector< Vector2<f32> >(i + 1);
+        for(std::size_t j = 0; j < squadPosition[i].size(); j++){
+            if(squadPosition[i].size() == 1)
+                squadPosition[i][j] = Vector2<f32>(0, 0);
+            else
+                gradesPerUnit = (360 / squadPosition[i].size()) * j * (PI / 180.0f);
+            
+            squadPosition[i][j] = Vector2<f32>(radious * std::cos(gradesPerUnit), radious * std::sin(gradesPerUnit)); 
+        }
+    }
 }
 WorldGeometry::~WorldGeometry(){
     mCells.clear();
@@ -378,4 +348,41 @@ const std::vector< std::vector<f32> >& WorldGeometry::getCellsDistance(){
 }
 const Vector2<f32> WorldGeometry::getSquadPosition(i32 _size, i32 _index) const{
     return squadPosition[_size][_index];
+}
+/* This is a fucking disaster */
+bool WorldGeometry::checkCollision(Vector2<f32> _orig, Vector2<f32> _end, f32 _halfsizeX, f32 _halfsizeY) const{
+    // Create the hitbox and the minimun distance to move
+    const f32 distanceMove = 40.0f;
+    Box2D hitBox(_halfsizeX, _halfsizeY);
+    hitBox.moveHitbox(_orig);
+
+    // Create vectorDir and the vectorOrigen which will save the actual position
+    Vector2<f32> vectorDir(_end - _orig);
+    Vector2<f32> vectorOrigen(_orig);
+
+    // Get the distance between both points and calculate the num of steps
+    f32 length = std::sqrt(std::pow(vectorDir.x, 2) + std::pow(vectorDir.y, 2));
+    f32 stepsBrute = length / distanceMove;
+    f32 steps = std::floor(stepsBrute);
+    stepsBrute -= steps;
+
+    // Calculate the vectorDir and multiples by the 'speed'
+    vectorDir = vectorDir / length;
+    vectorDir = vectorDir * distanceMove;
+
+    for(i32 i = 0; i < steps; i++){
+        vectorOrigen += vectorDir;
+        hitBox.moveHitbox(vectorOrigen);
+        std::cout << "Posicion hitbox: " << vectorOrigen.x << " , " << vectorOrigen.y << "\n";
+        if(quadTree->canBuild(hitBox)){
+            return true;
+        }
+    }
+    // Last steps
+    vectorOrigen += vectorDir * stepsBrute;
+    if(quadTree->canBuild(hitBox)){
+        return true;
+    }
+
+    return false;
 }

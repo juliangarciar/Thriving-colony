@@ -24,7 +24,7 @@
 				"modelPath": "media/unitModels/Flags/Drorania/flag.obj",
 				"texturePath": "media/textures/placeholder.bmp"
 			},
-			"troops": 8
+			"troops": 6
 		},
 		{
 			"unitName": "AdvancedR",

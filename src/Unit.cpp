@@ -52,7 +52,7 @@ Unit::Unit(SceneNode* _layer,
                         moveEvent(baseData.moveEvent),
                         selectEvent(baseData.selectEvent),
                         unitFighters(baseData.troops, nullptr),
-                        maxPositionDesviation(baseData.moveSpeed * 0.1f) ,
+                        maxPositionDesviation(baseData.moveSpeed * 0.5f) ,
                         unitFighterHP(baseData.maxHP / baseData.troops)        
 {
     lookForTargetTimer = new Timer (0.5, true);
@@ -510,6 +510,7 @@ void Unit::takeDamage(i32 _damage){
     while(_qnty != unitFighters.size()){
         delete unitFighters[unitFighters.size() - 1];
         unitFighters.erase(unitFighters.end());
+        std::cout << "An unitFighter has died \n";
     }
     tookDamageTimer -> restart();
     // Tint the model red

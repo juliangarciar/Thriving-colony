@@ -17,6 +17,9 @@ Box2D::Box2D(Vector2<f32> tl, Vector2<f32> br){
     m_vBottomLeft.x = tl.x;
     m_vBottomLeft.y = br.y;
 }
+//Box2D::Box2D(Vector2<f32> _pos, f32 halfsize){
+//    
+//}
 void Box2D::moveHitbox(f32 x, f32 y){
     m_vCenter.x = x;
     m_vCenter.y = y;
@@ -34,6 +37,21 @@ void Box2D::moveHitbox(f32 x, f32 y){
     m_vBottomRight.y = m_vBottomLeft.y;
 
     //std::cout << "HalfSizeX: " << halfSizeX << " HalfSizeY: " << halfSizeY << "\n"; 
+}
+void Box2D::moveHitbox(Vector2<f32> _vectorPos){
+    m_vCenter = _vectorPos;
+
+    m_vTopLeft.x = _vectorPos.x - halfSizeX;
+    m_vTopLeft.y = _vectorPos.y - halfSizeY;
+
+    m_vTopRight.x = _vectorPos.x + halfSizeX;
+    m_vTopRight.y = m_vTopLeft.y;
+
+    m_vBottomLeft.x = m_vTopLeft.x;
+    m_vBottomLeft.y = _vectorPos.y + halfSizeY;
+
+    m_vBottomRight.x = m_vTopRight.x;
+    m_vBottomRight.y = m_vBottomLeft.y;
 }
 /* TODO: Check this method, maybe is missfunctional */
 bool Box2D::isOverlappedWith(Box2D other){

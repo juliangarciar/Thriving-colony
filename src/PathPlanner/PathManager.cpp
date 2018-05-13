@@ -11,17 +11,54 @@ PathManager::~PathManager(){
     
 }
 bool PathManager::createPathTo(Vector2<f32> targetPos){
-    Cell* origin = WorldGeometry::Instance()->positionToCell(propietary->getPosition());
+    Vector2<f32> initPos(propietary->getPosition());
+    Vector2<f32> finalPos(0, 0);
+
+    Cell* origin = WorldGeometry::Instance()->positionToCell(initPos);
     Cell* end = WorldGeometry::Instance()->positionToCell(targetPos);
+
     if(end->isBlocked()){
         end = WorldGeometry::Instance()->getValidCell(end, origin, nullptr);
+        finalPos = end->getPosition();
     }
-    //AStar* astar = new AStar(origin, end);
+    else{
+        finalPos = targetPos;
+    }
 
-    //astar->Search();
-    std::list< Vector2<f32> > tmp;
-    tmp.push_back(end->getPosition());
-    //propietary->setPath(astar->getPath());
-    propietary->setPath(tmp);
+    AStar* astar = new AStar(origin, end);
+    astar->Search();
+    std::list< Vector2<f32> > finalPath = astar->getPath();
+
+    
+    finalPath.push_front(initPos);
+    if(finalPath.back() != finalPos)
+        finalPath.push_back(finalPos);
+    
+    smoothPath(finalPath);
+    propietary->setPath(finalPath);
+
     return true;
+}
+
+void PathManager::smoothPath(std::list< Vector2<f32> >& _path){
+    std::list< Vector2<f32> >::iterator v1(_path.begin()), 
+                                        v2(_path.begin()),
+                                        v3(_path.begin());
+    v2++;
+    v3++;
+    v3++;
+
+    while(v2 != _path.end()){
+        //std::cout << "Smooth \n";
+        if(!WorldGeometry::Instance()->checkCollision(*v1, *v3)){
+            v2 = _path.erase(v2);
+            v3++;
+            //std::cout << "Eliminado \n";
+        }
+        else{
+            v1 = v2;
+            v2++;
+            v3++;
+        }
+    }
 }

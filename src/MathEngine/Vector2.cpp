@@ -92,6 +92,14 @@ Vector2<T> Vector2<T>::operator += (const Vector2<T> &p){
     this->y = this->y + p.y;
     return *this;
 }
+template <class T>
+bool Vector2<T>::operator ==(const Vector2<T> &p){
+    return (this->x == p.x && this->y == p.y);
+}
+template <class T>
+bool Vector2<T>::operator !=(const Vector2<T> &p){
+    return (this->x != p.x || this->y != p.y);
+}
 /*
 /////////////////////////////////////////IRRLICHT////////////////////////////////////////
 template <class T>

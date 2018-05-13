@@ -34,8 +34,10 @@ class Box2D
         Box2D(f32 sizeX, f32 sizeY);
     // Constructor
         Box2D(Vector2<f32> tl, Vector2<f32> br);
+        //Box2D(Vector2<f32> _pos, f32 halfsize);
     /* Move hitbox */
         void moveHitbox(f32 x, f32 y);
+        void moveHitbox(Vector2<f32> _vectorPos);
     // Getters
         Vector2<f32> TopLeft();
         Vector2<f32> BottomRight();
