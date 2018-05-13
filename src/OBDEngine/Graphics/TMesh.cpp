@@ -10,7 +10,7 @@ TMesh::TMesh(ResourceMesh r, ResourceMaterial m) : TEntity() {
 
 	modelMatrix = glm::mat4(1.0f);
 
-	for (int i = 0; i < OBDEnums::TextureTypes::TEXTURE_SIZE; i++){
+	for (i32 i = 0; i < OBDEnums::TextureTypes::TEXTURE_SIZE; i++){
 		textures.push_back(nullptr);
 	}
 
@@ -97,7 +97,7 @@ void TMesh::beginDraw() {
 	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslTexture), &activeTextures);
 	glBindBufferBase(GL_UNIFORM_BUFFER, 3, textureID);
 
-	int loadedTextures = 0;
+	i32 loadedTextures = 0;
 
 	if (activeTextures.diffuseTexture == 1){
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
@@ -181,8 +181,8 @@ void TMesh::setMaterial(ResourceMaterial m){
 }
 
 void TMesh::setTexture(OBDEnums::TextureTypes tt, TTexture* t){
-	if (textures[(int)tt] != nullptr) delete textures[(int)tt];
-	textures[(int)tt] = t;
+	if (textures[(i32)tt] != nullptr) delete textures[(i32)tt];
+	textures[(i32)tt] = t;
 	switch(tt){
 		case OBDEnums::TextureTypes::TEXTURE_DIFFUSE:
 			activeTextures.diffuseTexture = 1;

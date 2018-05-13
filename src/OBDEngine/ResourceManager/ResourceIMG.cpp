@@ -39,14 +39,14 @@ unsigned char *ResourceIMG::getResource(){
     return resource;
 }
 
-int ResourceIMG::getWidth(){ 
+i32 ResourceIMG::getWidth(){ 
     return width;
 }
 
-int ResourceIMG::getHeight(){
+i32 ResourceIMG::getHeight(){
     return height;
 }
 
-int ResourceIMG::getChannels(){
+i32 ResourceIMG::getChannels(){
     return channels;
 }

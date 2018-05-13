@@ -17,16 +17,16 @@ OBDTerrain::~OBDTerrain() {
 	octree = nullptr;
 }
 
-void OBDTerrain::generateTerrain(const char *path, f32 y_offset, f32 y_scale, int step){
+void OBDTerrain::generateTerrain(const char *path, f32 y_offset, f32 y_scale, i32 step){
 	// ToDo: revisar parametros
 	terrain = new TerTerrain();
 	terrain->setHeightsFromTexture(path, y_offset, y_scale, step);
 	terrain->buildMesh();
 
 	//Mesh
-	int w = terrain->width;
-	int h = terrain->height;
-	int d = terrain->depth;
+	i32 w = terrain->width;
+	i32 h = terrain->height;
+	i32 d = terrain->depth;
 
 	mesh.aabbMin = glm::vec3(0, y_offset, 0);
 	mesh.aabbMax = glm::vec3(w, y_offset + h, d);
@@ -80,8 +80,8 @@ f32 OBDTerrain::getY(f32 x, f32 z){
 glm::vec3 OBDTerrain::getRayCollision(OBDLine line){
 
 	/*std::cout << "----------" << std::endl;
-	for (int i = 0; i < 4; i++){
-		for (int j = 0; j < 4; j++){
+	for (i32 i = 0; i < 4; i++){
+		for (i32 j = 0; j < 4; j++){
 			std::cout << inverse_model_matrix[i][j] << " ";
 		}
 		std::cout << std::endl;

@@ -2,7 +2,7 @@
 
 TShader::TShader(ResourceGLSL *s){
     GLint shaderResult = GL_FALSE;
-    int shaderInfoLogLength;
+    i32 shaderInfoLogLength;
 
     // Read the shader Shader code from the file
     if (s->getShaderType() == OBDEnums::ShaderType::VERTEX){

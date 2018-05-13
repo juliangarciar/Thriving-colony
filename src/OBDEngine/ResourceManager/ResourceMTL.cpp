@@ -26,7 +26,7 @@ void ResourceMTL::load(const char *path){
 	size_t last = p.rfind("/");
 	std::string ret = p.substr(0,last+1);
 
-    for (int i = 0; i < loader.LoadedMaterials.size(); i++) {
+    for (i32 i = 0; i < loader.LoadedMaterials.size(); i++) {
         // Copy one of the loaded meshes to be our current mesh
         mtl_objl::Material curMat = loader.LoadedMaterials[i];
 

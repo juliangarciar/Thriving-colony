@@ -1,7 +1,7 @@
 #include "TCache.h"
 
 TCache::TCache() {
-    for (int i = 0; i < (int)OBDEnums::OpenGLIDs::PARAMS; i++){
+    for (i32 i = 0; i < (i32)OBDEnums::OpenGLIDs::PARAMS; i++){
         parameterIDs.push_back(0);
     }
     lights = new std::vector<glslLight>();
@@ -49,11 +49,11 @@ void TCache::setAllIDs(std::vector<GLuint> v){
 }
 
 void TCache::setID(OBDEnums::OpenGLIDs s, GLuint i){
-    parameterIDs[(int)s] = i;
+    parameterIDs[(i32)s] = i;
 }
 
 GLuint TCache::getID(OBDEnums::OpenGLIDs s){
-    return parameterIDs[(int)s];
+    return parameterIDs[(i32)s];
 }
 
 void TCache::setViewMatrix(glm::mat4 m){
