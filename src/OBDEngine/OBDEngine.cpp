@@ -138,6 +138,12 @@ OBDTile* OBDEngine::createTile(ResourceIMG* _texture, glm::vec2 _position){
     return tmp;
 }
 
+OBDSkybox* OBDEngine::createSkybox(TTexture* texture) {
+    OBDSkybox* skybox = new OBDSkybox(texture);
+    defaultSceneNode -> addChild(skybox);
+    return skybox;
+}
+
 /////////////////
 
 void OBDEngine::registerLight(OBDLight* lightNode) {

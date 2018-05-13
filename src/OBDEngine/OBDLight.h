@@ -154,6 +154,13 @@ class OBDLight : public OBDEntity {
          * @return TNode* 
          */
         TNode *getFirstNode();
+
+        /**
+         * @brief Set the Type object
+         * 
+         * @param newType 
+         */
+        void setType(OBDEnums::LightTypes newType);
     private:
         TNode* lightNode;
 

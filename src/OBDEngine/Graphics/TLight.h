@@ -70,8 +70,14 @@ class TLight : public TEntity {
          * @return glm::vec3 
          */
         glm::vec3 getPosition();
+
+        /**
+         * @brief Set the Type object
+         * 
+         * @param newType 
+         */
+        void setType(OBDEnums::LightTypes newType);
     private:
-        OBDEnums::LightTypes lightType;
 
         glslLight components;
 
