@@ -11,7 +11,6 @@ class Texture {
         ~Texture();
         
         OBDTexture *getTexture();
-        
     private:
 		OBDTexture *texture;
 };

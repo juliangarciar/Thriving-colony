@@ -12,7 +12,7 @@ CameraController::CameraController() {
 
 	//Camera 
     camera = new Camera();
-    camera -> setShadowDistance(42000.f);
+    camera -> setFarValue(42000.f);
 
 	// Helper initializations
 	recipsqrt2 = 1.0 / sqrt(2);

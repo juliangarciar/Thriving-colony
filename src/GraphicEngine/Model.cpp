@@ -19,10 +19,6 @@ void Model::setID(i32 id) {
     
 }
 
-void Model::setName(const char *name) {
-   
-}
-
 void Model::setPosition(Vector3<f32> pos) {
 	if (pos.z > 0) pos.z *= -1;
     obj->setPosition(glm::vec3(pos.x, pos.y, pos.z));
@@ -30,14 +26,14 @@ void Model::setPosition(Vector3<f32> pos) {
 	obj->refreshBoundingBox();
 }
 
-void Model::setScale(Vector3<f32> s) {
-    obj->setScale(glm::vec3(s.x, s.y, s.z));
-	obj->refreshModelMatrix(glm::mat4(1.0f));
+void Model::setRotation(Vector3<f32> r) {
+	obj->setRotation(glm::vec3(r.x, r.y, r.z));
 	obj->refreshBoundingBox();
 }
 
-void Model::rotate(f32 x, f32 y){
-	obj->setRotation(glm::vec3(x, 0, y));
+void Model::setScale(Vector3<f32> s) {
+    obj->setScale(glm::vec3(s.x, s.y, s.z));
+	obj->refreshModelMatrix(glm::mat4(1.0f));
 	obj->refreshBoundingBox();
 }
 
