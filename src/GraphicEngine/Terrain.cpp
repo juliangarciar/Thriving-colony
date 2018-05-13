@@ -3,7 +3,7 @@
 
 //ToDo: no deberian haber datos aqui
 Terrain::Terrain(const char* heightMap) {
-	t = Window::Instance()->getEngine()->createTerrain(heightMap);
+	t = Window::Instance()->getEngine()->createTerrain(heightMap, 1, 100, 1);
 	t->rotate(glm::vec3(0, 1, 0), 180);
 	t->translate(glm::vec3(256, 0, 0));
 	t->refreshModelMatrix(glm::mat4(1.0f));

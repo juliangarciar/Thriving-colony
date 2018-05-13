@@ -122,12 +122,12 @@ OBDShaderProgram *OBDEngine::createShaderProgram(std::string programName, std::s
     return p;
 }
 
-OBDTerrain *OBDEngine::createTerrain(std::string heightMap){
-	return new OBDTerrain(defaultSceneNode, heightMap);
+OBDTerrain *OBDEngine::createTerrain(std::string heightMap, f32 y_offset, f32 y_scale, i32 step){
+	return new OBDTerrain(defaultSceneNode, heightMap, y_offset, y_scale, step);
 }
 
-OBDTerrain *OBDEngine::createTerrain(OBDSceneNode* layer, std::string heightMap){
-	return new OBDTerrain(layer, heightMap);
+OBDTerrain *OBDEngine::createTerrain(OBDSceneNode* layer, std::string heightMap, f32 y_offset, f32 y_scale, i32 step){
+	return new OBDTerrain(layer, heightMap, y_offset, y_scale, step);
 }
 
 OBDTexture *OBDEngine::createTexture(OBDEnums::TextureTypes t, std::string fs){

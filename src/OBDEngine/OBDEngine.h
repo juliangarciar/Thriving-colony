@@ -120,14 +120,14 @@ class OBDEngine {
 		 * @param terrain path
 		 * @return OBDTerrain* 
 		 */
-		OBDTerrain *createTerrain(std::string);
+		OBDTerrain *createTerrain(std::string, f32 y_offset, f32 y_scale, i32 step);
 
 		/**
 		 * @brief Create a Terrain object
 		 * @param terrain path
 		 * @return OBDTerrain* 
 		 */
-		OBDTerrain *createTerrain(OBDSceneNode*, std::string);
+		OBDTerrain *createTerrain(OBDSceneNode*, std::string, f32 y_offset, f32 y_scale, i32 step);
 
 		/**
 		 * @brief Create a Texture object

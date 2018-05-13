@@ -23,7 +23,7 @@ class OBDTerrain : public OBDEntity {
 		 * @param  
 		 * @param 
 		 */
-		OBDTerrain(OBDSceneNode*, std::string);
+		OBDTerrain(OBDSceneNode*, std::string, f32 y_offset, f32 y_scale, i32 step);
 
 		/**
 		 * @brief 

@@ -2,9 +2,9 @@
 
 #define EPSILON 0.0005
 
-OBDTerrain::OBDTerrain(OBDSceneNode* parent, std::string path) : OBDEntity(parent) {
+OBDTerrain::OBDTerrain(OBDSceneNode* parent, std::string path, f32 y_offset, f32 y_scale, i32 step) : OBDEntity(parent) {
 	//Generate mesh and material
-	generateTerrain(path.c_str(), 0, 100, 1);
+	generateTerrain(path.c_str(), y_offset, y_scale, step);
 
 	terrainNode = new TNode(new TMesh(mesh, material), scaleNode);
 }
