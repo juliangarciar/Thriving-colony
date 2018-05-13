@@ -298,7 +298,7 @@ Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin, 
     }
     return validCell;
 }
-Cell* WorldGeometry::positionToCell(Vector2<f32> position){
+Cell* WorldGeometry::positionToCell(Vector2<f32> position) const{
     int dummy = (i32)((MAP / CELL) * position.x / MAP) + 
                 ((i32)((MAP / CELL) * position.y / MAP) * (MAP / CELL));
     if(dummy < 0 || dummy > mCells.size()){
@@ -349,40 +349,58 @@ const std::vector< std::vector<f32> >& WorldGeometry::getCellsDistance(){
 const Vector2<f32> WorldGeometry::getSquadPosition(i32 _size, i32 _index) const{
     return squadPosition[_size][_index];
 }
-/* This is a fucking disaster */
-bool WorldGeometry::checkCollision(Vector2<f32> _orig, Vector2<f32> _end, f32 _halfsizeX, f32 _halfsizeY) const{
-    // Create the hitbox and the minimun distance to move
-    const f32 distanceMove = 40.0f;
-    Box2D hitBox(_halfsizeX, _halfsizeY);
-    hitBox.moveHitbox(_orig);
-
-    // Create vectorDir and the vectorOrigen which will save the actual position
-    Vector2<f32> vectorDir(_end - _orig);
-    Vector2<f32> vectorOrigen(_orig);
-
-    // Get the distance between both points and calculate the num of steps
-    f32 length = std::sqrt(std::pow(vectorDir.x, 2) + std::pow(vectorDir.y, 2));
-    f32 stepsBrute = length / distanceMove;
-    f32 steps = std::floor(stepsBrute);
-    stepsBrute -= steps;
-
-    // Calculate the vectorDir and multiples by the 'speed'
-    vectorDir = vectorDir / length;
-    vectorDir = vectorDir * distanceMove;
-
-    for(i32 i = 0; i < steps; i++){
-        vectorOrigen += vectorDir;
-        hitBox.moveHitbox(vectorOrigen);
-        std::cout << "Posicion hitbox: " << vectorOrigen.x << " , " << vectorOrigen.y << "\n";
-        if(quadTree->canBuild(hitBox)){
+/* This is a fucking disaster, but works more or less */
+//bool WorldGeometry::checkCollision(Vector2<f32> _orig, Vector2<f32> _end, f32 _halfsizeX, f32 _halfsizeY) const{
+//    // Create the hitbox and the minimun distance to move
+//    const f32 distanceMove = 40.0f;
+//    Box2D hitBox(_halfsizeX, _halfsizeY);
+//    hitBox.moveHitbox(_orig);
+//
+//    // Create vectorDir and the vectorOrigen which will save the actual position
+//    Vector2<f32> vectorDir(_end - _orig);
+//    Vector2<f32> vectorOrigen(_orig);
+//
+//    // Get the distance between both points and calculate the num of steps
+//    f32 length = std::sqrt(std::pow(vectorDir.x, 2) + std::pow(vectorDir.y, 2));
+//    f32 stepsBrute = length / distanceMove;
+//    f32 steps = std::floor(stepsBrute);
+//    stepsBrute -= steps;
+//
+//    // Calculate the vectorDir and multiples by the 'speed'
+//    vectorDir = vectorDir / length;
+//    vectorDir = vectorDir * distanceMove;
+//
+//    for(i32 i = 0; i < steps; i++){
+//        vectorOrigen += vectorDir;
+//        hitBox.moveHitbox(vectorOrigen);
+//        std::cout << "Posicion hitbox: " << vectorOrigen.x << " , " << vectorOrigen.y << "\n";
+//        if(quadTree->canBuild(hitBox)){
+//            return true;
+//        }
+//    }
+//    // Last steps
+//    vectorOrigen += vectorDir * stepsBrute;
+//    if(quadTree->canBuild(hitBox)){
+//        return true;
+//    }
+//
+//    return false;
+//}
+// Mas sidoso pero hiper rapido
+bool WorldGeometry::checkCollision(Vector2<f32> _orig, Vector2<f32> _end) const{
+    Vector2<f32> vectorOrig(_orig);
+    Vector2<f32> vectorDirection(_end - _orig);
+    f32 vectorDistance(std::sqrt(std::pow(vectorDirection.x, 2) + std::pow(vectorDirection.y, 2)));
+    const f32 speed(20.0f);
+    f32 totalDistance(0.0f);
+    // Normalize vector and multiplies for speed
+    vectorDirection = (vectorDirection / vectorDistance) * speed;
+    while(totalDistance < vectorDistance){
+        vectorOrig += vectorDirection;
+        totalDistance += speed;
+        if(positionToCell(vectorOrig) != nullptr && positionToCell(vectorOrig)->isBlocked()){
             return true;
         }
     }
-    // Last steps
-    vectorOrigen += vectorDir * stepsBrute;
-    if(quadTree->canBuild(hitBox)){
-        return true;
-    }
-
     return false;
 }

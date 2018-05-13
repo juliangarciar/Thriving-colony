@@ -19,9 +19,11 @@ Cell::~Cell(){
 }
 void Cell::setInhabitingBuilding(Building* buildingPtr){
     inhabitingBuilding = buildingPtr;
+    blocked = true;
 }
 void Cell::clearInhabitingBuilding(){
     inhabitingBuilding = nullptr;
+    blocked = false;
 }
 void Cell::setInhabitingUnit(Unit* unitPtr){
     inhabitingUnits.push_back(unitPtr);

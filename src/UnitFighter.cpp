@@ -102,7 +102,7 @@ Vector2<f32> UnitFighter::calculateFlocking(){
                 /* Cohesion */
                 cohesion += other;
                 /* Separation */
-                separation += other - vectorPosition;
+                separation += (other - vectorPosition);
                 /* Count */
                 k++;
             }
@@ -115,35 +115,47 @@ Vector2<f32> UnitFighter::calculateFlocking(){
 
     /* Alignment */
     alignment = alignment / k;
-    distance = std::sqrt(std::pow(alignment.x, 2) + 
-                         std::pow(alignment.y, 2));
 
-    if(alignment.x != 0 && alignment.y != 0){
+    if(alignment.x != 0 || alignment.y != 0){
+        distance = std::sqrt(std::pow(alignment.x, 2) + 
+                             std::pow(alignment.y, 2));
+
         alignment = alignment / distance;
     }
 
     /* Cohesion */
     cohesion = cohesion / k;
     cohesion = cohesion - vectorPosition;
-    distance = std::sqrt(std::pow(cohesion.x, 2) +
-                         std::pow(cohesion.y, 2));
 
-    cohesion = cohesion / distance;
+    if(cohesion.x != 0 || cohesion.y != 0){
+        distance = std::sqrt(std::pow(cohesion.x, 2) +
+                             std::pow(cohesion.y, 2));
+
+        cohesion = cohesion / distance;
+    }
+    
     
     /* Separation */
     separation = (separation * (-1)) / k;
-    distance = std::sqrt(std::pow(separation.x, 2) +
-                         std::pow(separation.y, 2));
+
+    if(separation.x != 0 || separation.y != 0){
+        distance = std::sqrt(std::pow(separation.x, 2) +
+                            std::pow(separation.y, 2));
     
-    separation = separation / distance;
+        separation = separation / distance;
+    }
+    
 
     flock = alignment * 1.1f + cohesion * 1.0f + separation * 1.1f;
 
-    /* Normalize */
-    distance = std::sqrt(std::pow(flock.x, 2) + 
-                         std::pow(flock.y, 2));
+    /* Normalize Flock */
+    if(flock.x != 0 || flock.y != 0){
+        distance = std::sqrt(std::pow(flock.x, 2) + 
+                             std::pow(flock.y, 2));
     
-    flock = flock / distance;
+        flock = flock / distance;
+    }
+    
 
     return flock;
 }
@@ -158,10 +170,12 @@ void UnitFighter::calculateDirection(){
         vectorDirection += calculateFlocking();
         
         /* Normalize */
-        distance = std::sqrt(std::pow(vectorDirection.x, 2) + 
+        if(vectorDirection.x != 0 || vectorDirection.y != 0){
+            distance = std::sqrt(std::pow(vectorDirection.x, 2) + 
                              std::pow(vectorDirection.y, 2));
 
-        vectorDirection = vectorDirection / distance;    
+            vectorDirection = vectorDirection / distance;   
+        }
     }   
     else{
         vectorDirection = Vector2<f32>(0, 0);

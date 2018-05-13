@@ -157,10 +157,6 @@ void Unit::update() {
         unitFighters[i]->setNearFighters(nearUnitFighters);
         unitFighters[i]->update();
     }
-
-    //for(std::size_t i = 0; i < unitFighters.size(); i++){
-    //    unitFighters[i]->update();
-    //}
 }
 
 void Unit::preTaxPlayer() {
@@ -254,7 +250,6 @@ void Unit::retractState() {
 }
 
 void Unit::moveTroop() {
-
     if (moving) {
         // close to destination, stop
         if (hasArrived()) {
