@@ -20,7 +20,7 @@ class TMesh : public TEntity {
          * @brief 
          * 
          */
-        virtual ~TMesh();
+        ~TMesh();
 
         /**
          * @brief 

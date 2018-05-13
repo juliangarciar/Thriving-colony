@@ -24,8 +24,6 @@ class Terrain{
         /*scene::ITerrainSceneNode* getTerrain();*/
     private:
        OBDTerrain *t;
-
-	   f32 yscale;
 };
 
 #endif

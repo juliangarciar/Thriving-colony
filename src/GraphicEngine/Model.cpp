@@ -37,8 +37,7 @@ void Model::setScale(Vector3<f32> s) {
 }
 
 void Model::rotate(f32 x, f32 y){
-    double param = atan(y / x) * 180 / PI;
-
+	obj->setRotation(glm::vec3(x, 0, y));
 	obj->refreshBoundingBox();
 }
 

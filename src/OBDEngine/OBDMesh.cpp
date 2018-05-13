@@ -13,7 +13,7 @@ OBDMesh::OBDMesh(u32 id, ResourceMesh m, ResourceMaterial mat) : OBDEntity() {
 	refreshBoundingBox();
 }
 
-OBDMesh::OBDMesh(OBDSceneNode* p, u32 id, ResourceMesh m, ResourceMaterial mat) : OBDEntity(parent) {
+OBDMesh::OBDMesh(OBDSceneNode* p, u32 id, ResourceMesh m, ResourceMaterial mat) : OBDEntity(p) {
     meshNode = new TNode(new TMesh(m, mat), scaleNode);
 
     mesh = m;
@@ -60,7 +60,6 @@ void OBDMesh::loadTextures(ResourceManager *r, bool sync){
 }
 
 void OBDMesh::refreshBoundingBox(){
-    TMesh* m = (TMesh*) meshNode -> getEntity();
 	glm::vec4 mmin = model_matrix * glm::vec4(mesh.aabbMin, 1);
 	glm::vec4 mmax = model_matrix * glm::vec4(mesh.aabbMax, 1);
 

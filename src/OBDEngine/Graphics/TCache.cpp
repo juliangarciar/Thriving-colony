@@ -1,13 +1,11 @@
 #include "TCache.h"
 
 TCache::TCache() {
-    glm::mat4 identityMatrix = glm::mat4(1.0f);
     for (int i = 0; i < (int)OBDEnums::OpenGLIDs::PARAMS; i++){
         parameterIDs.push_back(0);
     }
     lights = new std::vector<glslLight>();
 	matrixStack.push(glm::mat4(1.0f));
-
 }
 
 TCache::~TCache() {

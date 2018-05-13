@@ -98,6 +98,7 @@ Enumeration::BehaviourState CBuild::Update() {
                     return Enumeration::BehaviourState::Failure;
                 }
         }
+		return Enumeration::BehaviourState::Failure;
     } else {
         actionToDo();
         return Enumeration::BehaviourState::Success;

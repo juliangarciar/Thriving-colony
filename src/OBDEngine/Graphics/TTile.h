@@ -10,7 +10,7 @@ class TTile : public TEntity{
     public:
         TTile();
         TTile(ResourceIMG * _texture, glm::vec2 _position);
-        virtual ~TTile();
+        ~TTile();
         void beginDraw();
         void endDraw();
         void setTexture(ResourceIMG* _texture);

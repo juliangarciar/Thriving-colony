@@ -35,10 +35,9 @@ void Billboard::setScale(Vector3<f32> s) {
 }
 
 void Billboard::rotate(f32 x, f32 y){
-    double param = atan(y / x) * 180 / PI;
-    
     
 }
+
 void Billboard::setActive(bool a) {
     
 }
