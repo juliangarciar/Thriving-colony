@@ -229,7 +229,7 @@ Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin, 
     std::vector< Cell* > shortestPath = std::vector<Cell*>(MAX, nullptr);
     std::vector< Cell* > searchFrontier = std::vector<Cell*>(MAX, nullptr);
     /* Priority queue, that orders the weights of each iterated Cell */
-    IndexedPriorityQLow<float> pq(FCosts, MAX);
+    IndexedPriorityQLow<f32> pq(FCosts, MAX);
     pq.insert(sourceIndex);
     /* Algorithm start */ 
     while(!pq.empty()){
@@ -281,7 +281,7 @@ Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin, 
     return validCell;
 }
 Cell* WorldGeometry::positionToCell(Vector2<f32> position){
-    int dummy = (i32)((MAP / CELL) * position.x / MAP) + 
+    i32 dummy = (i32)((MAP / CELL) * position.x / MAP) + 
                 ((i32)((MAP / CELL) * position.y / MAP) * (MAP / CELL));
     if(dummy < 0 || dummy > mCells.size()){
         return nullptr;

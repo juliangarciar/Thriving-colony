@@ -267,7 +267,7 @@ void Unit::moveTroop() {
             
             //std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(newPos);
             //std::vector< Vector2<f32> > nearTroopsPosition;
-            //for(int i = 0; i < nearUnits.size(); i++){
+            //for(i32 i = 0; i < nearUnits.size(); i++){
             //    nearTroopsPosition.insert(nearTroopsPosition.end(), nearUnits[i]->getTroopsPosition().begin(), nearUnits[i]->getTroopsPosition().end());
             //}
             setPosition(newPos);

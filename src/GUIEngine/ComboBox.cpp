@@ -15,7 +15,7 @@ ComboBox::ComboBox(GUIElement *parent, std::vector<std::string> opts) {
 }
 
 ComboBox::~ComboBox() {
-    for (int i = 0; i < children.size(); i++){
+    for (i32 i = 0; i < children.size(); i++){
         //ToDo: eliminar hijos
     }
     //ToDo: eliminar este

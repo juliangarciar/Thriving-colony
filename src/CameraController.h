@@ -32,7 +32,7 @@ class CameraController {
 		* 
 		* @param Vector3 that will be the target position.
 		*/
-		void Init(Vector3<float>);
+		void Init(Vector3<f32>);
 
 		/**
 		* @brief Update target and camera position based on the changes done since the last update.

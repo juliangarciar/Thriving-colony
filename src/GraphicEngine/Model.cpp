@@ -17,7 +17,7 @@ Model::~Model() {
 }
 
 void Model::setID(i32 id) {
-    obj->setID(id);
+    //obj->setID(id);
 }
 
 void Model::setPosition(Vector3<f32> pos) {

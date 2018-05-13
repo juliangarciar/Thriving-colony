@@ -161,7 +161,7 @@ void UnitManager::updateUnitManager() {
             selectedTroop -> switchState(Enumeration::UnitState::Retract);
         }
     }
-    int i = 0;
+    i32 i = 0;
     for (std::map<i32,Unit*>::iterator it = inQueueTroops -> begin(); it != inQueueTroops -> end() && i < inQueueTroops->size(); ++it) {
         if (it -> second != nullptr) {
             it -> second -> update();

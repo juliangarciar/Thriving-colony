@@ -11,7 +11,7 @@ ProgressBar::ProgressBar(GUIElement *parent) {
 }
 
 ProgressBar::~ProgressBar() {
-    for (int i = 0; i < children.size(); i++){
+    for (i32 i = 0; i < children.size(); i++){
         //if (children[i] -> getGUIElement() -> getRefCount() > 1) children[i] -> getGUIElement() -> decRef();
     }
     //ToDo: eliminar este

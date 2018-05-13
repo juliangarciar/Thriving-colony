@@ -41,17 +41,17 @@ void Map::Init() {
     terrain = new Terrain(j["map"]["heightmap"].get<std::string>().c_str());
     //Set map texture
     terrain -> setTexture(new Texture(j["map"]["texture"].get<std::string>().c_str()), new Texture(j["map"]["detail_texture"].get<std::string>().c_str()));
-    terrain -> setSize(Vector3<f32>(j["map"]["size"]["x"].get<int>(), j["map"]["size"]["y"].get<int>(), j["map"]["size"]["z"].get<int>()));
+    terrain -> setSize(Vector3<f32>(j["map"]["size"]["x"].get<i32>(), j["map"]["size"]["y"].get<i32>(), j["map"]["size"]["z"].get<i32>()));
     
     loadProgress(20);
 
     //Luz
     for (auto& element : j["lights"]){
         Vector3<f32> lp;
-        lp.x = element["position"]["x"].get<int>();
-        lp.z = element["position"]["z"].get<int>();
-        lp.y = terrain -> getY(lp.x, lp.z) + element["height"].get<int>();
-        Light *light = new Light(lp, Color(1, 1, 1), element["intensity"].get<int>()); 
+        lp.x = element["position"]["x"].get<i32>();
+        lp.z = element["position"]["z"].get<i32>();
+        lp.y = terrain -> getY(lp.x, lp.z) + element["height"].get<i32>();
+        Light *light = new Light(lp, Color(1, 1, 1), element["intensity"].get<i32>()); 
         lights.push_back(light);
     }
 
@@ -113,8 +113,8 @@ void Map::Init() {
 
     //Init camera controller
     camera = new CameraController();
-    camera -> setZoomDistanceFromTarget(j["camera"]["zoomDistanceFromTarget"].get<int>());
-    camera -> setRotateDegrees(j["camera"]["delta_x"].get<int>(), j["camera"]["delta_y"].get<int>());
+    camera -> setZoomDistanceFromTarget(j["camera"]["zoomDistanceFromTarget"].get<i32>());
+    camera -> setRotateDegrees(j["camera"]["delta_x"].get<i32>(), j["camera"]["delta_y"].get<i32>());
     camera -> Init(Vector3<f32>(humanStartPos.x, terrain->getY(humanStartPos.x,humanStartPos.y), humanStartPos.y));
 
     loadProgress(100);
@@ -139,7 +139,7 @@ void Map::Render() {
 }
 
 void Map::CleanUp() {
-    for(int i=0; i<lights.size(); i++){
+    for(i32 i=0; i<lights.size(); i++){
         delete lights[i];
     }
     lights.clear();

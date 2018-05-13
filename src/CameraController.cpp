@@ -49,8 +49,8 @@ CameraController::CameraController() {
 	//ToDo: deberia actualizarse al redimensionar la pantalla
     screenCenter = Vector2<i32>(w->getInitialWindowWidth()/2, w->getInitialWindowHeight()/2);
 
-	int fractionsOfASecond = 50;
-	updateTimer = new Timer(1/fractionsOfASecond, true, false);
+	i32 framesPerSecond = 60;
+	updateTimer = new Timer(1/framesPerSecond, true, false);
 
 	updateTimer -> setCallback([&](){
         updateCamera(Window::Instance() -> getDeltaTime());
@@ -62,7 +62,7 @@ CameraController::~CameraController() {
 	delete updateTimer;
 }
 
-void CameraController::Init(Vector3<float> v){
+void CameraController::Init(Vector3<f32> v){
 	//Set camera and target positions
 	tarPos = v;
 	camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);

@@ -17,7 +17,7 @@ Panel::Panel(GUIElement *parent, std::string title) {
 }
 
 Panel::~Panel() {
-    for (int i = 0; i < children.size(); i++){
+    for (i32 i = 0; i < children.size(); i++){
         //if (children[i] != nullptr && children[i] -> getGUIElement() -> getRefCount() > 1) children[i] -> getGUIElement() -> decRef();
     }
     //ToDo: eliminar este

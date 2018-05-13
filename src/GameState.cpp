@@ -263,6 +263,6 @@ void GameState::cleanGamePaused() {
     if (g -> getIO() -> keyPressed(KEY_KEY_3)) {
         human -> receiveCitizens();
     }
-    Vector3<float> v = map -> getPointCollision(g -> getMouse());
+    Vector3<f32> v = map -> getPointCollision(g -> getMouse());
     human -> getUnitManager() -> UpdateUnitManager();
 */

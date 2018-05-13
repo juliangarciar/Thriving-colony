@@ -11,7 +11,7 @@ Label::Label(GUIElement *parent, std::string t) {
 }
 
 Label::~Label() {
-    for (int i = 0; i < children.size(); i++){
+    for (i32 i = 0; i < children.size(); i++){
         //ToDo: eliminar hijos
     }
     //ToDo: eliminar este

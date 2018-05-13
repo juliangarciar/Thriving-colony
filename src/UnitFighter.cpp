@@ -67,7 +67,7 @@ Vector2<f32> UnitFighter::calculateFlocking(){
     Vector2<f32> separation(0, 0);
     Vector2<f32> flock(0, 0);
     i32 k(0);
-    double distance(0);
+    f64 distance(0);
     Vector2<f32> other(0, 0);
     for(std::size_t i = 0; i < nearFighters.size(); i++){
         if(nearFighters[i] != this){
