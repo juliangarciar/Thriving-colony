@@ -1,8 +1,7 @@
 #include "OBDCamera.h"
 
-OBDCamera::OBDCamera(OBDSceneNode* parent, i32 sW, i32 sH) {
-    //ToDo: near, far y fov no deberian estar aqui
-    cameraNode = new TNode(new TCamera(OBDEnums::CameraProjection::ProjectionPerspective, 0.1, 1000, 0, sH, 0, sW, 45));
+OBDCamera::OBDCamera(OBDSceneNode* parent, i32 sW, i32 sH, f32 far, f32 fov) {
+    cameraNode = new TNode(new TCamera(OBDEnums::CameraProjection::ProjectionPerspective, 0.1, far, 0, sH, 0, sW, fov));
 
     parent->addChild(cameraNode);
 }

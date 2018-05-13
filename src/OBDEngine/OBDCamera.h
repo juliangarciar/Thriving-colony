@@ -16,7 +16,7 @@ class OBDCamera {
          * @param screenWidth
          * @param screenHeight
          */
-        OBDCamera(OBDSceneNode* parent, i32, i32);
+        OBDCamera(OBDSceneNode* parent, i32, i32, f32, f32);
 
         /**
          * @brief 

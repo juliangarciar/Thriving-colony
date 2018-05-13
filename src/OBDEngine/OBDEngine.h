@@ -69,7 +69,7 @@ class OBDEngine {
          * 
          * @return OBDCamera* 
          */
-        OBDCamera* createCamera();
+        OBDCamera* createCamera(f32 far, f32 fov);
 
         /**
          * @brief 

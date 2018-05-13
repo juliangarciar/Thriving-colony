@@ -2,7 +2,7 @@
 #include "Window.h"
 
 Camera::Camera() {
-    c = Window::Instance()->getEngine()->createCamera();
+    c = Window::Instance()->getEngine()->createCamera(1000, 45);
 }
 
 Camera::~Camera() {

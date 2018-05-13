@@ -84,8 +84,8 @@ OBDLight* OBDEngine::createLight(OBDColor color, f32 intensity, f32 ambient, f32
     return lightNode;
 }
 
-OBDCamera* OBDEngine::createCamera() {
-    OBDCamera* cameraNode = new OBDCamera(clSceneNode, windowWidth, windowHeight);
+OBDCamera* OBDEngine::createCamera(f32 far, f32 fov) {
+    OBDCamera* cameraNode = new OBDCamera(clSceneNode, windowWidth, windowHeight, far, fov);
     cameras.push_back(cameraNode);
     return cameraNode;
 }
