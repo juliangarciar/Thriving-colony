@@ -11,6 +11,7 @@ Terrain::Terrain(const char* heightMap) {
 
 Terrain::~Terrain() {
 	delete t;
+	t = nullptr;
 }
 
 void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture) {

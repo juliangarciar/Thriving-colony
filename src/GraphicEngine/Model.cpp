@@ -13,10 +13,11 @@ Model::Model(SceneNode *parent, i32 id, std::string path) {
 
 Model::~Model() {
 	delete obj;
+	obj = nullptr;
 }
 
 void Model::setID(i32 id) {
-    
+    obj->setID(id);
 }
 
 void Model::setPosition(Vector3<f32> pos) {
@@ -38,11 +39,11 @@ void Model::setScale(Vector3<f32> s) {
 }
 
 void Model::setActive(bool a) {
-    
+    obj->setActive(a);
 }
 
 void Model::setMaterial(Material *m){
-    
+    //ToDo
 }
 
 Vector3<f32> Model::getPosition() {
@@ -52,7 +53,3 @@ Vector3<f32> Model::getPosition() {
 i32 Model::getID() {
     return obj->getID();
 }
-
-/*scene::IMeshSceneNode *Model::getModel() {
-	return meshNode;
-}*/

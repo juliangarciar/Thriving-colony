@@ -8,7 +8,8 @@ Texture::Texture(const char* path) {
 }
 
 Texture::~Texture() {
-    
+    delete texture;
+	texture = nullptr;
 }
 
 OBDTexture *Texture::getTexture() {

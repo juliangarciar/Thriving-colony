@@ -1,6 +1,8 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
+#include <OBDEngine/OBDMaterial.h>
+
 #include "Texture.h"
 #include <Types.h>
 #include <MathEngine/Color.h>
@@ -12,7 +14,7 @@ class Material {
 		
         void setColor(Color c);
 
-        //video::SMaterial *getMaterial();
+        //OBDMaterial *getMaterial();
     private:
 
 };

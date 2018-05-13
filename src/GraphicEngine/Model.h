@@ -23,8 +23,6 @@ class Model {
 
         i32 getID();
         Vector3<f32> getPosition();
-		//scene::IMeshSceneNode *getModel();
-        
     private:
         OBDObject *obj;
 };

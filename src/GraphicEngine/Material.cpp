@@ -2,17 +2,18 @@
 #include "Window.h"
 
 Material::Material(Texture *tex) { 
-   
+   //ToDo
     setColor(Color(255, 255, 255));
 }
 
 Material::~Material() {
-   
+   //ToDo
 }
 
 void Material::setColor(Color c) {
+   //ToDo
 }
 
-/*video::SMaterial * Material::getMaterial() {
+/*OBDMaterial *Material::getMaterial() {
     return material;
 }*/
