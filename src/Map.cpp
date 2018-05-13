@@ -126,7 +126,7 @@ void Map::Input() {
     camera -> Zoom();
     camera -> CenterCamera();
 
-    collisionPoint = terrain->getPointCollision(IO::Instance()->getMouse());
+    collisionPoint = terrain->getPointCollision(IO::Instance()->getMouse()->getPosition());
 }
 
 void Map::Update(){

@@ -11,7 +11,7 @@ BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
     buildingMode = false;
 
 	buildingLayer = new SceneNode();
-	currentCollision = nullptr;
+	currentCollisionID = -1;
 	inMapBuildings = new std::map<i32, Building*>();
 	tempBuilding = nullptr;
 
@@ -53,7 +53,7 @@ BuildingManager::~BuildingManager() {
 
 void BuildingManager::testRaycastCollisions() {
 	if (!buildingMode) {
-		currentCollision = buildingLayer -> getNodeCollision(IO::Instance() -> getMouse());
+		currentCollisionID = buildingLayer -> getNodeCollision(IO::Instance() -> getMouse() -> getPosition());
 	}
 }
 
@@ -73,7 +73,7 @@ bool BuildingManager::setBuildingMode(std::string type) {
 void BuildingManager::drawBuilding() {
     if (buildingMode && tempBuilding != nullptr) {
 		//Get position where the cursor is pointing to the terrain
-        Vector2<f32> collisionPoint = Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2();
+        Vector2<f32> collisionPoint = Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse() -> getPosition()).toVector2();
 		// Change 2nd parameter
 		bool collision = false;
 		//Vector2<f32> dummy = collisionPoint;
@@ -208,17 +208,7 @@ i32 BuildingManager::getAmount(std::string type){
 }
 
 i32 BuildingManager::getCollisionID() {
-	if (currentCollision != nullptr) {
-		return currentCollision -> getID();
-	}
-	return -1;
-}
-
-std::string BuildingManager::getCollisionName() {
-	if (currentCollision != nullptr) {
-		return currentCollision -> getName();
-	}
-	return nullptr;
+	return currentCollisionID;
 }
 
 std::map<i32, Building*>* BuildingManager::getBuildings() {

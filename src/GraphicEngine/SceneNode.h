@@ -4,8 +4,8 @@
 #include <OBDEngine/OBDSceneNode.h>
 
 #include <Types.h>
+#include <MathEngine/Vector2.h>
 #include <MathEngine/Vector3.h>
-#include <IOEngine/Mouse.h>
 
 class SceneNode {
 	public:
@@ -14,10 +14,7 @@ class SceneNode {
 
 		virtual ~SceneNode();
 
-		SceneNode *getNodeCollision(Mouse *cursor);
-
-		i32 getID();
-		std::string getName();
+		i32 getNodeCollision(Vector2<i32> cursor);
 		
 		OBDSceneNode *getSceneNode();
 	private:

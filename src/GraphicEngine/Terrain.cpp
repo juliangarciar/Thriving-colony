@@ -22,8 +22,8 @@ void Terrain::setSize(Vector3<f32> s){
 	t->refreshModelMatrix(glm::mat4(1.0f));
 }
 
-Vector3<f32> Terrain::getPointCollision(Mouse *cursor){
-	OBDLine l = Window::Instance()->getEngine()->getRaycastFromScreenCoordinates(glm::vec2(cursor->getPosition().x, cursor->getPosition().y));
+Vector3<f32> Terrain::getPointCollision(Vector2<i32> cursor){
+	OBDLine l = Window::Instance()->getEngine()->getRaycastFromScreenCoordinates(glm::vec2(cursor.x, cursor.y));
 	glm::vec3 c = t->getRayCollision(l);
 	return Vector3<f32>(c.x, c.y, -c.z);
 }

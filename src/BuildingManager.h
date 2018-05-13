@@ -101,13 +101,6 @@ class BuildingManager {
 		 * @return i32 with the ID of the mesh if the currentCollision variable if it is not nullptr and -1 in other case.
 		 */
 		i32 getCollisionID();
-
-		/**
-		 * @brief Get the name of the mesh of currentCollision variable.
-		 * 
-		 * @return std::string with the name of the mesh if currentCollision variable is not nullptr and nullpntr in other case.
-		 */
-		std::string getCollisionName();
 		
 		/**
 		 * @brief Get the building stored in buildings variable associated to key passed by parameter.
@@ -168,7 +161,7 @@ class BuildingManager {
 		SceneNode *buildingLayer;
 
 		//Current colliding layer.
-		SceneNode *currentCollision;
+		i32 currentCollisionID;
 		
 		//Temporary building that is used when a building is selected to be built.
 		Building *tempBuilding;

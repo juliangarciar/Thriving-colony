@@ -20,21 +20,14 @@ SceneNode::~SceneNode() {
 	node = nullptr;
 }
  
-SceneNode *SceneNode::getNodeCollision(Mouse *cursor){
-	OBDLine l = Window::Instance()->getEngine()->getRaycastFromScreenCoordinates(glm::vec2(cursor->getPosition().x, cursor->getPosition().y));
+i32 SceneNode::getNodeCollision(Vector2<i32> cursor){
+	OBDLine l = Window::Instance()->getEngine()->getRaycastFromScreenCoordinates(glm::vec2(cursor.x, cursor.y));
 
 	std::vector<u32> res = node->getCollisionID(l);
 	if (res.size() > 0) {
+		return res[0];
 	}
-	return nullptr;
-}
-
-i32 SceneNode::getID(){
-	
-}
-
-std::string SceneNode::getName(){
-	
+	return -1;
 }
 
 OBDSceneNode *SceneNode::getSceneNode(){
