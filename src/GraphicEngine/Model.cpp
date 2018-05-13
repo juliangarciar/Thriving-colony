@@ -25,7 +25,6 @@ void Model::setName(const char *name) {
 
 void Model::setPosition(Vector3<f32> pos) {
 	if (pos.z > 0) pos.z *= -1;
-	std::cout << "P " << pos.x << " " << pos.y << " " << pos.z << std::endl;
     obj->setPosition(glm::vec3(pos.x, pos.y, pos.z));
 	obj->refreshModelMatrix(glm::mat4(1.0f));
 	obj->refreshBoundingBox();
