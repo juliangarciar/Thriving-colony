@@ -9,9 +9,6 @@
 #include "ResourceManager/ResourceOBJ.h"
 #include "ResourceManager/ResourceMTL.h"
 
-#include "Graphics/TTransform.h"
-#include "Graphics/TMesh.h"
-
 class OBDObject : public OBDEntity {
     public:
         /**
@@ -43,6 +40,13 @@ class OBDObject : public OBDEntity {
          */
         void setMaterial(ResourceMTL *mtl);
 
+        /**
+         * @brief Set the Material object
+         * 
+         * @param mtl 
+         */
+        void setMaterial(std::string, OBDMaterial *mtl);
+
 		/**
 		 * @brief 
 		 * 
@@ -68,6 +72,20 @@ class OBDObject : public OBDEntity {
          * @return std::map<std::string, OBDMesh*> 
          */
         std::map<std::string, OBDMesh*> getMeshes();
+
+        /**
+         * @brief Get the OBDMaterial object
+         * 
+         * @return OBDMaterial* 
+         */
+        OBDMaterial *getMaterial(std::string);
+
+        /**
+         * @brief Get the OBDMaterial object
+         * 
+         * @return std::map<std::string, OBDMaterial*> 
+         */
+        std::map<std::string, OBDMaterial*> getMaterials();
 
 		/**
 		 * @brief Get the Bounding Box object

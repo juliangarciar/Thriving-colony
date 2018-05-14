@@ -11,8 +11,7 @@ OBDMesh::OBDMesh(glslMesh *m, OBDMaterial *mat) : OBDEntity() {
 }
 
 OBDMesh::~OBDMesh() {
-    delete rotationNode;
-    rotationNode = nullptr;
+	
 }
 
 void OBDMesh::loadTextures(ResourceManager *r, bool sync){

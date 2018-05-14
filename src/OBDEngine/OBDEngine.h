@@ -130,6 +130,20 @@ class OBDEngine {
 		OBDTerrain *createTerrain(OBDSceneNode*, std::string, f32 y_offset, f32 y_scale, i32 step);
 
 		/**
+		 * @brief Create a Material object
+		 * 
+		 * @return OBDMaterial* 
+		 */
+		OBDMaterial *createMaterial();
+
+		/**
+		 * @brief Create a Material object
+		 * 
+		 * @return OBDMaterial* 
+		 */
+		OBDMaterial *createMaterial(std::string, std::string);
+
+		/**
 		 * @brief Create a Texture object
 		 * 
 		 * @return OBDTexture* 

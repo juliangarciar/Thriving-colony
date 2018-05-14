@@ -135,6 +135,15 @@ OBDTexture *OBDEngine::createTexture(OBDEnums::TextureTypes t, std::string fs){
 	return new OBDTexture(t, s);
 }
 
+OBDMaterial *OBDEngine::createMaterial(){
+	return new OBDMaterial();
+}
+
+OBDMaterial *OBDEngine::createMaterial(std::string path, std::string name){
+	ResourceMTL *s = (ResourceMTL*)OBDManager->getResource(path, true);
+	return new OBDMaterial(s, name);
+}
+
 void OBDEngine::registerLight(OBDLight* lightNode) {
     lights.push_back(lightNode);
 }

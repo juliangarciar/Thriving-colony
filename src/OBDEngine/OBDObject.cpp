@@ -82,6 +82,14 @@ void OBDObject::setMaterial(ResourceMTL *mtl) {
     }
 }
 
+void OBDObject::setMaterial(std::string s, OBDMaterial *mtl){
+	std::map<std::string, OBDMesh*>::iterator it = meshes.find(s);
+	if (it != meshes.end()){
+		it->second->setMaterial(mtl);
+		materials[s] = mtl;
+	}
+}
+
 u32 OBDObject::getMeshAmount(){
     return meshes.size();
 }
@@ -94,6 +102,16 @@ OBDMesh *OBDObject::getMesh(std::string meshName){
 
 std::map<std::string, OBDMesh*> OBDObject::getMeshes(){
     return meshes;
+}
+
+OBDMaterial *OBDObject::getMaterial(std::string meshName){
+	std::map<std::string, OBDMaterial*>::iterator i = materials.find(meshName);
+	if (i != materials.end()) return i->second;
+    else return nullptr;
+}
+
+std::map<std::string, OBDMaterial*> OBDObject::getMaterials(){
+    return materials;
 }
 
 aabb::AABB OBDObject::getBoundingBox(){

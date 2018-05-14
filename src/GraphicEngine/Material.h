@@ -14,9 +14,9 @@ class Material {
 		
         void setColor(Color c);
 
-        //OBDMaterial *getMaterial();
+        OBDMaterial *getMaterial();
     private:
-
+		OBDMaterial *material;
 };
 
 #endif
