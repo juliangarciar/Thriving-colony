@@ -3,27 +3,30 @@
 #include <MathEngine/Vector2.h>
 #include <Building.h>
 #include <Unit.h>
-Cell::Cell(Vector2<f32> vectorPosition, Box2D hitboxData, i32 idx){
-    position = vectorPosition;
-    hitBox = hitboxData;
-    index = idx;
-    inhabitingBuilding = nullptr;
-    inhabitingUnits = std::vector<Unit*>();
-    neighbors = std::vector<Cell*>();
-    blocked = false;
-}
+Cell::Cell(Vector2<f32> vectorPosition, const Box2D& hitboxData, i32 idx):position(vectorPosition),
+                                                                          hitBox(hitboxData),
+                                                                          index(idx),
+                                                                          inhabitingBuilding(nullptr),
+                                                                          inhabitingUnits(),
+                                                                          neighbors(),
+                                                                          blocked(false){}
+
 Cell::~Cell(){
     inhabitingBuilding = nullptr;
     inhabitingUnits.clear();
     neighbors.clear();
 }
 void Cell::setInhabitingBuilding(Building* buildingPtr){
-    inhabitingBuilding = buildingPtr;
-    blocked = true;
+    if(inhabitingBuilding == nullptr){
+        inhabitingBuilding = buildingPtr;
+        blocked = true;
+    }
 }
 void Cell::clearInhabitingBuilding(){
-    inhabitingBuilding = nullptr;
-    blocked = false;
+    if(inhabitingBuilding != nullptr){
+        inhabitingBuilding = nullptr;
+        blocked = false;
+    }
 }
 void Cell::setInhabitingUnit(Unit* unitPtr){
     inhabitingUnits.push_back(unitPtr);
@@ -36,9 +39,9 @@ void Cell::clearInhabitingUnit(Unit* unitPtr){
             return;
         }
     }
-    if(inhabitingUnits.size() == 0){
-        //blocked = false;
-    }
+    //if(inhabitingUnits.size() == 0){
+    //    blocked = false;
+    //}
 }
 void Cell::setNeighbor(Cell* cellPtr){
     neighbors.push_back(cellPtr);
@@ -51,13 +54,13 @@ void Cell::Clear(){
     inhabitingUnits.clear();
     neighbors.clear();
 }
-Box2D Cell::getHitbox(){
+const Box2D& Cell::getHitbox() const{
     return hitBox;
 }
-Vector2<f32> Cell::getPosition(){
+Vector2<f32> Cell::getPosition() const{
     return position;
 }
-Building* Cell::getInhabitingBuilding(){
+Building* Cell::getInhabitingBuilding() const{
     return inhabitingBuilding;
 }
 const std::vector<Unit*>& Cell::getInhabitingUnits(){
@@ -68,15 +71,15 @@ const std::vector<Unit*>& Cell::getInhabitingUnits(){
     }
     return inhabitingUnits;
 }
-const std::vector<Cell*>& Cell::getNeighbors(){
+const std::vector<Cell*>& Cell::getNeighbors() const{
     return neighbors;
 }
-i32 Cell::getIndex(){
+i32 Cell::getIndex() const{
     return index;
 }
-bool Cell::isBlocked(){
+bool Cell::isBlocked() const{
     return blocked;
 }
-bool Cell::collides(Box2D& otherHitbox){
+bool Cell::collides(const Box2D& otherHitbox) const{
     return hitBox.isOverlappedWith(otherHitbox);
 }

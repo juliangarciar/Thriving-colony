@@ -66,7 +66,7 @@ void Map::Init() {
 
     //ToDo: leer del mapa JSON el tamaño de celulas y de mapa
     WorldGeometry* newSystem = WorldGeometry::Instance();
-    newSystem->Init(i32(80), i32(10240), i32(10240));
+    newSystem->Init(cSize, i32(10240), i32(10240), 4);
 
     //Skydome
     skydome = new SkyDome(new Texture(j["map"]["skybox_texture"].get<std::string>().c_str()));

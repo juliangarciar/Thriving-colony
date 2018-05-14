@@ -28,7 +28,9 @@ Entity::Entity(SceneNode* _layer,
         entityType(_type),
         model(nullptr),
         vectorPos(0,0),
-        hitBox(0,0),
+        hitBox(Vector2<f32>(0, 0),
+               Vector2<f32>(_cellsY * cSize,
+                            _cellsX * cSize)),
         currentHP(_maxHP),
         maxHP(_maxHP), 
         viewRadius(_maxView),
@@ -61,13 +63,13 @@ Entity::Entity(SceneNode* _layer,
     Vector2<f32> bottomRight;
 
     /* Set the 2D hitbox params */
-    topLeft.x = (kCellsX / 2.0) * (-80.f) + 1;
-    topLeft.y = (kCellsY / 2.0) * (-80.f) + 1;
-    bottomRight.x = (kCellsX / 2.0) * (80.f) - 1;
-    bottomRight.y = (kCellsY / 2.0) * (80.f) - 1;
+    //topLeft.x = (kCellsX / 2.0) * (-80.f) + 1;
+    //topLeft.y = (kCellsY / 2.0) * (-80.f) + 1;
+    //bottomRight.x = (kCellsX / 2.0) * (80.f) - 1;
+    //bottomRight.y = (kCellsY / 2.0) * (80.f) - 1;
 
     /* Set the 2D hitbox */
-    hitBox = Box2D(topLeft, bottomRight); 
+    //hitBox = Box2D(topLeft, bottomRight); 
 }
 
 //ToDo: revisar
@@ -122,8 +124,8 @@ void Entity::setPosition(Vector2<f32> vectorData) {
 
     model -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y), vectorData.y));
 
-    hitBox.moveHitbox(vectorData.x, vectorData.y);
-    //ToDo: revisar lo de ajustar hitbox (Julian lo tienes al final de este archivo)
+    hitBox.moveHitbox(vectorData);
+    //std::cout << "Hitbox: " << hitBox.TopLeft().x << "," << hitBox.TopLeft().y << " y " << hitBox.BottomRight().x << "," << hitBox.BottomRight().y << "\n";
 }
 
 void Entity::setTarget(Entity *newTarget) {

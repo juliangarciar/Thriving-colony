@@ -226,7 +226,7 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
 			Vector3<f32> p = Human::Instance()->getHallPosition();
             target = WorldGeometry::Instance()->positionToCell(Vector2<f32>(p.x, p.z));
         }
-        target = WorldGeometry::Instance()->getValidCell(target, origin, nullptr);
+        target = WorldGeometry::Instance()->getValidCell(target, origin);
         Vector2<f32> dummy = target->getPosition();
         temp -> setTroopPosition(dummy);
         temp -> setUnitCell(dummy);
@@ -262,7 +262,7 @@ void UnitManager::deployAllTroops(Vector2<f32> p){
 			Vector3<f32> p = Human::Instance()->getHallPosition();
             target = WorldGeometry::Instance()->positionToCell(Vector2<f32>(p.x, p.z));
         }
-        target = WorldGeometry::Instance()->getValidCell(target, origin, nullptr);
+        target = WorldGeometry::Instance()->getValidCell(target, origin);
         Vector2<f32> dummy = target->getPosition();
         temp -> setTroopPosition(dummy);
         temp -> setUnitCell(dummy);

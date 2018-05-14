@@ -3,7 +3,6 @@
 #include "IA.h"
 
 BattleManager::BattleManager() {
-    
 }
 
 BattleManager::~BattleManager() {

@@ -20,7 +20,7 @@ class Cell{
          * @param hitboxData The hitbos that represents the cell collision
          * @param idx Index given by the worldGeometry array in order to fast acces 
          */
-        Cell(Vector2<f32> vectorPosition, Box2D hitboxData, i32 idx);
+        Cell(Vector2<f32> vectorPosition, const Box2D& hitboxData, i32 idx);
 
         /**
          * @brief Standard destructor
@@ -80,21 +80,21 @@ class Cell{
          * 
          * @return Box2D& 
          */
-        Box2D getHitbox();
+        const Box2D& getHitbox() const;
 
         /**
          * @brief Gives information about this cell's position
          * 
          * @return Vector2<f32> 
          */
-        Vector2<f32> getPosition();
+        Vector2<f32> getPosition() const;
 
         /**
          * @brief Gives information about the building inhabiting this cell (0 if none)
          * 
          * @return Building* 
          */
-        Building* getInhabitingBuilding();
+        Building* getInhabitingBuilding() const;
 
         /**
          * @brief Gives information about the units ihabiting this cell (size == 0 if none)
@@ -108,14 +108,14 @@ class Cell{
          * 
          * @return std::vector<Cell*>& 
          */
-        const std::vector<Cell*>& getNeighbors();
+        const std::vector<Cell*>& getNeighbors() const;
 
         /**
          * @brief Returns the index of the cell (only called from WorldGeometry)
          * 
          * @return i32 
          */
-        i32 getIndex();
+        i32 getIndex() const;
 
         /**
          * @brief Returns if the cell is blocked
@@ -123,7 +123,7 @@ class Cell{
          * @return true If it's blocked
          * @return false Else
          */
-        bool isBlocked();
+        bool isBlocked() const;
         
         /**
          * @brief Checks if this cell's hitbox collides with the one passed by reference
@@ -132,7 +132,7 @@ class Cell{
          * @return true If collides
          * @return false Else
          */
-        bool collides(Box2D& otherHitbox);
+        bool collides(const Box2D& otherHitbox) const;
 
     private:
         Vector2<f32> position;

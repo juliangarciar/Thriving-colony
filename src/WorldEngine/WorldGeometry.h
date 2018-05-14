@@ -9,6 +9,7 @@ class Cell;
 class Quadtree;
 class Unit;
 class Building;
+class Box2D;
 class WorldGeometry{
     public:
         /**
@@ -54,7 +55,7 @@ class WorldGeometry{
          * @return true 
          * @return false 
          */
-        bool checkBuildingSpace(Building* buildingPtr);
+        bool checkBuildingSpace(const Box2D& hitBox);
         /* To implement */
         //bool checkCollisions(Box2D& hitBox, Vector2<f32> originPosition, Vector2<f32> targetPosition);
         /**
@@ -77,7 +78,7 @@ class WorldGeometry{
          * @param searchMode 0 || 1
          * @return Cell* The wanted Cell 
          */
-        Cell* getValidCell(Cell* referenceTarget, Cell* referenceOrigin, Building* buildingPtr);
+        Cell* getValidCell(Cell* referenceTarget, Cell* referenceOrigin);
         /**
          * @brief Transforms a position (Vector2) into the cell that collides with
          * 

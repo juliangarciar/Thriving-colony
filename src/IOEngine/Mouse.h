@@ -56,10 +56,12 @@ class Mouse {
         Vector2<f32> wheel;
 		// Mouse button states.
 		Enumeration::ioStatesENUM mouseButtonState[GLFW_MOUSE_BUTTON_LAST]; //Left(0), Right(1), Middle(2) and more buttons.
+        i32 getOldState();
+        void setOldState(i32 data);
     private:
         bool visible;
         i32 currentCursor;
-
+        i32 oldState;
         GLFWcursor* cursor;
 };
 

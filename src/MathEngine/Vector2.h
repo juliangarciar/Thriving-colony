@@ -27,10 +27,18 @@ class Vector2 {
 
         Vector2<T> operator +(const Vector2<T> &p) const;
         Vector2<T> operator +(const f32 &num) const;
+        Vector2<T> operator +=(const Vector2<T> &p);
+        Vector2<T> operator +=(const f32 &num);
+
         Vector2<T> operator -(const Vector2<T> &p) const;
+        Vector2<T> operator -(const f32 &num) const;
+        Vector2<T> operator -=(const Vector2<T> &p);
+        Vector2<T> operator -=(const f32 &num);
+
         Vector2<T> operator /(const f32 &num) const;
         Vector2<T> operator *(const f32 &num) const;
-        Vector2<T> operator +=(const Vector2<T> &p);
+        
+        
         bool operator ==(const Vector2<T> &p);
         bool operator !=(const Vector2<T> &p);
 };

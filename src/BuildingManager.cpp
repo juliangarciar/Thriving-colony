@@ -75,7 +75,7 @@ void BuildingManager::drawBuilding() {
 		//Get position where the cursor is pointing to the terrain
         Vector2<f32> collisionPoint = Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2();
 		// Change 2nd parameter
-		bool collision = false;
+		bool canBuild = true;
 		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(collisionPoint, tempBuilding);
 
 		tempBuilding -> setPosition(dummy);
@@ -84,11 +84,10 @@ void BuildingManager::drawBuilding() {
 			Vector3<f32> tmp = Human::Instance()->getHallPosition();
 			f32 distance = std::sqrt(std::pow(tmp.x - dummy.x, 2) + std::pow(tmp.z - dummy.y, 2));
 			if(Human::Instance()->getBuildingRadious() < distance){
-				collision = true;
+				canBuild = false;
 			}
 			else{
-				//std::cout << "Celula " << WorldGeometry::Instance()->positionToCell(collisionPoint) << "\n";
-				collision = WorldGeometry::Instance()->checkBuildingSpace(tempBuilding);
+				canBuild = WorldGeometry::Instance()->checkBuildingSpace(tempBuilding->getHitbox());
 			}
 		}
 
@@ -100,7 +99,7 @@ void BuildingManager::drawBuilding() {
 			return;
 		}
 		
-		if (collision) {
+		if (!canBuild) {
 			tempBuilding->setCantBuildMat();
 		} else {
 			tempBuilding->setCanBuildMat();

@@ -4,12 +4,12 @@
 #include <WorldEngine/WorldGeometry.h>
 #include <WorldEngine/Cell.h>
 
-PathManager::PathManager(Unit* unitPtr){
-    propietary = unitPtr;
-}
+PathManager::PathManager(Unit* unitPtr):propietary(unitPtr){}
+
 PathManager::~PathManager(){
-    
+
 }
+
 bool PathManager::createPathTo(Vector2<f32> targetPos){
     Vector2<f32> initPos(propietary->getPosition());
     Vector2<f32> finalPos(0, 0);
@@ -18,7 +18,7 @@ bool PathManager::createPathTo(Vector2<f32> targetPos){
     Cell* end = WorldGeometry::Instance()->positionToCell(targetPos);
 
     if(end->isBlocked()){
-        end = WorldGeometry::Instance()->getValidCell(end, origin, nullptr);
+        end = WorldGeometry::Instance()->getValidCell(end, origin);
         finalPos = end->getPosition();
     }
     else{
@@ -29,12 +29,18 @@ bool PathManager::createPathTo(Vector2<f32> targetPos){
     astar->Search();
     std::list< Vector2<f32> > finalPath = astar->getPath();
 
-    
     finalPath.push_front(initPos);
-    if(finalPath.back() != finalPos)
+
+    if(finalPath.back() != finalPos){
         finalPath.push_back(finalPos);
-    
-    smoothPath(finalPath);
+    }
+    std::cout << "Path: " << finalPath.size() << "\n";
+    if(finalPath.size() > 2){
+        // ToDo: fix
+        //smoothPath(finalPath);
+        
+    }    
+    std::cout << "Path: " << finalPath.size() << "\n";
     propietary->setPath(finalPath);
 
     return true;
@@ -47,7 +53,6 @@ void PathManager::smoothPath(std::list< Vector2<f32> >& _path){
     v2++;
     v3++;
     v3++;
-
     while(v2 != _path.end()){
         //std::cout << "Smooth \n";
         if(!WorldGeometry::Instance()->checkCollision(*v1, *v3)){
