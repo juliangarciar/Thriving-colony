@@ -134,6 +134,7 @@ class Cell{
          */
         bool collides(const Box2D& otherHitbox) const;
 
+        i32 getTotalInhabitingUnits() const;
     private:
         Vector2<f32> position;
         Box2D hitBox;

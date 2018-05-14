@@ -139,8 +139,8 @@ void WorldGeometry::setUnitCell(Vector2<f32> positionVector, Unit* unitPtr){
     positionToCell(positionVector)->setInhabitingUnit(unitPtr);
 }
 bool WorldGeometry::checkBuildingSpace(const Box2D& hitBox){
-    //Box2D dummy = hitBox.getAmplifiedBox(cellSize - 2.0f);
-    return quadTree->canBuild(hitBox);
+    Box2D dummy = hitBox.getAmplifiedBox(cellSize / 4.0f);
+    return quadTree->canBuild(dummy);
 }
 Vector2<f32> WorldGeometry::correctBuildingPosition(Vector2<f32> targetPos, Building *buildingPtr){
     Vector2<f32> correctOne(0, 0);
@@ -251,10 +251,9 @@ std::vector< Unit* > WorldGeometry::getNeighborUnits(Vector2<f32> positionVector
     std::vector< Cell* > neighborCells = positionToCell(positionVector)->getNeighbors();
     neighborCells.push_back(positionToCell(positionVector));
     for(size_t i = 0; i < neighborCells.size(); i++){
-        if(!neighborCells[i]->getInhabitingUnits().empty()){
-            neighborUnits.insert(neighborUnits.end(), 
-                                neighborCells[i]->getInhabitingUnits().begin(), 
-                                neighborCells[i]->getInhabitingUnits().end());
+        if(neighborCells[i]->getTotalInhabitingUnits() != 0){
+            std::vector< Unit* > tmp = neighborCells[i]->getInhabitingUnits();
+            neighborUnits.insert(neighborUnits.end(), tmp.begin(),  tmp.end());
         }
     }
     return neighborUnits;

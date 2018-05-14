@@ -34,13 +34,13 @@ bool PathManager::createPathTo(Vector2<f32> targetPos){
     if(finalPath.back() != finalPos){
         finalPath.push_back(finalPos);
     }
-    std::cout << "Path: " << finalPath.size() << "\n";
+    std::cout << "Path sin smooth: " << finalPath.size() << "\n";
     if(finalPath.size() > 2){
         // ToDo: fix
-        //smoothPath(finalPath);
+        smoothPath(finalPath);
         
     }    
-    std::cout << "Path: " << finalPath.size() << "\n";
+    std::cout << "Path con smooth: " << finalPath.size() << "\n";
     propietary->setPath(finalPath);
 
     return true;
@@ -54,11 +54,9 @@ void PathManager::smoothPath(std::list< Vector2<f32> >& _path){
     v3++;
     v3++;
     while(v2 != _path.end()){
-        //std::cout << "Smooth \n";
         if(!WorldGeometry::Instance()->checkCollision(*v1, *v3)){
             v2 = _path.erase(v2);
             v3++;
-            //std::cout << "Eliminado \n";
         }
         else{
             v1 = v2;

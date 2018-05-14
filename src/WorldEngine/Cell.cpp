@@ -83,3 +83,13 @@ bool Cell::isBlocked() const{
 bool Cell::collides(const Box2D& otherHitbox) const{
     return hitBox.isOverlappedWith(otherHitbox);
 }
+
+i32 Cell::getTotalInhabitingUnits() const{
+    i32 dummy = 0;
+    for(std::size_t i = 0; i < inhabitingUnits.size(); i++){
+        if(inhabitingUnits[i] != nullptr){
+            ++dummy;
+        }
+    }
+    return dummy;
+}

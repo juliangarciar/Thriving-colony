@@ -87,12 +87,11 @@ void Quadtree::insertBuilding(Building* buildingPtr){
     if(this->depth == 0){
         i32 size = 0;
         for(std::size_t i = 0; i < innerCells.size(); i++){
-            if(innerCells[i]->getHitbox().isOverlappedWith(buildingPtr->getHitbox()) && innerCells[i]->getInhabitingBuilding() == nullptr){
+            if(innerCells[i]->getHitbox().isOverlappedWith(buildingPtr->getHitbox()) && !innerCells[i]->isBlocked()){
                 innerCells[i]->setInhabitingBuilding(buildingPtr);
                 ++size;
             }
         }
-        std::cout << "Numero de celulas ocupadas: " << size << "\n";
     }
     else{
         for(i32 i = 0; i < 4; i++){
@@ -124,11 +123,11 @@ void Quadtree::assignNeighbors(Cell* cellPtr){
 }
 
 bool Quadtree::canBuild(const Box2D& otherHitbox) const{
-    bool newCenter(true);
+    bool newCenter = true;
     
     if(this->depth == 0){
         for(std::size_t i = 0; i < innerCells.size(); i++){
-            if(innerCells[i]->getHitbox().isOverlappedWith(otherHitbox) && innerCells[i]->isBlocked() /*|| innerCells[i]->getInhabitingBuilding() != nullptr*/){
+            if(innerCells[i]->getHitbox().isOverlappedWith(otherHitbox) && innerCells[i]->isBlocked() && innerCells[i]->getTotalInhabitingUnits() == 0){
                 newCenter = false;
                 return newCenter;
             }
@@ -138,7 +137,7 @@ bool Quadtree::canBuild(const Box2D& otherHitbox) const{
         for(i32 i = 0; i < 4; i++){
             if(innerTrees[i]->getHitbox().isOverlappedWith(otherHitbox)){
                 newCenter = innerTrees[i]->canBuild(otherHitbox);
-                if(newCenter){
+                if(!newCenter){
                     return newCenter;
                 }
             }

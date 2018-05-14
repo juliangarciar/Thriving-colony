@@ -29,8 +29,8 @@ Entity::Entity(SceneNode* _layer,
         model(nullptr),
         vectorPos(0,0),
         hitBox(Vector2<f32>(0, 0),
-               Vector2<f32>(_cellsY * cSize,
-                            _cellsX * cSize)),
+               Vector2<f32>(_cellsX * cSize,
+                            _cellsY * cSize)),
         currentHP(_maxHP),
         maxHP(_maxHP), 
         viewRadius(_maxView),
@@ -63,13 +63,13 @@ Entity::Entity(SceneNode* _layer,
     Vector2<f32> bottomRight;
 
     /* Set the 2D hitbox params */
-    //topLeft.x = (kCellsX / 2.0) * (-80.f) + 1;
-    //topLeft.y = (kCellsY / 2.0) * (-80.f) + 1;
-    //bottomRight.x = (kCellsX / 2.0) * (80.f) - 1;
-    //bottomRight.y = (kCellsY / 2.0) * (80.f) - 1;
+    topLeft.x = (kCellsX / 2.0) * (-cSize);
+    topLeft.y = (kCellsY / 2.0) * (-cSize);
+    bottomRight.x = (kCellsX / 2.0) * (cSize);
+    bottomRight.y = (kCellsY / 2.0) * (cSize);
 
     /* Set the 2D hitbox */
-    //hitBox = Box2D(topLeft, bottomRight); 
+    hitBox = Box2D(topLeft, bottomRight); 
 }
 
 //ToDo: revisar
