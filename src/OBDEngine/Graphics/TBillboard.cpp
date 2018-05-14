@@ -3,9 +3,9 @@
 
 TBillboard::TBillboard(glm::vec3 pos, GLuint shader) : TEntity() {
     position = pos;
-    height = 2;
-    topWidth = 5;
-    bottomWidth = 10;
+    height = 200;
+    topWidth = 500;
+    bottomWidth = 100;
 
     program = shader;
     
