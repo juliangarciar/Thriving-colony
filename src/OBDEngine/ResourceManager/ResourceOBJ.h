@@ -27,11 +27,11 @@ class ResourceOBJ : public Resource {
         void setIdentifier(const char *);
         const char *getIdentifier();
 
-        std::map<std::string, ResourceMesh> getResource();
+        std::map<std::string, ResourceMesh*> getResource();
 
         std::string getDefaultMaterialPath();
     private:
-        std::map<std::string, ResourceMesh> meshArray;
+        std::map<std::string, ResourceMesh*> meshArray;
         std::string defaultMaterialPath;
 };
 

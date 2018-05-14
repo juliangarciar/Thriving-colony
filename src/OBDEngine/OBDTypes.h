@@ -37,6 +37,11 @@ struct glslLight {
 
 inline bool operator==(const glslLight& l, const glslLight& r){ return (l.position == r.position && l.intensity == r.intensity && l.ambientCoeficient == r.ambientCoeficient && l.attenuationCoeficient == r.attenuationCoeficient) == 0; }
 
+struct glslMesh {
+    std::vector<f32> vbo;
+    std::vector<u32> ibo;
+};
+
 struct glslMaterial {
     glm::vec4 ambientColor;
     glm::vec4 diffuseColor;

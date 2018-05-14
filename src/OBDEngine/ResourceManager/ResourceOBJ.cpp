@@ -27,7 +27,7 @@ void ResourceOBJ::load(const char *path){
         // Copy one of the loaded meshes to be our current mesh
         objl::Mesh curMesh = loader.LoadedMeshes[i];
 
-        ResourceMesh tempMesh;
+        ResourceMesh *tempMesh = new ResourceMesh();
 
         std::vector<f32> vbo;
 
@@ -74,15 +74,15 @@ void ResourceOBJ::load(const char *path){
             }
         }
 
-        tempMesh.aabbMin = min;
-        tempMesh.aabbMax = max;
+        tempMesh->aabbMin = min;
+        tempMesh->aabbMax = max;
         
-        tempMesh.name = curMesh.MeshName;
-        tempMesh.vbo = vbo;
-        tempMesh.indices = std::vector<u32>(curMesh.Indices.begin(), curMesh.Indices.end());
-        tempMesh.defaultMaterialName = curMesh.MeshMaterial.name;
+        tempMesh->name = curMesh.MeshName;
+        tempMesh->vbo = vbo;
+        tempMesh->indices = std::vector<u32>(curMesh.Indices.begin(), curMesh.Indices.end());
+        tempMesh->defaultMaterialName = curMesh.MeshMaterial.name;
 
-        meshArray.insert(std::pair<std::string, ResourceMesh>(curMesh.MeshName, tempMesh));
+        meshArray.insert(std::pair<std::string, ResourceMesh*>(curMesh.MeshName, tempMesh));
     }
 }
 
@@ -98,7 +98,7 @@ const char *ResourceOBJ::getIdentifier(){
     return identifier;
 }
 
-std::map<std::string, ResourceMesh> ResourceOBJ::getResource(){
+std::map<std::string, ResourceMesh*> ResourceOBJ::getResource(){
     return meshArray;
 }
 

@@ -4,14 +4,10 @@
 #include <aabbtree/AABB.h>
 
 #include "OBDEntity.h"
-#include "OBDSceneNode.h"
+#include "OBDMaterial.h"
 #include "OBDTexture.h"
 
-#include "ResourceManager/ResourceOBJ.h"
-#include "ResourceManager/ResourceMTL.h"
-
 #include "Graphics/TMesh.h"
-#include "Graphics/TTransform.h"
 
 class OBDMesh : public OBDEntity {
     public:
@@ -22,16 +18,7 @@ class OBDMesh : public OBDEntity {
          * @param 
          * @param 
          */
-        OBDMesh(u32, ResourceMesh, ResourceMaterial);
-
-        /**
-         * @brief 
-         * 
-         * @param  
-         * @param 
-         * @param 
-         */
-        OBDMesh(OBDSceneNode*, u32, ResourceMesh, ResourceMaterial);
+        OBDMesh(glslMesh*, OBDMaterial*);
 
         /**
          * @brief 
@@ -52,54 +39,37 @@ class OBDMesh : public OBDEntity {
 		 */
 		void refreshBoundingBox();
 
-        /**
-         * @brief Set the Name 
-         * 
-         * @param a 
-         */
-        void setName(std::string a);
+		/**
+		 * @brief 
+		 * 
+		 */
+		void setBoundingBox(glm::vec3, glm::vec3);
 
         /**
-         * @brief Set the ResourceMaterial object
+         * @brief Set the material name
          * 
          */
-        void setMaterial(ResourceMaterial);
+        void setMaterialName(std::string);
 
         /**
-         * @brief Set the glslTexture object
+         * @brief Set the OBDMaterial object
+         * 
+         */
+        void setMaterial(OBDMaterial*);
+
+        /**
+         * @brief Set the OBDTexture object
          * 
          */
         void setTexture(OBDTexture*);
 
         /**
-         * @brief Set the Name object
-         * 
-         * @param n 
-         */
-        void setMaterialName(std::string n);
-
-        /**
-         * @brief Get the Name 
-         * 
-         * @return true 
-         * @return false 
-         */
-        std::string getName();
-
-        /**
          * @brief 
-         * 
-         * @return u32 
-         */
-        u32 getID();
-
-        /**
-         * @brief Get the Name object
          * 
          * @return std::string 
          */
         std::string getMaterialName();
-        
+
         /**
          * @brief 
          * 
@@ -114,16 +84,16 @@ class OBDMesh : public OBDEntity {
 		 */
 		aabb::AABB getBoundingBox();
     private:
-		aabb::AABB boundingBox;
-
         TNode* meshNode;
 
-        u32 ID;
-		std::string name;
-        std::string materialName;
+		glslMesh *mesh;
+		OBDMaterial *material;
 
-        ResourceMesh mesh;
-        ResourceMaterial material;
+		std::string materialName;
+
+		glm::vec4 aabbMin;
+		glm::vec4 aabbMax;
+		aabb::AABB boundingBox;
 };
 
 #endif

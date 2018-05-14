@@ -4,6 +4,7 @@
 #include "OBDEntity.h"
 #include "OBDMesh.h"
 #include "OBDSceneNode.h"
+#include "OBDMaterial.h"
 
 #include "ResourceManager/ResourceOBJ.h"
 #include "ResourceManager/ResourceMTL.h"
@@ -92,6 +93,7 @@ class OBDObject : public OBDEntity {
 		aabb::AABB boundingBox;
 
         std::map<std::string, OBDMesh*> meshes;
+        std::map<std::string, OBDMaterial*> materials;
 		
         u32 ID;
 };

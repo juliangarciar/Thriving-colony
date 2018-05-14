@@ -63,8 +63,8 @@ class OBDTerrain : public OBDEntity {
 	private:
 		void generateTerrain(const char *path, f32 y_offset, f32 y_scale, i32 step);
 
-		ResourceMesh mesh;
-		ResourceMaterial material;
+		glslMesh *mesh;
+		glslMaterial *material;
 
 		TerTerrain *terrain;
 		SDF *octree;

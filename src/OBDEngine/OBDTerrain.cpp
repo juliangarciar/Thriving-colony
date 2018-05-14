@@ -3,6 +3,9 @@
 #define EPSILON 0.0005
 
 OBDTerrain::OBDTerrain(OBDSceneNode* parent, std::string path, f32 y_offset, f32 y_scale, i32 step) : OBDEntity(parent) {
+	mesh = new glslMesh();
+	material = new glslMaterial();
+
 	//Generate mesh and material
 	generateTerrain(path.c_str(), y_offset, y_scale, step);
 
@@ -28,18 +31,14 @@ void OBDTerrain::generateTerrain(const char *path, f32 y_offset, f32 y_scale, i3
 	i32 h = terrain->height;
 	i32 d = terrain->depth;
 
-	mesh.aabbMin = glm::vec3(0, y_offset, 0);
-	mesh.aabbMax = glm::vec3(w, y_offset + h, d);
-
-	mesh.name = "terrain";
-	mesh.vbo = std::vector<f32>(terrain->vertices, terrain->vertices+(terrain->num_vertices*8));
-	mesh.indices = std::vector<u32>(terrain->indices, terrain->indices+terrain->num_indices);
+	mesh -> vbo = std::vector<f32>(terrain->vertices, terrain->vertices+(terrain->num_vertices*8));
+	mesh -> ibo = std::vector<u32>(terrain->indices, terrain->indices+terrain->num_indices);
 
 	//Material
-	material.ambientColor = glm::vec3(1,1,1);
-	material.diffuseColor = glm::vec3(1,1,1);
-	material.specularColor = glm::vec3(1,1,1);
-	material.specularExponent = 90;
+	material -> ambientColor = glm::vec4(1,1,1,1);
+	material -> diffuseColor = glm::vec4(1,1,1,1);
+	material -> specularColor = glm::vec4(1,1,1,1);
+	material -> shininess = 90;
 
 	//Octree
 	vertex_vector = std::vector<glm::vec3>(terrain->glm_vertices, terrain->glm_vertices + terrain->num_vertices);

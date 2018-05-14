@@ -2,8 +2,6 @@
 #define TMESH_H
 
 #include "TEntity.h"
-#include "../ResourceManager/ResourceOBJ.h"
-#include "../ResourceManager/ResourceMTL.h"
 #include "TTexture.h"
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
@@ -14,7 +12,7 @@ class TMesh : public TEntity {
          * @brief 
          * 
          */
-        TMesh(ResourceMesh, ResourceMaterial);
+        TMesh(glslMesh*, glslMaterial*);
 
         /**
          * @brief 
@@ -39,44 +37,21 @@ class TMesh : public TEntity {
          * 
          * @param m 
          */
-        virtual void setMaterial(ResourceMaterial m);
+        virtual void setMaterial(glslMaterial *m);
 
         /**
          * @brief Set the glslTexture object
          * 
          */
         virtual void setTexture(OBDEnums::TextureTypes, TTexture*);
-
-		/**
-		 * @brief Get the Model Matrix object
-		 * 
-		 * @return glm::mat4 
-		 */
-		glm::mat4 getModelMatrix();
-
-        /**
-         * @brief Get the Mesh object
-         * 
-         * @return ResourceMesh
-         */
-        ResourceMesh getMesh();
-
-        /**
-         * @brief Get the glslMaterial object
-         * 
-         * @return ResourceMaterial
-         */
-        ResourceMaterial getMaterial();
     private:
-        ResourceMesh mesh;
-        ResourceMaterial material;
+        glslMesh *mesh;
+        glslMaterial *material; //¿?
+        glslTexture activeTextures;
         
         std::vector<TTexture*> textures;
 
 		glm::mat4 modelMatrix;
-        
-        glslTexture activeTextures;
-	    glslMaterial currentMaterial;
         
         GLuint VBOID;
 	    GLuint IBOID;

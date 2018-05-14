@@ -34,9 +34,9 @@ class ResourceMTL : public Resource {
         void setIdentifier(const char *);
         const char *getIdentifier();
 
-        std::map<std::string, ResourceMaterial> getResource();
+        std::map<std::string, ResourceMaterial*> getResource();
     private:
-        std::map<std::string, ResourceMaterial> materialArray;
+        std::map<std::string, ResourceMaterial*> materialArray;
         
 };
 

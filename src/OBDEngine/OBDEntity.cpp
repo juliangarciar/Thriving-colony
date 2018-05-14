@@ -15,6 +15,8 @@ OBDEntity::OBDEntity(){
 	scaleNode = new TNode(new TTransform(), translationNode);
 
 	parent = nullptr;
+
+	refreshModelMatrix(parent_model_matrix);
 }
 
 OBDEntity::OBDEntity(OBDSceneNode *p){
@@ -32,6 +34,8 @@ OBDEntity::OBDEntity(OBDSceneNode *p){
 
 	parent = p;
     p->addChild(this);
+
+	refreshModelMatrix(parent_model_matrix);
 }
 
 OBDEntity::~OBDEntity(){
