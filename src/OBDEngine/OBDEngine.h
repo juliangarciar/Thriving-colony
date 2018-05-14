@@ -266,7 +266,7 @@ class OBDEngine {
          * @param a 
          * @param c 
          */
-        OBDBillboard* createBillboard(OBDSceneNode*, glm::vec3);
+        OBDBillboard* createBillboard(OBDSceneNode*, glm::vec3, i32);
 
         /**
          * @brief Create a Skybox object

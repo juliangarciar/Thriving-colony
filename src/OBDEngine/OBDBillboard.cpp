@@ -1,9 +1,9 @@
 #include "OBDBillboard.h"
 
-OBDBillboard::OBDBillboard(OBDSceneNode* parent, glm::vec3 position, GLuint shaderID) {
+OBDBillboard::OBDBillboard(OBDSceneNode* parent, glm::vec3 position, GLuint shaderID, i32 id) {
     billboardNode = new TNode(new TBillboard(position, shaderID));
-
-	parent->addChild(billboardNode);
+	parent -> addChild(billboardNode);
+    ID = id;
 }
 
 OBDBillboard::~OBDBillboard(){
@@ -26,24 +26,9 @@ void OBDBillboard::setSize(f32 newHeight, f32 newTopWidth, f32 newBottomWidth) {
     aux -> setSize(newHeight, newTopWidth, newBottomWidth);
 }
 
-void OBDBillboard::setBottomWidth(f32 newBottomWidth) {
-    TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
-    aux -> setSize(-1, -1, newBottomWidth);
-}
-
 glm::vec3 OBDBillboard::getPosition() {
     TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
     return aux -> getPosition();
-}
-
-OBDColor* OBDBillboard::getTopColor() {
-    TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
-    return aux -> getTopColor();
-}
-
-OBDColor* OBDBillboard::getBottomColor() {
-    TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
-    return aux -> getBottomColor();
 }
 
 f32 OBDBillboard::getHeight() {
@@ -59,4 +44,8 @@ f32 OBDBillboard::getTopWidth() {
 f32 OBDBillboard::getBottomWidth() {
     TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
     return aux -> getBottomWidth();
+}
+
+i32 OBDBillboard::getID() {
+    return ID;
 }

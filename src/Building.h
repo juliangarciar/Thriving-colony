@@ -6,6 +6,7 @@
 #include <EntityData.h>
 #include <Types.h>
 #include <IOEngine/Timer.h>
+#include "OBDEngine/OBDBillboard.h"
 
 /**
  * @class Building.

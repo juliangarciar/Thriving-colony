@@ -322,10 +322,7 @@ class Entity {
         //
         Material *damagedMat;
 
-        //
-        Billboard* barBg;
-
-        //
+        //Pointer to a billboard with the HP of the entity.
         Billboard* bar;
 };
 #endif
