@@ -4,8 +4,7 @@
 #include "Graphics/TParticle.h"
 
 enum ParticleEmiterType {
-    Point,
-    Box
+    Point
 };
 
 class OBDParticleEmiter {

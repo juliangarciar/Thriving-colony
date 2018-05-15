@@ -4,7 +4,6 @@
 #include "../OBDColor.h"
 
 struct TParticle {
-
     OBDColor color;
     OBDColor startColor;
 
