@@ -9,21 +9,23 @@
 
 class Billboard {
     public:
-        Billboard(SceneNode* parent, i32 id, Vector3<f32> pos, Color top, Color bot);
+        Billboard(SceneNode* parent, i32 id, Vector3<f32> pos);
         ~Billboard();
 
-        void setColor(Color top, Color bot);
-        void setSize(f32 w, f32 h);
-
-        void setID(i32 id);
-        void setName(const wchar_t *name);
-        void setActive(bool a);
+        void setColor(Color* top, Color* bot);
+        void setSize(f32 h, f32 tw, f32 bw);
         void setPosition(Vector3<f32> pos);
-        void setScale(Vector3<f32> s);
-        void rotate(f32 x, f32 y);
+
+        Vector3<f32> getPosition();
+        Color getTopColor();
+        Color getBottomColor();
+        f32 getHeight();
+        f32 getTopWidth();
+        f32 getBottomWidth();
+        i32 getID();
 
     private:
-
+        OBDBillboard* billboard;
 };
 
 #endif

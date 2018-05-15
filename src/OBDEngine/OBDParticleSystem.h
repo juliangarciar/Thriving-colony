@@ -25,13 +25,7 @@ class OBDParticleSystem : public OBDEntity {
          * @brief 
          * 
          */
-        void cleanEmiters();
-
-        /**
-         * @brief 
-         * 
-         */
-        void cleanAffectors();
+        void clearAffectors();
 
         /**
          * @brief 
@@ -44,10 +38,11 @@ class OBDParticleSystem : public OBDEntity {
          * 
          */
         void addAffector(OBDParticleAffector*);
+
     private:
         TNode* particleSystemNode;
 
-        std::vector<OBDParticleEmiter*> emiters;
+        OBDParticleEmiter* emiter;
         std::vector<OBDParticleAffector*> affectors;
 };
 

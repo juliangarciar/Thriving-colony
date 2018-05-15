@@ -41,11 +41,7 @@ Building::Building(SceneNode *_layer,
 		f32 billBoardOffset = 200.00;
 
 		Vector3<f32> pos(getPosition().x, Map::Instance()->getTerrain()->getY(getPosition().x,getPosition().y) + billBoardOffset, getPosition().y);
-
-		barBg = new Billboard(layer, ID, pos, Color(0,0,0,255), Color(0,0,0,255));
-		bar = new Billboard(layer, ID, pos, Color(0, 255, 0, 255), Color(0, 255, 0, 255));
-		barBg -> setSize(105.00, 15.00);
-		////////////////////////////
+        ////////////////////////////
 
         if (callback != nullptr) callback(this);
     });
@@ -75,7 +71,6 @@ Building::~Building() {
     delete cantBuildMat;
     delete buildTimer;
     /* Error aqui */
-    //delete barBg;
     //delete bar;
     //delete particle;
 }

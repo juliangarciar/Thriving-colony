@@ -14,7 +14,7 @@ CBuild::~CBuild() {
 Enumeration::BehaviourState CBuild::Update() {
     if (IA::Instance() -> getRootNode() -> getPriority() == nullptr) {
         if (type == "Barn"){
-                if (IA::Instance() -> getTree() -> getNeedBarn()) {
+                if (IA::Instance() -> getTree() -> getRequireBarn()) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildBarn);
                     actionToDo();
                     return Enumeration::BehaviourState::Success;
@@ -22,7 +22,7 @@ Enumeration::BehaviourState CBuild::Update() {
                     return Enumeration::BehaviourState::Failure;
                 }
         } else if (type == "Barrack"){
-                if (IA::Instance() -> getTree() -> getNeedBarracks()) {
+                if (IA::Instance() -> getTree() -> getRequireBarrack()) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildBarrack);
                     actionToDo();
                     return Enumeration::BehaviourState::Success;
@@ -30,7 +30,7 @@ Enumeration::BehaviourState CBuild::Update() {
                     return Enumeration::BehaviourState::Failure;
                 }
         } else if (type == "DefenseBarrack") {
-                if (IA::Instance() -> getUnderAttack() == true && IA::Instance() -> getTree() -> getNeedBarracks()) {
+                if (IA::Instance() -> getUnderAttack() == true && IA::Instance() -> getTree() -> getRequireBarrack()) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildBarrack);
                     actionToDo();
                     return Enumeration::BehaviourState::Success;
@@ -90,7 +90,7 @@ Enumeration::BehaviourState CBuild::Update() {
                     return Enumeration::BehaviourState::Failure;
                 }
         } else if (type == "Workshop"){
-                if (IA::Instance() -> getTree() -> getNeedWorkshop()) {
+                if (IA::Instance() -> getTree() -> getRequireWorkshop()) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildWorkshop);
                     actionToDo();
                     return Enumeration::BehaviourState::Success;

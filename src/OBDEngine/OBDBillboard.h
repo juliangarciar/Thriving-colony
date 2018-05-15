@@ -14,7 +14,7 @@ class OBDBillboard {
          * @param position
          * @param shaderID
          */
-        OBDBillboard(OBDSceneNode*, glm::vec3, GLuint);
+        OBDBillboard(OBDSceneNode*, glm::vec3, GLuint, i32);
 
         /**
          * @brief 
@@ -39,29 +39,12 @@ class OBDBillboard {
          * 
          */
         void setSize(f32, f32, f32);
-        
-         /**
-          * @brief Set the Bottom Width object
-          * 
-          */
-        void setBottomWidth(f32);
 
         /**
          * @brief 
          * 
          */
         glm::vec3 getPosition();
-
-        /**
-         * @brief 
-         * 
-         */
-        OBDColor* getTopColor();
-
-        /**
-         * @brief
-         */
-        OBDColor* getBottomColor();
 
         /**
          * @brief Get the Height object
@@ -84,6 +67,13 @@ class OBDBillboard {
          */
         f32 getBottomWidth();
 
+        /**
+         * @brief 
+         * 
+         * @return i32 
+         */
+        i32 getID();
+
          /**
          * @brief Get the Node object
          * 
@@ -93,6 +83,7 @@ class OBDBillboard {
 
     private:
         TNode* billboardNode;
+        i32 ID;
 };
 
 #endif
