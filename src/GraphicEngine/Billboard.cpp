@@ -1,8 +1,8 @@
 #include "Billboard.h"
 
 
-Billboard::Billboard(SceneNode* parent, i32 id, Vector3<f32> pos) {
-    billboard = Window::Instance() -> getEngine() -> createBillboard(parent -> getSceneNode(), glm::vec3(pos.x, pos.y, pos.z), id);
+Billboard::Billboard(SceneNode* parent, Vector3<f32> pos) {
+    billboard = Window::Instance() -> getEngine() -> createBillboard(parent -> getSceneNode(), glm::vec3(pos.x, pos.y, pos.z), new OBDShaderProgram(new ResourceGLSL(), new ResourceGLSL()));
 }
 
 Billboard::~Billboard() {
@@ -46,8 +46,4 @@ f32 Billboard::getTopWidth() {
 
 f32 Billboard::getBottomWidth() {
     return billboard -> getBottomWidth();
-}
-
-i32 Billboard::getID() {
-    return billboard -> getID();
 }

@@ -66,7 +66,7 @@ void OBDEngine::End(){
 }
 
 void OBDEngine::draw() {
-    glUseProgram(currentProgram->getShaderProgram());
+    glUseProgram(TEntity::cache.getID(OBDEnums::OpenGLIDs::CURRENT_PROGRAM_ID));
 
     // Clear the screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -188,9 +188,8 @@ void OBDEngine::setCurrentShaderProgram(std::string programName){
     std::map<std::string, OBDShaderProgram*>::iterator it;
     it = shaderPrograms.find(programName);
     if (it != shaderPrograms.end()){
-        currentProgram = it->second;
-        TEntity::cache.setAllIDs(currentProgram -> getParamIDs());
-        TEntity::cache.setID(OBDEnums::OpenGLIDs::CURRENT_PROGRAM_ID, currentProgram -> getShaderProgram());
+        TEntity::cache.setAllIDs(it->second -> getParamIDs());
+        TEntity::cache.setID(OBDEnums::OpenGLIDs::CURRENT_PROGRAM_ID, it->second -> getShaderProgram());
     }
 }
 
@@ -244,8 +243,8 @@ OBDAnimation* OBDEngine::createAnimation(OBDSceneNode* layer, std::string anim) 
     return new OBDAnimation(layer);
 }
 
-OBDBillboard* OBDEngine::createBillboard(OBDSceneNode* layer, glm::vec3 pos, i32 id) {
-    OBDBillboard* billboard = new OBDBillboard(layer, pos, currentProgram -> getShaderProgram(), id);
+OBDBillboard* OBDEngine::createBillboard(OBDSceneNode* layer, glm::vec3 pos, OBDShaderProgram *s) {
+    OBDBillboard* billboard = new OBDBillboard(layer, pos, s);
     return billboard;
 }
 

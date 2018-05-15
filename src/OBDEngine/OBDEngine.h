@@ -271,7 +271,7 @@ class OBDEngine {
          * @param a 
          * @param c 
          */
-        OBDBillboard* createBillboard(OBDSceneNode*, glm::vec3, i32);
+        OBDBillboard* createBillboard(OBDSceneNode*, glm::vec3, OBDShaderProgram*);
 
         /**
          * @brief Create a Skybox object
@@ -290,10 +290,9 @@ class OBDEngine {
         OBDSceneNode *clSceneNode;
         OBDSceneNode *defaultSceneNode;
 
-        OBDShaderProgram *currentProgram;
-
         std::vector<OBDCamera*> cameras;
         std::vector<OBDLight*> lights;
+
         std::map<std::string, OBDShaderProgram*> shaderPrograms;
 
 		glm::vec4 viewport;
