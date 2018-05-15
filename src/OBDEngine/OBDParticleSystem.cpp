@@ -21,7 +21,7 @@ OBDParticleSystem::OBDParticleSystem(OBDSceneNode* parent, i32 id, glm::vec3 pos
 }
 
 OBDParticleSystem::~OBDParticleSystem() {
-    delete emiter;
+    /*delete emiter;
     for (i32 i = 0; i < affectors.size(); i++) {
         delete affectors[i];
     }
@@ -29,12 +29,12 @@ OBDParticleSystem::~OBDParticleSystem() {
     delete particleSystemNode;
     delete rotationNode;
     delete translationNode;
-    delete scaleNode;
+    delete scaleNode;*/
 }
 
-void OBDParticleSystem::aetEmiter(OBDParticleEmiter* newEmiter) {
-    delete emiter;
-    emiter = newEmiter;
+void OBDParticleSystem::setEmiter(OBDParticleEmiter* newEmiter) {
+    /*delete emiter;
+    emiter = newEmiter;*/
 }
 
 void OBDParticleSystem::addAffector(OBDParticleAffector* newAffector) {
@@ -42,17 +42,17 @@ void OBDParticleSystem::addAffector(OBDParticleAffector* newAffector) {
 }
 
 void OBDParticleSystem::cleanEmiters() {
-    for (i32 i = 0; i < emiters.size(); i++) {
+    /*for (i32 i = 0; i < emiters.size(); i++) {
         delete emiters[i];
     }
-    emiters.clear();
+    emiters.clear();*/
 }
 
 void OBDParticleSystem::cleanAffectors() {
-    for (i32 i = 0; i < affectors.size(); i++) {
+    /*for (i32 i = 0; i < affectors.size(); i++) {
         delete affectors[i];
     }
-    affectors.clear();
+    affectors.clear();*/
 }
 
 TNode* OBDParticleSystem::getFirstNode() {

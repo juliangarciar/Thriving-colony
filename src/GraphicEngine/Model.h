@@ -29,6 +29,10 @@ class Model {
     private:
         scene::IMeshSceneNode *meshNode;
         scene::ITriangleSelector *selector = 0;
+
+        i32 startingFrame;
+        i32 endingFrame;
+        i32 currentFrame;
 };
 
 #endif

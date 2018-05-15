@@ -27,10 +27,10 @@ OBDEngine::~OBDEngine() {
 }
 
 void OBDEngine::Init(i32 sW, i32 sH) {
-    if (glfwInit() != GLFW_OK) {
+    /*if (glfwInit() != GLFW_OK) {
         std::cout << "Failed to initialize GLFW" << std::endl;
         exit(0);
-    }
+    }*/
 
     screenWidth = sW;
     screenHeight = sH;

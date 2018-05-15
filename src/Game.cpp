@@ -46,11 +46,9 @@ void Game::Update() {
 }
 
 void Game::Render() {
-    std::cout << "RenderInit" << std::endl;
     window -> beginScene();
     state -> Render();
     window -> endScene(stateData == Enumeration::State::GameState);
-    std::cout << "Render finish" << std::endl;
 }
 
 void Game::CleanUp() {
@@ -64,7 +62,6 @@ void Game::changeState(Enumeration::State data) {
             state -> CleanUp();
             state = menu;
             state -> Init();
-            std::cout << "________________________________________" << std::endl;
         break;
         case Enumeration::State::GameState:
             state -> CleanUp();
