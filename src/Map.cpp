@@ -2,8 +2,6 @@
 #include "Game.h"
 #include <WorldEngine/WorldGeometry.h>
 #include <OBDEngine/ResourceManager/ResourceJSON.h>
-/* */
-#include <GraphicEngine/Light.h>
 #include "Human.h"
 
 #include "IA.h"
