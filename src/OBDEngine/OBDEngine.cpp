@@ -102,11 +102,7 @@ OBDObject* OBDEngine::createObject(u32 id, std::string mesh, bool autoload) {
     ResourceOBJ *obj = (ResourceOBJ*)OBDManager->getResource(mesh, true);
     ResourceMTL *mtl = (ResourceMTL*)OBDManager->getResource(obj->getDefaultMaterialPath(), true);
     OBDObject *tempObject = new OBDObject(defaultSceneNode, id, obj, mtl);
-	if (autoload) {
-		for (std::map<std::string, OBDMaterial*>::iterator it = tempObject->getMaterials().begin(); it != tempObject->getMaterials().end(); ++it){
-			it->second->loadTextures(mtl, OBDManager, true);
-		}
-	}
+	if (autoload) loadTexturesFromMTL(tempObject, mtl, true);
     return tempObject;
 }
 
@@ -114,12 +110,38 @@ OBDObject* OBDEngine::createObject(OBDSceneNode* layer, u32 id, std::string mesh
     ResourceOBJ *obj = (ResourceOBJ*)OBDManager->getResource(mesh, true);
     ResourceMTL *mtl = (ResourceMTL*)OBDManager->getResource(obj->getDefaultMaterialPath(), true);
     OBDObject *tempObject = new OBDObject(layer, id, obj, mtl);
-	if (autoload) {
-		for (std::map<std::string, OBDMaterial*>::iterator it = tempObject->getMaterials().begin(); it != tempObject->getMaterials().end(); ++it){
-			it->second->loadTextures(mtl, OBDManager, true);
+	if (autoload) loadTexturesFromMTL(tempObject, mtl, true);
+    return tempObject;
+}
+
+void OBDEngine::loadTexturesFromMTL(OBDObject *obj, ResourceMTL *mtl, bool sync){
+	for (std::map<std::string, OBDMaterial*>::iterator it = obj->getMaterials()->begin(); it != obj->getMaterials()->end(); ++it){
+		std::map<std::string, ResourceMaterial*>::iterator resource = mtl->getResource()->find(it->second->getMaterialName());
+		std::cout << "Busco " << it->second->getMaterialName() << std::endl;
+		if (resource != mtl->getResource()->end()){
+			std::cout << "Entro" << std::endl;
+			if (resource->second->diffuseTextureMap != ""){
+				ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->diffuseTextureMap, sync);
+				it->second->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_DIFFUSE, tmp));
+			}
+			if (resource->second->ambientOclusionsTextureMap != ""){
+				ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->ambientOclusionsTextureMap, sync);
+				it->second->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_OCLUSIONS, tmp));
+			}
+			if (resource->second->specularTextureMap != ""){
+				ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->specularTextureMap, sync);
+				it->second->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_SPECULAR, tmp));
+			}
+			if (resource->second->alphaTextureMap != ""){
+				ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->alphaTextureMap, sync);
+				it->second->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_ALPHA, tmp));
+			}
+			if (resource->second->bumpMap != ""){
+				ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->bumpMap, sync);
+				it->second->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_BUMP, tmp));
+			}
 		}
 	}
-    return tempObject;
 }
 
 OBDShaderProgram *OBDEngine::createShaderProgram(std::string programName, std::string vs, std::string fs){

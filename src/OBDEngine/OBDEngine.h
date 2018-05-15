@@ -89,21 +89,26 @@ class OBDEngine {
         /**
          * @brief 
          * 
-         * @param 
-         * @param autoload
+         * @param
          * @return OBDMesh* 
          */
-        OBDObject* createObject(u32, std::string, bool = false);
+        OBDObject* createObject(u32, std::string, bool);
         
         /**
          * @brief 
          * 
          * @param 
          * @param 
-         * @param autoload
          * @return OBDMesh* 
          */
-        OBDObject* createObject(OBDSceneNode*, u32, std::string, bool = false);
+        OBDObject* createObject(OBDSceneNode*, u32, std::string, bool);
+
+        /**
+         * @brief 
+         * @param r 
+         * @param sync 
+         */
+        void loadTexturesFromMTL(OBDObject *, ResourceMTL *m, bool = true);
 
         /**
          * @brief Create a Shader Program object

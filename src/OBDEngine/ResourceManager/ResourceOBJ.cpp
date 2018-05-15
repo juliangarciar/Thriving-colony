@@ -4,7 +4,7 @@
 #include <glm/glm.hpp>
 
 ResourceOBJ::ResourceOBJ(){
-
+	meshArray = new std::map<std::string, ResourceMesh*>();
 }
 
 ResourceOBJ::~ResourceOBJ(){
@@ -82,12 +82,12 @@ void ResourceOBJ::load(const char *path){
         tempMesh->indices = std::vector<u32>(curMesh.Indices.begin(), curMesh.Indices.end());
         tempMesh->defaultMaterialName = curMesh.MeshMaterial.name;
 
-        meshArray.insert(std::pair<std::string, ResourceMesh*>(curMesh.MeshName, tempMesh));
+        meshArray->insert(std::pair<std::string, ResourceMesh*>(curMesh.MeshName, tempMesh));
     }
 }
 
 void ResourceOBJ::release(){
-    meshArray.clear();
+    meshArray->clear();
 }
 
 void ResourceOBJ::setIdentifier(const char *i){
@@ -98,7 +98,7 @@ const char *ResourceOBJ::getIdentifier(){
     return identifier;
 }
 
-std::map<std::string, ResourceMesh*> ResourceOBJ::getResource(){
+std::map<std::string, ResourceMesh*> *ResourceOBJ::getResource(){
     return meshArray;
 }
 

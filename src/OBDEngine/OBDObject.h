@@ -64,7 +64,7 @@ class OBDObject : public OBDEntity {
          * 
          * @return std::map<std::string, OBDMesh*> 
          */
-        std::map<std::string, OBDMesh*> getMeshes();
+        std::map<std::string, OBDMesh*> *getMeshes();
 
         /**
          * @brief Get the OBDMaterial object
@@ -78,7 +78,7 @@ class OBDObject : public OBDEntity {
          * 
          * @return std::map<std::string, OBDMaterial*> 
          */
-        std::map<std::string, OBDMaterial*> getMaterials();
+        std::map<std::string, OBDMaterial*> *getMaterials();
 
 		/**
 		 * @brief Get the Bounding Box object
@@ -103,8 +103,8 @@ class OBDObject : public OBDEntity {
     private:
 		aabb::AABB boundingBox;
 
-        std::map<std::string, OBDMesh*> meshes;
-        std::map<std::string, OBDMaterial*> materials;
+        std::map<std::string, OBDMesh*> *meshes;
+        std::map<std::string, OBDMaterial*> *materials;
 		
         u32 ID;
 };

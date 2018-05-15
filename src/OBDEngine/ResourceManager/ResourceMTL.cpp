@@ -4,7 +4,7 @@
 #include <objloader/OBJ_Loader.h>
 
 ResourceMTL::ResourceMTL(){
-
+	materialArray = new std::map<std::string, ResourceMaterial*>();
 }
 
 ResourceMTL::~ResourceMTL(){
@@ -46,12 +46,12 @@ void ResourceMTL::load(const char *path){
         if (curMat.map_d != "") tempMat -> alphaTextureMap = ret+curMat.map_d;
         if (curMat.map_bump != "") tempMat -> bumpMap = ret+curMat.map_bump;
         
-        materialArray.insert(std::pair<std::string, ResourceMaterial*>(curMat.name, tempMat));
+        materialArray->insert(std::pair<std::string, ResourceMaterial*>(curMat.name, tempMat));
     }
 }
 
 void ResourceMTL::release(){
-    materialArray.clear();
+    materialArray->clear();
 }
 
 void ResourceMTL::setIdentifier(const char *i){
@@ -62,6 +62,6 @@ const char *ResourceMTL::getIdentifier(){
     return identifier;
 }
 
-std::map<std::string, ResourceMaterial*> ResourceMTL::getResource(){
+std::map<std::string, ResourceMaterial*> *ResourceMTL::getResource(){
     return materialArray;
 }

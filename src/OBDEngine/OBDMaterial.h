@@ -5,8 +5,8 @@
 #include "OBDEnums.h"
 
 #include "OBDColor.h"
+#include "OBDTexture.h"
 
-#include "Graphics/TTexture.h"
 #include "ResourceManager/ResourceMTL.h"
 
 class OBDMaterial {
@@ -15,13 +15,6 @@ class OBDMaterial {
 		OBDMaterial(ResourceMTL*, std::string);
 		~OBDMaterial();
 
-        /**
-         * @brief 
-         * @param r 
-         * @param sync 
-         */
-        void loadTextures(ResourceMTL *m, ResourceManager*, bool);
-
 		void setMaterialName(std::string);
 
 		void setAmbientColor(OBDColor);
@@ -29,7 +22,7 @@ class OBDMaterial {
 		void setSpecularColor(OBDColor);
 		void setSpecularShininess(i32);
 
-		void setTexture(OBDEnums::TextureTypes, TTexture *);
+		void setTexture(OBDTexture *);
 
 		std::string getMaterialName();
 

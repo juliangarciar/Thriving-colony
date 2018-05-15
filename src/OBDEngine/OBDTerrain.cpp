@@ -39,7 +39,7 @@ OBDTerrain::~OBDTerrain() {
 
 void OBDTerrain::setTexture(OBDTexture* t){
     TMesh* m = (TMesh*) terrainNode -> getEntity();
-    m -> getMaterial() -> setTexture(t->getType(), t->getTexture());
+    m -> getMaterial() -> setTexture(t);
 }
 
 TMesh *OBDTerrain::getTerrainMesh(){
