@@ -74,7 +74,7 @@ Building::~Building() {
     delete buildTimer;
     delete barBg;
     delete bar;
-    delete particle;
+    //delete particle;
 }
 
 void Building::update() {
