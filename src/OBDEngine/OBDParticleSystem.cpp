@@ -1,9 +1,10 @@
 #include "OBDParticleSystem.h"
 #include "Graphics/TParticleSystem.h"
 
-OBDParticleSystem::OBDParticleSystem(OBDSceneNode* parent) : OBDEntity(parent) {
+OBDParticleSystem::OBDParticleSystem(OBDSceneNode* parent, glm::vec3 pos) : OBDEntity(parent) {
     particleSystemNode = new TNode(new TParticleSystem()); 
 	parent -> addChild(this);
+    position = pos;
 }
 
 OBDParticleSystem::~OBDParticleSystem() {
@@ -28,4 +29,11 @@ void OBDParticleSystem::clearAffectors() {
         delete affectors[i];
     }
     affectors.clear();
+}
+
+void OBDParticleSystem::createPointEmitter(glm::vec3 direction, i32 particlesPerSecond, OBDColor startColor, i32 lifeTime, i32 maxAngleDegrees, glm::vec2 startSize) {
+    std::vector<TParticle*> particles;
+    for (i32 i = 0; i < particlesPerSecond; i ++) {
+        particles.push_back(new TParticle(startColor, startColor, lifeTime, 0, position, direction, direction, startSize, startSize));
+    }
 }
