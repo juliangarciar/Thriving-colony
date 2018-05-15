@@ -33,8 +33,8 @@ class Box2D
         Vector2<f32> m_vTopRight;
         Vector2<f32> m_vBottomLeft;
         
-        f32 halfSizeX;
-        f32 halfSizeY;
+        //f32 halfSizeX;
+        //f32 halfSizeY;
 };
   
 #endif /* BOX2D_H */

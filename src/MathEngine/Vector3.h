@@ -26,7 +26,7 @@ class Vector3 {
         Vector3<T> rotateFromPoint(f32 r, f32 phi, f32 theta);
         Vector3<T> getDistanceTo(Vector3<T> other);
 
-        Vector2<T> toVector2();
+        Vector2<T> toVector2() const;
         
         bool operator ==(const Vector3<T> &p) const;
         bool operator !=(const Vector3<T> &p) const;

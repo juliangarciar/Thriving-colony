@@ -152,7 +152,7 @@ class BuildingManager {
 		 * 
 		 * @return BuildingData 
 		 */
-		BuildingData getBuildingData(std::string);
+		const BuildingData& getBuildingData(std::string) const;
 
 	private:
 		//Player's team: Enumeration::Team::Human or Enumeration::Team::IA.

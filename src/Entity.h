@@ -146,7 +146,7 @@ class Entity {
          * 
          * @return Box2D that will be the value of hitbox variable.
          */
-        Box2D getHitbox() const;
+        const Box2D& getHitbox() const;
 
         /**
 	     * @brief Get the current hp of the entity.

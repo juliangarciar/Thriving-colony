@@ -227,7 +227,7 @@ class UnitManager{
          * 
          * @return
          */
-		UnitData getUnitData(std::string);
+		const UnitData& getUnitData(std::string) const;
 
     private:
         //Player's team: Enumeration::Team::Human or Enumeration::Team::IA.

@@ -40,7 +40,7 @@ class IA : public Player {
          * 
          * @return Vector2 that will be the position where the next uilding wiil be built.
          */
-        Vector2<f32> determinatePositionBuilding();
+        Vector2<f32> determinatePositionBuilding(const Box2D& buildingHitbox) const;
 
         /**
          * @brief Initialize all choices that can do the AI player.

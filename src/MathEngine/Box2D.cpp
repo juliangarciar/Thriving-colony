@@ -4,27 +4,21 @@ Box2D::Box2D():m_vTopLeft(0, 0),
                m_vBottomRight(0, 0),
                m_vCenter(0, 0),
                m_vTopRight(0, 0),
-               m_vBottomLeft(0, 0),
-               halfSizeX(0),
-               halfSizeY(0)
+               m_vBottomLeft(0, 0)
 {}
 
 Box2D::Box2D(Vector2<f32> vectorPosition, f32 sizeX, f32 sizeY):m_vTopLeft(0, 0),
                                                                 m_vBottomRight(0, 0),
                                                                 m_vCenter(0, 0),
                                                                 m_vTopRight(0, 0),
-                                                                m_vBottomLeft(0, 0),
-                                                                halfSizeX(sizeX),
-                                                                halfSizeY(sizeY)
+                                                                m_vBottomLeft(0, 0)
 {}
 
 Box2D::Box2D(Vector2<f32> tl, Vector2<f32> br):m_vTopLeft(tl),
                                                m_vBottomRight(br),
                                                m_vCenter((tl + br) / 2.0f),
                                                m_vTopRight(br.x, tl.y),
-                                               m_vBottomLeft(tl.x, br.y),
-                                               halfSizeX((br.x - tl.x) / 2.0f),
-                                               halfSizeY((br.y - tl.y) / 2.0f)
+                                               m_vBottomLeft(tl.x, br.y)
 {}
 
 void Box2D::moveHitbox(f32 x, f32 y){

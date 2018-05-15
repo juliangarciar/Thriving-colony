@@ -116,82 +116,13 @@ BehaviourTree* IA::getTree() {
 * until find the first empty position
 */
 
-/* ToDo: Cambiar algoritmo de construccion */
-
-Vector2<f32> IA::determinatePositionBuilding() {
-    Vector2<f32> v;
-    bool found = false;
-    bool occupied = false;
-    std::map<i32, Building*> *b = buildings -> getBuildings();
-
-    // If it is the first building start always on the same position
-    if (b -> size() == 0) { 
-        /**
-         * These coordinates determine the position of the main building
-         * the y component of it is determined based on the map
-         */
-		//ToDo: parametrizar
-        f32 startingX = 2000;
-        f32 startingZ = 2000;
-        v.set(startingX, startingZ);
-        v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.y);
-    } else {
-        //When there are some buildings
-        Vector2<f32> v2;
-        Vector2<f32> v3;
-        for (std::map<i32,Building*>::iterator it = b -> begin(); it != b -> end() && found == false; ++it){
-            v2 = it -> second -> getPosition();
-            occupied = false;
-            v = Vector2<f32>(v2 . x, v2 . y + 300);
-            for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
-                v3 = it2 -> second -> getPosition();
-                if (v3 . x == v.x && v3 . y == v.y) {
-                    occupied = true;
-                }
-            }
-            if (occupied == false ) {
-                found = true;
-            } else {
-                v = Vector2<f32>(v2 . x + 300, v2 . y);
-                occupied = false;
-                for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
-                    v3 = it2 -> second -> getPosition();
-                    if (v3 . x == v.x && v3 . y == v.y) {
-                        occupied = true;
-                    }
-                }
-                if (occupied == false ) {
-                    found = true;
-                } else {
-                    v = Vector2<f32>(v2 . x, v2 . y - 300);
-                    occupied = false;
-                    for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
-                        v3 = it2 -> second -> getPosition();
-                        if (v3 . x == v.x && v3 . y == v.y) {
-                            occupied = true;
-                        }
-                    }
-                    if (occupied == false ) {
-                        found = true;
-                    } else {
-                        v = Vector2<f32>(v2 . x - 300, v2 . y);
-                        occupied = false;
-                        for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
-                            v3 = it2 -> second -> getPosition();
-                            if (v3 . x == v.x && v3 . y == v.y) {
-                                occupied = true;
-                            }
-                        }
-                        if (occupied == false ) {
-                            found = true;
-                        }
-                    }
-                }
-            }
-        }
-        v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.y);
-    }
-    return v;
+Vector2<f32> IA::determinatePositionBuilding(const Box2D& buildingHitbox) const{
+    /* Mira que algoritmo mas crema */
+    Vector2<f32> dummy = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(),
+                                                                 hallPosition.toVector2(),
+                                                                 buildingHitbox,
+                                                                 true)->getPosition();
+    return dummy;
 }
 
 bool IA::getUnderAttack() {

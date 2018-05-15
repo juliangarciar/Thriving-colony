@@ -18,7 +18,7 @@ bool PathManager::createPathTo(Vector2<f32> targetPos){
     Cell* end = WorldGeometry::Instance()->positionToCell(targetPos);
 
     if(end->isBlocked()){
-        end = WorldGeometry::Instance()->getValidCell(end, origin);
+        end = WorldGeometry::Instance()->getValidCell(targetPos, initPos, propietary->getHitbox());
         finalPos = end->getPosition();
     }
     else{
@@ -34,13 +34,12 @@ bool PathManager::createPathTo(Vector2<f32> targetPos){
     if(finalPath.back() != finalPos){
         finalPath.push_back(finalPos);
     }
-    std::cout << "Path sin smooth: " << finalPath.size() << "\n";
+    std::cout << "Path sin smooth: " << finalPath.size();
     if(finalPath.size() > 2){
         // ToDo: fix
         smoothPath(finalPath);
-        
     }    
-    std::cout << "Path con smooth: " << finalPath.size() << "\n";
+    std::cout << ". Con smooth: " << finalPath.size() << ".\n";
     propietary->setPath(finalPath);
 
     return true;

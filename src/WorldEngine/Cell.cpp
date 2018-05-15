@@ -63,6 +63,7 @@ Vector2<f32> Cell::getPosition() const{
 Building* Cell::getInhabitingBuilding() const{
     return inhabitingBuilding;
 }
+/* This should be const, but we haven't planned the unitSensor for now */
 const std::vector<Unit*>& Cell::getInhabitingUnits(){
     for(std::size_t i = 0; i < inhabitingUnits.size(); i++){
         if(inhabitingUnits[i] == nullptr){

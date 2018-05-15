@@ -57,19 +57,6 @@ Entity::Entity(SceneNode* _layer,
     
     //Set texture
     //model->setMaterial(new Material(new Texture(_texturePath.c_str())));
-
-    /* Box2D parameters */
-    Vector2<f32> topLeft;
-    Vector2<f32> bottomRight;
-
-    /* Set the 2D hitbox params */
-    topLeft.x = (kCellsX / 2.0) * (-cSize);
-    topLeft.y = (kCellsY / 2.0) * (-cSize);
-    bottomRight.x = (kCellsX / 2.0) * (cSize);
-    bottomRight.y = (kCellsY / 2.0) * (cSize);
-
-    /* Set the 2D hitbox */
-    hitBox = Box2D(topLeft, bottomRight); 
 }
 
 //ToDo: revisar
@@ -157,7 +144,7 @@ Vector2<f32> Entity::getPosition() const{
     return vectorPos;
 }
 
-Box2D Entity::getHitbox() const{
+const Box2D& Entity::getHitbox() const{
     return hitBox;
 }
 

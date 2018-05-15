@@ -69,7 +69,7 @@ Vector3<T> Vector3<T>::rotateFromPoint(f32 r, f32 phi, f32 theta) {
 }
 
 template <class T>
-Vector2<T> Vector3<T>::toVector2(){
+Vector2<T> Vector3<T>::toVector2() const{
     Vector2<T> dummy;
     dummy.x = this->x;
     dummy.y = this->z;

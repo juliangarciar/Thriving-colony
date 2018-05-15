@@ -121,9 +121,11 @@ void WorldGeometry::Clear(){
     cellsDistance.clear();
     delete quadTree;
 }
+
 void WorldGeometry::build(Building* buildingPtr){
     quadTree->insertBuilding(buildingPtr);
 }
+
 void WorldGeometry::updateUnitCell(Vector2<f32> oldPosition, Vector2<f32> newPosition, Unit* unitPtr){
     Cell* oldCell = positionToCell(oldPosition);
     Cell* newCell = positionToCell(newPosition);
@@ -135,14 +137,22 @@ void WorldGeometry::updateUnitCell(Vector2<f32> oldPosition, Vector2<f32> newPos
 void WorldGeometry::clearUnitCell(Vector2<f32> positionVector, Unit* unitPtr){
     positionToCell(positionVector)->clearInhabitingUnit(unitPtr);
 }
+
 void WorldGeometry::setUnitCell(Vector2<f32> positionVector, Unit* unitPtr){
     positionToCell(positionVector)->setInhabitingUnit(unitPtr);
 }
-bool WorldGeometry::checkBuildingSpace(const Box2D& hitBox){
-    Box2D dummy = hitBox.getAmplifiedBox(cellSize / 4.0f);
-    return quadTree->canBuild(dummy);
+
+bool WorldGeometry::checkHitBoxCollision(const Box2D& hitBox, bool amplifyBox) const{
+    if(amplifyBox){
+        Box2D dummy = hitBox.getAmplifiedBox(cellSize / 4.0f);
+        return quadTree->checkCollision(dummy);
+    }
+    else{
+        return quadTree->checkCollision(hitBox);
+    }
 }
-Vector2<f32> WorldGeometry::correctBuildingPosition(Vector2<f32> targetPos, Building *buildingPtr){
+
+Vector2<f32> WorldGeometry::correctBuildingPosition(Vector2<f32> targetPos, Building *buildingPtr) const{
     Vector2<f32> correctOne(0, 0);
     if(buildingPtr != nullptr){
         Cell* dummy = positionToCell(targetPos);
@@ -164,14 +174,17 @@ Vector2<f32> WorldGeometry::correctBuildingPosition(Vector2<f32> targetPos, Buil
     }
     return correctOne;
 }
-/* !! */
+
+/* Semms that is working (yay) */
 /* NEEDS A HARD CLEAN !!! */
-Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin){
+/* Change to vector2 */
+Cell* WorldGeometry::getValidCell(Vector2<f32> referenceTarget, Vector2<f32> referenceOrigin, const Box2D& entityHitbox, bool amplifyBox) const{
+    Box2D dummyHitbox = entityHitbox;
     /* The wanted Cell */
     Cell* validCell = nullptr;
     /* Intended swap */
-    //Cell* sourceCell = referenceTarget;
-    Cell* targetCell = referenceOrigin;
+    Cell* sourceCell = positionToCell(referenceTarget);
+    Cell* targetCell = positionToCell(referenceOrigin);
     //i32 sourceIndex = sourceCell->getIndex();
     //i32 targetIndex = targetCell->getIndex();
     /* Check what's needed and what's not */
@@ -182,14 +195,19 @@ Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin){
     std::vector< Cell* > searchFrontier = std::vector<Cell*>(maxCells, nullptr);
     /* Priority queue, that orders the weights of each iterated Cell */
     IndexedPriorityQLow<float> pq(FCosts, maxCells);
-    pq.insert(referenceTarget->getIndex());
+    pq.insert(sourceCell->getIndex());
     /* Algorithm start */ 
     while(!pq.empty()){
         i32 closestIndex = pq.Pop();
     /* Adds the cell to the path vector */
         shortestPath[closestIndex] = searchFrontier[closestIndex];
     /* Stop condition, research about a system of conditions */
-        if(!indexToCell(closestIndex)->isBlocked()){
+        //if(!indexToCell(closestIndex)->isBlocked()){
+        //    validCell = indexToCell(closestIndex);
+        //    return validCell; 
+        //}
+        dummyHitbox.moveHitbox(indexToCell(closestIndex)->getPosition());
+        if(checkHitBoxCollision(dummyHitbox, amplifyBox)){
             validCell = indexToCell(closestIndex);
             return validCell; 
         }
@@ -220,6 +238,7 @@ Cell* WorldGeometry::getValidCell(Cell* referenceTarget, Cell* referenceOrigin){
     }
     return validCell;
 }
+
 Cell* WorldGeometry::positionToCell(Vector2<f32> position) const{
     i32 idx = (i32)((maxCellsX) * position.x / mapAxis.x) + 
                 ((i32)((maxCellsY) * position.y / mapAxis.y) * maxCellsX);
@@ -235,17 +254,21 @@ Cell* WorldGeometry::positionToCell(Vector2<f32> position) const{
     
     return tmp;
 }
-Cell* WorldGeometry::indexToCell(i32 index){
+
+Cell* WorldGeometry::indexToCell(i32 index) const{
     return mCells[index];
 }
-f32 WorldGeometry::calculateDistance(Vector2<f32> a, Vector2<f32> b){
+
+f32 WorldGeometry::calculateDistance(Vector2<f32> a, Vector2<f32> b) const{
     f32 dX = b.x - a.x;
     f32 dY = b.y - a.y;
     return std::sqrt(std::pow(dX, 2) + std::pow(dY,2));
 }
-f32 WorldGeometry::getCost(i32 indexA, i32 indexB){
+
+f32 WorldGeometry::getCost(i32 indexA, i32 indexB) const{
     return cellsDistance[indexA][indexB];
 }
+
 std::vector< Unit* > WorldGeometry::getNeighborUnits(Vector2<f32> positionVector){
     std::vector< Unit* > neighborUnits;
     std::vector< Cell* > neighborCells = positionToCell(positionVector)->getNeighbors();
@@ -258,55 +281,22 @@ std::vector< Unit* > WorldGeometry::getNeighborUnits(Vector2<f32> positionVector
     }
     return neighborUnits;
 }
-const std::vector<Cell*>& WorldGeometry::getNeighbors(i32 index){
+
+const std::vector<Cell*>& WorldGeometry::getNeighbors(i32 index) const{
     return mCells[index]->getNeighbors();
 }
-const std::vector<Cell*>& WorldGeometry::getCells(){
+
+const std::vector<Cell*>& WorldGeometry::getCells() const{
     return mCells;
 }
-const std::vector< std::vector<f32> >& WorldGeometry::getCellsDistance(){
+
+const std::vector< std::vector<f32> >& WorldGeometry::getCellsDistance() const{
     return cellsDistance;
 }
+
 const Vector2<f32> WorldGeometry::getSquadPosition(i32 _size, i32 _index) const{
     return squadPosition[_size][_index];
 }
-/* This is a fucking disaster, but works more or less */
-//bool WorldGeometry::checkCollision(Vector2<f32> _orig, Vector2<f32> _end, f32 _halfsizeX, f32 _halfsizeY) const{
-//    // Create the hitbox and the minimun distance to move
-//    const f32 distanceMove = 40.0f;
-//    Box2D hitBox(_halfsizeX, _halfsizeY);
-//    hitBox.moveHitbox(_orig);
-//
-//    // Create vectorDir and the vectorOrigen which will save the actual position
-//    Vector2<f32> vectorDir(_end - _orig);
-//    Vector2<f32> vectorOrigen(_orig);
-//
-//    // Get the distance between both points and calculate the num of steps
-//    f32 length = std::sqrt(std::pow(vectorDir.x, 2) + std::pow(vectorDir.y, 2));
-//    f32 stepsBrute = length / distanceMove;
-//    f32 steps = std::floor(stepsBrute);
-//    stepsBrute -= steps;
-//
-//    // Calculate the vectorDir and multiples by the 'speed'
-//    vectorDir = vectorDir / length;
-//    vectorDir = vectorDir * distanceMove;
-//
-//    for(i32 i = 0; i < steps; i++){
-//        vectorOrigen += vectorDir;
-//        hitBox.moveHitbox(vectorOrigen);
-//        std::cout << "Posicion hitbox: " << vectorOrigen.x << " , " << vectorOrigen.y << "\n";
-//        if(quadTree->canBuild(hitBox)){
-//            return true;
-//        }
-//    }
-//    // Last steps
-//    vectorOrigen += vectorDir * stepsBrute;
-//    if(quadTree->canBuild(hitBox)){
-//        return true;
-//    }
-//
-//    return false;
-//}
 
 // Line collision test (faster, but less precise) - maybe is not working properly (can crash)
 bool WorldGeometry::checkCollision(Vector2<f32> _orig, Vector2<f32> _end) const{
@@ -322,10 +312,7 @@ bool WorldGeometry::checkCollision(Vector2<f32> _orig, Vector2<f32> _end) const{
                                      std::pow(vectorDirection.y, 2)));
         
         // Calculate speed vector
-        std::cout << "Starting smoothpathing \n";
         vectorDirection = (vectorDirection / length) * speed;
-        //std::cout << "VectorDirection: " << vectorDirection.x << " , " << vectorDirection.y << "\n";
-        //std::cout << "Total Distance" << length << "\n";
         // Iterate line collision
         while(totalDistance < length){
             vectorOrig += vectorDirection;
@@ -334,7 +321,6 @@ bool WorldGeometry::checkCollision(Vector2<f32> _orig, Vector2<f32> _end) const{
                 return true;
             }
         }
-        std::cout << "Ending smoothpathing \n";
     }
    
     return false;

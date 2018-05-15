@@ -87,7 +87,7 @@ void BuildingManager::drawBuilding() {
 				canBuild = false;
 			}
 			else{
-				canBuild = WorldGeometry::Instance()->checkBuildingSpace(tempBuilding->getHitbox());
+				canBuild = WorldGeometry::Instance()->checkHitBoxCollision(tempBuilding->getHitbox(), true);
 			}
 		}
 
@@ -250,13 +250,14 @@ Building *BuildingManager::getBuilding(i32 id){
 		return nullptr;
 }
 
-BuildingData BuildingManager::getBuildingData(std::string type){
-	std::map<std::string, BuildingData>::iterator it = baseBuildings.find(type);
-	if (it != baseBuildings.end()){
-		return it->second;
-	} else {
+const BuildingData& BuildingManager::getBuildingData(std::string type) const{
+	std::map<std::string, BuildingData>::const_iterator it = baseBuildings.find(type);
+	/*if (it != baseBuildings.end()){
+		//return &it->second;
+	}*/ if (it == baseBuildings.end()) {
 		std::cout << "El tipo de edificio " << type << " no es valido." << std::endl;
 		exit(0);
-		return BuildingData();
+		//return BuildingData();
 	}
+	return it->second;
 }

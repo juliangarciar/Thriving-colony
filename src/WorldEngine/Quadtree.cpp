@@ -122,7 +122,7 @@ void Quadtree::assignNeighbors(Cell* cellPtr){
     }
 }
 
-bool Quadtree::canBuild(const Box2D& otherHitbox) const{
+bool Quadtree::checkCollision(const Box2D& otherHitbox) const{
     bool newCenter = true;
     
     if(this->depth == 0){
@@ -136,7 +136,7 @@ bool Quadtree::canBuild(const Box2D& otherHitbox) const{
     else{
         for(i32 i = 0; i < 4; i++){
             if(innerTrees[i]->getHitbox().isOverlappedWith(otherHitbox)){
-                newCenter = innerTrees[i]->canBuild(otherHitbox);
+                newCenter = innerTrees[i]->checkCollision(otherHitbox);
                 if(!newCenter){
                     return newCenter;
                 }

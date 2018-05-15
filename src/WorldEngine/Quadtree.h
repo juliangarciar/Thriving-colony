@@ -52,7 +52,7 @@ class Quadtree{
          * @return true If collides
          * @return false Else
          */
-        bool canBuild(const Box2D& otherHitbox) const;
+        bool checkCollision(const Box2D& otherHitbox) const;
         /**
          * @brief Returns a reference to the hitbox of the quadtree
          * 

@@ -4,8 +4,8 @@
 #include <vector>
 #include <Types.h>
 #include <MathEngine/Vector2.h>
+#include <WorldEngine/Cell.h>
 
-class Cell;
 class Quadtree;
 class Unit;
 class Building;
@@ -55,9 +55,7 @@ class WorldGeometry{
          * @return true 
          * @return false 
          */
-        bool checkBuildingSpace(const Box2D& hitBox);
-        /* To implement */
-        //bool checkCollisions(Box2D& hitBox, Vector2<f32> originPosition, Vector2<f32> targetPosition);
+        bool checkHitBoxCollision(const Box2D& hitBox, bool amplifyBox = false) const;
         /**
          * @brief Returns a correct position to construct in
          * 
@@ -66,7 +64,7 @@ class WorldGeometry{
          * @param collision Assigns true or false, depending if it collides with already built buildings
          * @return Vector2<f32> The correct position
          */
-        Vector2<f32> correctBuildingPosition(Vector2<f32> targetPos, Building* buildingPtr);
+        Vector2<f32> correctBuildingPosition(Vector2<f32> targetPos, Building* buildingPtr) const;
         /**
          * @brief Returns a valid cell, depending on the search mode
          * Case buildingPtr == nullptr -> searchs for the nearest cell to the reference target (non-blocked)
@@ -78,7 +76,7 @@ class WorldGeometry{
          * @param searchMode 0 || 1
          * @return Cell* The wanted Cell 
          */
-        Cell* getValidCell(Cell* referenceTarget, Cell* referenceOrigin);
+        Cell* getValidCell(Vector2<f32> referenceTarget, Vector2<f32> referenceOrigin, const Box2D& entityHitbox, bool amplifyBox = false) const;
         /**
          * @brief Transforms a position (Vector2) into the cell that collides with
          * 
@@ -92,7 +90,7 @@ class WorldGeometry{
          * @param index The index in the cell's vector
          * @return Cell* The indexed cell
          */
-        Cell* indexToCell(i32 index);
+        Cell* indexToCell(i32 index) const;
         /**
          * @brief Calculates the distance between two given points, it doesn't matter the order
          * 
@@ -100,7 +98,7 @@ class WorldGeometry{
          * @param b Point 2
          * @return f32 The distance in float format
          */
-        f32 calculateDistance(Vector2<f32> a, Vector2<f32> b);
+        f32 calculateDistance(Vector2<f32> a, Vector2<f32> b) const;
         /**
          * @brief Given two cell's index, calculates the cost to travel from one to another
          * 
@@ -108,7 +106,7 @@ class WorldGeometry{
          * @param indexB The cell index where the unit pretend to go
          * @return f32 The distance between them in float format
          */
-        f32 getCost(i32 indexA, i32 indexB);
+        f32 getCost(i32 indexA, i32 indexB) const;
         /* New method */
         std::vector< Unit* > getNeighborUnits(Vector2<f32> positionVector);
         /**
@@ -117,19 +115,19 @@ class WorldGeometry{
          * @param index The index of the cell
          * @return const std::vector<Cell*>& The reference
          */
-        const std::vector<Cell*>& getNeighbors(i32 index);
+        const std::vector<Cell*>& getNeighbors(i32 index) const;
         /**
          * @brief Returns a reference to the cell's vector
          * 
          * @return const std::vector<Cell*>& Self-explanatory
          */
-        const std::vector<Cell*>& getCells();
+        const std::vector<Cell*>& getCells() const;
         /**
          * @brief A reference to the distance between cells vector
          * 
          * @return const std::vector< std::vector<f32> >& Self-explanatory
          */
-        const std::vector< std::vector<f32> >& getCellsDistance();
+        const std::vector< std::vector<f32> >& getCellsDistance() const;
 
         //New method
         const Vector2<f32> getSquadPosition(i32 _size, i32 _index) const; 
