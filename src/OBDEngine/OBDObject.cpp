@@ -4,11 +4,11 @@ OBDObject::OBDObject(OBDSceneNode* p, u32 id, ResourceOBJ *obj, ResourceMTL *mtl
     std::map<std::string, ResourceMesh*> meshmap = obj->getResource();
 
     for (std::map<std::string, ResourceMesh*>::iterator it = meshmap.begin(); it != meshmap.end(); ++it) {
-		OBDMaterial *tempMat = new OBDMaterial(mtl, it->second->defaultMaterialName);
-
 		glslMesh *tmp = new glslMesh();
 		tmp->vbo = it->second->vbo;
 		tmp->ibo = it->second->indices;
+
+		OBDMaterial *tempMat = new OBDMaterial(mtl, it->second->defaultMaterialName);
 
         OBDMesh *tempMesh = new OBDMesh(tmp, tempMat);
 		tempMesh->setMaterialName(it->second->defaultMaterialName);
@@ -18,7 +18,7 @@ OBDObject::OBDObject(OBDSceneNode* p, u32 id, ResourceOBJ *obj, ResourceMTL *mtl
         scaleNode->addChild(tempMesh->getFirstNode());
 
         meshes.insert(std::pair<std::string, OBDMesh*>(it->second->name, tempMesh));
-        materials.insert(std::pair<std::string, OBDMaterial*>(it->second->name, tempMat));
+        materials.insert(std::pair<std::string, OBDMaterial*>(it->second->defaultMaterialName, tempMat));
     }
 
 	ID = id;
@@ -38,12 +38,6 @@ OBDObject::~OBDObject(){
     meshes.clear();
 	
 	if (parent != nullptr) parent -> removeBoundingBox(ID);
-}
-
-void OBDObject::loadTextures(ResourceManager *r, bool sync){
-    for (std::map<std::string, OBDMesh*>::iterator it = meshes.begin(); it != meshes.end(); ++it) {
-        it->second->loadTextures(r, sync);
-    }
 }
 
 void OBDObject::refreshBoundingBox(){
@@ -67,7 +61,15 @@ void OBDObject::refreshModelMatrix(glm::mat4 parent){
 	}
 }
 
-void OBDObject::setMaterial(ResourceMTL *mtl) {
+void OBDObject::setMaterial(std::string s, OBDMaterial *mtl){
+	std::map<std::string, OBDMesh*>::iterator it = meshes.find(s);
+	if (it != meshes.end()){
+		it->second->setMaterial(mtl);
+		materials[s] = mtl;
+	}
+}
+
+void OBDObject::setMaterials(ResourceMTL *mtl) {
 	//Delete previous materials
     for (std::map<std::string, OBDMaterial*>::iterator i = materials.begin(); i != materials.end(); ++i) {
 		delete i->second;
@@ -82,18 +84,6 @@ void OBDObject::setMaterial(ResourceMTL *mtl) {
     }
 }
 
-void OBDObject::setMaterial(std::string s, OBDMaterial *mtl){
-	std::map<std::string, OBDMesh*>::iterator it = meshes.find(s);
-	if (it != meshes.end()){
-		it->second->setMaterial(mtl);
-		materials[s] = mtl;
-	}
-}
-
-u32 OBDObject::getMeshAmount(){
-    return meshes.size();
-}
-
 OBDMesh *OBDObject::getMesh(std::string meshName){
 	std::map<std::string, OBDMesh*>::iterator i = meshes.find(meshName);
 	if (i != meshes.end()) return i->second;
@@ -102,6 +92,10 @@ OBDMesh *OBDObject::getMesh(std::string meshName){
 
 std::map<std::string, OBDMesh*> OBDObject::getMeshes(){
     return meshes;
+}
+
+u32 OBDObject::getMeshAmount(){
+    return meshes.size();
 }
 
 OBDMaterial *OBDObject::getMaterial(std::string meshName){

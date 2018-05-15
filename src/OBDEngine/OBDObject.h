@@ -26,19 +26,17 @@ class OBDObject : public OBDEntity {
          */
         virtual ~OBDObject();
 
-        /**
-         * @brief 
-         * @param r 
-         * @param sync 
-         */
-        void loadTextures(ResourceManager*, bool);
+		/**
+		 * @brief 
+		 * 
+		 */
+		void refreshModelMatrix(glm::mat4);
 
-        /**
-         * @brief Set the Material object
-         * 
-         * @param mtl 
-         */
-        void setMaterial(ResourceMTL *mtl);
+		/**
+		 * @brief 
+		 * 
+		 */
+		void refreshBoundingBox();
 
         /**
          * @brief Set the Material object
@@ -47,17 +45,12 @@ class OBDObject : public OBDEntity {
          */
         void setMaterial(std::string, OBDMaterial *mtl);
 
-		/**
-		 * @brief 
-		 * 
-		 */
-		void refreshBoundingBox();
-
-		/**
-		 * @brief 
-		 * 
-		 */
-		void refreshModelMatrix(glm::mat4);
+        /**
+         * @brief Set the Material object
+         * 
+         * @param mtl 
+         */
+        void setMaterials(ResourceMTL *mtl);
 
         /**
          * @brief Get the Mesh object

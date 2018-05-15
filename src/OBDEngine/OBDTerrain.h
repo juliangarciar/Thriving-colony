@@ -61,11 +61,6 @@ class OBDTerrain : public OBDEntity {
 		 */
 		TMesh *getTerrainMesh();
 	private:
-		void generateTerrain(const char *path, f32 y_offset, f32 y_scale, i32 step);
-
-		glslMesh *mesh;
-		glslMaterial *material;
-
 		TerTerrain *terrain;
 		SDF *octree;
 		std::vector<glm::vec3> vertex_vector;

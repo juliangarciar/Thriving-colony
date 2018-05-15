@@ -4,6 +4,8 @@
 #include "TEntity.h"
 #include "TTexture.h"
 
+#include "../OBDMaterial.h"
+
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 class TMesh : public TEntity {
@@ -12,7 +14,7 @@ class TMesh : public TEntity {
          * @brief 
          * 
          */
-        TMesh(glslMesh*, glslMaterial*);
+        TMesh(glslMesh*, OBDMaterial*);
 
         /**
          * @brief 
@@ -37,19 +39,17 @@ class TMesh : public TEntity {
          * 
          * @param m 
          */
-        virtual void setMaterial(glslMaterial *m);
+        void setMaterial(OBDMaterial *m);
 
         /**
-         * @brief Set the glslTexture object
+         * @brief Set the Material object
          * 
+         * @param m 
          */
-        virtual void setTexture(OBDEnums::TextureTypes, TTexture*);
+        OBDMaterial *getMaterial();
     private:
         glslMesh *mesh;
-        glslMaterial *material; //¿?
-        glslTexture activeTextures;
-        
-        std::vector<TTexture*> textures;
+        OBDMaterial *material;
 
 		glm::mat4 modelMatrix;
         

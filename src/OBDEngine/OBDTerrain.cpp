@@ -3,11 +3,28 @@
 #define EPSILON 0.0005
 
 OBDTerrain::OBDTerrain(OBDSceneNode* parent, std::string path, f32 y_offset, f32 y_scale, i32 step) : OBDEntity(parent) {
-	mesh = new glslMesh();
-	material = new glslMaterial();
+	glslMesh *mesh = new glslMesh();
+	OBDMaterial *material = new OBDMaterial();
 
 	//Generate mesh and material
-	generateTerrain(path.c_str(), y_offset, y_scale, step);
+	terrain = new TerTerrain();
+	terrain->setHeightsFromTexture(path.c_str(), y_offset, y_scale, step);
+	terrain->buildMesh();
+
+	//Mesh
+	i32 w = terrain->width;
+	i32 h = terrain->height;
+	i32 d = terrain->depth;
+
+	mesh -> vbo = std::vector<f32>(terrain->vertices, terrain->vertices+(terrain->num_vertices*8));
+	mesh -> ibo = std::vector<u32>(terrain->indices, terrain->indices+terrain->num_indices);
+
+	//Octree
+	vertex_vector = std::vector<glm::vec3>(terrain->glm_vertices, terrain->glm_vertices + terrain->num_vertices);
+
+	octree = new SDF(vertex_vector, terrain->triangled_indices, terrain->triangle_centroids);
+	octree->init();
+	octree->build();
 
 	terrainNode = new TNode(new TMesh(mesh, material), scaleNode);
 }
@@ -20,38 +37,9 @@ OBDTerrain::~OBDTerrain() {
 	octree = nullptr;
 }
 
-void OBDTerrain::generateTerrain(const char *path, f32 y_offset, f32 y_scale, i32 step){
-	// ToDo: revisar parametros
-	terrain = new TerTerrain();
-	terrain->setHeightsFromTexture(path, y_offset, y_scale, step);
-	terrain->buildMesh();
-
-	//Mesh
-	i32 w = terrain->width;
-	i32 h = terrain->height;
-	i32 d = terrain->depth;
-
-	mesh -> vbo = std::vector<f32>(terrain->vertices, terrain->vertices+(terrain->num_vertices*8));
-	mesh -> ibo = std::vector<u32>(terrain->indices, terrain->indices+terrain->num_indices);
-
-	//Material
-	material -> ambientColor = glm::vec4(1,1,1,1);
-	material -> diffuseColor = glm::vec4(1,1,1,1);
-	material -> specularColor = glm::vec4(1,1,1,1);
-	material -> shininess = 90;
-
-	//Octree
-	vertex_vector = std::vector<glm::vec3>(terrain->glm_vertices, terrain->glm_vertices + terrain->num_vertices);
-
-	octree = new SDF(vertex_vector, terrain->triangled_indices, terrain->triangle_centroids);
-	octree->init();
-	octree->build();
-}
-
-
 void OBDTerrain::setTexture(OBDTexture* t){
     TMesh* m = (TMesh*) terrainNode -> getEntity();
-    m -> setTexture(t->getType(), t->getTexture());
+    m -> getMaterial() -> setTexture(t->getType(), t->getTexture());
 }
 
 TMesh *OBDTerrain::getTerrainMesh(){

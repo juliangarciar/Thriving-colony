@@ -6,12 +6,15 @@ OBDMaterial::OBDMaterial(){
 	material->ambientColor = glm::vec4(1, 1, 1, 1);
 	material->diffuseColor = glm::vec4(1, 1, 1, 1);
 	material->specularColor = glm::vec4(1, 1, 1, 1);
+	material->shininess = 90;
 
-	diffuseTextureMap = "";
-	ambientOclusionsTextureMap = "";
-	specularTextureMap = "";
-	alphaTextureMap = "";
-	bumpMap = "";
+	activeTextures = new glslTexture();
+
+	activeTextures->diffuseTexture = 0;
+	activeTextures->oclusionsTexture = 0;
+	activeTextures->specularTexture = 0;
+	activeTextures->alphaTexture = 0;
+	activeTextures->bumpTexture = 0;
 }
 
 OBDMaterial::OBDMaterial(ResourceMTL *m, std::string n){
@@ -23,12 +26,14 @@ OBDMaterial::OBDMaterial(ResourceMTL *m, std::string n){
 		material->diffuseColor = glm::vec4(it -> second -> diffuseColor, 1);
 		material->specularColor = glm::vec4(it -> second -> specularColor, 1);
 		material->shininess = it -> second -> specularExponent;
-		
-		diffuseTextureMap = it -> second -> diffuseTextureMap;
-		ambientOclusionsTextureMap = it -> second -> ambientOclusionsTextureMap;
-		specularTextureMap = it -> second -> specularTextureMap;
-		alphaTextureMap = it -> second -> alphaTextureMap;
-		bumpMap = it -> second -> bumpMap;
+
+		activeTextures = new glslTexture();
+
+		activeTextures->diffuseTexture = 0;
+		activeTextures->oclusionsTexture = 0;
+		activeTextures->specularTexture = 0;
+		activeTextures->alphaTexture = 0;
+		activeTextures->bumpTexture = 0;
 	} else {
 		std::cout << "No se ha podido encontrar el material " << n << ", se creará un material por defecto." << std::endl;
 
@@ -37,17 +42,51 @@ OBDMaterial::OBDMaterial(ResourceMTL *m, std::string n){
 		material->ambientColor = glm::vec4(1, 1, 1, 1);
 		material->diffuseColor = glm::vec4(1, 1, 1, 1);
 		material->specularColor = glm::vec4(1, 1, 1, 1);
+		material->shininess = 90;
 
-		diffuseTextureMap = "";
-		ambientOclusionsTextureMap = "";
-		specularTextureMap = "";
-		alphaTextureMap = "";
-		bumpMap = "";
+		activeTextures = new glslTexture();
+
+		activeTextures->diffuseTexture = 0;
+		activeTextures->oclusionsTexture = 0;
+		activeTextures->specularTexture = 0;
+		activeTextures->alphaTexture = 0;
+		activeTextures->bumpTexture = 0;
 	}
 }
 
 OBDMaterial::~OBDMaterial(){
 
+}
+
+void OBDMaterial::loadTextures(ResourceMTL *m, ResourceManager *r, bool sync){
+	std::map<std::string, ResourceMaterial*> res = m->getResource();
+	std::map<std::string, ResourceMaterial*>::iterator it = res.find(name);
+	if (it != res.end()){
+		if (it->second->diffuseTextureMap != ""){
+			ResourceIMG *tmp = (ResourceIMG*)r->getResource(it->second->diffuseTextureMap, sync);
+			setTexture(OBDEnums::TextureTypes::TEXTURE_DIFFUSE, new TTexture(tmp));
+		}
+		if (it->second->ambientOclusionsTextureMap != ""){
+			ResourceIMG *tmp = (ResourceIMG*)r->getResource(it->second->ambientOclusionsTextureMap, sync);
+			setTexture(OBDEnums::TextureTypes::TEXTURE_OCLUSIONS, new TTexture(tmp));
+		}
+		if (it->second->specularTextureMap != ""){
+			ResourceIMG *tmp = (ResourceIMG*)r->getResource(it->second->specularTextureMap, sync);
+			setTexture(OBDEnums::TextureTypes::TEXTURE_SPECULAR, new TTexture(tmp));
+		}
+		if (it->second->alphaTextureMap != ""){
+			ResourceIMG *tmp = (ResourceIMG*)r->getResource(it->second->alphaTextureMap, sync);
+			setTexture(OBDEnums::TextureTypes::TEXTURE_ALPHA, new TTexture(tmp));
+		}
+		if (it->second->bumpMap != ""){
+			ResourceIMG *tmp = (ResourceIMG*)r->getResource(it->second->bumpMap, sync);
+			setTexture(OBDEnums::TextureTypes::TEXTURE_BUMP, new TTexture(tmp));
+		}
+	}
+}
+
+void OBDMaterial::setMaterialName(std::string n){
+	name = n;
 }
 
 void OBDMaterial::setAmbientColor(OBDColor c){
@@ -62,25 +101,38 @@ void OBDMaterial::setSpecularColor(OBDColor c){
 	material->specularColor = c.getRGBA();
 }
 
-void OBDMaterial::setTexture(OBDEnums::TextureTypes tt , std::string p){
+void OBDMaterial::setSpecularShininess(i32 i){
+	material->shininess = i;
+}
+
+void OBDMaterial::setTexture(OBDEnums::TextureTypes tt, TTexture *p){
 	switch(tt){
 		case OBDEnums::TextureTypes::TEXTURE_DIFFUSE:
 			diffuseTextureMap = p;
+			activeTextures->diffuseTexture = 1;
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_OCLUSIONS:
 			ambientOclusionsTextureMap = p;
+			activeTextures->oclusionsTexture = 1;
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_SPECULAR:
 			specularTextureMap = p;
+			activeTextures->specularTexture = 1;
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_ALPHA:
 			alphaTextureMap = p;
+			activeTextures->alphaTexture = 1;
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_BUMP:
 			bumpMap = p;
+			activeTextures->bumpTexture = 1;
 		break;
 		default: break;
 	}
+}
+
+std::string OBDMaterial::getMaterialName(){
+	return name;
 }
 
 OBDColor OBDMaterial::getAmbientColor(){
@@ -95,7 +147,11 @@ OBDColor OBDMaterial::getSpecularColor(){
 	return OBDColor(material->specularColor);
 }
 
-std::string OBDMaterial::getTexture(OBDEnums::TextureTypes tt){
+i32 OBDMaterial::getSpecularShininess(){
+	return material->shininess;
+}
+
+TTexture* OBDMaterial::getTexture(OBDEnums::TextureTypes tt){
 	switch(tt){
 		case OBDEnums::TextureTypes::TEXTURE_DIFFUSE:
 			return diffuseTextureMap;
@@ -113,11 +169,15 @@ std::string OBDMaterial::getTexture(OBDEnums::TextureTypes tt){
 			return bumpMap;
 		break;
 		default: 
-			return "";
+			return nullptr;
 		break;
 	}
 }
 
 glslMaterial *OBDMaterial::getGLSLMaterial(){
 	return material;
+}
+
+glslTexture *OBDMaterial::getGLSLActiveTextures(){
+	return activeTextures;
 }

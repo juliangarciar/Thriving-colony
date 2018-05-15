@@ -102,7 +102,11 @@ OBDObject* OBDEngine::createObject(u32 id, std::string mesh, bool autoload) {
     ResourceOBJ *obj = (ResourceOBJ*)OBDManager->getResource(mesh, true);
     ResourceMTL *mtl = (ResourceMTL*)OBDManager->getResource(obj->getDefaultMaterialPath(), true);
     OBDObject *tempObject = new OBDObject(defaultSceneNode, id, obj, mtl);
-    if (autoload) tempObject->loadTextures(OBDManager, true);
+	if (autoload) {
+		for (std::map<std::string, OBDMaterial*>::iterator it = tempObject->getMaterials().begin(); it != tempObject->getMaterials().end(); ++it){
+			it->second->loadTextures(mtl, OBDManager, true);
+		}
+	}
     return tempObject;
 }
 
@@ -110,7 +114,11 @@ OBDObject* OBDEngine::createObject(OBDSceneNode* layer, u32 id, std::string mesh
     ResourceOBJ *obj = (ResourceOBJ*)OBDManager->getResource(mesh, true);
     ResourceMTL *mtl = (ResourceMTL*)OBDManager->getResource(obj->getDefaultMaterialPath(), true);
     OBDObject *tempObject = new OBDObject(layer, id, obj, mtl);
-    if (autoload) tempObject->loadTextures(OBDManager, true);
+	if (autoload) {
+		for (std::map<std::string, OBDMaterial*>::iterator it = tempObject->getMaterials().begin(); it != tempObject->getMaterials().end(); ++it){
+			it->second->loadTextures(mtl, OBDManager, true);
+		}
+	}
     return tempObject;
 }
 
