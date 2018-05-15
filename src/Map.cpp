@@ -32,7 +32,7 @@ Map::~Map() {
 void Map::Init() {
     loadProgress(0);
 
-    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/map/map.json");
+    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/maps/test_map/map.json", true);
     json j = *r -> getJSON();
 
     loadProgress(5);

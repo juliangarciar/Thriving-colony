@@ -14,7 +14,6 @@ OBDObject::OBDObject(OBDSceneNode* p, u32 id, ResourceOBJ *obj, ResourceMTL *mtl
 		OBDMaterial *tempMat = new OBDMaterial(mtl, it->second->defaultMaterialName);
 
         OBDMesh *tempMesh = new OBDMesh(tmp, tempMat);
-		std::cout << "Inserto " << it->second->defaultMaterialName << std::endl;
 		tempMesh->setMaterialName(it->second->defaultMaterialName);
 		tempMesh->setBoundingBox(it->second->aabbMin, it->second->aabbMax);
 

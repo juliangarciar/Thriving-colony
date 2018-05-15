@@ -117,9 +117,7 @@ OBDObject* OBDEngine::createObject(OBDSceneNode* layer, u32 id, std::string mesh
 void OBDEngine::loadTexturesFromMTL(OBDObject *obj, ResourceMTL *mtl, bool sync){
 	for (std::map<std::string, OBDMaterial*>::iterator it = obj->getMaterials()->begin(); it != obj->getMaterials()->end(); ++it){
 		std::map<std::string, ResourceMaterial*>::iterator resource = mtl->getResource()->find(it->second->getMaterialName());
-		std::cout << "Busco " << it->second->getMaterialName() << std::endl;
 		if (resource != mtl->getResource()->end()){
-			std::cout << "Entro" << std::endl;
 			if (resource->second->diffuseTextureMap != ""){
 				ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->diffuseTextureMap, sync);
 				it->second->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_DIFFUSE, tmp));
