@@ -36,4 +36,7 @@ void OBDParticleSystem::createPointEmitter(glm::vec3 direction, i32 particlesPer
     for (i32 i = 0; i < particlesPerSecond; i ++) {
         particles.push_back(new TParticle(startColor, startColor, lifeTime, 0, position, direction, direction, startSize, startSize));
     }
+    emiter = new OBDParticleEmiter();
+    TParticleSystem* aux = (TParticleSystem*)particleSystemNode;
+    aux -> setParticles(particles);
 }
