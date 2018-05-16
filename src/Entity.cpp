@@ -61,6 +61,10 @@ Entity::Entity(SceneNode* _layer,
 
 //ToDo: revisar
 Entity::~Entity() {
+    for(std::size_t i = 0; i < subscribedEntites.size(); i++){
+        subscribedEntites[i]->unsubscribe(this);
+    }
+    subscribedEntites.clear();
     if (model != nullptr) delete model;
     hostile.clear();
     delete tookDamageTimer;
@@ -213,15 +217,15 @@ void Entity::setDamagedMaterial() {
     model -> setMaterial(damagedMat);
 }
 
-    //position -> set(vectorData);
-    /* Adjust the hitbox properly */
-    //Vector2<f32> topLeft;
-    //Vector2<f32> bottomRight;
-    //topLeft.x = vectorData.x - 120.f;
-    //topLeft.y = vectorData.z - 120.f;
-    //bottomRight.x = vectorData.x + 120.f;
-    //bottomRight.y = vectorData.z + 120.f;
-    //hitBox = Box2D(topLeft, bottomRight);
-    //std::cout << "Moving HitBox to: \n";
-    //std::cout << hitBox.TopLeft().x << "," << hitBox.TopLeft().y << "\n";
-    //std::cout << hitBox.BottomRight().x << "," << hitBox.BottomRight().y << "\n";
+void Entity::subscribe(Entity* _entity){
+    subscribedEntites.push_back(_entity);
+}
+
+void Entity::unsubscribe(Entity* _entity){
+    for(std::size_t i = 0; i < subscribedEntites.size(); i++){
+        if(subscribedEntites[i] == _entity){
+            subscribedEntites.erase(subscribedEntites.begin() + i);
+            break;
+        }
+    }
+}

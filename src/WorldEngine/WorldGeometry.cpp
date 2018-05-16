@@ -325,3 +325,8 @@ bool WorldGeometry::checkCollision(Vector2<f32> _orig, Vector2<f32> _end) const{
    
     return false;
 }
+
+std::vector< Entity* > WorldGeometry::getCollidingEntities(const Box2D& hitbox, const std::vector< Entity* >& collidingEntities,
+                                                                                const std::vector< Unit* >& flockingUnits){
+    quadTree->getCollidingEntities(hitbox, &collidingEntities, &flockingUnits);
+}

@@ -10,6 +10,7 @@
 #include <cmath>
 #include "UnitFighter.h"
 #include "Game.h"
+#include "Sensor.h"
 
 Unit::Unit(SceneNode* _layer, 
     i32 _id, 
@@ -52,13 +53,14 @@ Unit::Unit(SceneNode* _layer,
                         moveEvent(baseData.moveEvent),
                         selectEvent(baseData.selectEvent),
                         unitFighters(baseData.troops, nullptr),
-                        maxPositionDesviation(baseData.moveSpeed * 0.5f) ,
-                        unitFighterHP(baseData.maxHP / baseData.troops)        
+                        maxPositionDesviation(baseData.moveSpeed * 0.5f),
+                        unitFighterHP(baseData.maxHP / baseData.troops),
+                        unitSensor(nullptr)        
 {
     lookForTargetTimer = new Timer (0.5, true);
     lookForTargetTimer -> setCallback([&](){
         // Ask for a new target
-        Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
+        //Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
     });
 
     recruitingTimer = new Timer(baseData.recruitingTime, false);
@@ -89,6 +91,8 @@ Unit::Unit(SceneNode* _layer,
     damagedMat -> setColor(255, 255, 0, 0);
 
     setBaseMaterial();
+
+    unitSensor = new Sensor(this, baseData.viewRadius);
 }
 
 Unit::~Unit() {
@@ -232,7 +236,7 @@ void Unit::chaseState() {
         //Vector2<f32> tpos = Vector2<f32>();
         //tpos.x = getTarget() -> getPosition().x;
         //tpos.y = getTarget() -> getPosition().y;
-        //this  -> setTroopDestination(tpos);
+        //setTroopDestination(getTarget()->getPosition());
         chaseTarget();    
     }
 }
@@ -388,14 +392,6 @@ void Unit::setTroopDestination(Vector2<f32> _vectorData) {
     }
     // Okey lets tune this
     vectorDes = _vectorData;
-    //moving = true;
-    //Vector2<f32> _vectorDestiny = _vectorData - getPosition();
-    //f32 distance = std::sqrt(std::pow(_vectorDestiny.x, 2) + std::pow(_vectorDestiny.y, 2));
-    //vectorSpd = (_vectorDestiny / distance) * (moveSpeed / 100);
-
-    //f32 movDistance = std::sqrt(std::pow(vectorSpd.x, 2) + std::pow(vectorSpd.y, 2));
-    //steps = distance / movDistance;
-
     // This is working as intended
     std::size_t size = unitFighters.size();
     for(std::size_t i = 0; i < size; i++){
@@ -463,7 +459,7 @@ std::vector< UnitFighter* > Unit::getUnitFighters(){
 
 void Unit::calculateDirection(){
     Vector2<f32> _incVector = vectorDes - vectorPos;
-    /* Normlize */
+    /* Normalize */
     f32 distance = std::sqrt(std::pow(_incVector.x, 2) + 
                              std::pow(_incVector.y ,2));
     
@@ -503,8 +499,10 @@ void Unit::takeDamage(i32 _damage){
         _qnty++;
     }
     while(_qnty != unitFighters.size()){
-        delete unitFighters[unitFighters.size() - 1];
-        unitFighters.erase(unitFighters.end());
+        UnitFighter* tmp = unitFighters[unitFighters.size() - 1];
+        unitFighters.erase(unitFighters.end() - 1);
+        delete tmp;
+        
         std::cout << "An unitFighter has died \n";
     }
     tookDamageTimer -> restart();

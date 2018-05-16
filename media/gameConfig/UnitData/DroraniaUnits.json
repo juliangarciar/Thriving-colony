@@ -57,7 +57,7 @@
 			"unitName": "StandardM",
 			"moveSpeed": 3,
 			"attackDamage": 150,
-			"attackRange": 1000,
+			"attackRange": 50,
 			"attackSpeed": 1,
 			"viewRadious": 450,
 			"maxHP": 80,

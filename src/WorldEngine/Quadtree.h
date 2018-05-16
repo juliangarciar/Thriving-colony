@@ -65,6 +65,8 @@ class Quadtree{
          * @return Vector2<f32>
          */
         const Vector2<f32> getPosition() const;
+
+        void getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >& collidingEntities, std::vector< Unit* >& flockingUnits);
     private:
         const Vector2<f32> position;
         const Box2D hitBox;

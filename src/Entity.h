@@ -248,6 +248,8 @@ class Entity {
          * @brief Set the Damaged Material object
          */
         void setDamagedMaterial();
+        void subscribe(Entity* _entity);
+        void unsubscribe(Entity* _enttity);
 
     protected:
         //Layer where the entity has been created.
@@ -327,5 +329,7 @@ class Entity {
 
         //
         Billboard* bar;
+        
+        std::vector<Entity*> subscribedEntites;
 };
 #endif

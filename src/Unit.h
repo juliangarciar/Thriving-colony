@@ -11,6 +11,7 @@
 #include <Enumeration.h>
 
 //class PathManager;
+class Sensor;
 class UnitFighter;
 /**
  * @class Unit.
@@ -251,6 +252,7 @@ class Unit : public Entity {
         bool hasArrived();
         void updateFlockingSensor();
         void takeDamage(i32 _damage);
+        
     private:
         /**
          * @brief Initialize the variables.
@@ -332,6 +334,7 @@ class Unit : public Entity {
         std::vector< UnitFighter* > nearUnitFighters;
         f32 maxPositionDesviation;
         i32 unitFighterHP;
+        Sensor* unitSensor;
 };
 
 #endif
