@@ -37,8 +37,12 @@ OBDObject::~OBDObject(){
     for (std::map<std::string, OBDMesh*>::iterator it = meshes->begin(); it != meshes->end(); ++it) {
         delete it->second;
     }
-
     meshes->clear();
+
+    for (std::map<std::string, OBDMaterial*>::iterator it = materials->begin(); it != materials->end(); ++it) {
+        delete it->second;
+    }
+    materials->clear();
 	
 	if (parent != nullptr) parent -> removeBoundingBox(ID);
 }

@@ -8,7 +8,12 @@ ResourceMTL::ResourceMTL(){
 }
 
 ResourceMTL::~ResourceMTL(){
-    
+	for (std::map<std::string, ResourceMaterial*>::iterator it = materialArray->begin(); it != materialArray->end(); ++it){
+		delete it->second;
+	}
+	materialArray->clear();
+    delete materialArray;
+	materialArray = nullptr;
 }
 
 void ResourceMTL::load(const char *path){

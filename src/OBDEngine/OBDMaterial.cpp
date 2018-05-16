@@ -57,7 +57,10 @@ OBDMaterial::OBDMaterial(ResourceMTL *m, std::string n){
 }
 
 OBDMaterial::~OBDMaterial(){
-
+    delete material;
+	delete activeTextures;
+	material = nullptr;
+	activeTextures = nullptr;
 }
 
 void OBDMaterial::setMaterialName(std::string n){

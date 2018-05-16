@@ -8,7 +8,12 @@ ResourceOBJ::ResourceOBJ(){
 }
 
 ResourceOBJ::~ResourceOBJ(){
-    
+	for (std::map<std::string, ResourceMesh*>::iterator it = meshArray->begin(); it != meshArray->end(); ++it){
+		delete it->second;
+	}
+	meshArray->clear();
+    delete meshArray;
+	meshArray = nullptr;
 }
 
 void ResourceOBJ::load(const char *path){

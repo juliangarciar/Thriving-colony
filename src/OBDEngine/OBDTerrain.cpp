@@ -3,17 +3,10 @@
 #define EPSILON 0.0005
 
 OBDTerrain::OBDTerrain(OBDSceneNode* parent, std::string path, f32 y_offset, f32 y_scale, i32 step) : OBDEntity(parent) {
-	glslMesh *mesh = new glslMesh();
-	OBDMaterial *material = new OBDMaterial();
-
-	//Generate mesh and material
+	//Generate terrainmesh
 	terrain = new TerTerrain();
 	terrain->setHeightsFromTexture(path.c_str(), y_offset, y_scale, step);
 	terrain->buildMesh();
-
-	//Mesh
-	mesh -> vbo = std::vector<f32>(terrain->vertices, terrain->vertices+(terrain->num_vertices*8));
-	mesh -> ibo = std::vector<u32>(terrain->indices, terrain->indices+terrain->num_indices);
 
 	//Octree
 	vertex_vector = std::vector<glm::vec3>(terrain->glm_vertices, terrain->glm_vertices + terrain->num_vertices);
@@ -22,6 +15,15 @@ OBDTerrain::OBDTerrain(OBDSceneNode* parent, std::string path, f32 y_offset, f32
 	octree->init();
 	octree->build();
 
+	//glslMesh
+	glslMesh *mesh = new glslMesh();
+	mesh -> vbo = std::vector<f32>(terrain->vertices, terrain->vertices+(terrain->num_vertices*8));
+	mesh -> ibo = std::vector<u32>(terrain->indices, terrain->indices+terrain->num_indices);
+
+	//Empty material
+	OBDMaterial *material = new OBDMaterial();
+
+	//Create Node
 	terrainNode = new TNode(new TMesh(mesh, material), scaleNode);
 }
 
@@ -61,16 +63,6 @@ f32 OBDTerrain::getY(f32 x, f32 z){
 }
 
 glm::vec3 OBDTerrain::getRayCollision(OBDLine line){
-
-	/*std::cout << "----------" << std::endl;
-	for (i32 i = 0; i < 4; i++){
-		for (i32 j = 0; j < 4; j++){
-			std::cout << inverse_model_matrix[i][j] << " ";
-		}
-		std::cout << std::endl;
-	}
-	std::cout << "----------" << std::endl;*/
-
 	line.start = inverse_model_matrix * glm::vec4(line.start, 1);
 	line.end = inverse_model_matrix * glm::vec4(line.end, 1);
 

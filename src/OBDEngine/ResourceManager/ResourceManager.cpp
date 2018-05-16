@@ -41,10 +41,6 @@ void ResourceManager::load(std::string path, bool sync){
         Resource *r = new ResourceGLSL();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
-    } else if (extension == "fbx"){
-        //Resource *r = new ResourceFBX();
-        //r -> load(path.c_str());
-        //resources.insert(std::pair<std::string, Resource*>(path, r));
     } else if (extension == "bmp" || extension == "jpg" || extension == "jpeg" || extension == "png"){
         Resource *r = new ResourceIMG();
         r -> load(path.c_str());

@@ -39,7 +39,9 @@ OBDEntity::OBDEntity(OBDSceneNode *p){
 }
 
 OBDEntity::~OBDEntity(){
-	//ToDo
+	delete rotationNode;
+	rotationNode=nullptr;
+	parent = nullptr;
 }
 
 void OBDEntity::refreshModelMatrix(glm::mat4 parent){

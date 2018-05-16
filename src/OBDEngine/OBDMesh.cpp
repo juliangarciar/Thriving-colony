@@ -8,7 +8,7 @@ OBDMesh::OBDMesh(glslMesh *m, OBDMaterial *mat) : OBDEntity() {
 }
 
 OBDMesh::~OBDMesh() {
-	
+	//Se borra en OBDEntity
 }
 
 void OBDMesh::refreshBoundingBox(){
