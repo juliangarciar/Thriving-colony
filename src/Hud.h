@@ -291,8 +291,14 @@ class Hud {
         //Player's crystal amount.
         Label *playerCrystalAmount;
 
+        //Player's maximum persons amount.
+        Label *playerPersons;
+
         //Player's citizens amount.
         Label *playerCitizens;
+
+        //Player's individual units amount.
+        Label *playerUnits;
 
         //Player's happiness amount.
         Label *playerHappiness;

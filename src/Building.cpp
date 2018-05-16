@@ -99,11 +99,11 @@ void Building::adjustCityStats() {
     // Adjust the stats of the player
     if (getTeam() == Enumeration::Team::Human) {
         Human::Instance() -> increaseHappiness(getHappinessVariation());
-        Human::Instance() -> increaseCitizens(getCitizensVariation());   
+        Human::Instance() -> increasePersons(getCitizensVariation());   
         Human::Instance() -> increaseCityLevel(cityLevel);
     } else {
         IA::Instance() -> increaseHappiness(getHappinessVariation());
-        IA::Instance() -> increaseCitizens(getCitizensVariation());   
+        IA::Instance() -> increasePersons(getCitizensVariation());   
         IA::Instance() -> increaseCityLevel(cityLevel);
     }
 }
