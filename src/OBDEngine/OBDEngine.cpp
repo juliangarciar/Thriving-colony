@@ -102,7 +102,7 @@ OBDObject* OBDEngine::createObject(u32 id, std::string mesh, bool autoload) {
     ResourceOBJ *obj = (ResourceOBJ*)OBDManager->getResource(mesh, true);
     ResourceMTL *mtl = (ResourceMTL*)OBDManager->getResource(obj->getDefaultMaterialPath(), true);
     OBDObject *tempObject = new OBDObject(defaultSceneNode, id, obj, mtl);
-	if (autoload) loadTexturesFromMTL(tempObject, mtl, true);
+	if (autoload) loadObjectTexturesFromMTL(tempObject, mtl, true);
     return tempObject;
 }
 
@@ -110,11 +110,41 @@ OBDObject* OBDEngine::createObject(OBDSceneNode* layer, u32 id, std::string mesh
     ResourceOBJ *obj = (ResourceOBJ*)OBDManager->getResource(mesh, true);
     ResourceMTL *mtl = (ResourceMTL*)OBDManager->getResource(obj->getDefaultMaterialPath(), true);
     OBDObject *tempObject = new OBDObject(layer, id, obj, mtl);
-	if (autoload) loadTexturesFromMTL(tempObject, mtl, true);
+	if (autoload) loadObjectTexturesFromMTL(tempObject, mtl, true);
     return tempObject;
 }
 
-void OBDEngine::loadTexturesFromMTL(OBDObject *obj, ResourceMTL *mtl, bool sync){
+OBDTerrain *OBDEngine::createTerrain(std::string heightMap, f32 y_offset, f32 y_scale, i32 step){
+	return new OBDTerrain(defaultSceneNode, heightMap, y_offset, y_scale, step);
+}
+
+OBDTerrain *OBDEngine::createTerrain(OBDSceneNode* layer, std::string heightMap, f32 y_offset, f32 y_scale, i32 step){
+	return new OBDTerrain(layer, heightMap, y_offset, y_scale, step);
+}
+
+OBDShaderProgram *OBDEngine::createShaderProgram(std::string programName, std::string vs, std::string fs){
+	ResourceGLSL *s1 = (ResourceGLSL*)OBDManager->getResource(vs, true);
+	ResourceGLSL *s2 = (ResourceGLSL*)OBDManager->getResource(fs, true);
+	OBDShaderProgram *p = new OBDShaderProgram(s1, s2);
+    shaderPrograms.insert(std::pair<std::string, OBDShaderProgram*>(programName, p));
+    return p;
+}
+
+OBDMaterial *OBDEngine::createMaterial(std::string path, std::string name){
+	ResourceMTL *s = (ResourceMTL*)OBDManager->getResource(path, true);
+	return new OBDMaterial(s, name);
+}
+
+OBDTexture *OBDEngine::createTexture(OBDEnums::TextureTypes t, std::string fs){
+	ResourceIMG *s = (ResourceIMG*)OBDManager->getResource(fs, true);
+	return new OBDTexture(t, s);
+}
+
+OBDSceneNode *OBDEngine::createOverallSceneNode(OBDShaderProgram *shader){
+	return new OBDSceneNode(new TNode(new TShaderSwapper(shader->getShaderProgram())));
+}
+
+void OBDEngine::loadObjectTexturesFromMTL(OBDObject *obj, ResourceMTL *mtl, bool sync){
 	for (std::map<std::string, OBDMaterial*>::iterator it = obj->getMaterials()->begin(); it != obj->getMaterials()->end(); ++it){
 		std::map<std::string, ResourceMaterial*>::iterator resource = mtl->getResource()->find(it->second->getMaterialName());
 		if (resource != mtl->getResource()->end()){
@@ -140,36 +170,6 @@ void OBDEngine::loadTexturesFromMTL(OBDObject *obj, ResourceMTL *mtl, bool sync)
 			}
 		}
 	}
-}
-
-OBDShaderProgram *OBDEngine::createShaderProgram(std::string programName, std::string vs, std::string fs){
-	ResourceGLSL *s1 = (ResourceGLSL*)OBDManager->getResource(vs, true);
-	ResourceGLSL *s2 = (ResourceGLSL*)OBDManager->getResource(fs, true);
-	OBDShaderProgram *p = new OBDShaderProgram(s1, s2);
-    shaderPrograms.insert(std::pair<std::string, OBDShaderProgram*>(programName, p));
-    return p;
-}
-
-OBDTerrain *OBDEngine::createTerrain(std::string heightMap, f32 y_offset, f32 y_scale, i32 step){
-	return new OBDTerrain(defaultSceneNode, heightMap, y_offset, y_scale, step);
-}
-
-OBDTerrain *OBDEngine::createTerrain(OBDSceneNode* layer, std::string heightMap, f32 y_offset, f32 y_scale, i32 step){
-	return new OBDTerrain(layer, heightMap, y_offset, y_scale, step);
-}
-
-OBDTexture *OBDEngine::createTexture(OBDEnums::TextureTypes t, std::string fs){
-	ResourceIMG *s = (ResourceIMG*)OBDManager->getResource(fs, true);
-	return new OBDTexture(t, s);
-}
-
-OBDMaterial *OBDEngine::createMaterial(){
-	return new OBDMaterial();
-}
-
-OBDMaterial *OBDEngine::createMaterial(std::string path, std::string name){
-	ResourceMTL *s = (ResourceMTL*)OBDManager->getResource(path, true);
-	return new OBDMaterial(s, name);
 }
 
 void OBDEngine::registerLight(OBDLight* lightNode) {

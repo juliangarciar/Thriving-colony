@@ -12,10 +12,6 @@ OBDTerrain::OBDTerrain(OBDSceneNode* parent, std::string path, f32 y_offset, f32
 	terrain->buildMesh();
 
 	//Mesh
-	i32 w = terrain->width;
-	i32 h = terrain->height;
-	i32 d = terrain->depth;
-
 	mesh -> vbo = std::vector<f32>(terrain->vertices, terrain->vertices+(terrain->num_vertices*8));
 	mesh -> ibo = std::vector<u32>(terrain->indices, terrain->indices+terrain->num_indices);
 

@@ -19,7 +19,7 @@ TBillboard::~TBillboard() {
 }
 
 void TBillboard::beginDraw() {
-	TEntity::cache.setID(OBDEnums::OpenGLIDs::CURRENT_PROGRAM_ID, program);
+    glUseProgram(program);
 
     static const GLfloat g_vertex_buffer_data[] = {
         position.x - bottomWidth / 2, position.y + 0.0f, position.z,
