@@ -148,7 +148,7 @@ class OBDEngine {
 		 * 
 		 * @return OBDSceneNode* 
 		 */
-		OBDSceneNode* createOverallSceneNode(OBDShaderProgram *);
+		OBDSceneNode* createShaderedSceneNode(std::string vs, std::string fs);
 
         /**
          * @brief 

@@ -140,8 +140,11 @@ OBDTexture *OBDEngine::createTexture(OBDEnums::TextureTypes t, std::string fs){
 	return new OBDTexture(t, s);
 }
 
-OBDSceneNode *OBDEngine::createOverallSceneNode(OBDShaderProgram *shader){
-	return new OBDSceneNode(new TNode(new TShaderSwapper(shader->getShaderProgram())));
+OBDSceneNode *OBDEngine::createShaderedSceneNode(std::string vs, std::string fs){
+	ResourceGLSL *s1 = (ResourceGLSL*)OBDManager->getResource(vs, true);
+	ResourceGLSL *s2 = (ResourceGLSL*)OBDManager->getResource(fs, true);
+	OBDShaderProgram *p = new OBDShaderProgram(s1, s2);
+	return new OBDSceneNode(new TNode(new TShaderSwapper(p->getShaderProgram()), rootNode));
 }
 
 void OBDEngine::loadObjectTexturesFromMTL(OBDObject *obj, ResourceMTL *mtl, bool sync){
