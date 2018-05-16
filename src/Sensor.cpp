@@ -14,7 +14,9 @@ Sensor::~Sensor(){
 
 void Sensor::update(){
     detectedEntities.clear();
+    detectedEntities.resize(0);
     detectedFloking.clear();
+    detectedFloking.resize(0);
     WorldGeometry::Instance()->getCollidingEntities(sensorHitbox, detectedEntities, detectedFloking);
     std::cout << "Entidades cercanas: " << detectedEntities.size() << ". Flocking: " << detectedFloking.size() << "\n";
 }

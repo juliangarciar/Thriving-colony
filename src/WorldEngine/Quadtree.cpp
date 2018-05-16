@@ -154,6 +154,7 @@ const Vector2<f32> Quadtree::getPosition() const{
     return position;
 }
 /* Check this method, maybe ensure they are colliding, more precise but slower */
+/* Is not working properly for some reason */
 void Quadtree::getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >& collidingEntities, std::vector< Unit* >& flockingUnits) const{    
     if(this->depth == 0){
         for(std::size_t i = 0; i < innerCells.size(); i++){
@@ -161,7 +162,15 @@ void Quadtree::getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >&
                 Entity* buildingTmp = innerCells[i]->getInhabitingBuilding();
                 std::vector< Unit* > unitTmp = innerCells[i]->getInhabitingUnits();
                 if(buildingTmp != nullptr){
-                    collidingEntities.push_back(buildingTmp);
+                    bool done = false;
+                    for(std::size_t j = 0; j < collidingEntities.size() && !done; ++j){
+                        if(collidingEntities[i] == buildingTmp){
+                            done = true;
+                        }
+                    }
+                    if(!done){
+                        collidingEntities.push_back(buildingTmp);
+                    }
                 }
                 if(unitTmp.size() > 0){
                     collidingEntities.insert(collidingEntities.end(), unitTmp.begin(), unitTmp.end());

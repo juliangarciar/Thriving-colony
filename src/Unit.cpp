@@ -161,6 +161,7 @@ void Unit::update() {
         unitFighters[i]->setNearFighters(nearUnitFighters);
         unitFighters[i]->update();
     }
+    //std::cout << "Near units: " << nearUnitFighters.size() << "\n";
     unitSensor->update();
 }
 
