@@ -161,6 +161,7 @@ void Unit::update() {
         unitFighters[i]->setNearFighters(nearUnitFighters);
         unitFighters[i]->update();
     }
+    unitSensor->update();
 }
 
 void Unit::preTaxPlayer() {
@@ -281,6 +282,7 @@ void Unit::moveTroop() {
             vectorPos = _oldPosition + (vectorPos - _oldPosition) * Window::Instance()->getDeltaTimeVariance();
             WorldGeometry::Instance()->updateUnitCell(_oldPosition, vectorPos, this);
             setPosition(vectorPos);
+            unitSensor->move(vectorPos);
         }
     }
 }

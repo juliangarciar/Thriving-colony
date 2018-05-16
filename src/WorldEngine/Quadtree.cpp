@@ -3,6 +3,7 @@
 #include <MathEngine/Vector2.h>
 #include <MathEngine/Box2D.h>
 #include <Building.h>
+#include <Unit.h>
 
 Quadtree::Quadtree(Vector2<f32> positionData, const Box2D& hitboxData, i32 deepValue):position(positionData),
                                                                                       hitBox(hitboxData),
@@ -153,14 +154,14 @@ const Vector2<f32> Quadtree::getPosition() const{
     return position;
 }
 /* Check this method, maybe ensure they are colliding, more precise but slower */
-void Quadtree::getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >& collidingEntities, std::vector< Unit* >& flockingUnits){    
+void Quadtree::getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >& collidingEntities, std::vector< Unit* >& flockingUnits) const{    
     if(this->depth == 0){
         for(std::size_t i = 0; i < innerCells.size(); i++){
             if(innerCells[i]->getHitbox().isOverlappedWith(hitbox)){
                 Entity* buildingTmp = innerCells[i]->getInhabitingBuilding();
-                std::vector< Entity* > unitTmp = innerCells[i]->getInhabitingUnits();
+                std::vector< Unit* > unitTmp = innerCells[i]->getInhabitingUnits();
                 if(buildingTmp != nullptr){
-                    collidingEntities.push_back(tmp);
+                    collidingEntities.push_back(buildingTmp);
                 }
                 if(unitTmp.size() > 0){
                     collidingEntities.insert(collidingEntities.end(), unitTmp.begin(), unitTmp.end());

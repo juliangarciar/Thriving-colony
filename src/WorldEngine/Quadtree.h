@@ -6,6 +6,8 @@
 #include <MathEngine/Box2D.h>
 
 class Cell;
+class Entity;
+class Unit;
 class Building;
 class Quadtree{
     public:
@@ -66,7 +68,7 @@ class Quadtree{
          */
         const Vector2<f32> getPosition() const;
 
-        void getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >& collidingEntities, std::vector< Unit* >& flockingUnits);
+        void getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >& collidingEntities, std::vector< Unit* >& flockingUnits) const;
     private:
         const Vector2<f32> position;
         const Box2D hitBox;
