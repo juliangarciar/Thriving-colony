@@ -234,13 +234,11 @@ i32 Entity::getCellsY() const{
 }
 
 void Entity::setBaseColor() {
-    baseMat -> setColor(Color(255, 255, 255, 255));
-    model -> setMaterial(baseMat);
+    model -> setColor(Color(255, 255, 255, 255));
 }
 
 void Entity::setDamageColor() {
-    baseMat -> setColor(Color(255, 0, 0, 255));
-    model -> setMaterial(baseMat);
+    model -> setColor(Color(255, 0, 0, 255));
 }
 
     //position -> set(vectorData);

@@ -20,6 +20,7 @@ class Model {
         void setName(const char *name);
         void setActive(bool a);
         void setMaterial(Material *m);
+		void setColor(Color);
         void setPosition(Vector3<f32> pos);
         void setScale(Vector3<f32> s);
         void rotate(f32 x, f32 y);
@@ -34,6 +35,8 @@ class Model {
         i32 startingFrame;
         i32 endingFrame;
         i32 currentFrame;
+
+		Material *material;
 };
 
 #endif

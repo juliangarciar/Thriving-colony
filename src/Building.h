@@ -46,6 +46,12 @@ class Building : public Entity {
          */
         void setCantBuildColor();
 
+		/**
+		 * @brief Set the Building Color object
+		 * 
+		 */
+		void setBuildingColor();
+
         /**
          * @brief Get the finished variable of the building.
          * 

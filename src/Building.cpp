@@ -35,6 +35,7 @@ Building::Building(SceneNode *_layer,
     buildTimer = new Timer(baseData.buildingTime, false, false);
     buildTimer -> setCallback([&]{
         adjustCityStats();
+		setBaseColor();
         if (callback != nullptr) callback(this);
     });
 
@@ -57,6 +58,7 @@ Building::~Building() {
 
 void Building::startBuilding() {
     taxPlayer();
+	model -> setColor(Color(0, 255, 0, 255));
     buildTimer -> start();
 }
 
@@ -95,6 +97,5 @@ std::string Building::getType(){
 }
 
 void Building::setCantBuildColor() {
-	baseMat -> setColor(Color(0, 0, 255, 255));
-    model -> setMaterial(baseMat);
+	model -> setColor(Color(0, 0, 255, 255));
 }

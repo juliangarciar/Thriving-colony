@@ -83,10 +83,16 @@ void Model::setActive(bool a) {
 }
 
 void Model::setMaterial(Material *m){
+	material = m;
     meshNode->getMaterial(0) = *m->getMaterial();
 	
     scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
 	smgr->getMeshManipulator()->setVertexColors (meshNode->getMesh(), m->getMaterial()->AmbientColor);
+}
+
+void Model::setColor(Color c){
+	material -> setColor(c);
+	setMaterial(material);
 }
 
 Vector3<f32> Model::getPosition() {
