@@ -2,7 +2,7 @@
 
 
 Billboard::Billboard(Vector3<f32> pos) {
-    billboard = Window::Instance() -> getEngine() -> createBillboard(glm::vec3(pos.x, pos.y, pos.z), new OBDShaderProgram(new ResourceGLSL(), new ResourceGLSL()));
+    billboard = Window::Instance() -> getEngine() -> createBillboard(glm::vec3(pos.x, pos.y, pos.z));
 }
 
 Billboard::~Billboard() {

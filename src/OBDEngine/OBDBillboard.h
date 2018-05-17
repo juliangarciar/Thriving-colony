@@ -13,9 +13,8 @@ class OBDBillboard {
          * 
          * @param parent
          * @param position
-         * @param shader
          */
-        OBDBillboard(glm::vec3, OBDShaderProgram*);
+        OBDBillboard(glm::vec3);
 
         /**
          * @brief 
@@ -77,8 +76,6 @@ class OBDBillboard {
 
     private:
         TNode* billboardNode;
-
-		OBDShaderProgram* shader;
 };
 
 #endif

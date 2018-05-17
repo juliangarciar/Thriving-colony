@@ -3,17 +3,14 @@
 Window* Window::pinstance = 0;
 
 Window* Window::Instance() {
-    
     if(pinstance == 0) {
         pinstance = new Window(1048, 720);
     }
-    
     return pinstance;
 }
 
 Window::Window(i32 width, i32 height) {
     closeWindow = false;
-
     windowWidth = width;
     windowHeight = height;
 
@@ -67,6 +64,8 @@ Window::Window(i32 width, i32 height) {
     );
 
     dtThen = glfwGetTime();
+
+    billboardLayer = e -> createShaderedSceneNode("media/shaders/vertexShader.glsl", "media/shaders/fragmentShaderBillboards.glsl");
 }
 
 Window::~Window() {
@@ -138,4 +137,8 @@ void Window::calculateFramerate() {
 
 i32 Window::getFrameRate() {
     return framerate;
+}
+
+OBDSceneNode* Window::getBillboardLayer() {
+    return billboardLayer;
 }

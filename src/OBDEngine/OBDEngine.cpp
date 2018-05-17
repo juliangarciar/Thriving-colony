@@ -246,8 +246,8 @@ OBDAnimation* OBDEngine::createAnimation(OBDSceneNode* layer, std::string anim) 
     return new OBDAnimation(layer);
 }
 
-OBDBillboard* OBDEngine::createBillboard(glm::vec3 pos, OBDShaderProgram *s) {
-    OBDBillboard* billboard = new OBDBillboard(pos, s);
+OBDBillboard* OBDEngine::createBillboard(glm::vec3 pos) {
+    OBDBillboard* billboard = new OBDBillboard(pos);
     return billboard;
 }
 

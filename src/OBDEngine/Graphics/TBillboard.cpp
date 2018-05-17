@@ -34,7 +34,7 @@ void TBillboard::beginDraw() {
     };
 
     /*glm::vec3 _color = glm::vec3(1,0,1);
-    GLuint colorID = glGetUniformLocation(program, "color");
+    GLuint colorID = glGetUniformLocation("color");
     glUniform3f(colorID, 1, GL_FALSE, _color[0]);*/
     glGenBuffers(1, &vertexbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);

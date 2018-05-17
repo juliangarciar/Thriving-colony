@@ -55,6 +55,14 @@ class Window {
          * @return i32 framerate
          */
         i32 getFrameRate();
+
+        /**
+         * @brief Get the layer where are going to be created all billboards.
+         * 
+         * @return OBDSceneNode* that is going to be the value of billboardLayer.
+         */
+        OBDSceneNode* getBillboardLayer();
+
     protected:
         Window(i32 width, i32 height);
         virtual ~Window();
@@ -71,6 +79,9 @@ class Window {
         bool closeWindow;
 
 		OBDEngine *e;
+
+        //Lyer where are going to be created all billboards;
+        OBDSceneNode* billboardLayer;
 
         nanogui::Screen* gui;
 

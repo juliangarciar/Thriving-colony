@@ -1,9 +1,9 @@
 #include "OBDBillboard.h"
+#include "../GraphicEngine/Window.h"
 
-OBDBillboard::OBDBillboard(glm::vec3 position, OBDShaderProgram *s) {
-	shader = s;
+OBDBillboard::OBDBillboard(glm::vec3 position) {
     billboardNode = new TNode(new TBillboard(position));
-	parent -> addChild(billboardNode);
+	Window::Instance() -> getBillboardLayer() -> addChild(billboardNode);
 }
 
 OBDBillboard::~OBDBillboard(){
