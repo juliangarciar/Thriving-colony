@@ -314,9 +314,6 @@ class Entity {
         Material *baseMat;
 
         //
-        Material *damagedMat;
-
-        //
         Billboard* barBg;
 
         //

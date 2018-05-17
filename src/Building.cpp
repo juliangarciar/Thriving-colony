@@ -42,23 +42,6 @@ Building::Building(SceneNode *_layer,
 	//ToDo: hacia abajo anadido por rafa
     f32 billBoardOffset = 200.00;
 
-	Texture *t = new Texture(baseData.texturePath.c_str());
-
-    /* Set the model and texture */
-    baseMat = new Material(t);
-    baseMat -> setColor(255, 255, 255, 255);
-
-    damagedMat = new Material(t);
-    damagedMat -> setColor(255, 255, 0, 0);
-    
-    canBuildMat = new Material(t);
-    canBuildMat -> setColor(128, 0, 255, 0);
-
-    cantBuildMat = new Material(t);
-    cantBuildMat -> setColor(128, 255, 0, 0);
-
-    setBaseMaterial();
-
 	Vector3<f32> pos(getPosition().x, Map::Instance()->getTerrain()->getY(getPosition().x,getPosition().y) + billBoardOffset, getPosition().y);
 
     barBg = new Billboard(layer, ID, pos, Color(0,0,0,255), Color(0,0,0,255));
@@ -67,10 +50,6 @@ Building::Building(SceneNode *_layer,
 }
 
 Building::~Building() {
-    delete canBuildMat;
-    delete cantBuildMat;
-    delete baseMat;
-    delete damagedMat;
     delete buildTimer;
     delete barBg;
     delete bar;
@@ -116,12 +95,9 @@ std::string Building::getType(){
     return buildingType;
 }
 
-void Building::setCanBuildMat() {
-    model -> setMaterial(canBuildMat);
-}
-
 void Building::setCantBuildMat() {
-    model -> setMaterial(cantBuildMat);
+	baseMat -> setColor(255, 0, 0, 255);
+    model -> setMaterial(baseMat);
 }
 
 void Building::debugAnimation(std::string path) {

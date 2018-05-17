@@ -66,6 +66,11 @@ class Building : public Entity {
          */
         void setCantBuildMat();
 
+		/**
+		 * @brief Animation?
+		 * 
+		 * @param path 
+		 */
         void debugAnimation(std::string path);
 
     private:
@@ -91,13 +96,8 @@ class Building : public Entity {
         //Finish the building.
         std::function<void(Building*)> callback;
         
+		//Animation?
         Animation* anim;
-
-        //
-        Material *canBuildMat;
-        
-        //
-        Material *cantBuildMat;
 };
 
 #endif

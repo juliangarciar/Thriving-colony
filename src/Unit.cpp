@@ -64,15 +64,6 @@ Unit::Unit(SceneNode* _layer,
         switchState(Enumeration::UnitState::InHome);
     });
     pathManager = new PathManager(this);
-
-    baseMat = new Material(new Texture(""));
-    baseMat -> setColor(255, 255, 255, 255);
-
-    damagedMat = new Material(new Texture(""));
-    damagedMat -> setColor(255, 255, 0, 0);
-
-    setBaseMaterial();
-
 }
 
 Unit::~Unit() {

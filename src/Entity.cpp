@@ -54,7 +54,8 @@ Entity::Entity(SceneNode* _layer,
     model = new Model(_layer, _id, _modelPath);
     
     //Set texture
-    //model->setMaterial(new Material(new Texture(_texturePath.c_str())));
+    baseMat = new Material(new Texture(_texturePath.c_str()));
+    baseMat -> setColor(255, 255, 255, 255);
 
     /* Box2D parameters */
     Vector2<f32> topLeft;
@@ -67,7 +68,10 @@ Entity::Entity(SceneNode* _layer,
     bottomRight.y = (kCellsY / 2.0) * (80.f) - 1;
 
     /* Set the 2D hitbox */
-    hitBox = Box2D(topLeft, bottomRight); 
+    hitBox = Box2D(topLeft, bottomRight);
+
+	// Set the material
+    setBaseMaterial();
 }
 
 //ToDo: revisar
@@ -75,6 +79,10 @@ Entity::~Entity() {
     if (model != nullptr) delete model;
     hostile.clear();
     delete tookDamageTimer;
+
+    delete baseMat;
+    delete barBg;
+    delete bar;
 }
 
 void Entity::addHostile(Entity* newHostileUnit) {
@@ -213,11 +221,13 @@ i32 Entity::getCellsY() const{
 
 //ToDo: anadido por rafa
 void Entity::setBaseMaterial() {
+    baseMat -> setColor(255, 255, 255, 255);
     model -> setMaterial(baseMat);
 }
 
 void Entity::setDamagedMaterial() {
-    model -> setMaterial(damagedMat);
+    baseMat -> setColor(255, 255, 0, 0);
+    model -> setMaterial(baseMat);
 }
 
     //position -> set(vectorData);
