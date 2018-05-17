@@ -76,12 +76,8 @@ class IO {
         EventSystem *events;
 
         ResourceManager *resourceManager;
-<<<<<<< HEAD
-        
-=======
 
 		std::vector<Timer*> timers;
->>>>>>> master
 };
 
 #endif

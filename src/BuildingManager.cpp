@@ -99,13 +99,8 @@ void BuildingManager::drawBuilding() {
 			return;
 		}
 		
-<<<<<<< HEAD
 		if (!canBuild) {
-			tempBuilding->setCantBuildMat();
-=======
-		if (collision) {
 			tempBuilding->setCantBuildColor();
->>>>>>> master
 		} else {
 			tempBuilding->setBaseColor();
 			//If there is no collision and the player press left button of the mouse, build the building

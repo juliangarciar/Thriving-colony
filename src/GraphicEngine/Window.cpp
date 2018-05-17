@@ -99,25 +99,11 @@ void Window::beginScene(){
 }
 
 void Window::endScene(bool b){
-<<<<<<< HEAD
-    //std::cout << "Window::endScene init" << std::endl;
-    //std::cout << "1" << std::endl;
-    // DA ERROR AQUI
-    if (b) scene -> drawAll();
-    //std::cout << "2" << std::endl;
-    gui -> drawWidgets();
-    //std::cout << "3" << std::endl;
-    glEnable(GL_DEPTH_TEST);
-    //std::cout << "4" << std::endl;
-    driver -> endScene();
-    //std::cout << "Window::endScene finish" << std::endl;
-=======
     // DA ERROR AQUI
     if (b) scene -> drawAll();
     gui -> drawWidgets();
     glEnable(GL_DEPTH_TEST);
     driver -> endScene();
->>>>>>> master
 }
 
 void Window::close(){
