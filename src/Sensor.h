@@ -15,7 +15,6 @@ class Sensor{
     private:
         Unit* propietary;
         Box2D sensorHitbox;
-        std::vector< Unit* > detectedFloking;
-        std::vector< Entity* > detectedEntities;
+        std::vector< Entity* > detectedEnemyEntities;
 };
 #endif

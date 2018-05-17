@@ -69,11 +69,10 @@ Unit::Unit(SceneNode* _layer,
         switchState(Enumeration::UnitState::InHome);
     });
 
-    flockingSensorTimer = new Timer(0.5, true, true);
-    flockingSensorTimer->setCallback([&]{
-        if(state != Enumeration::UnitState::InHome){
+    enemySensorTimer = new Timer(0.5, true, true);
+    enemySensorTimer->setCallback([&]{
+        if(state != Enumeration::UnitState::InHome && state != Enumeration::UnitState::Recruiting){
             unitSensor->update();
-            //updateFlockingSensor();
         }
     });
     pathManager = new PathManager(this);
@@ -105,7 +104,7 @@ Unit::~Unit() {
     }
     unitFighters.clear();
     delete recruitingTimer;
-    delete flockingSensorTimer;
+    delete enemySensorTimer;
 }
 void Unit::Init() {
     //ToDo: esto ya no es necesario
@@ -149,22 +148,14 @@ void Unit::update() {
         break;
         default: break;
     }
-    /*This should be moved from there */
-    //std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(vectorPos);
-    //std::vector< UnitFighter* > dummyFighters;
-    //std::vector< UnitFighter* > dummySpace;
-    //for(std::size_t i = 0; i < nearUnits.size(); i++){
-    //    dummySpace = nearUnits[i]->getUnitFighters();
-    //    dummyFighters.insert(dummyFighters.end(), dummySpace.begin(), dummySpace.end());
-    //}
-    //nearUnitFighters = dummyFighters;
-    flockingSensorTimer->tick();
-    for(std::size_t i = 0; i < unitFighters.size(); i++){
-        //unitFighters[i]->setNearFighters(nearUnitFighters);
-        unitFighters[i]->update();
+    /* Check if this is correct there */
+    if(state != Enumeration::UnitState::InHome && state != Enumeration::UnitState::Recruiting){
+        enemySensorTimer->tick();
+        updateFlockingSensor();
+        for(std::size_t i = 0; i < unitFighters.size(); i++){
+            unitFighters[i]->update();
+        }
     }
-    //std::cout << "Near units: " << nearUnitFighters.size() << "\n";
-    //unitSensor->update();
 }
 
 void Unit::preTaxPlayer() {
@@ -483,8 +474,8 @@ bool Unit::hasArrived(){
     return false;
 }
 /* Check how to do this */
-void Unit::updateFlockingSensor(std::vector< Unit* > _nearUnits){
-    std::vector< Unit* > nearUnits = _nearUnits;
+void Unit::updateFlockingSensor(){
+    std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(vectorPos);
     std::vector< UnitFighter* > dummyFighters;
     std::vector< UnitFighter* > dummySpace;
     for(std::size_t i = 0; i < nearUnits.size(); i++){

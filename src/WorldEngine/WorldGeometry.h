@@ -5,6 +5,7 @@
 #include <Types.h>
 #include <MathEngine/Vector2.h>
 #include <WorldEngine/Cell.h>
+#include <Enumeration.h>
 
 class Quadtree;
 class Entity;
@@ -134,7 +135,7 @@ class WorldGeometry{
         const Vector2<f32> getSquadPosition(i32 _size, i32 _index) const; 
         //bool checkCollision(Vector2<f32> _orig, Vector2<f32> _end, f32 _halfsizeX = 40, f32 _halfsizeY = 40) const;
         bool checkCollision(Vector2<f32> _orig, Vector2<f32> _end) const;
-        void getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >& collidingEntities, std::vector< Unit* >& flockingUnits) const;
+        void getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >& collidingEnemyEntities, Enumeration::Team teamTarget) const;
     private:
         static WorldGeometry* pinstance;
         std::vector<Cell*> mCells;

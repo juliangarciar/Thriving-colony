@@ -155,13 +155,13 @@ const Vector2<f32> Quadtree::getPosition() const{
 }
 /* Check this method, maybe ensure they are colliding, more precise but slower */
 /* Is not working properly for some reason */
-void Quadtree::getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >& collidingEntities, std::vector< Unit* >& flockingUnits) const{    
+void Quadtree::getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >& collidingEntities, Enumeration::Team teamTarget) const{    
     if(this->depth == 0){
         for(std::size_t i = 0; i < innerCells.size(); i++){
             if(innerCells[i]->getHitbox().isOverlappedWith(hitbox)){
                 Entity* buildingTmp = innerCells[i]->getInhabitingBuilding();
                 std::vector< Unit* > unitTmp = innerCells[i]->getInhabitingUnits();
-                if(buildingTmp != nullptr){
+                if(buildingTmp != nullptr && buildingTmp->getTeam() != teamTarget){
                     bool done = false;
                     for(std::size_t j = 0; j < collidingEntities.size() && !done; ++j){
                         if(collidingEntities[j] == buildingTmp){
@@ -172,9 +172,10 @@ void Quadtree::getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >&
                         collidingEntities.push_back(buildingTmp);
                     }
                 }
-                if(unitTmp.size() > 0){
-                    collidingEntities.insert(collidingEntities.end(), unitTmp.begin(), unitTmp.end());
-                    flockingUnits.insert(flockingUnits.end(), unitTmp.begin(), unitTmp.end());
+                for(std::size_t k = 0; k < unitTmp.size(); k++){
+                    if(unitTmp[k]->getTeam() != teamTarget){
+                        collidingEntities.push_back(unitTmp[k]);
+                    }
                 }
             }
         }
@@ -182,7 +183,7 @@ void Quadtree::getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >&
     else{
         for(i32 i = 0; i < 4; i++){
             if(innerTrees[i]->getHitbox().isOverlappedWith(hitbox)){
-                innerTrees[i]->getCollidingEntities(hitbox, collidingEntities, flockingUnits);
+                innerTrees[i]->getCollidingEntities(hitbox, collidingEntities, teamTarget);
             }
         }
     }

@@ -1,6 +1,7 @@
 #include "Sensor.h"
 #include "Unit.h"
 #include <WorldEngine/WorldGeometry.h>
+#include <Enumeration.h>
 
 Sensor::Sensor(Unit* _entity, i32 maxRadius):propietary(_entity),
                                                sensorHitbox(Vector2<f32>(0,0),
@@ -13,13 +14,11 @@ Sensor::~Sensor(){
 }
 
 void Sensor::update(){
-    detectedEntities.clear();
-    detectedEntities.resize(0);
-    detectedFloking.clear();
-    detectedFloking.resize(0);
-    WorldGeometry::Instance()->getCollidingEntities(sensorHitbox, detectedEntities, detectedFloking);
-    propietary->updateFlockingSensor(detectedFloking);
-    //std::cout << "Entidades cercanas: " << detectedEntities.size() << ". Flocking: " << detectedFloking.size() << "\n";
+    detectedEnemyEntities.clear();
+    detectedEnemyEntities.resize(0);
+    WorldGeometry::Instance()->getCollidingEntities(sensorHitbox, detectedEnemyEntities, propietary->getTeam());
+    //propietary->updateFlockingSensor(detectedFloking);
+    std::cout << "Entidades cercanas: " << detectedEnemyEntities.size() << "\n";
 }
 
 void Sensor::move(Vector2<f32> _vectorPosition){

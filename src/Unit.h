@@ -250,7 +250,7 @@ class Unit : public Entity {
         std::vector< UnitFighter* > getUnitFighters();
         void calculateDirection();
         bool hasArrived();
-        void updateFlockingSensor(std::vector< Unit* > _nearUnits);
+        void updateFlockingSensor();
         void takeDamage(i32 _damage);
         
     private:
@@ -292,7 +292,7 @@ class Unit : public Entity {
         //Timer that controls the time that has to pass since the last time that the unit looked for a new target.
         Timer* lookForTargetTimer;
 
-        Timer* flockingSensorTimer;
+        Timer* enemySensorTimer;
         //Timer that controls the time that has to pass since the last time that the unit attack its target.
         f32 attackCountdown;
 

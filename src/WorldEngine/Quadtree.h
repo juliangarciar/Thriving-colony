@@ -4,6 +4,7 @@
 #include <Types.h>
 #include <MathEngine/Vector2.h>
 #include <MathEngine/Box2D.h>
+#include <Enumeration.h>
 
 class Cell;
 class Entity;
@@ -68,7 +69,7 @@ class Quadtree{
          */
         const Vector2<f32> getPosition() const;
 
-        void getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >& collidingEntities, std::vector< Unit* >& flockingUnits) const;
+        void getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >& collidingEntities, Enumeration::Team teamTarget) const;
     private:
         const Vector2<f32> position;
         const Box2D hitBox;
