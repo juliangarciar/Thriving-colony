@@ -1,11 +1,8 @@
 #ifndef TSKYBOX_H
 #define TSKYBOX_H
 
-#include <glfw/glfw3.h>
-
 #include "TEntity.h"
 #include "TTexture.h"
-
 
 class TSkybox : public TEntity {
     public:

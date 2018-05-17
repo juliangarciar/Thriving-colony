@@ -1,26 +1,13 @@
 #include "OBDBillboard.h"
 
-OBDBillboard::OBDBillboard() {
-
+OBDBillboard::OBDBillboard(OBDSceneNode* parent, glm::vec3 position) {
+    billboardNode = new TNode(new TBillboard(position));
+	parent -> addChild(billboardNode);
 }
 
-OBDBillboard::OBDBillboard(OBDSceneNode* parent, i32 id, glm::vec3 pos, GLuint shader) {
-    rotationNode = new TNode(new TTransform());
-    translationNode = new TNode(new TTransform(), rotationNode);
-    scaleNode = new TNode(new TTransform(), translationNode);
-    
-    ID = id;
-
-    billboardNode = new TNode(new TBillboard(pos, shader));
-
-    parent -> addChild(this);
-}
-
-OBDBillboard::~OBDBillboard() {
-    delete billboardNode;
-    delete rotationNode;
-    delete translationNode;
-    delete scaleNode;
+OBDBillboard::~OBDBillboard(){
+	delete billboardNode;
+	billboardNode = nullptr;
 }
 
 void OBDBillboard::setPosition(glm::vec3 pos) {
@@ -38,28 +25,9 @@ void OBDBillboard::setSize(f32 newHeight, f32 newTopWidth, f32 newBottomWidth) {
     aux -> setSize(newHeight, newTopWidth, newBottomWidth);
 }
 
-void OBDBillboard::setBottomWidth(f32 newBottomWidth) {
-    TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
-    aux -> setSize(-1, -1, newBottomWidth);
-}
-
 glm::vec3 OBDBillboard::getPosition() {
     TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
     return aux -> getPosition();
-}
-
-i32 OBDBillboard::getID() {
-    return ID;
-}
-
-OBDColor* OBDBillboard::getTopColor() {
-    TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
-    return aux -> getTopColor();
-}
-
-OBDColor* OBDBillboard::getBottomColor() {
-    TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
-    return aux -> getBottomColor();
 }
 
 f32 OBDBillboard::getHeight() {
@@ -75,8 +43,4 @@ f32 OBDBillboard::getTopWidth() {
 f32 OBDBillboard::getBottomWidth() {
     TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
     return aux -> getBottomWidth();
-}
-
-TNode *OBDBillboard::getFirstNode() {
-    return billboardNode;
 }

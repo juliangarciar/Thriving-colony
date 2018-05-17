@@ -1,106 +1,79 @@
 #include "OBDTerrain.h"
 
-OBDTerrain::OBDTerrain(std::string path){
-	rotationNode = new TNode(new TTransform());
-	translationNode = new TNode(new TTransform(), rotationNode);
-	scaleNode = new TNode(new TTransform(), translationNode);
+#define EPSILON 0.0005
 
-	// ToDo: revisar parametros
-	terrain = ter_terrain_new(256, 256, 1);
-	ter_terrain_set_heights_from_texture(terrain, path.c_str(), 0, 1);
-	ter_terrain_build_mesh(terrain);
+OBDTerrain::OBDTerrain(OBDSceneNode* parent, std::string path, f32 y_offset, f32 y_scale, i32 step) : OBDEntity(parent) {
+	//Generate terrainmesh
+	terrain = new TerTerrain();
+	terrain->setHeightsFromTexture(path.c_str(), y_offset, y_scale, step);
+	terrain->buildMesh();
 
-	generateTerrain();
+	//Octree
+	vertex_vector = std::vector<glm::vec3>(terrain->glm_vertices, terrain->glm_vertices + terrain->num_vertices);
 
+	octree = new SDF(vertex_vector, terrain->triangled_indices, terrain->triangle_centroids);
+	octree->init();
+	octree->build();
+
+	//glslMesh
+	glslMesh *mesh = new glslMesh();
+	mesh -> vbo = std::vector<f32>(terrain->vertices, terrain->vertices+(terrain->num_vertices*8));
+	mesh -> ibo = std::vector<u32>(terrain->indices, terrain->indices+terrain->num_indices);
+
+	//Empty material
+	OBDMaterial *material = new OBDMaterial();
+
+	//Create Node
 	terrainNode = new TNode(new TMesh(mesh, material), scaleNode);
-}
-
-OBDTerrain::OBDTerrain(OBDSceneNode* parent, std::string path){
-	rotationNode = new TNode(new TTransform());
-	translationNode = new TNode(new TTransform(), rotationNode);
-	scaleNode = new TNode(new TTransform(), translationNode);
-
-	// ToDo: revisar parametros
-	terrain = ter_terrain_new(256, 256, 1);
-	ter_terrain_set_heights_from_texture(terrain, path.c_str(), 0, 1);
-	ter_terrain_build_mesh(terrain);
-
-	generateTerrain();
-
-	terrainNode = new TNode(new TMesh(mesh, material), scaleNode);
-
-	parent->addChild(this);
 }
 
 OBDTerrain::~OBDTerrain() {
-	delete rotationNode;
-	rotationNode = nullptr;
+	delete terrain;
+	delete octree;
+
+	terrain = nullptr;
+	octree = nullptr;
 }
 
-void OBDTerrain::generateTerrain(){
-	int w = ter_terrain_get_width(terrain);
-	int h = ter_terrain_get_height(terrain);
-	int d = ter_terrain_get_depth(terrain);
+void OBDTerrain::setTexture(OBDTexture* t){
+    TMesh* m = (TMesh*) terrainNode -> getEntity();
+    m -> getMaterial() -> setTexture(t);
+}
 
-	mesh.boundingBox.min = glm::vec3(0,0,0);
-	mesh.boundingBox.max = glm::vec3(w, h, d);
-	mesh.boundingBox.size = glm::vec3(w, h, d);
-	mesh.boundingBox.center = glm::vec3(w/2, h/2, d/2);
+TMesh *OBDTerrain::getTerrainMesh(){
+	TMesh* t = (TMesh*) terrainNode -> getEntity();
+	return t;
+}
+
+f32 OBDTerrain::getY(f32 x, f32 z){
+	OBDLine line;
+	line.start = inverse_model_matrix * glm::vec4(glm::vec3(x+EPSILON, -10000, z+EPSILON), 1); //ToDo: Revisar
+	line.end = inverse_model_matrix * glm::vec4(glm::vec3(x+EPSILON, 10000, z+EPSILON), 1); //ToDo: Revisar
+
+	glm::vec3 world_dir = glm::normalize(line.end - line.start);
+	std::vector<glm::vec3> res = octree->query(line.start, world_dir);
+
+	if (res.size() > 0) {
+		glm::vec4 r(res[0], 1);
+		r = model_matrix * r;
+		return r.y;
+	}
+
+	return 0;
+}
+
+glm::vec3 OBDTerrain::getRayCollision(OBDLine line){
+	line.start = inverse_model_matrix * glm::vec4(line.start, 1);
+	line.end = inverse_model_matrix * glm::vec4(line.end, 1);
+
+	glm::vec3 world_dir = glm::normalize(line.end - line.start);
+	std::vector<glm::vec3> res = octree->query(line.start, world_dir);
 	
-	mesh.name = "terrain";
-	mesh.vbo = std::vector<float>(terrain->vertices, terrain->vertices+(terrain->num_vertices*8));
-	mesh.indices = std::vector<unsigned short>(terrain->vertices, terrain->vertices+terrain->num_indices);
+	if (res.size() > 0) {
+		glm::vec4 r(res[0], 1);
+		r = model_matrix * r;
+		return r;
+	}
 
-	material.ambientColor = glm::vec3(1,1,1);
-}
-
-void OBDTerrain::translate(f32 tX, f32 tY, f32 tZ) {
-	TTransform* t = (TTransform*) translationNode -> getEntity();
-	t -> translate(tX, tY, tZ);
-	node_position += glm::vec3(tX, tY, tZ);
-}
-
-void OBDTerrain::rotate(f32 rX, f32 rY, f32 rZ, f32 angle) {
-	TTransform* t = (TTransform*) rotationNode -> getEntity();
-	t -> rotate(rX, rY, rZ, angle);
-	node_rotation += glm::vec3(rX, rY, rZ);
-}
-
-void OBDTerrain::scale(f32 sX, f32 sY, f32 sZ) {
-	TTransform* t = (TTransform*) scaleNode -> getEntity();
-	t -> scale(sX, sY, sZ);
-	node_scale += glm::vec3(sX, sY, sZ);
-}
-
-void OBDTerrain::setPosition(glm::vec3 p) {
-	TTransform* t = (TTransform*) translationNode -> getEntity();
-	glm::vec3 o = node_position - p;
-	t -> translate(o.x, o.y, o.z);
-	node_position = p;
-}
-
-void OBDTerrain::setRotation(glm::vec3 r, f32 angle) {
-	TTransform* t = (TTransform*) rotationNode -> getEntity();
-	glm::vec3 o = node_rotation - r;
-	t -> rotate(o.x, o.y, o.z, angle);
-	node_rotation = r;
-}
-
-void OBDTerrain::setScale(glm::vec3 s) {
-	TTransform* t = (TTransform*) scaleNode -> getEntity();
-	glm::vec3 o = node_scale - s;
-	t -> scale(o.x, o.y, o.z);
-	node_scale = s;
-}
-
-void OBDTerrain::setActive(bool a) {
-	terrainNode -> setActive(a);
-}
-
-bool OBDTerrain::getActive() {
-	return terrainNode -> getActive();
-}
-
-TNode *OBDTerrain::getFirstNode(){
-    return rotationNode;
+	return glm::vec3();
 }

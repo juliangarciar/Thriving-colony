@@ -23,6 +23,20 @@ class OBDColor {
         /**
          * @brief 
          * 
+         * @param rgb 
+         */
+        OBDColor(glm::vec3);
+
+        /**
+         * @brief 
+         * 
+         * @param rgba 
+         */
+        OBDColor(glm::vec4);
+
+        /**
+         * @brief 
+         * 
          * @param red 
          * @param green 
          * @param blue 

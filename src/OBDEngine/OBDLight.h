@@ -8,109 +8,46 @@
 #include "Graphics/TTransform.h"
 #include "Graphics/TLight.h"
 
-class OBDLight : public OBDEntity {
+class OBDLight {
     public:
         /**
-         * @brief 
-         */
-        OBDLight(OBDColor color, u32 intensity);
-
-        /**
-         * @brief 
+         * @brief Construct a new OBDLight object
          * 
          * @param parent 
+         * @param color 
+         * @param intensity 
+         * @param ambient 
+         * @param attenuation 
          */
-        OBDLight(OBDSceneNode* parent, OBDColor color, u32 intensity);
+        OBDLight(OBDSceneNode* parent, OBDColor color, f32 intensity, f32 ambient, f32 attenuation);
 
         /**
          * @brief 
          * 
          */
-        ~OBDLight();
+        virtual ~OBDLight();
 
         /**
-         * @brief 
+         * @brief Set the Color object
          * 
-         * @param OBDColor 
+         * @param color
+         * @param intensity 
          */
-        void setAmbientColor(OBDColor);
+        void setColor(OBDColor color, f32 intensity);
 
-        /**
-         * @brief 
-         * 
-         * @return OBDColor 
-         */
-        OBDColor getAmbientColor();
-        
-        /**
-         * @brief 
-         * 
-         * @param OBDColor 
-         */
-        void setAmbientIntensity(u32);
+		/**
+		 * @brief Set the Ambient Coeficient object
+		 * 
+         * @param f32 
+		 */
+		void setAmbientCoeficient(f32);
 
-        /**
-         * @brief 
-         * 
-         * @return OBDColor 
-         */
-        u32 getAmbientIntensity();
-
-        /**
-         * @brief 
-         * 
-         * @param OBDColor 
-         */
-        void setDiffuseColor(OBDColor);
-
-        /**
-         * @brief 
-         * 
-         * @return OBDColor 
-         */
-        OBDColor getDiffuseColor();
-        
-        /**
-         * @brief 
-         * 
-         * @param OBDColor 
-         */
-        void setDiffuseIntensity(u32);
-
-        /**
-         * @brief 
-         * 
-         * @return OBDColor 
-         */
-        u32 getDiffuseIntensity();
-
-        /**
-         * @brief 
-         * 
-         * @param OBDColor 
-         */
-        void setSpecularColor(OBDColor);
-
-        /**
-         * @brief 
-         * 
-         * @return OBDColor 
-         */
-        OBDColor getSpecularColor();
-        
-        /**
-         * @brief 
-         * 
-         * @param OBDColor 
-         */
-        void setSpecularIntensity(u32);
-
-        /**
-         * @brief 
-         * 
-         * @return OBDColor 
-         */
-        u32 getSpecularIntensity();
+		/**
+		 * @brief Set the Attenuation Coeficient object
+		 * 
+         * @param f32 
+		 */
+		void setAttenuationCoeficient(f32);
         
         /**
          * @brief Set the Position object
@@ -120,18 +57,18 @@ class OBDLight : public OBDEntity {
         void setPosition(glm::vec3 p);
 
         /**
-         * @brief Get the Position object
-         * 
-         * @return glm::vec3 
-         */
-        glm::vec3 getPosition();
-
-        /**
          * @brief set the light to active or inactive
          * 
          * @param bool new light active state
          */
         void setActive(bool);
+
+        /**
+         * @brief Get the Position object
+         * 
+         * @return glm::vec3 
+         */
+        glm::vec3 getPosition();
 
         /**
          * @brief returns wether or not the light is active
@@ -163,13 +100,6 @@ class OBDLight : public OBDEntity {
         void setType(OBDEnums::LightTypes newType);
     private:
         TNode* lightNode;
-
-        OBDColor ambientColor;
-        u32 ambientIntensity;
-        OBDColor diffuseColor;
-        u32 diffuseIntensity;
-        OBDColor specularColor;
-        u32 specularIntensity;
 };
 
 #endif

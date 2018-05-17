@@ -7,15 +7,8 @@
 #include "Graphics/TTransform.h"
 #include "Graphics/TCamera.h"
 
-class OBDCamera : public OBDEntity {
+class OBDCamera {
     public:
-        /**
-         * @brief 
-         * @param screenWidth
-         * @param screenHeight
-         */
-        OBDCamera(i32, i32);
-
         /**
          * @brief 
          * 
@@ -23,13 +16,13 @@ class OBDCamera : public OBDEntity {
          * @param screenWidth
          * @param screenHeight
          */
-        OBDCamera(OBDSceneNode* parent, i32, i32);
+        OBDCamera(OBDSceneNode* parent, i32, i32, f32, f32);
 
         /**
          * @brief 
          * 
          */
-        ~OBDCamera();
+        virtual ~OBDCamera();
 
         /**
           * @brief 
@@ -138,28 +131,7 @@ class OBDCamera : public OBDEntity {
          * @return glm::vec3 
          */
         glm::vec3 getTargetPosition();
-
-        /**
-         * @brief Get World Coordinates From Screen
-         * 
-         * @return glm::vec3 
-         */
-        glm::vec3 getWorldCoordinatesFromScreen(glm::vec3);
-
-        /**
-         * @brief Get Screen Coordinates From World
-         * 
-         * @return glm::vec3 
-         */
-        glm::vec3 getScreenCoordinatesFromWorld(glm::vec3);
-
-        /**
-         * @brief Get World Coordinates From Screen
-         * 
-         * @return glm::vec3 
-         */
-        OBDLine getRaycastFromScreenCoordinates(glm::vec2);
-
+		
         /**
          * @brief 
          * s

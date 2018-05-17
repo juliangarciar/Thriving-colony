@@ -19,8 +19,8 @@ class OBDEnums {
         };
 
         enum TextureTypes {
-            TEXTURE_AMBIENT,
             TEXTURE_DIFFUSE,
+            TEXTURE_OCLUSIONS,
             TEXTURE_SPECULAR,
             TEXTURE_ALPHA,
             TEXTURE_BUMP,
@@ -51,8 +51,9 @@ class OBDEnums {
             BUFFER_TEXTURE,
 
             LIGHT_AMOUNT,
+			CAMERA_POSITION,
 
-            SAMPLER_AMBIENT,
+            SAMPLER_OCLUSIONS,
             SAMPLER_DIFFUSE,
             SAMPLER_SPECULAR,
             SAMPLER_ALPHA,

@@ -10,13 +10,13 @@ class TLight : public TEntity {
          * @brief 
          * 
          */
-        TLight(OBDColor, f32);
+        TLight(OBDColor, f32, f32, f32);
 
         /**
          * @brief 
          * 
          */
-        ~TLight();
+        virtual ~TLight();
 
         /**
          * @brief 
@@ -35,21 +35,19 @@ class TLight : public TEntity {
          * 
          * @param OBDColor 
          */
-        void setAmbientComponent(OBDColor, f32);
-        
-        /**
-         * @brief 
-         * 
-         * @param OBDColor 
-         */
-        void setDiffuseComponent(OBDColor, f32);
-        
-        /**
-         * @brief 
-         * 
-         * @param OBDColor 
-         */
-        void setSpecularComponent(OBDColor, f32);
+        void setColor(OBDColor, f32);
+
+		/**
+		 * @brief Set the Ambient Coeficient object
+		 * 
+		 */
+		void setAmbientCoeficient(f32);
+
+		/**
+		 * @brief Set the Attenuation Coeficient object
+		 * 
+		 */
+		void setAttenuationCoeficient(f32);
 
         /**
          * @brief Set the Position object

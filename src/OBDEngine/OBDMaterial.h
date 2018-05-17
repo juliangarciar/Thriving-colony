@@ -1,22 +1,51 @@
 #ifndef OBDMATERIAL_H
 #define OBDMATERIAL_H
 
-#include <GLFW/glfw3.h>
 #include "OBDTypes.h"
 #include "OBDEnums.h"
 
-#include "Graphics/TTexture.h"
+#include "OBDColor.h"
+#include "OBDTexture.h"
 
-class OBDTexture {
+#include "ResourceManager/ResourceMTL.h"
+
+class OBDMaterial {
 	public:
-		OBDTexture(OBDEnums::TextureTypes, ResourceIMG*);
-		~OBDTexture();
+		OBDMaterial();
+		OBDMaterial(ResourceMTL*, std::string);
+		~OBDMaterial();
 
-		OBDEnums::TextureTypes getType();
-		TTexture *getTexture();
+		void setMaterialName(std::string);
+
+		void setAmbientColor(OBDColor);
+		void setDiffuseColor(OBDColor);
+		void setSpecularColor(OBDColor);
+		void setSpecularShininess(i32);
+
+		void setTexture(OBDTexture *);
+
+		std::string getMaterialName();
+
+		OBDColor getAmbientColor();
+		OBDColor getDiffuseColor();
+		OBDColor getSpecularColor();
+		i32 getSpecularShininess();
+
+		TTexture *getTexture(OBDEnums::TextureTypes);
+
+		glslMaterial *getGLSLMaterial();
+		glslTexture *getGLSLActiveTextures();
 	private:
-		OBDEnums::TextureTypes type;
-		TTexture *tex;
+		std::string name;
+
+        glslMaterial *material;
+		glslTexture *activeTextures;
+
+		TTexture* diffuseTextureMap;
+		TTexture* ambientOclusionsTextureMap;
+		TTexture* specularTextureMap;
+		TTexture* alphaTextureMap;
+		TTexture* bumpMap;
 };
 
 #endif

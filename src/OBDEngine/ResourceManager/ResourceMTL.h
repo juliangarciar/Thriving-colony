@@ -16,8 +16,8 @@ struct ResourceMaterial{
     f32 dissolve;
     i32 illumination;
 
-    std::string ambientTextureMap;
     std::string diffuseTextureMap;
+    std::string ambientOclusionsTextureMap;
     std::string specularTextureMap;
     std::string alphaTextureMap;
     std::string bumpMap;
@@ -34,9 +34,9 @@ class ResourceMTL : public Resource {
         void setIdentifier(const char *);
         const char *getIdentifier();
 
-        std::map<std::string, ResourceMaterial> getResource();
+        std::map<std::string, ResourceMaterial*> *getResource();
     private:
-        std::map<std::string, ResourceMaterial> materialArray;
+        std::map<std::string, ResourceMaterial*> *materialArray;
         
 };
 

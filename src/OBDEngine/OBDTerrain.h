@@ -2,9 +2,11 @@
 #define OBDTERRAIN_H
 
 #include <ter-terrain/ter-terrain.h>
+#include <ter-terrain/octree.h>
 
 #include "OBDEntity.h"
 #include "OBDSceneNode.h"
+#include "OBDTexture.h"
 
 #include "ResourceManager/ResourceIMG.h"
 #include "ResourceManager/ResourceOBJ.h"
@@ -18,104 +20,52 @@ class OBDTerrain : public OBDEntity {
 		/**
 		 * @brief 
 		 * 
-		 * @param
-		 */
-		OBDTerrain(std::string);
-
-		/**
-		 * @brief 
-		 * 
 		 * @param  
 		 * @param 
 		 */
-		OBDTerrain(OBDSceneNode*, std::string);
+		OBDTerrain(OBDSceneNode*, std::string, f32 y_offset, f32 y_scale, i32 step);
 
 		/**
 		 * @brief 
 		 * 
 		 */
-		~OBDTerrain();
+		virtual ~OBDTerrain();
+
+        /**
+         * @brief Set the glslTexture object
+         * 
+         */
+        void setTexture(OBDTexture*);
+
+		/**
+		 * @brief Get the Ray Collision object
+		 * 
+		 * @param line
+		 * @return glm::vec3 
+		 */
+		glm::vec3 getRayCollision(OBDLine);
 
 		/**
 		 * @brief 
 		 * 
-		 * @param tX 
-		 * @param tY 
-		 * @param tZ 
+		 * @param x 
+		 * @param z 
+		 * @return f32 
 		 */
-		void rotate(f32 rX, f32 rY, f32 rZ, f32 angle);
+		f32 getY(f32 x, f32 z);
 
 		/**
-		 * @brief 
+		 * @brief Get the Terrain Mesh object
 		 * 
+		 * @return TMesh* 
 		 */
-		void scale(f32 sX, f32 sY, f32 sZ);
-
-		/**
-		 * @brief 
-		 * 
-		 */
-		void translate(f32 tX, f32 tY, f32 tZ);
-
-		/**
-		 * @brief Set the Position
-		 * 
-		 * @param p 
-		 */
-		void setPosition(glm::vec3 p);
-
-		/**
-		 * @brief Set the Rotation
-		 * 
-		 * @param r 
-		 * @param angle 
-		 */
-		void setRotation(glm::vec3 r, f32 angle);
-
-		/**
-		 * @brief Set the Scale
-		 * 
-		 * @param s 
-		 */
-		void setScale(glm::vec3 s);
-
-		/**
-		 * @brief Set the Active object
-		 * 
-		 * @param a 
-		 */
-		void setActive(bool a);
-
-		/**
-		 * @brief Get the Active object
-		 * 
-		 * @return true 
-		 * @return false 
-		 */
-		bool getActive();
-
-		/**
-		 * @brief Get the First Node object
-		 * 
-		 * @return TNode* 
-		 */
-		TNode *getFirstNode();
+		TMesh *getTerrainMesh();
 	private:
-		void generateTerrain();
-
-		ResourceMesh mesh;
-		ResourceMaterial material;
-
 		TerTerrain *terrain;
+		SDF *octree;
+		std::vector<glm::vec3> vertex_vector;
 
-		TNode* rotationNode;
-		TNode* translationNode;
-		TNode* scaleNode;
 		TNode* terrainNode;
-
-		glm::vec3 node_position;
-		glm::vec3 node_rotation;
-		glm::vec3 node_scale;
 };
 
 #endif

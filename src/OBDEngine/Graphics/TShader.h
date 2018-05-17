@@ -1,8 +1,6 @@
 #ifndef TSHADER_H
 #define TSHADER_H
 
-#include <glfw/glfw3.h>
-
 #include "../OBDTypes.h"
 #include "../ResourceManager/ResourceGLSL.h"
 

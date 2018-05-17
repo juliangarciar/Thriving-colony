@@ -1,13 +1,11 @@
 #include "TBillboard.h"
 #include "TShader.h"
 
-TBillboard::TBillboard(glm::vec3 pos, GLuint shader) : TEntity() {
+TBillboard::TBillboard(glm::vec3 pos) : TEntity() {
     position = pos;
-    height = 2;
-    topWidth = 5;
-    bottomWidth = 10;
-
-    program = shader;
+    height = 200;
+    topWidth = 500;
+    bottomWidth = 100;
     
     bottomColor = new OBDColor(255, 255, 255);
     topColor = new OBDColor();
@@ -50,9 +48,7 @@ void TBillboard::beginDraw() {
         0,                  
         (void*)0            
     );
-
-    // Dibujar el triángulo
-    glDrawArrays(GL_TRIANGLES, 0, 12); // Empezar desde el vértice 0; 12 vértices en total -> 1 triángulo
+    glDrawArrays(GL_TRIANGLES, 0, 12);
     glDisableVertexAttribArray(0);
 }
 
@@ -79,7 +75,9 @@ void TBillboard::setSize(f32 newHeight, f32 newTopWidth, f32 newBottomWidth) {
         height = newHeight;
     }
 
-    topWidth = newTopWidth;
+    if (newTopWidth != -1) {
+        topWidth = newTopWidth;
+    }
 
     if (newBottomWidth != -1) {
         bottomWidth = newBottomWidth;

@@ -45,17 +45,16 @@ void TTransform::multiply(glm::mat4 mMatrix) {
     matrix = matrix * mMatrix;
 }
 
-void TTransform::translate(f32 tX, f32 tY, f32 tZ) {
-    matrix = glm::translate(matrix, glm::vec3(tX, tY, tZ));
+void TTransform::translate(glm::vec3 t) {
+    matrix = glm::translate(matrix, t);
 }
 
-void TTransform::rotate(f32 rX, f32 rY, f32 rZ, f32 angle) {
-    matrix = glm::rotate(matrix , angle,glm::vec3(rX, rY, rZ));
-
+void TTransform::rotate(glm::vec3 r, f32 angle) {
+    matrix = glm::rotate(matrix, glm::radians(angle), r);
 }
 
-void TTransform::scale(f32 sX, f32 sY, f32 sZ) {
-    matrix = glm::scale(matrix, glm::vec3(sX, sY, sZ));
+void TTransform::scale(glm::vec3 s) {
+    matrix = glm::scale(matrix, s);
 }
 
 glm::mat4 TTransform::getMatrix() {

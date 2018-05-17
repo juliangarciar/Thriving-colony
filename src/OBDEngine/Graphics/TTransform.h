@@ -83,33 +83,27 @@ class TTransform : public TEntity {
          * @brief creates and stores into the transform matrix a translation matrix from the current 
          * one and a vector3 composed of the 3 numbers passed as parameters.
          * 
-         * @param f32 x component of the translation.
-         * @param f32 y component of the translation.
-         * @param f32 z component of the translation.
+         * @param glm::vec3 component of the translation.
          */
-        void translate(f32, f32, f32);
+        void translate(glm::vec3);
 
         /**
          * @brief creates and stores into the transform matrix a rotation matrix from the current 
          * one and a vector3 composed of the first 3 numbers passed as parameters. The rotation amount is determined
          * by the fourth one, the angle.
          * 
-         * @param f32 x component of the rotation.
-         * @param f32 y component of the rotation.
-         * @param f32 z component of the rotation.
+         * @param glm::vec3 component of the rotation.
          * @param f32 angular amount to rotate. This is expressed in radians if GLM_FORCE_RADIANS is define or degrees otherwise.
          */
-        void rotate(f32, f32, f32, f32);
+        void rotate(glm::vec3, f32);
 
         /**
          * @brief creates and stores into the transform matrix a scale matrix from the current 
          * one and a vector3 composed of the 3 numbers passed as parameters.
          * 
-         * @param f32 x component of the scale.
-         * @param f32 y component of the scale.
-         * @param f32 z component of the scale.
+         * @param glm::vec3 component of the scale.
          */
-        void scale(f32, f32, f32);
+        void scale(glm::vec3);
 
         /**
          * @brief 

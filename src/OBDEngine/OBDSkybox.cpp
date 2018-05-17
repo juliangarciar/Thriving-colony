@@ -7,7 +7,8 @@ OBDSkybox::OBDSkybox(TTexture* texture) {
 }
 
 OBDSkybox::~OBDSkybox() {
-
+	delete skyboxNode;
+	skyboxNode = nullptr;
 }
 
 void OBDSkybox::setTexture(TTexture* texture) {

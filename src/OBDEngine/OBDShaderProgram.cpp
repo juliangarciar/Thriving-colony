@@ -14,7 +14,7 @@ OBDShaderProgram::OBDShaderProgram(ResourceGLSL* vs, ResourceGLSL* fs){
 
 	// Check the program
     GLint Result = GL_FALSE;
-    int InfoLogLength;
+    i32 InfoLogLength;
 	glGetProgramiv(pid, GL_LINK_STATUS, &Result);
 	glGetProgramiv(pid, GL_INFO_LOG_LENGTH, &InfoLogLength);
 	if (InfoLogLength > 0){

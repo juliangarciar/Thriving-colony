@@ -4,22 +4,16 @@
 #include "Resource.h"
 #include "ResourceManager.h"
 
-struct BoundingBox {
-    glm::vec3 min;
-    glm::vec3 max;
-    glm::vec3 size;
-    glm::vec3 center;
-};
-
 struct ResourceMesh {
     std::string name;
 
     std::vector<f32> vbo;
-    std::vector<us32> indices;
+    std::vector<u32> indices;
 
     std::string defaultMaterialName;
 
-    BoundingBox boundingBox;
+    glm::vec3 aabbMin;
+	glm::vec3 aabbMax;
 };
 
 class ResourceOBJ : public Resource {
@@ -33,11 +27,11 @@ class ResourceOBJ : public Resource {
         void setIdentifier(const char *);
         const char *getIdentifier();
 
-        std::map<std::string, ResourceMesh> getResource();
+        std::map<std::string, ResourceMesh*> *getResource();
 
         std::string getDefaultMaterialPath();
     private:
-        std::map<std::string, ResourceMesh> meshArray;
+        std::map<std::string, ResourceMesh*> *meshArray;
         std::string defaultMaterialPath;
 };
 

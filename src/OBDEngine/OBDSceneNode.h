@@ -1,19 +1,14 @@
 #ifndef OBDSCENENODE_H
 #define OBDSCENENODE_H
 
+#include <aabbtree/AABB.h>
+
 #include "OBDEntity.h"
 
 #include "Graphics/TTransform.h"
 
 class OBDSceneNode : public OBDEntity {
     public:
-        /**
-         * @brief 
-         * 
-         * @param parent 
-         */
-        OBDSceneNode();
-
         /**
          * @brief 
          * 
@@ -32,50 +27,7 @@ class OBDSceneNode : public OBDEntity {
          * @brief 
          * 
          */
-        ~OBDSceneNode();
-
-        /**
-         * @brief 
-         * 
-         * @param tX 
-         * @param tY 
-         * @param tZ 
-         */
-        void rotate(f32 rX, f32 rY, f32 rZ, f32 angle);
-
-        /**
-         * @brief 
-         * 
-         */
-        void scale(f32 sX, f32 sY, f32 sZ);
-
-        /**
-         * @brief 
-         * 
-         */
-        void translate(f32 tX, f32 tY, f32 tZ);
-
-        /**
-         * @brief Set the Position
-         * 
-         * @param p 
-         */
-        void setPosition(glm::vec3 p);
-
-        /**
-         * @brief Set the Rotation
-         * 
-         * @param r 
-         * @param angle 
-         */
-        void setRotation(glm::vec3 r, f32 angle);
-
-        /**
-         * @brief Set the Scale
-         * 
-         * @param s 
-         */
-        void setScale(glm::vec3 s);
+        virtual ~OBDSceneNode();
 
         /**
          * @brief 
@@ -89,23 +41,47 @@ class OBDSceneNode : public OBDEntity {
          */
         void addChild(TNode *);
 
-        /**
-         * @brief Get the First Node object
-         * 
-         * @return TNode* 
-         */
-        TNode *getFirstNode();
+		/**
+		 * @brief 
+		 * 
+		 */
+		void refreshModelMatrix(glm::mat4);
+
+		/**
+		 * @brief 
+		 * 
+         * @param s 
+         * @param s 
+		 */
+		void insertBoundingBox(u32, aabb::AABB);
+
+		/**
+		 * @brief 
+		 * 
+         * @param s 
+         * @param s 
+		 */
+		void refreshBoundingBox(u32, aabb::AABB);
+
+		/**
+		 * @brief 
+		 * 
+         * @param s 
+         * @param s 
+		 */
+		void removeBoundingBox(u32);
+
+		/**
+		 * @brief Get the Collision I D object
+		 * 
+		 * @return u32 
+		 */
+		std::vector<u32> getCollisionID(OBDLine);
 
     private:
         std::vector<OBDEntity*> children;
 
-        TNode* rotationNode;
-        TNode* translationNode;
-        TNode* scaleNode;
-
-        glm::vec3 node_position;
-        glm::vec3 node_rotation;
-        glm::vec3 node_scale;
+		aabb::Tree octree;
 };
 
 #endif

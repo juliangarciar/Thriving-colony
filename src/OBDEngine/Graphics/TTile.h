@@ -2,10 +2,10 @@
 #define TTILE_H
 
 #include "TEntity.h"
-#include <glfw/glfw3.h>
 
 class TTexture;
 class ResourceIMG;
+
 class TTile : public TEntity{
     public:
         TTile();
@@ -19,7 +19,7 @@ class TTile : public TEntity{
     private:
         TTexture* texture;
         GLuint textureID;
-        GLuint lightID;
+        //GLuint lightID;
         glm::vec2 position;
 };
 #endif

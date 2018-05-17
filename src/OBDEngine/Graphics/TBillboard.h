@@ -7,9 +7,9 @@
 class TBillboard : public TEntity {
     
     public:
-        TBillboard(glm::vec3, GLuint);
+        TBillboard(glm::vec3);
 
-        ~TBillboard();
+        virtual ~TBillboard();
 
         void beginDraw();
 
@@ -37,7 +37,6 @@ class TBillboard : public TEntity {
         glm::vec3 position;
 
         GLuint vertexbuffer;
-        GLuint program;
 
         OBDColor* topColor;
         OBDColor* bottomColor;
