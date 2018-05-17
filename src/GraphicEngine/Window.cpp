@@ -65,7 +65,7 @@ Window::Window(i32 width, i32 height) {
 
     dtThen = glfwGetTime();
 
-    billboardLayer = e -> createShaderedSceneNode("media/shaders/vertexShader.glsl", "media/shaders/fragmentShaderBillboards.glsl");
+    billboardLayer = e -> createShaderedSceneNode("media/shaders/vertexShaderBillboards.glsl", "media/shaders/fragmentShaderBillboards.glsl");
 }
 
 Window::~Window() {

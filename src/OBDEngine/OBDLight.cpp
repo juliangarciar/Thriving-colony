@@ -54,7 +54,7 @@ TNode *OBDLight::getFirstNode(){
     return lightNode;
 }
 
-void OBDLight::setType(OBDEnums::LightTypes newType) {
+void OBDLight::setType(i32 t) {
     TLight* l = (TLight*) lightNode -> getEntity();
-    l -> setType(newType);
+    l -> setType((OBDEnums::LightTypes)t);
 }
