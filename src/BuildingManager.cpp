@@ -100,9 +100,9 @@ void BuildingManager::drawBuilding() {
 		}
 		
 		if (collision) {
-			tempBuilding->setCantBuildMat();
+			tempBuilding->setCantBuildColor();
 		} else {
-			tempBuilding->setCanBuildMat();
+			tempBuilding->returnToBaseColor();
 			//If there is no collision and the player press left button of the mouse, build the building
 			if (IO::Instance() -> getMouse() -> leftMouseDown()) {
 				buildingMode = false;
@@ -146,7 +146,6 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
 		
 		//Start the construction of the building
 		tempBuilding -> startBuilding();
-		tempBuilding -> setBaseMaterial(); //ToDo: anadido por rafa
 		
 		//
 		WorldGeometry::Instance() -> build(tempBuilding);

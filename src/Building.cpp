@@ -31,33 +31,17 @@ Building::Building(SceneNode *_layer,
                 buildingType(baseData.type),
                 callback(nullptr)
 {
+	cantBuildColor = Color(255, 0, 0, 255);
+
     /* Set the timer */
     buildTimer = new Timer(baseData.buildingTime, false, false);
     buildTimer -> setCallback([&]{
-		setBaseMaterial();
         adjustCityStats();
         if (callback != nullptr) callback(this);
     });
 
 	//ToDo: hacia abajo anadido por rafa
     f32 billBoardOffset = 200.00;
-
-	Texture *t = new Texture(baseData.texturePath.c_str());
-
-    /* Set the model and texture */
-    baseMat = new Material(t);
-    baseMat -> setColor(255, 255, 255, 255);
-
-    damagedMat = new Material(t);
-    damagedMat -> setColor(255, 255, 0, 0);
-    
-    canBuildMat = new Material(t);
-    canBuildMat -> setColor(128, 0, 255, 0);
-
-    cantBuildMat = new Material(t);
-    cantBuildMat -> setColor(128, 255, 0, 0);
-
-    setBaseMaterial();
 
 	Vector3<f32> pos(getPosition().x, Map::Instance()->getTerrain()->getY(getPosition().x,getPosition().y) + billBoardOffset, getPosition().y);
 
@@ -67,10 +51,6 @@ Building::Building(SceneNode *_layer,
 }
 
 Building::~Building() {
-    delete canBuildMat;
-    delete cantBuildMat;
-    delete baseMat;
-    delete damagedMat;
     delete buildTimer;
     delete barBg;
     delete bar;
@@ -104,6 +84,10 @@ void Building::adjustCityStats() {
     }
 }
 
+void Building::setCantBuildColor(){
+	model->setMaterialColor(cantBuildColor);
+}
+
 void Building::setFinishedCallback(std::function<void(Building*)> f){
     callback = f;
 }
@@ -116,21 +100,8 @@ std::string Building::getType(){
     return buildingType;
 }
 
-void Building::setCanBuildMat() {
-    model -> setMaterial(canBuildMat);
-}
-
-void Building::setCantBuildMat() {
-    model -> setMaterial(cantBuildMat);
-}
 
 void Building::debugAnimation(std::string path) {
-    
-/*
-std::map< std::string, std::vector < std::string > > * paths
-*/
-
-
     std::string name = "modelo1";
     std::vector<std::string> * vector = new std::vector<std::string>();
     vector -> push_back(path);

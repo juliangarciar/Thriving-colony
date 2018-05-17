@@ -72,6 +72,12 @@ class Entity {
          */
         void putHostileTargetsToNull();
 
+		/**
+		 * @brief 
+		 * 
+		 */
+		void returnToBaseColor();
+
         /**
          * @brief Set a new id to the entity.
          * 
@@ -233,16 +239,6 @@ class Entity {
          */
         i32 getCellsY() const;
 
-        /**
-         * @brief Set the Base Material object
-         */
-        void setBaseMaterial();
-
-        /**
-         * @brief Set the Damaged Material object
-         */
-        void setDamagedMaterial();
-
     protected:
         //Layer where the entity has been created.
         SceneNode* layer;
@@ -311,10 +307,10 @@ class Entity {
         i32 kCellsY;
 
         //
-        Material *baseMat;
+        Color baseColor;
 
         //
-        Material *damagedMat;
+        Color damagedColor;
 
         //
         Billboard* barBg;

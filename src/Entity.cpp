@@ -44,17 +44,20 @@ Entity::Entity(SceneNode* _layer,
         kCellsX(_cellsX),
         kCellsY(_cellsY) 
 {
+	baseColor = Color(255, 255, 255, 255);
+	damagedColor = Color(255, 255, 0, 0); 
+
     //set Timer
     tookDamageTimer = new Timer(0.1);
     tookDamageTimer -> setCallback([&](){
-        setBaseMaterial();
+        model->setMaterialColor(baseColor);
     });
 
     //Set model
     model = new Model(_layer, _id, _modelPath);
     
     //Set texture
-    //model->setMaterial(new Material(new Texture(_texturePath.c_str())));
+    model->setMaterial(new Material(new Texture(_texturePath.c_str())));
 
     /* Box2D parameters */
     Vector2<f32> topLeft;
@@ -101,10 +104,14 @@ void Entity::takeDamage(i32 dmg) {
     currentHP = currentHP - dmg;
     tookDamageTimer -> restart();
     // Tint the model red
-    //ToDo: cambiar a material daño recibido
+    model->setMaterialColor(damagedColor);
     if (currentHP <= 0) {
         currentHP = 0;
     }
+}
+
+void Entity::returnToBaseColor(){
+	model->setMaterialColor(baseColor);
 }
 
 //SETTERS
@@ -119,7 +126,6 @@ void Entity::setPosition(Vector2<f32> vectorData) {
     model -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y), vectorData.y));
 
     hitBox.moveHitbox(vectorData.x, vectorData.y);
-    //ToDo: revisar lo de ajustar hitbox (Julian lo tienes al final de este archivo)
 }
 
 void Entity::setTarget(Entity *newTarget) {
@@ -210,25 +216,3 @@ i32 Entity::getCellsX() const{
 i32 Entity::getCellsY() const{
     return kCellsY;
 }
-
-//ToDo: anadido por rafa
-void Entity::setBaseMaterial() {
-    model -> setMaterial(baseMat);
-}
-
-void Entity::setDamagedMaterial() {
-    model -> setMaterial(damagedMat);
-}
-
-    //position -> set(vectorData);
-    /* Adjust the hitbox properly */
-    //Vector2<f32> topLeft;
-    //Vector2<f32> bottomRight;
-    //topLeft.x = vectorData.x - 120.f;
-    //topLeft.y = vectorData.z - 120.f;
-    //bottomRight.x = vectorData.x + 120.f;
-    //bottomRight.y = vectorData.z + 120.f;
-    //hitBox = Box2D(topLeft, bottomRight);
-    //std::cout << "Moving HitBox to: \n";
-    //std::cout << hitBox.TopLeft().x << "," << hitBox.TopLeft().y << "\n";
-    //std::cout << hitBox.BottomRight().x << "," << hitBox.BottomRight().y << "\n";

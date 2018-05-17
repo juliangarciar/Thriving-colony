@@ -34,6 +34,12 @@ class Building : public Entity {
          * @brief Start the building process
          */
         void startBuilding();
+
+		/**
+		 * @brief 
+		 * 
+		 */
+		void setCantBuildColor();
         
         /**
          * @brief Set the callback variable as the function passed by parameter.
@@ -56,16 +62,7 @@ class Building : public Entity {
          */
         std::string getType();
         
-        /**
-         * @brief Set the Can Build Mat object
-         */
-        void setCanBuildMat();
-
-        /**
-         * @brief Set the Cant Build Mat object
-         */
-        void setCantBuildMat();
-
+		/**¿?*/
         void debugAnimation(std::string path);
 
     private:
@@ -90,14 +87,12 @@ class Building : public Entity {
 
         //Finish the building.
         std::function<void(Building*)> callback;
-        
-        Animation* anim;
 
-        //
-        Material *canBuildMat;
+		//
+		Color cantBuildColor;
         
-        //
-        Material *cantBuildMat;
+		//ToDo: Buildings have animations?
+        Animation* anim;
 };
 
 #endif

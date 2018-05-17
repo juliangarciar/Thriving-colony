@@ -5,6 +5,7 @@
 
 using namespace irr;
 #define PI 3.14159265
+
 Model::Model(i32 id, std::string path) {
     const char* c = path.c_str();
     std::wstringstream o;
@@ -83,6 +84,10 @@ void Model::setActive(bool a) {
 
 void Model::setMaterial(Material *m){
     meshNode->getMaterial(0) = *m->getMaterial();
+}
+
+void Model::setMaterialColor(Color c){
+    meshNode->getMaterial(0).DiffuseColor = video::SColor(c.a, c.r, c.g, c.b);
 }
 
 Vector3<f32> Model::getPosition() {

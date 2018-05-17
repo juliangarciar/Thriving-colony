@@ -5,6 +5,7 @@
 #include <Types.h>
 #include <GraphicEngine/SceneNode.h>
 #include <GraphicEngine/Material.h>
+#include <MathEngine/Color.h>
 
 using namespace irr;
 
@@ -19,6 +20,7 @@ class Model {
         void setName(const char *name);
         void setActive(bool a);
         void setMaterial(Material *m);
+		void setMaterialColor(Color);
         void setPosition(Vector3<f32> pos);
         void setScale(Vector3<f32> s);
         void rotate(f32 x, f32 y);
