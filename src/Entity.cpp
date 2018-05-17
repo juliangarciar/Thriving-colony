@@ -47,7 +47,7 @@ Entity::Entity(SceneNode* _layer,
     //set Timer
     tookDamageTimer = new Timer(0.1);
     tookDamageTimer -> setCallback([&](){
-        setBaseMaterial();
+        setBaseColor();
     });
 
     //Set model
@@ -55,7 +55,8 @@ Entity::Entity(SceneNode* _layer,
     
     //Set texture
     baseMat = new Material(new Texture(_texturePath.c_str()));
-    baseMat -> setColor(255, 255, 255, 255);
+    baseMat -> setColor(Color(255, 255, 255, 255));
+	model -> setMaterial(baseMat);
 
     /* Box2D parameters */
     Vector2<f32> topLeft;
@@ -70,8 +71,8 @@ Entity::Entity(SceneNode* _layer,
     /* Set the 2D hitbox */
     hitBox = Box2D(topLeft, bottomRight);
 
-	// Set the material
-    setBaseMaterial();
+	// Set the color
+    setBaseColor();
 }
 
 //ToDo: revisar
@@ -109,7 +110,7 @@ void Entity::takeDamage(i32 dmg) {
     currentHP = currentHP - dmg;
     tookDamageTimer -> restart();
     // Tint the model red
-    setBaseMaterial();
+    setBaseColor();
     if (currentHP <= 0) {
         currentHP = 0;
     }
@@ -218,14 +219,13 @@ i32 Entity::getCellsY() const{
     return kCellsY;
 }
 
-//ToDo: anadido por rafa
-void Entity::setBaseMaterial() {
-    baseMat -> setColor(255, 255, 255, 255);
+void Entity::setBaseColor() {
+    baseMat -> setColor(Color(255, 255, 255, 255));
     model -> setMaterial(baseMat);
 }
 
-void Entity::setDamagedMaterial() {
-    baseMat -> setColor(255, 255, 0, 0);
+void Entity::setDamageColor() {
+    baseMat -> setColor(Color(255, 0, 0, 255));
     model -> setMaterial(baseMat);
 }
 

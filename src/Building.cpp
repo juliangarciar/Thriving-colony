@@ -94,8 +94,8 @@ std::string Building::getType(){
     return buildingType;
 }
 
-void Building::setCantBuildMat() {
-	baseMat -> setColor(255, 0, 0, 255);
+void Building::setCantBuildColor() {
+	baseMat -> setColor(Color(0, 0, 255, 255));
     model -> setMaterial(baseMat);
 }
 

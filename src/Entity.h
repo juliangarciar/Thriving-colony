@@ -233,9 +233,17 @@ class Entity {
          */
         i32 getCellsY() const;
 
-		void setBaseMaterial();
+		/**
+		 * @brief Set the Base Color object
+		 * 
+		 */
+		void setBaseColor();
 
-		void setDamagedMaterial();
+		/**
+		 * @brief Set the Damage Color object
+		 * 
+		 */
+		void setDamageColor();
 
     protected:
         //Layer where the entity has been created.

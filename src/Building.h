@@ -59,7 +59,7 @@ class Building : public Entity {
         /**
          * @brief Set the Cant Build Mat object
          */
-        void setCantBuildMat();
+        void setCantBuildColor();
 
 		/**
 		 * @brief Animation?
