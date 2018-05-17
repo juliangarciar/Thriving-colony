@@ -6,7 +6,6 @@
 #include <EntityData.h>
 #include <Types.h>
 #include <IOEngine/Timer.h>
-#include <GraphicEngine/Animation.h>
 
 #include <irrlicht/irrlicht.h>
 /**
@@ -61,9 +60,6 @@ class Building : public Entity {
          * @return std::string that will be the value of the type variable.
          */
         std::string getType();
-        
-		/**¿?*/
-        void debugAnimation(std::string path);
 
     private:
         /**
@@ -91,8 +87,6 @@ class Building : public Entity {
 		//
 		Color cantBuildColor;
         
-		//ToDo: Buildings have animations?
-        Animation* anim;
 };
 
 #endif

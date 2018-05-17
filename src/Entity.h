@@ -10,6 +10,7 @@
 #include <GraphicEngine/Material.h>
 #include <GraphicEngine/Billboard.h>
 #include <IOEngine/Timer.h>
+#include <GraphicEngine/Animation.h>
 
 /**
  * @class Entity.
@@ -132,6 +133,7 @@ class Entity {
          * 
          * @return Pointer to a Model object that will be the value of the model variable.
 	     */
+        //Animation* getModel() const;
         Model* getModel() const;
 
         /**
@@ -317,5 +319,7 @@ class Entity {
 
         //
         Billboard* bar;
+
+        //Animation* animatedModel;
 };
 #endif
