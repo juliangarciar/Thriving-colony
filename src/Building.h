@@ -6,7 +6,6 @@
 #include <EntityData.h>
 #include <Types.h>
 #include <IOEngine/Timer.h>
-#include <GraphicEngine/Animation.h>
 
 #include <irrlicht/irrlicht.h>
 /**
@@ -43,6 +42,11 @@ class Building : public Entity {
         void setFinishedCallback(std::function<void(Building*)>);
 
         /**
+         * @brief Set the Cant Build Mat object
+         */
+        void setCantBuildColor();
+
+        /**
          * @brief Get the finished variable of the building.
          * 
          * @return Value finished variable (true if the building is finished or false if it is not).
@@ -55,18 +59,6 @@ class Building : public Entity {
          * @return std::string that will be the value of the type variable.
          */
         std::string getType();
-
-        /**
-         * @brief Set the Cant Build Mat object
-         */
-        void setCantBuildColor();
-
-		/**
-		 * @brief Animation?
-		 * 
-		 * @param path 
-		 */
-        void debugAnimation(std::string path);
 
     private:
         /**
@@ -90,9 +82,6 @@ class Building : public Entity {
 
         //Finish the building.
         std::function<void(Building*)> callback;
-        
-		//Animation?
-        Animation* anim;
 };
 
 #endif

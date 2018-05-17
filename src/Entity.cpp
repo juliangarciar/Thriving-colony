@@ -49,7 +49,16 @@ Entity::Entity(SceneNode* _layer,
     tookDamageTimer -> setCallback([&](){
         setBaseColor();
     });
+/*
+    std::string name = "Test";
+    std::vector<std::string> * vector = new std::vector<std::string>();
+    vector -> push_back(_modelPath);
+    std::map< std::string, std::vector < std::string > > * frames = new std::map< std::string, std::vector < std::string > > ();
 
+    frames->insert(std::pair< std::string, std::vector<std::string>>(name, *vector));
+
+    animatedModel = new Animation(_layer, _id, frames);
+*/
     //Set model
     model = new Model(_layer, _id, _modelPath);
     
@@ -77,6 +86,7 @@ Entity::Entity(SceneNode* _layer,
 
 //ToDo: revisar
 Entity::~Entity() {
+    //if (animatedModel != nullptr) delete animatedModel;
     if (model != nullptr) delete model;
     hostile.clear();
     delete tookDamageTimer;
@@ -119,12 +129,14 @@ void Entity::takeDamage(i32 dmg) {
 //SETTERS
 void Entity::setID(i32 id){
     ID = id;
+    //animatedModel -> setID(id);
     model -> setID(id);
 }
 
 void Entity::setPosition(Vector2<f32> vectorData) {
     vectorPos = vectorData;
 
+    //animatedModel -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y), vectorData.y));
     model -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y), vectorData.y));
 
     hitBox.moveHitbox(vectorData.x, vectorData.y);
@@ -151,7 +163,9 @@ Enumeration::EntityType Entity::getEntityType() const{
     return entityType;
 }
 
+//Animation* Entity::getModel() const{
 Model* Entity::getModel() const{
+    //return animatedModel;
     return model;
 }
 

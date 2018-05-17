@@ -98,14 +98,3 @@ void Building::setCantBuildColor() {
 	baseMat -> setColor(Color(0, 0, 255, 255));
     model -> setMaterial(baseMat);
 }
-
-void Building::debugAnimation(std::string path) {
-    std::string name = "modelo1";
-    std::vector<std::string> * vector = new std::vector<std::string>();
-    vector -> push_back(path);
-    std::map< std::string, std::vector < std::string > > * frames = new std::map< std::string, std::vector < std::string > > ();
-
-    frames->insert(std::pair< std::string, std::vector<std::string>>(name, *vector));
-
-    anim = new Animation(frames);
-}
