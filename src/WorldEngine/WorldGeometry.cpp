@@ -144,7 +144,7 @@ void WorldGeometry::setUnitCell(Vector2<f32> positionVector, Unit* unitPtr){
 
 bool WorldGeometry::checkHitBoxCollision(const Box2D& hitBox, bool amplifyBox) const{
     if(amplifyBox){
-        Box2D dummy = hitBox.getAmplifiedBox(cellSize / 4.0f);
+        Box2D dummy = hitBox.getAmplifiedBox(cellSize / 2.0f);
         return quadTree->checkCollision(dummy);
     }
     else{
@@ -326,6 +326,6 @@ bool WorldGeometry::checkCollision(Vector2<f32> _orig, Vector2<f32> _end) const{
     return false;
 }
 
-void WorldGeometry::getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >& collidingEnemyEntities, Enumeration::Team teamTarget) const{
-    quadTree->getCollidingEntities(hitbox,  collidingEnemyEntities, teamTarget);
+void WorldGeometry::getCollidingEntities(const Box2D& hitbox, Entity** priorityEntity, Enumeration::Team teamTarget) const{
+    quadTree->getCollidingEntities(hitbox, priorityEntity, teamTarget);
 }

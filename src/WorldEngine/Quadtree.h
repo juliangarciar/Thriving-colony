@@ -69,7 +69,7 @@ class Quadtree{
          */
         const Vector2<f32> getPosition() const;
 
-        void getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >& collidingEntities, Enumeration::Team teamTarget) const;
+        void getCollidingEntities(const Box2D& hitbox, Entity** priorityEntity, Enumeration::Team teamTarget) const;
     private:
         const Vector2<f32> position;
         const Box2D hitBox;

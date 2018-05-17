@@ -3,10 +3,11 @@
 #include <WorldEngine/WorldGeometry.h>
 #include <Enumeration.h>
 
-Sensor::Sensor(Unit* _entity, i32 maxRadius):propietary(_entity),
-                                               sensorHitbox(Vector2<f32>(0,0),
-                                                            Vector2<f32>(std::sqrt(std::pow(maxRadius,2) + std::pow(maxRadius,2)),
-                                                                         std::sqrt(std::pow(maxRadius,2) + std::pow(maxRadius,2))))
+Sensor::Sensor(Entity* _entity):propietary(_entity),
+                                priorityTarget(nullptr),
+                                sensorHitbox(Vector2<f32>(0,0),
+                                            Vector2<f32>(std::sqrt(std::pow(_entity->getViewRadius(),2) + std::pow(_entity->getViewRadius(),2)),
+                                                            std::sqrt(std::pow(_entity->getViewRadius(),2) + std::pow(_entity->getViewRadius(),2))))
 {}
 
 Sensor::~Sensor(){
@@ -14,11 +15,16 @@ Sensor::~Sensor(){
 }
 
 void Sensor::update(){
-    detectedEnemyEntities.clear();
-    detectedEnemyEntities.resize(0);
-    WorldGeometry::Instance()->getCollidingEntities(sensorHitbox, detectedEnemyEntities, propietary->getTeam());
-    //propietary->updateFlockingSensor(detectedFloking);
-    std::cout << "Entidades cercanas: " << detectedEnemyEntities.size() << "\n";
+    if(priorityTarget != nullptr){
+        priorityTarget->removeHostile(propietary);
+    }
+    priorityTarget = nullptr;
+    WorldGeometry::Instance()->getCollidingEntities(sensorHitbox, &priorityTarget, propietary->getTeam());
+    if(priorityTarget != nullptr){
+        priorityTarget->addHostile(propietary);
+        propietary->setTarget(priorityTarget);
+        std::cout << "Entidad encontrada en: " << priorityTarget->getPosition().x << " , " << priorityTarget->getPosition().y << "\n";
+    }
 }
 
 void Sensor::move(Vector2<f32> _vectorPosition){

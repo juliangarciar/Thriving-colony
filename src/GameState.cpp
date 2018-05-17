@@ -56,9 +56,6 @@ void GameState::Init() {
         hud->showToast("Se ha reclutado una tropa");
     });
 
-    //Init battle manager
-    battleManager = new BattleManager();
-
     //Init SoundSystem
     SoundSystem::Instance() -> initSystem();
 }
@@ -232,17 +229,12 @@ void GameState::Render() {
 }
 
 void GameState::CleanUp() {
-    delete battleManager;
     delete pauseMenu;
 
     human -> CleanUp();
     ia -> CleanUp();
     map -> CleanUp();
     hud -> CleanUp();
-}
-
-BattleManager* GameState::getBattleManager() {
-    return battleManager;
 }
 
 void GameState::cleanGamePaused() {

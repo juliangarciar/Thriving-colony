@@ -19,7 +19,7 @@ class UnitFighter{
         void move();
         void update();
         void setNearFighters(std::vector<UnitFighter*>& _nearFighters);
-
+        void setActive(bool _active);
         // Getters
         Vector2<f32> getVectorPosition() const;
         Vector2<f32> getVectorSpeed() const;

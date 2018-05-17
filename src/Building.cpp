@@ -137,3 +137,7 @@ void Building::takeDamage(i32 _damage) {
         currentHP = 0;
     }
 }
+
+void Building::setTarget(Entity *newTarget) {
+    target = newTarget;
+}

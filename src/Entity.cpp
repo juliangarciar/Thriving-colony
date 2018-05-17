@@ -42,7 +42,7 @@ Entity::Entity(SceneNode* _layer,
         happinessVariation(_happines), 
         citizensVariation(_citizens),
         target(nullptr),
-        hostile(),
+        hostile(std::vector< Entity* >(0)),
         kCellsX(_cellsX),
         kCellsY(_cellsY) 
 {
@@ -61,11 +61,9 @@ Entity::Entity(SceneNode* _layer,
 
 //ToDo: revisar
 Entity::~Entity() {
-    for(std::size_t i = 0; i < subscribedEntites.size(); i++){
-        subscribedEntites[i]->unsubscribe(this);
+    if (model != nullptr){
+        delete model;
     }
-    subscribedEntites.clear();
-    if (model != nullptr) delete model;
     hostile.clear();
     delete tookDamageTimer;
 }
@@ -80,8 +78,8 @@ void Entity::addHostile(Entity* newHostileUnit) {
 
 void Entity::removeHostile(Entity* oldHostileUnit) {
     bool done = false;
-    for (i32 i = 0; i < hostile.size() && done == false; i++) {
-        if (hostile.at(i) == oldHostileUnit) {
+    for (std::size_t i = 0; i < hostile.size() && done == false; i++) {
+        if (hostile[i] == oldHostileUnit) {
             hostile.erase(hostile.begin() + i);
             done = true;
         }
@@ -117,10 +115,6 @@ void Entity::setPosition(Vector2<f32> vectorData) {
 
     hitBox.moveHitbox(vectorData);
     //std::cout << "Hitbox: " << hitBox.TopLeft().x << "," << hitBox.TopLeft().y << " y " << hitBox.BottomRight().x << "," << hitBox.BottomRight().y << "\n";
-}
-
-void Entity::setTarget(Entity *newTarget) {
-    target = newTarget;
 }
 
 //GETTERS
@@ -215,17 +209,4 @@ void Entity::setBaseMaterial() {
 
 void Entity::setDamagedMaterial() {
     model -> setMaterial(damagedMat);
-}
-
-void Entity::subscribe(Entity* _entity){
-    subscribedEntites.push_back(_entity);
-}
-
-void Entity::unsubscribe(Entity* _entity){
-    for(std::size_t i = 0; i < subscribedEntites.size(); i++){
-        if(subscribedEntites[i] == _entity){
-            subscribedEntites.erase(subscribedEntites.begin() + i);
-            break;
-        }
-    }
 }

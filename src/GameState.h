@@ -8,7 +8,6 @@
 #include "Human.h"
 #include "IA.h"
 #include "Map.h"
-#include "BattleManager.h"
 
 #include <Types.h>
 
@@ -53,13 +52,6 @@ class GameState : public State {
          * @brief Delete all variables.
          */
         void CleanUp();
-        
-         /**
-        * @brief Get the battle manager.
-        * 
-        * @return Pointer to a BattleManager object that will be the value of battleManager variable.
-        */
-        BattleManager* getBattleManager();
 
         /**
          * @brief Delete pauseMenu variable and set gamePaused as false.
@@ -81,9 +73,6 @@ class GameState : public State {
 
         //Pointer to the hud of pause mode.
         PauseMenu *pauseMenu;
-        
-        //Pointer to the battle manager.
-        BattleManager *battleManager;
 
         //True when the game is paused and false in other case.
         bool gamePaused;

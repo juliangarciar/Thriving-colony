@@ -69,7 +69,7 @@ class Building : public Entity {
          */
         void setCantBuildMat();
         void takeDamage(i32 _damage);
-
+        void setTarget(Entity *newTarget);
     private:
         /**
          * @brief Subtract the metal and crystal cost of the building to the metal and crystal available of the player (Human or IA) and add the city level that provided by the building to the player's city level (Human or IA).

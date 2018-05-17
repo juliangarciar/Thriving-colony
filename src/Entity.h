@@ -97,7 +97,7 @@ class Entity {
          * 
          * @param Pointer to Entity is the value that is going be assigned to target variable. It can be nullptr.
 	     */
-        void setTarget(Entity*);
+        virtual void setTarget(Entity*) = 0;
 
         /**
          * @brief Get the layer where the entity has been created.
@@ -248,8 +248,6 @@ class Entity {
          * @brief Set the Damaged Material object
          */
         void setDamagedMaterial();
-        void subscribe(Entity* _entity);
-        void unsubscribe(Entity* _enttity);
 
     protected:
         //Layer where the entity has been created.
@@ -330,6 +328,5 @@ class Entity {
         //
         Billboard* bar;
         
-        std::vector<Entity*> subscribedEntites;
 };
 #endif

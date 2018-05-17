@@ -51,19 +51,9 @@ class Unit : public Entity {
         void update();
 
         /**
-         * @brief Attack the target if it is not nullptr and when the attackCountdown variable is 0 or less.
-         */
-        void attack();
-
-        /**
          * @brief Move the unit.
          */
         void moveTroop();
-
-        /**
-         * @brief Chase the target when it is at range of vision of the unit and it is not at range of attack of the unit.
-         */
-        void chaseTarget();
 
         /**
          * @brief Look fora new target for the unit.
@@ -134,20 +124,6 @@ class Unit : public Entity {
          * @param
          */
         void setUnitCell(Vector2<f32>);
-
-        /**
-         * @brief Set to true or false moving variable.
-         * 
-         * @param True when the unit is walking and false in other case.
-         */
-        void setMoving(bool);
-
-        /**
-         * @brief Set to true or false attacking variable.
-         * 
-         * @param True when the unit is attacking to its target and false in other case.
-         */
-        void setAttacking(bool);
 
         /**
          * @brief Set the position of the unit.
@@ -252,7 +228,8 @@ class Unit : public Entity {
         bool hasArrived();
         void updateFlockingSensor();
         void takeDamage(i32 _damage);
-        
+        void updateUnitFighters();
+        void setTarget(Entity *newTarget);
     private:
         /**
          * @brief Initialize the variables.
@@ -282,19 +259,18 @@ class Unit : public Entity {
 
         //True when the unit is attacking and false in other case.
         bool attacking;
-
+        bool canAttack;
         //Amount of army level that provides to the player's city.
         i32 armyLevel;
 
         //Timer that controls the time of training of the unit.
         Timer* recruitingTimer;
 
-        //Timer that controls the time that has to pass since the last time that the unit looked for a new target.
-        Timer* lookForTargetTimer;
-
         Timer* enemySensorTimer;
+        Timer* attackTimer;
+        Timer* chaseTimer;
         //Timer that controls the time that has to pass since the last time that the unit attack its target.
-        f32 attackCountdown;
+        //f32 attackCountdown;
 
         //
         class PathManager* pathManager;

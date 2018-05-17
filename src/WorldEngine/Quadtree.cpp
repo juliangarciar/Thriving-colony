@@ -155,26 +155,44 @@ const Vector2<f32> Quadtree::getPosition() const{
 }
 /* Check this method, maybe ensure they are colliding, more precise but slower */
 /* Is not working properly for some reason */
-void Quadtree::getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >& collidingEntities, Enumeration::Team teamTarget) const{    
+void Quadtree::getCollidingEntities(const Box2D& hitbox, Entity** priorityEntity, Enumeration::Team teamTarget) const{    
     if(this->depth == 0){
         for(std::size_t i = 0; i < innerCells.size(); i++){
             if(innerCells[i]->getHitbox().isOverlappedWith(hitbox)){
-                Entity* buildingTmp = innerCells[i]->getInhabitingBuilding();
                 std::vector< Unit* > unitTmp = innerCells[i]->getInhabitingUnits();
-                if(buildingTmp != nullptr && buildingTmp->getTeam() != teamTarget){
-                    bool done = false;
-                    for(std::size_t j = 0; j < collidingEntities.size() && !done; ++j){
-                        if(collidingEntities[j] == buildingTmp){
-                            done = true;
+                if(unitTmp.size() > 0){
+                    for(std::size_t k = 0; k < unitTmp.size(); k++){
+                        if(unitTmp[k]->getTeam() != teamTarget){
+                            if(*priorityEntity == nullptr){
+                                *priorityEntity = unitTmp[k];
+                            }
+                            else{
+                                Vector2<f32> vectorDistance1 = (*priorityEntity)->getPosition() - hitbox.Center();
+                                Vector2<f32> vectorDistance2 = unitTmp[k]->getPosition() - hitbox.Center();
+                                if( (std::sqrt(std::pow(vectorDistance1.x, 2) + std::pow(vectorDistance1.y, 2))) > 
+                                    (std::sqrt(std::pow(vectorDistance2.x, 2) + std::pow(vectorDistance2.y, 2))) ){
+                                        *priorityEntity = unitTmp[k];
+                                }
+                            }
                         }
                     }
-                    if(!done){
-                        collidingEntities.push_back(buildingTmp);
-                    }
                 }
-                for(std::size_t k = 0; k < unitTmp.size(); k++){
-                    if(unitTmp[k]->getTeam() != teamTarget){
-                        collidingEntities.push_back(unitTmp[k]);
+                else{
+                    Entity* buildingTmp = innerCells[i]->getInhabitingBuilding();
+                    if(buildingTmp != nullptr){
+                        if(buildingTmp->getTeam() != teamTarget){
+                            if(*priorityEntity == nullptr){
+                                *priorityEntity == buildingTmp;
+                            }
+                            else if((*priorityEntity)->getEntityType() == Enumeration::EntityType::Building){
+                                Vector2<f32> vectorDistance1 = (*priorityEntity)->getPosition() - hitbox.Center();
+                                Vector2<f32> vectorDistance2 = buildingTmp->getPosition() - hitbox.Center();
+                                if( (std::sqrt(std::pow(vectorDistance1.x, 2) + std::pow(vectorDistance1.y, 2))) > 
+                                    (std::sqrt(std::pow(vectorDistance2.x, 2) + std::pow(vectorDistance2.y, 2))) ){
+                                        *priorityEntity = buildingTmp;
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -183,7 +201,7 @@ void Quadtree::getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >&
     else{
         for(i32 i = 0; i < 4; i++){
             if(innerTrees[i]->getHitbox().isOverlappedWith(hitbox)){
-                innerTrees[i]->getCollidingEntities(hitbox, collidingEntities, teamTarget);
+                innerTrees[i]->getCollidingEntities(hitbox, priorityEntity, teamTarget);
             }
         }
     }

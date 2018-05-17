@@ -5,16 +5,15 @@
 #include <vector>
 
 class Entity;
-class Unit;
 class Sensor{
     public:
-        Sensor(Unit* _entity, i32 maxRadius);
+        Sensor(Entity* _entity);
         ~Sensor();
         void update();
         void move(Vector2<f32> _vectorPosition);
     private:
-        Unit* propietary;
+        Entity* propietary;
+        Entity* priorityTarget;
         Box2D sensorHitbox;
-        std::vector< Entity* > detectedEnemyEntities;
 };
 #endif

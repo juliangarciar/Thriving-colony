@@ -117,7 +117,6 @@ BehaviourTree* IA::getTree() {
 */
 
 Vector2<f32> IA::determinatePositionBuilding(const Box2D& buildingHitbox) const{
-    /* Mira que algoritmo mas crema */
     Vector2<f32> dummy = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(),
                                                                  hallPosition.toVector2(),
                                                                  buildingHitbox,

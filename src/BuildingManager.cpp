@@ -118,6 +118,8 @@ void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 bui
 		BuildingData b = it->second;
 		if (buildTime >= 0) b.buildingTime = buildTime;
 		tempBuilding = new Building(buildingLayer, 0, team, b);
+		/* Okey there's a problem */
+		//Vector2<f32> correctPosition = WorldGeometry::Instance()->correctBuildingPosition(pos, tempBuilding);
 		buildBuilding(pos);
 	}
 }
