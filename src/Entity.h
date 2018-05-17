@@ -54,21 +54,21 @@ class Entity {
         void takeDamage(i32);
 
         /**
-         * @breif Add an entity to the vector of enemies that have as target the entity.
+         * @brief Add an entity to the vector of enemies that have as target the entity.
          * 
          * @param Pointer to the entity that is going to be added to hostile variable.
          */
         void addHostile(Entity* hostileTarget);
 
         /**
-         * @breif Remove an entity from the vector of enemies that have as target the entity.
+         * @brief Remove an entity from the vector of enemies that have as target the entity.
          * 
          * @param Pointer to de the entity that is going to be removed from hostile variable.
          */
         void removeHostile(Entity* hostileTarget);
 
         /**
-         * @breif Set all the enemies' target variable stored at hostile variable to nullptr.
+         * @brief Set all the enemies' target variable stored at hostile variable to nullptr.
          */
         void putHostileTargetsToNull();
 
@@ -233,15 +233,9 @@ class Entity {
          */
         i32 getCellsY() const;
 
-        /**
-         * @brief Set the Base Material object
-         */
-        void setBaseMaterial();
+		void setBaseMaterial();
 
-        /**
-         * @brief Set the Damaged Material object
-         */
-        void setDamagedMaterial();
+		void setDamagedMaterial();
 
     protected:
         //Layer where the entity has been created.

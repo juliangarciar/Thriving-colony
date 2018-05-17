@@ -109,7 +109,7 @@ void Entity::takeDamage(i32 dmg) {
     currentHP = currentHP - dmg;
     tookDamageTimer -> restart();
     // Tint the model red
-    //ToDo: cambiar a material daño recibido
+    setBaseMaterial();
     if (currentHP <= 0) {
         currentHP = 0;
     }
@@ -127,7 +127,6 @@ void Entity::setPosition(Vector2<f32> vectorData) {
     model -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y), vectorData.y));
 
     hitBox.moveHitbox(vectorData.x, vectorData.y);
-    //ToDo: revisar lo de ajustar hitbox (Julian lo tienes al final de este archivo)
 }
 
 void Entity::setTarget(Entity *newTarget) {

@@ -34,7 +34,7 @@ class Building : public Entity {
          * @brief Start the building process
          */
         void startBuilding();
-        
+
         /**
          * @brief Set the callback variable as the function passed by parameter.
          * 
@@ -55,11 +55,6 @@ class Building : public Entity {
          * @return std::string that will be the value of the type variable.
          */
         std::string getType();
-        
-        /**
-         * @brief Set the Can Build Mat object
-         */
-        void setCanBuildMat();
 
         /**
          * @brief Set the Cant Build Mat object

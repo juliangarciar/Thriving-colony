@@ -34,7 +34,6 @@ Building::Building(SceneNode *_layer,
     /* Set the timer */
     buildTimer = new Timer(baseData.buildingTime, false, false);
     buildTimer -> setCallback([&]{
-		setBaseMaterial();
         adjustCityStats();
         if (callback != nullptr) callback(this);
     });
@@ -101,12 +100,6 @@ void Building::setCantBuildMat() {
 }
 
 void Building::debugAnimation(std::string path) {
-    
-/*
-std::map< std::string, std::vector < std::string > > * paths
-*/
-
-
     std::string name = "modelo1";
     std::vector<std::string> * vector = new std::vector<std::string>();
     vector -> push_back(path);
