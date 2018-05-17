@@ -8,12 +8,12 @@ class Entity;
 class Unit;
 class Sensor{
     public:
-        Sensor(Entity* _entity, i32 maxRadius);
+        Sensor(Unit* _entity, i32 maxRadius);
         ~Sensor();
         void update();
         void move(Vector2<f32> _vectorPosition);
     private:
-        Entity* propietary;
+        Unit* propietary;
         Box2D sensorHitbox;
         std::vector< Unit* > detectedFloking;
         std::vector< Entity* > detectedEntities;

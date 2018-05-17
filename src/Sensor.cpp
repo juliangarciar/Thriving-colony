@@ -2,7 +2,7 @@
 #include "Unit.h"
 #include <WorldEngine/WorldGeometry.h>
 
-Sensor::Sensor(Entity* _entity, i32 maxRadius):propietary(_entity),
+Sensor::Sensor(Unit* _entity, i32 maxRadius):propietary(_entity),
                                                sensorHitbox(Vector2<f32>(0,0),
                                                             Vector2<f32>(std::sqrt(std::pow(maxRadius,2) + std::pow(maxRadius,2)),
                                                                          std::sqrt(std::pow(maxRadius,2) + std::pow(maxRadius,2))))
@@ -18,7 +18,8 @@ void Sensor::update(){
     detectedFloking.clear();
     detectedFloking.resize(0);
     WorldGeometry::Instance()->getCollidingEntities(sensorHitbox, detectedEntities, detectedFloking);
-    std::cout << "Entidades cercanas: " << detectedEntities.size() << ". Flocking: " << detectedFloking.size() << "\n";
+    propietary->updateFlockingSensor(detectedFloking);
+    //std::cout << "Entidades cercanas: " << detectedEntities.size() << ". Flocking: " << detectedFloking.size() << "\n";
 }
 
 void Sensor::move(Vector2<f32> _vectorPosition){

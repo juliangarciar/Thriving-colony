@@ -164,7 +164,7 @@ void Quadtree::getCollidingEntities(const Box2D& hitbox, std::vector< Entity* >&
                 if(buildingTmp != nullptr){
                     bool done = false;
                     for(std::size_t j = 0; j < collidingEntities.size() && !done; ++j){
-                        if(collidingEntities[i] == buildingTmp){
+                        if(collidingEntities[j] == buildingTmp){
                             done = true;
                         }
                     }

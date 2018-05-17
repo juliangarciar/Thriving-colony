@@ -250,7 +250,7 @@ class Unit : public Entity {
         std::vector< UnitFighter* > getUnitFighters();
         void calculateDirection();
         bool hasArrived();
-        void updateFlockingSensor();
+        void updateFlockingSensor(std::vector< Unit* > _nearUnits);
         void takeDamage(i32 _damage);
         
     private:
