@@ -149,7 +149,3 @@ void StartMenu::setHUDEvents(){
     });
 
 }
-
-void StartMenu::update() {
-
-}

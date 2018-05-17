@@ -3,11 +3,12 @@
 #include <WorldEngine/WorldGeometry.h>
 #include <Enumeration.h>
 
-Sensor::Sensor(Entity* _entity):propietary(_entity),
-                                priorityTarget(nullptr),
-                                sensorHitbox(Vector2<f32>(0,0),
-                                            Vector2<f32>(std::sqrt(std::pow(_entity->getViewRadius(),2) + std::pow(_entity->getViewRadius(),2)),
-                                                            std::sqrt(std::pow(_entity->getViewRadius(),2) + std::pow(_entity->getViewRadius(),2))))
+Sensor::Sensor(Entity* _entity) :
+	propietary(_entity),
+    priorityTarget(nullptr),
+    sensorHitbox(Vector2<f32>(0,0),
+    Vector2<f32>(std::sqrt(std::pow(_entity->getViewRadius(),2) + std::pow(_entity->getViewRadius(),2)),
+    std::sqrt(std::pow(_entity->getViewRadius(),2) + std::pow(_entity->getViewRadius(),2))))
 {}
 
 Sensor::~Sensor(){

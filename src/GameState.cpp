@@ -11,7 +11,7 @@ GameState::GameState() : State() {
 }
 
 GameState::~GameState() {
-    
+    //Clean Up
 } 
 
 void GameState::Init() {
@@ -121,7 +121,7 @@ void GameState::Input() {
                 IO::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
 
                 if (IO::Instance() -> getMouse() -> rightMousePressed()) {
-                    //ToDo
+                    //ToDo: atacar
                 }
                 
                 onMap = false;
@@ -132,7 +132,7 @@ void GameState::Input() {
                 IO::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
 
                 if (IO::Instance() -> getMouse() -> rightMousePressed()){
-                    //ToDo
+                    //ToDo: retract
                 }
                 
                 onMap = false;
@@ -157,7 +157,7 @@ void GameState::Input() {
                             human -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
                         }
                     } else {
-                        //std::cout << "Ninguna tropa seleccionada" << std::endl;
+                        //Ninguna tropa seleccionada
                     }
                 } else 
                     IO::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);
@@ -195,7 +195,7 @@ void GameState::Update(){
         //Update HUD
         hud -> Update();
 
-        //NEW SOUND SYSTEM
+        //ToDo: NEW SOUND SYSTEM
         //SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");
         SoundSystem::Instance() -> update();
         
@@ -207,9 +207,6 @@ void GameState::Update(){
         ia -> Update();
 
         //ToDo: glfw tiene un evento para si se redimensiona la pantalla
-        /*if (g -> getWindow() -> getRealWindowWidth() != prevWindowWidth || g -> getWindow() -> getRealWindowHeight() != prevWindowHeight) {
-            hud -> updatePositions();
-        }*/
 
         //Win/Lose
         if (ia -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
@@ -219,7 +216,7 @@ void GameState::Update(){
             g -> changeState(Enumeration::State::DefeatState);
         }
     }
-    //todo llevar a un metodo en window supongo
+    //ToDo: llevar a un metodo en window supongo
     //fps count goes after game logic to see how long it took to go through the logic
     Window::Instance() -> calculateFramerate();
 }
@@ -241,20 +238,3 @@ void GameState::cleanGamePaused() {
     gamePaused = false;
     delete pauseMenu;
 }
-
-/*  
-    //Hacks
-    if (g -> getIO() -> keyPressed(KEY_KEY_1)) {
-        human -> receiveMetal();
-    }
-
-    if (g -> getIO() -> keyPressed(KEY_KEY_2)) {
-        human -> receiveCrystal();
-    }
-
-    if (g -> getIO() -> keyPressed(KEY_KEY_3)) {
-        human -> receiveCitizens();
-    }
-    Vector3<float> v = map -> getPointCollision(g -> getMouse());
-    human -> getUnitManager() -> UpdateUnitManager();
-*/

@@ -6,7 +6,7 @@ DefeatState::DefeatState() : State() {
 }
 
 DefeatState::~DefeatState() {
-    
+    //CleanUp
 }
 
 void DefeatState::Init() {
@@ -16,7 +16,7 @@ void DefeatState::Init() {
 }
 
 void DefeatState::Input() {
-    hud -> update();
+	
 }
 
 void DefeatState::Update() {
@@ -29,5 +29,6 @@ void DefeatState::Render() {
 
 void DefeatState::CleanUp() {
     delete hud;
+	hud = nullptr;
     Window::Instance() -> setGUI();
 }

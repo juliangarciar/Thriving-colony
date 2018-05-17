@@ -6,6 +6,7 @@ MenuState::MenuState() : State() {
 }
 
 MenuState::~MenuState() {
+	//CleanUp
 }
 
 void MenuState::Init() {
@@ -16,7 +17,7 @@ void MenuState::Init() {
 }
 
 void MenuState::Input() {
-    hud -> update();
+	
 }
 
 void MenuState::Update() {
@@ -24,9 +25,11 @@ void MenuState::Update() {
 }
 
 void MenuState::Render() {
+
 }
 
 void MenuState::CleanUp() {
     delete hud;
+	hud = nullptr;
     Window::Instance() -> setGUI();
 }

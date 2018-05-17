@@ -6,7 +6,7 @@ WinState::WinState() : State() {
 }
 
 WinState::~WinState() {
-
+	//CleanUp
 }
 
 void WinState::Init() {
@@ -16,7 +16,7 @@ void WinState::Init() {
 }
 
 void WinState::Input() {
-    hud -> update();
+	
 }
 
 void WinState::Update() {
@@ -29,5 +29,6 @@ void WinState::Render() {
 
 void WinState::CleanUp() {
     delete hud;
+	hud = nullptr;
     Window::Instance() -> setGUI();
 }

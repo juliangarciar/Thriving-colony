@@ -16,6 +16,8 @@
 #include "AIEngine/ARecruit.h"
 #include "AIEngine/ARetreat.h"
 
+//ToDo: revisar y limpiar esta clase
+
 IA* IA::instance = 0;
 
 IA* IA::Instance() {

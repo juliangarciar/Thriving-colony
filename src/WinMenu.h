@@ -26,11 +26,6 @@ class WinMenu {
          */
         void setHUDEvents();
 
-        /**
-         * @brief Update.
-         */
-        void update();
-
     private:
         //Pointer to Button object that closes the game.
         Button *buttonQuit;

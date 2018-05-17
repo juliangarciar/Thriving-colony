@@ -1,16 +1,16 @@
 #include "Player.h"
 
-//ToDo: seria ideal que todo fuera parametrizable y todo estuviera en el mismo sitio
-
 Player::Player() {
     
 }
 
 Player::~Player() {
     delete updateTimer;
+	updateTimer = nullptr;
 }
 
 void Player::Init() {
+	//ToDo: seria ideal que todo fuera parametrizable y todo estuviera en el mismo sitio
     happiness = 0;
     cityLevel = 10;
     armyLevel = 0;
@@ -50,7 +50,6 @@ void Player::spendResources(i32 metalCost, i32 crystalCost) {
 }
 
 void Player::increaseHappiness(i32 h) {
-    // ToDo: clamp mejor?
     happiness += h;
     if (happiness <= -100) {
         happiness = -100;

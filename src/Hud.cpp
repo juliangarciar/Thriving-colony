@@ -38,10 +38,6 @@ void Hud::Init(){
 	
     // Building buttons panel
     buildingsPanel = new Panel("Buildings");
-    //bgMain -> setSize(Vector2<i32>(400, 300));
-    //bgMain -> setVerticalLayout();
-    //bgMain -> refreshLayout();
-    //bgMain -> center();
 
     buildingsPanel -> setPosition(Vector2<i32>(125, 445));
 
@@ -502,8 +498,7 @@ void Hud::Init(){
 }
 
 void Hud::Update() { 
-    //debugTimer -> tick();
-   //toastTimer -> tick();
+	
 }
 
 void Hud::CleanUp(){
