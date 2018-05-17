@@ -68,16 +68,10 @@ void Model::setScale(Vector3<f32> s) {
     meshNode -> setScale(core::vector3df(s.x, s.y, s.z)); 
 }
 
-void Model::rotate(f32 x, f32 y){
-    double param = atan(y / x) * 180 / PI;
-    //if(x < 0 && y < 0)
-    //    param += 180;
-    //else if(x < 0)
-    //    param += 90;
-    //else if(y < 0)
-    //    param += 270;
-    meshNode->setRotation(core::vector3df(0, param, 0));
+void Model::setRotation(Vector3<f32> r){
+    meshNode->setRotation(core::vector3df(r.x, r.y, r.z));
 }
+
 void Model::setActive(bool a) {
     meshNode -> setVisible(a);
 }

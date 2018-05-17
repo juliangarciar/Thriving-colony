@@ -23,7 +23,7 @@ class Billboard {
         void setActive(bool a);
         void setPosition(Vector3<f32> pos);
         void setScale(Vector3<f32> s);
-        void rotate(f32 x, f32 y);
+        void setRotation(Vector3<f32> r);
 
     private:
         scene::IBillboardSceneNode* billboardNode;

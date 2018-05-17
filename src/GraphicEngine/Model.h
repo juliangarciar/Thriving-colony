@@ -21,9 +21,9 @@ class Model {
         void setActive(bool a);
         void setMaterial(Material *m);
 		void setColor(Color);
-        void setPosition(Vector3<f32> pos);
+        void setPosition(Vector3<f32> p);
         void setScale(Vector3<f32> s);
-        void rotate(f32 x, f32 y);
+        void setRotation(Vector3<f32> r);
         i32 getID();
         Vector3<f32> getPosition();
 		scene::IMeshSceneNode *getModel();

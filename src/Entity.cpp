@@ -82,6 +82,19 @@ Entity::Entity(SceneNode* _layer,
 
 	// Set the color
     setBaseColor();
+
+	//ToDo: hacia abajo anadido por rafa
+    f32 billBoardOffset = 200.00;
+
+	Vector3<f32> pos(
+		getPosition().x, 
+		Map::Instance()->getTerrain()->getY(getPosition().x,getPosition().y) + billBoardOffset, 
+		getPosition().y
+	);
+
+    barBg = new Billboard(layer, ID, pos, Color(0,0,0,255), Color(0,0,0,255));
+	bar = new Billboard(layer, ID, pos, Color(0, 255, 0, 255), Color(0, 255, 0, 255));
+    barBg -> setSize(105.00, 15.00);
 }
 
 //ToDo: revisar
@@ -120,7 +133,7 @@ void Entity::takeDamage(i32 dmg) {
     currentHP = currentHP - dmg;
     tookDamageTimer -> restart();
     // Tint the model red
-    setBaseColor();
+    setDamageColor();
     if (currentHP <= 0) {
         currentHP = 0;
     }
