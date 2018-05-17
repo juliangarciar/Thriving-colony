@@ -87,20 +87,9 @@ Unit::Unit(SceneNode* _layer,
 
     pathManager = new PathManager(this);
 
-    Texture *t = new Texture(baseData.flagTexture.c_str());
-
-
     for(std::size_t i = 0; i < unitFighters.size(); i++){
         unitFighters[i] = new UnitFighter(_layer, _id, baseData.troopModel, baseData.moveSpeed);
     }
-
-    baseMat = new Material(t);
-    baseMat -> setColor(255, 255, 255, 255);
-
-    damagedMat = new Material(t);
-    damagedMat -> setColor(255, 255, 0, 0);
-
-    setBaseMaterial();
 
     unitSensor = new Sensor(this);
 }
@@ -115,6 +104,7 @@ Unit::~Unit() {
     delete recruitingTimer;
     delete enemySensorTimer;
 }
+
 void Unit::Init() {
     //ToDo: esto ya no es necesario
     preTaxPlayer();
@@ -193,7 +183,6 @@ void Unit::switchState(Enumeration::UnitState newState) {
 }
 
 void Unit::recruitingState(){
-    recruitingTimer -> tick();
     if (recruitingTimer -> isRunning()){
         if (getTeam() == Enumeration::Team::Human){
             Hud::Instance() -> modifyTroopFromQueue(getID(), recruitingTimer -> getElapsedTime() / recruitingTimer -> getMaxDuration());
@@ -529,8 +518,7 @@ void Unit::takeDamage(i32 _damage){
         std::cout << "An unitFighter has died \n";
     }
     tookDamageTimer -> restart();
-    // Tint the model red
-    //ToDo: cambiar a material daño recibido
+    setDamageColor();
     if (currentHP <= 0) {
         currentHP = 0;
     }

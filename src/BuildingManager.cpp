@@ -99,10 +99,15 @@ void BuildingManager::drawBuilding() {
 			return;
 		}
 		
+<<<<<<< HEAD
 		if (!canBuild) {
 			tempBuilding->setCantBuildMat();
+=======
+		if (collision) {
+			tempBuilding->setCantBuildColor();
+>>>>>>> master
 		} else {
-			tempBuilding->setCanBuildMat();
+			tempBuilding->setBaseColor();
 			//If there is no collision and the player press left button of the mouse, build the building
 			if (IO::Instance() -> getMouse() -> leftMouseDown()) {
 				buildingMode = false;
@@ -148,7 +153,6 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
 		
 		//Start the construction of the building
 		tempBuilding -> startBuilding();
-		tempBuilding -> setBaseMaterial(); //ToDo: anadido por rafa
 		
 		//
 		WorldGeometry::Instance() -> build(tempBuilding);
@@ -192,12 +196,6 @@ bool BuildingManager::checkCanPay(std::string type) {
 	return false;
 }
 
-void BuildingManager::updateBuildingManager() {
-	for (std::map<i32,Building*>::iterator it = inMapBuildings -> begin(); it != inMapBuildings -> end(); ++it) {
-		it -> second -> update();
-	}
-}
-
 bool BuildingManager::checkFinished(i32 _id) {	
 	return (inMapBuildings -> find(_id) -> second -> getFinished());	
 }
@@ -235,8 +233,14 @@ SceneNode* BuildingManager::getBuildingLayer() {
 void BuildingManager::deleteBuilding(i32 id) {
 	if (inMapBuildings -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
 		Human::Instance() -> decreaseHappiness(inMapBuildings -> find(id) -> second -> getHappinessVariation());
+		if (inMapBuildings -> find(id) -> second -> getType() == "House") {
+			Human::Instance() -> decreasePersons(inMapBuildings -> find(id) -> second -> getCitizensVariation());
+		}
 	} else {
 		IA::Instance() -> decreaseHappiness(inMapBuildings -> find(id) -> second -> getHappinessVariation());
+		if (inMapBuildings -> find(id) -> second -> getType() == "House") {
+			IA::Instance() -> decreasePersons(inMapBuildings -> find(id) -> second -> getCitizensVariation());
+		}
 	}
 	buildingAmounts[inMapBuildings -> find(id) -> second -> getType()]--;
 	delete inMapBuildings -> find(id) -> second;

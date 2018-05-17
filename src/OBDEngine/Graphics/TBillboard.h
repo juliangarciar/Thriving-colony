@@ -1,8 +1,6 @@
 #ifndef TBILLBOARD_H
 #define TBILLBOARD_H
 
-#include <GL/glew.h>
-
 #include "TEntity.h"
 #include "../OBDColor.h"
 
@@ -11,7 +9,7 @@ class TBillboard : public TEntity {
     public:
         TBillboard(glm::vec3);
 
-        ~TBillboard();
+        virtual ~TBillboard();
 
         void beginDraw();
 
@@ -37,9 +35,12 @@ class TBillboard : public TEntity {
 
     private:
         glm::vec3 position;
+
         GLuint vertexbuffer;
+
         OBDColor* topColor;
         OBDColor* bottomColor;
+        
         f32 height;
         f32 topWidth;
         f32 bottomWidth;

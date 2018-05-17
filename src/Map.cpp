@@ -51,7 +51,7 @@ void Map::Init() {
         lp.x = element["position"]["x"].get<int>();
         lp.z = element["position"]["z"].get<int>();
         lp.y = terrain -> getY(lp.x, lp.z) + element["height"].get<int>();
-        Light *light = new Light(lp, element["intensity"].get<int>()); 
+        Light *light = new Light(lp, Color(255, 255, 255), element["intensity"].get<int>()); 
         lights.push_back(light);
     }
 
@@ -130,8 +130,7 @@ void Map::Input() {
 }
 
 void Map::Update(){
-    //Update camera
-    camera -> Update();
+	
 }
 
 void Map::Render() {

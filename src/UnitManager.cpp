@@ -214,8 +214,11 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
         //Vector3<f32> dummy = Vector3<f32>(0, 0, 0);
         //Cell* origin = WorldGeometry::Instance()->positionToCell(p);
         Cell* target;
+<<<<<<< HEAD
         Vector3<f32> hallPosition(0, 0, 0);
 
+=======
+>>>>>>> master
         if (team == Enumeration::Team::IA){
             
             //Vector3<f32> correctPosition = Vector3<f32>(-384.f, 0, 0);
@@ -228,6 +231,7 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
 			hallPosition = Human::Instance()->getHallPosition();
             target = WorldGeometry::Instance()->positionToCell(hallPosition.toVector2());
         }
+<<<<<<< HEAD
         target = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(), p, temp->getHitbox());
         Vector2<f32> dummy = target->getPosition();
         temp -> setTroopPosition(dummy);
@@ -235,6 +239,15 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
         temp -> getModel() -> setActive(true);
         temp -> setPathToTarget(p);
         //temp -> switchState(Enumeration::UnitState::Move);
+=======
+        target = WorldGeometry::Instance()->getValidCell(target, origin, nullptr);
+        Vector2<f32> dummy = target->getPosition();
+        temp -> setTroopPosition(dummy);
+        temp -> setUnitCell(dummy);
+        //temp -> setPosition(dummy);
+        temp -> getModel() -> setActive(true);
+        temp -> setPathToTarget(p);
+>>>>>>> master
         if (team == Enumeration::Team::Human){
             Hud::Instance()->removeTroopFromHall(temp->getID());
         }

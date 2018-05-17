@@ -25,6 +25,24 @@ IO::~IO(){
     delete resourceManager;
 }
 
+void IO::Update(){
+    cursor -> refreshStates();
+	for (int i = 0; i < timers.size(); i++){
+		timers[i]->tick();
+	}
+}
+
+void IO::registerTimer(Timer* t){
+	timers.push_back(t);
+}
+
+void IO::unregisterTimer(Timer* t){
+	std::vector<Timer*>::iterator it = std::find(timers.begin(), timers.end(), t);
+	if (it != timers.end()){
+		timers.erase(it);
+	}
+}
+
 Keyboard *IO::getKeyboard(){
     return keyboard;
 }

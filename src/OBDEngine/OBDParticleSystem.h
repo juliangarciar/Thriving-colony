@@ -2,8 +2,8 @@
 #define OBDPARTICLESYSTEM_H
 
 #include "OBDSceneNode.h"
-
-#include "Graphics/TBillboard.h"
+#include "OBDParticleEmiter.h"
+#include "OBDParticleAffector.h"
 
 class OBDParticleSystem : public OBDEntity {
     
@@ -11,15 +11,9 @@ class OBDParticleSystem : public OBDEntity {
         /**
          * @brief 
          * 
+         * @param
          */
-        OBDParticleSystem();
-
-        /**
-         * @brief 
-         * 
-         * @param parent 
-         */
-        OBDParticleSystem(OBDSceneNode*, i32, glm::vec3);
+        OBDParticleSystem(OBDSceneNode*);
 
         /**
          * @brief 
@@ -27,18 +21,29 @@ class OBDParticleSystem : public OBDEntity {
          */
         ~OBDParticleSystem();
 
-         /**
-         * @brief Get the First Node object
+        /**
+         * @brief 
          * 
-         * @return TNode* 
          */
-        TNode *getFirstNode();
+        void clearAffectors();
+
+        /**
+         * @brief 
+         * 
+         */
+        void setEmiter(OBDParticleEmiter*);
+        
+        /**
+         * @brief 
+         * 
+         */
+        void addAffector(OBDParticleAffector*);
 
     private:
         TNode* particleSystemNode;
-        TNode* rotationNode;
-        TNode* translationNode;
-        TNode* scaleNode;
+
+        OBDParticleEmiter* emiter;
+        std::vector<OBDParticleAffector*> affectors;
 };
 
 #endif

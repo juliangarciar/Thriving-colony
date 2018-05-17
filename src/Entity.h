@@ -10,6 +10,7 @@
 #include <GraphicEngine/Material.h>
 #include <GraphicEngine/Billboard.h>
 #include <IOEngine/Timer.h>
+#include <GraphicEngine/Animation.h>
 
 /**
  * @class Entity.
@@ -47,12 +48,6 @@ class Entity {
         virtual ~Entity();
 
         /**
-         * @brief Update.
-         * 
-         */
-        void update();
-
-        /**
          * @brief Subtract damage passed by parameter to currentHP variable.
          * 
          * @param i32 is the damage that is going to be subtracted to currentHP variable.
@@ -60,21 +55,21 @@ class Entity {
         virtual void takeDamage(i32) = 0;
 
         /**
-         * @breif Add an entity to the vector of enemies that have as target the entity.
+         * @brief Add an entity to the vector of enemies that have as target the entity.
          * 
          * @param Pointer to the entity that is going to be added to hostile variable.
          */
         void addHostile(Entity* hostileTarget);
 
         /**
-         * @breif Remove an entity from the vector of enemies that have as target the entity.
+         * @brief Remove an entity from the vector of enemies that have as target the entity.
          * 
          * @param Pointer to de the entity that is going to be removed from hostile variable.
          */
         void removeHostile(Entity* hostileTarget);
 
         /**
-         * @breif Set all the enemies' target variable stored at hostile variable to nullptr.
+         * @brief Set all the enemies' target variable stored at hostile variable to nullptr.
          */
         void putHostileTargetsToNull();
 
@@ -132,6 +127,7 @@ class Entity {
          * 
          * @return Pointer to a Model object that will be the value of the model variable.
 	     */
+        //Animation* getModel() const;
         Model* getModel() const;
 
         /**
@@ -239,15 +235,17 @@ class Entity {
          */
         i32 getCellsY() const;
 
-        /**
-         * @brief Set the Base Material object
-         */
-        void setBaseMaterial();
+		/**
+		 * @brief Set the Base Color object
+		 * 
+		 */
+		void setBaseColor();
 
-        /**
-         * @brief Set the Damaged Material object
-         */
-        void setDamagedMaterial();
+		/**
+		 * @brief Set the Damage Color object
+		 * 
+		 */
+		void setDamageColor();
 
     protected:
         //Layer where the entity has been created.
@@ -307,7 +305,7 @@ class Entity {
         //All enemies that have as target the entity.
         std::vector<Entity*> hostile;
 
-        //
+        // Sospechoso
         Timer *tookDamageTimer;
 
         //
@@ -320,13 +318,9 @@ class Entity {
         Material *baseMat;
 
         //
-        Material *damagedMat;
-
-        //
         Billboard* barBg;
 
         //
         Billboard* bar;
-        
 };
 #endif

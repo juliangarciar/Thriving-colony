@@ -22,7 +22,7 @@ TNode::TNode(TEntity *t, TNode *p){
 TNode::~TNode(){
     if (entity != nullptr) delete entity;
     if (parent != nullptr) parent->removeChild(this);
-    for (int i = 0; i < children.size(); i++){
+    for (i32 i = 0; i < children.size(); i++){
         delete children[i];
     }
 }
@@ -38,7 +38,7 @@ void TNode::removeChild(TNode *c){
 void TNode::draw(){
     if (!active) return;
     if (entity != nullptr) entity->beginDraw();
-    for (int i=0; i<children.size(); i++){
+    for (i32 i=0; i<children.size(); i++){
         children[i] -> draw();
     }
     if (entity != nullptr) entity->endDraw();

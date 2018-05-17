@@ -1,13 +1,12 @@
 #ifndef OBDMESH_H
 #define OBDMESH_H
 
+#include <aabbtree/AABB.h>
+
 #include "OBDEntity.h"
-#include "OBDSceneNode.h"
+#include "OBDMaterial.h"
+#include "OBDTexture.h"
 
-#include "ResourceManager/ResourceOBJ.h"
-#include "ResourceManager/ResourceMTL.h"
-
-#include "Graphics/TTransform.h"
 #include "Graphics/TMesh.h"
 
 class OBDMesh : public OBDEntity {
@@ -19,16 +18,7 @@ class OBDMesh : public OBDEntity {
          * @param 
          * @param 
          */
-        OBDMesh(ResourceMesh, ResourceMaterial);
-
-        /**
-         * @brief 
-         * 
-         * @param  
-         * @param 
-         * @param 
-         */
-        OBDMesh(OBDSceneNode*, ResourceMesh, ResourceMaterial);
+        OBDMesh(glslMesh*, OBDMaterial*);
 
         /**
          * @brief 
@@ -36,113 +26,39 @@ class OBDMesh : public OBDEntity {
          */
         ~OBDMesh();
 
+		/**
+		 * @brief 
+		 * 
+		 */
+		void refreshBoundingBox();
+
+		/**
+		 * @brief 
+		 * 
+		 */
+		void setBoundingBox(glm::vec3, glm::vec3);
+
         /**
-         * @brief 
+         * @brief Set the OBDMaterial object
          * 
-         * @param tX 
-         * @param tY 
-         * @param tZ 
          */
-        void rotate(f32 rX, f32 rY, f32 rZ, f32 angle);
+        void setMaterial(OBDMaterial*);
+
+        /**
+         * @brief Set the material name
+         * 
+         */
+        void setMaterialName(std::string);
 
         /**
          * @brief 
-         * 
-         */
-        void scale(f32 sX, f32 sY, f32 sZ);
-
-        /**
-         * @brief 
-         * 
-         */
-        void translate(f32 tX, f32 tY, f32 tZ);
-
-        /**
-         * @brief Set the Position
-         * 
-         * @param p 
-         */
-        void setPosition(glm::vec3 p);
-
-        /**
-         * @brief Set the Rotation
-         * 
-         * @param r 
-         * @param angle 
-         */
-        void setRotation(glm::vec3 r, f32 angle);
-
-        /**
-         * @brief Set the Scale
-         * 
-         * @param s 
-         */
-        void setScale(glm::vec3 s);
-
-        /**
-         * @brief Set the Active object
-         * 
-         * @param a 
-         */
-        void setActive(bool a);
-
-        /**
-         * @brief Get the Active object
-         * 
-         * @return true 
-         * @return false 
-         */
-        bool getActive();
-
-        /**
-         * @brief Set the ResourceMaterial object
-         * 
-         */
-        void setMaterial(ResourceMaterial);
-
-        /**
-         * @brief Set the glslTexture object
-         * 
-         */
-        void setTexture(OBDEnums::TextureTypes, ResourceIMG*);
-
-        /**
-         * @brief 
-         * 
-         * @param i 
-         */
-        void setID(GLuint i);
-
-        /**
-         * @brief 
-         * 
-         * @return GLuint 
-         */
-        GLuint getID();
-
-        /**
-         * @brief Set the Name object
-         * 
-         * @param n 
-         */
-        void setName(std::string n);
-
-        /**
-         * @brief Get the Name object
          * 
          * @return std::string 
          */
-        std::string getName();
+        OBDMaterial *getMaterial();
 
         /**
-         * @brief Set the Name object
-         * 
-         * @param n 
-         */
-        void setMaterialName(std::string n);
-
-        /**
-         * @brief Get the Name object
+         * @brief 
          * 
          * @return std::string 
          */
@@ -150,40 +66,25 @@ class OBDMesh : public OBDEntity {
 
         /**
          * @brief 
-         * @param
-         * @param sync
-         */
-        void loadTextures(ResourceManager*, bool);
-        
-        /**
-         * @brief 
          * 
          * @return TMesh* 
          */
         TMesh* getMeshEntity();
 
-        /**
-         * @brief Get the First Node object
-         * 
-         * @return TNode* 
-         */
-        TNode *getFirstNode();
+		/**
+		 * @brief Get the Bounding Box object
+		 * 
+		 * @return TNode* 
+		 */
+		aabb::AABB getBoundingBox();
     private:
-        TNode* rotationNode;
-        TNode* translationNode;
-        TNode* scaleNode;
         TNode* meshNode;
 
-        glm::vec3 node_position;
-        glm::vec3 node_rotation;
-        glm::vec3 node_scale;
+		std::string materialName;
 
-        GLuint ID;
-        std::string name;
-        std::string materialName;
-
-        ResourceMesh mesh;
-        ResourceMaterial material;
+		glm::vec4 aabbMin;
+		glm::vec4 aabbMax;
+		aabb::AABB boundingBox;
 };
 
 #endif

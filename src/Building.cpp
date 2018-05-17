@@ -34,55 +34,20 @@ Building::Building(SceneNode *_layer,
     /* Set the timer */
     buildTimer = new Timer(baseData.buildingTime, false, false);
     buildTimer -> setCallback([&]{
-		setBaseMaterial();
         adjustCityStats();
+		setBaseColor();
         if (callback != nullptr) callback(this);
     });
-
-	//ToDo: hacia abajo anadido por rafa
-    f32 billBoardOffset = 200.00;
-
-	Texture *t = new Texture(baseData.texturePath.c_str());
-
-    /* Set the model and texture */
-    baseMat = new Material(t);
-    baseMat -> setColor(255, 255, 255, 255);
-
-    damagedMat = new Material(t);
-    damagedMat -> setColor(255, 255, 0, 0);
-    
-    canBuildMat = new Material(t);
-    canBuildMat -> setColor(128, 0, 255, 0);
-
-    cantBuildMat = new Material(t);
-    cantBuildMat -> setColor(128, 255, 0, 0);
-
-    setBaseMaterial();
-
-	Vector3<f32> pos(getPosition().x, Map::Instance()->getTerrain()->getY(getPosition().x,getPosition().y) + billBoardOffset, getPosition().y);
-
-    barBg = new Billboard(layer, ID, pos, Color(0,0,0,255), Color(0,0,0,255));
-	bar = new Billboard(layer, ID, pos, Color(0, 255, 0, 255), Color(0, 255, 0, 255));
-    barBg -> setSize(105.00, 15.00);
 }
 
 Building::~Building() {
-    delete canBuildMat;
-    delete cantBuildMat;
-    delete baseMat;
-    delete damagedMat;
     delete buildTimer;
-    delete barBg;
-    
-    delete bar;
-}
-
-void Building::update() {
-    buildTimer -> tick();
+    //delete particle;
 }
 
 void Building::startBuilding() {
     taxPlayer();
+	model -> setColor(Color(0, 255, 0, 255));
     buildTimer -> start();
 }
 
@@ -99,11 +64,11 @@ void Building::adjustCityStats() {
     // Adjust the stats of the player
     if (getTeam() == Enumeration::Team::Human) {
         Human::Instance() -> increaseHappiness(getHappinessVariation());
-        Human::Instance() -> increaseCitizens(getCitizensVariation());   
+        Human::Instance() -> increasePersons(getCitizensVariation());   
         Human::Instance() -> increaseCityLevel(cityLevel);
     } else {
         IA::Instance() -> increaseHappiness(getHappinessVariation());
-        IA::Instance() -> increaseCitizens(getCitizensVariation());   
+        IA::Instance() -> increasePersons(getCitizensVariation());   
         IA::Instance() -> increaseCityLevel(cityLevel);
     }
 }
@@ -120,19 +85,11 @@ std::string Building::getType(){
     return buildingType;
 }
 
-//ToDo: hacia abajo anadido por rafa
-void Building::setCanBuildMat() {
-    model -> setMaterial(canBuildMat);
-}
-
-void Building::setCantBuildMat() {
-    model -> setMaterial(cantBuildMat);
-}
 void Building::takeDamage(i32 _damage) {
     currentHP = currentHP - _damage;
     tookDamageTimer -> restart();
     // Tint the model red
-    //ToDo: cambiar a material daño recibido
+    setDamageColor();
     if (currentHP <= 0) {
         currentHP = 0;
     }
@@ -140,4 +97,8 @@ void Building::takeDamage(i32 _damage) {
 
 void Building::setTarget(Entity *newTarget) {
     target = newTarget;
+}
+
+void Building::setCantBuildColor() {
+	model -> setColor(Color(0, 0, 255, 255));
 }

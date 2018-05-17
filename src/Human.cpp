@@ -30,9 +30,7 @@ void Human::Init(std::string _race) {
 }
 
 void Human::Update() {
-    buildings -> updateBuildingManager();
     units -> updateUnitManager();
-    updateTimer ->tick();
 }
 
 void Human::CleanUp() {

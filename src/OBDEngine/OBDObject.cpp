@@ -1,140 +1,124 @@
 #include "OBDObject.h"
 
-OBDObject::OBDObject(ResourceOBJ *obj, ResourceMTL *mtl) {
-    rotationNode = new TNode(new TTransform());
-    translationNode = new TNode(new TTransform(), rotationNode);
-    scaleNode = new TNode(new TTransform(), translationNode);
+OBDObject::OBDObject(OBDSceneNode* p, u32 id, ResourceOBJ *obj, ResourceMTL *mtl) : OBDEntity(p) {
+	meshes = new std::map<std::string, OBDMesh*>();
+	materials = new std::map<std::string, OBDMaterial*>();
 
-    std::map<std::string, ResourceMesh> meshmap = obj->getResource();
-    std::map<std::string, ResourceMaterial> matmap = mtl->getResource();
+    std::map<std::string, ResourceMesh*> *meshmap = obj->getResource();
 
-    for (std::map<std::string, ResourceMesh>::iterator it = meshmap.begin(); it != meshmap.end(); ++it) {
-        std::map<std::string, ResourceMaterial>::iterator it2;
-        it2 = matmap.find(it->second.defaultMaterialName);
-        if (it2 == matmap.end()){
-            std::cout << "No existe material " << it->second.defaultMaterialName << " para el mesh " << it->first << std::endl;
-            exit(0);
-        }
+    for (std::map<std::string, ResourceMesh*>::iterator it = meshmap->begin(); it != meshmap->end(); ++it) {
+		glslMesh *tmp = new glslMesh();
+		tmp->vbo = it->second->vbo;
+		tmp->ibo = it->second->indices;
 
-        OBDMesh *tempMesh = new OBDMesh(it->second, it2->second);
+		OBDMaterial *tempMat = new OBDMaterial(mtl, it->second->defaultMaterialName);
+
+        OBDMesh *tempMesh = new OBDMesh(tmp, tempMat);
+		tempMesh->setMaterialName(it->second->defaultMaterialName);
+		tempMesh->setBoundingBox(it->second->aabbMin, it->second->aabbMax);
+
         tempMesh->getFirstNode()->setParent(scaleNode);
         scaleNode->addChild(tempMesh->getFirstNode());
 
-        meshes.insert(std::pair<std::string, OBDMesh*>(it->second.name, tempMesh));
+        meshes->insert(std::pair<std::string, OBDMesh*>(it->second->name, tempMesh));
+        materials->insert(std::pair<std::string, OBDMaterial*>(it->second->defaultMaterialName, tempMat));
     }
 
-}
+	ID = id;
 
-OBDObject::OBDObject(OBDSceneNode* parent, ResourceOBJ *obj, ResourceMTL *mtl) {
-    rotationNode = new TNode(new TTransform());
-    translationNode = new TNode(new TTransform(), rotationNode);
-    scaleNode = new TNode(new TTransform(), translationNode);
+	parent = nullptr;
+	refreshBoundingBox();
+	parent = p;
 
-    parent->addChild(this);
-
-    std::map<std::string, ResourceMesh> meshmap = obj->getResource();
-    std::map<std::string, ResourceMaterial> matmap = mtl->getResource();
-
-    for (std::map<std::string, ResourceMesh>::iterator it = meshmap.begin(); it != meshmap.end(); ++it) {
-        std::map<std::string, ResourceMaterial>::iterator it2;
-        it2 = matmap.find(it->second.defaultMaterialName);
-        if (it2 == matmap.end()){
-            std::cout << "No existe material " << it->second.defaultMaterialName << " para el mesh " << it->first << std::endl;
-            exit(0);
-        }
-
-        OBDMesh *tempMesh = new OBDMesh(it->second, it2->second);
-        tempMesh->getFirstNode()->setParent(scaleNode);
-        scaleNode->addChild(tempMesh->getFirstNode());
-
-        meshes.insert(std::pair<std::string, OBDMesh*>(it->second.name, tempMesh));
-    }
+	p -> insertBoundingBox(ID, boundingBox);
 }
 
 OBDObject::~OBDObject(){
-    for (std::map<std::string, OBDMesh*>::iterator it = meshes.begin(); it != meshes.end(); ++it) {
+    for (std::map<std::string, OBDMesh*>::iterator it = meshes->begin(); it != meshes->end(); ++it) {
         delete it->second;
     }
-    meshes.clear();
-    delete rotationNode;
-    rotationNode = nullptr;
-}
+    meshes->clear();
 
-void OBDObject::translate(f32 tX, f32 tY, f32 tZ) {
-    TTransform* t = (TTransform*) translationNode -> getEntity();
-    t -> translate(tX, tY, tZ);
-    node_position += glm::vec3(tX, tY, tZ);
-}
-
-void OBDObject::rotate(f32 rX, f32 rY, f32 rZ, f32 angle) {
-    TTransform* t = (TTransform*) rotationNode -> getEntity();
-    t -> rotate(rX, rY, rZ, angle);
-    node_rotation += glm::vec3(rX, rY, rZ);
-}
-
-void OBDObject::scale(f32 sX, f32 sY, f32 sZ) {
-    TTransform* t = (TTransform*) scaleNode -> getEntity();
-    t -> scale(sX, sY, sZ);
-    node_scale += glm::vec3(sX, sY, sZ);
-}
-
-void OBDObject::setPosition(glm::vec3 p) {
-    TTransform* t = (TTransform*) translationNode -> getEntity();
-    glm::vec3 o = node_position - p;
-    t -> translate(o.x, o.y, o.z);
-    node_position = p;
-}
-
-void OBDObject::setRotation(glm::vec3 r, f32 angle) {
-    TTransform* t = (TTransform*) rotationNode -> getEntity();
-    glm::vec3 o = node_rotation - r;
-    t -> rotate(o.x, o.y, o.z, angle);
-    node_rotation = r;
-}
-
-void OBDObject::setScale(glm::vec3 s) {
-    TTransform* t = (TTransform*) scaleNode -> getEntity();
-    glm::vec3 o = node_scale - s;
-    t -> scale(o.x, o.y, o.z);
-    node_scale = s;
-}
-
-void OBDObject::setActive(bool a) {
-    rotationNode -> setActive(a);
-}
-
-bool OBDObject::getActive() {
-    return rotationNode -> getActive();
-}
-
-void OBDObject::setMaterial(ResourceMTL *mtl) {
-    std::map<std::string, ResourceMaterial> matmap = mtl->getResource();
-    
-    for (std::map<std::string, OBDMesh*>::iterator it = meshes.begin(); it != meshes.end(); ++it) {
-        if (matmap.find(it->second->getMaterialName()) != matmap.end()){
-            it->second->setMaterial(matmap[it->second->getMaterialName()]);
-        }
+    for (std::map<std::string, OBDMaterial*>::iterator it = materials->begin(); it != materials->end(); ++it) {
+        delete it->second;
     }
+    materials->clear();
+	
+	if (parent != nullptr) parent -> removeBoundingBox(ID);
 }
 
-void OBDObject::loadTextures(ResourceManager *r, bool sync){
-    for (std::map<std::string, OBDMesh*>::iterator it = meshes.begin(); it != meshes.end(); ++it) {
-        it->second->loadTextures(r, sync);
+void OBDObject::refreshBoundingBox(){
+	meshes->begin()->second->refreshBoundingBox();
+	aabb::AABB matrix = meshes->begin()->second->getBoundingBox();
+    for (std::map<std::string, OBDMesh*>::iterator i = meshes->begin(); i != meshes->end(); ++i) {
+		i->second->refreshBoundingBox();
+		matrix.merge(matrix, i->second->getBoundingBox());
+	}
+	boundingBox = matrix;
+
+	if (parent != nullptr){
+		parent -> refreshBoundingBox(ID, boundingBox);
+	}
+}
+
+void OBDObject::refreshModelMatrix(glm::mat4 parent){
+	OBDEntity::refreshModelMatrix(parent);
+    for (std::map<std::string, OBDMesh*>::iterator i = meshes->begin(); i != meshes->end(); ++i) {
+		i->second->refreshModelMatrix(model_matrix);
+	}
+}
+
+void OBDObject::setMaterial(std::string s, OBDMaterial *mtl){
+	std::map<std::string, OBDMesh*>::iterator it = meshes->find(s);
+	if (it != meshes->end()){
+		it->second->setMaterial(mtl);
+		materials->at(it->second->getMaterialName()) = mtl;
+	}
+}
+
+void OBDObject::setMaterials(ResourceMTL *mtl) {
+	//Delete previous materials
+    for (std::map<std::string, OBDMaterial*>::iterator i = materials->begin(); i != materials->end(); ++i) {
+		delete i->second;
+	}
+	meshes->clear();
+
+	//Create new materials
+    for (std::map<std::string, OBDMesh*>::iterator it = meshes->begin(); it != meshes->end(); ++it) {
+		OBDMaterial *tempMat = new OBDMaterial(mtl, it->second->getMaterialName());
+        it->second->setMaterial(tempMat);
+        materials->insert(std::pair<std::string, OBDMaterial*>(it->first, tempMat));
     }
-}
-
-u32 OBDObject::getMeshAmount(){
-    return meshes.size();
 }
 
 OBDMesh *OBDObject::getMesh(std::string meshName){
-    return meshes[meshName];
+	std::map<std::string, OBDMesh*>::iterator i = meshes->find(meshName);
+	if (i != meshes->end()) return i->second;
+    else return nullptr;
 }
 
-std::map<std::string, OBDMesh*> OBDObject::getMeshes(){
+std::map<std::string, OBDMesh*> *OBDObject::getMeshes(){
     return meshes;
 }
 
-TNode *OBDObject::getFirstNode(){
-    return rotationNode;
+u32 OBDObject::getMeshAmount(){
+    return meshes->size();
+}
+
+OBDMaterial *OBDObject::getMaterial(std::string meshName){
+	std::map<std::string, OBDMaterial*>::iterator i = materials->find(meshName);
+	if (i != materials->end()) return i->second;
+    else return nullptr;
+}
+
+std::map<std::string, OBDMaterial*> *OBDObject::getMaterials(){
+    return materials;
+}
+
+aabb::AABB OBDObject::getBoundingBox(){
+	return boundingBox;
+}
+
+u32 OBDObject::getID() {
+	return ID;
 }

@@ -21,6 +21,20 @@ OBDColor::OBDColor(i32 red, i32 green, i32 blue) {
     a = 1.f;
 }
 
+OBDColor::OBDColor(glm::vec4 rgba) {
+    r = rgba.r;
+    g = rgba.g;
+    b = rgba.b;
+    a = rgba.a;
+}
+
+OBDColor::OBDColor(glm::vec3 rgb) {
+    r = rgb.r;
+    g = rgb.g;
+    b = rgb.b;
+    a = 1.f;
+}
+
 OBDColor::~OBDColor() {
 
 }

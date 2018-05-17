@@ -76,10 +76,6 @@ void CameraController::Init(Vector3<float> v){
 	updateTimer -> start();
 }
 
-void CameraController::Update() {
-	updateTimer -> tick();
-}
-
 void CameraController::updateCamera(f32 deltaTime) {
 	if (movementMode) {
     	Vector3<f32> tarIncr;
@@ -317,7 +313,7 @@ void CameraController::setRotateDegrees(i32 x, i32 y){
 	rotateDegrees.y = y; 
 }
 
-Vector3<f32> CameraController::getTargetPosition() {
+Vector3<f32> CameraController::getTarPos() {
 	return tarPos;
 }
 

@@ -15,14 +15,15 @@ class TCamera : public TEntity {
          * @param f32 button.
          * @param f32 left.
          * @param f32 right.
+         * @param f32 fov.
          */
-        TCamera(OBDEnums::CameraProjection, f32, f32, f32, f32, f32, f32);
+        TCamera(OBDEnums::CameraProjection, f32, f32, f32, f32, f32, f32, f32);
 
         /**
          * @brief Destructor for a camera entity.
          * 
          */
-        ~TCamera();
+        virtual ~TCamera();
 
 
         /**
@@ -36,12 +37,6 @@ class TCamera : public TEntity {
          * 
          */
         void endDraw();
-
-        /**
-         * @brief 
-         * 
-         */
-        void calculateViewMatrix();
 
 
         /**
@@ -117,20 +112,6 @@ class TCamera : public TEntity {
          * @param tZ 
          */
         void setCameraPosition(glm::vec3 p);
-
-        /**
-         * @brief Get the World Coordinates From Screen object
-         * 
-         * @return glm::vec3 
-         */
-        glm::vec3 getWorldCoordinatesFromScreen(glm::vec3);
-
-        /**
-         * @brief Get the Screen Coordinates From World object
-         * 
-         * @return glm::vec3 
-         */
-        glm::vec3 getScreenCoordinatesFromWorld(glm::vec3);
         
 
         /**
@@ -202,8 +183,19 @@ class TCamera : public TEntity {
          * @return glm::vec3 
          */
         glm::vec3 getCameraPosition();
-
     private:
+        /**
+         * @brief 
+         * 
+         */
+        void recalculateViewMatrix();
+
+		/**
+		 * @brief 
+		 * 
+		 */
+		void recalculateProjectionMatrix();
+		
         // Positions
         glm::vec3 targetPosition;
         glm::vec3 cameraPosition;

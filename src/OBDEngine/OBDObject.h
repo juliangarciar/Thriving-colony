@@ -4,23 +4,13 @@
 #include "OBDEntity.h"
 #include "OBDMesh.h"
 #include "OBDSceneNode.h"
+#include "OBDMaterial.h"
 
 #include "ResourceManager/ResourceOBJ.h"
 #include "ResourceManager/ResourceMTL.h"
 
-#include "Graphics/TTransform.h"
-#include "Graphics/TMesh.h"
-
 class OBDObject : public OBDEntity {
     public:
-        /**
-         * @brief Construct a new OBDMesh object
-         * 
-         * @param obj 
-         * @param mtl 
-         */
-        OBDObject(ResourceOBJ *obj, ResourceMTL *mtl);
-
         /**
          * @brief Construct a new OBDMesh object
          * 
@@ -28,98 +18,39 @@ class OBDObject : public OBDEntity {
          * @param obj 
          * @param mtl 
          */
-        OBDObject(OBDSceneNode* parent, ResourceOBJ *obj, ResourceMTL *mtl);
+        OBDObject(OBDSceneNode* parent, u32, ResourceOBJ *obj, ResourceMTL *mtl);
 
         /**
          * @brief Destroy the OBDObject object
          * 
          */
-        ~OBDObject();
+        virtual ~OBDObject();
 
-        /**
-         * @brief 
-         * 
-         * @param tX 
-         * @param tY 
-         * @param tZ 
-         */
-        void rotate(f32 rX, f32 rY, f32 rZ, f32 angle);
+		/**
+		 * @brief 
+		 * 
+		 */
+		void refreshModelMatrix(glm::mat4);
 
-        /**
-         * @brief 
-         * 
-         */
-        void scale(f32 sX, f32 sY, f32 sZ);
-
-        /**
-         * @brief 
-         * 
-         */
-        void translate(f32 tX, f32 tY, f32 tZ);
-
-        /**
-         * @brief Set the Position
-         * 
-         * @param p 
-         */
-        void setPosition(glm::vec3 p);
-
-        /**
-         * @brief Set the Rotation
-         * 
-         * @param r 
-         * @param angle 
-         */
-        void setRotation(glm::vec3 r, f32 angle);
-
-        /**
-         * @brief Set the Scale
-         * 
-         * @param s 
-         */
-        void setScale(glm::vec3 s);
-
-        /**
-         * @brief Set the glslTexture object
-         * 
-         */
-        void setTexture(OBDEnums::TextureTypes, ResourceIMG*);
-
-        /**
-         * @brief Set the Active object
-         * 
-         * @param a 
-         */
-        void setActive(bool a);
-
-        /**
-         * @brief Get the Active object
-         * 
-         * @return true 
-         * @return false 
-         */
-        bool getActive();
+		/**
+		 * @brief 
+		 * 
+		 */
+		void refreshBoundingBox();
 
         /**
          * @brief Set the Material object
          * 
          * @param mtl 
          */
-        void setMaterial(ResourceMTL *mtl);
+        void setMaterial(std::string, OBDMaterial *mtl);
 
         /**
-         * @brief 
-         * @param r 
-         * @param sync 
-         */
-        void loadTextures(ResourceManager*, bool);
-
-        /**
-         * @brief Get the Mesh Amount object
+         * @brief Set the Material object
          * 
-         * @return u32 
+         * @param mtl 
          */
-        u32 getMeshAmount();
+        void setMaterials(ResourceMTL *mtl);
 
         /**
          * @brief Get the Mesh object
@@ -133,25 +64,49 @@ class OBDObject : public OBDEntity {
          * 
          * @return std::map<std::string, OBDMesh*> 
          */
-        std::map<std::string, OBDMesh*> getMeshes();
+        std::map<std::string, OBDMesh*> *getMeshes();
 
         /**
-         * @brief Get the First Node object
+         * @brief Get the OBDMaterial object
          * 
-         * @return TNode* 
+         * @return OBDMaterial* 
          */
-        TNode *getFirstNode();
+        OBDMaterial *getMaterial(std::string);
 
+        /**
+         * @brief Get the OBDMaterial object
+         * 
+         * @return std::map<std::string, OBDMaterial*> 
+         */
+        std::map<std::string, OBDMaterial*> *getMaterials();
+
+		/**
+		 * @brief Get the Bounding Box object
+		 * 
+		 * @return aabb::AABB 
+		 */
+		aabb::AABB getBoundingBox();
+
+        /**
+         * @brief 
+         * 
+         * @return u32 
+         */
+        u32 getID();
+
+        /**
+         * @brief Get the Mesh Amount object
+         * 
+         * @return u32 
+         */
+        u32 getMeshAmount();
     private:
-        TNode* rotationNode;
-        TNode* translationNode;
-        TNode* scaleNode;
+		aabb::AABB boundingBox;
 
-        std::map<std::string, OBDMesh*> meshes;
-
-        glm::vec3 node_position;
-        glm::vec3 node_rotation;
-        glm::vec3 node_scale;
+        std::map<std::string, OBDMesh*> *meshes;
+        std::map<std::string, OBDMaterial*> *materials;
+		
+        u32 ID;
 };
 
 #endif

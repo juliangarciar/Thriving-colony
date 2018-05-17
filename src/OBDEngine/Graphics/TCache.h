@@ -1,8 +1,6 @@
 #ifndef TCACHE_H
 #define TCACHE_H
 
-#include <GL/glew.h>
-
 #include "../OBDTypes.h"
 #include "../OBDEnums.h"
 
@@ -63,7 +61,7 @@ class TCache {
          * 
          * @return glm::mat4 
          */
-        glm::mat4 getViewMatrix();
+        glm::mat4 *getViewMatrix();
 
         /**
          * @brief Set the Projection Matrix object
@@ -77,7 +75,21 @@ class TCache {
          * 
          * @return glm::mat4 
          */
-        glm::mat4 getProjectionMatrix();
+        glm::mat4 *getProjectionMatrix();
+
+        /**
+         * @brief Set the Camera Position
+         * 
+         * @param a 
+         */
+        void setCameraPosition(glm::vec3);
+
+        /**
+         * @brief Get the Camera Position
+         * 
+         * @return glm::vec3 
+         */
+        glm::vec3 getCameraPosition();
 
         /**
          * @brief Get the Lights object
@@ -99,6 +111,7 @@ class TCache {
 
         glm::mat4 viewMatrix;
         glm::mat4 projectionMatrix;
+		glm::vec3 cameraPosition;
 
         std::vector<glslLight> *lights;
 };

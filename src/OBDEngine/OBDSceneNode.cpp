@@ -1,68 +1,19 @@
 #include "OBDSceneNode.h"
 
-OBDSceneNode::OBDSceneNode() {
-    rotationNode = new TNode(new TTransform());
-    translationNode = new TNode(new TTransform(), rotationNode);
-    scaleNode = new TNode(new TTransform(), translationNode);
+OBDSceneNode::OBDSceneNode(TNode* parent) : OBDEntity() {
+	octree = aabb::Tree();
+
+	parent->addChild(rotationNode);
 }
 
-OBDSceneNode::OBDSceneNode(TNode* parent) {
-    rotationNode = new TNode(new TTransform(), parent);
-    translationNode = new TNode(new TTransform(), rotationNode);
-    scaleNode = new TNode(new TTransform(), translationNode);
-}
-
-OBDSceneNode::OBDSceneNode(OBDSceneNode* parent) {
-    rotationNode = new TNode(new TTransform());
-    translationNode = new TNode(new TTransform(), rotationNode);
-    scaleNode = new TNode(new TTransform(), translationNode);
+OBDSceneNode::OBDSceneNode(OBDSceneNode* parent) : OBDEntity(parent) {
+	octree = aabb::Tree();
 
     parent->addChild(this);
 }
 
 OBDSceneNode::~OBDSceneNode() {
-    delete rotationNode;
-    delete translationNode;
-    delete scaleNode;
-}
 
-void OBDSceneNode::translate(f32 tX, f32 tY, f32 tZ) {
-    TTransform* t = (TTransform*) translationNode -> getEntity();
-    t -> translate(tX, tY, tZ);
-    node_position += glm::vec3(tX, tY, tZ);
-}
-
-void OBDSceneNode::rotate(f32 rX, f32 rY, f32 rZ, f32 angle) {
-    TTransform* t = (TTransform*) rotationNode -> getEntity();
-    t -> rotate(rX, rY, rZ, angle);
-    node_rotation += glm::vec3(rX, rY, rZ);
-}
-
-void OBDSceneNode::scale(f32 sX, f32 sY, f32 sZ) {
-    TTransform* t = (TTransform*) scaleNode -> getEntity();
-    t -> scale(sX, sY, sZ);
-    node_scale += glm::vec3(sX, sY, sZ);
-}
-
-void OBDSceneNode::setPosition(glm::vec3 p) {
-    TTransform* t = (TTransform*) translationNode -> getEntity();
-    glm::vec3 o = node_position - p;
-    t -> translate(o.x, o.y, o.z);
-    node_position = p;
-}
-
-void OBDSceneNode::setRotation(glm::vec3 r, f32 angle) {
-    TTransform* t = (TTransform*) rotationNode -> getEntity();
-    glm::vec3 o = node_rotation - r;
-    t -> rotate(o.x, o.y, o.z, angle);
-    node_rotation = r;
-}
-
-void OBDSceneNode::setScale(glm::vec3 s) {
-    TTransform* t = (TTransform*) scaleNode -> getEntity();
-    glm::vec3 o = node_scale - s;
-    t -> scale(o.x, o.y, o.z);
-    node_scale = s;
 }
 
 void OBDSceneNode::addChild(OBDEntity *e){
@@ -75,6 +26,38 @@ void OBDSceneNode::addChild(TNode *e){
     scaleNode->addChild(e);
 }
 
-TNode* OBDSceneNode::getFirstNode() {
-    return rotationNode;
+void OBDSceneNode::refreshModelMatrix(glm::mat4 parent){
+	OBDEntity::refreshModelMatrix(parent);
+    for (std::vector<OBDEntity*>::iterator i = children.begin(); i != children.end(); ++i) {
+		OBDEntity *temp = *i;
+		temp->refreshModelMatrix(model_matrix);
+	}
+}
+
+void OBDSceneNode::insertBoundingBox(u32 id, aabb::AABB box){
+	octree.insertParticle(id, box.lowerBound, box.upperBound);
+}
+
+void OBDSceneNode::refreshBoundingBox(u32 id, aabb::AABB box){
+	octree.updateParticle(id, box.lowerBound, box.upperBound);
+}
+
+void OBDSceneNode::removeBoundingBox(u32 id){
+	octree.removeParticle(id);
+}
+
+std::vector<u32> OBDSceneNode::getCollisionID(OBDLine ray){
+	aabb::Ray r;
+	r.rayStart = ray.start;
+	r.rayEnd = ray.end;
+
+	r.rayDirection = glm::normalize(ray.end - ray.start);
+	r.rayInverseDirection.x = 1.0f/r.rayDirection.x;
+	r.rayInverseDirection.y = 1.0f/r.rayDirection.y;
+	r.rayInverseDirection.z = 1.0f/r.rayDirection.z;
+	r.raySign.x = (r.rayInverseDirection.x < 0); 
+	r.raySign.y = (r.rayInverseDirection.y < 0); 
+	r.raySign.z = (r.rayInverseDirection.z < 0); 
+
+	return octree.query(r);
 }

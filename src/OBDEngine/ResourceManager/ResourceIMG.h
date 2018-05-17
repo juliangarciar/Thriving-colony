@@ -16,12 +16,12 @@ class ResourceIMG : public Resource {
         const char *getIdentifier();
 
         unsigned char *getResource();
-        int getWidth();
-        int getHeight();
-        int getChannels();
+        i32 getWidth();
+        i32 getHeight();
+        i32 getChannels();
     private:
         unsigned char *resource;
-        int width, height, channels;
+        i32 width, height, channels;
         
 };
 

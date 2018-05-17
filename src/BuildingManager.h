@@ -89,13 +89,6 @@ class BuildingManager {
 		bool checkFinished(i32);
 
 		/**
-		 * @brief Call the update method of every building stored at buildings variable.
-		 * 
-		 * @see update() method at Building class.
-		 */
-		void updateBuildingManager();
-		
-		/**
 		 * @brief Get the ID number of the mesh of currentCollision variable.
 		 * 
 		 * @return i32 with the ID of the mesh if the currentCollision variable if it is not nullptr and -1 in other case.

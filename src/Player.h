@@ -88,6 +88,34 @@ class Player {
         void increaseCitizens(i32);
 
         /**
+         * @brief Increase the persons based on the persons passed by parameter.
+         * 
+         * @param i32 is the persons that are going to be added to the persons variable.
+         */
+        void increasePersons(i32);
+
+        /**
+         * @brief Increase the individual units based on the individual units passed by parameter.
+         * 
+         * @param i32 is the units that are going to be added to the individualUnits variable.
+         */
+        void increaseIndividualUnits(i32);
+
+        /**
+         * @brief Decrease the persons based on the persosns passed by parameter.
+         * 
+         * @param i32 is the persons that are going to be substracted to the persons variable.
+         */
+        void decreasePersons(i32);
+
+        /**
+         * @brief Decrease the individualU units based on the individual units passed by parameter.
+         * 
+         * @param i32 is the units that are going to be substracted to the individualUnits variable.
+         */
+        void decreaseIndividualUnits(i32);
+
+        /**
          * @brief Decrease 10 citizens and 5 happiness from the player's city.
          */
         void increaseArmySize();
@@ -147,7 +175,7 @@ class Player {
         void setSiderurgyProductivity(i32);
 
         /**
-         * @brief Ste the production of each quarry.
+         * @brief Set the production of each quarry.
          * 
          * @param i32 is the value that is going to be assigned to quarryProductivity variable.
          */
@@ -180,6 +208,20 @@ class Player {
          * @return i32 that will be the value of citizens variable.
          */
         i32 getCitizens();
+
+        /**
+         * @brief Get the player's persons amount.
+         * 
+         * @return i32 that will be the value of persons varibale.
+         */
+        i32 getPersons();
+
+        /**
+         * @brief Get the player's individualUnits amount.
+         * 
+         * @return i32 that will be the value of individualUnits varibale.
+         */
+        i32 getIndividualUnits();
 
         /**
          * @brief Get the player's troops amount.
@@ -289,8 +331,17 @@ class Player {
         //PLayer's crystal amount.
         i32 crystalAmount;
 
+        //Player's units amount.
+        i32 individualUnits;
+
         //Player's citizens amount.
         i32 citizens;
+
+        //Player's citizens and units maximum amount.
+        i32 persons;
+
+        //Player's citizens in coming amount.
+        i32 citizensInComing;
 
         //
         i32 buildingRadious;

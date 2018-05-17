@@ -2,30 +2,25 @@
 #define OBDBILLBOARD_H
 
 #include "OBDSceneNode.h"
+#include "OBDShaderProgram.h"
 
 #include "Graphics/TBillboard.h"
 
-class OBDBillboard : public OBDEntity {
-    
+class OBDBillboard {
     public:
         /**
          * @brief 
          * 
+         * @param parent
+         * @param position
          */
-        OBDBillboard();
-
-        /**
-         * @brief 
-         * 
-         * @param parent 
-         */
-        OBDBillboard(OBDSceneNode*, i32, glm::vec3);
+        OBDBillboard(OBDSceneNode*, glm::vec3);
 
         /**
          * @brief 
          * 
          */
-        ~OBDBillboard();
+        virtual ~OBDBillboard();
 
         /**
          * @brief 
@@ -44,35 +39,12 @@ class OBDBillboard : public OBDEntity {
          * 
          */
         void setSize(f32, f32, f32);
-        
-         /**
-          * @brief Set the Bottom Width object
-          * 
-          */
-        void setBottomWidth(f32);
 
         /**
          * @brief 
          * 
          */
         glm::vec3 getPosition();
-
-        /**
-         * @brief 
-         * 
-         */
-        i32 getID();
-
-        /**
-         * @brief 
-         * 
-         */
-        OBDColor* getTopColor();
-
-        /**
-         * @brief
-         */
-        OBDColor* getBottomColor();
 
         /**
          * @brief Get the Height object
@@ -96,18 +68,14 @@ class OBDBillboard : public OBDEntity {
         f32 getBottomWidth();
 
          /**
-         * @brief Get the First Node object
+         * @brief Get the Node object
          * 
          * @return TNode* 
          */
-        TNode *getFirstNode();
+        TNode *getNode();
 
     private:
         TNode* billboardNode;
-        TNode* rotationNode;
-        TNode* translationNode;
-        TNode* scaleNode;
-        i32 ID;
 };
 
 #endif

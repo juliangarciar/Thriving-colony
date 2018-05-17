@@ -7,6 +7,7 @@
 #include <Types.h>
 #include <IOEngine/Timer.h>
 
+#include <irrlicht/irrlicht.h>
 /**
  * @class Building.
  * @brief Create a Building type object. Public heritage from Entity class.
@@ -27,23 +28,29 @@ class Building : public Entity {
          * @brief Building destructor.
          */
         virtual ~Building();
-
-        /**
-         * @brief Update the building while it is not finished.
-         */
-        void update();
-
+		
         /**
          * @brief Start the building process
          */
         void startBuilding();
-        
+
         /**
          * @brief Set the callback variable as the function passed by parameter.
          * 
          * @param std::function is the function to set as the callback variable of the building and have to be void and get a Building pointer as parameter.
          */
         void setFinishedCallback(std::function<void(Building*)>);
+
+        /**
+         * @brief Set the Cant Build Mat object
+         */
+        void setCantBuildColor();
+
+		/**
+		 * @brief Set the Building Color object
+		 * 
+		 */
+		void setBuildingColor();
 
         /**
          * @brief Get the finished variable of the building.
@@ -58,16 +65,7 @@ class Building : public Entity {
          * @return std::string that will be the value of the type variable.
          */
         std::string getType();
-        
-        /**
-         * @brief Set the Can Build Mat object
-         */
-        void setCanBuildMat();
 
-        /**
-         * @brief Set the Cant Build Mat object
-         */
-        void setCantBuildMat();
         void takeDamage(i32 _damage);
         void setTarget(Entity *newTarget);
     private:
@@ -92,12 +90,6 @@ class Building : public Entity {
 
         //Finish the building.
         std::function<void(Building*)> callback;
-        
-        //
-        Material *canBuildMat;
-        
-        //
-        Material *cantBuildMat;
 };
 
 #endif

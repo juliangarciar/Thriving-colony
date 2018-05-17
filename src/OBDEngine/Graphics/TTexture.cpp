@@ -15,7 +15,15 @@ TTexture::TTexture(ResourceIMG *t){
 	// ... which requires mipmaps. Generate them automatically.
 	glGenerateMipmap(GL_TEXTURE_2D);
 	
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture->getWidth(), texture->getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, texture->getResource());
+	if (t->getChannels() == 1)
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_R, texture->getWidth(), texture->getHeight(), 0, GL_R, GL_UNSIGNED_BYTE, texture->getResource());
+	else if (t->getChannels() == 2)
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RG, texture->getWidth(), texture->getHeight(), 0, GL_RG, GL_UNSIGNED_BYTE, texture->getResource());
+	else if (t->getChannels() == 3)
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texture->getWidth(), texture->getHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, texture->getResource());
+	else if (t->getChannels() == 4)
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, texture->getWidth(), texture->getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, texture->getResource());
+
 
     glBindTexture(GL_TEXTURE_2D, 0);
 }

@@ -2,9 +2,11 @@
 #define IO_H
 
 #include <OBDEngine/ResourceManager/ResourceManager.h>
-#include <IOEngine/Mouse.h>
-#include <IOEngine/Keyboard.h>
-#include <IOEngine/EventSystem.h>
+
+#include "Mouse.h"
+#include "Keyboard.h"
+#include "EventSystem.h"
+#include "Timer.h"
 
 class IO {
     public:
@@ -12,6 +14,24 @@ class IO {
 		 * @brief Crea una Instancia de IO
 		 */
         static IO* Instance();
+
+		/**
+		 * @brief Update
+		 * 
+		 */
+		void Update();
+
+		/**
+		 * @brief 
+		 * 
+		 */
+		void registerTimer(Timer*);
+
+		/**
+		 * @brief 
+		 * 
+		 */
+		void unregisterTimer(Timer*);
 
          /**
 		 * @brief Devuelve la tecla actual
@@ -56,7 +76,12 @@ class IO {
         EventSystem *events;
 
         ResourceManager *resourceManager;
+<<<<<<< HEAD
         
+=======
+
+		std::vector<Timer*> timers;
+>>>>>>> master
 };
 
 #endif

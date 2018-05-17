@@ -3,6 +3,7 @@
 
 #include <irrlicht/irrlicht.h>
 #include "Texture.h"
+#include <MathEngine/Color.h>
 #include <Types.h>
 
 using namespace irr;
@@ -12,8 +13,9 @@ class Material {
         Material(Texture *tex);
         ~Material();
 
+        void setColor(Color);
+
         video::SMaterial *getMaterial();
-        void setColor(f32 a, f32 r, f32 g, f32 b);
     private:
         video::SMaterial *material;
 };

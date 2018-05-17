@@ -1,6 +1,8 @@
 #ifndef OBDTYPES_H
 #define OBDTYPES_H
 
+#include <GLFW/glfw3.h>
+
 #include <glm/glm.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -21,31 +23,39 @@
 
 typedef int32_t i32;
 typedef uint32_t u32;
-typedef unsigned short us32;
 typedef float f32;
 
 struct glslLight {
-    glm::vec3 position;
+    glm::vec4 position;
+    glm::vec4 intensity;
 
-    glm::vec3 ambientComponent;
-    glm::vec3 diffuseComponent;
-    glm::vec3 specularComponent;
+	GLfloat ambientCoeficient;
+	GLfloat attenuationCoeficient;
+	
+    i32 type;
 };
 
-inline bool operator==(const glslLight& l, const glslLight& r){ return (l.position == r.position && l.ambientComponent == r.ambientComponent && l.diffuseComponent == r.diffuseComponent && l.specularComponent == r.specularComponent) == 0; }
+inline bool operator==(const glslLight& l, const glslLight& r){ return (l.position == r.position && l.intensity == r.intensity && l.ambientCoeficient == r.ambientCoeficient && l.attenuationCoeficient == r.attenuationCoeficient) == 0; }
+
+struct glslMesh {
+    std::vector<f32> vbo;
+    std::vector<u32> ibo;
+};
 
 struct glslMaterial {
-    glm::vec3 ambientColor;
-    glm::vec3 diffuseColor;
-    glm::vec3 specularColor;
+    glm::vec4 ambientColor;
+    glm::vec4 diffuseColor;
+    glm::vec4 specularColor;
+
+	GLfloat shininess;
 };
 
 struct glslTexture {
-    bool ambientTexture;
-    bool diffuseTexture;
-    bool specularTexture;
-    bool alphaTexture;
-    bool bumpTexture;
+    GLint diffuseTexture;
+    GLint oclusionsTexture;
+    GLint specularTexture;
+    GLint alphaTexture;
+    GLint bumpTexture;
 };
 
 struct OBDLine {

@@ -99,6 +99,7 @@ void Window::beginScene(){
 }
 
 void Window::endScene(bool b){
+<<<<<<< HEAD
     //std::cout << "Window::endScene init" << std::endl;
     //std::cout << "1" << std::endl;
     // DA ERROR AQUI
@@ -110,6 +111,13 @@ void Window::endScene(bool b){
     //std::cout << "4" << std::endl;
     driver -> endScene();
     //std::cout << "Window::endScene finish" << std::endl;
+=======
+    // DA ERROR AQUI
+    if (b) scene -> drawAll();
+    gui -> drawWidgets();
+    glEnable(GL_DEPTH_TEST);
+    driver -> endScene();
+>>>>>>> master
 }
 
 void Window::close(){

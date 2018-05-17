@@ -38,19 +38,25 @@ void Game::Init() {
 
 void Game::Input() {
     state -> Input();
-    io -> getMouse() -> refreshStates();
 }
 
 void Game::Update() {
+	io -> Update();
     state -> Update();
 }
 
 void Game::Render() {
+<<<<<<< HEAD
     //std::cout << "RenderInit" << std::endl;
     window -> beginScene();
     state -> Render();
     window -> endScene(stateData == Enumeration::State::GameState);
     //std::cout << "Render finish" << std::endl;
+=======
+    window -> beginScene();
+    state -> Render();
+    window -> endScene(stateData == Enumeration::State::GameState);
+>>>>>>> master
 }
 
 void Game::CleanUp() {
@@ -64,7 +70,6 @@ void Game::changeState(Enumeration::State data) {
             state -> CleanUp();
             state = menu;
             state -> Init();
-            std::cout << "________________________________________" << std::endl;
         break;
         case Enumeration::State::GameState:
             state -> CleanUp();

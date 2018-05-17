@@ -2,10 +2,10 @@
 #define TTILE_H
 
 #include "TEntity.h"
-#include <GL/glew.h>
 
 class TTexture;
 class ResourceIMG;
+
 class TTile : public TEntity{
     public:
         TTile();

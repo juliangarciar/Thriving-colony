@@ -1,13 +1,9 @@
 #include "OBDLight.h"
 
-OBDLight::OBDLight(OBDColor color, u32 intensity) {
-    lightNode = new TNode(new TLight(color, intensity));
-}
+OBDLight::OBDLight(OBDSceneNode* parent, OBDColor color, f32 intensity, f32 ambient, f32 attenuation) {
+    lightNode = new TNode(new TLight(color, intensity, ambient, attenuation));
 
-OBDLight::OBDLight(OBDSceneNode* parent, OBDColor color, u32 intensity) {
-    lightNode = new TNode(new TLight(color, intensity));
-
-    parent->addChild(this);
+    parent->addChild(lightNode);
 }
 
 OBDLight::~OBDLight() {
@@ -15,64 +11,19 @@ OBDLight::~OBDLight() {
     lightNode = nullptr;
 }
 
-void OBDLight::setAmbientColor(OBDColor c) {
+void OBDLight::setColor(OBDColor color, f32 intensity){
     TLight* l = (TLight*) lightNode -> getEntity();
-    ambientColor = c;
-    l -> setAmbientComponent(ambientColor, ambientIntensity);
+    l -> setColor(color, intensity);
 }
 
-OBDColor OBDLight::getAmbientColor() {
-    return ambientColor;
-}
-
-void OBDLight::setAmbientIntensity(u32 c) {
+void OBDLight::setAmbientCoeficient(f32 am){
     TLight* l = (TLight*) lightNode -> getEntity();
-    ambientIntensity = c;
-    l -> setAmbientComponent(ambientColor, ambientIntensity);
+	l -> setAmbientCoeficient(am);
 }
 
-u32 OBDLight::getAmbientIntensity() {
-    return ambientIntensity;
-}
-
-void OBDLight::setDiffuseColor(OBDColor c) {
+void OBDLight::setAttenuationCoeficient(f32 at){
     TLight* l = (TLight*) lightNode -> getEntity();
-    diffuseColor = c;
-    l -> setDiffuseComponent(diffuseColor, diffuseIntensity);
-}
-
-OBDColor OBDLight::getDiffuseColor() {
-    return diffuseColor;
-}
-
-void OBDLight::setDiffuseIntensity(u32 c) {
-    TLight* l = (TLight*) lightNode -> getEntity();
-    diffuseIntensity = c;
-    l -> setDiffuseComponent(diffuseColor, diffuseIntensity);
-}
-
-u32 OBDLight::getDiffuseIntensity() {
-    return diffuseIntensity;
-}
-
-void OBDLight::setSpecularColor(OBDColor c) {
-    TLight* l = (TLight*) lightNode -> getEntity();
-    specularColor = c;
-    l -> setSpecularComponent(specularColor, specularIntensity);
-}
-
-OBDColor OBDLight::getSpecularColor() {
-    return specularColor;
-}
-
-void OBDLight::setSpecularIntensity(u32 c) {
-    TLight* l = (TLight*) lightNode -> getEntity();
-    specularIntensity = c;
-    l -> setSpecularComponent(specularColor, specularIntensity);
-}
-
-u32 OBDLight::getSpecularIntensity() {
-    return specularIntensity;
+	l -> setAttenuationCoeficient(at);
 }
 
 void OBDLight::setActive(bool active) {
@@ -101,4 +52,9 @@ TLight* OBDLight::getLightEntity() {
 
 TNode *OBDLight::getFirstNode(){
     return lightNode;
+}
+
+void OBDLight::setType(OBDEnums::LightTypes newType) {
+    TLight* l = (TLight*) lightNode -> getEntity();
+    l -> setType(newType);
 }
