@@ -36,13 +36,6 @@ class CameraController {
 		void Init(Vector3<float>);
 
 		/**
-		* @brief Update target and camera position based on the changes done since the last update.
-		* 
-		* @param f32 that will be the delta time to do the interpolation.
-		*/
-		void Update();
-
-		/**
 		* @brief Move the camera up, down, right or left if the mouse cursor is on the up, down, right or left edge of the window.
 		*/
 		void Move();

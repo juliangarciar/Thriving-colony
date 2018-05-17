@@ -130,8 +130,7 @@ void Map::Input() {
 }
 
 void Map::Update(){
-    //Update camera
-    camera -> Update();
+	
 }
 
 void Map::Render() {

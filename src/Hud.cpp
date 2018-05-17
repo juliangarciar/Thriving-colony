@@ -18,6 +18,14 @@ Hud* Hud::Instance() {
 }
 
 Hud::Hud() {
+    popUpOpen = false;
+}
+
+Hud::~Hud() {
+    //Al cleanUp
+}
+
+void Hud::Init(){
     debugTimer = new Timer (0.5, true);
     debugTimer -> setCallback([&](){
         debug();
@@ -27,15 +35,7 @@ Hud::Hud() {
     toastTimer -> setCallback([&](){
         hideToast();
     });
-
-    popUpOpen = false;
-}
-
-Hud::~Hud() {
-    //Al cleanUp
-}
-
-void Hud::Init(){
+	
     // Building buttons panel
     buildingsPanel = new Panel("Buildings");
     //bgMain -> setSize(Vector2<i32>(400, 300));
@@ -502,8 +502,8 @@ void Hud::Init(){
 }
 
 void Hud::Update() { 
-    debugTimer -> tick();
-    toastTimer -> tick();
+    //debugTimer -> tick();
+   //toastTimer -> tick();
 }
 
 void Hud::CleanUp(){

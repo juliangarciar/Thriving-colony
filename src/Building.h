@@ -29,12 +29,7 @@ class Building : public Entity {
          * @brief Building destructor.
          */
         virtual ~Building();
-
-        /**
-         * @brief Update the building while it is not finished.
-         */
-        void update();
-
+		
         /**
          * @brief Start the building process
          */

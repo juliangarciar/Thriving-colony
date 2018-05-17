@@ -47,12 +47,6 @@ class Entity {
         virtual ~Entity();
 
         /**
-         * @brief Update.
-         * 
-         */
-        void update();
-
-        /**
          * @brief Subtract damage passed by parameter to currentHP variable.
          * 
          * @param i32 is the damage that is going to be subtracted to currentHP variable.

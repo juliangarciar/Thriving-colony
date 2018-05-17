@@ -1,8 +1,8 @@
 #ifndef TIMER_H
 #define TIMER_H
 
+#include <functional>
 #include <Types.h>
-#include "../GraphicEngine/Window.h"
 
 class Timer {
     public:

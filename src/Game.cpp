@@ -38,10 +38,10 @@ void Game::Init() {
 
 void Game::Input() {
     state -> Input();
-    io -> getMouse() -> refreshStates();
 }
 
 void Game::Update() {
+	io -> Update();
     state -> Update();
 }
 

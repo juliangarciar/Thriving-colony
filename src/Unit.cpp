@@ -155,7 +155,6 @@ void Unit::switchState(Enumeration::UnitState newState) {
 }
 
 void Unit::recruitingState(){
-    recruitingTimer -> tick();
     if (recruitingTimer -> isRunning()){
         if (getTeam() == Enumeration::Team::Human){
             Hud::Instance() -> modifyTroopFromQueue(getID(), recruitingTimer -> getElapsedTime() / recruitingTimer -> getMaxDuration());
@@ -342,7 +341,7 @@ bool Unit::inRangeOfAttack() {
 
 bool Unit::refreshTarget() {
     bool targetUpdated = false;
-    lookForTargetTimer -> tick();
+    //lookForTargetTimer -> tick();
     // return wether or not it got updated
     if (getTarget() != nullptr) {
         targetUpdated = true;

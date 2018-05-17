@@ -77,10 +77,6 @@ Entity::~Entity() {
     delete tookDamageTimer;
 }
 
-void Entity::update(){
-    tookDamageTimer -> tick();
-}
-
 void Entity::addHostile(Entity* newHostileUnit) {
     hostile.push_back(newHostileUnit);
 }

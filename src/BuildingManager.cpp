@@ -190,12 +190,6 @@ bool BuildingManager::checkCanPay(std::string type) {
 	return false;
 }
 
-void BuildingManager::updateBuildingManager() {
-	for (std::map<i32,Building*>::iterator it = inMapBuildings -> begin(); it != inMapBuildings -> end(); ++it) {
-		it -> second -> update();
-	}
-}
-
 bool BuildingManager::checkFinished(i32 _id) {	
 	return (inMapBuildings -> find(_id) -> second -> getFinished());	
 }

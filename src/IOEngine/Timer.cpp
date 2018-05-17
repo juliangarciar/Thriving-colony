@@ -1,12 +1,16 @@
 #include "Timer.h"
+#include "IO.h"
+#include "../GraphicEngine/Window.h"
 
-Timer::Timer(f32 maxD, bool l, bool a) : maxDuration(maxD), loop(l), 
-    elapsedTime(0), running(false), callback(nullptr) 
+Timer::Timer(f32 maxD, bool l, bool a) : loop(l), running(false),
+	maxDuration(maxD), elapsedTime(0), callback(nullptr) 
 {
+	IO::Instance()->registerTimer(this);
     if (a) start();
 }
 
 Timer::~Timer() {
+	IO::Instance()->unregisterTimer(this);
 }
 
 void Timer::start(){

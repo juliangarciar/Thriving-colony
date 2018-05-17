@@ -77,10 +77,6 @@ Building::~Building() {
     //delete particle;
 }
 
-void Building::update() {
-    buildTimer -> tick();
-}
-
 void Building::startBuilding() {
     taxPlayer();
     buildTimer -> start();
