@@ -18,6 +18,7 @@
 
 #include "ResourceManager/ResourceManager.h"
 #include "Graphics/TNode.h"
+#include "Graphics/TShaderSwapper.h"
 
 class OBDEngine {
     public:
@@ -54,6 +55,21 @@ class OBDEngine {
         void draw();
 
         /**
+         * @brief 
+         * 
+         * @return OBDSceneNode* 
+         */
+        OBDSceneNode* createSceneNode();
+
+        /**
+         * @brief 
+         * 
+         * @param 
+         * @return OBDSceneNode* 
+         */
+        OBDSceneNode* createSceneNode(OBDSceneNode*);
+
+        /**
          * @brief Create a Light object
          * 
          * @param color 
@@ -70,50 +86,23 @@ class OBDEngine {
          * @return OBDCamera* 
          */
         OBDCamera* createCamera(f32 far, f32 fov);
-
-        /**
-         * @brief 
-         * 
-         * @return OBDSceneNode* 
-         */
-        OBDSceneNode* createSceneNode();
-
-        /**
-         * @brief 
-         * 
-         * @param 
-         * @return OBDSceneNode* 
-         */
-        OBDSceneNode* createSceneNode(OBDSceneNode*);
         
         /**
          * @brief 
          * 
-         * @param 
-         * @param autoload
+         * @param
          * @return OBDMesh* 
          */
-        OBDObject* createObject(u32, std::string, bool = false);
+        OBDObject* createObject(u32, std::string, bool);
         
         /**
          * @brief 
          * 
          * @param 
          * @param 
-         * @param autoload
          * @return OBDMesh* 
          */
-        OBDObject* createObject(OBDSceneNode*, u32, std::string, bool = false);
-
-        /**
-         * @brief Create a Shader Program object
-         * 
-         * @param a 
-         * @param b 
-         * @param c 
-         * @return OBDShaderProgram* 
-         */
-        OBDShaderProgram *createShaderProgram(std::string, std::string, std::string);
+        OBDObject* createObject(OBDSceneNode*, u32, std::string, bool);
 
 		/**
 		 * @brief Create a Terrain object
@@ -129,16 +118,20 @@ class OBDEngine {
 		 */
 		OBDTerrain *createTerrain(OBDSceneNode*, std::string, f32 y_offset, f32 y_scale, i32 step);
 
-		/**
-		 * @brief Create a Material object
-		 * 
-		 * @return OBDMaterial* 
-		 */
-		OBDMaterial *createMaterial();
+        /**
+         * @brief Create a Shader Program object
+         * 
+         * @param a 
+         * @param b 
+         * @param c 
+         * @return OBDShaderProgram* 
+         */
+        OBDShaderProgram *createShaderProgram(std::string, std::string, std::string);
 
 		/**
 		 * @brief Create a Material object
-		 * 
+		 * @path
+		 * @name
 		 * @return OBDMaterial* 
 		 */
 		OBDMaterial *createMaterial(std::string, std::string);
@@ -149,6 +142,20 @@ class OBDEngine {
 		 * @return OBDTexture* 
 		 */
 		OBDTexture *createTexture(OBDEnums::TextureTypes, std::string);
+
+		/**
+		 * @brief Create a Overall Scene Node object
+		 * 
+		 * @return OBDSceneNode* 
+		 */
+		OBDSceneNode* createShaderedSceneNode(std::string vs, std::string fs);
+
+        /**
+         * @brief 
+         * @param r 
+         * @param sync 
+         */
+        void loadObjectTexturesFromMTL(OBDObject *, ResourceMTL *m, bool = true);
 
         /**
          * @brief 
@@ -266,7 +273,7 @@ class OBDEngine {
          * @param a 
          * @param c 
          */
-        OBDBillboard* createBillboard(OBDSceneNode*, glm::vec3, i32);
+        OBDBillboard* createBillboard(OBDSceneNode*, glm::vec3, OBDShaderProgram*);
 
         /**
          * @brief Create a Skybox object
@@ -285,10 +292,9 @@ class OBDEngine {
         OBDSceneNode *clSceneNode;
         OBDSceneNode *defaultSceneNode;
 
-        OBDShaderProgram *currentProgram;
-
         std::vector<OBDCamera*> cameras;
         std::vector<OBDLight*> lights;
+
         std::map<std::string, OBDShaderProgram*> shaderPrograms;
 
 		glm::vec4 viewport;

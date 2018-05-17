@@ -2,21 +2,11 @@
 
 #define MAX_LIGHTS 10
 
-TMesh::TMesh(glslMesh *r, glslMaterial *m) : TEntity() {
+TMesh::TMesh(glslMesh *r, OBDMaterial *m) : TEntity() {
 	mesh = r;
 	material = m;
 
 	modelMatrix = glm::mat4(1.0f);
-
-	for (i32 i = 0; i < OBDEnums::TextureTypes::TEXTURE_SIZE; i++){
-		textures.push_back(nullptr);
-	}
-
-	activeTextures.oclusionsTexture = 0;
-	activeTextures.diffuseTexture = 0;
-	activeTextures.specularTexture = 0;
-	activeTextures.alphaTexture = 0;
-	activeTextures.bumpTexture = 0;
 
 	// Generate a buffer for the vertices
 	glGenBuffers(1, &VBOID);
@@ -36,15 +26,15 @@ TMesh::TMesh(glslMesh *r, glslMaterial *m) : TEntity() {
 	// Material
 	glGenBuffers(1, &materialID);
 	glBindBuffer(GL_UNIFORM_BUFFER, materialID);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslMaterial), material, GL_DYNAMIC_DRAW); // ¿?
-	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslMaterial), material); // ¿?
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslMaterial), material->getGLSLMaterial(), GL_DYNAMIC_DRAW); // ¿?
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslMaterial), material->getGLSLMaterial()); // ¿?
 	glBindBufferBase(GL_UNIFORM_BUFFER, 2, materialID);
 
 	// Textures
 	glGenBuffers(1, &textureID);
 	glBindBuffer(GL_UNIFORM_BUFFER, textureID);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslTexture), &activeTextures, GL_DYNAMIC_DRAW);
-	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslTexture), &activeTextures);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslTexture), material->getGLSLActiveTextures(), GL_DYNAMIC_DRAW); // ¿?
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslTexture), material->getGLSLActiveTextures()); // ¿?
 	glBindBufferBase(GL_UNIFORM_BUFFER, 3, textureID);
 }
 
@@ -82,47 +72,47 @@ void TMesh::beginDraw() {
 
 	//Send material
 	glBindBuffer(GL_UNIFORM_BUFFER, materialID);
-	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslMaterial), material); // ¿?
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslMaterial), material->getGLSLMaterial()); // ¿?
 	glBindBufferBase(GL_UNIFORM_BUFFER, 2, materialID);
 
 	//Send textures
 	glBindBuffer(GL_UNIFORM_BUFFER, textureID);
-	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslTexture), &activeTextures);
+	glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslTexture), material->getGLSLActiveTextures()); //¿?
 	glBindBufferBase(GL_UNIFORM_BUFFER, 3, textureID);
 
 	i32 loadedTextures = 0;
 
-	if (activeTextures.diffuseTexture == 1){
+	if (material->getGLSLActiveTextures()->diffuseTexture == 1){
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
-		glBindTexture(GL_TEXTURE_2D, textures[OBDEnums::TextureTypes::TEXTURE_DIFFUSE]->getTextureID());
+		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_DIFFUSE)->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_DIFFUSE), loadedTextures);
 		loadedTextures++;
 	}
 
-	if (activeTextures.oclusionsTexture == 1){
+	if (material->getGLSLActiveTextures()->oclusionsTexture == 1){
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
-		glBindTexture(GL_TEXTURE_2D, textures[OBDEnums::TextureTypes::TEXTURE_OCLUSIONS]->getTextureID());
+		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_OCLUSIONS)->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_OCLUSIONS), loadedTextures);
 		loadedTextures++;
 	}
 
-	if (activeTextures.specularTexture == 1){
+	if (material->getGLSLActiveTextures()->specularTexture == 1){
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
-		glBindTexture(GL_TEXTURE_2D, textures[OBDEnums::TextureTypes::TEXTURE_SPECULAR]->getTextureID());
+		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_SPECULAR)->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_SPECULAR), loadedTextures);
 		loadedTextures++;
 	}
 
-	if (activeTextures.alphaTexture == 1){
+	if (material->getGLSLActiveTextures()->alphaTexture == 1){
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
-		glBindTexture(GL_TEXTURE_2D, textures[OBDEnums::TextureTypes::TEXTURE_ALPHA]->getTextureID());
+		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_ALPHA)->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_ALPHA), loadedTextures);
 		loadedTextures++;
 	}
 
-	if (activeTextures.bumpTexture == 1){
+	if (material->getGLSLActiveTextures()->bumpTexture == 1){
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
-		glBindTexture(GL_TEXTURE_2D, textures[OBDEnums::TextureTypes::TEXTURE_BUMP]->getTextureID());
+		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_BUMP)->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_BUMP), loadedTextures);
 		loadedTextures++;
 	}
@@ -164,29 +154,10 @@ void TMesh::endDraw() {
 	glDisableVertexAttribArray(2);
 }
 
-void TMesh::setMaterial(glslMaterial *m){
+void TMesh::setMaterial(OBDMaterial *m){
 	material = m;
 }
 
-void TMesh::setTexture(OBDEnums::TextureTypes tt, TTexture* t){
-	if (textures[(i32)tt] != nullptr) delete textures[(i32)tt];
-	textures[(i32)tt] = t;
-	switch(tt){
-		case OBDEnums::TextureTypes::TEXTURE_DIFFUSE:
-			activeTextures.diffuseTexture = 1;
-		break;
-		case OBDEnums::TextureTypes::TEXTURE_OCLUSIONS:
-			activeTextures.oclusionsTexture = 1;
-		break;
-		case OBDEnums::TextureTypes::TEXTURE_SPECULAR:
-			activeTextures.specularTexture = 1;
-		break;
-		case OBDEnums::TextureTypes::TEXTURE_ALPHA:
-			activeTextures.alphaTexture = 1;
-		break;
-		case OBDEnums::TextureTypes::TEXTURE_BUMP:
-			activeTextures.bumpTexture = 1;
-		break;
-		default: break;
-	}
+OBDMaterial *TMesh::getMaterial(){
+	return material;
 }

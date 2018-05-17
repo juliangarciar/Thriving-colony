@@ -66,7 +66,7 @@ void OBDEngine::End(){
 }
 
 void OBDEngine::draw() {
-    glUseProgram(currentProgram->getShaderProgram());
+    glUseProgram(TEntity::cache.getID(OBDEnums::OpenGLIDs::CURRENT_PROGRAM_ID));
 
     // Clear the screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -102,7 +102,7 @@ OBDObject* OBDEngine::createObject(u32 id, std::string mesh, bool autoload) {
     ResourceOBJ *obj = (ResourceOBJ*)OBDManager->getResource(mesh, true);
     ResourceMTL *mtl = (ResourceMTL*)OBDManager->getResource(obj->getDefaultMaterialPath(), true);
     OBDObject *tempObject = new OBDObject(defaultSceneNode, id, obj, mtl);
-    if (autoload) tempObject->loadTextures(OBDManager, true);
+	if (autoload) loadObjectTexturesFromMTL(tempObject, mtl, true);
     return tempObject;
 }
 
@@ -110,16 +110,8 @@ OBDObject* OBDEngine::createObject(OBDSceneNode* layer, u32 id, std::string mesh
     ResourceOBJ *obj = (ResourceOBJ*)OBDManager->getResource(mesh, true);
     ResourceMTL *mtl = (ResourceMTL*)OBDManager->getResource(obj->getDefaultMaterialPath(), true);
     OBDObject *tempObject = new OBDObject(layer, id, obj, mtl);
-    if (autoload) tempObject->loadTextures(OBDManager, true);
+	if (autoload) loadObjectTexturesFromMTL(tempObject, mtl, true);
     return tempObject;
-}
-
-OBDShaderProgram *OBDEngine::createShaderProgram(std::string programName, std::string vs, std::string fs){
-	ResourceGLSL *s1 = (ResourceGLSL*)OBDManager->getResource(vs, true);
-	ResourceGLSL *s2 = (ResourceGLSL*)OBDManager->getResource(fs, true);
-	OBDShaderProgram *p = new OBDShaderProgram(s1, s2);
-    shaderPrograms.insert(std::pair<std::string, OBDShaderProgram*>(programName, p));
-    return p;
 }
 
 OBDTerrain *OBDEngine::createTerrain(std::string heightMap, f32 y_offset, f32 y_scale, i32 step){
@@ -130,18 +122,57 @@ OBDTerrain *OBDEngine::createTerrain(OBDSceneNode* layer, std::string heightMap,
 	return new OBDTerrain(layer, heightMap, y_offset, y_scale, step);
 }
 
-OBDTexture *OBDEngine::createTexture(OBDEnums::TextureTypes t, std::string fs){
-	ResourceIMG *s = (ResourceIMG*)OBDManager->getResource(fs, true);
-	return new OBDTexture(t, s);
-}
-
-OBDMaterial *OBDEngine::createMaterial(){
-	return new OBDMaterial();
+OBDShaderProgram *OBDEngine::createShaderProgram(std::string programName, std::string vs, std::string fs){
+	ResourceGLSL *s1 = (ResourceGLSL*)OBDManager->getResource(vs, true);
+	ResourceGLSL *s2 = (ResourceGLSL*)OBDManager->getResource(fs, true);
+	OBDShaderProgram *p = new OBDShaderProgram(s1, s2);
+    shaderPrograms.insert(std::pair<std::string, OBDShaderProgram*>(programName, p));
+    return p;
 }
 
 OBDMaterial *OBDEngine::createMaterial(std::string path, std::string name){
 	ResourceMTL *s = (ResourceMTL*)OBDManager->getResource(path, true);
 	return new OBDMaterial(s, name);
+}
+
+OBDTexture *OBDEngine::createTexture(OBDEnums::TextureTypes t, std::string fs){
+	ResourceIMG *s = (ResourceIMG*)OBDManager->getResource(fs, true);
+	return new OBDTexture(t, s);
+}
+
+OBDSceneNode *OBDEngine::createShaderedSceneNode(std::string vs, std::string fs){
+	ResourceGLSL *s1 = (ResourceGLSL*)OBDManager->getResource(vs, true);
+	ResourceGLSL *s2 = (ResourceGLSL*)OBDManager->getResource(fs, true);
+	OBDShaderProgram *p = new OBDShaderProgram(s1, s2);
+	return new OBDSceneNode(new TNode(new TShaderSwapper(p->getShaderProgram()), rootNode));
+}
+
+void OBDEngine::loadObjectTexturesFromMTL(OBDObject *obj, ResourceMTL *mtl, bool sync){
+	for (std::map<std::string, OBDMaterial*>::iterator it = obj->getMaterials()->begin(); it != obj->getMaterials()->end(); ++it){
+		std::map<std::string, ResourceMaterial*>::iterator resource = mtl->getResource()->find(it->second->getMaterialName());
+		if (resource != mtl->getResource()->end()){
+			if (resource->second->diffuseTextureMap != ""){
+				ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->diffuseTextureMap, sync);
+				it->second->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_DIFFUSE, tmp));
+			}
+			if (resource->second->ambientOclusionsTextureMap != ""){
+				ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->ambientOclusionsTextureMap, sync);
+				it->second->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_OCLUSIONS, tmp));
+			}
+			if (resource->second->specularTextureMap != ""){
+				ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->specularTextureMap, sync);
+				it->second->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_SPECULAR, tmp));
+			}
+			if (resource->second->alphaTextureMap != ""){
+				ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->alphaTextureMap, sync);
+				it->second->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_ALPHA, tmp));
+			}
+			if (resource->second->bumpMap != ""){
+				ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->bumpMap, sync);
+				it->second->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_BUMP, tmp));
+			}
+		}
+	}
 }
 
 void OBDEngine::registerLight(OBDLight* lightNode) {
@@ -160,9 +191,8 @@ void OBDEngine::setCurrentShaderProgram(std::string programName){
     std::map<std::string, OBDShaderProgram*>::iterator it;
     it = shaderPrograms.find(programName);
     if (it != shaderPrograms.end()){
-        currentProgram = it->second;
-        TEntity::cache.setAllIDs(currentProgram -> getParamIDs());
-        TEntity::cache.setID(OBDEnums::OpenGLIDs::CURRENT_PROGRAM_ID, currentProgram -> getShaderProgram());
+        TEntity::cache.setAllIDs(it->second -> getParamIDs());
+        TEntity::cache.setID(OBDEnums::OpenGLIDs::CURRENT_PROGRAM_ID, it->second -> getShaderProgram());
     }
 }
 
@@ -216,8 +246,8 @@ OBDAnimation* OBDEngine::createAnimation(OBDSceneNode* layer, std::string anim) 
     return new OBDAnimation(layer);
 }
 
-OBDBillboard* OBDEngine::createBillboard(OBDSceneNode* layer, glm::vec3 pos, i32 id) {
-    OBDBillboard* billboard = new OBDBillboard(layer, pos, currentProgram -> getShaderProgram(), id);
+OBDBillboard* OBDEngine::createBillboard(OBDSceneNode* layer, glm::vec3 pos, OBDShaderProgram *s) {
+    OBDBillboard* billboard = new OBDBillboard(layer, pos, s);
     return billboard;
 }
 

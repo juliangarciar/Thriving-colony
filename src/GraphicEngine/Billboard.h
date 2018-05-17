@@ -6,10 +6,11 @@
 #include <MathEngine/Color.h>
 #include "SceneNode.h"
 #include "Window.h"
+#include <OBDEngine/OBDShaderProgram.h>
 
 class Billboard {
     public:
-        Billboard(SceneNode* parent, i32 id, Vector3<f32> pos);
+        Billboard(SceneNode* parent, Vector3<f32> pos);
         ~Billboard();
 
         void setColor(Color* top, Color* bot);

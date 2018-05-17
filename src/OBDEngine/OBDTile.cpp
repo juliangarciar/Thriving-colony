@@ -11,6 +11,7 @@ OBDTile::OBDTile(OBDSceneNode* _parent, ResourceIMG* _texture, glm::vec2 _positi
 
 OBDTile::~OBDTile(){
     delete tileNode;
+	tileNode = nullptr;
 }
 
 void OBDTile::setPosition(glm::vec2 _position){

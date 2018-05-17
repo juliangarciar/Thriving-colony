@@ -6,7 +6,8 @@ OBDTexture::OBDTexture(OBDEnums::TextureTypes t, ResourceIMG* i){
 }
 
 OBDTexture::~OBDTexture() {
-
+	delete tex;
+	tex = nullptr;
 }
 
 OBDEnums::TextureTypes OBDTexture::getType(){

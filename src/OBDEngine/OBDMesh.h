@@ -26,13 +26,6 @@ class OBDMesh : public OBDEntity {
          */
         ~OBDMesh();
 
-        /**
-         * @brief 
-         * @param
-         * @param sync
-         */
-        void loadTextures(ResourceManager*, bool);
-
 		/**
 		 * @brief 
 		 * 
@@ -46,22 +39,23 @@ class OBDMesh : public OBDEntity {
 		void setBoundingBox(glm::vec3, glm::vec3);
 
         /**
-         * @brief Set the material name
-         * 
-         */
-        void setMaterialName(std::string);
-
-        /**
          * @brief Set the OBDMaterial object
          * 
          */
         void setMaterial(OBDMaterial*);
 
         /**
-         * @brief Set the OBDTexture object
+         * @brief Set the material name
          * 
          */
-        void setTexture(OBDTexture*);
+        void setMaterialName(std::string);
+
+        /**
+         * @brief 
+         * 
+         * @return std::string 
+         */
+        OBDMaterial *getMaterial();
 
         /**
          * @brief 
@@ -85,9 +79,6 @@ class OBDMesh : public OBDEntity {
 		aabb::AABB getBoundingBox();
     private:
         TNode* meshNode;
-
-		glslMesh *mesh;
-		OBDMaterial *material;
 
 		std::string materialName;
 

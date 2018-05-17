@@ -2,6 +2,7 @@
 #define OBDBILLBOARD_H
 
 #include "OBDSceneNode.h"
+#include "OBDShaderProgram.h"
 
 #include "Graphics/TBillboard.h"
 
@@ -12,9 +13,9 @@ class OBDBillboard {
          * 
          * @param parent
          * @param position
-         * @param shaderID
+         * @param shader
          */
-        OBDBillboard(OBDSceneNode*, glm::vec3, GLuint, i32);
+        OBDBillboard(OBDSceneNode*, glm::vec3, OBDShaderProgram*);
 
         /**
          * @brief 
@@ -67,13 +68,6 @@ class OBDBillboard {
          */
         f32 getBottomWidth();
 
-        /**
-         * @brief 
-         * 
-         * @return i32 
-         */
-        i32 getID();
-
          /**
          * @brief Get the Node object
          * 
@@ -83,7 +77,8 @@ class OBDBillboard {
 
     private:
         TNode* billboardNode;
-        i32 ID;
+
+		OBDShaderProgram* shader;
 };
 
 #endif

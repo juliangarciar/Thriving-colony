@@ -5,6 +5,7 @@
 #include "OBDEnums.h"
 
 #include "OBDColor.h"
+#include "OBDTexture.h"
 
 #include "ResourceManager/ResourceMTL.h"
 
@@ -14,27 +15,37 @@ class OBDMaterial {
 		OBDMaterial(ResourceMTL*, std::string);
 		~OBDMaterial();
 
+		void setMaterialName(std::string);
+
 		void setAmbientColor(OBDColor);
 		void setDiffuseColor(OBDColor);
 		void setSpecularColor(OBDColor);
+		void setSpecularShininess(i32);
 
-		void setTexture(OBDEnums::TextureTypes, std::string);
+		void setTexture(OBDTexture *);
+
+		std::string getMaterialName();
 
 		OBDColor getAmbientColor();
 		OBDColor getDiffuseColor();
 		OBDColor getSpecularColor();
+		i32 getSpecularShininess();
 
-		std::string getTexture(OBDEnums::TextureTypes);
+		TTexture *getTexture(OBDEnums::TextureTypes);
 
 		glslMaterial *getGLSLMaterial();
+		glslTexture *getGLSLActiveTextures();
 	private:
-        glslMaterial *material;
+		std::string name;
 
-		std::string diffuseTextureMap;
-		std::string ambientOclusionsTextureMap;
-		std::string specularTextureMap;
-		std::string alphaTextureMap;
-		std::string bumpMap;
+        glslMaterial *material;
+		glslTexture *activeTextures;
+
+		TTexture* diffuseTextureMap;
+		TTexture* ambientOclusionsTextureMap;
+		TTexture* specularTextureMap;
+		TTexture* alphaTextureMap;
+		TTexture* bumpMap;
 };
 
 #endif

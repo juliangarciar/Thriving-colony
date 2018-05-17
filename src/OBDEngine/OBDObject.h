@@ -26,19 +26,17 @@ class OBDObject : public OBDEntity {
          */
         virtual ~OBDObject();
 
-        /**
-         * @brief 
-         * @param r 
-         * @param sync 
-         */
-        void loadTextures(ResourceManager*, bool);
+		/**
+		 * @brief 
+		 * 
+		 */
+		void refreshModelMatrix(glm::mat4);
 
-        /**
-         * @brief Set the Material object
-         * 
-         * @param mtl 
-         */
-        void setMaterial(ResourceMTL *mtl);
+		/**
+		 * @brief 
+		 * 
+		 */
+		void refreshBoundingBox();
 
         /**
          * @brief Set the Material object
@@ -47,17 +45,12 @@ class OBDObject : public OBDEntity {
          */
         void setMaterial(std::string, OBDMaterial *mtl);
 
-		/**
-		 * @brief 
-		 * 
-		 */
-		void refreshBoundingBox();
-
-		/**
-		 * @brief 
-		 * 
-		 */
-		void refreshModelMatrix(glm::mat4);
+        /**
+         * @brief Set the Material object
+         * 
+         * @param mtl 
+         */
+        void setMaterials(ResourceMTL *mtl);
 
         /**
          * @brief Get the Mesh object
@@ -71,7 +64,7 @@ class OBDObject : public OBDEntity {
          * 
          * @return std::map<std::string, OBDMesh*> 
          */
-        std::map<std::string, OBDMesh*> getMeshes();
+        std::map<std::string, OBDMesh*> *getMeshes();
 
         /**
          * @brief Get the OBDMaterial object
@@ -85,7 +78,7 @@ class OBDObject : public OBDEntity {
          * 
          * @return std::map<std::string, OBDMaterial*> 
          */
-        std::map<std::string, OBDMaterial*> getMaterials();
+        std::map<std::string, OBDMaterial*> *getMaterials();
 
 		/**
 		 * @brief Get the Bounding Box object
@@ -110,8 +103,8 @@ class OBDObject : public OBDEntity {
     private:
 		aabb::AABB boundingBox;
 
-        std::map<std::string, OBDMesh*> meshes;
-        std::map<std::string, OBDMaterial*> materials;
+        std::map<std::string, OBDMesh*> *meshes;
+        std::map<std::string, OBDMaterial*> *materials;
 		
         u32 ID;
 };

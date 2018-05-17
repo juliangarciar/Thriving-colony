@@ -1,9 +1,9 @@
 {
 	"map": {
-		"heightmap": "media/map/mapa3-256x256.bmp",
-		"texture": "media/map/map-texture.jpg",
-		"detail_texture": "media/map/map-detail-texture.jpg",
-		"skybox_texture": "media/map/skybox-texture.jpg",
+		"heightmap": "media/maps/test_map/mapa3-256x256.bmp",
+		"texture": "media/maps/test_map/map-texture.jpg",
+		"detail_texture": "media/maps/test_map/map-detail-texture.jpg",
+		"skybox_texture": "media/maps/test_map/skybox-texture.jpg",
 		"size":{
 			"x": 40,
 			"y": 20,
