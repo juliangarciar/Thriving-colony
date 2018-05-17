@@ -249,6 +249,9 @@ class Entity {
          */
         void setDamagedMaterial();
 
+        void createBar();
+        void deleteBar();
+
     protected:
         //Layer where the entity has been created.
         SceneNode* layer;

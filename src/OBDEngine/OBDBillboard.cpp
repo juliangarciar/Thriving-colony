@@ -1,6 +1,6 @@
 #include "OBDBillboard.h"
 
-OBDBillboard::OBDBillboard(OBDSceneNode* parent, glm::vec3 position, OBDShaderProgram *s) {
+OBDBillboard::OBDBillboard(glm::vec3 position, OBDShaderProgram *s) {
 	shader = s;
     billboardNode = new TNode(new TBillboard(position));
 	parent -> addChild(billboardNode);

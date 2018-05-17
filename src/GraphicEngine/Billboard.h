@@ -10,7 +10,7 @@
 
 class Billboard {
     public:
-        Billboard(SceneNode* parent, Vector3<f32> pos);
+        Billboard(Vector3<f32> pos);
         ~Billboard();
 
         void setColor(Color* top, Color* bot);

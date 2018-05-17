@@ -75,9 +75,7 @@ Entity::~Entity() {
     if (model != nullptr) delete model;
     hostile.clear();
     delete tookDamageTimer;
-    /* Revisar */
-    //delete barBg;
-    //delete bar;
+    delete bar;
     delete baseMat;
     delete damagedMat;
 }
@@ -227,4 +225,12 @@ void Entity::setBaseMaterial() {
 
 void Entity::setDamagedMaterial() {
     model -> setMaterial(damagedMat);
+}
+
+void Entity::createBar() {
+    bar = new Billboard(Vector3<f32>(getPosition().x, 200, getPosition().y));
+}
+
+void Entity::deleteBar() {
+    delete bar;
 }

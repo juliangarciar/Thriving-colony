@@ -15,7 +15,7 @@ class OBDBillboard {
          * @param position
          * @param shader
          */
-        OBDBillboard(OBDSceneNode*, glm::vec3, OBDShaderProgram*);
+        OBDBillboard(glm::vec3, OBDShaderProgram*);
 
         /**
          * @brief 
