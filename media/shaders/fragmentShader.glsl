@@ -68,10 +68,17 @@ vec3 Phong(myLight light, vec3 surfaceColor, vec3 specularColor) {
     vec3 Ambient;
     vec3 Diffuse;
     vec3 Specular;
-
+    vec3 dist;
     // Realizar diferentes calculos
-	vec3 dist = light.position.xyz - vertexPosition_out; //3D distance
-	float d = sqrt(pow(dist.x, 2) + pow(dist.y, 2) + pow(dist.z, 2)); //1D Distance
+    if (light.type == 1) {
+        // Luz direccional
+        dist = -light.position.xyz;
+    } else {
+        // Por defecto luz puntual
+	    dist = light.position.xyz - vertexPosition_out; //3D distance
+    }
+	
+    float d = sqrt(pow(dist.x, 2) + pow(dist.y, 2) + pow(dist.z, 2)); //1D Distance
 
     vec3 surfaceToLight = normalize(dist);
     vec3 surfaceToCamera = normalize(cameraPosition - vertexPosition_out);

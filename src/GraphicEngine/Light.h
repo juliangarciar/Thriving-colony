@@ -13,6 +13,7 @@ class Light {
         ~Light();
 
 		void setPosition(Vector3<f32> position);
+        void setType(i32 t);
     private:
 		OBDLight *l;
 };

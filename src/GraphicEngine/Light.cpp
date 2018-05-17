@@ -14,3 +14,7 @@ Light::~Light(){
 void Light::setPosition(Vector3<f32> pos){
 	l->setPosition(glm::vec3(pos.x, pos.y, pos.z));
 }
+
+void Light::setType(i32 t) {
+	l -> setType(t);
+}
