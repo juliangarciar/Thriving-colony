@@ -84,10 +84,9 @@ void Model::setActive(bool a) {
 
 void Model::setMaterial(Material *m){
     meshNode->getMaterial(0) = *m->getMaterial();
-}
-
-void Model::setMaterialColor(Color c){
-    meshNode->getMaterial(0).DiffuseColor = video::SColor(c.a, c.r, c.g, c.b);
+	
+    scene::ISceneManager *smgr = Window::Instance() -> getSceneManager();
+	smgr->getMeshManipulator()->setVertexColors (meshNode->getMesh(), m->getMaterial()->AmbientColor);
 }
 
 Vector3<f32> Model::getPosition() {
