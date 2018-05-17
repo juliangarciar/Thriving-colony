@@ -31,9 +31,7 @@ Enumeration::BehaviourState ABuild::Update(std::string type) {
             IA::Instance() -> getTree() -> setRequireCrystal(false);
 	} else if (type == "Workshop"){
             IA::Instance() -> getTree() -> setRequireBarrack(false);
-	} else if (type == "Tower"){
-            std::cout<<"torre"<<std::endl;
-    }
+	}
     IA::Instance() -> getBuildingManager() -> createBuilding(v, type, false);
     return Enumeration::BehaviourState::Success;
 }

@@ -639,7 +639,6 @@ void Hud::hidePopup(){
 }
 
 void Hud::addTroopToHall(i32 idTroop, std::string t){
-    std::cout << "Metiendo sida " << t << "\n";
     if (t == "StandardM") {
         hallTroopList -> addOption("Melee footman");
     } else if (t == "StandardR") {

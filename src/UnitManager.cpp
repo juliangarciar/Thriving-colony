@@ -204,21 +204,16 @@ void UnitManager::startDeployingAllTroops() {
 /* Check this method -> Optimize, also change deployAllTroops */
 void UnitManager::deploySelectedTroop(Vector2<f32> p) {
     if (deployingTroop && currentDeployingTroop >= 0) { 
-        std::cout << "Buscandome\n";
         Unit *temp = inHallTroops -> find(currentDeployingTroop) -> second;
 
         //Delete in hall
-        std::cout << "Borrandome\n";
         inHallTroops->erase(temp->getID());
-        std::cout << "Me borro del hall\n";
         //Insert in map
         inMapTroops -> insert(std::pair<i32, Unit*>(temp -> getModel() -> getID(), temp));
-        std::cout << "Entro en maptroopsl\n";
         temp -> switchState(Enumeration::UnitState::AttackMove); // ToDo: why attack move?
         //Vector3<f32> dummy = Vector3<f32>(0, 0, 0);
         Cell* origin = WorldGeometry::Instance()->positionToCell(p);
         Cell* target;
-        std::cout << "Shit \n";
         if (team == Enumeration::Team::IA){
             
             //Vector3<f32> correctPosition = Vector3<f32>(-384.f, 0, 0);
@@ -231,25 +226,20 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
 			Vector3<f32> p = Human::Instance()->getHallPosition();
             target = WorldGeometry::Instance()->positionToCell(Vector2<f32>(p.x, p.z));
         }
-        std::cout << "Mid method \n";
         target = WorldGeometry::Instance()->getValidCell(target, origin, nullptr);
         Vector2<f32> dummy = target->getPosition();
         temp -> setTroopPosition(dummy);
         temp -> setUnitCell(dummy);
-        std::cout << "Mid method 2\n";
         //temp -> setPosition(dummy);
         temp -> getModel() -> setActive(true);
         temp -> setPathToTarget(p);
-        std::cout << "Mid method 3\n";
         if (team == Enumeration::Team::Human){
             Hud::Instance()->removeTroopFromHall(temp->getID());
         }
-        std::cout << "Mid method 4\n";
         //std::cout << "Se ha terminado de deployear la unidad " << temp->getID() << std::endl;
 
         currentDeployingTroop = -1;
         deployingTroop = false;
-        std::cout << "Fin \n";
     }
 }
 /* Porbably add the new deploy system used above */

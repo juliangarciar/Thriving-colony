@@ -218,13 +218,6 @@ void Unit::retractState() {
 }
 
 void Unit::moveTroop() {
-    std::cout << "Esto en:" << getPosition().x << "," << getPosition().y << "\n";
-    if(team == 0){
-        std::cout << "Soy humano \n";
-    }
-    else{
-        std::cout << "Soy ia \n";
-    }
     if (moving) {
         // close to destination, stop
         if (steps == 0) {
@@ -265,7 +258,6 @@ void Unit::moveTroop() {
             setTroopPosition(newPos);*/
             //troops -> moveTroops(newPos);
             steps = 0;
-            std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
         } 
         else {
             // far from destination, move
@@ -286,7 +278,6 @@ void Unit::moveTroop() {
             setTroopPosition(newPos);*/
             //troops -> moveTroops(newPos);
             steps--;
-            std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
         }
     }
 }
@@ -420,7 +411,6 @@ void Unit::setPath(std::list< Vector2<f32> > path){
 }
 
 void Unit::setPathToTarget(Vector2<f32> vectorData){
-    std::cout << "Analizando camino \n";
     this->pathManager->createPathTo(vectorData);
     if(!pathFollow.empty()){
         //Vector2<f32> dummy = this->pathFollow.front();
@@ -429,9 +419,7 @@ void Unit::setPathToTarget(Vector2<f32> vectorData){
         //newDest.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y);
         //newDest.y = dummy.y;
         setTroopDestination(this->pathFollow.front());
-        std::cout << "Lo tengo " << pathFollow.size() << "\n";
         pathFollow.pop_front();
-        std::cout << "Salgo ya " << "\n";
     }
 }
 
