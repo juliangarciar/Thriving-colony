@@ -92,16 +92,6 @@ void Entity::putHostileTargetsToNull() {
     }
 }
 
-//void Entity::takeDamage(i32 dmg) {
-//    currentHP = currentHP - dmg;
-//    tookDamageTimer -> restart();
-//    // Tint the model red
-//    //ToDo: cambiar a material daño recibido
-//    if (currentHP <= 0) {
-//        currentHP = 0;
-//    }
-//}
-
 //SETTERS
 void Entity::setID(i32 id){
     ID = id;
