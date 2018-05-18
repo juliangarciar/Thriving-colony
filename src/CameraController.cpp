@@ -7,6 +7,15 @@
 #include "GraphicEngine/Window.h"
 
 //ToDo: llevarse datos a JSON
+        
+//Margins of the map.
+enum MapMargins { //ToDo: to JSON
+	mapMarginTop = 1500,
+	mapMarginLeft = 1500,
+	mapMarginBottom = 8500,
+	mapMarginRight = 8500
+};
+
 CameraController::CameraController() {
 	Window *w = Window::Instance();
 
@@ -131,17 +140,17 @@ void CameraController::updateCamera(f32 deltaTime) {
 		) * camSpeed * deltaTime;
 
 		// border collision + apply update
-		if (tarPos.x < Enumeration::MapMargins::mapMarginTop) {
+		if (tarPos.x < MapMargins::mapMarginTop) {
 			if (tarIncr.x > 0) tarPos.x += tarIncr.x;
-		} else if (tarPos.x > Enumeration::MapMargins::mapMarginRight) {
+		} else if (tarPos.x > MapMargins::mapMarginRight) {
 			if (tarIncr.x < 0) tarPos.x += tarIncr.x;
 		} else {
 			tarPos.x += tarIncr.x;
 		}
 
-		if (tarPos.z < Enumeration::MapMargins::mapMarginTop) {
+		if (tarPos.z < MapMargins::mapMarginTop) {
 			if (tarIncr.z > 0) tarPos.z += tarIncr.z;
-		} else if (tarPos.z > Enumeration::MapMargins::mapMarginBottom) {
+		} else if (tarPos.z > MapMargins::mapMarginBottom) {
 			if (tarIncr.z < 0) tarPos.z += tarIncr.z;
 		} else {
 			tarPos.z += tarIncr.z;

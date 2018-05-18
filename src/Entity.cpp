@@ -76,7 +76,6 @@ Entity::Entity(SceneNode* _layer,
     barBg -> setSize(105.00, 15.00);
 }
 
-//ToDo: revisar
 Entity::~Entity() {
 	//Timer
     delete tookDamageTimer;
