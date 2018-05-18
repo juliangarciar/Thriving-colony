@@ -95,13 +95,6 @@ class Entity {
         virtual void setTarget(Entity*) = 0;
 
         /**
-         * @brief Get the layer where the entity has been created.
-         * 
-         * @return Pointer to a SceneNode object that will be the value of layer variable.
-         */
-        SceneNode *getLayer();
-
-        /**
          * @brief Get id of the entity.
          * 
          * @return i32 that will be the value of the ID variable.
@@ -248,9 +241,6 @@ class Entity {
 		void setDamageColor();
 
     protected:
-        //Layer where the entity has been created.
-        SceneNode* layer;
-
         //Number that identifies the entity.
         i32 ID;
 

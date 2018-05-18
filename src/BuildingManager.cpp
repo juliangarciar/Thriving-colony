@@ -124,7 +124,7 @@ void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 bui
 		BuildingData b = it->second;
 		if (buildTime >= 0) b.buildingTime = buildTime;
 		tempBuilding = new Building(buildingLayer, 0, team, b);
-		/* Okey there's a problem */
+		//ToDo: Okey there's a problem
 		//Vector2<f32> correctPosition = WorldGeometry::Instance()->correctBuildingPosition(pos, tempBuilding);
 		buildBuilding(pos);
 	}
@@ -155,7 +155,7 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
 		//Start the construction of the building
 		tempBuilding -> startBuilding();
 		
-		//
+		//Build
 		WorldGeometry::Instance() -> build(tempBuilding);
 
 		//Finish everything
@@ -235,12 +235,12 @@ void BuildingManager::deleteBuilding(i32 id) {
 	if (inMapBuildings -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
 		Human::Instance() -> decreaseHappiness(inMapBuildings -> find(id) -> second -> getHappinessVariation());
 		if (inMapBuildings -> find(id) -> second -> getType() == "House") {
-			Human::Instance() -> decreasePersons(inMapBuildings -> find(id) -> second -> getCitizensVariation());
+			Human::Instance() -> decreasePeople(inMapBuildings -> find(id) -> second -> getCitizensVariation());
 		}
 	} else {
 		IA::Instance() -> decreaseHappiness(inMapBuildings -> find(id) -> second -> getHappinessVariation());
 		if (inMapBuildings -> find(id) -> second -> getType() == "House") {
-			IA::Instance() -> decreasePersons(inMapBuildings -> find(id) -> second -> getCitizensVariation());
+			IA::Instance() -> decreasePeople(inMapBuildings -> find(id) -> second -> getCitizensVariation());
 		}
 	}
 	buildingAmounts[inMapBuildings -> find(id) -> second -> getType()]--;
@@ -259,12 +259,9 @@ Building *BuildingManager::getBuilding(i32 id){
 
 const BuildingData& BuildingManager::getBuildingData(std::string type) const{
 	std::map<std::string, BuildingData>::const_iterator it = baseBuildings.find(type);
-	/*if (it != baseBuildings.end()){
-		//return &it->second;
-	}*/ if (it == baseBuildings.end()) {
+	if (it == baseBuildings.end()) {
 		std::cout << "El tipo de edificio " << type << " no es valido." << std::endl;
 		exit(0);
-		//return BuildingData();
 	}
 	return it->second;
 }

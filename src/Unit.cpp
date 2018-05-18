@@ -12,6 +12,8 @@
 #include "Game.h"
 #include "Sensor.h"
 
+//ToDo: revisar y limpiar esta clase
+
 Unit::Unit(SceneNode* _layer, 
     i32 _id, 
     Enumeration::Team _team, 

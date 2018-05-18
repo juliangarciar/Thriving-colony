@@ -16,14 +16,17 @@ UnitFighter::UnitFighter(SceneNode* _parent, i32 _id, std::string _path, f32 _sp
         isMoving = false;
     });
 }
+
 UnitFighter::~UnitFighter(){
     delete unitFighterClock;
     delete fighterModel;
     nearFighters.clear();
 }
+
 void UnitFighter::setPosition(Vector2<f32> _pos){
     vectorPosition = _pos;
 }
+
 void UnitFighter::setDestiny(Vector2<f32> _dest){
     vectorDestiny = _dest;
     Vector2<f32> vectorDistance = (vectorDestiny - vectorPosition);
@@ -34,6 +37,7 @@ void UnitFighter::setDestiny(Vector2<f32> _dest){
 
     isMoving = true;
 }
+
 void UnitFighter::move(){
     if(!hasArrived()){
         calculateDirection();
@@ -48,7 +52,8 @@ void UnitFighter::move(){
         unitFighterClock->stop();
     }
 }
-/* Check this method */
+
+//ToDo: Check this method
 void UnitFighter::update(){
     if(isMoving){
         //nearFighters = _nearFighters;
@@ -67,15 +72,19 @@ void UnitFighter::setActive(bool _active){
 Vector2<f32> UnitFighter::getVectorPosition() const{
     return vectorPosition;
 }
+
 Vector2<f32> UnitFighter::getVectorSpeed() const{
     return vectorSpeed;
 }
+
 Vector2<f32> UnitFighter::getVectorDestiny() const{
     return vectorDestiny;
 }
+
 const f32 UnitFighter::getSpeed() const{
     return speed;
 }
+
 bool UnitFighter::hasArrived(){
     if((vectorPosition - vectorDestiny).dotProduct() < maxDesviation){
         vectorSpeed = Vector2<f32>(0, 0);
@@ -83,6 +92,7 @@ bool UnitFighter::hasArrived(){
     }
     return false;
 }
+
 /* Maybe we can calculate it in only one method */
 Vector2<f32> UnitFighter::calculateFlocking(){
     Vector2<f32> alignment(0, 0);
@@ -162,6 +172,7 @@ Vector2<f32> UnitFighter::calculateFlocking(){
 
     return flock;
 }
+
 void UnitFighter::calculateDirection(){
     Vector2<f32> _incVector = vectorDestiny - vectorPosition;
     /* Calculate speed */

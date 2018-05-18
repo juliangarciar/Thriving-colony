@@ -8,6 +8,7 @@
 
 //class Model;
 class Timer;
+
 class UnitFighter{
     public:
         UnitFighter(SceneNode* _parent, i32 _id, std::string _path, f32 _speed);
@@ -20,6 +21,7 @@ class UnitFighter{
         void update();
         void setNearFighters(std::vector<UnitFighter*>& _nearFighters);
         void setActive(bool _active);
+		
         // Getters
         Vector2<f32> getVectorPosition() const;
         Vector2<f32> getVectorSpeed() const;

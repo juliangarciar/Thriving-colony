@@ -5,33 +5,35 @@
 #include "IA.h"
 #include "GraphicEngine/Window.h"
 
-Building::Building(SceneNode *_layer,
-                i32 _id, 
-                Enumeration::Team _team, 
-                BuildingData baseData):Entity(
-                _layer,
-                _id,
-                _team,
-                Enumeration::EntityType::Building,
-                baseData.maxHP,
-                baseData.viewRadius,
-                baseData.attackRange,
-                baseData.attackDamage,
-                baseData.attackSpeed,
-                baseData.metalCost,
-                baseData.crystalCost,
-                baseData.happinessVariation,
-                baseData.citizensVariation,
-                baseData.cellsX,
-                baseData.cellsY,
-                baseData.modelPath,
-                baseData.texturePath
-                ), 
-                cityLevel(baseData.cityLevel),
-                buildingType(baseData.type),
-                callback(nullptr)
+Building::Building(
+	SceneNode *_layer,
+	i32 _id, 
+	Enumeration::Team _team, 
+	BuildingData baseData) :
+		Entity(
+			_layer,
+			_id,
+			_team,
+			Enumeration::EntityType::Building,
+			baseData.maxHP,
+			baseData.viewRadius,
+			baseData.attackRange,
+			baseData.attackDamage,
+			baseData.attackSpeed,
+			baseData.metalCost,
+			baseData.crystalCost,
+			baseData.happinessVariation,
+			baseData.citizensVariation,
+			baseData.cellsX,
+			baseData.cellsY,
+			baseData.modelPath,
+			baseData.texturePath
+        ), 
+		cityLevel(baseData.cityLevel),
+		buildingType(baseData.type),
+		callback(nullptr)
 {
-    /* Set the timer */
+    // Set the building timer
     buildTimer = new Timer(baseData.buildingTime, false, false);
     buildTimer -> setCallback([&]{
         adjustCityStats();
@@ -42,7 +44,7 @@ Building::Building(SceneNode *_layer,
 
 Building::~Building() {
     delete buildTimer;
-    //delete particle;
+    buildTimer = nullptr;
 }
 
 void Building::startBuilding() {
@@ -64,11 +66,11 @@ void Building::adjustCityStats() {
     // Adjust the stats of the player
     if (getTeam() == Enumeration::Team::Human) {
         Human::Instance() -> increaseHappiness(getHappinessVariation());
-        Human::Instance() -> increasePersons(getCitizensVariation());   
+        Human::Instance() -> increasePeople(getCitizensVariation());   
         Human::Instance() -> increaseCityLevel(cityLevel);
     } else {
         IA::Instance() -> increaseHappiness(getHappinessVariation());
-        IA::Instance() -> increasePersons(getCitizensVariation());   
+        IA::Instance() -> increasePeople(getCitizensVariation());   
         IA::Instance() -> increaseCityLevel(cityLevel);
     }
 }

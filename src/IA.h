@@ -159,7 +159,7 @@ class IA : public Player {
         //Current choice of the AI.
         i32 choiceIndex;
 
-        //Determine if the choice of the Ai is updated fast or not. True will be the fast mode and false the slow.
+        //Determine if the choice of the AI is updated fast or not. True will be the fast mode and false the slow one.
         bool fast;
 
         //Timer used to update fast the AI's choices.

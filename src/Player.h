@@ -88,11 +88,11 @@ class Player {
         void increaseCitizens(i32);
 
         /**
-         * @brief Increase the persons based on the persons passed by parameter.
+         * @brief Increase the people based on the people passed by parameter.
          * 
-         * @param i32 is the persons that are going to be added to the persons variable.
+         * @param i32 is the people that are going to be added to the people variable.
          */
-        void increasePersons(i32);
+        void increasePeople(i32);
 
         /**
          * @brief Increase the individual units based on the individual units passed by parameter.
@@ -102,11 +102,11 @@ class Player {
         void increaseIndividualUnits(i32);
 
         /**
-         * @brief Decrease the persons based on the persosns passed by parameter.
+         * @brief Decrease the people based on the persosns passed by parameter.
          * 
-         * @param i32 is the persons that are going to be substracted to the persons variable.
+         * @param i32 is the people that are going to be substracted to the people variable.
          */
-        void decreasePersons(i32);
+        void decreasePeople(i32);
 
         /**
          * @brief Decrease the individualU units based on the individual units passed by parameter.
@@ -210,11 +210,11 @@ class Player {
         i32 getCitizens();
 
         /**
-         * @brief Get the player's persons amount.
+         * @brief Get the player's people amount.
          * 
-         * @return i32 that will be the value of persons varibale.
+         * @return i32 that will be the value of people varibale.
          */
-        i32 getPersons();
+        i32 getPeople();
 
         /**
          * @brief Get the player's individualUnits amount.
@@ -338,7 +338,7 @@ class Player {
         i32 citizens;
 
         //Player's citizens and units maximum amount.
-        i32 persons;
+        i32 people;
 
         //Player's citizens in coming amount.
         i32 citizensInComing;
