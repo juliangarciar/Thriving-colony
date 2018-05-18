@@ -160,18 +160,34 @@ void Quadtree::getCollidingEntities(const Box2D& hitbox, Entity** priorityEntity
         for(std::size_t i = 0; i < innerCells.size(); i++){
             if(innerCells[i]->getHitbox().isOverlappedWith(hitbox)){
                 std::vector< Unit* > unitTmp = innerCells[i]->getInhabitingUnits();
-                if(unitTmp.size() > 0){
+                if(!unitTmp.empty()){
                     for(std::size_t k = 0; k < unitTmp.size(); k++){
                         if(unitTmp[k]->getTeam() != teamTarget){
                             if(*priorityEntity == nullptr){
                                 *priorityEntity = unitTmp[k];
+                                std::cout << "Unidad ";
+                                if(teamTarget == Enumeration::Team::IA){
+                                    std::cout << "Humana";
+                                }
+                                else{
+                                    std::cout << "IA";
+                                }
+                                std::cout << " detectada en " << (*priorityEntity)->getPosition().x << " , " << (*priorityEntity)->getPosition().y << "\n";
                             }
-                            else{
+                            else if(*priorityEntity != unitTmp[k]){
                                 Vector2<f32> vectorDistance1 = (*priorityEntity)->getPosition() - hitbox.Center();
                                 Vector2<f32> vectorDistance2 = unitTmp[k]->getPosition() - hitbox.Center();
                                 if( (std::sqrt(std::pow(vectorDistance1.x, 2) + std::pow(vectorDistance1.y, 2))) > 
                                     (std::sqrt(std::pow(vectorDistance2.x, 2) + std::pow(vectorDistance2.y, 2))) ){
-                                        *priorityEntity = unitTmp[k];
+                                    *priorityEntity = unitTmp[k];
+                                    std::cout << "Unidad ";
+                                    if(teamTarget == Enumeration::Team::IA){
+                                        std::cout << "Humana";
+                                    }
+                                    else{
+                                        std::cout << "IA";
+                                    }
+                                    std::cout << " detectada en " << (*priorityEntity)->getPosition().x << " , " << (*priorityEntity)->getPosition().y << "\n";
                                 }
                             }
                         }
@@ -182,14 +198,30 @@ void Quadtree::getCollidingEntities(const Box2D& hitbox, Entity** priorityEntity
                     if(buildingTmp != nullptr){
                         if(buildingTmp->getTeam() != teamTarget){
                             if(*priorityEntity == nullptr){
-                                *priorityEntity == buildingTmp;
+                                *priorityEntity = buildingTmp;
+                                std::cout << "Edificio ";
+                                if(teamTarget == Enumeration::Team::IA){
+                                    std::cout << "Humano";
+                                }
+                                else{
+                                    std::cout << "IA";
+                                }
+                                std::cout << " detectada en " << (*priorityEntity)->getPosition().x << " , " << (*priorityEntity)->getPosition().y << "\n";
                             }
-                            else if((*priorityEntity)->getEntityType() == Enumeration::EntityType::Building){
+                            else if((*priorityEntity)->getEntityType() == Enumeration::EntityType::Building && *priorityEntity != buildingTmp){
                                 Vector2<f32> vectorDistance1 = (*priorityEntity)->getPosition() - hitbox.Center();
                                 Vector2<f32> vectorDistance2 = buildingTmp->getPosition() - hitbox.Center();
                                 if( (std::sqrt(std::pow(vectorDistance1.x, 2) + std::pow(vectorDistance1.y, 2))) > 
                                     (std::sqrt(std::pow(vectorDistance2.x, 2) + std::pow(vectorDistance2.y, 2))) ){
-                                        *priorityEntity = buildingTmp;
+                                    *priorityEntity = buildingTmp;
+                                    std::cout << "Edificio ";
+                                    if(teamTarget == Enumeration::Team::IA){
+                                        std::cout << "Humano";
+                                    }
+                                    else{
+                                        std::cout << "IA";
+                                    }
+                                    std::cout << " detectada en " << (*priorityEntity)->getPosition().x << " , " << (*priorityEntity)->getPosition().y << "\n";
                                 }
                             }
                         }

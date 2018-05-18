@@ -225,20 +225,27 @@ SceneNode* BuildingManager::getBuildingLayer() {
 }
 
 void BuildingManager::deleteBuilding(i32 id) {
-	if (inMapBuildings -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
-		Human::Instance() -> decreaseHappiness(inMapBuildings -> find(id) -> second -> getHappinessVariation());
-		if (inMapBuildings -> find(id) -> second -> getType() == "House") {
-			Human::Instance() -> decreasePersons(inMapBuildings -> find(id) -> second -> getCitizensVariation());
+	std::cout << id << "\n";
+    std::map<i32, Building*>::iterator it = inMapBuildings->find(id);
+    if (it != inMapBuildings->end()){
+		if (it -> second -> getTeam() == Enumeration::Team::Human) {
+			Human::Instance() -> decreaseHappiness(it -> second -> getHappinessVariation());
+			if (it -> second -> getType() == "House") {
+				Human::Instance() -> decreasePersons(it -> second -> getCitizensVariation());
+			}
+		} else {
+			IA::Instance() -> decreaseHappiness(it -> second -> getHappinessVariation());
+			if (it -> second -> getType() == "House") {
+				IA::Instance() -> decreasePersons(it -> second -> getCitizensVariation());
+			}
 		}
-	} else {
-		IA::Instance() -> decreaseHappiness(inMapBuildings -> find(id) -> second -> getHappinessVariation());
-		if (inMapBuildings -> find(id) -> second -> getType() == "House") {
-			IA::Instance() -> decreasePersons(inMapBuildings -> find(id) -> second -> getCitizensVariation());
-		}
+		buildingAmounts[it -> second -> getType()]--;
+		delete it -> second;
+		inMapBuildings -> erase(id);
 	}
-	buildingAmounts[inMapBuildings -> find(id) -> second -> getType()]--;
-	delete inMapBuildings -> find(id) -> second;
-	inMapBuildings -> erase(id);
+	else{
+		std::cout << "ERROR DE BUILDING \n";
+	}
 } 
 
 Building *BuildingManager::getBuilding(i32 id){

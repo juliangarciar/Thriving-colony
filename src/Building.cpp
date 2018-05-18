@@ -31,7 +31,8 @@ Building::Building(SceneNode *_layer,
                                                 ), 
                                                 cityLevel(baseData.cityLevel),
                                                 buildingType(baseData.type),
-                                                callback(nullptr)
+                                                callback(nullptr),
+                                                buildingManager(_buildingManager)
 {
     /* Set the timer */
     buildTimer = new Timer(baseData.buildingTime, false, false);
@@ -91,6 +92,7 @@ void Building::takeDamage(i32 _damage) {
     currentHP = currentHP - _damage;
     if(currentHP < 1){
         currentHP = 0;
+        std::cout << "Soy un edificio y me muero \n";
         buildingManager->deleteBuilding(ID);
         return;
     }

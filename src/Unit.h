@@ -57,12 +57,6 @@ class Unit : public Entity {
         void moveTroop();
 
         /**
-         * @brief Look fora new target for the unit.
-         * @return True when the unit has a target and false in other case.
-         */
-        bool refreshTarget();
-
-        /**
          * @brief Determinate if the target of the unit is in its range of attack.
          * @return True when the target is in the range of attack of the unit and false in other case. 
          */
@@ -241,37 +235,29 @@ class Unit : public Entity {
         Enumeration::UnitState state;
 
         //Type of the unit.
-        std::string type;
+        const std::string type;
 
         //Speed with which the unit moves.
-        i32 moveSpeed;
+        const i32 moveSpeed;
 
         //Speed with which the unit attacks.
-        i32 attackSpeed;
+        const i32 attackSpeed;
 
         //Damage infliceted by the unit.
         i32 attackDamage;
 
-        //True when the unit is trained and false in other case.
-        bool finished;
-
         //True when the unit is moving and false in other case.
         bool moving;
 
-        //True when the unit is attacking and false in other case.
-        bool attacking;
         bool canAttack;
         //Amount of army level that provides to the player's city.
-        i32 armyLevel;
+        const i32 armyLevel;
 
         //Timer that controls the time of training of the unit.
         Timer* recruitingTimer;
-
         Timer* enemySensorTimer;
         Timer* attackTimer;
         Timer* chaseTimer;
-        //Timer that controls the time that has to pass since the last time that the unit attack its target.
-        //f32 attackCountdown;
 
         //
         class PathManager* pathManager;
@@ -287,30 +273,26 @@ class Unit : public Entity {
 
         //Destination of the unit.
         Vector2<f32> vectorDes;
-
-        //
         Vector2<f32> vectorSpd;
         Vector2<f32> vectorDir;
-        //
-        // f32 steps;
 
         //True when the unit is ready to get into the command center and false in other case.
         bool readyToEnter;
 
         //
-        std::string attackEvent;
+        const std::string attackEvent;
 
         //
-        std::string moveEvent;
+        const std::string moveEvent;
 
         //
-        std::string selectEvent;
+        const std::string selectEvent;
 
         //
         std::vector< UnitFighter* > unitFighters;
         std::vector< UnitFighter* > nearUnitFighters;
-        f32 maxPositionDesviation;
-        i32 unitFighterHP;
+        const f32 maxPositionDesviation;
+        const i32 unitFighterHP;
         Sensor* unitSensor;
         UnitManager* unitManager;
 };

@@ -55,8 +55,8 @@
 		},
 		{
 			"unitName": "StandardM",
-			"moveSpeed": 3,
-			"attackDamage": 5,
+			"moveSpeed": 30,
+			"attackDamage": 100,
 			"attackRange": 50,
 			"attackSpeed": 1,
 			"viewRadious": 450,

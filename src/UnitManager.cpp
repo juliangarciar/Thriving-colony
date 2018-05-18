@@ -381,13 +381,16 @@ bool UnitManager::isDeployingTroop(){
 }
 
 void UnitManager::deleteUnit(i32 id) {
-    if (team == Enumeration::Team::Human) {
-        Human::Instance() -> decreaseArmyLevel(inMapTroops -> find(id) -> second -> getArmyLevel());
-    } else {
-        IA::Instance() -> decreaseArmyLevel(inMapTroops -> find(id) -> second -> getArmyLevel());
+    std::map<i32, Unit*>::iterator it = inMapTroops->find(id);
+    if (it != inMapTroops->end()){
+        if (team == Enumeration::Team::Human) {
+            Human::Instance() -> decreaseArmyLevel(it -> second -> getArmyLevel());
+        } else {
+            IA::Instance() -> decreaseArmyLevel(it -> second -> getArmyLevel());
+        }
+        delete it -> second;
+        inMapTroops -> erase(id);
     }
-    delete inMapTroops -> find(id) -> second;
-    inMapTroops -> erase(id);
 }
 
 i32 UnitManager::getCollisionID() {
