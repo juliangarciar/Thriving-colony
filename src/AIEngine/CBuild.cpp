@@ -106,7 +106,7 @@ Enumeration::BehaviourState CBuild::Update() {
 }
 
 void CBuild::actionToDo() {
-    if (IA::Instance() -> getBuildingManager() -> isSolvent(metal, crystal)) {
+    if (IA::Instance() -> isSolvent(metal, crystal, 0)) {
         action -> Update(type);
         IA::Instance() -> getRootNode() -> setPriority(nullptr);
     } else {

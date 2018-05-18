@@ -21,11 +21,11 @@ void GameState::Init() {
     human -> Init("Drorania"); 
     ia -> Init("Kaonov");
 
-    //Init HUD
-    hud -> Init();
-
     //Load map
     map -> Init();
+
+    //Init HUD
+    hud -> Init();
 
     //Initialize the event system
     //IA Events
@@ -33,7 +33,7 @@ void GameState::Init() {
         ia -> getUnitManager() -> retractAllTroops();
     });
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::DeployTroopsIA, [&]() {
-        Vector3<f32> p = ia -> getHallPosition();
+        Vector3<f32> p = ia -> hallPosition;
         p.x = p.x + 200; //ToDo: hacer bien
         ia -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
     });
@@ -43,7 +43,7 @@ void GameState::Init() {
         human -> getUnitManager() -> retractAllTroops();
     });
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::DeployTroopsHuman, [&]() {
-        Vector3<f32> p = human -> getHallPosition();
+        Vector3<f32> p = human -> hallPosition;
         p.x = p.x + 200; //ToDo: hacer bien
         human -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
     });

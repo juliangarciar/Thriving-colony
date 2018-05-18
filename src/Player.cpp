@@ -1,67 +1,93 @@
 #include "Player.h"
+#include "Map.h"
 
 Player::Player() {
     
 }
 
 Player::~Player() {
-    delete updateTimer;
-	updateTimer = nullptr;
+
 }
 
 void Player::Init() {
 	//ToDo: seria ideal que todo fuera parametrizable y todo estuviera en el mismo sitio
     happiness = 0;
-    cityLevel = 10;
-    armyLevel = 0;
     citizens = 20;
-    people = 20;
-    individualUnits = 0;
-    citizensInComing = floor(people / 10);
-    resistance = 0;
-    increasedDamage = 0;
+    maxPeople = 20;
 
     metalAmount = 1200;
     crystalAmount = 0;
 
+    cityLevel = 10;
+    armyLevel = 0;
+
+    citizensByHappiness = 0;
+    resistanceModifier = 0;
+    damageModifier = 0;
+
     underAttack = false;
 
-    updateTimer = new Timer(1.00, true);
+    resourceTimer = new Timer(1.00, true);
 
-	updateTimer -> setCallback([&](){
-        gainResources();
+	resourceTimer -> setCallback([&](){
+		metalAmount += getMetalProduction();
+		crystalAmount += getCrystalProduction();
+	});
+
+	citizenTimer = new Timer(5.00, true);
+
+	citizenTimer -> setCallback([&](){
+   		citizens += citizensByHappiness;
+		if (citizens + getArmySize() > maxPeople) {
+			citizens = maxPeople - getArmySize();
+		}
 	});
 }
 
-void Player::Update() {
-    resistance = floor(happiness * 10 / 100);
-    increasedDamage = floor(happiness * 15 / 100);
-    if (increasedDamage < 0) {
-        increasedDamage = - increasedDamage;
-    } else {
-        increasedDamage = 0;
+void Player::Update() { //ToDo: config JSON
+	citizensByHappiness = floor(happiness / 50);
+    if (citizensByHappiness < 0) {
+        citizensByHappiness = 0; //ToDo: minimal citizens quantity
     }
+    resistanceModifier = floor(happiness * 10 / 100);
+    if (resistanceModifier < 0) {
+        resistanceModifier = 0;
+    }
+    damageModifier = -1 * floor(happiness * 15 / 100);
+    if (damageModifier < 0) {
+        damageModifier = 0;
+    }
+}
+
+void Player::CleanUp(){
+    delete resourceTimer;
+	resourceTimer = nullptr;
+    delete citizenTimer;
+	citizenTimer = nullptr;
 }
 
 /**
  * CONTROL METHODS
  */
-void Player::gainResources() {
-    metalAmount += getMetalProduction();
-    crystalAmount += getCrystalProduction();
-    citizens += citizensInComing + floor(happiness / 50);
-    if (citizens + individualUnits > people) {
-        citizens = people - individualUnits;
-    }
+bool Player::isSolvent(i32 metalCost, i32 crystalCost, i32 citizenCost){
+	return (metalCost <= metalAmount && crystalCost <= crystalAmount && citizenCost <= citizens);
 }
 
 void Player::spendResources(i32 metalCost, i32 crystalCost) {
-    // ToDo: Nunca acabaran siendo menor que 0
     metalAmount -= metalCost;
     crystalAmount -= crystalAmount;
+	if (metalAmount < 0) metalAmount = 0;
+	if (crystalAmount < 0) crystalAmount = 0;
 }
 
-void Player::increaseHappiness(i32 h) {
+void Player::increaseBuildableRange() {
+    buildableRange *= 1.5; // ToDo: to map JSON
+}
+
+/**
+ * MODIFIYING METHODS
+ */
+void Player::modifyHappiness(i32 h) { //ToDo: to config JSON
     happiness += h;
     if (happiness <= -100) {
         happiness = -100;
@@ -71,177 +97,81 @@ void Player::increaseHappiness(i32 h) {
     }
 }
 
-void Player::increaseCityLevel(i32 lvl) {
-    cityLevel += lvl;
-}
-
-void Player::increaseCitizens(i32 c) {
+void Player::modifyCitizens(i32 c) {
     citizens += c;
+    if (citizens < 0) {
+        citizens = 0;
+    }
 }
 
-void Player::increaseArmySize() {
-    citizens -= 10;
-    happiness -= 5;
+void Player::modifyMaxPeople(i32 p) {
+    maxPeople += p;
+    if (maxPeople < 0) {
+        maxPeople = 0;
+    }
 }
 
-void Player::increaseBuildableRange() {
-    // ToDo: equilibrar la cantidad de aumento
-    buildableRange *= 1.5;
+void Player::modifyCityLevel(i32 lvl) {
+    cityLevel += lvl;
+    if (cityLevel < 0) {
+        cityLevel = 0;
+    }
 }
 
-bool Player::losingBattle() {
-    // ToDo: Es necesario? por ahora si
-    // ToDo: calcular si estas perdiendo tu la  batalla
-    // ToDo: no deberia ir en el battle manager? no se, es probable
-    return false;
-}
-
-void Player::increaseArmyLevel(i32 alincrement) {
-    armyLevel = armyLevel + alincrement;
-}
-
-void Player::decreaseArmyLevel(i32 aldecrement) {
-    armyLevel = armyLevel - aldecrement;
-}
-
-void Player::setHallPosition(Vector3<f32> p){
-    hallPosition = p;
-}
-
-void Player::setMetalAmount(i32 metal){
-    metalAmount = metal;
-}
-
-void Player::setCrystalAmount(i32 crystal){
-    crystalAmount = crystal;
-}
-
-void Player::setSiderurgyProductivity(i32 prod){
-    siderurgyProductivity = prod;
-}
-
-void Player::setQuarryProductivity(i32 prod){
-    quarryProductivity = prod;
-}
-
-void Player::setBuildingRadious(f32 radious){
-    buildingRadious = radious;
+void Player::modifyArmyLevel(i32 lvl) {
+    armyLevel += lvl;
+    if (armyLevel < 0) {
+        armyLevel = 0;
+    }
 }
 
 //==========
 // Getters
 //==========
-i32 Player::getHappiness() {
-    return happiness;
-}
-
-i32 Player::getCityLevel() {
-    return cityLevel;
-}
-
-i32 Player::getCitizens() {
-    return citizens;
-}
-
-i32 Player::getPeople() {
-    return people;
-}
-
-i32 Player::getIndividualUnits() {
-    return individualUnits;
-}
-
 i32 Player::getArmySize() {
     return units -> getTotalTroopAmount();
 }
 
-i32 Player::getMetalAmount() {
-    return metalAmount;
-}
-
-i32 Player::getCrystalAmount() {
-    return crystalAmount;
-}
-
 i32 Player::getMetalProduction() {
-    return buildings->getAmount("Siderurgy") * siderurgyProductivity;
+    return buildings->getAmount("Siderurgy") * Map::Instance()->getMetalProductivity();
 }
 
 i32 Player::getCrystalProduction() {
-    return buildings->getAmount("Quarry") * quarryProductivity;
+    return buildings->getAmount("Quarry") * Map::Instance()->getCrystalProductivity();
 }
 
-i32 Player::getArmyLevel() {
-    return armyLevel;
+i32 Player::getHappiness(){
+	return happiness;
 }
 
-f32 Player::getBuildingRadious(){
-    return buildingRadious;
+i32 Player::getCitizens() {
+	return citizens;
 }
 
-BuildingManager* Player::getBuildingManager() {
-    return buildings;
+i32 Player::getMaxPeople(){
+	return maxPeople;
 }
 
-UnitManager* Player::getUnitManager() {
-    return units;
+i32 Player::getCityLevel(){
+	return cityLevel;
 }
 
-Vector3<f32> Player::getHallPosition() {
-    return hallPosition;
+i32 Player::getArmyLevel(){
+	return armyLevel;
 }
 
-i32 Player::getResistance() {
-    return resistance;
+i32 Player::getResistanceModifier() {
+	return resistanceModifier;
 }
 
-i32 Player::getIncreasedDamage() {
-    return increasedDamage;
+i32 Player::getDamageModifier() {
+	return damageModifier;
 }
 
-// Tricks
-void Player::receiveMetal() {
-    metalAmount = metalAmount + 200;
+BuildingManager *Player::getBuildingManager(){
+	return buildings;
 }
 
-void Player::receiveCrystal() {
-    crystalAmount = crystalAmount + 200;
-}
-
-void Player::receiveCitizens() {
-    citizens = citizens + 100;
-}
-
-void Player::decreaseHappiness(i32 h) {
-    happiness = happiness - h;
-    if (happiness <= -100) {
-        happiness = -100;
-    }
-    if (happiness >= 100) {
-        happiness = 100;
-    }
-}
-
-void Player::increasePeople(i32 p) {
-    people = people + p;
-    citizensInComing = floor(people / 10);
-}
-
-void Player::increaseIndividualUnits(i32 u) {
-    individualUnits = individualUnits + u;
-}
-
-void Player::decreasePeople(i32 p) {
-    people = people - p;
-    if (people <= 0) {
-        people = 0;
-    }
-    citizensInComing = floor(people / 10);
-}
-
-void Player::decreaseIndividualUnits(i32 u) {
-    individualUnits = individualUnits -u;
-    if (individualUnits <= 0) {
-        individualUnits = 0;
-    }
+UnitManager *Player::getUnitManager(){
+	return units;
 }

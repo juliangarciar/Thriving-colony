@@ -209,17 +209,17 @@ void Hud::Init(){
         Human::Instance() -> getUnitManager() -> getTroopAmount("Desintegrator") + 
         Human::Instance() -> getUnitManager() -> getTroopAmount("Launcher");
     std::stringstream os;
-    os << "Metal: " << std::to_string(Human::Instance() -> getMetalAmount());
+    os << "Metal: " << std::to_string(Human::Instance() -> metalAmount);
     playerMetalAmount = new Label(playerResources, os.str());
     playerMetalAmount -> setColor(200, 0, 200, 0);
 
     os = std::stringstream();
-    os << "Crystal: " << std::to_string(Human::Instance() -> getCrystalAmount());
+    os << "Crystal: " << std::to_string(Human::Instance() -> crystalAmount);
     playerCrystalAmount = new Label(playerResources, os.str());
     playerCrystalAmount -> setColor(150, 0, 0, 150);
 
     os = std::stringstream();
-    os << "People: " << std::to_string(Human::Instance() -> getPeople());
+    os << "People: " << std::to_string(Human::Instance() -> getMaxPeople());
     playerPeople = new Label(playerResources, os.str());
     playerPeople -> setColor(150, 200, 200, 0);
 
@@ -229,7 +229,7 @@ void Hud::Init(){
     playerCitizens -> setColor(150, 200, 200, 0);
 
     os = std::stringstream();
-    os << "Units: " << std::to_string(Human::Instance() -> getIndividualUnits());
+    os << "Units: " << std::to_string(Human::Instance() -> getArmySize());
     playerUnits = new Label(playerResources, os.str());
     playerUnits -> setColor(150, 200, 200, 0);
 
@@ -238,12 +238,6 @@ void Hud::Init(){
     playerHappiness = new Label(playerResources, os.str());
     playerHappiness -> setColor(200, 210, 48, 130);
 
-    os = std::stringstream();
-    os << "City level: "<< std::to_string(Human::Instance() -> getCityLevel());
-    playerCityLevel = new Label(playerResources, os.str());
-    os = std::stringstream();
-    os << "Army size: " << std::to_string(Human::Instance() -> getArmySize());
-    playerArmySize = new Label(playerResources, os.str());
     os = std::stringstream();
     os << "Melee: " << std::to_string(melees);
     playerMelees = new Label(playerResources, os.str());
@@ -274,10 +268,10 @@ void Hud::Init(){
         IA::Instance() -> getUnitManager() -> getTroopAmount("Desintegrator") + 
         IA::Instance() -> getUnitManager() -> getTroopAmount("Launcher");
     std::stringstream iaos;
-    iaos << "Metal: " << std::to_string(IA::Instance() -> getMetalAmount());
+    iaos << "Metal: " << std::to_string(IA::Instance() -> metalAmount);
     iaMetalAmount = new Label(iaResources, iaos.str());
     iaos = std::stringstream();
-    iaos << "Crystal: " << std::to_string(IA::Instance() -> getCrystalAmount());
+    iaos << "Crystal: " << std::to_string(IA::Instance() -> crystalAmount);
     iaCrystalAmount = new Label(iaResources, iaos.str());
     iaos = std::stringstream();
     iaos << "Citizens: " << std::to_string(IA::Instance() -> getCitizens());
@@ -285,9 +279,6 @@ void Hud::Init(){
     iaos = std::stringstream();
     iaos << "Happiness: " << std::to_string(IA::Instance() -> getHappiness());
     iaHappiness = new Label(iaResources, iaos.str());
-    iaos = std::stringstream();
-    iaos << "City level: "<< std::to_string(IA::Instance() -> getCityLevel());
-    iaCityLevel = new Label(iaResources, iaos.str());
     iaos = std::stringstream();
     iaos << "Army size: " << std::to_string(IA::Instance() -> getArmySize());
     iaArmySize = new Label(iaResources, iaos.str());
@@ -836,29 +827,23 @@ void Hud::debug(){
         Human::Instance() -> getUnitManager() -> getTroopAmount("Launcher");
 
     std::stringstream os;
-    os << "Metal: " << std::to_string(Human::Instance() -> getMetalAmount());
+    os << "Metal: " << std::to_string(Human::Instance() -> metalAmount);
     playerMetalAmount -> setLabel(os.str());
     os = std::stringstream();
-    os << "Crystal: " << std::to_string(Human::Instance() -> getCrystalAmount());
+    os << "Crystal: " << std::to_string(Human::Instance() -> crystalAmount);
     playerCrystalAmount -> setLabel(os.str());
     os = std::stringstream();
-    os << "People: " << std::to_string(Human::Instance() -> getPeople());
+    os << "People: " << std::to_string(Human::Instance() -> getMaxPeople());
     playerPeople -> setLabel(os.str());
     os = std::stringstream();
     os << "Citizens: " << std::to_string(Human::Instance() -> getCitizens());
     playerCitizens -> setLabel(os.str());
     os = std::stringstream();
-    os << "Units: " << std::to_string(Human::Instance() -> getIndividualUnits());
+    os << "Units: " << std::to_string(Human::Instance() -> getArmySize());
     playerUnits -> setLabel(os.str());
     os = std::stringstream();
     os << "Happiness: " << std::to_string(Human::Instance() -> getHappiness());
     playerHappiness -> setLabel(os.str());
-    os = std::stringstream();
-    os << "City level: "<< std::to_string(Human::Instance() -> getCityLevel());
-    playerCityLevel -> setLabel(os.str());
-    os = std::stringstream();
-    os << "Army size: " << std::to_string(Human::Instance() -> getArmySize());
-    playerArmySize -> setLabel(os.str());
     os = std::stringstream();
     os << "Melee: " << std::to_string(melees);
     playerMelees -> setLabel(os.str());
@@ -884,10 +869,10 @@ void Hud::debug(){
         IA::Instance() -> getUnitManager() -> getTroopAmount("Launcher");
 
     std::stringstream iaos;
-    iaos << "Metal: " << std::to_string(IA::Instance() -> getMetalAmount());
+    iaos << "Metal: " << std::to_string(IA::Instance() -> metalAmount);
     iaMetalAmount -> setLabel(iaos.str());
     iaos = std::stringstream();
-    iaos << "Crystal: " << std::to_string(IA::Instance() -> getCrystalAmount());
+    iaos << "Crystal: " << std::to_string(IA::Instance() -> crystalAmount);
     iaCrystalAmount -> setLabel(iaos.str());
     iaos = std::stringstream();
     iaos << "Citizens: " << std::to_string(IA::Instance() -> getCitizens());
@@ -895,9 +880,6 @@ void Hud::debug(){
     iaos = std::stringstream();
     iaos << "Happiness: " << std::to_string(IA::Instance() -> getHappiness());
     iaHappiness -> setLabel(iaos.str());
-    iaos = std::stringstream();
-    iaos << "City level: "<< std::to_string(IA::Instance() -> getCityLevel());
-    iaCityLevel -> setLabel(iaos.str());
     iaos = std::stringstream();
     iaos << "Army size: " << std::to_string(IA::Instance() -> getArmySize());
     iaArmySize -> setLabel(iaos.str());

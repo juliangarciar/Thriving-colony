@@ -95,7 +95,6 @@ void IA::CleanUp() {
     delete units;
     choices -> clear();
     delete choices;
-    delete updateTimer;
     delete updateFastTimer;
     delete updateSlowTimer;
     delete rootNode;

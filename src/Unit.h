@@ -41,11 +41,6 @@ class Unit : public Entity {
         virtual void preTaxPlayer();
 
         /**
-         * #brief Increase the palyer's army size.
-         */
-        virtual void posTaxPlayer();
-
-        /**
          * @brief Update the troop depending of its state.
         */
         void update();

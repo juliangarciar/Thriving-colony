@@ -29,7 +29,7 @@ UnitManager::UnitManager(Enumeration::Team t, std::string b) {
             tmp.metalCost = element["metalCost"].get<i32>();
             tmp.crystalCost = element["crystalCost"].get<i32>();
             tmp.maxHP = element["maxHP"].get<i32>();
-            tmp.viewRadius = element["viewRadious"].get<i32>();
+            tmp.viewRadius = element["viewRadius"].get<i32>();
             tmp.attackRange = element["attackRange"].get<i32>();
             tmp.attackDamage = element["attackDamage"].get<i32>();
             tmp.attackSpeed = element["attackSpeed"].get<i32>();
@@ -155,7 +155,7 @@ void UnitManager::updateUnitManager() {
     if (selectedTroop != nullptr) {
         if (IO::Instance() -> getKeyboard() -> keyPressed(82)) { //82 = R, R de retracted
             if (team == Enumeration::Team::Human){
-				Vector3<f32> p = Human::Instance()->getHallPosition();
+				Vector3<f32> p = Human::Instance()->hallPosition;
                 selectedTroop -> setTroopDestination(Vector2<f32>(p.x, p.z));
             }
             selectedTroop -> switchState(Enumeration::UnitState::Retract);
@@ -222,12 +222,12 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
             
             //Vector3<f32> correctPosition = Vector3<f32>(-384.f, 0, 0);
             //temp -> setTroopPosition(IA::Instance()->getHallPosition() + correctPosition);temp -> setPathToTarget(p);temp -> setPathToTarget(p);
-            hallPosition = IA::Instance()->getHallPosition();
+            hallPosition = IA::Instance()->hallPosition;
 			target = WorldGeometry::Instance()->positionToCell(hallPosition.toVector2());
         } else {
             //Vector3<f32> correctPosition = Vector3<f32>(-384.f, 0, 0);
             //temp -> setTroopPosition(Human::Instance()->getHallPosition() + correctPosition);
-			hallPosition = Human::Instance()->getHallPosition();
+			hallPosition = Human::Instance()->hallPosition;
             target = WorldGeometry::Instance()->positionToCell(hallPosition.toVector2());
         }
         target = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(), p, temp->getHitbox());
@@ -258,11 +258,11 @@ void UnitManager::deployAllTroops(Vector2<f32> p){
         Vector3<f32> hallPosition(0, 0, 0);
         if (team == Enumeration::Team::IA){
             //temp -> setTroopPosition(IA::Instance()->getHallPosition());
-			hallPosition = IA::Instance()->getHallPosition();
+			hallPosition = IA::Instance()->hallPosition;
             target = WorldGeometry::Instance()->positionToCell(hallPosition.toVector2());
         } else {
             //temp -> setTroopPosition(Human::Instance()->getHallPosition());
-			hallPosition = Human::Instance()->getHallPosition();
+			hallPosition = Human::Instance()->hallPosition;
             target = WorldGeometry::Instance()->positionToCell(hallPosition.toVector2());
         }
         /* Check this, can return a nullptr */
@@ -291,11 +291,11 @@ void UnitManager::retractAllTroops() {
         Unit *temp = it -> second;
         if (team == Enumeration::Team::IA){
             //temp -> setTroopDestination(IA::Instance()->getHallPosition());
-			Vector3<f32> p = IA::Instance()->getHallPosition();
+			Vector3<f32> p = IA::Instance()->hallPosition;
             temp -> setPathToTarget(Vector2<f32>(p.x, p.z));
         } else {
             //temp -> setTroopDestination(Human::Instance()->getHallPosition());
-			Vector3<f32> p = Human::Instance()->getHallPosition();
+			Vector3<f32> p = Human::Instance()->hallPosition;
             temp -> setPathToTarget(Vector2<f32>(p.x, p.z));
         }
         temp -> switchState(Enumeration::UnitState::Retract);
@@ -343,27 +343,6 @@ void UnitManager::startBattle(i32 enemyID) {
     //ToDo: crear batalla
 }
 
-// Checks if the player, either the human or the AI can afford to build a specific building
-bool UnitManager::isSolvent(i32 metalCost, i32 crystalCost, i32 citizensCost) {
-    i32 metalAmt = 0;
-    i32 crystalAmt = 0;
-    i32 citizensAmt = 0;
-    if (team == Enumeration::Team::Human) {
-        metalAmt = Human::Instance() -> getMetalAmount();
-        crystalAmt = Human::Instance() -> getCrystalAmount();
-        citizensAmt = Human::Instance() -> getCitizens();
-    } else {
-        metalAmt = IA::Instance() -> getMetalAmount();
-        crystalAmt = IA::Instance() -> getCrystalAmount();
-        citizensAmt = IA::Instance() -> getCitizens();
-    }
-    bool canPayMetal = metalAmt >= metalCost;
-    bool canPayCrystal = crystalAmt >= crystalCost;
-    bool hasCitizens = citizensAmt >= citizensCost;
-
-    return (canPayMetal && canPayCrystal && hasCitizens);
-}
-
 /**
  * This method is responsible for managing calls to isSolvent() for the human, registering the type
  * of the desired building and sending the aforementhioned method the prices. It has its own method
@@ -371,7 +350,10 @@ bool UnitManager::isSolvent(i32 metalCost, i32 crystalCost, i32 citizensCost) {
  */
 bool UnitManager::checkCanPay(std::string type) {
 	if (baseUnits.find(type) != baseUnits.end()){
-		return isSolvent(baseUnits[type].metalCost, baseUnits[type].crystalCost, baseUnits[type].citizensVariation);
+		if (team == Enumeration::Team::Human)
+			return Human::Instance() -> isSolvent(baseUnits[type].metalCost, baseUnits[type].crystalCost, baseUnits[type].citizensVariation);
+		else
+			return IA::Instance() -> isSolvent(baseUnits[type].metalCost, baseUnits[type].crystalCost, baseUnits[type].citizensVariation);
 	}
 	return false;
 }
@@ -387,9 +369,9 @@ bool UnitManager::isDeployingTroop(){
 
 void UnitManager::deleteUnit(i32 id) {
     if (team == Enumeration::Team::Human) {
-        Human::Instance() -> decreaseArmyLevel(inMapTroops -> find(id) -> second -> getArmyLevel());
+        Human::Instance() -> modifyArmyLevel(-inMapTroops -> find(id) -> second -> getArmyLevel());
     } else {
-        IA::Instance() -> decreaseArmyLevel(inMapTroops -> find(id) -> second -> getArmyLevel());
+        IA::Instance() -> modifyArmyLevel(-inMapTroops -> find(id) -> second -> getArmyLevel());
     }
     inMapTroops -> find(id) -> second -> putHostileTargetsToNull();
     delete inMapTroops -> find(id) -> second;

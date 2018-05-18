@@ -78,18 +78,20 @@ void Map::Init() {
     WorldGeometry* newSystem = WorldGeometry::Instance();
     newSystem->Init(cSize, i32(10240), i32(10240), 4);
 
+	//ToDo: leer del JSON la productividad del mapa
+    metalProductivity = j["player"]["siderurgy_productivity"].get<i32>();
+    crystalProductivity = j["player"]["crystal_productivity"].get<i32>();
+	
 	loadProgress(50);
 
     //Human
-    Human::Instance()->setMetalAmount(j["player"]["initial_metal"].get<i32>());
-    Human::Instance()->setCrystalAmount(j["player"]["initial_crystal"].get<i32>());
-    Human::Instance()->setSiderurgyProductivity(j["player"]["siderurgy_productivity"].get<i32>());
-    Human::Instance()->setQuarryProductivity(j["player"]["quarry_productivity"].get<i32>());
-    Human::Instance()->setBuildingRadious(j["player"]["building_radious"].get<f32>());
+    Human::Instance() -> metalAmount = j["player"]["initial_metal"].get<i32>();
+    Human::Instance() -> crystalAmount = j["player"]["initial_crystal"].get<i32>();
+    Human::Instance() -> buildableRange = j["player"]["building_radius"].get<f32>();
 
     Vector2<f32> humanPosition(j["player"]["mainBuilding"]["position"]["x"], j["player"]["mainBuilding"]["position"]["z"]);
     Human::Instance() -> getBuildingManager() -> createBuilding(humanPosition, "MainBuilding", 0);
-    Human::Instance() -> setHallPosition(Vector3<f32>(humanPosition.x, terrain->getY(humanPosition.x, humanPosition.y), humanPosition.y));
+    Human::Instance() -> hallPosition = Vector3<f32>(humanPosition.x, terrain->getY(humanPosition.x, humanPosition.y), humanPosition.y);
     humanStartPos = humanPosition;
 
     for (auto& element : j["player"]["buildings"]){
@@ -100,15 +102,13 @@ void Map::Init() {
     loadProgress(70);
 
     //IA
-    IA::Instance()->setMetalAmount(j["IA"]["initial_metal"].get<i32>());
-    IA::Instance()->setCrystalAmount(j["IA"]["initial_crystal"].get<i32>());
-    IA::Instance()->setSiderurgyProductivity(j["IA"]["siderurgy_productivity"].get<i32>());
-    IA::Instance()->setQuarryProductivity(j["IA"]["quarry_productivity"].get<i32>());
-    IA::Instance()->setBuildingRadious(j["IA"]["building_radious"].get<f32>());
+    IA::Instance() -> metalAmount = j["IA"]["initial_metal"].get<i32>();
+    IA::Instance() -> crystalAmount = j["IA"]["initial_crystal"].get<i32>();
+    IA::Instance() -> buildableRange = j["IA"]["building_radius"].get<f32>();
 
     Vector2<f32> iaPosition(j["IA"]["mainBuilding"]["position"]["x"], j["IA"]["mainBuilding"]["position"]["z"]);
     IA::Instance() -> getBuildingManager() -> createBuilding(iaPosition, "MainBuilding", 0);
-    IA::Instance() -> setHallPosition(Vector3<f32>(iaPosition.x, terrain->getY(iaPosition.x, iaPosition.y), iaPosition.y));
+    IA::Instance() -> hallPosition = Vector3<f32>(iaPosition.x, terrain->getY(iaPosition.x, iaPosition.y), iaPosition.y);
     iaStartPos = iaPosition;
     
     for(auto& element : j["IA"]["buildings"]){
@@ -180,6 +180,14 @@ CameraController* Map::getCamera() {
 
 Margins *Map::getMapMargins(){
 	return mapMargins;
+}
+
+i32 Map::getMetalProductivity(){
+	return metalProductivity;
+}
+
+i32 Map::getCrystalProductivity(){
+	return crystalProductivity;
 }
 
 void Map::loadProgress(i32 p){

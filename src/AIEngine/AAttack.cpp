@@ -12,7 +12,7 @@ AAttack::~AAttack() {
 }
 
 Enumeration::BehaviourState AAttack::Update() {
-    IA::Instance() -> getUnitManager() -> deployAllTroops(Human::Instance()->getHallPosition().toVector2());
+    IA::Instance() -> getUnitManager() -> deployAllTroops(Human::Instance()->hallPosition.toVector2());
     return Enumeration::BehaviourState::Success;
 }
 

@@ -81,9 +81,9 @@ void BuildingManager::drawBuilding() {
 		tempBuilding -> setPosition(dummy);
 
 		if(team == Enumeration::Team::Human){
-			Vector3<f32> tmp = Human::Instance()->getHallPosition();
+			Vector3<f32> tmp = Human::Instance()->hallPosition;
 			f32 distance = std::sqrt(std::pow(tmp.x - dummy.x, 2) + std::pow(tmp.z - dummy.y, 2));
-			if(Human::Instance()->getBuildingRadious() < distance){
+			if(Human::Instance()->buildableRange < distance){
 				canBuild = false;
 			}
 			else{
@@ -167,23 +167,6 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
 	}
 }
 
-//Checks if the player, either the human or the AI can afford to build a specific building 
-bool BuildingManager::isSolvent(i32 metalCost, i32 crystalCost) {
-	i32 metalAmt = 0;
-	i32 crystalAmt = 0;
-	if (team == Enumeration::Team::Human) {
-		metalAmt = Human::Instance() -> getMetalAmount();
-		crystalAmt = Human::Instance() -> getCrystalAmount();
-	} else {
-		metalAmt = IA::Instance() -> getMetalAmount();
-		crystalAmt = IA::Instance() -> getCrystalAmount();
-	}
-	bool canPayMetal = metalAmt >= metalCost;
-	bool canPayCrystal = crystalAmt >= crystalCost;
-    
-    return (canPayMetal && canPayCrystal);
-}
-
 /**
  * This method is responsible for managing calls to isSolvent() for the human, registering the type
  * of the desired building and sending the aforementhioned method the prices. It has its own method
@@ -192,7 +175,10 @@ bool BuildingManager::isSolvent(i32 metalCost, i32 crystalCost) {
 bool BuildingManager::checkCanPay(std::string type) {
 	std::map<std::string, BuildingData>::iterator it = baseBuildings.find(type);
 	if (it != baseBuildings.end()){
-		return isSolvent(it->second.metalCost, it->second.crystalCost);
+		if (team == Enumeration::Team::Human)
+			return Human::Instance() -> isSolvent(it->second.metalCost, it->second.crystalCost, 0);
+		else
+			return IA::Instance() -> isSolvent(it->second.metalCost, it->second.crystalCost, 0);
 	}
 	return false;
 }
@@ -233,14 +219,14 @@ SceneNode* BuildingManager::getBuildingLayer() {
 
 void BuildingManager::deleteBuilding(i32 id) {
 	if (inMapBuildings -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
-		Human::Instance() -> decreaseHappiness(inMapBuildings -> find(id) -> second -> getHappinessVariation());
+		Human::Instance() -> modifyHappiness(-inMapBuildings -> find(id) -> second -> getHappinessVariation());
 		if (inMapBuildings -> find(id) -> second -> getType() == "House") {
-			Human::Instance() -> decreasePeople(inMapBuildings -> find(id) -> second -> getCitizensVariation());
+			Human::Instance() -> modifyMaxPeople(-inMapBuildings -> find(id) -> second -> getCitizensVariation());
 		}
 	} else {
-		IA::Instance() -> decreaseHappiness(inMapBuildings -> find(id) -> second -> getHappinessVariation());
+		IA::Instance() -> modifyHappiness(-inMapBuildings -> find(id) -> second -> getHappinessVariation());
 		if (inMapBuildings -> find(id) -> second -> getType() == "House") {
-			IA::Instance() -> decreasePeople(inMapBuildings -> find(id) -> second -> getCitizensVariation());
+			IA::Instance() -> modifyMaxPeople(-inMapBuildings -> find(id) -> second -> getCitizensVariation());
 		}
 	}
 	buildingAmounts[inMapBuildings -> find(id) -> second -> getType()]--;
