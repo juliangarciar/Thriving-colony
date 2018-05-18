@@ -220,7 +220,6 @@ void GameState::Update(){
             g -> changeState(Enumeration::State::DefeatState);
         }
     }
-    //todo llevar a un metodo en window supongo
     //fps count goes after game logic to see how long it took to go through the logic
     Window::Instance() -> calculateFramerate();
 }

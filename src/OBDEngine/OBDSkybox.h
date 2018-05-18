@@ -3,6 +3,7 @@
 
 #include "OBDSceneNode.h"
 #include "Graphics/TTexture.h"
+#include "OBDTexture.h"
 
 #include "Graphics/TSkybox.h"
 
@@ -13,7 +14,7 @@ class OBDSkybox : public OBDEntity {
          * @brief 
          * 
          */
-        OBDSkybox(TTexture* texture);
+        OBDSkybox(OBDTexture* texture);
 
         /**
          * @brief 

@@ -24,7 +24,7 @@ Map::Map() {
 }
 
 Map::~Map() {
-    delete skydome; //Violacion del segmento al borrar.
+    delete skybox;
     delete terrain;
     delete camera;
 }
@@ -69,7 +69,7 @@ void Map::Init() {
     //cellSpace = new CellSpacePartition(10240, 10240, 128, 128, 4);
 
     //Skydome
-    skydome = new SkyDome(new Texture(j["map"]["skybox_texture"].get<std::string>().c_str()));
+    skybox = new Skybox(new Texture(j["map"]["skybox_texture"].get<std::string>().c_str()));
 
     loadProgress(50);
 
