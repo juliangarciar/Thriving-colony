@@ -94,6 +94,8 @@ Unit::Unit(SceneNode* _layer,
     }
 
     unitSensor = new Sensor(this);
+
+    resistance = 0;
 }
 
 Unit::~Unit() {
@@ -504,9 +506,13 @@ void Unit::updateFlockingSensor(){
 }
 
 void Unit::takeDamage(i32 _damage){
-    currentHP = currentHP - _damage;
+    i32 dmg = _damage - resistance;
+    if (dmg < 0) {
+        dmg = 0;
+    }
+    currentHP = currentHP - dmg;
     i32 _qnty = std::floor(currentHP / unitFighterHP);
-    if(currentHP % unitFighterHP != 0){
+    if (currentHP % unitFighterHP != 0){
         _qnty++;
     }
     while(_qnty != unitFighters.size()){
@@ -535,4 +541,12 @@ void Unit::setTarget(Entity *newTarget) {
     if(target == nullptr){
         switchState(Enumeration::UnitState::Idle);
     }
+}
+
+i32 Unit::getResistance() {
+    return resistance;
+}
+
+void Unit::setResistance(i32 h) {
+    resistance = floor(h / 10);
 }

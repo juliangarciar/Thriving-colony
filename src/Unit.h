@@ -221,6 +221,21 @@ class Unit : public Entity {
          * @return i32 that will be the value of the armyLevel variable.
          */
         i32 getArmyLevel();
+
+        /**
+         * @brief Get the resistance of the unit.
+         * 
+         * @return i32 that will be the value of the resistance variable.
+         */
+        i32 getResistance();
+
+        /**
+         * @brief Set the resistance of the unit based on the happiness passed by parameter.
+         * 
+         * @param i32 that will be the happiness of the city of the unit owner. 
+         */
+        void setResistance(i32);
+
         /* New */
         std::vector< Vector2<f32> > getTroopsPosition();        
         std::vector< UnitFighter* > getUnitFighters();
@@ -250,6 +265,9 @@ class Unit : public Entity {
 
         //Damage infliceted by the unit.
         i32 attackDamage;
+
+        //Amount of damage avoided by the unit.
+        i32 resistance;
 
         //True when the unit is trained and false in other case.
         bool finished;

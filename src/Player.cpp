@@ -17,7 +17,7 @@ void Player::Init() {
     citizens = 20;
     people = 20;
     individualUnits = 0;
-    citizensInComing = people / 10;
+    citizensInComing = floor(people / 10);
 
     metalAmount = 1200;
     crystalAmount = 0;
@@ -37,7 +37,7 @@ void Player::Init() {
 void Player::gainResources() {
     metalAmount += getMetalProduction();
     crystalAmount += getCrystalProduction();
-    citizens += citizensInComing + happiness / 50;
+    citizens += citizensInComing + floor(happiness / 50);
     if (citizens + individualUnits > people) {
         citizens = people - individualUnits;
     }
@@ -204,7 +204,7 @@ void Player::decreaseHappiness(i32 h) {
 
 void Player::increasePeople(i32 p) {
     people = people + p;
-    citizensInComing = people / 10;
+    citizensInComing = floor(people / 10);
 }
 
 void Player::increaseIndividualUnits(i32 u) {
@@ -216,7 +216,7 @@ void Player::decreasePeople(i32 p) {
     if (people <= 0) {
         people = 0;
     }
-    citizensInComing = people / 10;
+    citizensInComing = floor(people / 10);
 }
 
 void Player::decreaseIndividualUnits(i32 u) {

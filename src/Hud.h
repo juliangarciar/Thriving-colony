@@ -368,8 +368,6 @@ class Hud {
 
         //
         Timer* toastTimer;
-
-        
 };
 
 #endif
