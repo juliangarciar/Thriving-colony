@@ -26,6 +26,7 @@ class Model {
         void setRotation(Vector3<f32> r);
         i32 getID();
         Vector3<f32> getPosition();
+        Vector3<f32> getRotation();
 		scene::IMeshSceneNode *getModel();
         
     private:

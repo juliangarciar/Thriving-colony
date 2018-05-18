@@ -10,9 +10,9 @@ SkyDome::SkyDome(Texture* tex) {
 }
 
 SkyDome::~SkyDome() {
-    skydome -> remove();
+    //skydome -> remove();
     //skydome -> getParent() -> removeChild(skydome);
-    delete skydome;
-    skydome = nullptr;
-	delete t;
+    //delete skydome;
+    //skydome = nullptr;
+	//delete t;
 }

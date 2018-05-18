@@ -27,7 +27,3 @@ void WinMenu::setHUDEvents(){
         Game::Instance() -> changeState(Enumeration::State::MenuState);
     });
 }
-
-void WinMenu::update() {
-
-}

@@ -31,7 +31,6 @@ IA::IA() : Player() {
 
 IA::~IA() {
     delete tree;
-    //delete nodeRootIA;
     delete buildings;
     delete units;
     choices -> clear();
@@ -52,8 +51,6 @@ void IA::Init(std::string _race) {
     // Create a behaviour and a root node and set them up according to the behaviour
     tree = new BehaviourTree();
     tree -> init(behaviour);
-    //nodeRootIA = new RootNode();
-    //nodeRootIA -> init(behaviour);
 
     // Choices for the debugging system
     choiceIndex = 0;
@@ -61,14 +58,12 @@ void IA::Init(std::string _race) {
 
     updateFastTimer = new Timer(1.00, true);
 	updateFastTimer -> setCallback([&](){
-		//nodeRootIA -> question();
 		rootNode -> Update();
 		updateFastTimer -> restart();
 		updateSlowTimer -> restart();
 	});
     updateSlowTimer = new Timer(3.00, true);
 	updateSlowTimer -> setCallback([&](){
-		//nodeRootIA -> question();
 		rootNode -> Update();
 		updateFastTimer -> restart();
 		updateSlowTimer -> restart();
@@ -81,21 +76,20 @@ void IA::Update() {
     Vector2<f32> IAPos = buildings -> getBuilding(0) -> getPosition();
 
     if (((IAPos . x + 2000 > tarPos.x && IAPos . x - 2000 < tarPos.x) && (IAPos . y + 2000 > tarPos.z && IAPos . y - 2000 < tarPos.z)) || underAttack) {
-        if (updateSlowTimer->isRunning() && !updateFastTimer->isRunning()){
-			updateSlowTimer->stop();
-			updateFastTimer->restart();
+        if (updateSlowTimer -> isRunning() && !updateFastTimer -> isRunning()){
+			updateSlowTimer -> stop();
+			updateFastTimer -> restart();
 		}
     } else {
-		if (!updateSlowTimer->isRunning() && updateFastTimer->isRunning()){
-			updateSlowTimer->restart();
-			updateFastTimer->stop();
+		if (!updateSlowTimer -> isRunning() && updateFastTimer->isRunning()){
+			updateSlowTimer -> restart();
+			updateFastTimer -> stop();
 		}
 	}
 }
 
 void IA::CleanUp() {
     delete tree;
-    //delete nodeRootIA;
     // Add a method to clean the cells the buildings inahbit
     delete buildings;
     delete units;
@@ -137,11 +131,11 @@ bool IA::getUnderAttack() {
         // Get units in the map of the opposing team
         std::map<i32, Unit*> *inMapTroops = Human::Instance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map
-        for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
+        for (std::map<i32, Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
             if (it -> second != nullptr) {
             // Calculate distance between troop requesting target and posible targets
-                xaux = it -> second -> getPosition() . x - pos . x;
-                yaux = it -> second -> getPosition() . y - pos . y;
+                xaux = it -> second -> getPosition().x - pos.x;
+                yaux = it -> second -> getPosition().y - pos.y;
                 dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
 
             if (dist <= requesterRange) {
@@ -156,7 +150,7 @@ void IA::chooseBehaviour() {
     // RAndomize the seed
     srand(time(nullptr));
     // Determine a number between 0 and 4, the number of possible behaviours for the AI to choose
-    behaviour = (Enumeration::IABehaviour)(rand()%(4-0 + 1) + 0);
+    behaviour = (Enumeration::IABehaviour)(rand() % (4-0 + 1) + 0);
     switch (behaviour) {
         case Enumeration::IABehaviour::VeryHappy:
             chosenBehaviour = "Very happy";
@@ -567,14 +561,12 @@ void IA::initializeChoices() {
     choices -> push_back("Build siderurgy");
     choices -> push_back("Build quarry");
     choices -> push_back("Build home");
-    //choices -> push_back(L"Melee footman");
     choices -> push_back("Train mounted melee");
     choices -> push_back("Train creature");
     choices -> push_back("Train ranged footman");
     choices -> push_back("Train mounted ranged");
     choices -> push_back("Train catapult");
     choices -> push_back("Train ram");
-    //choices -> push_back(L"Barrack");
     choices -> push_back("Build barn");
     choices -> push_back("Build workshop");
     choices -> push_back("Build tower");

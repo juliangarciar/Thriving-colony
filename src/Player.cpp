@@ -1,23 +1,25 @@
 #include "Player.h"
 
-//ToDo: seria ideal que todo fuera parametrizable y todo estuviera en el mismo sitio
-
 Player::Player() {
     
 }
 
 Player::~Player() {
     delete updateTimer;
+	updateTimer = nullptr;
 }
 
 void Player::Init() {
+	//ToDo: seria ideal que todo fuera parametrizable y todo estuviera en el mismo sitio
     happiness = 0;
     cityLevel = 10;
     armyLevel = 0;
     citizens = 20;
-    persons = 20;
+    people = 20;
     individualUnits = 0;
-    citizensInComing = persons / 10;
+    citizensInComing = floor(people / 10);
+    resistance = 0;
+    increasedDamage = 0;
 
     metalAmount = 1200;
     crystalAmount = 0;
@@ -31,15 +33,25 @@ void Player::Init() {
 	});
 }
 
+void Player::Update() {
+    resistance = floor(happiness * 10 / 100);
+    increasedDamage = floor(happiness * 15 / 100);
+    if (increasedDamage < 0) {
+        increasedDamage = - increasedDamage;
+    } else {
+        increasedDamage = 0;
+    }
+}
+
 /**
  * CONTROL METHODS
  */
 void Player::gainResources() {
     metalAmount += getMetalProduction();
     crystalAmount += getCrystalProduction();
-    citizens += citizensInComing + happiness / 50;
-    if (citizens + individualUnits > persons) {
-        citizens = persons - individualUnits;
+    citizens += citizensInComing + floor(happiness / 50);
+    if (citizens + individualUnits > people) {
+        citizens = people - individualUnits;
     }
 }
 
@@ -50,7 +62,6 @@ void Player::spendResources(i32 metalCost, i32 crystalCost) {
 }
 
 void Player::increaseHappiness(i32 h) {
-    // ToDo: clamp mejor?
     happiness += h;
     if (happiness <= -100) {
         happiness = -100;
@@ -132,8 +143,8 @@ i32 Player::getCitizens() {
     return citizens;
 }
 
-i32 Player::getPersons() {
-    return persons;
+i32 Player::getPeople() {
+    return people;
 }
 
 i32 Player::getIndividualUnits() {
@@ -180,6 +191,14 @@ Vector3<f32> Player::getHallPosition() {
     return hallPosition;
 }
 
+i32 Player::getResistance() {
+    return resistance;
+}
+
+i32 Player::getIncreasedDamage() {
+    return increasedDamage;
+}
+
 // Tricks
 void Player::receiveMetal() {
     metalAmount = metalAmount + 200;
@@ -203,21 +222,21 @@ void Player::decreaseHappiness(i32 h) {
     }
 }
 
-void Player::increasePersons(i32 p) {
-    persons = persons + p;
-    citizensInComing = persons / 10;
+void Player::increasePeople(i32 p) {
+    people = people + p;
+    citizensInComing = floor(people / 10);
 }
 
 void Player::increaseIndividualUnits(i32 u) {
     individualUnits = individualUnits + u;
 }
 
-void Player::decreasePersons(i32 p) {
-    persons = persons - p;
-    if (persons <= 0) {
-        persons = 0;
+void Player::decreasePeople(i32 p) {
+    people = people - p;
+    if (people <= 0) {
+        people = 0;
     }
-    citizensInComing = persons / 10;
+    citizensInComing = floor(people / 10);
 }
 
 void Player::decreaseIndividualUnits(i32 u) {

@@ -23,7 +23,6 @@ Entity::Entity(SceneNode* _layer,
     i32 _cellsY,
     std::string _modelPath,
     std::string _texturePath) : 
-        layer(_layer),
         ID(_id),
         team(_team),
         entityType(_type),
@@ -52,16 +51,7 @@ Entity::Entity(SceneNode* _layer,
     tookDamageTimer -> setCallback([&](){
         setBaseColor();
     });
-/*
-    std::string name = "Test";
-    std::vector<std::string> * vector = new std::vector<std::string>();
-    vector -> push_back(_modelPath);
-    std::map< std::string, std::vector < std::string > > * frames = new std::map< std::string, std::vector < std::string > > ();
 
-    frames->insert(std::pair< std::string, std::vector<std::string>>(name, *vector));
-
-    animatedModel = new Animation(_layer, _id, frames);
-*/
     //Set model
     model = new Model(_layer, _id, _modelPath);
     
@@ -73,7 +63,7 @@ Entity::Entity(SceneNode* _layer,
 	// Set the color
     setBaseColor();
 
-	//ToDo: hacia abajo anadido por rafa
+	//ToDo: separa datos de la aplicacion
     f32 billBoardOffset = 200.00;
 
 	Vector3<f32> pos(
@@ -82,12 +72,11 @@ Entity::Entity(SceneNode* _layer,
 		getPosition().y
 	);
 
-    barBg = new Billboard(layer, ID, pos, Color(0,0,0,255), Color(0,0,0,255));
-	bar = new Billboard(layer, ID, pos, Color(0, 255, 0, 255), Color(0, 255, 0, 255));
+    barBg = new Billboard(_layer, ID, pos, Color(0,0,0,255), Color(0,0,0,255));
+	bar = new Billboard(_layer, ID, pos, Color(0, 255, 0, 255), Color(0, 255, 0, 255));
     barBg -> setSize(105.00, 15.00);
 }
 
-//ToDo: revisar
 Entity::~Entity() {
     if(target != nullptr){
         target->removeHostile(this);
@@ -101,8 +90,15 @@ Entity::~Entity() {
     delete tookDamageTimer;
 
     delete baseMat;
+	//Billboard
     delete barBg;
     delete bar;
+	//
+    for (std::size_t i = 0; i < hostile.size(); i++) {
+        delete hostile[i];
+    }
+    hostile.clear();
+    delete target;
 }
 
 void Entity::addHostile(Entity* newHostileUnit) {
@@ -128,24 +124,18 @@ void Entity::putHostileTargetsToNull() {
 //SETTERS
 void Entity::setID(i32 id){
     ID = id;
-    //animatedModel -> setID(id);
     model -> setID(id);
 }
 
 void Entity::setPosition(Vector2<f32> vectorData) {
     vectorPos = vectorData;
 
-    //animatedModel -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y), vectorData.y));
     model -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y), vectorData.y));
 
     hitBox.moveHitbox(vectorData);
 }
 
 //GETTERS
-SceneNode *Entity::getLayer() {
-    return layer;
-}
-
 i32 Entity::getID() const{
     return ID;
 }
@@ -158,9 +148,7 @@ Enumeration::EntityType Entity::getEntityType() const{
     return entityType;
 }
 
-//Animation* Entity::getModel() const{
 Model* Entity::getModel() const{
-    //return animatedModel;
     return model;
 }
 
@@ -235,3 +223,21 @@ void Entity::setBaseColor() {
 void Entity::setDamageColor() {
     model -> setColor(Color(255, 0, 0, 255));
 }
+
+/*
+    std::string name = "Test";
+    std::vector<std::string> * vector = new std::vector<std::string>();
+    vector -> push_back(_modelPath);
+    std::map< std::string, std::vector < std::string > > * frames = new std::map< std::string, std::vector < std::string > > ();
+
+    frames->insert(std::pair< std::string, std::vector<std::string>>(name, *vector));
+
+    animatedModel = new Animation(_layer, _id, frames);
+    animatedModel -> setID(id);
+
+    animatedModel -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y), vectorData.y));
+
+	Animation* Entity::getModel() const
+	  
+	return animatedModel;
+*/

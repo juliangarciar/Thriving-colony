@@ -14,6 +14,8 @@
 #include "IOEngine/IO.h"
 #include "UnitManager.h"
 
+//ToDo: revisar y limpiar esta clase
+
 Unit::Unit(SceneNode* _layer, 
     i32 _id, 
     Enumeration::Team _team, 
@@ -104,6 +106,7 @@ Unit::~Unit() {
     unitFighters.clear();
     delete unitSensor;
     delete pathManager;
+
     delete recruitingTimer;
     delete enemySensorTimer;
     delete attackTimer;
@@ -182,9 +185,9 @@ void Unit::switchState(Enumeration::UnitState newState) {
     state = newState;
 }
 
-void Unit::recruitingState(){
-    if (recruitingTimer -> isRunning()){
-        if (getTeam() == Enumeration::Team::Human){
+void Unit::recruitingState() {
+    if (recruitingTimer -> isRunning()) {
+        if (getTeam() == Enumeration::Team::Human) {
             Hud::Instance() -> modifyTroopFromQueue(getID(), recruitingTimer -> getElapsedTime() / recruitingTimer -> getMaxDuration());
         }
     }
@@ -243,7 +246,7 @@ void Unit::retractState() {
     if (readyToEnter){
         retractedCallback(this);
         for(std::size_t i = 0; i < unitFighters.size(); ++i){
-            unitFighters[i]->setActive(false);
+            unitFighters[i] -> setActive(false);
         }
         getModel() -> setActive(false);
         switchState(Enumeration::UnitState::InHome);
@@ -256,7 +259,7 @@ void Unit::moveTroop() {
     if (moving) {
         // close to destination, stop
         if (hasArrived()) {
-            if(pathFollow.empty()){
+            if (pathFollow.empty()) {
                 moving = false;
                 if (state == Enumeration::UnitState::Retract) {
                     readyToEnter = true;
@@ -282,10 +285,10 @@ void Unit::moveTroop() {
             Vector2<f32> _oldPosition = vectorPos;
             vectorSpd = vectorDir * moveSpeed;
             vectorPos += vectorSpd;
-            vectorPos = _oldPosition + (vectorPos - _oldPosition) * Window::Instance()->getDeltaTimeVariance();
-            WorldGeometry::Instance()->updateUnitCell(_oldPosition, vectorPos, this);
+            vectorPos = _oldPosition + (vectorPos - _oldPosition) * Window::Instance() -> getDeltaTimeVariance();
+            WorldGeometry::Instance() -> updateUnitCell(_oldPosition, vectorPos, this);
             setPosition(vectorPos);
-            unitSensor->move(vectorPos);
+            unitSensor -> move(vectorPos);
         }
     }
 }
@@ -294,8 +297,8 @@ void Unit::moveTroop() {
 bool Unit::inRangeOfAttack() {
     bool inRange = false;
     if (getTarget() != nullptr) {
-        f32 xaux = getTarget()->getPosition().x - this->getPosition().x;
-        f32 yaux = getTarget()->getPosition().y - this->getPosition().y;
+        f32 xaux = getTarget() -> getPosition().x - getPosition().x;
+        f32 yaux = getTarget() -> getPosition().y - getPosition().y;
         f32 dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
         if (dist <= getAttackRange()) {
             inRange = true;
@@ -308,12 +311,12 @@ void Unit::triggerRecruitedCallback(){
     recruitedCallback(this);
 }
 
-void Unit::triggerRetractedCallback(){
+void Unit::triggerRetractedCallback() {
     retractedCallback(this);
 }
 
 /////SETTERS/////
-void Unit::setUnitCell(Vector2<f32> vectorPosition){
+void Unit::setUnitCell(Vector2<f32> vectorPosition) {
     WorldGeometry::Instance() -> setUnitCell(vectorPosition, this);
 }
 
@@ -333,29 +336,29 @@ void Unit::setTroopDestination(Vector2<f32> _vectorData) {
 
     vectorDes = _vectorData;
     std::size_t size = unitFighters.size();
-    for(std::size_t i = 0; i < size; i++){
-        unitFighters[i]->setDestiny(_vectorData + WorldGeometry::Instance()->getSquadPosition(size - 1, i));
+    for (std::size_t i = 0; i < size; i++) {
+        unitFighters[i] -> setDestiny(_vectorData + WorldGeometry::Instance() -> getSquadPosition(size - 1, i));
     }
     moving = true;
 }
 
-void Unit::setPath(std::list< Vector2<f32> > path){
-    this->pathFollow = path;
+void Unit::setPath(std::list<Vector2<f32>> path) {
+    pathFollow = path;
 }
 
-void Unit::setPathToTarget(Vector2<f32> vectorData){
-    this->pathManager->createPathTo(vectorData);
-    if(!pathFollow.empty()){
-        setTroopDestination(this->pathFollow.front());
+void Unit::setPathToTarget(Vector2<f32> vectorData) {
+    pathManager -> createPathTo(vectorData);
+    if (!pathFollow.empty()) {
+        setTroopDestination(pathFollow.front());
         pathFollow.pop_front();
     }
 }
 
-void Unit::setRecruitedCallback(std::function<void(Unit*)> f){
+void Unit::setRecruitedCallback(std::function<void(Unit*)> f) {
     recruitedCallback = f;
 }
 
-void Unit::setRetractedCallback(std::function<void(Unit*)> f){
+void Unit::setRetractedCallback(std::function<void(Unit*)> f) {
     retractedCallback = f;
 }
 
@@ -376,7 +379,7 @@ Vector2<f32> Unit::getDestination() {
     return vectorDes;
 }
 
-std::list< Vector2<f32> > Unit::getPath(){
+std::list<Vector2<f32>> Unit::getPath() {
     return pathFollow;
 }
 
@@ -392,15 +395,14 @@ i32 Unit::getArmyLevel(){
     return armyLevel;
 }
 
-std::vector< UnitFighter* > Unit::getUnitFighters(){
+std::vector<UnitFighter*> Unit::getUnitFighters() {
     return unitFighters;
 }
 
-void Unit::calculateDirection(){
+void Unit::calculateDirection() {
     Vector2<f32> _incVector = vectorDes - vectorPos;
     /* Normalize */
-    f32 distance = std::sqrt(std::pow(_incVector.x, 2) + 
-                             std::pow(_incVector.y ,2));
+    f32 distance = std::sqrt(std::pow(_incVector.x, 2) + std::pow(_incVector.y ,2));
     
     if(distance != 0){
         vectorDir = _incVector / distance;        
@@ -409,31 +411,46 @@ void Unit::calculateDirection(){
         vectorDir = Vector2<f32>(0, 0);
     }
 }
-bool Unit::hasArrived(){
-    if((vectorPos - vectorDes).dotProduct() < maxPositionDesviation){
+bool Unit::hasArrived() {
+    if ((vectorPos - vectorDes).dotProduct() < maxPositionDesviation) {
         vectorSpd = Vector2<f32>(0, 0);
         return true;
     }
     return false;
 }
 /* Check how to do this */
-void Unit::updateFlockingSensor(){
-    std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(vectorPos);
-    std::vector< UnitFighter* > dummyFighters;
-    std::vector< UnitFighter* > dummySpace;
-    for(std::size_t i = 0; i < nearUnits.size(); i++){
-        dummySpace = nearUnits[i]->getUnitFighters();
+void Unit::updateFlockingSensor() {
+    std::vector<Unit*> nearUnits = WorldGeometry::Instance() -> getNeighborUnits(vectorPos);
+    std::vector<UnitFighter*> dummyFighters;
+    std::vector<UnitFighter*> dummySpace;
+    for(std::size_t i = 0; i < nearUnits.size(); i++) {
+        dummySpace = nearUnits[i] -> getUnitFighters();
         dummyFighters.insert(dummyFighters.end(), dummySpace.begin(), dummySpace.end());
     }
     nearUnitFighters = dummyFighters;
     for(std::size_t i = 0; i < unitFighters.size(); i++){
-        unitFighters[i]->setNearFighters(nearUnitFighters);
+        unitFighters[i] -> setNearFighters(nearUnitFighters);
     }
 }
 
 void Unit::takeDamage(i32 _damage){
-    currentHP = currentHP - _damage;
-    if(currentHP < 1){
+    
+    i32 resistance = 0;
+    if (team == Enumeration::Team::Human) {
+        resistance = Human::Instance() -> getResistance();
+    } 
+    else {
+        resistance = IA::Instance() -> getResistance();
+    }
+    i32 dmg = _damage - resistance;
+
+    if (dmg < 0) {
+        dmg = 0;
+    }
+    currentHP = currentHP - dmg;
+    tookDamageTimer -> restart();
+    setDamageColor();
+    if (currentHP <= 0) {
         currentHP = 0;
         unitManager->deleteUnit(ID);
         return;
@@ -453,16 +470,16 @@ void Unit::takeDamage(i32 _damage){
     }
 }
 
-void Unit::updateUnitFighters(){
+void Unit::updateUnitFighters() {
     updateFlockingSensor();
-    for(std::size_t i = 0; i < unitFighters.size(); i++){
-        unitFighters[i]->update();
+    for (std::size_t i = 0; i < unitFighters.size(); i++) {
+        unitFighters[i] -> update();
     }
 }
 
 void Unit::setTarget(Entity *newTarget) {
     target = newTarget;
-    if(target == nullptr){
+    if (target == nullptr) {
         switchState(Enumeration::UnitState::Idle);
         enemySensorTimer->restart();
     }

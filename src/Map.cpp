@@ -144,7 +144,7 @@ void Map::CleanUp() {
     lights.clear();
     delete terrain;
     delete camera;
-    //delete skydome; Violacion del segmento al borrar.
+    delete skydome;
 }
 
 Vector2<f32> Map::getHumanStartPosition(){

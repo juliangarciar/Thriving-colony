@@ -35,6 +35,13 @@ class Building : public Entity {
          */
         void startBuilding();
 
+		/**
+		 * @brief 
+		 * 
+		 * @param _damage 
+		 */
+        void takeDamage(i32 _damage);
+
         /**
          * @brief Set the callback variable as the function passed by parameter.
          * 
@@ -53,6 +60,13 @@ class Building : public Entity {
 		 */
 		void setBuildingColor();
 
+		/**
+		 * @brief Set the Target object
+		 * 
+		 * @param newTarget 
+		 */
+        void setTarget(Entity *newTarget);
+
         /**
          * @brief Get the finished variable of the building.
          * 
@@ -66,9 +80,6 @@ class Building : public Entity {
          * @return std::string that will be the value of the type variable.
          */
         std::string getType();
-
-        void takeDamage(i32 _damage);
-        void setTarget(Entity *newTarget);
     private:
         /**
          * @brief Subtract the metal and crystal cost of the building to the metal and crystal available of the player (Human or IA) and add the city level that provided by the building to the player's city level (Human or IA).

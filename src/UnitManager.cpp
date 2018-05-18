@@ -11,6 +11,8 @@
 #include <OBDEngine/ResourceManager/ResourceJSON.h>
 #include "EntityData.h"
 
+//ToDo: revisar esta clase
+
 //Constructor
 UnitManager::UnitManager(Enumeration::Team t, std::string b) {
     IO::Instance() -> getResourceManager()->loadResource("media/gameConfig/UnitData/"+b+"Units.json");
