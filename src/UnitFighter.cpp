@@ -3,7 +3,7 @@
 #include "Map.h"
 #include "GraphicEngine/Window.h"
 #include "IOEngine/Timer.h"
-
+#include "IOEngine/IO.h"
 UnitFighter::UnitFighter(SceneNode* _parent, i32 _id, std::string _path, f32 _speed):speed(_speed), maxDesviation(_speed * 0.5f), maxTime(0), unitFighterClock(nullptr){
     fighterModel = new Model(_parent, _id, _path);
     vectorPosition = Vector2<f32>(0, 0);
@@ -17,6 +17,7 @@ UnitFighter::UnitFighter(SceneNode* _parent, i32 _id, std::string _path, f32 _sp
     });
 }
 UnitFighter::~UnitFighter(){
+    IO::Instance()->unregisterTimer(unitFighterClock);
     delete unitFighterClock;
     delete fighterModel;
     nearFighters.clear();

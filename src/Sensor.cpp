@@ -25,6 +25,7 @@ void Sensor::update(){
         propietary->setTarget(priorityTarget);
         std::cout << "Entidad encontrada en: " << priorityTarget->getPosition().x << " , " << priorityTarget->getPosition().y << "\n";
     }
+    std::cout << "Me actualizo panada \n";
 }
 
 void Sensor::move(Vector2<f32> _vectorPosition){

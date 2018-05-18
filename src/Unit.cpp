@@ -11,6 +11,7 @@
 #include "UnitFighter.h"
 #include "Game.h"
 #include "Sensor.h"
+#include "IOEngine/IO.h"
 
 Unit::Unit(SceneNode* _layer, 
     i32 _id, 
@@ -58,14 +59,16 @@ Unit::Unit(SceneNode* _layer,
                         unitSensor(nullptr)        
 {
 
+    unitSensor = new Sensor(this);
+
     recruitingTimer = new Timer(baseData.recruitingTime, false);
     recruitingTimer -> setCallback([&](){
         recruitedCallback(this);
         switchState(Enumeration::UnitState::InHome);
     });
 
-    enemySensorTimer = new Timer(0.5, false, false);
-    enemySensorTimer->setCallback([&]{
+    enemySensorTimer = new Timer(0.5, true, true);
+    enemySensorTimer->setCallback([&](){
         //if(state != Enumeration::UnitState::InHome && state != Enumeration::UnitState::Recruiting){
             unitSensor->update();
         //}
@@ -78,7 +81,7 @@ Unit::Unit(SceneNode* _layer,
         //}
     });
 
-    chaseTimer = new Timer(1.0, false, false);
+    chaseTimer = new Timer(0.5, false, false);
     chaseTimer->setCallback([&](){
         if(target != nullptr){
             setPathToTarget(target->getPosition());
@@ -91,18 +94,23 @@ Unit::Unit(SceneNode* _layer,
         unitFighters[i] = new UnitFighter(_layer, _id, baseData.troopModel, baseData.moveSpeed);
     }
 
-    unitSensor = new Sensor(this);
 }
 
 Unit::~Unit() {
+    IO::Instance()->unregisterTimer(recruitingTimer);
+    IO::Instance()->unregisterTimer(enemySensorTimer);
+    IO::Instance()->unregisterTimer(attackTimer);
+    IO::Instance()->unregisterTimer(chaseTimer);
     WorldGeometry::Instance()->clearUnitCell(getPosition(), this);
-    delete pathManager;
     for(std::size_t i = 0; i < unitFighters.size(); i++){
         delete unitFighters[i];
     }
     unitFighters.clear();
+    delete pathManager;
     delete recruitingTimer;
     delete enemySensorTimer;
+    delete attackTimer;
+    delete chaseTimer;
 }
 
 void Unit::Init() {
@@ -124,11 +132,9 @@ void Unit::update() {
         break;
         case Enumeration::UnitState::Idle:
             //ToDo: poner material idle
-            if(enemySensorTimer->isFinished()){
-                enemySensorTimer->restart();
-            }
             idleState();
         break;
+        /* Maybe this shouldn't exist */
         case Enumeration::UnitState::Move:
             //ToDo: poner material moving
             moveState();
@@ -143,9 +149,6 @@ void Unit::update() {
         break;    
         case Enumeration::UnitState::Chase:
             //s//ToDo: poner material chase
-            if(chaseTimer->isFinished()){
-                chaseTimer->restart();
-            }
             chaseState();
         break;
         case Enumeration::UnitState::Retract:
@@ -191,43 +194,16 @@ void Unit::recruitingState(){
 }
 
 void Unit::idleState() {
-    //updateUnitFighters();
-    //enemySensorTimer->tick();
-    //if (refreshTarget()) { // if got one
-    //    switchState(Enumeration::UnitState::Chase);
+    //if(enemySensorTimer->isFinished()){
+    //    std::cout << "Ha parao, vuelvo a encender el sensor \n";
+    //    enemySensorTimer->restart();
     //}
+    if (target != nullptr) { // if got one
+        switchState(Enumeration::UnitState::Attack);
+    }
 }
 
 void Unit::moveState() {
-    //moveTroop();
-    //updateUnitFighters();
-    //if (hasArrived()) {
-    //    if(pathFollow.empty()){
-    //        if (state == Enumeration::UnitState::Retract) {
-    //            readyToEnter = true;
-    //            Human::Instance() -> getUnitManager() -> unSelectTroop();
-    //            //triggerRetractedCallback();
-    //        }
-    //        else{
-    //            switchState(Enumeration::Idle);
-    //            enemySensorTimer->start();
-    //        }
-    //    }
-    //    else{
-    //        setTroopDestination(this->pathFollow.front());
-    //        pathFollow.pop_front();
-    //    }
-    //}
-    //else{
-    //    calculateDirection();
-    //    Vector2<f32> _oldPosition = vectorPos;
-    //    vectorSpd = vectorDir * moveSpeed;
-    //    vectorPos += vectorSpd;
-    //    vectorPos = _oldPosition + (vectorPos - _oldPosition) * Window::Instance()->getDeltaTimeVariance();
-    //    WorldGeometry::Instance()->updateUnitCell(_oldPosition, vectorPos, this);
-    //    setPosition(vectorPos);
-    //    unitSensor->move(vectorPos);
-    //}
 }
 
 void Unit::attackMoveState() {
@@ -242,7 +218,24 @@ void Unit::attackMoveState() {
 }
 
 void Unit::attackState() {
-    if(inRangeOfAttack()) {
+    if(target != nullptr){
+        if(inRangeOfAttack()) {
+            if(canAttack){
+                target->takeDamage(attackDamage);
+                canAttack = false;
+            }
+        }
+        else{
+            switchState(Enumeration::UnitState::Chase);
+            setPathToTarget(target->getPosition());
+            chaseTimer->restart();
+        }
+    }
+    else{
+        switchState(Enumeration::UnitState::Idle);
+        //unitSensor->update();
+        enemySensorTimer->restart();
+    }
         //if (getTarget() != nullptr && getTarget() -> getTeam() != getTeam()) {
         //    setAttacking(true);
         //    if (attackCountdown <= 0) {
@@ -270,31 +263,21 @@ void Unit::attackState() {
         //        }
         //    }
         //}
-    } 
-    else {
-        switchState(Enumeration::UnitState::Chase);
-        setPathToTarget(target->getPosition());
-        chaseTimer->restart();
-    }
 }
 
 /// Chasing the target
 void Unit::chaseState() {
-    //chaseTimer->tick();
-    if(inRangeOfAttack()) {
-        switchState(Enumeration::UnitState::Attack);
+    if(target == nullptr){
+        switchState(Enumeration::UnitState::Idle);
         chaseTimer->stop();
+        //unitSensor->update();
+        enemySensorTimer->restart();
     }
     else{
-    //if (moving) {
-    //    // If i can attack, then do so
-    //    if (inRangeOfAttack()) {
-    //        moving = false;
-    //        switchState(Enumeration::UnitState::Attack);
-    //    } else { //If i am too far away to attack, then move closer.
-    //        setPathToTarget(getTarget()->getPosition());
-    //    }
-    //}
+        if(inRangeOfAttack()) {
+            switchState(Enumeration::UnitState::Attack);
+            chaseTimer->stop();
+        }
     }
 }
 
@@ -324,9 +307,14 @@ void Unit::moveTroop() {
                     Human::Instance() -> getUnitManager() -> unSelectTroop();
                     //triggerRetractedCallback();
                 }
+                else if(state == Enumeration::UnitState::Chase){
+                    switchState(Enumeration::UnitState::Attack);
+                    chaseTimer->stop();
+                }
                 else{
-                    switchState(Enumeration::Idle);
-                    enemySensorTimer->start();
+                    switchState(Enumeration::UnitState::Idle);
+                    //unitSensor->update();
+                    enemySensorTimer->restart();
                 }
             }
             else{
@@ -532,5 +520,6 @@ void Unit::setTarget(Entity *newTarget) {
     target = newTarget;
     if(target == nullptr){
         switchState(Enumeration::UnitState::Idle);
+        enemySensorTimer->restart();
     }
 }

@@ -148,6 +148,7 @@ bool UnitManager::createTroop(std::string type) {
 }
 
 //Update all troops
+/* Delete here the dead units */
 void UnitManager::updateUnitManager() {
     // Retractear una sola unidad
     if (selectedTroop != nullptr) {
@@ -210,7 +211,7 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
         inHallTroops->erase(temp->getID());
         //Insert in map
         inMapTroops -> insert(std::pair<i32, Unit*>(temp -> getModel() -> getID(), temp));
-        temp -> switchState(Enumeration::UnitState::AttackMove); // ToDo: why attack move?
+        temp -> switchState(Enumeration::UnitState::Move); // ToDo: why attack move?
         //Vector3<f32> dummy = Vector3<f32>(0, 0, 0);
         //Cell* origin = WorldGeometry::Instance()->positionToCell(p);
         Cell* target;
@@ -250,7 +251,7 @@ void UnitManager::deployAllTroops(Vector2<f32> p){
         //Insert in map
         inMapTroops -> insert(std::pair<i32, Unit*>(temp -> getModel() -> getID(), temp));
 
-        temp -> switchState(Enumeration::UnitState::AttackMove); // ToDo: why attack move?
+        temp -> switchState(Enumeration::UnitState::Move); // ToDo: why attack move?
         //Cell* origin = WorldGeometry::Instance()->positionToCell(p);
         Cell* target;
         Vector3<f32> hallPosition(0, 0, 0);

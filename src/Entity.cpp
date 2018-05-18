@@ -88,6 +88,7 @@ Entity::Entity(SceneNode* _layer,
 
 //ToDo: revisar
 Entity::~Entity() {
+    putHostileTargetsToNull();
     if (model != nullptr){
         delete model;
     }
@@ -115,7 +116,7 @@ void Entity::removeHostile(Entity* oldHostileUnit) {
 
 void Entity::putHostileTargetsToNull() {
     for (i32 i = 0; i < hostile.size(); i++) {
-        hostile.at(i) -> setTarget(nullptr);
+        hostile[i] -> setTarget(nullptr);
     }
 }
 
