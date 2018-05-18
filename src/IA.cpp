@@ -16,8 +16,6 @@
 #include "AIEngine/ARecruit.h"
 #include "AIEngine/ARetreat.h"
 
-//ToDo: revisar y limpiar esta clase
-
 IA* IA::instance = 0;
 
 IA* IA::Instance() {
@@ -33,7 +31,6 @@ IA::IA() : Player() {
 
 IA::~IA() {
     delete tree;
-    //delete nodeRootIA;
     delete buildings;
     delete units;
     choices -> clear();
@@ -54,8 +51,6 @@ void IA::Init(std::string _race) {
     // Create a behaviour and a root node and set them up according to the behaviour
     tree = new BehaviourTree();
     tree -> init(behaviour);
-    //nodeRootIA = new RootNode();
-    //nodeRootIA -> init(behaviour);
 
     // Choices for the debugging system
     choiceIndex = 0;
@@ -63,14 +58,12 @@ void IA::Init(std::string _race) {
 
     updateFastTimer = new Timer(1.00, true);
 	updateFastTimer -> setCallback([&](){
-		//nodeRootIA -> question();
 		rootNode -> Update();
 		updateFastTimer -> restart();
 		updateSlowTimer -> restart();
 	});
     updateSlowTimer = new Timer(3.00, true);
 	updateSlowTimer -> setCallback([&](){
-		//nodeRootIA -> question();
 		rootNode -> Update();
 		updateFastTimer -> restart();
 		updateSlowTimer -> restart();
@@ -97,7 +90,6 @@ void IA::Update() {
 
 void IA::CleanUp() {
     delete tree;
-    //delete nodeRootIA;
     // Add a method to clean the cells the buildings inahbit
     delete buildings;
     delete units;
@@ -119,11 +111,8 @@ BehaviourTree* IA::getTree() {
 * until find the first empty position
 */
 
-Vector2<f32> IA::determinatePositionBuilding(const Box2D& buildingHitbox) const{
-    Vector2<f32> dummy = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(),
-                                                                 hallPosition.toVector2(),
-                                                                 buildingHitbox,
-                                                                 true)->getPosition();
+Vector2<f32> IA::determinatePositionBuilding(const Box2D& buildingHitbox) const {
+    Vector2<f32> dummy = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(), hallPosition.toVector2(), buildingHitbox, true)->getPosition();
     return dummy;
 }
 

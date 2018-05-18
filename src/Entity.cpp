@@ -88,6 +88,9 @@ Entity::~Entity() {
     delete barBg;
     delete bar;
 	//
+    for (std::size_t i = 0; i < hostile.size(); i++) {
+        delete hostile[i];
+    }
     hostile.clear();
 }
 

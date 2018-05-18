@@ -229,12 +229,12 @@ void BuildingManager::deleteBuilding(i32 id) {
 	if (inMapBuildings -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
 		Human::Instance() -> decreaseHappiness(inMapBuildings -> find(id) -> second -> getHappinessVariation());
 		if (inMapBuildings -> find(id) -> second -> getType() == "House") {
-			Human::Instance() -> decreasePersons(inMapBuildings -> find(id) -> second -> getCitizensVariation());
+			Human::Instance() -> decreasePeople(inMapBuildings -> find(id) -> second -> getCitizensVariation());
 		}
 	} else {
 		IA::Instance() -> decreaseHappiness(inMapBuildings -> find(id) -> second -> getHappinessVariation());
 		if (inMapBuildings -> find(id) -> second -> getType() == "House") {
-			IA::Instance() -> decreasePersons(inMapBuildings -> find(id) -> second -> getCitizensVariation());
+			IA::Instance() -> decreasePeople(inMapBuildings -> find(id) -> second -> getCitizensVariation());
 		}
 	}
 	buildingAmounts[inMapBuildings -> find(id) -> second -> getType()]--;
