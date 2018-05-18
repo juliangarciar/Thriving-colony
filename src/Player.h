@@ -31,12 +31,12 @@ class Player {
         void Init();
 
         /**
-         * @brief Virtual method that will be implemented at classes that will inherit from Player class.
+         * @brief Updates the resistance and the damage of the palyer's troops.
          * 
          * @see Update() method from Human class.
          * @see Update() method from IA class.
          */
-        virtual void Update() = 0;
+        void Update();
 
         /**
          * @brief Virtual method that will be implemented at classes that will inherit from Player class.
@@ -309,6 +309,20 @@ class Player {
          */
         void receiveCitizens();
 
+        /**
+         * @brief Get the resistance of a unit.
+         * 
+         * @return i32 that will be the value of the resistance variable.
+         */
+        i32 getResistance();
+
+        /**
+         * @brief Get the increased damage of a unit.
+         * 
+         * @return i32 that will be the value of the increasedDamage variable.
+         */
+        i32 getIncreasedDamage();
+
     protected:
         //Happiness of the player's city.
         i32 happiness;
@@ -345,6 +359,12 @@ class Player {
 
         //
         i32 buildingRadious;
+
+        //Amount of damage avoided by a unit.
+        i32 resistance;
+
+        //Amount of increased damage of a unit.
+        i32 increasedDamage;
 
         //True if player's city is under attack and false in other case.
         bool underAttack;

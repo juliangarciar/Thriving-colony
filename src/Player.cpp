@@ -18,6 +18,8 @@ void Player::Init() {
     people = 20;
     individualUnits = 0;
     citizensInComing = floor(people / 10);
+    resistance = 0;
+    increasedDamage = 0;
 
     metalAmount = 1200;
     crystalAmount = 0;
@@ -29,6 +31,16 @@ void Player::Init() {
 	updateTimer -> setCallback([&](){
         gainResources();
 	});
+}
+
+void Player::Update() {
+    resistance = floor(happiness * 10 / 100);
+    increasedDamage = floor(happiness * 15 / 100);
+    if (increasedDamage < 0) {
+        increasedDamage = - increasedDamage;
+    } else {
+        increasedDamage = 0;
+    }
 }
 
 /**
@@ -177,6 +189,14 @@ UnitManager* Player::getUnitManager() {
 
 Vector3<f32> Player::getHallPosition() {
     return hallPosition;
+}
+
+i32 Player::getResistance() {
+    return resistance;
+}
+
+i32 Player::getIncreasedDamage() {
+    return increasedDamage;
 }
 
 // Tricks

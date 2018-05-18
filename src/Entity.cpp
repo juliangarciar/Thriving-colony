@@ -92,6 +92,7 @@ Entity::~Entity() {
         delete hostile[i];
     }
     hostile.clear();
+    delete target;
 }
 
 void Entity::addHostile(Entity* newHostileUnit) {

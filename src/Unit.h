@@ -222,20 +222,6 @@ class Unit : public Entity {
          */
         i32 getArmyLevel();
 
-        /**
-         * @brief Get the resistance of the unit.
-         * 
-         * @return i32 that will be the value of the resistance variable.
-         */
-        i32 getResistance();
-
-        /**
-         * @brief Set the resistance of the unit based on the happiness passed by parameter.
-         * 
-         * @param i32 that will be the happiness of the city of the unit owner. 
-         */
-        void setResistance(i32);
-
         /* New */
         std::vector< Vector2<f32> > getTroopsPosition();        
         std::vector< UnitFighter* > getUnitFighters();
@@ -245,6 +231,7 @@ class Unit : public Entity {
         void takeDamage(i32 _damage);
         void updateUnitFighters();
         void setTarget(Entity *newTarget);
+        
     private:
         /**
          * @brief Initialize the variables.
@@ -265,9 +252,6 @@ class Unit : public Entity {
 
         //Damage infliceted by the unit.
         i32 attackDamage;
-
-        //Amount of damage avoided by the unit.
-        i32 resistance;
 
         //True when the unit is trained and false in other case.
         bool finished;
@@ -324,8 +308,8 @@ class Unit : public Entity {
         std::string selectEvent;
 
         //
-        std::vector< UnitFighter* > unitFighters;
-        std::vector< UnitFighter* > nearUnitFighters;
+        std::vector<UnitFighter*> unitFighters;
+        std::vector<UnitFighter*> nearUnitFighters;
         f32 maxPositionDesviation;
         i32 unitFighterHP;
         Sensor* unitSensor;

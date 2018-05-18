@@ -44,7 +44,6 @@ Building::Building(
 
 Building::~Building() {
     delete buildTimer;
-    buildTimer = nullptr;
 }
 
 void Building::startBuilding() {
