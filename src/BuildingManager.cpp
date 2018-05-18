@@ -98,6 +98,12 @@ void BuildingManager::drawBuilding() {
 			tempBuilding = nullptr;
 			return;
 		}
+
+		if (IO::Instance() -> getKeyboard() -> keyPressed(82)) {
+			f32 rot = tempBuilding -> getModel() -> getRotation() . y;
+			rot += 90;
+			tempBuilding -> getModel() -> setRotation(Vector3<f32>(0,rot,0));
+		}
 		
 		if (!canBuild) {
 			tempBuilding->setCantBuildColor();
@@ -229,12 +235,12 @@ void BuildingManager::deleteBuilding(i32 id) {
 	if (inMapBuildings -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
 		Human::Instance() -> decreaseHappiness(inMapBuildings -> find(id) -> second -> getHappinessVariation());
 		if (inMapBuildings -> find(id) -> second -> getType() == "House") {
-			Human::Instance() -> decreasePersons(inMapBuildings -> find(id) -> second -> getCitizensVariation());
+			Human::Instance() -> decreasePeople(inMapBuildings -> find(id) -> second -> getCitizensVariation());
 		}
 	} else {
 		IA::Instance() -> decreaseHappiness(inMapBuildings -> find(id) -> second -> getHappinessVariation());
 		if (inMapBuildings -> find(id) -> second -> getType() == "House") {
-			IA::Instance() -> decreasePersons(inMapBuildings -> find(id) -> second -> getCitizensVariation());
+			IA::Instance() -> decreasePeople(inMapBuildings -> find(id) -> second -> getCitizensVariation());
 		}
 	}
 	buildingAmounts[inMapBuildings -> find(id) -> second -> getType()]--;

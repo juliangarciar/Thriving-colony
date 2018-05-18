@@ -221,6 +221,7 @@ class Unit : public Entity {
          * @return i32 that will be the value of the armyLevel variable.
          */
         i32 getArmyLevel();
+
         /* New */
         std::vector< Vector2<f32> > getTroopsPosition();        
         std::vector< UnitFighter* > getUnitFighters();
@@ -230,6 +231,7 @@ class Unit : public Entity {
         void takeDamage(i32 _damage);
         void updateUnitFighters();
         void setTarget(Entity *newTarget);
+        
     private:
         /**
          * @brief Initialize the variables.
@@ -306,8 +308,8 @@ class Unit : public Entity {
         std::string selectEvent;
 
         //
-        std::vector< UnitFighter* > unitFighters;
-        std::vector< UnitFighter* > nearUnitFighters;
+        std::vector<UnitFighter*> unitFighters;
+        std::vector<UnitFighter*> nearUnitFighters;
         f32 maxPositionDesviation;
         i32 unitFighterHP;
         Sensor* unitSensor;

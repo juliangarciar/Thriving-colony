@@ -219,9 +219,9 @@ void Hud::Init(){
     playerCrystalAmount -> setColor(150, 0, 0, 150);
 
     os = std::stringstream();
-    os << "Persons: " << std::to_string(Human::Instance() -> getPersons());
-    playerPersons = new Label(playerResources, os.str());
-    playerPersons -> setColor(150, 200, 200, 0);
+    os << "People: " << std::to_string(Human::Instance() -> getPeople());
+    playerPeople = new Label(playerResources, os.str());
+    playerPeople -> setColor(150, 200, 200, 0);
 
     os = std::stringstream();
     os << "Citizens: " << std::to_string(Human::Instance() -> getCitizens());
@@ -255,8 +255,9 @@ void Hud::Init(){
     playerSieges = new Label(playerResources, os.str());
     os = std::stringstream();
     os << "FPS: " << std::to_string(Window::Instance() -> getFrameRate());
-    framerateLabel = new Label(playerResources, os.str());
+    framerateLabel = new Label(os.str());
     framerateLabel -> setSize(Vector2<i32> (50, 15));
+    framerateLabel -> setPosition(Vector2<i32> (0, 0));
     os = std::stringstream();
     
     iaResources = new Panel("IA Resources");
@@ -527,7 +528,7 @@ void Hud::CleanUp(){
 
     delete playerMetalAmount;
     delete playerCrystalAmount;
-    delete playerPersons;
+    delete playerPeople;
     delete playerCitizens;
     delete playerUnits;
     delete playerHappiness;
@@ -841,8 +842,8 @@ void Hud::debug(){
     os << "Crystal: " << std::to_string(Human::Instance() -> getCrystalAmount());
     playerCrystalAmount -> setLabel(os.str());
     os = std::stringstream();
-    os << "Persons: " << std::to_string(Human::Instance() -> getPersons());
-    playerPersons -> setLabel(os.str());
+    os << "People: " << std::to_string(Human::Instance() -> getPeople());
+    playerPeople -> setLabel(os.str());
     os = std::stringstream();
     os << "Citizens: " << std::to_string(Human::Instance() -> getCitizens());
     playerCitizens -> setLabel(os.str());
