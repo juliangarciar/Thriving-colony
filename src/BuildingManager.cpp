@@ -99,10 +99,10 @@ void BuildingManager::drawBuilding() {
 			return;
 		}
 
-		if (IO::Instance() -> getKeyboard() -> keyPressed(82)) {
+		if (IO::Instance() -> getKeyboard() -> keyPressed(82)) { //ToDo: fachada
 			f32 rot = tempBuilding -> getModel() -> getRotation() . y;
 			rot += 90;
-			tempBuilding -> getModel() -> setRotation(Vector3<f32>(0,rot,0));
+			tempBuilding -> getModel() -> setRotation(Vector3<f32>(0, rot, 0));
 		}
 		
 		if (!canBuild) {
