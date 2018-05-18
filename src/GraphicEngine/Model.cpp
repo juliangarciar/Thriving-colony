@@ -93,6 +93,10 @@ Vector3<f32> Model::getPosition() {
     return Vector3<f32>(meshNode -> getPosition().X, meshNode -> getPosition().Y, meshNode -> getPosition().Z);
 }
 
+Vector3<f32> Model::getRotation() {
+    return Vector3<f32>(meshNode -> getRotation().X, meshNode -> getRotation().Y, meshNode -> getRotation().Z);
+}
+
 i32 Model::getID() {
     return meshNode -> getID();
 }

@@ -259,8 +259,9 @@ void Hud::Init(){
     playerSieges = new Label(playerResources, os.str());
     os = std::stringstream();
     os << "FPS: " << std::to_string(Window::Instance() -> getFrameRate());
-    framerateLabel = new Label(playerResources, os.str());
+    framerateLabel = new Label(os.str());
     framerateLabel -> setSize(Vector2<i32> (50, 15));
+    framerateLabel -> setPosition(Vector2<i32> (0, 0));
     os = std::stringstream();
     
     iaResources = new Panel("IA Resources");

@@ -168,10 +168,16 @@ void GameState::Input() {
             onMap = false;
 
             if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_ESCAPE)) { //ToDo: fachada
-                pauseMenu = new PauseMenu();
-                Window::Instance() -> setGUI();
-                pauseMenu -> setHUDEvents();
-                gamePaused = true;
+                // Si el popup esta abierto, cierralo
+                if (hud -> getPopUpOpen())
+                    hud -> hidePopup();
+                // Si no, pausa el juego
+                else {
+                    pauseMenu = new PauseMenu();
+                    Window::Instance() -> setGUI();
+                    pauseMenu -> setHUDEvents();
+                    gamePaused = true;
+                }
             }
 
             if (IO::Instance()-> getMouse() -> rightMousePressed()) {
@@ -219,7 +225,6 @@ void GameState::Update(){
             g -> changeState(Enumeration::State::DefeatState);
         }
     }
-    //todo llevar a un metodo en window supongo
     //fps count goes after game logic to see how long it took to go through the logic
     Window::Instance() -> calculateFramerate();
 }

@@ -98,6 +98,12 @@ void BuildingManager::drawBuilding() {
 			tempBuilding = nullptr;
 			return;
 		}
+
+		if (IO::Instance() -> getKeyboard() -> keyPressed(82)) {
+			f32 rot = tempBuilding -> getModel() -> getRotation() . y;
+			rot += 90;
+			tempBuilding -> getModel() -> setRotation(Vector3<f32>(0,rot,0));
+		}
 		
 		if (!canBuild) {
 			tempBuilding->setCantBuildColor();
