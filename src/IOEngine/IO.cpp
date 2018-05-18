@@ -10,12 +10,7 @@ IO* IO::Instance() {
 }
 
 IO::IO() {
-    cursor = new Mouse();
-    keyboard = new Keyboard();
 
-    events = new EventSystem();
-
-    resourceManager = new ResourceManager();
 }
 
 IO::~IO(){
@@ -23,6 +18,15 @@ IO::~IO(){
     delete keyboard;
     delete events;
     delete resourceManager;
+}
+
+void IO::Init(){
+    cursor = new Mouse();
+    keyboard = new Keyboard();
+
+    events = new EventSystem();
+
+    resourceManager = new ResourceManager();
 }
 
 void IO::Update(){

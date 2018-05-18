@@ -39,11 +39,20 @@ void Map::Init() {
 
     //Create map
     terrain = new Terrain(j["map"]["heightmap"].get<std::string>().c_str());
-    //Set map texture
     terrain -> setTexture(new Texture(j["map"]["texture"].get<std::string>().c_str()), new Texture(j["map"]["detail_texture"].get<std::string>().c_str()));
     terrain -> setSize(Vector3<f32>(j["map"]["size"]["x"].get<int>(), j["map"]["size"]["y"].get<int>(), j["map"]["size"]["z"].get<int>()));
-    
+	mapMargins = new Margins();
+	mapMargins->top = j["map"]["margins"]["top"].get<int>();
+	mapMargins->right = j["map"]["margins"]["right"].get<int>();
+	mapMargins->bottom = j["map"]["margins"]["bottom"].get<int>();
+	mapMargins->left = j["map"]["margins"]["left"].get<int>();
+
     loadProgress(20);
+
+    //Skydome
+    skydome = new SkyDome(new Texture(j["map"]["skybox_texture"].get<std::string>().c_str()));
+
+    loadProgress(30);
 
     //Luz
     for (auto& element : j["lights"]){
@@ -55,23 +64,21 @@ void Map::Init() {
         lights.push_back(light);
     }
 
-    loadProgress(30);
+    loadProgress(35);
 
     //Hud buttons
     for (auto& element : j["buildables"]){
         Hud::Instance()->setButtonStatus(element["type"].get<std::string>(), element["isBuildable"].get<bool>());
     }
     Hud::Instance()->setButtonStatus("expandableTerrain", j["expandableTerrain"].get<bool>());
-    loadProgress(40);
+    
+	loadProgress(40);
 
     //ToDo: leer del mapa JSON el tamaño de celulas y de mapa
     WorldGeometry* newSystem = WorldGeometry::Instance();
     newSystem->Init(cSize, i32(10240), i32(10240), 4);
 
-    //Skydome
-    skydome = new SkyDome(new Texture(j["map"]["skybox_texture"].get<std::string>().c_str()));
-
-    loadProgress(50);
+	loadProgress(50);
 
     //Human
     Human::Instance()->setMetalAmount(j["player"]["initial_metal"].get<i32>());
@@ -113,8 +120,12 @@ void Map::Init() {
 
     //Init camera controller
     camera = new CameraController();
-    camera -> setZoomDistanceFromTarget(j["camera"]["zoomDistanceFromTarget"].get<int>());
-    camera -> setRotateDegrees(j["camera"]["delta_x"].get<int>(), j["camera"]["delta_y"].get<int>());
+	camera -> minZoom = j["camera"]["zoom"]["min"].get<int>();
+	camera -> maxZoom = j["camera"]["zoom"]["max"].get<int>();
+	camera -> zoomDistanceFromTarget = j["camera"]["zoom"]["initialDistanceFromTarget"].get<int>();
+	camera -> minInclination = j["camera"]["rotation"]["min_inclination"].get<int>();
+	camera -> maxInclination = j["camera"]["rotation"]["max_inclination"].get<int>();
+	camera -> rotateDegrees = Vector2<f32>(j["camera"]["rotation"]["initialRotation"]["x"].get<int>(), j["camera"]["rotation"]["initialRotation"]["y"].get<int>());
     camera -> Init(Vector3<f32>(humanStartPos.x, terrain->getY(humanStartPos.x,humanStartPos.y), humanStartPos.y));
 
     loadProgress(100);
@@ -165,6 +176,10 @@ Terrain* Map::getTerrain() {
 
 CameraController* Map::getCamera() {
     return camera;
+}
+
+Margins *Map::getMapMargins(){
+	return mapMargins;
 }
 
 void Map::loadProgress(i32 p){

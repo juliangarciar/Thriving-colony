@@ -24,7 +24,7 @@ void Camera::setTargetPosition(Vector3<f32> position){
 }
 
 //Distancia del objetivo
-void Camera::setShadowDistance(f32 zoom){
+void Camera::setFarValue(f32 zoom){
 	camera -> setFarValue(zoom);
 }
 

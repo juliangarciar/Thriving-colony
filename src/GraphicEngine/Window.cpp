@@ -6,19 +6,29 @@ Window* Window::pinstance = 0;
 Window* Window::Instance() {
     
     if(pinstance == 0) {
-        pinstance = new Window(1048, 720);
+        pinstance = new Window();
     }
     
     return pinstance;
 }
 
-Window::Window(i32 width, i32 height) {
+Window::Window() {
     closeWindow = false;
-
-    windowWidth = width;
-    windowHeight = height;
     
     glfwInit();
+
+    // Init last delta time
+    lastDeltaTime = 0.014;
+}
+
+Window::~Window() {
+    //ToDo: destructor
+}
+
+void Window::Init(i32 width, i32 height){
+    windowWidth = width;
+    windowHeight = height;
+
     glfwSetTime(0);
 
     // Create an application window with the following settings:
@@ -75,12 +85,6 @@ Window::Window(i32 width, i32 height) {
     );
 
     dtThen = glfwGetTime();
-    // Init last delta time
-    lastDeltaTime = 0.014;
-}
-
-Window::~Window() {
-    //ToDo: destructor
 }
 
 void Window::setGUI(){ 

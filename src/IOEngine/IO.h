@@ -16,6 +16,12 @@ class IO {
         static IO* Instance();
 
 		/**
+		 * @brief 
+		 * 
+		 */
+		void Init();
+
+		/**
 		 * @brief Update
 		 * 
 		 */

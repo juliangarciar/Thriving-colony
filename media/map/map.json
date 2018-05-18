@@ -8,12 +8,28 @@
 			"x": 40,
 			"y": 20,
 			"z": 40
+		},
+		"margins":{
+			"top": 1000,
+			"right": 9000,
+			"bottom": 9000,
+			"left": 1000
 		}
 	},
 	"camera":{
-		"zoomDistanceFromTarget": 750,
-		"delta_x": 0,
-		"delta_y": 230
+		"zoom": {
+			"min": 400,
+			"max": 1000,
+			"initialDistanceFromTarget": 750
+		},
+		"rotation": {
+			"min_inclination": 200,
+			"max_inclination": 260,
+			"initialRotation": {
+				"x": 0,
+				"y": 230
+			}
+		}
 	},
 	"lights":[
 		{

@@ -7,49 +7,38 @@
 #include "GraphicEngine/Window.h"
 
 //ToDo: llevarse datos a JSON
-        
-//Margins of the map.
-enum MapMargins { //ToDo: to JSON
-	mapMarginTop = 1500,
-	mapMarginLeft = 1500,
-	mapMarginBottom = 8500,
-	mapMarginRight = 8500
-};
 
 CameraController::CameraController() {
 	Window *w = Window::Instance();
 
 	//Camera 
     camera = new Camera();
-    camera -> setShadowDistance(42000.f);
+    camera -> setFarValue(42000.f); //JSON config
 
 	// Helper initializations
 	recipsqrt2 = 1.0 / sqrt(2);
-	centerMargin = 20;
+	centerMargin = Vector2<f32>(10, 10); //JSON config
+	screenMargin = Vector2<f32>(20, 20); //JSON config
 
 	// Cam movement initializations
 	direction = 0;
-	camSpeed = 700.0f;
-	screenMarginV = 20;
-	screenMarginH = 20;
+	camSpeed = 700.0f; //JSON config
     movementMode = false;
 
 	// Cam zoom initializations
-	zoomDistanceFromTarget = 750.0f;
-	minZoom = 400;
-	maxZoom = 1000;
-	zoomLevels = 10;
+	zoomLevels = 10; //JSON config
+	zoomDistanceFromTarget = 750.0f; //JSON map
+	minZoom = 400; //JSON map
+	maxZoom = 1000; //JSON map
     zoomMode = false;
 
 	// Cam rotation and inclination initializations
-	rotSpeed = 2.f;
-	inclSpeed = 2.f;
-
-	minInclination = 200.f;
-	maxInclination = 260.f;
-
-	rotateDegrees.x = 0.f;
-	rotateDegrees.y = 230.f;
+	rotSpeed = 2.f; //JSON config
+	inclSpeed = 2.f; //JSON config
+	minInclination = 200.f; //JSON map
+	maxInclination = 260.f; //JSON map
+	rotateDegrees.x = 0.f; //JSON map
+	rotateDegrees.y = 230.f; //JSON map
     rotationOrInclinationMode = false;
 
 	//Center
@@ -140,17 +129,17 @@ void CameraController::updateCamera(f32 deltaTime) {
 		) * camSpeed * deltaTime;
 
 		// border collision + apply update
-		if (tarPos.x < MapMargins::mapMarginTop) {
+		if (tarPos.x < Map::Instance()->getMapMargins()->top) {
 			if (tarIncr.x > 0) tarPos.x += tarIncr.x;
-		} else if (tarPos.x > MapMargins::mapMarginRight) {
+		} else if (tarPos.x > Map::Instance()->getMapMargins()->right) {
 			if (tarIncr.x < 0) tarPos.x += tarIncr.x;
 		} else {
 			tarPos.x += tarIncr.x;
 		}
 
-		if (tarPos.z < MapMargins::mapMarginTop) {
+		if (tarPos.z < Map::Instance()->getMapMargins()->left) {
 			if (tarIncr.z > 0) tarPos.z += tarIncr.z;
-		} else if (tarPos.z > MapMargins::mapMarginBottom) {
+		} else if (tarPos.z > Map::Instance()->getMapMargins()->bottom) {
 			if (tarIncr.z < 0) tarPos.z += tarIncr.z;
 		} else {
 			tarPos.z += tarIncr.z;
@@ -201,18 +190,18 @@ void CameraController::Move() {
 
 	if (cursorOffLimits) IO::Instance() -> getMouse() -> setPosition(cursorPosCurrent);
 	
-	if (cursorPosCurrent.y < screenMarginV) {
+	if (cursorPosCurrent.y < screenMargin.y) {
 		direction |= 1 << 0;
         movementMode = true;
-	} else if (cursorPosCurrent.y > (w -> getRealWindowHeight() - screenMarginV)) {
+	} else if (cursorPosCurrent.y > (w -> getRealWindowHeight() - screenMargin.y)) {
 		direction |= 1 << 2;
         movementMode = true;
 	}
 
-	if (cursorPosCurrent.x < screenMarginH) {
+	if (cursorPosCurrent.x < screenMargin.x) {
 		direction |= 1 << 1;
         movementMode = true;
-	} else if (cursorPosCurrent.x > (w -> getRealWindowWidth() - screenMarginH)) {
+	} else if (cursorPosCurrent.x > (w -> getRealWindowWidth() - screenMargin.x)) {
 		direction |= 1 << 3;
         movementMode = true;
 	}
@@ -264,16 +253,16 @@ void CameraController::RotateAndInclinate(){
 		Vector2<i32> cursorPosCurrent = IO::Instance() -> getMouse() -> getPosition();
 
 		//Increase or decease rotation angle
-		if (cursorPosCurrent.x < screenCenter.x - centerMargin) {
+		if (cursorPosCurrent.x < screenCenter.x - centerMargin.x) {
 			rotateDegrees.x += rotSpeed;
-		} else if (cursorPosCurrent.x > screenCenter.x + centerMargin) {
+		} else if (cursorPosCurrent.x > screenCenter.x + centerMargin.x) {
 			rotateDegrees.x -= rotSpeed;
 		}
 
 		//Increase or decease inclination angle
-		if (cursorPosCurrent.y < screenCenter.y - centerMargin) {
+		if (cursorPosCurrent.y < screenCenter.y - centerMargin.y) {
 			rotateDegrees.y += inclSpeed;
-		} else if (cursorPosCurrent.y > screenCenter.y + centerMargin) {
+		} else if (cursorPosCurrent.y > screenCenter.y + centerMargin.y) {
 			rotateDegrees.y -= inclSpeed;
 		}
 
@@ -313,16 +302,7 @@ Camera *CameraController::getCamera() {
 	return camera;
 }
 
-void CameraController::setZoomDistanceFromTarget(i32 zoom){
-	zoomDistanceFromTarget = zoom;
-}
-
-void CameraController::setRotateDegrees(i32 x, i32 y){
-	rotateDegrees.x = x;
-	rotateDegrees.y = y; 
-}
-
-Vector3<f32> CameraController::getTarPos() {
+Vector3<f32> CameraController::getTargetPosition() {
 	return tarPos;
 }
 

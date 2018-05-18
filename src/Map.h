@@ -85,6 +85,13 @@ class Map {
          */
         CameraController* getCamera();
 
+		/**
+		 * @brief Get the Map Margins object
+		 * 
+		 * @return Margins* 
+		 */
+		Margins *getMapMargins();
+
     protected:
         /**
 		 * @brief Map constructor.
@@ -126,8 +133,10 @@ class Map {
         Vector3<f32> collisionPoint;
 
         //Skydome of the map.
-        SkyDome* skydome;
+        SkyDome *skydome;
 
+		//MapMargins
+		Margins *mapMargins;
 };
 
 #endif
