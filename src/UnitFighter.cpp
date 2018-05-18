@@ -46,7 +46,6 @@ void UnitFighter::move(){
         vectorPosition += vectorSpeed;
         vectorPosition = _oldPosition + (vectorPosition - _oldPosition) * Window::Instance()->getDeltaTimeVariance();
         fighterModel->setPosition(Vector3<f32>(vectorPosition.x, Map::Instance()->getTerrain()->getY(vectorPosition.x, vectorPosition.y), vectorPosition.y));
-        unitFighterClock->tick();
     }   
     else{
         isMoving = false;

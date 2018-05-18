@@ -194,7 +194,7 @@ void Unit::recruitingState(){
 
 void Unit::idleState() {
     //updateUnitFighters();
-    enemySensorTimer->tick();
+    //enemySensorTimer->tick();
     //if (refreshTarget()) { // if got one
     //    switchState(Enumeration::UnitState::Chase);
     //}
@@ -276,13 +276,13 @@ void Unit::attackState() {
     else {
         switchState(Enumeration::UnitState::Chase);
         setPathToTarget(target->getPosition());
-        chaseTimer->start();
+        chaseTimer->restart();
     }
 }
 
 /// Chasing the target
 void Unit::chaseState() {
-    chaseTimer->tick();
+    //chaseTimer->tick();
     if(inRangeOfAttack()) {
         switchState(Enumeration::UnitState::Attack);
         chaseTimer->stop();
@@ -311,7 +311,7 @@ void Unit::retractState() {
         getModel() -> setActive(false);
         switchState(Enumeration::UnitState::InHome);
         // ToDo: Aqui peta
-        triggerRetractedCallback();        
+        //triggerRetractedCallback();        
     }
 }
 
@@ -396,17 +396,14 @@ void Unit::setTroopPosition(Vector2<f32> vectorData) {
         unitFighters[i]->setPosition(vectorData + WorldGeometry::Instance()->getSquadPosition(size - 1, i));
     }
 }
-// To do -> adjust units movement
-// Adjust
-// Crazycura incoming
+
 void Unit::setTroopDestination(Vector2<f32> _vectorData) {
     /* Esto que es */
     if (state == Enumeration::UnitState::Move) {
         setTarget(nullptr);
     }
-    // Okey lets tune this
+
     vectorDes = _vectorData;
-    // This is working as intended
     std::size_t size = unitFighters.size();
     for(std::size_t i = 0; i < size; i++){
         unitFighters[i]->setDestiny(_vectorData + WorldGeometry::Instance()->getSquadPosition(size - 1, i));
