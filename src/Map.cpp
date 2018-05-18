@@ -40,12 +40,13 @@ void Map::Init() {
     //Create map
     terrain = new Terrain(j["map"]["heightmap"].get<std::string>().c_str());
     terrain -> setTexture(new Texture(j["map"]["texture"].get<std::string>().c_str()), new Texture(j["map"]["detail_texture"].get<std::string>().c_str()));
-    terrain -> setSize(Vector3<f32>(j["map"]["size"]["x"].get<int>(), j["map"]["size"]["y"].get<int>(), j["map"]["size"]["z"].get<int>()));
+    terrain -> setSize(Vector3<f32>(j["map"]["scale"]["x"].get<int>(), j["map"]["scale"]["y"].get<int>(), j["map"]["scale"]["z"].get<int>()));
 	mapMargins = new Margins();
 	mapMargins->top = j["map"]["margins"]["top"].get<int>();
 	mapMargins->right = j["map"]["margins"]["right"].get<int>();
 	mapMargins->bottom = j["map"]["margins"]["bottom"].get<int>();
 	mapMargins->left = j["map"]["margins"]["left"].get<int>();
+    WorldGeometry::Instance() -> Init(cSize, i32(j["map"]["size"]["width"].get<int>()), i32(j["map"]["size"]["height"].get<int>()), cDepth);
 
     loadProgress(20);
 
@@ -74,13 +75,9 @@ void Map::Init() {
     
 	loadProgress(40);
 
-    //ToDo: leer del mapa JSON el tamaño de celulas y de mapa
-    WorldGeometry* newSystem = WorldGeometry::Instance();
-    newSystem->Init(cSize, i32(10240), i32(10240), 4);
-
-	//ToDo: leer del JSON la productividad del mapa
-    metalProductivity = j["player"]["siderurgy_productivity"].get<i32>();
-    crystalProductivity = j["player"]["crystal_productivity"].get<i32>();
+    //Game productivity
+    metalProductivity = j["game"]["metal_productivity"].get<i32>();
+    crystalProductivity = j["game"]["crystal_productivity"].get<i32>();
 	
 	loadProgress(50);
 

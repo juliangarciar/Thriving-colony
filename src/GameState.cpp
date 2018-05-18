@@ -21,11 +21,11 @@ void GameState::Init() {
     human -> Init("Drorania"); 
     ia -> Init("Kaonov");
 
-    //Load map
-    map -> Init();
-
     //Init HUD
     hud -> Init();
+
+    //Load map
+    map -> Init();
 
     //Initialize the event system
     //IA Events

@@ -9,7 +9,9 @@
 typedef int32_t i32;
 typedef uint32_t u32;
 typedef float f32;
-const int32_t cSize = 80;
+
+const int32_t cSize = 80; //ToDo: a gameconfig
+const int32_t cDepth = 4; 
 
 struct Margins{
 	i32 top;

@@ -4,10 +4,14 @@
 		"texture": "media/map/map-texture.jpg",
 		"detail_texture": "media/map/map-detail-texture.jpg",
 		"skybox_texture": "media/map/skybox-texture.jpg",
-		"size":{
+		"scale":{
 			"x": 40,
 			"y": 20,
 			"z": 40
+		},
+		"size":{
+			"width": 10240,
+			"height": 10240
 		},
 		"margins":{
 			"top": 1000,
@@ -15,6 +19,10 @@
 			"bottom": 9000,
 			"left": 1000
 		}
+	},
+	"game":{
+		"metal_productivity": 20,
+		"crystal_productivity": 20
 	},
 	"camera":{
 		"zoom": {
@@ -61,7 +69,7 @@
 		"initial_crystal": 0,
 		"siderurgy_productivity": 10,
 		"quarry_productivity": 5,
-		"building_radious": 2000,
+		"building_radius": 2000,
 		"mainBuilding": {
 			"position": {
 				"x": 8040,
@@ -104,7 +112,7 @@
 		"initial_crystal": 5,
 		"siderurgy_productivity": 15,
 		"quarry_productivity": 10,
-		"building_radious": 2000,
+		"building_radius": 2000,
 		"mainBuilding": {
 			"position": {
 				"x": 1960,
