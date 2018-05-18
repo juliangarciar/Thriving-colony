@@ -44,7 +44,7 @@ void GameState::Init() {
     });
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::DeployTroopsHuman, [&]() {
         Vector3<f32> p = human -> getHallPosition();
-        p.x = p.x + 200; //ToDo: hacer bien
+        p.x = p.x + 400; //ToDo: hacer bien
         human -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
     });
 

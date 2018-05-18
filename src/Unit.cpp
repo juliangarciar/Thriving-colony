@@ -12,51 +12,54 @@
 #include "Game.h"
 #include "Sensor.h"
 #include "IOEngine/IO.h"
+#include "UnitManager.h"
 
 Unit::Unit(SceneNode* _layer, 
     i32 _id, 
     Enumeration::Team _team, 
-    UnitData baseData):Entity(
-                        _layer,
-                        _id,
-                        _team,
-                        Enumeration::EntityType::Unit,
-                        baseData.maxHP,
-                        baseData.viewRadius,
-                        baseData.attackRange,
-                        baseData.attackDamage,
-                        baseData.attackSpeed,
-                        baseData.metalCost,
-                        baseData.crystalCost,
-                        baseData.happinessVariation,
-                        baseData.citizensVariation,
-                        1,
-                        1,
-                        baseData.flagModel,
-                        baseData.flagTexture
-                        ),
-                        state(Enumeration::UnitState::Recruiting),
-                        type(baseData.type),
-                        moveSpeed(baseData.moveSpeed),
-                        attackSpeed(baseData.attackSpeed),
-                        attackDamage(baseData.attackDamage),
-                        finished(false),
-                        moving(false),
-                        attacking(false),
-                        canAttack(true),
-                        armyLevel(baseData.armyLevel),
-                        pathManager(nullptr),
-                        pathFollow(),
-                        vectorDes(0,0),
-                        vectorSpd(0,0),
-                        readyToEnter(false),
-                        attackEvent(baseData.attackEvent),
-                        moveEvent(baseData.moveEvent),
-                        selectEvent(baseData.selectEvent),
-                        unitFighters(baseData.troops, nullptr),
-                        maxPositionDesviation(baseData.moveSpeed * 0.5f),
-                        unitFighterHP(baseData.maxHP / baseData.troops),
-                        unitSensor(nullptr)        
+    UnitData baseData,
+    UnitManager* _unitManager):Entity(
+                            _layer,
+                            _id,
+                            _team,
+                            Enumeration::EntityType::Unit,
+                            baseData.maxHP,
+                            baseData.viewRadius,
+                            baseData.attackRange,
+                            baseData.attackDamage,
+                            baseData.attackSpeed,
+                            baseData.metalCost,
+                            baseData.crystalCost,
+                            baseData.happinessVariation,
+                            baseData.citizensVariation,
+                            1,
+                            1,
+                            baseData.flagModel,
+                            baseData.flagTexture
+                            ),
+                            state(Enumeration::UnitState::Recruiting),
+                            type(baseData.type),
+                            moveSpeed(baseData.moveSpeed),
+                            attackSpeed(baseData.attackSpeed),
+                            attackDamage(baseData.attackDamage),
+                            finished(false),
+                            moving(false),
+                            attacking(false),
+                            canAttack(true),
+                            armyLevel(baseData.armyLevel),
+                            pathManager(nullptr),
+                            pathFollow(),
+                            vectorDes(0,0),
+                            vectorSpd(0,0),
+                            readyToEnter(false),
+                            attackEvent(baseData.attackEvent),
+                            moveEvent(baseData.moveEvent),
+                            selectEvent(baseData.selectEvent),
+                            unitFighters(baseData.troops, nullptr),
+                            maxPositionDesviation(baseData.moveSpeed * 0.5f),
+                            unitFighterHP(baseData.maxHP / baseData.troops),
+                            unitSensor(nullptr),
+                            unitManager(_unitManager)      
 {
 
     unitSensor = new Sensor(this);
@@ -97,15 +100,12 @@ Unit::Unit(SceneNode* _layer,
 }
 
 Unit::~Unit() {
-    IO::Instance()->unregisterTimer(recruitingTimer);
-    IO::Instance()->unregisterTimer(enemySensorTimer);
-    IO::Instance()->unregisterTimer(attackTimer);
-    IO::Instance()->unregisterTimer(chaseTimer);
     WorldGeometry::Instance()->clearUnitCell(getPosition(), this);
     for(std::size_t i = 0; i < unitFighters.size(); i++){
         delete unitFighters[i];
     }
     unitFighters.clear();
+    delete unitSensor;
     delete pathManager;
     delete recruitingTimer;
     delete enemySensorTimer;
@@ -223,6 +223,7 @@ void Unit::attackState() {
             if(canAttack){
                 target->takeDamage(attackDamage);
                 canAttack = false;
+                std::cout << "Ataco  \n";
             }
         }
         else{
@@ -491,21 +492,26 @@ void Unit::updateFlockingSensor(){
 
 void Unit::takeDamage(i32 _damage){
     currentHP = currentHP - _damage;
-    i32 _qnty = std::floor(currentHP / unitFighterHP);
-    if(currentHP % unitFighterHP != 0){
-        _qnty++;
-    }
-    while(_qnty != unitFighters.size()){
-        UnitFighter* tmp = unitFighters[unitFighters.size() - 1];
-        unitFighters.erase(unitFighters.end() - 1);
-        delete tmp;
-        
-        std::cout << "An unitFighter has died \n";
-    }
-    tookDamageTimer -> restart();
-    setDamageColor();
-    if (currentHP <= 0) {
+    if(currentHP < 1){
+        // Llamar a unit manager para que me borre
         currentHP = 0;
+        unitManager->deleteUnit(ID);
+        return;
+    }
+    else{
+        i32 _qnty = std::floor(currentHP / unitFighterHP);
+        if(currentHP % unitFighterHP != 0){
+            _qnty++;
+        }
+        while(_qnty < unitFighters.size()){
+            UnitFighter* tmp = unitFighters[unitFighters.size() - 1];
+            unitFighters.erase(unitFighters.end() - 1);
+            delete tmp;
+            
+            std::cout << "An unitFighter has died \n";
+        }
+        tookDamageTimer -> restart();
+        setDamageColor();
     }
 }
 

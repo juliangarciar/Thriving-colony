@@ -88,7 +88,7 @@ UnitManager::~UnitManager() {
 bool UnitManager::createTroop(std::string type) {
     if (baseUnits.find(type) != baseUnits.end()){
         if (checkCanPay(type)) {
-            Unit *newUnit = new Unit(unitLayer, nextTroopId, team, baseUnits[type]);
+            Unit *newUnit = new Unit(unitLayer, nextTroopId, team, baseUnits[type], this);
             if (newUnit == nullptr) {
                 return false;
             }
@@ -338,10 +338,6 @@ void UnitManager::moveOrder() {
     }
 }
 
-void UnitManager::startBattle(i32 enemyID) {
-    //ToDo: crear batalla
-}
-
 // Checks if the player, either the human or the AI can afford to build a specific building
 bool UnitManager::isSolvent(i32 metalCost, i32 crystalCost, i32 citizensCost) {
     i32 metalAmt = 0;
@@ -390,7 +386,6 @@ void UnitManager::deleteUnit(i32 id) {
     } else {
         IA::Instance() -> decreaseArmyLevel(inMapTroops -> find(id) -> second -> getArmyLevel());
     }
-    inMapTroops -> find(id) -> second -> putHostileTargetsToNull();
     delete inMapTroops -> find(id) -> second;
     inMapTroops -> erase(id);
 }

@@ -4,6 +4,7 @@
 #include <GraphicEngine/Model.h>
 #include <GraphicEngine/SceneNode.h>
 #include <GraphicEngine/Window.h>
+#include "UnitManager.h"
 
 Entity::Entity(SceneNode* _layer,
     i32 _id,
@@ -88,11 +89,15 @@ Entity::Entity(SceneNode* _layer,
 
 //ToDo: revisar
 Entity::~Entity() {
+    if(target != nullptr){
+        target->removeHostile(this);
+    }
     putHostileTargetsToNull();
     if (model != nullptr){
         delete model;
     }
     hostile.clear();
+    
     delete tookDamageTimer;
 
     delete baseMat;
@@ -115,7 +120,7 @@ void Entity::removeHostile(Entity* oldHostileUnit) {
 }
 
 void Entity::putHostileTargetsToNull() {
-    for (i32 i = 0; i < hostile.size(); i++) {
+    for (std::size_t i = 0; i < hostile.size(); i++) {
         hostile[i] -> setTarget(nullptr);
     }
 }

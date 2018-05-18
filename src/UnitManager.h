@@ -99,13 +99,6 @@ class UnitManager{
         void selectTroop(i32);
 
         /**
-         * @brief
-         * 
-         * @param
-         */
-        void startBattle(i32);
-
-        /**
          * @brief Delete the unit with the id passed by parameter.
          * 
          * @param The i32 is the id of the unit that is going to be deleted. 

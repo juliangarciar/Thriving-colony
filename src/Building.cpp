@@ -4,32 +4,34 @@
 #include "Human.h"
 #include "IA.h"
 #include "GraphicEngine/Window.h"
+#include "BuildingManager.h"
 
 Building::Building(SceneNode *_layer,
                 i32 _id, 
                 Enumeration::Team _team, 
-                BuildingData baseData):Entity(
-                _layer,
-                _id,
-                _team,
-                Enumeration::EntityType::Building,
-                baseData.maxHP,
-                baseData.viewRadius,
-                baseData.attackRange,
-                baseData.attackDamage,
-                baseData.attackSpeed,
-                baseData.metalCost,
-                baseData.crystalCost,
-                baseData.happinessVariation,
-                baseData.citizensVariation,
-                baseData.cellsX,
-                baseData.cellsY,
-                baseData.modelPath,
-                baseData.texturePath
-                ), 
-                cityLevel(baseData.cityLevel),
-                buildingType(baseData.type),
-                callback(nullptr)
+                BuildingData baseData,
+                BuildingManager* _buildingManager):Entity(
+                                                _layer,
+                                                _id,
+                                                _team,
+                                                Enumeration::EntityType::Building,
+                                                baseData.maxHP,
+                                                baseData.viewRadius,
+                                                baseData.attackRange,
+                                                baseData.attackDamage,
+                                                baseData.attackSpeed,
+                                                baseData.metalCost,
+                                                baseData.crystalCost,
+                                                baseData.happinessVariation,
+                                                baseData.citizensVariation,
+                                                baseData.cellsX,
+                                                baseData.cellsY,
+                                                baseData.modelPath,
+                                                baseData.texturePath
+                                                ), 
+                                                cityLevel(baseData.cityLevel),
+                                                buildingType(baseData.type),
+                                                callback(nullptr)
 {
     /* Set the timer */
     buildTimer = new Timer(baseData.buildingTime, false, false);
@@ -87,11 +89,15 @@ std::string Building::getType(){
 
 void Building::takeDamage(i32 _damage) {
     currentHP = currentHP - _damage;
-    tookDamageTimer -> restart();
-    // Tint the model red
-    setDamageColor();
-    if (currentHP <= 0) {
+    if(currentHP < 1){
         currentHP = 0;
+        buildingManager->deleteBuilding(ID);
+        return;
+    }
+    else{
+        tookDamageTimer -> restart();
+        // Tint the model red
+        setDamageColor();
     }
 }
 

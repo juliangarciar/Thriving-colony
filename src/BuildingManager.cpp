@@ -62,7 +62,7 @@ bool BuildingManager::setBuildingMode(std::string type) {
 	if (it != baseBuildings.end() && checkCanPay(type)) {
 		if (!buildingMode) {
 			buildingMode = true;
-			tempBuilding = new Building(buildingLayer, 0, team, it->second);
+			tempBuilding = new Building(buildingLayer, 0, team, it->second, this);
 			return true;
 		}
 	}
@@ -76,7 +76,7 @@ void BuildingManager::drawBuilding() {
         Vector2<f32> collisionPoint = Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2();
 		// Change 2nd parameter
 		bool canBuild = true;
-		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(collisionPoint, tempBuilding);
+		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(collisionPoint, tempBuilding->getHitbox());
 
 		tempBuilding -> setPosition(dummy);
 
@@ -112,14 +112,13 @@ void BuildingManager::drawBuilding() {
     }
 }
 
+/* Check this sida method */
 void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 buildTime){
 	std::map<std::string, BuildingData>::iterator it = baseBuildings.find(type);
 	if (it != baseBuildings.end()){
 		BuildingData b = it->second;
 		if (buildTime >= 0) b.buildingTime = buildTime;
-		tempBuilding = new Building(buildingLayer, 0, team, b);
-		/* Okey there's a problem */
-		//Vector2<f32> correctPosition = WorldGeometry::Instance()->correctBuildingPosition(pos, tempBuilding);
+		tempBuilding = new Building(buildingLayer, 0, team, b, this);
 		buildBuilding(pos);
 	}
 }

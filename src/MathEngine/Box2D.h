@@ -26,15 +26,18 @@ class Box2D
         f32    Right() const;
         Box2D getAmplifiedBox(f32 distance) const;
         bool isOverlappedWith(const Box2D& other) const;
+
+        i32 getCellsX() const;
+        i32 getCellsY() const;
     private:
         Vector2<f32> m_vTopLeft;
         Vector2<f32> m_vBottomRight;
         Vector2<f32> m_vCenter;
         Vector2<f32> m_vTopRight;
         Vector2<f32> m_vBottomLeft;
-        
-        //f32 halfSizeX;
-        //f32 halfSizeY;
+        /* Super sida */
+        i32 cellsX;
+        i32 cellsY;
 };
   
 #endif /* BOX2D_H */

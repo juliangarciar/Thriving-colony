@@ -11,6 +11,7 @@
 #include <Enumeration.h>
 
 //class PathManager;
+class UnitManager;
 class Sensor;
 class UnitFighter;
 /**
@@ -28,7 +29,7 @@ class Unit : public Entity {
          * @param Enumeration::Team is the team to which belongs the building: Enumeration::Team::Human or Enumeration::Team::IA. 
          * @param UnitData is the data for this unit.
          */
-        Unit(SceneNode* _layer, i32 _id, Enumeration::Team _team, UnitData baseData);
+        Unit(SceneNode* _layer, i32 _id, Enumeration::Team _team, UnitData baseData, UnitManager* _unitManager);
         
         /**
          * @brief Unit destructor.
@@ -311,6 +312,7 @@ class Unit : public Entity {
         f32 maxPositionDesviation;
         i32 unitFighterHP;
         Sensor* unitSensor;
+        UnitManager* unitManager;
 };
 
 #endif

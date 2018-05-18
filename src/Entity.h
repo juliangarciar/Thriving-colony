@@ -16,6 +16,7 @@
  * @class Entity.
  * @brief Create a Entity type object.
  */
+
 class Entity {
 
     public:
