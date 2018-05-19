@@ -27,15 +27,6 @@ class Unit : public Entity {
         /* Do something functions */
         void update();
         void switchState(Enumeration::UnitState);
-        void recruitingState();
-        void inHomeState();
-        void idleState();
-        void moveState();
-        void attackMoveState();
-        void attackState();
-        void chaseState();
-        void retractState();
-        void moveUnit();
         void triggerRecruitedCallback();
         void triggerRetractedCallback();
         void setUnitCell(Vector2<f32>);
@@ -48,10 +39,6 @@ class Unit : public Entity {
         void takeDamage(i32 _damage);
         void setTarget(Entity *newTarget);
         /* Getters */
-        bool inRangeOfAttack();
-        const std::string getAttackEvent() const;
-        const std::string getMoveEvent() const;
-        const std::string getSelectEvent() const;
         Vector2<f32> getDestination() const;
         const std::list< Vector2<f32> >& getPath() const;
         const std::string getType() const;
@@ -62,6 +49,20 @@ class Unit : public Entity {
         const std::vector< UnitFighter* >& getUnitFighters() const;
 
     private:
+        void recruitingState();
+        void inHomeState();
+        void idleState();
+        void moveState();
+        void attackMoveState();
+        void attackState();
+        void chaseState();
+        void retractState();
+        void moveUnit();
+        bool inRangeOfAttack();
+        const std::string getAttackEvent() const;
+        const std::string getMoveEvent() const;
+        const std::string getSelectEvent() const;
+
         bool hasArrived();
         void calculateDirection();
         void updateUnitFighters();

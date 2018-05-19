@@ -72,7 +72,7 @@ Unit::Unit(SceneNode* _layer,
         switchState(Enumeration::UnitState::InHome);
     });
 
-    enemySensorTimer = new Timer(0.5, false, false);
+    enemySensorTimer = new Timer(0.5, true, false);
     enemySensorTimer->setCallback([&](){
         if(state != Enumeration::UnitState::InHome && state != Enumeration::UnitState::Recruiting){
             unitSensor->update();
@@ -85,7 +85,7 @@ Unit::Unit(SceneNode* _layer,
         canAttack = true;
     });
 
-    chaseTimer = new Timer(0.5, false, false);
+    chaseTimer = new Timer(0.5, true, false);
     chaseTimer->setCallback([&](){
         if(target != nullptr){
             setPathToTarget(target->getPosition());
@@ -135,13 +135,11 @@ void Unit::update() {
             recruitingState();
         break;
         case Enumeration::UnitState::InHome:
-            //ToDo: inHomeState();
             inHomeState();
         break;
         case Enumeration::UnitState::Idle:
             idleState();
         break;
-        //ToDo: Maybe this shouldn't exist
         case Enumeration::UnitState::Move:
             moveState();
         break;
@@ -162,7 +160,47 @@ void Unit::update() {
 }
 
 void Unit::switchState(Enumeration::UnitState newState){
-    state = newState;
+    switch (newState) {
+        case Enumeration::UnitState::Recruiting:
+            state = newState;
+        break;
+        case Enumeration::UnitState::InHome:
+            chaseTimer->stop();
+            enemySensorTimer->stop();
+            state = newState;
+        break;
+        case Enumeration::UnitState::Idle:
+            chaseTimer->stop();
+            enemySensorTimer->restart();
+            state = newState;
+        break;
+        case Enumeration::UnitState::Move:
+            chaseTimer->stop();
+            enemySensorTimer->stop();
+            state = newState;
+        break;
+        case Enumeration::UnitState::AttackMove:
+            state = newState;
+        break;
+        case Enumeration::UnitState::Attack:
+            chaseTimer->stop();
+            enemySensorTimer->stop();
+            state = newState;
+        break;    
+        case Enumeration::UnitState::Chase:
+            chaseTimer->restart();
+            enemySensorTimer->stop();
+            state = newState;
+        break;
+        case Enumeration::UnitState::Retract:
+            chaseTimer->stop();
+            enemySensorTimer->stop();
+            state = newState;
+        break;
+        default: 
+            std::cout << "INVALID UNIT STATE \n";
+        break;
+    }
 }
 
 void Unit::recruitingState() {
@@ -173,8 +211,9 @@ void Unit::recruitingState() {
     }
 }
 
+/* Nothing? */
 void Unit::inHomeState(){
-
+    
 }
 
 void Unit::idleState() {
@@ -190,8 +229,10 @@ void Unit::moveState() {
 }
 
 /* ToDo: Tenemos que hablar si existen shortcuts para llamar este */
+/* End this method */
 void Unit::attackMoveState() {
     updateUnitFighters();
+    moveUnit();
 }
 
 void Unit::attackState() {
@@ -208,27 +249,21 @@ void Unit::attackState() {
             switchState(Enumeration::UnitState::Chase);
             setPathToTarget(target->getPosition());
             moveUnit();
-            chaseTimer->restart();
         }
     }
     else{
         switchState(Enumeration::UnitState::Idle);
-        enemySensorTimer->restart();
     }
 }
 
-// Chasing the target
 void Unit::chaseState() {
     updateUnitFighters();
     if(target == nullptr){
         switchState(Enumeration::UnitState::Idle);
-        chaseTimer->stop();
-        enemySensorTimer->restart();
     }
     else{
         if(inRangeOfAttack()) {
             switchState(Enumeration::UnitState::Attack);
-            chaseTimer->stop();
         }
         else{
             moveUnit();
@@ -248,6 +283,9 @@ void Unit::retractState() {
         // ToDo: Aqui peta
         //triggerRetractedCallback();        
     }
+    else{
+        moveUnit();
+    }
 }
 
 void Unit::moveUnit() {
@@ -263,17 +301,10 @@ void Unit::moveUnit() {
                 }
                 else if(state == Enumeration::UnitState::Chase){
                     switchState(Enumeration::UnitState::Attack);
-                    chaseTimer->stop();
                 }
                 else if(state == Enumeration::UnitState::Move){
                     switchState(Enumeration::UnitState::Idle);
-                    enemySensorTimer->restart();
                 }
-                /* Meh */
-                //else{
-                //    switchState(Enumeration::UnitState::Idle);
-                //    enemySensorTimer->restart();
-                //}
             }
             else{
                 setUnitDestination(this->pathFollow.front());
@@ -392,7 +423,6 @@ void Unit::setTarget(Entity *newTarget) {
     target = newTarget;
     if (target == nullptr) {
         switchState(Enumeration::UnitState::Idle);
-        enemySensorTimer->restart();
     }
     else{
         switchState(Enumeration::UnitState::Attack);

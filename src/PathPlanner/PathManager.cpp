@@ -37,7 +37,8 @@ bool PathManager::createPathTo(Vector2<f32> targetPos){
     //std::cout << "Path sin smooth: " << finalPath.size();
     if(finalPath.size() > 2){
         /* I think is fixed, check */
-        smoothPath(finalPath);
+        /* Nope, needs more checks */
+        //smoothPath(finalPath);
     }    
     //std::cout << ". Con smooth: " << finalPath.size() << ".\n";
     propietary->setPath(finalPath);

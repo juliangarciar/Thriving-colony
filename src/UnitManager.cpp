@@ -325,14 +325,14 @@ void UnitManager::unSelectTroop() {
 //Pass the order to the selected unit
 void UnitManager::moveOrder() {
     if (selectedTroop != nullptr) {
-        selectedTroop -> setUnitDestination(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
+        //selectedTroop -> setUnitDestination(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
         if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
             // ToDo by Julian -> change attack iddle to pathfinding mode
-            selectedTroop -> switchState(Enumeration::UnitState::AttackMove);
+            selectedTroop->switchState(Enumeration::UnitState::AttackMove);
 
             selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
         } else {
-            selectedTroop -> switchState(Enumeration::UnitState::Move);
+            selectedTroop->switchState(Enumeration::UnitState::Move);
 
             selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
         }
