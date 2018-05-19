@@ -42,9 +42,10 @@ OBDObject::~OBDObject(){
 	delete meshes;
 	meshes = nullptr;
 
-    for (std::map<std::string, OBDMaterial*>::iterator it = materials->begin(); it != materials->end(); ++it) {
+	//ToDo: revisar este destructor
+    /*for (std::map<std::string, OBDMaterial*>::iterator it = materials->begin(); it != materials->end(); ++it) {
         delete it->second;
-    }
+    }*/
     materials->clear();
 
 	delete materials;
