@@ -151,7 +151,7 @@ void UnitManager::updateUnitManager() {
         if (IO::Instance() -> getKeyboard() -> keyPressed(82)) { //82 = R, R de retracted
             if (team == Enumeration::Team::Human){
 				Vector3<f32> p = Human::Instance()->hallPosition;
-                selectedTroop -> setTroopDestination(Vector2<f32>(p.x, p.z));
+                selectedTroop -> setUnitDestination(Vector2<f32>(p.x, p.z));
             }
             selectedTroop -> switchState(Enumeration::UnitState::Retract);
         }
@@ -206,7 +206,6 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
         inHallTroops->erase(temp->getID());
         //Insert in map
         inMapTroops -> insert(std::pair<i32, Unit*>(temp -> getModel() -> getID(), temp));
-        temp -> switchState(Enumeration::UnitState::Move); 
         Cell* target;
         Vector3<f32> hallPosition(0, 0, 0);
 
@@ -223,6 +222,7 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
         temp -> setUnitCell(dummy);
         temp -> getModel() -> setActive(true);
         temp -> setPathToTarget(p);
+        temp -> switchState(Enumeration::UnitState::Move);
         if (team == Enumeration::Team::Human){
             Hud::Instance()->removeTroopFromHall(temp->getID());
         }
@@ -239,7 +239,6 @@ void UnitManager::deployAllTroops(Vector2<f32> p){
         //Insert in map
         inMapTroops -> insert(std::pair<i32, Unit*>(temp -> getModel() -> getID(), temp));
 
-        temp -> switchState(Enumeration::UnitState::Move); // ToDo: why attack move?
         Cell* target;
         Vector3<f32> hallPosition(0, 0, 0);
         if (team == Enumeration::Team::IA){
@@ -258,6 +257,7 @@ void UnitManager::deployAllTroops(Vector2<f32> p){
         temp -> setUnitCell(dummy);
         temp -> getModel() -> setActive(true);
         temp -> setPathToTarget(p);
+        temp -> switchState(Enumeration::UnitState::Move); 
         if (team == Enumeration::Team::Human){
             Hud::Instance()->removeTroopFromHall(temp->getID());
         }
@@ -273,11 +273,9 @@ void UnitManager::retractAllTroops() {
     for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
         Unit *temp = it -> second;
         if (team == Enumeration::Team::IA){
-            //temp -> setTroopDestination(IA::Instance()->getHallPosition());
 			Vector3<f32> p = IA::Instance()->hallPosition;
             temp -> setPathToTarget(Vector2<f32>(p.x, p.z));
         } else {
-            //temp -> setTroopDestination(Human::Instance()->getHallPosition());
 			Vector3<f32> p = Human::Instance()->hallPosition;
             temp -> setPathToTarget(Vector2<f32>(p.x, p.z));
         }
@@ -306,7 +304,7 @@ void UnitManager::unSelectTroop() {
 //Pass the order to the selected unit
 void UnitManager::moveOrder() {
     if (selectedTroop != nullptr) {
-        selectedTroop -> setTroopDestination(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
+        selectedTroop -> setUnitDestination(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
         if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
             // ToDo by Julian -> change attack iddle to pathfinding mode
             selectedTroop -> switchState(Enumeration::UnitState::AttackMove);

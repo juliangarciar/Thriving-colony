@@ -119,8 +119,8 @@ void GameState::Input() {
 			//Interactions with Human Units
             i32 idTroop = human -> getUnitManager() -> getCollisionID();
             if (idTroop != -1){
-                if (!human -> getUnitManager() -> isTroopSelected())
-                    IO::Instance() -> getMouse() -> changeIcon(CURSOR_HAND);
+                //if (!human -> getUnitManager() -> isTroopSelected())
+                IO::Instance() -> getMouse() -> changeIcon(CURSOR_HAND);
                 
                 if (IO::Instance() -> getMouse() -> leftMousePressed()){
                     IO::Instance() -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
