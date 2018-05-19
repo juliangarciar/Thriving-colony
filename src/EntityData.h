@@ -6,6 +6,7 @@
 
 struct UnitData {
     std::string type;
+	std::string buildingType;
     std::string troopModel;
     std::string troopTexture;
     std::string flagModel;

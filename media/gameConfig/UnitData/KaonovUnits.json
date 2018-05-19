@@ -1,6 +1,7 @@
 {
 	"Units": [{
 			"unitName": "StandardR",
+			"buildingType": "Barrack",
 			"moveSpeed": 3,
 			"attackDamage": 10,
 			"attackRange": 350,
@@ -31,6 +32,7 @@
 		},
 		{
 			"unitName": "AdvancedR",
+			"buildingType": "Barn",
 			"moveSpeed": 3,
 			"attackDamage": 5,
 			"attackRange": 700,
@@ -61,6 +63,7 @@
 		},
 		{
 			"unitName": "StandardM",
+			"buildingType": "Barrack",
 			"moveSpeed": 3,
 			"attackDamage": 10,
 			"attackRange": 100,
@@ -91,6 +94,7 @@
 		},
 		{
 			"unitName": "AdvancedM",
+			"buildingType": "Barn",
 			"moveSpeed": 3,
 			"attackDamage": 5,
 			"attackRange": 140,
@@ -121,6 +125,7 @@
 		},
 		{
 			"unitName": "Launcher",
+			"buildingType": "Workshop",
 			"moveSpeed": 3,
 			"attackDamage": 5,
 			"attackRange": 900,
@@ -151,6 +156,7 @@
 		},
 		{
 			"unitName": "Desintegrator",
+			"buildingType": "Workshop",
 			"moveSpeed": 3,
 			"attackDamage": 5,
 			"attackRange": 120,
@@ -181,6 +187,7 @@
 		},
 		{
 			"unitName": "Idol",
+			"buildingType": "Barn",
 			"moveSpeed": 3,
 			"attackDamage": 5,
 			"attackRange": 140,

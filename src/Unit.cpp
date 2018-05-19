@@ -20,49 +20,50 @@ Unit::Unit(SceneNode* _layer,
     i32 _id, 
     Enumeration::Team _team, 
     UnitData baseData,
-    UnitManager* _unitManager):Entity(
-                            _layer,
-                            _id,
-                            _team,
-                            Enumeration::EntityType::Unit,
-                            baseData.maxHP,
-                            baseData.viewRadius,
-                            baseData.attackRange,
-                            baseData.attackDamage,
-                            baseData.attackSpeed,
-                            baseData.metalCost,
-                            baseData.crystalCost,
-                            baseData.happinessVariation,
-                            baseData.citizensVariation,
-                            baseData.cellsX,
-                            baseData.cellsY,
-                            baseData.flagModel,
-                            baseData.flagTexture,
-                            baseData.bbOffset
-                            ),
-                            state(Enumeration::UnitState::Recruiting),
-                            type(baseData.type),
-                            moveSpeed(baseData.moveSpeed),
-                            attackSpeed(baseData.attackSpeed),
-                            attackDamage(baseData.attackDamage),
-                            moving(false),
-                            canAttack(true),
-                            armyLevel(baseData.armyLevel),
-                            pathManager(nullptr),
-                            pathFollow(),
-                            vectorDes(0,0),
-                            vectorSpd(0,0),
-                            readyToEnter(false),
-                            attackEvent(baseData.attackEvent),
-                            moveEvent(baseData.moveEvent),
-                            selectEvent(baseData.selectEvent),
-                            unitFighters(baseData.troops, nullptr),
-                            maxPositionDesviation(baseData.moveSpeed * 0.5f),
-                            unitFighterHP(baseData.maxHP / baseData.troops),
-                            unitSensor(nullptr),
-                            unitManager(_unitManager)      
+    UnitManager* _unitManager) :
+		Entity(
+			_layer,
+			_id,
+			_team,
+			Enumeration::EntityType::Unit,
+			baseData.maxHP,
+			baseData.viewRadius,
+			baseData.attackRange,
+			baseData.attackDamage,
+			baseData.attackSpeed,
+			baseData.metalCost,
+			baseData.crystalCost,
+			baseData.happinessVariation,
+			baseData.citizensVariation,
+			baseData.cellsX,
+			baseData.cellsY,
+			baseData.flagModel,
+			baseData.flagTexture,
+			baseData.bbOffset
+		),
+		state(Enumeration::UnitState::Recruiting),
+		type(baseData.type),
+		building(baseData.buildingType),
+		moveSpeed(baseData.moveSpeed),
+		attackSpeed(baseData.attackSpeed),
+		attackDamage(baseData.attackDamage),
+		moving(false),
+		canAttack(true),
+		armyLevel(baseData.armyLevel),
+		pathManager(nullptr),
+		pathFollow(),
+		vectorDes(0,0),
+		vectorSpd(0,0),
+		readyToEnter(false),
+		attackEvent(baseData.attackEvent),
+		moveEvent(baseData.moveEvent),
+		selectEvent(baseData.selectEvent),
+		unitFighters(baseData.troops, nullptr),
+		maxPositionDesviation(baseData.moveSpeed * 0.5f),
+		unitFighterHP(baseData.maxHP / baseData.troops),
+		unitSensor(nullptr),
+		unitManager(_unitManager)      
 {
-
     unitSensor = new Sensor(this);
 
     recruitingTimer = new Timer(baseData.recruitingTime, false);
@@ -366,6 +367,10 @@ std::list<Vector2<f32>> Unit::getPath() {
 
 std::string Unit::getType(){
     return type;
+}
+
+std::string Unit::getBuildingName(){
+	return building;
 }
 
 Enumeration::UnitState Unit::getState() {

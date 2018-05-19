@@ -199,6 +199,13 @@ class Unit : public Entity {
          */
         std::string getType();
 
+		/**
+		 * @brief Get the Building Name
+		 * 
+		 * @return std::string 
+		 */
+		std::string getBuildingName();
+
         /**
          * @brief Get the current state of the unit.
          * 
@@ -228,6 +235,9 @@ class Unit : public Entity {
 
         //Type of the unit.
         const std::string type;
+
+		//Recruit building name
+		const std::string building;
 
         //Speed with which the unit moves.
         const i32 moveSpeed;
