@@ -7,44 +7,44 @@
 #include "UnitManager.h"
 
 Entity::Entity(SceneNode* _layer,
-    i32 _id,
-    Enumeration::Team _team,
-    Enumeration::EntityType _type,
-    i32 _maxHP,
-    i32 _maxView,
-    i32 _attackRange,
-    i32 _attackDamage,
-    i32 _attackSpeed,
-    i32 _metal,
-    i32 _crystal,
-    i32 _happines,
-    i32 _citizens,
-    i32 _cellsX,
-    i32 _cellsY,
-    std::string _modelPath,
-    std::string _texturePath) : 
-        ID(_id),
-        team(_team),
-        entityType(_type),
-        model(nullptr),
-        vectorPos(0,0),
-        hitBox(Vector2<f32>(0, 0),
-               Vector2<f32>(_cellsX * cSize,
-                            _cellsY * cSize)),
-        currentHP(_maxHP),
-        maxHP(_maxHP), 
-        viewRadius(_maxView),
-        attackRange(_attackRange),
-        attackDamage(_attackDamage),
-        attackSpeed(_attackSpeed),
-        metalCost(_metal), 
-        crystalCost(_crystal), 
-        happinessVariation(_happines), 
-        citizensVariation(_citizens),
-        target(nullptr),
-        hostile(std::vector< Entity* >(0)),
-        kCellsX(_cellsX),
-        kCellsY(_cellsY) 
+                i32 _id,
+                Enumeration::Team _team,
+                Enumeration::EntityType _type,
+                i32 _maxHP,
+                i32 _maxView,
+                i32 _attackRange,
+                i32 _attackDamage,
+                i32 _attackSpeed,
+                i32 _metal,
+                i32 _crystal,
+                i32 _happines,
+                i32 _citizens,
+                i32 _cellsX,
+                i32 _cellsY,
+                std::string _modelPath,
+                std::string _texturePath,
+                f32 _bbOffset) : 
+                    ID(_id),
+                    team(_team),
+                    entityType(_type),
+                    model(nullptr),
+                    vectorPos(0,0),
+                    hitBox(Vector2<f32>(0, 0),
+                        Vector2<f32>(_cellsX * cSize,
+                                        _cellsY * cSize)),
+                    currentHP(_maxHP),
+                    maxHP(_maxHP), 
+                    viewRadius(_maxView),
+                    attackRange(_attackRange),
+                    attackDamage(_attackDamage),
+                    attackSpeed(_attackSpeed),
+                    metalCost(_metal), 
+                    crystalCost(_crystal), 
+                    happinessVariation(_happines), 
+                    citizensVariation(_citizens),
+                    target(nullptr),
+                    hostile(std::vector< Entity* >(0)),
+                    bbOffset(_bbOffset)
 {
     //set Timer
     tookDamageTimer = new Timer(0.1);
@@ -74,7 +74,8 @@ Entity::Entity(SceneNode* _layer,
 
     barBg = new Billboard(_layer, ID, pos, Color(0,0,0,255), Color(0,0,0,255));
 	bar = new Billboard(_layer, ID, pos, Color(0, 255, 0, 255), Color(0, 255, 0, 255));
-    barBg -> setSize(105.00, 15.00);
+    barBg -> setSize((hitBox.Right() - hitBox.Left()) * 0.8f, 15.00);
+    bar -> setSize((hitBox.Right() - hitBox.Left()) * 0.8f, 15.00);
 }
 
 Entity::~Entity() {
@@ -132,6 +133,9 @@ void Entity::setPosition(Vector2<f32> vectorData) {
     model -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y), vectorData.y));
 
     hitBox.moveHitbox(vectorData);
+
+    barBg->setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y) + bbOffset, vectorData.y));
+    bar->setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y) + bbOffset, vectorData.y));
 }
 
 //GETTERS
@@ -205,14 +209,6 @@ Entity* Entity::getTarget() const{
 
 std::vector<Entity*> Entity::getHostile() const{
     return hostile;
-}
-
-i32 Entity::getCellsX() const{
-    return kCellsX;
-}
-
-i32 Entity::getCellsY() const{
-    return kCellsY;
 }
 
 void Entity::setBaseColor() {

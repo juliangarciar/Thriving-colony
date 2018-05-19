@@ -16,6 +16,7 @@ class Billboard {
         ~Billboard();
 
         void setColor(Color top, Color bot);
+        void setColor(Color totalColor);
         void setSize(f32 w, f32 h);
 
         void setID(i32 id);
@@ -23,6 +24,7 @@ class Billboard {
         void setActive(bool a);
         void setPosition(Vector3<f32> pos);
         void setScale(Vector3<f32> s);
+        void setScale(f32 s);
         void setRotation(Vector3<f32> r);
 
     private:

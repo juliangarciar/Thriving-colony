@@ -34,10 +34,11 @@ Unit::Unit(SceneNode* _layer,
                             baseData.crystalCost,
                             baseData.happinessVariation,
                             baseData.citizensVariation,
-                            1,
-                            1,
+                            baseData.cellsX,
+                            baseData.cellsY,
                             baseData.flagModel,
-                            baseData.flagTexture
+                            baseData.flagTexture,
+                            baseData.bbOffset
                             ),
                             state(Enumeration::UnitState::Recruiting),
                             type(baseData.type),
@@ -427,7 +428,8 @@ void Unit::updateFlockingSensor() {
 
 void Unit::takeDamage(i32 _damage){
     
-    i32 resistance = 0;
+    i32 resistance(0);
+    f32 percentage(0);
     if (team == Enumeration::Team::Human) {
         resistance = Human::Instance() -> getResistanceModifier();
     } 
@@ -440,14 +442,19 @@ void Unit::takeDamage(i32 _damage){
         dmg = 0;
     }
     currentHP = currentHP - dmg;
+    
     tookDamageTimer -> restart();
     setDamageColor();
-    if (currentHP <= 0) {
-        currentHP = 0;
+    if (currentHP < 1) {
+        bar->setColor(Color(0,0,0));
+        bar->setScale(0);
         unitManager->deleteUnit(ID);
         return;
     }
     else{
+        percentage = (100 * currentHP) / maxHP;
+        bar->setColor(Color((100 - percentage) * 255 / 100.0f, percentage * 255 / 100.0f, 0));
+        bar->setScale(percentage / 100.0f);
         i32 _qnty = std::floor(currentHP / unitFighterHP);
         if(currentHP % unitFighterHP != 0){
             _qnty++;
