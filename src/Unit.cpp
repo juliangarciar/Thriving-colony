@@ -102,6 +102,7 @@ Unit::Unit(SceneNode* _layer,
 Unit::~Unit() {
     WorldGeometry::Instance()->clearUnitCell(getPosition(), this);
     for(std::size_t i = 0; i < unitFighters.size(); i++){
+        unitManager->adjustUnitFighter(-1);
         delete unitFighters[i];
     }
     unitFighters.clear();
@@ -410,6 +411,7 @@ void Unit::takeDamage(i32 _damage){
             _qnty++;
         }
         while(_qnty < unitFighters.size()){
+            unitManager->adjustUnitFighter(-1);
             UnitFighter* tmp = unitFighters[unitFighters.size() - 1];
             unitFighters.erase(unitFighters.end() - 1);
             delete tmp;

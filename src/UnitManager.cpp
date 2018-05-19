@@ -55,7 +55,7 @@ UnitManager::UnitManager(Enumeration::Team t, std::string b) {
     
     selectedTroop = 0; 
     nextTroopId = 1;
-
+    totalUnitFighters = 0;
     team = t;
 
     unitLayer = new SceneNode();
@@ -98,20 +98,22 @@ UnitManager::~UnitManager() {
 //In order to add a new unit, you must specify which one
 bool UnitManager::createTroop(std::string type) {
 	//ToDo: This method is just so fucking weird, I just can't get it
-    if (baseUnits->find(type) != baseUnits->end()){
+    std::map<std::string, UnitData>::iterator it = baseUnits->find(type);
+    if (it != baseUnits->end()){
 		//Check if there are space in the queue
         if (team == Enumeration::Team::Human){
-			if (inQueueTroopsByBuilding->at(baseUnits->at(type).buildingType) >= Human::Instance()->getBuildingManager()->getAmount(baseUnits->at(type).buildingType)) return false;
+			if (inQueueTroopsByBuilding->at(it->second.buildingType) >= Human::Instance()->getBuildingManager()->getAmount(it->second.buildingType)) return false;
 		} else {
-			if (inQueueTroopsByBuilding->at(baseUnits->at(type).buildingType) >= IA::Instance()->getBuildingManager()->getAmount(baseUnits->at(type).buildingType)) return false;
+			if (inQueueTroopsByBuilding->at(it->second.buildingType) >= IA::Instance()->getBuildingManager()->getAmount(it->second.buildingType)) return false;
 		}
 		//Check if can pay it
         if (checkCanPay(type)) {
-            Unit *newUnit = new Unit(unitLayer, nextTroopId, team, baseUnits->at(type), this);
+            Unit *newUnit = new Unit(unitLayer, nextTroopId, team, it->second, this);
             if (newUnit == nullptr) {
                 return false;
             }
             newUnit -> getModel() -> setActive(false);
+            totalUnitFighters += it->second.troops;
             newUnit -> setRecruitedCallback([&] (Unit* u){
                 //Delete in Queue
                 inQueueTroops->erase(inQueueTroops->find(u->getID()));
@@ -150,7 +152,7 @@ bool UnitManager::createTroop(std::string type) {
 
 			//Add to queues
             inQueueTroops -> insert(std::pair<i32, Unit*>(newUnit->getID(), newUnit));
-			inQueueTroopsByBuilding->at(baseUnits->at(type).buildingType)++;
+			inQueueTroopsByBuilding->at(it->second.buildingType)++;
             if (team == Enumeration::Team::Human){
                 Hud::Instance()->addTroopToQueue(newUnit->getID(), newUnit->getType());
             }
@@ -446,4 +448,8 @@ Unit* UnitManager::getUnit(i32 _id){
     else{
         return nullptr;
     }
+}
+
+void UnitManager::adjustUnitFighter(i32 qnty){
+    totalUnitFighters += qnty;
 }

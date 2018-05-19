@@ -205,6 +205,7 @@ class UnitManager{
          */
 		const UnitData& getUnitData(std::string) const;
         Unit* getUnit(i32 _id);
+        void adjustUnitFighter(i32 qnty);
 
     private:
         //Player's team: Enumeration::Team::Human or Enumeration::Team::IA.
@@ -246,7 +247,7 @@ class UnitManager{
         //Id number that is going to be asigned as the key of the next unit created.
         i32 nextTroopId;
 
-        
+        i32 totalUnitFighters;
 };
 
 #endif

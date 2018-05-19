@@ -10,7 +10,7 @@
 			"maxHP": 60,
 			"recruitingTime": 1,
 			"happiness": -10,
-			"citizens": -10,
+			"citizens": -6,
 			"armyLevel": 5,
 			"attackEvent": "event:/UnitAttack/Drorania_ranged_S",
 			"moveEvent": "event:/UnitMovement/Drorania_ranged_S",
@@ -41,7 +41,7 @@
 			"maxHP": 110,
 			"recruitingTime": 1,
 			"happiness": -10,
-			"citizens": -10,
+			"citizens": -4,
 			"armyLevel": 10,
 			"attackEvent": "event:/UnitAttack/Drorania_ranged_A",
 			"moveEvent": "event:/UnitMovement/Drorania_ranged_A",
@@ -72,7 +72,7 @@
 			"maxHP": 80,
 			"recruitingTime": 1,
 			"happiness": -10,
-			"citizens": -10,
+			"citizens": -6,
 			"armyLevel": 5,
 			"attackEvent": "event:/UnitAttack/Drorania_melee_S",
 			"moveEvent": "event:/UnitMovement/Drorania_melee_S",
@@ -87,7 +87,7 @@
 				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 				"texturePath": ""
 			},
-			"troops": 4,
+			"troops": 6,
 			"cellsX": 1,
 			"cellsY": 1,
 			"bbOffset": 200
@@ -103,7 +103,7 @@
 			"maxHP": 140,
 			"recruitingTime": 1,
 			"happiness": -10,
-			"citizens": -10,
+			"citizens": -4,
 			"armyLevel": 10,
 			"attackEvent": "event:/UnitAttack/Drorania_melee_A",
 			"moveEvent": "event:/UnitMovement/Drorania_melee_A",
@@ -134,7 +134,7 @@
 			"maxHP": 180,
 			"recruitingTime": 1,
 			"happiness": -10,
-			"citizens": -10,
+			"citizens": -1,
 			"armyLevel": 7,
 			"attackEvent": "event:/UnitAttack/Drorania_ranged_S",
 			"moveEvent": "event:/UnitMovement/Drorania_ranged_S",
@@ -149,7 +149,7 @@
 				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 				"texturePath": ""
 			},
-			"troops": 4,
+			"troops": 1,
 			"cellsX": 1,
 			"cellsY": 1,
 			"bbOffset": 200
@@ -165,7 +165,7 @@
 			"maxHP": 220,
 			"recruitingTime": 1,
 			"happiness": -10,
-			"citizens": -10,
+			"citizens": -1,
 			"armyLevel": 7,
 			"attackEvent": "event:/UnitAttack/Drorania_ranged_A",
 			"moveEvent": "event:/UnitMovement/Drorania_ranged_A",
@@ -180,7 +180,7 @@
 				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 				"texturePath": ""
 			},
-			"troops": 4,
+			"troops": 1,
 			"cellsX": 1,
 			"cellsY": 1,
 			"bbOffset": 200
@@ -196,7 +196,7 @@
 			"maxHP": 180,
 			"recruitingTime": 1,
 			"happiness": -10,
-			"citizens": -10,
+			"citizens": -1,
 			"armyLevel": 15,
 			"attackEvent": "event:/UnitAttack/Drorania_melee_A",
 			"moveEvent": "event:/UnitMovement/Drorania_melee_A",
@@ -211,7 +211,7 @@
 				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 				"texturePath": ""
 			},
-			"troops": 4,
+			"troops": 1,
 			"cellsX": 1,
 			"cellsY": 1,
 			"bbOffset": 200
