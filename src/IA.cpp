@@ -602,3 +602,13 @@ void IA::initializeChoices() {
     //choices[0] = "House"
     */
 }
+
+bool IA::getIdleTroops() {
+    std::map <int, Unit*> *inMap = getUnitManager() -> getInMapTroops();
+    for (std::map<i32,Unit*>::iterator it = inMap -> begin(); it != inMap -> end(); ++it) {
+        if (it -> second -> getState() != Enumeration::Attack) {
+            return false;
+        } 
+    }
+    return true;
+}
