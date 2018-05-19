@@ -55,7 +55,7 @@ void GameState::Init() {
     });
 
     //Init SoundSystem
-    SoundSystem::Instance() -> initSystem();
+    //SoundSystem::Instance() -> initSystem();
 }
 
 void GameState::Input() {
@@ -209,7 +209,7 @@ void GameState::Update(){
 
         //ToDo: NEW SOUND SYSTEM
         //SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");
-        SoundSystem::Instance() -> update();
+        //SoundSystem::Instance() -> update();
         
         //If human is building something
         human -> getBuildingManager() -> drawBuilding();

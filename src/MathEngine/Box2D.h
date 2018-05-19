@@ -26,6 +26,8 @@ class Box2D
         f32    Right() const;
         Box2D getAmplifiedBox(f32 distance) const;
         bool isOverlappedWith(const Box2D& other) const;
+        bool isOverlappedWith(Vector2<f32> point) const;
+        f32 getHalfSize() const;
 
         i32 getCellsX() const;
         i32 getCellsY() const;
