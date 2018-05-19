@@ -1,13 +1,14 @@
 {
 	"Units": [{
 			"unitName": "StandardR",
-			"moveSpeed": 350,
-			"attackDamage": 13,
+			"buildingType": "Barrack",
+			"moveSpeed": 3,
+			"attackDamage": 10,
 			"attackRange": 350,
 			"attackSpeed": 1,
-			"viewRadious": 450,
+			"viewRadius": 450,
 			"maxHP": 60,
-			"recruitingTime": 5,
+			"recruitingTime": 1,
 			"happiness": -10,
 			"citizens": -10,
 			"armyLevel": 5,
@@ -24,17 +25,21 @@
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
 				"texturePath": "media/textures/placeholder.bmp"
 			},
-			"troops": 4
+			"troops": 4,
+			"cellsX": 1,
+			"cellsY": 1,
+			"bbOffset": 200
 		},
 		{
 			"unitName": "AdvancedR",
-			"moveSpeed": 530,
-			"attackDamage": 18,
+			"buildingType": "Barn",
+			"moveSpeed": 3,
+			"attackDamage": 5,
 			"attackRange": 700,
 			"attackSpeed": 1,
-			"viewRadious": 450,
+			"viewRadius": 450,
 			"maxHP": 110,
-			"recruitingTime": 10,
+			"recruitingTime": 1,
 			"happiness": -10,
 			"citizens": -10,
 			"armyLevel": 10,
@@ -51,17 +56,21 @@
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
 				"texturePath": "media/textures/placeholder.bmp"
 			},
-			"troops": 4
+			"troops": 4,
+			"cellsX": 1,
+			"cellsY": 1,
+			"bbOffset": 200
 		},
 		{
 			"unitName": "StandardM",
-			"moveSpeed": 420,
-			"attackDamage": 15,
+			"buildingType": "Barrack",
+			"moveSpeed": 3,
+			"attackDamage": 10,
 			"attackRange": 100,
 			"attackSpeed": 1,
-			"viewRadious": 450,
+			"viewRadius": 450,
 			"maxHP": 80,
-			"recruitingTime": 5,
+			"recruitingTime": 1,
 			"happiness": -10,
 			"citizens": -10,
 			"armyLevel": 5,
@@ -78,17 +87,21 @@
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
 				"texturePath": "media/textures/placeholder.bmp"
 			},
-			"troops": 4
+			"troops": 4,
+			"cellsX": 1,
+			"cellsY": 1,
+			"bbOffset": 200
 		},
 		{
 			"unitName": "AdvancedM",
-			"moveSpeed": 530,
-			"attackDamage": 21,
+			"buildingType": "Barn",
+			"moveSpeed": 3,
+			"attackDamage": 5,
 			"attackRange": 140,
 			"attackSpeed": 1,
-			"viewRadious": 450,
+			"viewRadius": 450,
 			"maxHP": 140,
-			"recruitingTime": 10,
+			"recruitingTime": 1,
 			"happiness": -10,
 			"citizens": -10,
 			"armyLevel": 10,
@@ -105,17 +118,21 @@
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
 				"texturePath": "media/textures/placeholder.bmp"
 			},
-			"troops": 4
+			"troops": 4,
+			"cellsX": 1,
+			"cellsY": 1,
+			"bbOffset": 200
 		},
 		{
 			"unitName": "Launcher",
-			"moveSpeed": 250,
-			"attackDamage": 27,
+			"buildingType": "Workshop",
+			"moveSpeed": 3,
+			"attackDamage": 5,
 			"attackRange": 900,
 			"attackSpeed": 1,
-			"viewRadious": 450,
+			"viewRadius": 450,
 			"maxHP": 180,
-			"recruitingTime": 15,
+			"recruitingTime": 1,
 			"happiness": -10,
 			"citizens": -10,
 			"armyLevel": 7,
@@ -132,17 +149,21 @@
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
 				"texturePath": "media/textures/placeholder.bmp"
 			},
-			"troops": 4
+			"troops": 4,
+			"cellsX": 1,
+			"cellsY": 1,
+			"bbOffset": 200
 		},
 		{
 			"unitName": "Desintegrator",
-			"moveSpeed": 250,
-			"attackDamage": 41,
+			"buildingType": "Workshop",
+			"moveSpeed": 3,
+			"attackDamage": 5,
 			"attackRange": 120,
 			"attackSpeed": 1,
-			"viewRadious": 450,
+			"viewRadius": 450,
 			"maxHP": 220,
-			"recruitingTime": 20,
+			"recruitingTime": 1,
 			"happiness": -10,
 			"citizens": -10,
 			"armyLevel": 7,
@@ -159,17 +180,21 @@
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
 				"texturePath": "media/textures/placeholder.bmp"
 			},
-			"troops": 4
+			"troops": 4,
+			"cellsX": 1,
+			"cellsY": 1,
+			"bbOffset": 200
 		},
 		{
 			"unitName": "Idol",
-			"moveSpeed": 250,
-			"attackDamage": 27,
+			"buildingType": "Barn",
+			"moveSpeed": 3,
+			"attackDamage": 5,
 			"attackRange": 140,
 			"attackSpeed": 1,
-			"viewRadious": 450,
+			"viewRadius": 450,
 			"maxHP": 180,
-			"recruitingTime": 20,
+			"recruitingTime": 1,
 			"happiness": -10,
 			"citizens": -10,
 			"armyLevel": 15,
@@ -186,7 +211,10 @@
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
 				"texturePath": "media/textures/placeholder.bmp"
 			},
-			"troops": 4
+			"troops": 4,
+			"cellsX": 1,
+			"cellsY": 1,
+			"bbOffset": 200
 		}
 	]
 }

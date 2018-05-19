@@ -46,8 +46,17 @@ void Model::setMaterial(Material *m){
     //ToDo
 }
 
+void Model::setColor(Color c){
+	//material -> setColor(c);
+	//setMaterial(material);
+}
+
 Vector3<f32> Model::getPosition() {
     return Vector3<f32>(obj->getPosition().x, obj->getPosition().y, -obj->getPosition().z);
+}
+
+Vector3<f32> Model::getRotation() {
+    return Vector3<f32>(obj -> getRotation().x, obj -> getRotation().y, obj -> getRotation().z);
 }
 
 i32 Model::getID() {

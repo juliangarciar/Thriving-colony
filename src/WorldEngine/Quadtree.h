@@ -4,16 +4,13 @@
 #include <Types.h>
 #include <MathEngine/Vector2.h>
 #include <MathEngine/Box2D.h>
+#include <Enumeration.h>
 
 class Cell;
+class Entity;
+class Unit;
 class Building;
 class Quadtree{
-    private:
-        Vector2<f32> position;
-        Box2D hitBox;
-        std::vector<Quadtree*> innerTrees;
-        std::vector<Cell*> innerCells;
-        i32 deep;
     public:
         /**
          * @brief Default constructor
@@ -22,7 +19,7 @@ class Quadtree{
          * @param hitboxData The hitbos that represents the quadTree collision
          * @param deepValue Represent the k layer where the quadTree is allocated
          */
-        Quadtree(Vector2<f32> positionData, Box2D hitboxData, i32 deepValue);
+        Quadtree(Vector2<f32> positionData, const Box2D& hitboxData, i32 deepValue);
         /**
          * @brief Default destructor
          * 
@@ -58,18 +55,26 @@ class Quadtree{
          * @return true If collides
          * @return false Else
          */
-        bool canBuild(Box2D otherHitbox);
+        bool checkCollision(const Box2D& otherHitbox) const;
         /**
          * @brief Returns a reference to the hitbox of the quadtree
          * 
          * @return Box2D& 
          */
-        Box2D getHitbox();
+        const Box2D& getHitbox() const;
         /**
          * @brief Returns a Vector2 that indicates the position(center) of the Quadtree
          * 
          * @return Vector2<f32>
          */
-        Vector2<f32> getPosition();
+        const Vector2<f32> getPosition() const;
+
+        void getCollidingEntities(const Box2D& hitbox, Entity** priorityEntity, Enumeration::Team teamTarget) const;
+    private:
+        const Vector2<f32> position;
+        const Box2D hitBox;
+        std::vector<Quadtree*> innerTrees;
+        std::vector<Cell*> innerCells;
+        const i32 depth;
 };
 #endif

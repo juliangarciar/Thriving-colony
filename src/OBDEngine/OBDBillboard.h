@@ -14,7 +14,7 @@ class OBDBillboard {
          * @param parent
          * @param position
          */
-        OBDBillboard(glm::vec3);
+        OBDBillboard(OBDSceneNode*, glm::vec3);
 
         /**
          * @brief 
@@ -32,7 +32,7 @@ class OBDBillboard {
          * @brief 
          * 
          */
-        void setColor(OBDColor*, OBDColor*);
+        void setColor(OBDColor, OBDColor);
 
         /**
          * @brief Set the Size object

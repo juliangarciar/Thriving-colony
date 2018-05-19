@@ -1,78 +1,102 @@
 #include "Box2D.h"
-Box2D::Box2D(){
 
-}
-Box2D::Box2D(f32 sizeX, f32 sizeY){
-    halfSizeX = sizeX;
-    halfSizeY = sizeY;
-}
-Box2D::Box2D(Vector2<f32> tl, Vector2<f32> br){
-    halfSizeX = std::abs((br.x - tl.x) / 2);
-    halfSizeY = std::abs((br.y - tl.y) / 2);
-    m_vTopLeft = tl;
-    m_vBottomRight = br;
-    m_vCenter = (tl + br) / 2;
-    m_vTopRight.x = br.x;
-    m_vTopRight.y = tl.y;
-    m_vBottomLeft.x = tl.x;
-    m_vBottomLeft.y = br.y;
-}
+Box2D::Box2D():m_vTopLeft(0, 0),
+               m_vBottomRight(0, 0),
+               m_vCenter(0, 0),
+               m_vTopRight(0, 0),
+               m_vBottomLeft(0, 0)
+{}
+
+Box2D::Box2D(Vector2<f32> vectorPosition, f32 sizeX, f32 sizeY):m_vTopLeft(0, 0),
+                                                                m_vBottomRight(0, 0),
+                                                                m_vCenter(0, 0),
+                                                                m_vTopRight(0, 0),
+                                                                m_vBottomLeft(0, 0)
+{}
+
+Box2D::Box2D(Vector2<f32> tl, Vector2<f32> br):m_vTopLeft(tl),
+                                               m_vBottomRight(br),
+                                               m_vCenter((tl + br) / 2.0f),
+                                               m_vTopRight(br.x, tl.y),
+                                               m_vBottomLeft(tl.x, br.y),
+                                               cellsX((tl.x - br.y) / cSize),
+                                               cellsY((tl.y - br.y) / cSize)
+{}
+
 void Box2D::moveHitbox(f32 x, f32 y){
-    m_vCenter.x = x;
-    m_vCenter.y = y;
-
-    m_vTopLeft.x = x - halfSizeX;
-    m_vTopLeft.y = y - halfSizeY;
-
-    m_vTopRight.x = x + halfSizeX;
-    m_vTopRight.y = m_vTopLeft.y;
-
-    m_vBottomLeft.x = m_vTopLeft.x;
-    m_vBottomLeft.y = y + halfSizeY;
-
-    m_vBottomRight.x = m_vTopRight.x;
-    m_vBottomRight.y = m_vBottomLeft.y;
-
-    //std::cout << "HalfSizeX: " << halfSizeX << " HalfSizeY: " << halfSizeY << "\n"; 
+    Vector2<f32> vectorDirection = Vector2<f32>(x, y) - m_vCenter;
+    
+    m_vCenter += vectorDirection;
+    m_vTopLeft += vectorDirection;
+    m_vTopRight += vectorDirection;
+    m_vBottomLeft += vectorDirection;
+    m_vBottomRight += vectorDirection;
 }
-/* TODO: Check this method, maybe is missfunctional */
-bool Box2D::isOverlappedWith(Box2D other){
-    return !((other.Top() > this->Bottom()) ||
-        (other.Bottom() < this->Top()) ||
-        (other.Left() > this->Right()) ||
-        (other.Right() < this->Left()));
+
+void Box2D::moveHitbox(Vector2<f32> _vectorPos){
+    Vector2<f32> vectorDirection = _vectorPos - m_vCenter;
+
+    m_vCenter += vectorDirection;
+    m_vTopLeft += vectorDirection;
+    m_vTopRight += vectorDirection;
+    m_vBottomLeft += vectorDirection;
+    m_vBottomRight += vectorDirection;
 }
-Vector2<f32> Box2D::TopLeft(){
+
+bool Box2D::isOverlappedWith(const Box2D& other) const{
+    return !((other.Top() >= this->Bottom()) ||
+             (other.Bottom() <= this->Top()) ||
+             (other.Left() >= this->Right()) ||
+             (other.Right() <= this->Left()));
+}
+
+Vector2<f32> Box2D::TopLeft() const{
     return m_vTopLeft;
 }
-Vector2<f32> Box2D::BottomRight(){
+
+Vector2<f32> Box2D::BottomRight() const{
     return m_vBottomRight;
 }
-Vector2<f32> Box2D::Center(){
+
+Vector2<f32> Box2D::Center() const{
     return m_vCenter;
 }
-Vector2<f32> Box2D::TopRight(){
+
+Vector2<f32> Box2D::TopRight() const{ 
     return m_vTopRight;
 }
-Vector2<f32> Box2D::BottomLeft(){
+
+Vector2<f32> Box2D::BottomLeft() const{
     return m_vBottomLeft;
 }
-f32 Box2D::Top(){
+
+f32 Box2D::Top() const{
     return m_vTopLeft.y;
 }
-f32 Box2D::Left(){
+
+f32 Box2D::Left() const{
     return m_vTopLeft.x;
 }
-f32 Box2D::Bottom(){
+
+f32 Box2D::Bottom() const{
     return m_vBottomRight.y;
 }
-f32 Box2D::Right(){
+
+f32 Box2D::Right() const{
     return m_vBottomRight.x;
 }
-Box2D Box2D::getAmplifiedBox(f32 distance){
-    Vector2<f32> amp = Vector2<f32>(distance, distance);
-    Vector2<f32> tL = m_vTopLeft - amp;
-    Vector2<f32> bR = m_vBottomRight + amp;
-    Box2D dummy = Box2D(tL, bR);
+
+Box2D Box2D::getAmplifiedBox(f32 distance) const{
+    Vector2<f32> tL = m_vTopLeft - distance;
+    Vector2<f32> bR = m_vBottomRight + distance;
+    Box2D dummy(tL, bR);
     return dummy;
+}
+
+i32 Box2D::getCellsX() const{
+    return cellsX;
+}
+
+i32 Box2D::getCellsY() const{
+    return cellsY;
 }

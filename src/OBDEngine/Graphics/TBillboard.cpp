@@ -7,13 +7,12 @@ TBillboard::TBillboard(glm::vec3 pos) : TEntity() {
     topWidth = 500;
     bottomWidth = 100;
     
-    bottomColor = new OBDColor(255, 255, 255);
-    topColor = new OBDColor();
+    bottomColor = OBDColor(255, 255, 255);
+    topColor = OBDColor();
 }
 
 TBillboard::~TBillboard() {
-    delete bottomColor;
-    delete topColor;
+	
 }
 
 void TBillboard::beginDraw() {
@@ -60,14 +59,9 @@ void TBillboard::setPosition(glm::vec3 pos) {
     position = pos;
 }
 
-void TBillboard::setColor(OBDColor* newTopColor, OBDColor* newBottomColor) {
-    if (newTopColor != nullptr) {
-        topColor = newTopColor;
-    }
-
-    if (newBottomColor != nullptr) {
-        bottomColor = newBottomColor;
-    }
+void TBillboard::setColor(OBDColor newTopColor, OBDColor newBottomColor) {
+    topColor = newTopColor;
+    bottomColor = newBottomColor;
 }
 
 void TBillboard::setSize(f32 newHeight, f32 newTopWidth, f32 newBottomWidth) {
@@ -84,11 +78,11 @@ void TBillboard::setSize(f32 newHeight, f32 newTopWidth, f32 newBottomWidth) {
     }
 }
 
-OBDColor* TBillboard::getTopColor() {
+OBDColor TBillboard::getTopColor() {
     return topColor;
 }
 
-OBDColor* TBillboard::getBottomColor() {
+OBDColor TBillboard::getBottomColor() {
     return bottomColor;
 }
 

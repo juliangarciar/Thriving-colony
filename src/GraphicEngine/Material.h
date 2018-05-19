@@ -4,6 +4,7 @@
 #include <OBDEngine/OBDMaterial.h>
 
 #include "Texture.h"
+#include <MathEngine/Color.h>
 #include <Types.h>
 #include <MathEngine/Color.h>
 

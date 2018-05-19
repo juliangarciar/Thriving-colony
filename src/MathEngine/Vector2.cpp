@@ -75,8 +75,36 @@ Vector2<T> Vector2<T>::operator + (const f32 &num) const {
     return Vector2<T>(this -> x + num, this -> y + num);
 }
 template <class T>
+Vector2<T> Vector2<T>::operator += (const Vector2<T> &p){
+    this->x = this->x + p.x; 
+    this->y = this->y + p.y;
+    return *this;
+}
+template <class T>
+Vector2<T> Vector2<T>::operator += (const f32 &num){
+    this->x = this->x + num; 
+    this->y = this->y + num;
+    return *this;
+}
+template <class T>
 Vector2<T> Vector2<T>::operator - (const Vector2<T> &p) const {
     return Vector2<T>(this -> x - p.x, this -> y - p.y);
+}
+template <class T>
+Vector2<T> Vector2<T>::operator - (const f32 &num) const {
+    return Vector2<T>(this -> x - num, this -> y - num);
+}
+template <class T>
+Vector2<T> Vector2<T>::operator -= (const Vector2<T> &p){
+    this->x = this->x - p.x; 
+    this->y = this->y - p.y;
+    return *this;
+}
+template <class T>
+Vector2<T> Vector2<T>::operator -= (const f32 &num){
+    this->x = this->x - num; 
+    this->y = this->y - num;
+    return *this;
 }
 template <class T>
 Vector2<T> Vector2<T>::operator / (const f32 &num) const {
@@ -86,11 +114,14 @@ template <class T>
 Vector2<T> Vector2<T>::operator * (const f32 &num) const{
     return Vector2<T>(this->x * num, this->y * num);
 }
+
 template <class T>
-Vector2<T> Vector2<T>::operator += (const Vector2<T> &p){
-    this->x = this->x + p.x; 
-    this->y = this->y + p.y;
-    return *this;
+bool Vector2<T>::operator ==(const Vector2<T> &p){
+    return (this->x == p.x && this->y == p.y);
+}
+template <class T>
+bool Vector2<T>::operator !=(const Vector2<T> &p){
+    return (this->x != p.x || this->y != p.y);
 }
 
 template class Vector2<i32>;

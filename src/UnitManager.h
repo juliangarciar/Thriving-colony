@@ -99,13 +99,6 @@ class UnitManager{
         void selectTroop(i32);
 
         /**
-         * @brief
-         * 
-         * @param
-         */
-        void startBattle(i32);
-
-        /**
          * @brief Delete the unit with the id passed by parameter.
          * 
          * @param The i32 is the id of the unit that is going to be deleted. 
@@ -118,17 +111,7 @@ class UnitManager{
          * @return True when there is a troop selected and false in other case.
          */
         bool isTroopSelected();
-
-        /**
-		 * @brief Check if the player's metalAmount and crystalAmount variables are higher than the ones passed by parameter.
-		 * 
-         * @param metalCost is the metal cost of the unit.
-		 * @param crystalCost is the crystal cost of the unit.
-         * @param citizensCost is the citizens cost of the unit.
-		 * @return True if the three player's variables are higher than the three passed by parameter and false in other case.
-		 */
-		bool isSolvent(i32 metalCost, i32 crystalCost, i32 citizensCost);
-
+		
         /** 
          * @brief Responsible for managing calls to isSolvent() for the human player, registering the type of the desired unit and sending the aforementhioned method the prices.
 		 * 
@@ -220,7 +203,8 @@ class UnitManager{
          * 
          * @return
          */
-		UnitData getUnitData(std::string);
+		const UnitData& getUnitData(std::string) const;
+        Unit* getUnit(i32 _id);
 
     private:
         //Player's team: Enumeration::Team::Human or Enumeration::Team::IA.
@@ -233,7 +217,10 @@ class UnitManager{
 		u32 currentCollisionID;
 
         //
-        std::map<std::string, UnitData> baseUnits;
+        std::map<std::string, UnitData> *baseUnits;
+
+		//Name of the building and quantity of troops in this building type queue
+		std::map<std::string, i32> *inQueueTroopsByBuilding;
 
         //Pointer to a std::map object with all the units that are being trained.
         std::map<i32, Unit*> *inQueueTroops;
@@ -258,6 +245,8 @@ class UnitManager{
 
         //Id number that is going to be asigned as the key of the next unit created.
         i32 nextTroopId;
+
+        
 };
 
 #endif

@@ -45,7 +45,7 @@
 		"initial_crystal": 0,
 		"siderurgy_productivity": 10,
 		"quarry_productivity": 5,
-		"building_radious": 2000,
+		"building_radius": 2000,
 		"mainBuilding": {
 			"position": {
 				"x": 8040,
@@ -88,7 +88,7 @@
 		"initial_crystal": 5,
 		"siderurgy_productivity": 15,
 		"quarry_productivity": 10,
-		"building_radious": 2000,
+		"building_radius": 2000,
 		"mainBuilding": {
 			"position": {
 				"x": 1960,

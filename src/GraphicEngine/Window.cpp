@@ -4,20 +4,31 @@ Window* Window::pinstance = 0;
 
 Window* Window::Instance() {
     if(pinstance == 0) {
-        pinstance = new Window(1048, 720);
+        pinstance = new Window();
     }
     return pinstance;
 }
 
-Window::Window(i32 width, i32 height) {
+Window::Window() {
     closeWindow = false;
-    windowWidth = width;
-    windowHeight = height;
-
+    
     if(!glfwInit()) {
 		std::cout << "Failed to initialize GLFW" << std::endl;
 		exit(0);
 	}
+
+    // Init last delta time
+    lastDeltaTime = 0.014;
+}
+
+Window::~Window() {
+    //ToDo: destructor
+}
+
+void Window::Init(i32 width, i32 height){
+    windowWidth = width;
+    windowHeight = height;
+    screenCenter = Vector2<i32>(windowWidth/2, windowHeight/2);
 
     glfwSetTime(0);
 
@@ -60,16 +71,16 @@ Window::Window(i32 width, i32 height) {
         [](GLFWwindow *w, i32 width, i32 height) {
 			Window::Instance() -> getEngine() -> setWindowSize(width, height);
             Window::Instance() -> getGUIEnvironment() -> resizeCallbackEvent(width, height);
+			Window::Instance() -> windowWidth = width;
+			Window::Instance() -> windowHeight = height;
+    		Window::Instance() -> screenCenter.set(width/2, height/2);
+			Window::Instance() -> triggerResizeCallback(width, height);
         }
     );
 
     dtThen = glfwGetTime();
 
     billboardLayer = e -> createShaderedSceneNode("media/shaders/vertexShaderBillboards.glsl", "media/shaders/fragmentShaderBillboards.glsl");
-}
-
-Window::~Window() {
-    //ToDo: destructor
 }
 
 void Window::setGUI(){ 
@@ -79,6 +90,7 @@ void Window::setGUI(){
 
 void Window::beginScene(){
     f64 now = glfwGetTime();
+    lastDeltaTime = deltaTime;
     deltaTime = (f64)(now - dtThen); // Time in seconds
     dtThen = now;
 }
@@ -107,28 +119,36 @@ OBDEngine *Window::getEngine(){
 	return e;
 }
 
+void Window::setResizeCallback(std::function<void(i32, i32)> f){
+	resizeCallback = f;
+}
+
+void Window::triggerResizeCallback(i32 width, i32 height){
+	if (resizeCallback) resizeCallback(width, height);
+}
+
 nanogui::Screen* Window::getGUIEnvironment(){
     return gui;
 }
 
-i32 Window::getInitialWindowWidth(){
+i32 Window::getWindowWidth(){
     return windowWidth;
 }
 
-i32 Window::getInitialWindowHeight(){
+i32 Window::getWindowHeight(){
     return windowHeight;
 }
 
-i32 Window::getRealWindowWidth(){
-    return windowWidth;
-}
-
-i32 Window::getRealWindowHeight(){
-    return windowHeight;
-}
-
-f32 Window::getDeltaTime() {
+f32 Window::getDeltaTime() const{
     return deltaTime;
+}
+
+f32 Window::getLastDeltaTime() const{
+    return lastDeltaTime;
+}
+
+f32 Window::getDeltaTimeVariance() const{
+    return deltaTime / 0.016f;
 }
 
 void Window::calculateFramerate() {

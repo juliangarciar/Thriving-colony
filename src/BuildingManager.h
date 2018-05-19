@@ -64,15 +64,6 @@ class BuildingManager {
 		void buildBuilding(Vector2<f32>);
 
 		/**
-		 * @brief Check if the player's metalAmount and crystalAmount variables are higher than the ones passed by parameter.
-		 * 
-		 * @param metalCost is the metal cost of the building
-		 * @param crystalCost is the crystal cost of the building
-		 * @return True if both player's variables are higher than the both passed by parameter and false in other case.
-		 */
-		bool isSolvent(i32 metalCost, i32 crystalCost);
-
-		/**
 		 * @brief Responsible for managing calls to isSolvent() for the human player, registering the type of the desired building and sending the aforementhioned method the prices. It has its own method to avoid cluttering the setBuildingMode() method, as it used to be there in the first place.
 		 * 
 		 * @param std::string is the building type.
@@ -88,13 +79,6 @@ class BuildingManager {
 		 */
 		bool checkFinished(i32);
 
-		/**
-		 * @brief Call the update method of every building stored at buildings variable.
-		 * 
-		 * @see update() method at Building class.
-		 */
-		void updateBuildingManager();
-		
 		/**
 		 * @brief Get the ID number of the mesh of currentCollision variable.
 		 * 
@@ -145,7 +129,7 @@ class BuildingManager {
 		 * 
 		 * @return BuildingData 
 		 */
-		BuildingData getBuildingData(std::string);
+		const BuildingData& getBuildingData(std::string) const;
 
 	private:
 		//Player's team: Enumeration::Team::Human or Enumeration::Team::IA.

@@ -6,39 +6,33 @@
 #include "IOEngine/IO.h"
 #include "GraphicEngine/Window.h"
 
-//ToDo: llevarse datos a JSON
 CameraController::CameraController() {
-	Window *w = Window::Instance();
-
 	//Camera 
     camera = new Camera();
-    camera -> setFarValue(42000.f);
+    camera -> setFarValue(42000.f); //JSON config
 
 	// Helper initializations
 	recipsqrt2 = 1.0 / sqrt(2);
-	centerMargin = 20;
+	centerMargin = Vector2<f32>(10, 10); //JSON config
+	screenMargin = Vector2<f32>(20, 20); //JSON config
 
 	// Cam movement initializations
 	direction = 0;
-	camSpeed = 700.0f;
-	screenMarginV = 20;
-	screenMarginH = 20;
+	camSpeed = 850.0f; //JSON config
     movementMode = false;
 
 	// Cam zoom initializations
+	zoomLevels = 10; //JSON config
 	zoomDistanceFromTarget = 750.0f;
 	minZoom = 400;
 	maxZoom = 1000;
-	zoomLevels = 10;
     zoomMode = false;
 
 	// Cam rotation and inclination initializations
-	rotSpeed = 2.f;
-	inclSpeed = 2.f;
-
+	rotSpeed = 2.f; //JSON config
+	inclSpeed = 2.f; //JSON config
 	minInclination = 200.f;
 	maxInclination = 260.f;
-
 	rotateDegrees.x = 0.f;
 	rotateDegrees.y = 230.f;
     rotationOrInclinationMode = false;
@@ -46,11 +40,8 @@ CameraController::CameraController() {
 	//Center
 	centerCameraMode = false;
 
-	//ToDo: deberia actualizarse al redimensionar la pantalla
-    screenCenter = Vector2<i32>(w->getInitialWindowWidth()/2, w->getInitialWindowHeight()/2);
-
-	i32 framesPerSecond = 60;
-	updateTimer = new Timer(1/framesPerSecond, true, false);
+	int fractionsOfASecond = 70.f;
+	updateTimer = new Timer(0, true, false); //ToDo: revisar
 
 	updateTimer -> setCallback([&](){
         updateCamera(Window::Instance() -> getDeltaTime());
@@ -74,10 +65,6 @@ void CameraController::Init(Vector3<f32> v){
 	distanceToTarget = camPos.getDistanceTo(tarPos);
 
 	updateTimer -> start();
-}
-
-void CameraController::Update() {
-	updateTimer -> tick();
 }
 
 void CameraController::updateCamera(f32 deltaTime) {
@@ -135,17 +122,17 @@ void CameraController::updateCamera(f32 deltaTime) {
 		) * camSpeed * deltaTime;
 
 		// border collision + apply update
-		if (tarPos.x < Enumeration::MapMargins::mapMarginTop) {
+		if (tarPos.x < Map::Instance()->getMapMargins()->top) {
 			if (tarIncr.x > 0) tarPos.x += tarIncr.x;
-		} else if (tarPos.x > Enumeration::MapMargins::mapMarginRight) {
+		} else if (tarPos.x > Map::Instance()->getMapMargins()->right) {
 			if (tarIncr.x < 0) tarPos.x += tarIncr.x;
 		} else {
 			tarPos.x += tarIncr.x;
 		}
 
-		if (tarPos.z < Enumeration::MapMargins::mapMarginTop) {
+		if (tarPos.z < Map::Instance()->getMapMargins()->left) {
 			if (tarIncr.z > 0) tarPos.z += tarIncr.z;
-		} else if (tarPos.z > Enumeration::MapMargins::mapMarginBottom) {
+		} else if (tarPos.z > Map::Instance()->getMapMargins()->bottom) {
 			if (tarIncr.z < 0) tarPos.z += tarIncr.z;
 		} else {
 			tarPos.z += tarIncr.z;
@@ -182,33 +169,33 @@ void CameraController::Move() {
 	if (cursorPosCurrent.x <= 0) {
 		cursorPosCurrent.x = 0;
 		cursorOffLimits = true;
-	} else if (cursorPosCurrent.x >= w -> getRealWindowWidth()) {
-		cursorPosCurrent.x = w -> getRealWindowWidth();
+	} else if (cursorPosCurrent.x >= w -> getWindowWidth()) {
+		cursorPosCurrent.x = w -> getWindowWidth();
 		cursorOffLimits = true;
 	}
 
 	if (cursorPosCurrent.y <= 0) {
 		cursorPosCurrent.y = 0;
 		cursorOffLimits = true;
-	} else if (cursorPosCurrent.y >= w -> getRealWindowHeight()) {
-		cursorPosCurrent.y = w -> getRealWindowHeight();
+	} else if (cursorPosCurrent.y >= w -> getWindowHeight()) {
+		cursorPosCurrent.y = w -> getWindowHeight();
 		cursorOffLimits = true;
 	}
 
 	if (cursorOffLimits) IO::Instance() -> getMouse() -> setPosition(cursorPosCurrent);
 	
-	if (cursorPosCurrent.y < screenMarginV) {
+	if (cursorPosCurrent.y < screenMargin.y) {
 		direction |= 1 << 0;
         movementMode = true;
-	} else if (cursorPosCurrent.y > (w -> getRealWindowHeight() - screenMarginV)) {
+	} else if (cursorPosCurrent.y > (w -> getWindowHeight() - screenMargin.y)) {
 		direction |= 1 << 2;
         movementMode = true;
 	}
 
-	if (cursorPosCurrent.x < screenMarginH) {
+	if (cursorPosCurrent.x < screenMargin.x) {
 		direction |= 1 << 1;
         movementMode = true;
-	} else if (cursorPosCurrent.x > (w -> getRealWindowWidth() - screenMarginH)) {
+	} else if (cursorPosCurrent.x > (w -> getWindowWidth() - screenMargin.x)) {
 		direction |= 1 << 3;
         movementMode = true;
 	}
@@ -243,7 +230,7 @@ void CameraController::RotateAndInclinate(){
     if (IO::Instance() -> getMouse() -> middleMousePressed()) {
 		// get cursor data
         cursorPosSaved = IO::Instance() -> getMouse() -> getPosition();
-        IO::Instance() -> getMouse() -> setPosition(screenCenter);
+        IO::Instance() -> getMouse() -> setPosition(Window::Instance()->screenCenter);
 
 		IO::Instance() -> getMouse() -> hide();
 
@@ -260,16 +247,16 @@ void CameraController::RotateAndInclinate(){
 		Vector2<i32> cursorPosCurrent = IO::Instance() -> getMouse() -> getPosition();
 
 		//Increase or decease rotation angle
-		if (cursorPosCurrent.x < screenCenter.x - centerMargin) {
+		if (cursorPosCurrent.x < Window::Instance()->screenCenter.x - centerMargin.x) {
 			rotateDegrees.x += rotSpeed;
-		} else if (cursorPosCurrent.x > screenCenter.x + centerMargin) {
+		} else if (cursorPosCurrent.x > Window::Instance()->screenCenter.x + centerMargin.x) {
 			rotateDegrees.x -= rotSpeed;
 		}
 
 		//Increase or decease inclination angle
-		if (cursorPosCurrent.y < screenCenter.y - centerMargin) {
+		if (cursorPosCurrent.y < Window::Instance()->screenCenter.y - centerMargin.y) {
 			rotateDegrees.y += inclSpeed;
-		} else if (cursorPosCurrent.y > screenCenter.y + centerMargin) {
+		} else if (cursorPosCurrent.y > Window::Instance()->screenCenter.y + centerMargin.y) {
 			rotateDegrees.y -= inclSpeed;
 		}
 
@@ -282,7 +269,7 @@ void CameraController::RotateAndInclinate(){
         rotateDegrees.y = (rotateDegrees.y > maxInclination) ? maxInclination : rotateDegrees.y;
 
         // reset cursor position to center
-        IO::Instance() -> getMouse() -> setPosition(screenCenter); 
+        IO::Instance() -> getMouse() -> setPosition(Window::Instance()->screenCenter); 
 
 		// refresh distance to target
 		distanceToTarget = camPos.getDistanceTo(tarPos);
@@ -297,8 +284,8 @@ void CameraController::CenterCamera(){
 			userPos.z = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition() . y;
 			userPos.y = Map::Instance() -> getTerrain() -> getY(userPos.x, userPos.z);
 		} else {
-			userPos.x = Human::Instance() -> getHallPosition().x;
-			userPos.z = Human::Instance() -> getHallPosition().y;
+			userPos.x = Human::Instance() -> hallPosition.x;
+			userPos.z = Human::Instance() -> hallPosition.y;
 			userPos.y = Map::Instance() -> getTerrain() -> getY(userPos.x, userPos.z);
 		}
 		centerCameraMode = true;
@@ -307,15 +294,6 @@ void CameraController::CenterCamera(){
 
 Camera *CameraController::getCamera() {
 	return camera;
-}
-
-void CameraController::setZoomDistanceFromTarget(i32 zoom){
-	zoomDistanceFromTarget = zoom;
-}
-
-void CameraController::setRotateDegrees(i32 x, i32 y){
-	rotateDegrees.x = x;
-	rotateDegrees.y = y; 
 }
 
 Vector3<f32> CameraController::getTargetPosition() {

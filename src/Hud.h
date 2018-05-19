@@ -20,6 +20,7 @@
 #include <IOEngine/Timer.h>
 
 #include <string>
+#include <queue>
 #include <sstream>
 
 /**
@@ -126,18 +127,6 @@ class Hud {
         void removeTroopFromQueue(i32);
 
         /**
-         * @brief Show the text passed by parameter.
-         * 
-         * @param std::string is the text that is going to be shown.
-         */
-        void showToast(std::string);
-
-        /**
-         * @brief Hide the text that is been shown.
-         */
-        void hideToast();
-
-        /**
          * @brief Get if there is or not any pop up opened.
          * 
          * @return Trues if there is any pop up opened and false in other case.
@@ -152,15 +141,11 @@ class Hud {
          */
         void setButtonStatus(std::string, bool);
 
-        /**
-         * @brief Ajust the widgets that have to be shown or hidden.
-         */
-        void adjustMenuVisibility();
-
-        /**
-         * @brief Shows all relevant player's variables.
-         */
-        void debug();
+		/**
+		 * @brief add toast notification to queue
+		 * @param string
+		 */
+		void addToastToQueue(std::string);
 
     protected:
         /**
@@ -174,6 +159,28 @@ class Hud {
         ~Hud();
 
     private:
+        /**
+         * @brief Show the text passed by parameter.
+         * 
+         * @param std::string is the text that is going to be shown.
+         */
+        void showToast(std::string);
+
+        /**
+         * @brief Hide the text that is been shown.
+         */
+        void hideToast();
+
+        /**
+         * @brief Ajust the widgets that have to be shown or hidden.
+         */
+        void adjustMenuVisibility();
+
+        /**
+         * @brief Shows all relevant player's variables.
+         */
+        void debug();
+
         //Pointer to the only instance of Hud class.
         static Hud* pinstance;
 
@@ -188,6 +195,9 @@ class Hud {
 
         //List of troops that are being trained and their progress.
         std::map<i32, ProgressBar*> troopQueueProgressBars;
+
+		//This
+		std::queue<std::string> notificationQueue;
 
         //Panel with all types of buildings.
         Panel *buildingsPanel;
@@ -291,8 +301,14 @@ class Hud {
         //Player's crystal amount.
         Label *playerCrystalAmount;
 
+        //Player's maximum people amount.
+        Label *playerPeople;
+
         //Player's citizens amount.
         Label *playerCitizens;
+
+        //Player's individual units amount.
+        Label *playerUnits;
 
         //Player's happiness amount.
         Label *playerHappiness;
@@ -362,8 +378,6 @@ class Hud {
 
         //
         Timer* toastTimer;
-
-        
 };
 
 #endif

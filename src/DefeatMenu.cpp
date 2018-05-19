@@ -28,7 +28,3 @@ void DefeatMenu::setHUDEvents(){
         Game::Instance() -> changeState(Enumeration::State::MenuState);
     });
 }
-
-void DefeatMenu::update() {
-
-}

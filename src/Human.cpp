@@ -20,19 +20,21 @@ Human::Human() : Player() {
 
 Human::~Human() {
     delete buildings;
+	buildings = nullptr;
     delete units;
+	units = nullptr;
 }
 
 void Human::Init(std::string _race) {
     Player::Init();
+
     buildings = new BuildingManager(Enumeration::Team::Human, _race);
     units = new UnitManager(Enumeration::Team::Human, _race);
 }
 
 void Human::Update() {
-    buildings -> updateBuildingManager();
+	Player::Update();
     units -> updateUnitManager();
-    updateTimer ->tick();
 }
 
 void Human::CleanUp() {
@@ -68,17 +70,3 @@ bool Human::getUnderAttack() {
     }
     return underAttack;
 }
-
-/*
-void Human::receiveMetal() {
-    metalAmount = metalAmount + 200;
-}
-
-void Human::receiveCrystal() {
-    crystalAmount = crystalAmount + 200;
-}
-
-void Human::receiveCitizens() {
-    citizens = citizens + 100;
-}
-*/

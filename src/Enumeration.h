@@ -103,14 +103,6 @@ class Enumeration {
             Failure,
             Running
         };
-        
-        //Margins of the map.
-        enum MapMargins { //ToDo: to JSON
-            mapMarginTop = 1500,
-            mapMarginLeft = 1500,
-            mapMarginBottom = 8500,
-            mapMarginRight = 8500
-        };
 };
 
 #endif

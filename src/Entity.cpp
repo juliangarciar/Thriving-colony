@@ -4,84 +4,97 @@
 #include <GraphicEngine/Model.h>
 #include <GraphicEngine/SceneNode.h>
 #include <GraphicEngine/Window.h>
+#include "UnitManager.h"
 
 Entity::Entity(SceneNode* _layer,
-    i32 _id,
-    Enumeration::Team _team,
-    Enumeration::EntityType _type,
-    i32 _maxHP,
-    i32 _maxView,
-    i32 _attackRange,
-    i32 _attackDamage,
-    i32 _attackSpeed,
-    i32 _metal,
-    i32 _crystal,
-    i32 _happines,
-    i32 _citizens,
-    i32 _cellsX,
-    i32 _cellsY,
-    std::string _modelPath,
-    std::string _texturePath) : 
-        layer(_layer),
-        ID(_id),
-        team(_team),
-        entityType(_type),
-        model(nullptr),
-        vectorPos(0,0),
-        hitBox(0,0),
-        currentHP(_maxHP),
-        maxHP(_maxHP), 
-        viewRadius(_maxView),
-        attackRange(_attackRange),
-        attackDamage(_attackDamage),
-        attackSpeed(_attackSpeed),
-        metalCost(_metal), 
-        crystalCost(_crystal), 
-        happinessVariation(_happines), 
-        citizensVariation(_citizens),
-        target(nullptr),
-        hostile(),
-        kCellsX(_cellsX),
-        kCellsY(_cellsY) 
+                i32 _id,
+                Enumeration::Team _team,
+                Enumeration::EntityType _type,
+                i32 _maxHP,
+                i32 _maxView,
+                i32 _attackRange,
+                i32 _attackDamage,
+                i32 _attackSpeed,
+                i32 _metal,
+                i32 _crystal,
+                i32 _happines,
+                i32 _citizens,
+                i32 _cellsX,
+                i32 _cellsY,
+                std::string _modelPath,
+                std::string _texturePath,
+                f32 _bbOffset) : 
+                    ID(_id),
+                    team(_team),
+                    entityType(_type),
+                    model(nullptr),
+                    vectorPos(0,0),
+                    hitBox(Vector2<f32>(0, 0),
+                        Vector2<f32>(_cellsX * cSize,
+                                        _cellsY * cSize)),
+                    currentHP(_maxHP),
+                    maxHP(_maxHP), 
+                    viewRadius(_maxView),
+                    attackRange(_attackRange),
+                    attackDamage(_attackDamage),
+                    attackSpeed(_attackSpeed),
+                    metalCost(_metal), 
+                    crystalCost(_crystal), 
+                    happinessVariation(_happines), 
+                    citizensVariation(_citizens),
+                    target(nullptr),
+                    hostile(std::vector< Entity* >(0)),
+                    bbOffset(_bbOffset)
 {
     //set Timer
     tookDamageTimer = new Timer(0.1);
     tookDamageTimer -> setCallback([&](){
-        setBaseMaterial();
+        setBaseColor();
     });
 
     //Set model
     model = new Model(_layer, _id, _modelPath);
     
     //Set texture
-    //model->setMaterial(new Material(new Texture(_texturePath.c_str())));
+    baseMat = new Material(new Texture(_texturePath.c_str()));
+    baseMat -> setColor(Color(255, 255, 255, 255));
+	model -> setMaterial(baseMat);
 
-    /* Box2D parameters */
-    Vector2<f32> topLeft;
-    Vector2<f32> bottomRight;
+	// Set the color
+    setBaseColor();
+	Vector3<f32> pos(
+		getPosition().x, 
+		Map::Instance()->getTerrain()->getY(getPosition().x,getPosition().y) + bbOffset, 
+		getPosition().y
+	);
 
-    /* Set the 2D hitbox params */
-    topLeft.x = (kCellsX / 2.0) * (-80.f) + 1;
-    topLeft.y = (kCellsY / 2.0) * (-80.f) + 1;
-    bottomRight.x = (kCellsX / 2.0) * (80.f) - 1;
-    bottomRight.y = (kCellsY / 2.0) * (80.f) - 1;
-
-    /* Set the 2D hitbox */
-    hitBox = Box2D(topLeft, bottomRight); 
+    barBg = new Billboard(_layer, pos, Color(0,0,0,255), Color(0,0,0,255));
+	bar = new Billboard(_layer, pos, Color(0, 255, 0, 255), Color(0, 255, 0, 255));
+    barBg -> setSize((hitBox.Right() - hitBox.Left()) * 0.8f, 0, 15.00);
+    bar -> setSize((hitBox.Right() - hitBox.Left()) * 0.8f, 0, 15.00);
 }
 
-//ToDo: revisar
 Entity::~Entity() {
-    if (model != nullptr) delete model;
+    if(target != nullptr){
+        target->removeHostile(this);
+    }
+    putHostileTargetsToNull();
+    if (model != nullptr){
+        delete model;
+    }
     hostile.clear();
+    
     delete tookDamageTimer;
-    delete bar;
-    delete baseMat;
-    delete damagedMat;
-}
 
-void Entity::update(){
-    tookDamageTimer -> tick();
+    delete baseMat;
+	//Billboard
+    delete barBg;
+    delete bar;
+	//
+    for (std::size_t i = 0; i < hostile.size(); i++) {
+        delete hostile[i];
+    }
+    hostile.clear();
 }
 
 void Entity::addHostile(Entity* newHostileUnit) {
@@ -90,8 +103,8 @@ void Entity::addHostile(Entity* newHostileUnit) {
 
 void Entity::removeHostile(Entity* oldHostileUnit) {
     bool done = false;
-    for (i32 i = 0; i < hostile.size() && done == false; i++) {
-        if (hostile.at(i) == oldHostileUnit) {
+    for (std::size_t i = 0; i < hostile.size() && done == false; i++) {
+        if (hostile[i] == oldHostileUnit) {
             hostile.erase(hostile.begin() + i);
             done = true;
         }
@@ -99,18 +112,8 @@ void Entity::removeHostile(Entity* oldHostileUnit) {
 }
 
 void Entity::putHostileTargetsToNull() {
-    for (i32 i = 0; i < hostile.size(); i++) {
-        hostile.at(i) -> setTarget(nullptr);
-    }
-}
-
-void Entity::takeDamage(i32 dmg) {
-    currentHP = currentHP - dmg;
-    tookDamageTimer -> restart();
-    // Tint the model red
-    //ToDo: cambiar a material daño recibido
-    if (currentHP <= 0) {
-        currentHP = 0;
+    for (std::size_t i = 0; i < hostile.size(); i++) {
+        hostile[i] -> setTarget(nullptr);
     }
 }
 
@@ -125,19 +128,13 @@ void Entity::setPosition(Vector2<f32> vectorData) {
 
     model -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y), vectorData.y));
 
-    hitBox.moveHitbox(vectorData.x, vectorData.y);
-    //ToDo: revisar lo de ajustar hitbox (Julian lo tienes al final de este archivo)
-}
+    hitBox.moveHitbox(vectorData);
 
-void Entity::setTarget(Entity *newTarget) {
-    target = newTarget;
+    barBg->setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y) + bbOffset, vectorData.y));
+    bar->setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y) + bbOffset, vectorData.y));
 }
 
 //GETTERS
-SceneNode *Entity::getLayer() {
-    return layer;
-}
-
 i32 Entity::getID() const{
     return ID;
 }
@@ -158,7 +155,7 @@ Vector2<f32> Entity::getPosition() const{
     return vectorPos;
 }
 
-Box2D Entity::getHitbox() const{
+const Box2D& Entity::getHitbox() const{
     return hitBox;
 }
 
@@ -210,22 +207,26 @@ std::vector<Entity*> Entity::getHostile() const{
     return hostile;
 }
 
-i32 Entity::getCellsX() const{
-    return kCellsX;
+void Entity::setBaseColor() {
+    model -> setColor(Color(255, 255, 255, 255));
 }
 
-i32 Entity::getCellsY() const{
-    return kCellsY;
+void Entity::setDamageColor() {
+    model -> setColor(Color(255, 0, 0, 255));
 }
 
-//ToDo: anadido por rafa
-void Entity::setBaseMaterial() {
-    model -> setMaterial(baseMat);
-}
+/*
+    std::string name = "Test";
+    std::vector<std::string> * vector = new std::vector<std::string>();
+    vector -> push_back(_modelPath);
+    std::map< std::string, std::vector < std::string > > * frames = new std::map< std::string, std::vector < std::string > > ();
 
-void Entity::setDamagedMaterial() {
-    model -> setMaterial(damagedMat);
-}
+    frames->insert(std::pair< std::string, std::vector<std::string>>(name, *vector));
+
+    animatedModel = new Animation(_layer, _id, frames);
+    animatedModel -> setID(id);
+
+    animatedModel -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y), vectorData.y));
 
 void Entity::createBar() {
     bar = new Billboard(Vector3<f32>(getPosition().x, 200, getPosition().y));
@@ -234,3 +235,7 @@ void Entity::createBar() {
 void Entity::deleteBar() {
     delete bar;
 }
+	Animation* Entity::getModel() const
+	  
+	return animatedModel;
+*/

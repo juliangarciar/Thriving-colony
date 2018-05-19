@@ -10,11 +10,13 @@
 #include <GraphicEngine/Material.h>
 #include <GraphicEngine/Billboard.h>
 #include <IOEngine/Timer.h>
+#include <GraphicEngine/Animation.h>
 
 /**
  * @class Entity.
  * @brief Create a Entity type object.
  */
+
 class Entity {
 
     public:
@@ -39,7 +41,7 @@ class Entity {
          * @param _modelPath 
          * @param _texturePath 
          */
-        Entity(SceneNode*, i32 _id, Enumeration::Team, Enumeration::EntityType, i32 _maxHP, i32 _maxView, i32 _attackRange, i32 _attackDamage, i32 _attackSpeed, i32 _metal, i32 _crystal, i32 _happines, i32 _citizens, i32 _cellsX, i32 _cellsY, std::string _modelPath, std::string _texturePath);
+        Entity(SceneNode*, i32 _id, Enumeration::Team, Enumeration::EntityType, i32 _maxHP, i32 _maxView, i32 _attackRange, i32 _attackDamage, i32 _attackSpeed, i32 _metal, i32 _crystal, i32 _happines, i32 _citizens, i32 _cellsX, i32 _cellsY, std::string _modelPath, std::string _texturePath, f32 _bbOffset);
 
         /**
          * @brief Entity destructor.
@@ -47,34 +49,28 @@ class Entity {
         virtual ~Entity();
 
         /**
-         * @brief Update.
-         * 
-         */
-        void update();
-
-        /**
          * @brief Subtract damage passed by parameter to currentHP variable.
          * 
          * @param i32 is the damage that is going to be subtracted to currentHP variable.
 	    */
-        void takeDamage(i32);
+        virtual void takeDamage(i32) = 0;
 
         /**
-         * @breif Add an entity to the vector of enemies that have as target the entity.
+         * @brief Add an entity to the vector of enemies that have as target the entity.
          * 
          * @param Pointer to the entity that is going to be added to hostile variable.
          */
         void addHostile(Entity* hostileTarget);
 
         /**
-         * @breif Remove an entity from the vector of enemies that have as target the entity.
+         * @brief Remove an entity from the vector of enemies that have as target the entity.
          * 
          * @param Pointer to de the entity that is going to be removed from hostile variable.
          */
         void removeHostile(Entity* hostileTarget);
 
         /**
-         * @breif Set all the enemies' target variable stored at hostile variable to nullptr.
+         * @brief Set all the enemies' target variable stored at hostile variable to nullptr.
          */
         void putHostileTargetsToNull();
 
@@ -97,14 +93,7 @@ class Entity {
          * 
          * @param Pointer to Entity is the value that is going be assigned to target variable. It can be nullptr.
 	     */
-        void setTarget(Entity*);
-
-        /**
-         * @brief Get the layer where the entity has been created.
-         * 
-         * @return Pointer to a SceneNode object that will be the value of layer variable.
-         */
-        SceneNode *getLayer();
+        virtual void setTarget(Entity*) = 0;
 
         /**
          * @brief Get id of the entity.
@@ -132,6 +121,7 @@ class Entity {
          * 
          * @return Pointer to a Model object that will be the value of the model variable.
 	     */
+        //Animation* getModel() const;
         Model* getModel() const;
 
         /**
@@ -146,7 +136,7 @@ class Entity {
          * 
          * @return Box2D that will be the value of hitbox variable.
          */
-        Box2D getHitbox() const;
+        const Box2D& getHitbox() const;
 
         /**
 	     * @brief Get the current hp of the entity.
@@ -227,35 +217,22 @@ class Entity {
          */
         std::vector<Entity*> getHostile() const;
 
-        /**
-         * @brief
-         * @return
-         */
-        i32 getCellsX() const;
+		/**
+		 * @brief Set the Base Color object
+		 * 
+		 */
+		void setBaseColor();
 
-        /**
-         * @brief
-         * @return
-         */
-        i32 getCellsY() const;
-
-        /**
-         * @brief Set the Base Material object
-         */
-        void setBaseMaterial();
-
-        /**
-         * @brief Set the Damaged Material object
-         */
-        void setDamagedMaterial();
+		/**
+		 * @brief Set the Damage Color object
+		 * 
+		 */
+		void setDamageColor();
 
         void createBar();
         void deleteBar();
 
     protected:
-        //Layer where the entity has been created.
-        SceneNode* layer;
-
         //Number that identifies the entity.
         i32 ID;
 
@@ -310,22 +287,18 @@ class Entity {
         //All enemies that have as target the entity.
         std::vector<Entity*> hostile;
 
-        //
+        // Sospechoso
         Timer *tookDamageTimer;
-
-        //
-        i32 kCellsX;
-
-        //
-        i32 kCellsY;
 
         //
         Material *baseMat;
 
-        //
-        Material *damagedMat;
+        //Pointer to a billboard with the HP of the entity.
+        Billboard* barBg;
 
         //Pointer to a billboard with the HP of the entity.
         Billboard* bar;
+
+        const f32 bbOffset;
 };
 #endif

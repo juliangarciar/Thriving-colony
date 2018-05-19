@@ -114,12 +114,6 @@ class Game {
         //Pointer to the defeat menu of the game.
         DefeatState *defeat;
         
-        //Pointer to the window of the game.
-        Window *window;
-
-        //Pointer to the IO of the game.
-        IO *io;
-        
         //Pointer to the sound system of the game.
         SoundSystem *soundSystem;
         

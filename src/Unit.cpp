@@ -9,99 +9,126 @@
 #include <functional>
 #include <cmath>
 #include "UnitFighter.h"
+#include "Game.h"
+#include "Sensor.h"
+#include "IOEngine/IO.h"
+#include "UnitManager.h"
+
+//ToDo: revisar y limpiar esta clase
 
 Unit::Unit(SceneNode* _layer, 
     i32 _id, 
     Enumeration::Team _team, 
-    UnitData baseData):Entity(
-                        _layer,
-                        _id,
-                        _team,
-                        Enumeration::EntityType::Unit,
-                        baseData.maxHP,
-                        baseData.viewRadius,
-                        baseData.attackRange,
-                        baseData.attackDamage,
-                        baseData.attackSpeed,
-                        baseData.metalCost,
-                        baseData.crystalCost,
-                        baseData.happinessVariation,
-                        baseData.citizensVariation,
-                        1,
-                        1,
-                        baseData.flagModel,
-                        baseData.flagTexture
-                        ),
-                        state(Enumeration::UnitState::Recruiting),
-                        type(baseData.type),
-                        moveSpeed(baseData.moveSpeed),
-                        attackSpeed(baseData.attackSpeed),
-                        attackDamage(baseData.attackDamage),
-                        finished(false),
-                        moving(false),
-                        attacking(false),
-                        armyLevel(baseData.armyLevel),
-                        attackCountdown(0),
-                        pathManager(nullptr),
-                        pathFollow(),
-                        vectorDes(0,0),
-                        vectorMov(0,0),
-                        steps(0),
-                        readyToEnter(false),
-                        attackEvent(baseData.attackEvent),
-                        moveEvent(baseData.moveEvent),
-                        selectEvent(baseData.selectEvent),
-                        unitFighters()         
+    UnitData baseData,
+    UnitManager* _unitManager) :
+		Entity(
+			_layer,
+			_id,
+			_team,
+			Enumeration::EntityType::Unit,
+			baseData.maxHP,
+			baseData.viewRadius,
+			baseData.attackRange,
+			baseData.attackDamage,
+			baseData.attackSpeed,
+			baseData.metalCost,
+			baseData.crystalCost,
+			baseData.happinessVariation,
+			baseData.citizensVariation,
+			baseData.cellsX,
+			baseData.cellsY,
+			baseData.flagModel,
+			baseData.flagTexture,
+			baseData.bbOffset
+		),
+		state(Enumeration::UnitState::Recruiting),
+		type(baseData.type),
+		building(baseData.buildingType),
+		moveSpeed(baseData.moveSpeed),
+		attackSpeed(baseData.attackSpeed),
+		attackDamage(baseData.attackDamage),
+		moving(false),
+		canAttack(true),
+		armyLevel(baseData.armyLevel),
+		pathManager(nullptr),
+		pathFollow(),
+		vectorDes(0,0),
+		vectorSpd(0,0),
+		readyToEnter(false),
+		attackEvent(baseData.attackEvent),
+		moveEvent(baseData.moveEvent),
+		selectEvent(baseData.selectEvent),
+		unitFighters(baseData.troops, nullptr),
+		maxPositionDesviation(baseData.moveSpeed * 0.5f),
+		unitFighterHP(baseData.maxHP / baseData.troops),
+		unitSensor(nullptr),
+		unitManager(_unitManager)      
 {
-    lookForTargetTimer = new Timer (0.5, true);
-    lookForTargetTimer -> setCallback([&](){
-        // Ask for a new target
-        //Game::Instance() -> getGameState() -> getBattleManager() -> askForTarget(this);
-    });
+    unitSensor = new Sensor(this);
 
     recruitingTimer = new Timer(baseData.recruitingTime, false);
     recruitingTimer -> setCallback([&](){
         recruitedCallback(this);
         switchState(Enumeration::UnitState::InHome);
     });
+
+    enemySensorTimer = new Timer(0.5, false, false);
+    enemySensorTimer->setCallback([&](){
+        if(state != Enumeration::UnitState::InHome && state != Enumeration::UnitState::Recruiting){
+            unitSensor->update();
+        }
+    });
+
+    attackTimer = new Timer(attackSpeed, false, false);
+    attackTimer->setCallback([&](){
+        std::cout << "Me activo para atacar \n";
+        canAttack = true;
+    });
+
+    chaseTimer = new Timer(0.5, false, false);
+    chaseTimer->setCallback([&](){
+        if(target != nullptr){
+            setPathToTarget(target->getPosition());
+        }
+    });
+
     pathManager = new PathManager(this);
 
-    Texture *t = new Texture(baseData.flagTexture.c_str());
-
-
-    unitFighters = std::vector< UnitFighter* >(baseData.troops, nullptr);
     for(std::size_t i = 0; i < unitFighters.size(); i++){
         unitFighters[i] = new UnitFighter(_layer, _id, baseData.troopModel, baseData.moveSpeed);
     }
-
-    baseMat = new Material(t);
-    baseMat -> setColor(Color(255, 255, 255, 255));
-
-    damagedMat = new Material(t);
-    damagedMat -> setColor(Color(255, 255, 0, 0));
-
-    setBaseMaterial();
 }
 
 Unit::~Unit() {
     WorldGeometry::Instance()->clearUnitCell(getPosition(), this);
-    delete lookForTargetTimer;
-    delete pathManager;
     for(std::size_t i = 0; i < unitFighters.size(); i++){
         delete unitFighters[i];
     }
     unitFighters.clear();
+    delete unitSensor;
+    delete pathManager;
+
     delete recruitingTimer;
+    delete enemySensorTimer;
+    delete attackTimer;
+    delete chaseTimer;
 }
 
-void Unit::Init() {
-    //ToDo: esto ya no es necesario
-    preTaxPlayer();
+void Unit::preTaxPlayer() {
+    if (getTeam() == Enumeration::Team::Human) {
+        Human::Instance() -> spendResources(getMetalCost(), getCrystalCost());
+        Human::Instance() -> modifyHappiness(getHappinessVariation());
+        Human::Instance() -> modifyCitizens(getCitizensVariation());
+        Human::Instance() -> modifyArmyLevel(armyLevel);
+    } else {
+        IA::Instance() -> spendResources(getMetalCost(), getCrystalCost());
+        IA::Instance() -> modifyHappiness(getHappinessVariation());
+        IA::Instance() -> modifyCitizens(getCitizensVariation());
+        IA::Instance() -> modifyArmyLevel(armyLevel);
+    }
 }
 
 void Unit::update() {
-    //returnToOriginalColor(); //ToDo: daba segfault aqui en el arbol very unhappy
-    attackCountdown -= Window::Instance() -> getDeltaTime();
     //State machine, color changes according to state
     switch (state) {
         case Enumeration::UnitState::Recruiting:
@@ -109,236 +136,276 @@ void Unit::update() {
         break;
         case Enumeration::UnitState::InHome:
             //ToDo: inHomeState();
+            inHomeState();
         break;
         case Enumeration::UnitState::Idle:
-            //ToDo: poner material idle
             idleState();
         break;
+        //ToDo: Maybe this shouldn't exist
         case Enumeration::UnitState::Move:
-            //ToDo: poner material moving
             moveState();
         break;
         case Enumeration::UnitState::AttackMove:
-            //ToDo: poner material attackMove
             attackMoveState();
         break;
         case Enumeration::UnitState::Attack:
-            //ToDo: poner material attack
             attackState();
         break;    
         case Enumeration::UnitState::Chase:
-            //s//ToDo: poner material chase
             chaseState();
         break;
         case Enumeration::UnitState::Retract:
-            ////ToDo: poner material retracting
             retractState();
         break;
         default: break;
     }
-    std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(vectorPos);
-    std::vector< UnitFighter* > dummyFighters;
-    std::vector< UnitFighter* > dummySpace;
-    for(std::size_t i = 0; i < nearUnits.size(); i++){
-        dummySpace = nearUnits[i]->getUnitFighters();
-        dummyFighters.insert(dummyFighters.end(), dummySpace.begin(), dummySpace.end());
-    }
-    for(std::size_t i = 0; i < unitFighters.size(); i++){
-        unitFighters[i]->update(dummyFighters);
-    }
 }
 
-void Unit::preTaxPlayer() {
-    if (getTeam() == Enumeration::Team::Human) {
-        Human::Instance() -> spendResources(getMetalCost(), getCrystalCost());
-        Human::Instance() -> increaseHappiness(getHappinessVariation());
-        Human::Instance() -> increaseCitizens(getCitizensVariation());
-        Human::Instance() -> increaseArmyLevel(armyLevel);
-    } else {
-        IA::Instance() -> spendResources(getMetalCost(), getCrystalCost());
-        IA::Instance() -> increaseHappiness(getHappinessVariation());
-        IA::Instance() -> increaseCitizens(getCitizensVariation());
-        IA::Instance() -> increaseArmyLevel(armyLevel);
-    }
-}
-
-void Unit::posTaxPlayer(){
-    if (getTeam() == Enumeration::Team::Human) {
-        Human::Instance() -> increaseArmySize();
-    } else {
-        IA::Instance() -> increaseArmySize();
-    }
-}
-
-void Unit::switchState(Enumeration::UnitState newState) {
-    lookForTargetTimer -> restart();
+void Unit::switchState(Enumeration::UnitState newState){
     state = newState;
 }
 
-void Unit::recruitingState(){
-    recruitingTimer -> tick();
-    if (recruitingTimer -> isRunning()){
-        if (getTeam() == Enumeration::Team::Human){
+void Unit::recruitingState() {
+    if (recruitingTimer -> isRunning()) {
+        if (getTeam() == Enumeration::Team::Human) {
             Hud::Instance() -> modifyTroopFromQueue(getID(), recruitingTimer -> getElapsedTime() / recruitingTimer -> getMaxDuration());
         }
     }
 }
 
+void Unit::inHomeState(){
+
+}
+
 void Unit::idleState() {
-    if (refreshTarget()) { // if got one
-        switchState(Enumeration::UnitState::Chase);
+    updateUnitFighters();
+    if (target != nullptr) {
+        switchState(Enumeration::UnitState::Attack);
     }
 }
 
 void Unit::moveState() {
-    moveTroop();
+    updateUnitFighters();
+    moveUnit();
 }
 
+/* ToDo: Tenemos que hablar si existen shortcuts para llamar este */
 void Unit::attackMoveState() {
-    attackCountdown -= Window::Instance() -> getDeltaTime();
-    // Scan for targets
-    if (refreshTarget()) { // if got one
-        switchState(Enumeration::UnitState::Chase);
-    } else {
-        switchState(Enumeration::UnitState::AttackMove);
-        moveTroop();  
-    }
+    updateUnitFighters();
 }
 
 void Unit::attackState() {
-    attackCountdown -= Window::Instance() -> getDeltaTime();
-    if(inRangeOfAttack()) {
-        attack();
-    } else {
-        switchState(Enumeration::UnitState::Chase);
+    updateUnitFighters();
+    if(target != nullptr){
+        if(inRangeOfAttack()) {
+            if(canAttack){
+                target->takeDamage(attackDamage);
+                canAttack = false;
+                attackTimer->start();
+            }
+        }
+        else{
+            switchState(Enumeration::UnitState::Chase);
+            setPathToTarget(target->getPosition());
+            moveUnit();
+            chaseTimer->restart();
+        }
+    }
+    else{
+        switchState(Enumeration::UnitState::Idle);
+        enemySensorTimer->restart();
     }
 }
 
-/// Chasing the target
+// Chasing the target
 void Unit::chaseState() {
-    //If I have a target, then chase it
-    if (getTarget() != nullptr) {
-        Vector2<f32> tpos = Vector2<f32>();
-        tpos.x = getTarget() -> getPosition().x;
-        tpos.y = getTarget() -> getPosition().y;
-        this  -> setTroopDestination(tpos);
-        chaseTarget();    
+    updateUnitFighters();
+    if(target == nullptr){
+        switchState(Enumeration::UnitState::Idle);
+        chaseTimer->stop();
+        enemySensorTimer->restart();
+    }
+    else{
+        if(inRangeOfAttack()) {
+            switchState(Enumeration::UnitState::Attack);
+            chaseTimer->stop();
+        }
+        else{
+            moveUnit();
+        }
     }
 }
 
 void Unit::retractState() {
-    moveTroop();
+    updateUnitFighters();
     if (readyToEnter){
         retractedCallback(this);
-        //troops -> setActive(false);
+        for(std::size_t i = 0; i < unitFighters.size(); ++i){
+            unitFighters[i] -> setActive(false);
+        }
         getModel() -> setActive(false);
         switchState(Enumeration::UnitState::InHome);
         // ToDo: Aqui peta
-        triggerRetractedCallback();        
+        //triggerRetractedCallback();        
     }
 }
-/* ToDo: delta time */
-void Unit::moveTroop() {
+
+void Unit::moveUnit() {
     if (moving) {
         // close to destination, stop
-        if (steps == 0) {
-            if(pathFollow.empty()){
+        if (hasArrived()) {
+            if (pathFollow.empty()) {
                 moving = false;
                 if (state == Enumeration::UnitState::Retract) {
                     readyToEnter = true;
                     Human::Instance() -> getUnitManager() -> unSelectTroop();
                     //triggerRetractedCallback();
-                    return;
                 }
-                switchState(Enumeration::Idle);
+                else if(state == Enumeration::UnitState::Chase){
+                    switchState(Enumeration::UnitState::Attack);
+                    chaseTimer->stop();
+                }
+                else if(state == Enumeration::UnitState::Move){
+                    switchState(Enumeration::UnitState::Idle);
+                    enemySensorTimer->restart();
+                }
+                /* Meh */
+                //else{
+                //    switchState(Enumeration::UnitState::Idle);
+                //    enemySensorTimer->restart();
+                //}
             }
             else{
-                //Vector2<f32> newDest = this->pathFollow.front();
-                //Vector2<f32> newDest(dummy.x, dummy.y);
-                //setTroopDestination(newDest);
-                setTroopDestination(this->pathFollow.front());
+                setUnitDestination(this->pathFollow.front());
                 pathFollow.pop_front();
             }
         }
-        // Update Cell state 
-        else if(std::floor(steps) == 0){
-            Vector2<f32> newPos = vectorPos + vectorMov;
-            WorldGeometry::Instance()->updateUnitCell(vectorPos, newPos, this);
-            
-            //std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(newPos);
-            //std::vector< Vector2<f32> > nearTroopsPosition;
-            //for(i32 i = 0; i < nearUnits.size(); i++){
-            //    nearTroopsPosition.insert(nearTroopsPosition.end(), nearUnits[i]->getTroopsPosition().begin(), nearUnits[i]->getTroopsPosition().end());
-            //}
-            setPosition(newPos);
-            steps = 0;
-            //std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
-        } 
-        else {
-            Vector2<f32> newPos = vectorPos + vectorMov;
-            WorldGeometry::Instance()->updateUnitCell(vectorPos, newPos, this);
-
-            //std::vector< Unit* > nearUnits = WorldGeometry::Instance()->getNeighborUnits(newPos);
-            
-            setPosition(newPos);
-            //troops -> moveTroops(vectorMov);
-
-            steps--;
-            //std::cout << "Voy pa:" << newPos.x << "," << newPos.y << "\n";
+        else{
+            calculateDirection();
+            Vector2<f32> _oldPosition = vectorPos;
+            vectorSpd = vectorDir * moveSpeed;
+            vectorPos += vectorSpd;
+            vectorPos = _oldPosition + (vectorPos - _oldPosition) * Window::Instance() -> getDeltaTimeVariance();
+            WorldGeometry::Instance() -> updateUnitCell(_oldPosition, vectorPos, this);
+            setPosition(vectorPos);
+            unitSensor -> move(vectorPos);
         }
     }
 }
 
-void Unit::attack() {
-    if (getTarget() != nullptr && getTarget() -> getTeam() != getTeam()) {
-        setAttacking(true);
-        if (attackCountdown <= 0) {
-            getTarget() -> takeDamage(attackDamage);
-            attackCountdown = attackSpeed;
-            if (getTarget() -> getCurrentHP() <= 0) {
-                if (getTarget() -> getTarget() != nullptr) {
-                    getTarget() -> getTarget() -> removeHostile(getTarget());
-                }
-                if (getTeam() == Enumeration::Team::Human) {
-                    if (getTarget() -> getEntityType() == Enumeration::EntityType::Unit) {
-                        IA::Instance() -> getUnitManager() -> deleteUnit(getTarget() -> getID());
-                    } else {
-                        IA::Instance() -> getBuildingManager() -> deleteBuilding(getTarget() -> getID());
-                    }
-                } else {
-                    if (getTarget() -> getEntityType() == Enumeration::EntityType::Unit) {
-                        Human::Instance() -> getUnitManager() -> deleteUnit(getTarget() -> getID());
-                    } else {
-                        Human::Instance() -> getBuildingManager() -> deleteBuilding(getTarget() -> getID());
-                    }
-                }
-                setTarget(nullptr);
-                switchState(Enumeration::UnitState::AttackMove);
-            }
-        }
-    }
+void Unit::triggerRecruitedCallback(){
+    recruitedCallback(this);
 }
-/* Soberana mierda */
-void Unit::chaseTarget() {
-    if (moving) {
-        // If i can attack, then do so
-        if (inRangeOfAttack()) {
-            moving = false;
-            switchState(Enumeration::UnitState::Attack);
-        } else { //If i am too far away to attack, then move closer.
-            Vector2<f32> newPos = getPosition() + vectorMov;
-            //newPos.y = Map::Instance() -> getTerrain() -> getY(newPos.x, newPos.z);
-            //setTroopPosition(newPos);
-        }
+
+void Unit::triggerRetractedCallback() {
+    retractedCallback(this);
+}
+
+void Unit::setUnitCell(Vector2<f32> vectorPosition) {
+    WorldGeometry::Instance() -> setUnitCell(vectorPosition, this);
+}
+
+void Unit::setUnitPosition(Vector2<f32> vectorData) {
+    setPosition(vectorData);
+    std::size_t size = unitFighters.size();
+    for(std::size_t i = 0; i < size; i++){
+        unitFighters[i]->setPosition(vectorData + WorldGeometry::Instance()->getSquadPosition(size - 1, i));
     }
 }
 
+void Unit::setUnitDestination(Vector2<f32> _vectorData) {
+    if (state == Enumeration::UnitState::Move) {
+        target = nullptr;
+    }
+
+    vectorDes = _vectorData;
+    std::size_t size = unitFighters.size();
+    for (std::size_t i = 0; i < size; i++) {
+        unitFighters[i] -> setDestiny(_vectorData + WorldGeometry::Instance() -> getSquadPosition(size - 1, i));
+    }
+    moving = true;
+}
+
+void Unit::setPath(const std::list< Vector2<f32> >& path) {
+    pathFollow = path;
+}
+
+void Unit::setPathToTarget(Vector2<f32> vectorData) {
+    pathManager -> createPathTo(vectorData);
+    if (!pathFollow.empty()) {
+        setUnitDestination(pathFollow.front());
+        pathFollow.pop_front();
+    }
+}
+
+void Unit::setRecruitedCallback(std::function<void(Unit*)> f) {
+    recruitedCallback = f;
+}
+
+void Unit::setRetractedCallback(std::function<void(Unit*)> f) {
+    retractedCallback = f;
+}
+
+void Unit::takeDamage(i32 _damage){
+    i32 resistance(0);
+    f32 percentage(0);
+    if (team == Enumeration::Team::Human) {
+        resistance = Human::Instance() -> getResistanceModifier();
+    } 
+    else {
+        resistance = IA::Instance() -> getResistanceModifier();
+    }
+    i32 dmg = _damage - resistance;
+
+    if (dmg < 0) {
+        dmg = 0;
+    }
+    currentHP = currentHP - dmg;
+    
+    tookDamageTimer -> restart();
+    setDamageColor();
+    if (currentHP < 1) {
+        bar->setColor(Color(0,0,0));
+        //bar->setScale(0);
+        unitManager->deleteUnit(ID);
+        return;
+    }
+    else{
+        percentage = currentHP / maxHP;
+        bar->setColor(Color((1.0f - percentage) * 255.0f, percentage * 255.0f, 0));
+        //bar->setScale(percentage);
+        i32 _qnty = std::floor(currentHP / unitFighterHP);
+        if(currentHP % unitFighterHP != 0){
+            _qnty++;
+        }
+        while(_qnty < unitFighters.size()){
+            UnitFighter* tmp = unitFighters[unitFighters.size() - 1];
+            unitFighters.erase(unitFighters.end() - 1);
+            delete tmp;
+        }
+        tookDamageTimer -> restart();
+        setDamageColor();
+    }
+}
+
+void Unit::setTarget(Entity *newTarget) {
+    target = newTarget;
+    if (target == nullptr) {
+        switchState(Enumeration::UnitState::Idle);
+        enemySensorTimer->restart();
+    }
+    else{
+        switchState(Enumeration::UnitState::Attack);
+    }
+}
+
+/*** GETTERS ***/
 /* Edit this */
 bool Unit::inRangeOfAttack() {
     bool inRange = false;
     if (getTarget() != nullptr) {
-        f32 xaux = getTarget()->getPosition().x - this->getPosition().x;
-        f32 yaux = getTarget()->getPosition().y - this->getPosition().y;
+        f32 xaux = getTarget() -> getPosition().x - getPosition().x;
+        f32 yaux = getTarget() -> getPosition().y - getPosition().y;
         f32 dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
         if (dist <= getAttackRange()) {
             inRange = true;
@@ -347,136 +414,84 @@ bool Unit::inRangeOfAttack() {
     return inRange;
 }
 
-bool Unit::refreshTarget() {
-    bool targetUpdated = false;
-    lookForTargetTimer -> tick();
-    // return wether or not it got updated
-    if (getTarget() != nullptr) {
-        targetUpdated = true;
-    } else {
-        targetUpdated = false;
-    }   
-    return targetUpdated;
-}
-
-void Unit::triggerRecruitedCallback(){
-    finished = true;
-    recruitedCallback(this);
-}
-
-void Unit::triggerRetractedCallback(){
-    retractedCallback(this);
-}
-
-/////SETTERS/////
-void Unit::setUnitCell(Vector2<f32> vectorPosition){
-    WorldGeometry::Instance() -> setUnitCell(vectorPosition, this);
-}
-
-void Unit::setMoving(bool movingPnt) {
-    moving = movingPnt;
-}
-
-void Unit::setAttacking(bool attackingPnt) {
-    attacking = attackingPnt;
-}
-/* Weird method */
-void Unit::setTroopPosition(Vector2<f32> vectorData) {
-    //vectorPos.set(vectorData);
-    //vectorPos = vectorData;
-    setPosition(vectorData);
-    for(std::size_t i = 0; i < unitFighters.size(); i++){
-        unitFighters[i]->setPosition(vectorData + (16 * i));
-    }
-}
-// To do -> adjust units movement
-void Unit::setTroopDestination(Vector2<f32> vectorData) {
-    if (state == Enumeration::UnitState::Move) {
-        setTarget(nullptr);
-    }
-    //vectorDes.set(vectorData);
-    vectorDes = vectorData;
-    Vector2<f32> desp = vectorDes - getPosition();
-    f32 distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.y, 2));
-    //vectorMov -> x = (desp.x / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
-    //vectorMov -> z = (desp.z / distance) * moveSpeed * Game::Instance() -> getWindow() -> getDeltaTime();
-    vectorMov.x = (desp.x / distance) * (moveSpeed / 100);
-    vectorMov.y = (desp.y / distance) * (moveSpeed / 100);
-    f32 movDistance = std::sqrt(std::pow(vectorMov.x, 2) + std::pow(vectorMov.y, 2));
-    steps = distance / movDistance;
-    for(std::size_t i = 0; i < unitFighters.size(); i++){
-        unitFighters[i]->setDestiny(vectorData + (16 * i));
-    }
-    /*vectorDes.set(vectorData);
-    Vector3<f32> desp = vectorDes - vectorPos;
-    f32 distance = std::sqrt(std::pow(desp.x, 2) + std::pow(desp.z, 2));
-    vectorMov.x = (desp.x / distance) * (moveSpeed / 100);
-    vectorMov.z = (desp.z / distance) * (moveSpeed / 100);
-    f32 movDistance = std::sqrt(std::pow(vectorMov.x, 2) + std::pow(vectorMov.z, 2));
-    steps = (distance / movDistance);*/
-    moving = true;
-}
-
-void Unit::setPath(std::list< Vector2<f32> > path){
-    this->pathFollow = path;
-}
-
-void Unit::setPathToTarget(Vector2<f32> vectorData){
-    //std::cout << "Analizando camino \n";
-    this->pathManager->createPathTo(vectorData);
-    if(!pathFollow.empty()){
-        //Vector2<f32> dummy = this->pathFollow.front();
-        //Vector2<f32> newDest;
-        //newDest.x = dummy.x;
-        //newDest.y = Map::Instance() -> getTerrain() -> getY(dummy.x, dummy.y);
-        //newDest.y = dummy.y;
-        setTroopDestination(this->pathFollow.front());
-        //std::cout << "Lo tengo " << pathFollow.size() << "\n";
-        pathFollow.pop_front();
-        //std::cout << "Salgo ya " << "\n";
-    }
-}
-
-void Unit::setRecruitedCallback(std::function<void(Unit*)> f){
-    recruitedCallback = f;
-}
-
-void Unit::setRetractedCallback(std::function<void(Unit*)> f){
-    retractedCallback = f;
-}
-
-/////GETTERS/////
-string Unit::getAttackEvent() {
+const string Unit::getAttackEvent() const{
     return attackEvent;
 }
 
-string Unit::getMoveEvent() {
+const string Unit::getMoveEvent() const{
     return moveEvent;
 }
 
-string Unit::getSelectEvent() {
+const string Unit::getSelectEvent() const{
     return selectEvent;
 }
 
-Vector2<f32> Unit::getDestination() {
+Vector2<f32> Unit::getDestination() const{
     return vectorDes;
 }
 
-std::list< Vector2<f32> > Unit::getPath(){
+const std::list< Vector2<f32> >& Unit::getPath() const{
     return pathFollow;
 }
 
-std::string Unit::getType(){
+const std::string Unit::getType() const{
     return type;
 }
 
-Enumeration::UnitState Unit::getState() {
+const std::string Unit::getBuildingName() const{
+	return building;
+}
+
+Enumeration::UnitState Unit::getState() const{
     return state;
 }
 
-i32 Unit::getArmyLevel(){
+const i32 Unit::getArmyLevel() const{
     return armyLevel;
 }
-std::vector< UnitFighter* > Unit::getUnitFighters(){
+
+const std::vector< UnitFighter* >& Unit::getUnitFighters() const{
     return unitFighters;
+}
+
+bool Unit::hasArrived(){
+    if ((vectorPos - vectorDes).dotProduct() < maxPositionDesviation) {
+        vectorSpd = Vector2<f32>(0, 0);
+        return true;
+    }
+    return false;
+}
+
+void Unit::calculateDirection() {
+    Vector2<f32> _incVector = vectorDes - vectorPos;
+    /* Normalize */
+    f32 distance = std::sqrt(std::pow(_incVector.x, 2) + std::pow(_incVector.y ,2));
+    
+    if(distance != 0){
+        vectorDir = _incVector / distance;        
+    }   
+    else{
+        vectorDir = Vector2<f32>(0, 0);
+    }
+}
+
+void Unit::updateUnitFighters() {
+    updateFlockingSensor();
+    for (std::size_t i = 0; i < unitFighters.size(); i++) {
+        unitFighters[i] -> update();
+    }
+}
+
+void Unit::updateFlockingSensor() {
+    std::vector<Unit*> nearUnits = WorldGeometry::Instance() -> getNeighborUnits(vectorPos);
+    std::vector<UnitFighter*> dummyFighters;
+    std::vector<UnitFighter*> dummySpace;
+    for(std::size_t i = 0; i < nearUnits.size(); i++) {
+        dummySpace = nearUnits[i] -> getUnitFighters();
+        dummyFighters.insert(dummyFighters.end(), dummySpace.begin(), dummySpace.end());
+    }
+    nearUnitFighters = dummyFighters;
+    for(std::size_t i = 0; i < unitFighters.size(); i++){
+        unitFighters[i] -> setNearFighters(nearUnitFighters);
+    }
 }

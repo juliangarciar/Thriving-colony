@@ -1,26 +1,27 @@
 #include "Billboard.h"
 
 
-Billboard::Billboard(Vector3<f32> pos) {
-    billboard = Window::Instance() -> getEngine() -> createBillboard(glm::vec3(pos.x, pos.y, pos.z));
+Billboard::Billboard(SceneNode* parent, Vector3<f32> pos, Color top, Color bot) {
+    billboard = Window::Instance() -> getEngine() -> createBillboard(Window::Instance()->getBillboardLayer(), glm::vec3(pos.x, pos.y, pos.z));
+	setColor(top, bot);
+    setActive(true);
 }
 
 Billboard::~Billboard() {
     
 }
 
-void Billboard::setColor(Color* top, Color* bot) {
-    OBDColor* topColor = nullptr;
-    OBDColor* botColor = nullptr;
-    if (top != nullptr) {
-        topColor = new OBDColor(top -> r, top -> g, top -> b, top -> a);
-    }
-
-    if (bot != nullptr) {
-        botColor = new OBDColor(bot -> r, bot -> g, bot -> b, bot -> a);       
-    }
+void Billboard::setColor(Color top, Color bot) {
+    OBDColor topColor(top . r, top . g, top . b, top . a);
+	OBDColor botColor(bot . r, bot . g, bot . b, bot . a);
 
     billboard -> setColor(topColor, botColor);
+}
+
+void Billboard::setColor(Color t) {
+    OBDColor totalColor(t . r, t . g, t . b, t . a);
+
+    billboard -> setColor(totalColor, totalColor);
 }
 
 void Billboard::setSize(f32 h, f32 tw, f32 bw) {
@@ -46,4 +47,8 @@ f32 Billboard::getTopWidth() {
 
 f32 Billboard::getBottomWidth() {
     return billboard -> getBottomWidth();
+}
+
+void Billboard::setActive(bool a) {
+    //billboard -> setVisible(a);
 }

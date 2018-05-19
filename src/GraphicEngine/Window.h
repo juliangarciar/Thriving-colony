@@ -11,7 +11,9 @@
 class Window {
     public:
         static Window* Instance();
-		
+
+		void Init(i32, i32);
+
         void handleGUIEvents();
 
         void setGUI();
@@ -27,16 +29,19 @@ class Window {
 
 		OBDEngine *getEngine();
 
+		void setResizeCallback(std::function<void(i32, i32)>);
+
+		void triggerResizeCallback(i32, i32);
+		
         nanogui::Screen* getGUIEnvironment();
 
-        i32 getInitialWindowWidth();
-        i32 getInitialWindowHeight();
+        i32 getWindowWidth();
+        i32 getWindowHeight();
 
-        i32 getRealWindowWidth();
-        i32 getRealWindowHeight();
-
-        f32 getDeltaTime();
-
+        f32 getDeltaTime() const;
+        f32 getLastDeltaTime() const;
+        f32 getDeltaTimeVariance() const;
+        
         GLFWwindow *getWindow() {
             return window;
         }
@@ -63,15 +68,18 @@ class Window {
          */
         OBDSceneNode* getBillboardLayer();
 
+        
+        i32 windowWidth;
+        i32 windowHeight;
+		Vector2<i32> screenCenter;
     protected:
-        Window(i32 width, i32 height);
+        Window();
         virtual ~Window();
         Window(const Window & );
         Window &operator = (const Window & );
-
+    private:
         void setGLAttributes();
 
-    private:
         static Window* pinstance;
 
         GLFWwindow* window;
@@ -84,13 +92,13 @@ class Window {
         OBDSceneNode* billboardLayer;
 
         nanogui::Screen* gui;
-
-        i32 windowWidth;
-        i32 windowHeight;
         
         f64 dtThen;
         f64 deltaTime;
+        f64 lastDeltaTime;
         i32 framerate;
+
+		std::function<void(i32, i32)> resizeCallback;
 };
 
 #endif

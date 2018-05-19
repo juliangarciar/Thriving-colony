@@ -5,7 +5,7 @@
 Mouse::Mouse(){
     visible = true;
     currentCursor = CURSOR_NORMAL;
-
+    oldState = GLFW_RELEASE;
     for (i32 i = 0; i < GLFW_MOUSE_BUTTON_LAST;i++){
         mouseButtonState[i] = Enumeration::UP;
     }
@@ -31,13 +31,16 @@ Mouse::Mouse(){
        }
     );
 
+    /* Change this */
     glfwSetMouseButtonCallback(window,
         [](GLFWwindow *w, i32 button, i32 action, i32 modifiers) {
             Window::Instance() -> getGUIEnvironment() -> mouseButtonCallbackEvent(button, action, modifiers);
             Mouse *s = IO::Instance() -> getMouse();
-            if (action == GLFW_PRESS) {
+            if (action == GLFW_PRESS /*&& s->getOldState() == GLFW_RELEASE*/) {
+                //s->setOldState(action);
                 s -> mouseButtonState[button] = Enumeration::PRESSED;
-            } else if (action == GLFW_RELEASE) {
+            } else if (action == GLFW_RELEASE /*&& s->getOldState() == GLFW_PRESS*/) {
+                //s->setOldState(action);
                 s -> mouseButtonState[button] = Enumeration::RELEASED;
             }
         }
@@ -213,4 +216,12 @@ GLFWcursor *Mouse::getMouse(){
 
 bool Mouse::isVisible(){
     return visible;
+}
+
+i32 Mouse::getOldState(){
+    return oldState;
+}
+
+void Mouse::setOldState(i32 data){
+
 }

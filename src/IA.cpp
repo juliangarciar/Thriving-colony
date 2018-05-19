@@ -31,7 +31,6 @@ IA::IA() : Player() {
 
 IA::~IA() {
     delete tree;
-    //delete nodeRootIA;
     delete buildings;
     delete units;
     choices -> clear();
@@ -52,8 +51,6 @@ void IA::Init(std::string _race) {
     // Create a behaviour and a root node and set them up according to the behaviour
     tree = new BehaviourTree();
     tree -> init(behaviour);
-    //nodeRootIA = new RootNode();
-    //nodeRootIA -> init(behaviour);
 
     // Choices for the debugging system
     choiceIndex = 0;
@@ -61,14 +58,12 @@ void IA::Init(std::string _race) {
 
     updateFastTimer = new Timer(100.00, true);
 	updateFastTimer -> setCallback([&](){
-		//nodeRootIA -> question();
 		rootNode -> Update();
 		updateFastTimer -> restart();
 		updateSlowTimer -> restart();
 	});
     updateSlowTimer = new Timer(300.00, true);
 	updateSlowTimer -> setCallback([&](){
-		//nodeRootIA -> question();
 		rootNode -> Update();
 		updateFastTimer -> restart();
 		updateSlowTimer -> restart();
@@ -76,31 +71,31 @@ void IA::Init(std::string _race) {
 }
 
 void IA::Update() {
-    buildings -> updateBuildingManager();
+	Player::Update();
     units -> updateUnitManager();
     Vector3<f32> tarPos = Map::Instance() -> getCamera() -> getTargetPosition();
     Vector2<f32> IAPos = buildings -> getBuilding(0) -> getPosition();
-    fast = false;
+
     if (((IAPos . x + 2000 > tarPos.x && IAPos . x - 2000 < tarPos.x) && (IAPos . y + 2000 > tarPos.z && IAPos . y - 2000 < tarPos.z)) || underAttack) {
-        fast = true;
-    }
-    if (fast == true) {
-		updateFastTimer -> tick();
+        if (updateSlowTimer -> isRunning() && !updateFastTimer -> isRunning()){
+			updateSlowTimer -> stop();
+			updateFastTimer -> restart();
+		}
     } else {
-		updateSlowTimer -> tick();
-    }
-	updateTimer -> tick();
+		if (!updateSlowTimer -> isRunning() && updateFastTimer->isRunning()){
+			updateSlowTimer -> restart();
+			updateFastTimer -> stop();
+		}
+	}
 }
 
 void IA::CleanUp() {
     delete tree;
-    //delete nodeRootIA;
     // Add a method to clean the cells the buildings inahbit
     delete buildings;
     delete units;
     choices -> clear();
     delete choices;
-    delete updateTimer;
     delete updateFastTimer;
     delete updateSlowTimer;
     delete rootNode;
@@ -115,81 +110,13 @@ BehaviourTree* IA::getTree() {
 * Goes over the vector of buildings looking up, right, down and left of every building built
 * until find the first empty position
 */
-/* ToDo: Cambiar algoritmo de construccion */
-Vector2<f32> IA::determinatePositionBuilding() {
-    Vector2<f32> v;
-    bool found = false;
-    bool occupied = false;
-    std::map<i32, Building*> *b = buildings -> getBuildings();
 
-    // If it is the first building start always on the same position
-    if (b -> size() == 0) { 
-        /**
-         * These coordinates determine the position of the main building
-         * the y component of it is determined based on the map
-         */
-		//ToDo: parametrizar
-        f32 startingX = 2000;
-        f32 startingZ = 2000;
-        v.set(startingX, startingZ);
-        v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.y);
-    } else {
-        //When there are some buildings
-        Vector2<f32> v2;
-        Vector2<f32> v3;
-        for (std::map<i32,Building*>::iterator it = b -> begin(); it != b -> end() && found == false; ++it){
-            v2 = it -> second -> getPosition();
-            occupied = false;
-            v = Vector2<f32>(v2 . x, v2 . y + 300);
-            for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
-                v3 = it2 -> second -> getPosition();
-                if (v3 . x == v.x && v3 . y == v.y) {
-                    occupied = true;
-                }
-            }
-            if (occupied == false ) {
-                found = true;
-            } else {
-                v = Vector2<f32>(v2 . x + 300, v2 . y);
-                occupied = false;
-                for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
-                    v3 = it2 -> second -> getPosition();
-                    if (v3 . x == v.x && v3 . y == v.y) {
-                        occupied = true;
-                    }
-                }
-                if (occupied == false ) {
-                    found = true;
-                } else {
-                    v = Vector2<f32>(v2 . x, v2 . y - 300);
-                    occupied = false;
-                    for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
-                        v3 = it2 -> second -> getPosition();
-                        if (v3 . x == v.x && v3 . y == v.y) {
-                            occupied = true;
-                        }
-                    }
-                    if (occupied == false ) {
-                        found = true;
-                    } else {
-                        v = Vector2<f32>(v2 . x - 300, v2 . y);
-                        occupied = false;
-                        for (std::map<i32,Building*>::iterator it2 = b -> begin(); it2 != b -> end() && occupied == false; ++it2){
-                            v3 = it2 -> second -> getPosition();
-                            if (v3 . x == v.x && v3 . y == v.y) {
-                                occupied = true;
-                            }
-                        }
-                        if (occupied == false ) {
-                            found = true;
-                        }
-                    }
-                }
-            }
-        }
-        v.y = Map::Instance() -> getTerrain() -> getY(v.x, v.y);
-    }
-    return v;
+Vector2<f32> IA::determinatePositionBuilding(const Box2D& buildingHitbox) const{
+    Vector2<f32> dummy = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(),
+                                                                 hallPosition.toVector2(),
+                                                                 buildingHitbox,
+                                                                 true)->getHitbox().TopLeft();
+    return dummy;
 }
 
 bool IA::getUnderAttack() {
@@ -204,11 +131,11 @@ bool IA::getUnderAttack() {
         // Get units in the map of the opposing team
         std::map<i32, Unit*> *inMapTroops = Human::Instance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map
-        for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
+        for (std::map<i32, Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
             if (it -> second != nullptr) {
             // Calculate distance between troop requesting target and posible targets
-                xaux = it -> second -> getPosition() . x - pos . x;
-                yaux = it -> second -> getPosition() . y - pos . y;
+                xaux = it -> second -> getPosition().x - pos.x;
+                yaux = it -> second -> getPosition().y - pos.y;
                 dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
 
             if (dist <= requesterRange) {
@@ -223,7 +150,7 @@ void IA::chooseBehaviour() {
     // RAndomize the seed
     srand(time(nullptr));
     // Determine a number between 0 and 4, the number of possible behaviours for the AI to choose
-    behaviour = (Enumeration::IABehaviour)(rand()%(4-0 + 1) + 0);
+    behaviour = (Enumeration::IABehaviour)(rand() % (4-0 + 1) + 0);
     switch (behaviour) {
         case Enumeration::IABehaviour::VeryHappy:
             chosenBehaviour = "Very happy";
@@ -634,14 +561,12 @@ void IA::initializeChoices() {
     choices -> push_back("Build siderurgy");
     choices -> push_back("Build quarry");
     choices -> push_back("Build home");
-    //choices -> push_back(L"Melee footman");
     choices -> push_back("Train mounted melee");
     choices -> push_back("Train creature");
     choices -> push_back("Train ranged footman");
     choices -> push_back("Train mounted ranged");
     choices -> push_back("Train catapult");
     choices -> push_back("Train ram");
-    //choices -> push_back(L"Barrack");
     choices -> push_back("Build barn");
     choices -> push_back("Build workshop");
     choices -> push_back("Build tower");
