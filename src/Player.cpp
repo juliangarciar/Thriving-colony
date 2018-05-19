@@ -25,6 +25,8 @@ void Player::Init() {
     resistanceModifier = 0;
     damageModifier = 0;
 
+	influenceRangeIncrements = 0;
+
     underAttack = false;
 
     resourceTimer = new Timer(1.00, true);
@@ -81,7 +83,9 @@ void Player::spendResources(i32 metalCost, i32 crystalCost) {
 }
 
 void Player::increaseBuildableRange() {
-    buildableRange *= 1.5; // ToDo: to map JSON
+	if (influenceRangeIncrements < Map::Instance()->getInfluenceRangeIncrementLimit())
+    	buildableRange += Map::Instance()->getInfluenceRangeIncrement(); // ToDo: to map JSON
+	influenceRangeIncrements++;
 }
 
 /**

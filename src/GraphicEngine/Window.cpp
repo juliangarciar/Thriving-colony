@@ -77,7 +77,7 @@ void Window::Init(i32 width, i32 height){
             Window::Instance() -> getGUIEnvironment() -> resizeCallbackEvent(width, height);
 			Window::Instance() -> windowWidth = width;
 			Window::Instance() -> windowHeight = height;
-			Window::Instance() -> triggerResizeCallback();
+			Window::Instance() -> triggerResizeCallback(width, height);
         }
     );
 
@@ -120,12 +120,12 @@ void Window::onClose(){
     glfwTerminate();
 }
 
-void Window::setResizeCallback(std::function<void()> f){
+void Window::setResizeCallback(std::function<void(i32, i32)> f){
 	resizeCallback = f;
 }
 
-void Window::triggerResizeCallback(){
-	resizeCallback();
+void Window::triggerResizeCallback(i32 width, i32 height){
+	if (resizeCallback) resizeCallback(width, height);
 }
 
 IrrlichtDevice* Window::getDevice() {

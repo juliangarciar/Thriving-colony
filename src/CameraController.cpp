@@ -6,8 +6,6 @@
 #include "IOEngine/IO.h"
 #include "GraphicEngine/Window.h"
 
-//ToDo: llevarse datos a JSON
-
 CameraController::CameraController() {
 	Window *w = Window::Instance();
 
@@ -27,18 +25,18 @@ CameraController::CameraController() {
 
 	// Cam zoom initializations
 	zoomLevels = 10; //JSON config
-	zoomDistanceFromTarget = 750.0f; //JSON map
-	minZoom = 400; //JSON map
-	maxZoom = 1000; //JSON map
+	zoomDistanceFromTarget = 750.0f;
+	minZoom = 400;
+	maxZoom = 1000;
     zoomMode = false;
 
 	// Cam rotation and inclination initializations
 	rotSpeed = 2.f; //JSON config
 	inclSpeed = 2.f; //JSON config
-	minInclination = 200.f; //JSON map
-	maxInclination = 260.f; //JSON map
-	rotateDegrees.x = 0.f; //JSON map
-	rotateDegrees.y = 230.f; //JSON map
+	minInclination = 200.f;
+	maxInclination = 260.f;
+	rotateDegrees.x = 0.f;
+	rotateDegrees.y = 230.f;
     rotationOrInclinationMode = false;
 
 	//Center

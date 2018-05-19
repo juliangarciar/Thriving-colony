@@ -228,6 +228,9 @@ class Player {
         //Amount of modifyd damage of a unit.
         i32 damageModifier;
 
+		//Count
+		i32 influenceRangeIncrements;
+
         //True if player's city is under attack and false in other case.
         bool underAttack;
         

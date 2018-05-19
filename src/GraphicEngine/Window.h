@@ -30,9 +30,9 @@ class Window {
         
         void onClose();
 
-		void setResizeCallback(std::function<void()>);
+		void setResizeCallback(std::function<void(i32, i32)>);
 
-		void triggerResizeCallback();
+		void triggerResizeCallback(i32, i32);
 
         IrrlichtDevice* getDevice();
         video::IVideoDriver* getVideoDriver();
@@ -74,7 +74,7 @@ class Window {
         Window &operator = (const Window & );
     private:
         void setGLAttributes();
-		
+
         static Window* pinstance;
 
         GLFWwindow* window;
@@ -92,7 +92,7 @@ class Window {
 
         i32 framerate;
 
-		std::function<void()> resizeCallback;
+		std::function<void(i32, i32)> resizeCallback;
 };
 
 #endif

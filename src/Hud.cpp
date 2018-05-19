@@ -181,8 +181,9 @@ void Hud::Init(){
     });
 
     buttonExpandTerrain->setTooltip("Purchase a terrain expansion that will allow you to build a bigger city.\n Metal cost: 500.");
-    buttonExpandTerrain->setCallback([]{
-        //ToDo: hacer que se expanda el terreno edificable y que el susodicho exista
+    buttonExpandTerrain->setCallback([&]{
+		showToast("Se ha expandido el terreno");
+        Human::Instance() -> increaseBuildableRange();
     });
 
     buttonOpenPanel->setTooltip("Open your panel to manage your city.");
@@ -786,10 +787,10 @@ void Hud::setButtonStatus(std::string t, bool status){
     } else if (t == "Workshop"){
         if (status) buttonWorkshop -> show();
         else buttonWorkshop -> hide();
-    } else if (t == "BuildingsSize"){
+    } else if (t == "expandableTerrain"){
         if (status) buttonExpandTerrain -> show();
         else buttonExpandTerrain -> hide();
-    } else 
+    } 
     
     adjustMenuVisibility();
     buildingsPanel -> refreshLayout();

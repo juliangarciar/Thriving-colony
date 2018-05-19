@@ -22,7 +22,9 @@
 	},
 	"game":{
 		"metal_productivity": 20,
-		"crystal_productivity": 20
+		"crystal_productivity": 20,
+		"expansion_increment": 20,
+		"expansion_increment_times": 5
 	},
 	"camera":{
 		"zoom": {
