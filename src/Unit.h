@@ -25,7 +25,6 @@ class Unit : public Entity {
         virtual ~Unit();
         virtual void preTaxPlayer();
         /* Do something functions */
-        void Init();
         void update();
         void switchState(Enumeration::UnitState);
         void recruitingState();
@@ -56,6 +55,7 @@ class Unit : public Entity {
         Vector2<f32> getDestination() const;
         const std::list< Vector2<f32> >& getPath() const;
         const std::string getType() const;
+        const std::string getBuildingName() const;
         Enumeration::UnitState getState() const;
         const i32 getArmyLevel() const;
         const std::vector< Vector2<f32> >& getUnitFightersPosition() const; /* Not implemented */    
@@ -69,6 +69,11 @@ class Unit : public Entity {
 
         Enumeration::UnitState state;
         const std::string type;
+
+		//Recruit building name
+		const std::string building;
+
+        //Speed with which the unit moves.
         const i32 moveSpeed;
         const i32 attackSpeed;
         const i32 attackDamage;

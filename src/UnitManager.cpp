@@ -19,9 +19,13 @@ UnitManager::UnitManager(Enumeration::Team t, std::string b) {
     ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/gameConfig/UnitData/"+b+"Units.json");
     json j = *r -> getJSON();
 
+    baseUnits = new std::map<std::string, UnitData>();
+    inQueueTroopsByBuilding = new std::map<std::string, i32>();
+
     for (auto& element : j["Units"]){
         UnitData tmp;
             tmp.type = element["unitName"].get<std::string>();
+            tmp.buildingType = element["buildingType"].get<std::string>();
             tmp.troopModel = element["troopPath"]["modelPath"].get<std::string>();
             tmp.troopTexture = element["troopPath"]["texturePath"].get<std::string>();
             tmp.flagModel = element["flagPath"]["modelPath"].get<std::string>();
@@ -45,7 +49,8 @@ UnitManager::UnitManager(Enumeration::Team t, std::string b) {
             tmp.attackEvent = element["attackEvent"].get<std::string>();
             tmp.moveEvent = element["moveEvent"].get<std::string>();
             tmp.selectEvent = element["selectEvent"].get<std::string>();
-        baseUnits.insert(std::pair<std::string, UnitData>(tmp.type, tmp));
+        baseUnits->insert(std::pair<std::string, UnitData>(tmp.type, tmp));
+		inQueueTroopsByBuilding->insert(std::pair<std::string, i32>(tmp.buildingType, 0));
     }
     
     selectedTroop = 0; 
@@ -87,13 +92,20 @@ UnitManager::~UnitManager() {
 
     delete unitLayer;
 }
-/* This method is just so fucking weird, I just can't get it */
 //Create a new troops
 //In order to add a new unit, you must specify which one
 bool UnitManager::createTroop(std::string type) {
-    if (baseUnits.find(type) != baseUnits.end()){
+	//ToDo: This method is just so fucking weird, I just can't get it
+    if (baseUnits->find(type) != baseUnits->end()){
+		//Check if there are space in the queue
+        if (team == Enumeration::Team::Human){
+			if (inQueueTroopsByBuilding->at(baseUnits->at(type).buildingType) >= Human::Instance()->getBuildingManager()->getAmount(baseUnits->at(type).buildingType)) return false;
+		} else {
+			if (inQueueTroopsByBuilding->at(baseUnits->at(type).buildingType) >= IA::Instance()->getBuildingManager()->getAmount(baseUnits->at(type).buildingType)) return false;
+		}
+		//Check if can pay it
         if (checkCanPay(type)) {
-            Unit *newUnit = new Unit(unitLayer, nextTroopId, team, baseUnits[type], this);
+            Unit *newUnit = new Unit(unitLayer, nextTroopId, team, baseUnits->at(type), this);
             if (newUnit == nullptr) {
                 return false;
             }
@@ -101,6 +113,9 @@ bool UnitManager::createTroop(std::string type) {
             newUnit -> setRecruitedCallback([&] (Unit* u){
                 //Delete in Queue
                 inQueueTroops->erase(inQueueTroops->find(u->getID()));
+
+				//Remove from queue size
+				inQueueTroopsByBuilding->at(u->getBuildingName())--;
 
                 //Add in Hall
                 inHallTroops->insert(std::pair<i32, Unit*>(u->getID(), u));
@@ -128,7 +143,12 @@ bool UnitManager::createTroop(std::string type) {
                 }
             });
 
+			//Tax player
+			newUnit->preTaxPlayer();
+
+			//Add to queues
             inQueueTroops -> insert(std::pair<i32, Unit*>(newUnit->getID(), newUnit));
+			inQueueTroopsByBuilding->at(baseUnits->at(type).buildingType)++;
             if (team == Enumeration::Team::Human){
                 Hud::Instance()->addTroopToQueue(newUnit->getID(), newUnit->getType());
             }
@@ -148,7 +168,7 @@ bool UnitManager::createTroop(std::string type) {
 void UnitManager::updateUnitManager() {
     // Retractear una sola unidad
     if (selectedTroop != nullptr) {
-        if (IO::Instance() -> getKeyboard() -> keyPressed(82)) { //82 = R, R de retracted
+        if (IO::Instance() -> getKeyboard() -> keyPressed(82)) { //ToDo: fachada -- 82 = R, R de retracted
             if (team == Enumeration::Team::Human){
 				Vector3<f32> p = Human::Instance()->hallPosition;
                 selectedTroop -> setUnitDestination(Vector2<f32>(p.x, p.z));
@@ -198,7 +218,7 @@ void UnitManager::startDeployingAllTroops() {
         currentDeployingTroop = 0;
     }
 } 
-/* Check this method -> Optimize, also change deployAllTroops */
+//ToDo: Check this method -> Optimize, also change deployAllTroops
 void UnitManager::deploySelectedTroop(Vector2<f32> p) {
     if (deployingTroop && currentDeployingTroop >= 0) { 
         Unit *temp = inHallTroops -> find(currentDeployingTroop) -> second;
@@ -231,7 +251,8 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
         deployingTroop = false;
     }
 }
-/* Porbably add the new deploy system used above */
+
+/* Probably add the new deploy system used above */
 void UnitManager::deployAllTroops(Vector2<f32> p){
     for (std::map<i32,Unit*>::iterator it = inHallTroops -> begin(); it != inHallTroops -> end(); ++it) {
         Unit *temp = it -> second;
@@ -248,7 +269,7 @@ void UnitManager::deployAllTroops(Vector2<f32> p){
 			hallPosition = Human::Instance()->hallPosition;
             target = WorldGeometry::Instance()->positionToCell(hallPosition.toVector2());
         }
-        /* Check this, can return a nullptr */
+        //ToDo: Check this, can return a nullptr
         target = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(), p, temp->getHitbox());
         
         Vector2<f32> dummy;
@@ -326,11 +347,11 @@ void UnitManager::moveOrder() {
  * to avoid cluttering the setBuildingMode() method, as it used to be there in the first place.
  */
 bool UnitManager::checkCanPay(std::string type) {
-	if (baseUnits.find(type) != baseUnits.end()){
+	if (baseUnits->find(type) != baseUnits->end()){
 		if (team == Enumeration::Team::Human)
-			return Human::Instance() -> isSolvent(baseUnits[type].metalCost, baseUnits[type].crystalCost, baseUnits[type].citizensVariation);
+			return Human::Instance() -> isSolvent(baseUnits->at(type).metalCost, baseUnits->at(type).crystalCost, baseUnits->at(type).citizensVariation);
 		else
-			return IA::Instance() -> isSolvent(baseUnits[type].metalCost, baseUnits[type].crystalCost, baseUnits[type].citizensVariation);
+			return IA::Instance() -> isSolvent(baseUnits->at(type).metalCost, baseUnits->at(type).crystalCost, baseUnits->at(type).citizensVariation);
 	}
 	return false;
 }
@@ -416,10 +437,10 @@ i32 UnitManager::getTotalTroopAmount() {
 } 
 
 const UnitData& UnitManager::getUnitData(std::string type) const{
-	std::map<std::string, UnitData>::const_iterator it = baseUnits.find(type);
-	/*if (it != baseUnits.end()){
+	std::map<std::string, UnitData>::const_iterator it = baseUnits->find(type);
+	/*if (it != baseUnits->end()){
 		//return &it->second;
-	}*/ if (it == baseUnits.end()){
+	}*/ if (it == baseUnits->end()){
 		std::cout << "El tipo de unidad " << type << " no es valido." << std::endl;
 		exit(0);
 		//return &it->second;

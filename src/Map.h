@@ -86,25 +86,46 @@ class Map {
         CameraController* getCamera();
 
 		/**
-		 * @brief Get the Map Margins object
+		 * @brief Get the Map Margin
 		 * 
 		 * @return Margins* 
 		 */
 		Margins *getMapMargins();
 
 		/**
-		 * @brief Get the Metal Productivity object
+		 * @brief Get the Metal Productivity
 		 * 
 		 * @return i32 
 		 */
 		i32 getMetalProductivity();
 
 		/**
-		 * @brief Get the Crystal Productivity objects
+		 * @brief Get the Crystal Productivity
 		 * 
 		 * @return i32 
 		 */
 		i32 getCrystalProductivity();
+
+		/**
+		 * @brief Get the Citizen Increment object
+		 * 
+		 * @return i32 
+		 */
+		i32 getCitizenIncrement();
+		
+		/**
+		 * @brief Get the Expansion Increment
+		 * 
+		 * @return i32 
+		 */
+		i32 getInfluenceRangeIncrement();
+
+		/**
+		 * @brief Get the Influence Range Increment Limit
+		 * 
+		 * @return i32 
+		 */
+		i32 getInfluenceRangeIncrementLimit();
 
     protected:
         /**
@@ -157,6 +178,15 @@ class Map {
 
         //Production of crystal.
         i32 crystalProductivity;
+
+		//Citizen increment
+		i32 citizenIncrement;
+
+		//Terrain increment
+		i32 influenceRangeIncrement;
+
+		//Number of times you can expand your terrain
+		i32 influenceRangeIncrementLimit;
 };
 
 #endif

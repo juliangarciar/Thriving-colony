@@ -78,6 +78,9 @@ void Map::Init() {
     //Game productivity
     metalProductivity = j["game"]["metal_productivity"].get<i32>();
     crystalProductivity = j["game"]["crystal_productivity"].get<i32>();
+	influenceRangeIncrement = j["game"]["expansion_increment"].get<i32>();
+	influenceRangeIncrementLimit = j["game"]["expansion_increment_times"].get<i32>();
+	citizenIncrement = j["game"]["citizen_increment"].get<i32>();
 	
 	loadProgress(50);
 
@@ -185,6 +188,18 @@ i32 Map::getMetalProductivity(){
 
 i32 Map::getCrystalProductivity(){
 	return crystalProductivity;
+}
+
+i32 Map::getCitizenIncrement(){
+	return citizenIncrement;
+}
+
+i32 Map::getInfluenceRangeIncrement(){
+	return influenceRangeIncrement;
+}
+
+i32 Map::getInfluenceRangeIncrementLimit(){
+	return influenceRangeIncrementLimit;
 }
 
 void Map::loadProgress(i32 p){

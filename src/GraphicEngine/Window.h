@@ -30,16 +30,17 @@ class Window {
         
         void onClose();
 
+		void setResizeCallback(std::function<void(i32, i32)>);
+
+		void triggerResizeCallback(i32, i32);
+
         IrrlichtDevice* getDevice();
         video::IVideoDriver* getVideoDriver();
         scene::ISceneManager* getSceneManager();
         nanogui::Screen* getGUIEnvironment();
 
-        i32 getInitialWindowWidth();
-        i32 getInitialWindowHeight();
-
-        i32 getRealWindowWidth();
-        i32 getRealWindowHeight();
+        i32 getWindowWidth();
+        i32 getWindowHeight();
 
         f32 getDeltaTime() const;
         f32 getLastDeltaTime() const;
@@ -64,15 +65,17 @@ class Window {
          */
         i32 getFrameRate();
         
+        i32 windowWidth;
+        i32 windowHeight;
+		Vector2<i32> screenCenter;
     protected:
         Window();
         virtual ~Window();
         Window(const Window & );
         Window &operator = (const Window & );
-
+    private:
         void setGLAttributes();
 
-    private:
         static Window* pinstance;
 
         GLFWwindow* window;
@@ -83,15 +86,14 @@ class Window {
         video::IVideoDriver* driver;
         scene::ISceneManager* scene;
         nanogui::Screen* gui;
-
-        i32 windowWidth;
-        i32 windowHeight;
         
         double dtThen;
         double deltaTime;
         double lastDeltaTime;
 
         i32 framerate;
+
+		std::function<void(i32, i32)> resizeCallback;
 };
 
 #endif

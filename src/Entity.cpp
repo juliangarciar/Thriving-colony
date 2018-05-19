@@ -62,7 +62,6 @@ Entity::Entity(SceneNode* _layer,
 
 	// Set the color
     setBaseColor();
-
 	Vector3<f32> pos(
 		getPosition().x, 
 		Map::Instance()->getTerrain()->getY(getPosition().x,getPosition().y) + bbOffset, 

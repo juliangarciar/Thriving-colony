@@ -50,10 +50,10 @@ void GameState::Init() {
 
     //Hud events
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::showBuiltText, [&](){
-        hud->showToast("Se ha construido un edificio");
+        hud->addToastToQueue("Se ha construido un edificio");
     });
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::showRecruitedText, [&](){
-        hud->showToast("Se ha reclutado una tropa");
+        hud->addToastToQueue("Se ha reclutado una tropa");
     });
 
     //Init SoundSystem
@@ -216,7 +216,10 @@ void GameState::Update(){
         human -> Update();
         ia -> Update();
 
-        //ToDo: glfw tiene un evento para si se redimensiona la pantalla
+		//Resize trigger
+        Window::Instance()->setResizeCallback([&](i32 newWidth, i32 newHeight){
+			std::cout << "Resized to (" << newWidth << "," << newHeight << ")" << std::endl;
+		});
 
         //Win/Lose
         if (ia -> getBuildingManager() -> getAmount("MainBuilding") == 0) {

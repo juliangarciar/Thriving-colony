@@ -106,9 +106,6 @@ class CameraController {
 		//Maximum zoom of the camera.
 		i32 maxZoom;
 
-		//Center point of the current window size.
-		Vector2<i32> screenCenter;
-
 		//Initial rotation degrees of the camera.
 		Vector2<f32> rotateDegrees;
 

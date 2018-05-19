@@ -33,6 +33,7 @@ void Human::Init(std::string _race) {
 }
 
 void Human::Update() {
+	Player::Update();
     units -> updateUnitManager();
 }
 
