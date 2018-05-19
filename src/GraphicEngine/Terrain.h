@@ -24,6 +24,9 @@ class Terrain{
         /*scene::ITerrainSceneNode* getTerrain();*/
     private:
        OBDTerrain *t;
+
+	   Texture *terrainTex;
+	   Texture *detailTex;
 };
 
 #endif

@@ -109,9 +109,10 @@ class OBDEngine {
          * 
          * @param vector of objects
          * @param material
+         * @param autoload
          * @return OBDAnimation* 
          */
-        OBDAnimation* createAnimation(std::vector<std::string>, std::string);
+        OBDAnimation* createAnimation(std::vector<std::string>, std::string, bool);
         
         /**
          * @brief 
@@ -119,9 +120,10 @@ class OBDEngine {
          * @param parent
          * @param vector of objects
          * @param material
+         * @param autoload
          * @return OBDAnimation* 
          */
-        OBDAnimation* createAnimation(OBDSceneNode*, std::vector<std::string>, std::string);
+        OBDAnimation* createAnimation(OBDSceneNode*, std::vector<std::string>, std::string, bool);
 
 		/**
 		 * @brief Create a Terrain object
@@ -175,6 +177,13 @@ class OBDEngine {
          * @param sync 
          */
         void loadObjectTexturesFromMTL(OBDObject *, ResourceMTL *m, bool = true);
+
+        /**
+         * @brief 
+         * @param r 
+         * @param sync 
+         */
+        void loadAnimationTexturesFromMTL(OBDAnimation *, ResourceMTL *m, bool = true);
 
         /**
          * @brief 

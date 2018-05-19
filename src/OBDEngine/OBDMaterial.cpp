@@ -15,6 +15,12 @@ OBDMaterial::OBDMaterial(){
 	activeTextures->specularTexture = 0;
 	activeTextures->alphaTexture = 0;
 	activeTextures->bumpTexture = 0;
+
+	diffuseTextureMap = nullptr;
+	ambientOclusionsTextureMap = nullptr;
+	specularTextureMap = nullptr;
+	alphaTextureMap = nullptr;
+	bumpMap = nullptr;
 }
 
 OBDMaterial::OBDMaterial(ResourceMTL *m, std::string n){
@@ -35,6 +41,12 @@ OBDMaterial::OBDMaterial(ResourceMTL *m, std::string n){
 		activeTextures->alphaTexture = 0;
 		activeTextures->bumpTexture = 0;
 
+		diffuseTextureMap = nullptr;
+		ambientOclusionsTextureMap = nullptr;
+		specularTextureMap = nullptr;
+		alphaTextureMap = nullptr;
+		bumpMap = nullptr;
+
 		name = it->second->materialName;
 	} else {
 		std::cout << "No se ha podido encontrar el material " << n << ", se creará un material por defecto." << std::endl;
@@ -53,6 +65,12 @@ OBDMaterial::OBDMaterial(ResourceMTL *m, std::string n){
 		activeTextures->specularTexture = 0;
 		activeTextures->alphaTexture = 0;
 		activeTextures->bumpTexture = 0;
+
+		diffuseTextureMap = nullptr;
+		ambientOclusionsTextureMap = nullptr;
+		specularTextureMap = nullptr;
+		alphaTextureMap = nullptr;
+		bumpMap = nullptr;
 	}
 }
 
@@ -61,6 +79,18 @@ OBDMaterial::~OBDMaterial(){
 	delete activeTextures;
 	material = nullptr;
 	activeTextures = nullptr;
+
+	if (diffuseTextureMap != nullptr) delete diffuseTextureMap;
+	if (ambientOclusionsTextureMap != nullptr) delete ambientOclusionsTextureMap;
+	if (specularTextureMap != nullptr) delete specularTextureMap;
+	if (alphaTextureMap != nullptr) delete alphaTextureMap;
+	if (bumpMap != nullptr) delete bumpMap;
+
+	diffuseTextureMap = nullptr;
+	ambientOclusionsTextureMap = nullptr;
+	specularTextureMap = nullptr;
+	alphaTextureMap = nullptr;
+	bumpMap = nullptr;
 }
 
 void OBDMaterial::setMaterialName(std::string n){

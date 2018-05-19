@@ -25,9 +25,9 @@ bool PathManager::createPathTo(Vector2<f32> targetPos){
         finalPos = targetPos;
     }
 
-    AStar* astar = new AStar(origin, end);
-    astar->Search();
-    std::list< Vector2<f32> > finalPath = astar->getPath();
+    AStar astar = AStar(origin, end);
+    astar.Search();
+    std::list< Vector2<f32> > finalPath = astar.getPath();
 
     finalPath.push_front(initPos);
 

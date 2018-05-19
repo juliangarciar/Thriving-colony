@@ -290,9 +290,6 @@ class Entity {
         // Sospechoso
         Timer *tookDamageTimer;
 
-        //
-        Material *baseMat;
-
         //Pointer to a billboard with the HP of the entity.
         Billboard* barBg;
 

@@ -46,3 +46,7 @@ void OBDAnimation::updateFrame(){
 	nextFrame++;
 	if (nextFrame >= numberOfFrames) nextFrame = 0;
 }
+
+OBDMaterial *OBDAnimation::getMaterial(){
+	return material;
+}

@@ -64,6 +64,9 @@ class OBDTerrain : public OBDEntity {
 		TerTerrain *terrain;
 		SDF *octree;
 		std::vector<glm::vec3> vertex_vector;
+		
+        glslMesh *mesh;
+        OBDMaterial *material;
 
 		TNode* terrainNode;
 };
