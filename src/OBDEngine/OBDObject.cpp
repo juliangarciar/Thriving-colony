@@ -27,10 +27,10 @@ OBDObject::OBDObject(OBDSceneNode* p, u32 id, ResourceOBJ *obj, ResourceMTL *mtl
 	ID = id;
 
 	parent = nullptr;
-	refreshBoundingBox();
+	if (ID) refreshBoundingBox();
 	parent = p;
 
-	p -> insertBoundingBox(ID, boundingBox);
+	if (ID) p -> insertBoundingBox(ID, boundingBox);
 }
 
 OBDObject::~OBDObject(){
@@ -44,20 +44,22 @@ OBDObject::~OBDObject(){
     }
     materials->clear();
 	
-	if (parent != nullptr) parent -> removeBoundingBox(ID);
+	if (parent != nullptr && ID) parent -> removeBoundingBox(ID);
 }
 
 void OBDObject::refreshBoundingBox(){
-	meshes->begin()->second->refreshBoundingBox();
-	aabb::AABB matrix = meshes->begin()->second->getBoundingBox();
-    for (std::map<std::string, OBDMesh*>::iterator i = meshes->begin(); i != meshes->end(); ++i) {
-		i->second->refreshBoundingBox();
-		matrix.merge(matrix, i->second->getBoundingBox());
-	}
-	boundingBox = matrix;
+	if (ID){
+		meshes->begin()->second->refreshBoundingBox();
+		aabb::AABB matrix = meshes->begin()->second->getBoundingBox();
+		for (std::map<std::string, OBDMesh*>::iterator i = meshes->begin(); i != meshes->end(); ++i) {
+			i->second->refreshBoundingBox();
+			matrix.merge(matrix, i->second->getBoundingBox());
+		}
+		boundingBox = matrix;
 
-	if (parent != nullptr){
-		parent -> refreshBoundingBox(ID, boundingBox);
+		if (parent != nullptr){
+			parent -> refreshBoundingBox(ID, boundingBox);
+		}
 	}
 }
 
