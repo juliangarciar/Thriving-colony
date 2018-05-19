@@ -133,8 +133,7 @@ class WorldGeometry{
 
         //New method
         const Vector2<f32> getSquadPosition(i32 _size, i32 _index) const; 
-        //bool checkCollision(Vector2<f32> _orig, Vector2<f32> _end, f32 _halfsizeX = 40, f32 _halfsizeY = 40) const;
-        bool checkCollision(Vector2<f32> _orig, Vector2<f32> _end) const;
+        bool checkLineCollision(Vector2<f32> _orig, Vector2<f32> _end) const;
         void getCollidingEntities(const Box2D& hitbox, Entity** priorityEntity, Enumeration::Team teamTarget) const;
     private:
         static WorldGeometry* pinstance;

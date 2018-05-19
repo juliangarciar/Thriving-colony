@@ -33,7 +33,9 @@ void Game::Init() {
 	IO::Instance() -> Init();
     /* Cargar cursores */
     IO::Instance()->loadImageIcon("media/icons/Mouse/cursor_azul.png");
-    /* */
+    IO::Instance()->loadImageIcon("media/icons/Mouse/cursor_verde.png");
+    IO::Instance()->loadImageIcon("media/icons/Mouse/cursor_rojo.png");
+    IO::Instance() -> getMouse() -> changeCustomIcon(0);
     state -> Init();
 }
 

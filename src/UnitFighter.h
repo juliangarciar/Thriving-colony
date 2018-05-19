@@ -4,6 +4,7 @@
 #include "Types.h"
 #include "MathEngine/Vector2.h"
 #include "GraphicEngine/Model.h"
+#include "Enumeration.h"
 #include <vector>
 
 //class Model;
@@ -40,7 +41,7 @@ class UnitFighter{
         Timer* unitFighterClock;
         /* Check in the future */
         std::vector<UnitFighter*> nearFighters;
-        
+        Enumeration::UnitFighterState fighterState;
         bool hasArrived();
         Vector2<f32> calculateFlocking();
         void calculateDirection();

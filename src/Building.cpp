@@ -98,14 +98,14 @@ void Building::takeDamage(i32 _damage) {
     currentHP = currentHP - _damage;
     
     if(currentHP < 1){
-        bar->setColor(Color(0,0,0));
+        //bar->setColor(Color(0,0,0));
         //bar->setScale(0);
         buildingManager->deleteBuilding(ID);
         return;
     }
     else{
         percentage = currentHP / maxHP;
-        bar->setColor(Color((1.0f - percentage) * 255.0f, percentage * 255.0f, 0));
+        //bar->setColor(Color((1.0f - percentage) * 255.0f, percentage * 255.0f, 0));
         //bar->setScale(percentage);
         tookDamageTimer -> restart();
         // Tint the model red

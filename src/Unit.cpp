@@ -74,14 +74,13 @@ Unit::Unit(SceneNode* _layer,
 
     enemySensorTimer = new Timer(0.5, true, false);
     enemySensorTimer->setCallback([&](){
-        if(state != Enumeration::UnitState::InHome && state != Enumeration::UnitState::Recruiting){
+        //if(state != Enumeration::UnitState::InHome && state != Enumeration::UnitState::Recruiting){
             unitSensor->update();
-        }
+        // }
     });
-
+    std::cout << "AttackSpeed: " << attackSpeed << "\n";
     attackTimer = new Timer(attackSpeed, false, false);
     attackTimer->setCallback([&](){
-        std::cout << "Me activo para atacar \n";
         canAttack = true;
     });
 
@@ -218,32 +217,32 @@ void Unit::inHomeState(){
 }
 
 void Unit::idleState() {
-    updateUnitFighters();
+    //updateUnitFighters();
     if (target != nullptr) {
         switchState(Enumeration::UnitState::Attack);
     }
 }
 
 void Unit::moveState() {
-    updateUnitFighters();
+    //updateUnitFighters();
     moveUnit();
 }
 
 /* ToDo: Tenemos que hablar si existen shortcuts para llamar este */
 /* End this method */
 void Unit::attackMoveState() {
-    updateUnitFighters();
+    //updateUnitFighters();
     moveUnit();
 }
 
 void Unit::attackState() {
-    updateUnitFighters();
+    //updateUnitFighters();
     if(target != nullptr){
         if(inRangeOfAttack()) {
             if(canAttack){
                 target->takeDamage(attackDamage);
                 canAttack = false;
-                attackTimer->start();
+                attackTimer->restart();
             }
         }
         else{
@@ -258,7 +257,7 @@ void Unit::attackState() {
 }
 
 void Unit::chaseState() {
-    updateUnitFighters();
+    //updateUnitFighters();
     if(target == nullptr){
         switchState(Enumeration::UnitState::Idle);
     }
@@ -273,7 +272,7 @@ void Unit::chaseState() {
 }
 
 void Unit::retractState() {
-    updateUnitFighters();
+    //updateUnitFighters();
     if (readyToEnter){
         retractedCallback(this);
         for(std::size_t i = 0; i < unitFighters.size(); ++i){
@@ -321,6 +320,7 @@ void Unit::moveUnit() {
             WorldGeometry::Instance() -> updateUnitCell(_oldPosition, vectorPos, this);
             setPosition(vectorPos);
             unitSensor -> move(vectorPos);
+            updateUnitFighters();
         }
     }
 }
@@ -397,14 +397,14 @@ void Unit::takeDamage(i32 _damage){
     tookDamageTimer -> restart();
     setDamageColor();
     if (currentHP < 1) {
-        bar->setColor(Color(0,0,0));
+        //bar->setColor(Color(0,0,0));
         //bar->setScale(0);
         unitManager->deleteUnit(ID);
         return;
     }
     else{
         percentage = currentHP / maxHP;
-        bar->setColor(Color((1.0f - percentage) * 255.0f, percentage * 255.0f, 0));
+        //bar->setColor(Color((1.0f - percentage) * 255.0f, percentage * 255.0f, 0));
         //bar->setScale(percentage);
         i32 _qnty = std::floor(currentHP / unitFighterHP);
         if(currentHP % unitFighterHP != 0){
@@ -416,8 +416,6 @@ void Unit::takeDamage(i32 _damage){
             unitFighters.erase(unitFighters.end() - 1);
             delete tmp;
         }
-        tookDamageTimer -> restart();
-        setDamageColor();
     }
 }
 
@@ -431,15 +429,15 @@ void Unit::setTarget(Entity *newTarget) {
     }
 }
 
-/*** GETTERS ***/
-/* Edit this */
 bool Unit::inRangeOfAttack() {
     bool inRange = false;
-    if (getTarget() != nullptr) {
-        f32 xaux = getTarget() -> getPosition().x - getPosition().x;
-        f32 yaux = getTarget() -> getPosition().y - getPosition().y;
-        f32 dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
-        if (dist <= getAttackRange()) {
+    if(target != nullptr){
+        Vector2<f32> tmp(target->getPosition() - vectorPos);
+        f32 distance = std::sqrt(std::pow(tmp.x, 2) + 
+                                 std::pow(tmp.y, 2));
+
+        distance = distance - target->getHitbox().getHalfSize() - this->getHitbox().getHalfSize();
+        if( distance <= attackRange){
             inRange = true;
         }
     }

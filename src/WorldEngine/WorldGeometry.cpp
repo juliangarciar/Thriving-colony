@@ -30,6 +30,9 @@ WorldGeometry::WorldGeometry():mCells(),
 {}
 
 WorldGeometry::~WorldGeometry(){
+    for(std::size_t i = 0; i < mCells.size(); i++){
+        delete mCells[i];
+    }
     mCells.clear();
     cellsDistance.clear();
     delete quadTree;
@@ -147,10 +150,10 @@ void WorldGeometry::setUnitCell(Vector2<f32> positionVector, Unit* unitPtr){
 bool WorldGeometry::checkHitBoxCollision(const Box2D& hitBox, bool amplifyBox) const{
     if(amplifyBox){
         Box2D dummy = hitBox.getAmplifiedBox(cellSize / 2.0f);
-        return quadTree->checkCollision(dummy);
+        return quadTree->checkCollision(dummy, true);
     }
     else{
-        return quadTree->checkCollision(hitBox);
+        return quadTree->checkCollision(hitBox, false);
     }
 }
 
@@ -298,7 +301,7 @@ const Vector2<f32> WorldGeometry::getSquadPosition(i32 _size, i32 _index) const{
 }
 
 // Line collision test (faster, but less precise) - maybe is not working properly (can crash)
-bool WorldGeometry::checkCollision(Vector2<f32> _orig, Vector2<f32> _end) const{
+bool WorldGeometry::checkLineCollision(Vector2<f32> _orig, Vector2<f32> _end) const{
     // Test precision
     const f32 speed(10.0f);
     f32 totalDistance(0.0f);
@@ -308,7 +311,7 @@ bool WorldGeometry::checkCollision(Vector2<f32> _orig, Vector2<f32> _end) const{
     if(vectorDirection.x != 0 || vectorDirection.y != 0){
         // Normalize vector 
         f32 length(std::sqrt(std::pow(vectorDirection.x, 2) + 
-                                     std::pow(vectorDirection.y, 2)));
+                             std::pow(vectorDirection.y, 2)));
         
         // Calculate speed vector
         vectorDirection = (vectorDirection / length) * speed;

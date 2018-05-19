@@ -55,7 +55,7 @@ void GameState::Init() {
     });
 
     //Init SoundSystem
-    SoundSystem::Instance() -> initSystem();
+    //SoundSystem::Instance() -> initSystem();
 }
 
 void GameState::Input() {
@@ -75,7 +75,7 @@ void GameState::Input() {
             i32 idBuilding = human -> getBuildingManager() -> getCollisionID();
             if (idBuilding != -1){
                 if (!human -> getUnitManager() -> isTroopSelected())
-                    IO::Instance() -> getMouse() -> changeIcon(CURSOR_HAND);
+                    IO::Instance() -> getMouse() -> changeCustomIcon(1);
                 
                 if (IO::Instance() -> getMouse() -> leftMousePressed()) {
                     Building *b = human->getBuildingManager()->getBuilding(idBuilding);
@@ -104,24 +104,24 @@ void GameState::Input() {
 
             //Interactions with IA's buildings
             i32 idBuildingIA =  ia -> getBuildingManager() -> getCollisionID();
-            if (idBuildingIA != -1 && human -> getUnitManager() -> isTroopSelected()){
-                IO::Instance() -> getMouse() -> changeIcon(CURSOR_VRESIZE);
+            if (idBuildingIA != -1){
+                IO::Instance() -> getMouse() -> changeCustomIcon(2);
                 
-                if (IO::Instance() -> getMouse() -> rightMousePressed()) {
-                    human->getUnitManager()->getSelectedTroop()->setTarget(ia->getBuildingManager()->getBuilding(idBuildingIA));
+                if(human -> getUnitManager() -> isTroopSelected()){
+                    if (IO::Instance() -> getMouse() -> rightMousePressed()) {
+                        human->getUnitManager()->getSelectedTroop()->setTarget(ia->getBuildingManager()->getBuilding(idBuildingIA));
+                    }
                 }
-                
+
                 onMap = false;
             }
             
 			//Interactions with Human Units
             i32 idTroop = human -> getUnitManager() -> getCollisionID();
             if (idTroop != -1){
-                //if (!human -> getUnitManager() -> isTroopSelected())
-                //IO::Instance() -> getMouse() -> changeIcon(CURSOR_HAND);
-                IO::Instance() -> getMouse() -> changeCustomIcon(0);
+                IO::Instance() -> getMouse() -> changeCustomIcon(1);
+
                 if (IO::Instance() -> getMouse() -> leftMousePressed()){
-                    IO::Instance() -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
                     human -> getUnitManager() -> selectTroop(idTroop);
                 }
                 
@@ -130,22 +130,25 @@ void GameState::Input() {
 
 			//Interactions with IA Units
             i32 idTroopIA = ia -> getUnitManager() -> getCollisionID();
-            if (idTroopIA != -1 && human -> getUnitManager() -> isTroopSelected()){
-                IO::Instance() -> getMouse() -> changeIcon(CURSOR_VRESIZE);
+            if (idTroopIA != -1){
+                IO::Instance() -> getMouse() -> changeCustomIcon(2);
 
-                if (IO::Instance() -> getMouse() -> rightMousePressed()){
-                    human->getUnitManager()->getSelectedTroop()->setTarget(ia->getUnitManager()->getUnit(idTroopIA));
+                if(human -> getUnitManager() -> isTroopSelected()){
+                    if (IO::Instance() -> getMouse() -> rightMousePressed()){
+                        human->getUnitManager()->getSelectedTroop()->setTarget(ia->getUnitManager()->getUnit(idTroopIA));
+                    }
                 }
-                
+
                 onMap = false;
             }
             
             //If nothing happens
             if (onMap){
                 if (human -> getUnitManager() -> isTroopSelected()){
-                    IO::Instance() -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
-                } else if (human -> getUnitManager() -> isDeployingTroop()){
-                    IO::Instance() -> getMouse() -> changeIcon(CURSOR_CROSSHAIR);
+                    IO::Instance() -> getMouse() -> changeCustomIcon(0);
+                } 
+                else if (human -> getUnitManager() -> isDeployingTroop()){
+                    IO::Instance() -> getMouse() -> changeCustomIcon(0);
                     i32 idTroop = human -> getUnitManager() -> getDeployingTroopID();
                     if (idTroop > 0){
                         if (IO::Instance() -> getMouse() -> rightMousePressed()){
@@ -162,7 +165,7 @@ void GameState::Input() {
                         //Ninguna tropa seleccionada
                     }
                 } else 
-                    IO::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);
+                    IO::Instance() -> getMouse() -> changeCustomIcon(0);
 
                 if (IO::Instance() -> getMouse() -> leftMousePressed())
                     human -> getUnitManager() -> unSelectTroop();
@@ -175,6 +178,7 @@ void GameState::Input() {
                     hud -> hidePopup();
                 // Si no, pausa el juego
                 else {
+                    IO::Instance() -> getMouse() -> changeCustomIcon(0);
                     pauseMenu = new PauseMenu();
                     Window::Instance() -> setGUI();
                     pauseMenu -> setHUDEvents();
@@ -186,7 +190,7 @@ void GameState::Input() {
                 human -> getUnitManager() -> moveOrder();
             }
         } else {
-            IO::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);
+            IO::Instance() -> getMouse() -> changeCustomIcon(0);
         }  
     } else {
         pauseMenu -> update();
@@ -205,7 +209,7 @@ void GameState::Update(){
 
         //ToDo: NEW SOUND SYSTEM
         //SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");
-        SoundSystem::Instance() -> update();
+        //SoundSystem::Instance() -> update();
         
         //If human is building something
         human -> getBuildingManager() -> drawBuilding();

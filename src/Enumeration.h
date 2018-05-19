@@ -55,6 +55,14 @@ class Enumeration {
             Retract
         };
 
+        //Unit fighter states.
+        enum UnitFighterState{
+            ufAttack,
+            ufMove,
+            ufIdle,
+            ufConfront
+        };
+
         //IO states.
         enum ioStatesENUM {
             PRESSED, 
