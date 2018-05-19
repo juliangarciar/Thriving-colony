@@ -84,35 +84,35 @@ void TMesh::beginDraw() {
 
 	if (material->getGLSLActiveTextures()->diffuseTexture == 1){
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
-		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_DIFFUSE)->getTextureID());
+		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_DIFFUSE)->getTexture()->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_DIFFUSE), loadedTextures);
 		loadedTextures++;
 	}
 
 	if (material->getGLSLActiveTextures()->oclusionsTexture == 1){
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
-		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_OCLUSIONS)->getTextureID());
+		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_OCLUSIONS)->getTexture()->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_OCLUSIONS), loadedTextures);
 		loadedTextures++;
 	}
 
 	if (material->getGLSLActiveTextures()->specularTexture == 1){
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
-		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_SPECULAR)->getTextureID());
+		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_SPECULAR)->getTexture()->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_SPECULAR), loadedTextures);
 		loadedTextures++;
 	}
 
 	if (material->getGLSLActiveTextures()->alphaTexture == 1){
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
-		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_ALPHA)->getTextureID());
+		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_ALPHA)->getTexture()->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_ALPHA), loadedTextures);
 		loadedTextures++;
 	}
 
 	if (material->getGLSLActiveTextures()->bumpTexture == 1){
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
-		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_BUMP)->getTextureID());
+		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_BUMP)->getTexture()->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_BUMP), loadedTextures);
 		loadedTextures++;
 	}

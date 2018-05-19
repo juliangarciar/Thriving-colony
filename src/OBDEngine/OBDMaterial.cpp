@@ -116,23 +116,23 @@ void OBDMaterial::setSpecularShininess(i32 i){
 void OBDMaterial::setTexture(OBDTexture *p){
 	switch(p->getType()){
 		case OBDEnums::TextureTypes::TEXTURE_DIFFUSE:
-			diffuseTextureMap = p->getTexture();
+			diffuseTextureMap = p;
 			activeTextures->diffuseTexture = 1;
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_OCLUSIONS:
-			ambientOclusionsTextureMap = p->getTexture();
+			ambientOclusionsTextureMap = p;
 			activeTextures->oclusionsTexture = 1;
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_SPECULAR:
-			specularTextureMap = p->getTexture();
+			specularTextureMap = p;
 			activeTextures->specularTexture = 1;
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_ALPHA:
-			alphaTextureMap = p->getTexture();
+			alphaTextureMap = p;
 			activeTextures->alphaTexture = 1;
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_BUMP:
-			bumpMap = p->getTexture();
+			bumpMap = p;
 			activeTextures->bumpTexture = 1;
 		break;
 		default: break;
@@ -159,7 +159,7 @@ i32 OBDMaterial::getSpecularShininess(){
 	return material->shininess;
 }
 
-TTexture* OBDMaterial::getTexture(OBDEnums::TextureTypes tt){
+OBDTexture* OBDMaterial::getTexture(OBDEnums::TextureTypes tt){
 	switch(tt){
 		case OBDEnums::TextureTypes::TEXTURE_DIFFUSE:
 			return diffuseTextureMap;
