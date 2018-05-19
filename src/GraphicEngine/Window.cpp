@@ -28,6 +28,7 @@ Window::~Window() {
 void Window::Init(i32 width, i32 height){
     windowWidth = width;
     windowHeight = height;
+    screenCenter = Vector2<i32>(windowWidth/2, windowHeight/2);
 
     glfwSetTime(0);
 
@@ -77,6 +78,7 @@ void Window::Init(i32 width, i32 height){
             Window::Instance() -> getGUIEnvironment() -> resizeCallbackEvent(width, height);
 			Window::Instance() -> windowWidth = width;
 			Window::Instance() -> windowHeight = height;
+    		Window::Instance() -> screenCenter.set(width/2, height/2);
 			Window::Instance() -> triggerResizeCallback(width, height);
         }
     );

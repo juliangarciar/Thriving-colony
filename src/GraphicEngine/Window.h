@@ -67,6 +67,7 @@ class Window {
         
         i32 windowWidth;
         i32 windowHeight;
+		Vector2<i32> screenCenter;
     protected:
         Window();
         virtual ~Window();

@@ -6,34 +6,37 @@
 #include "GraphicEngine/Window.h"
 #include "BuildingManager.h"
 
-Building::Building(SceneNode *_layer,
-                i32 _id, 
-                Enumeration::Team _team, 
-                BuildingData baseData,
-                BuildingManager* _buildingManager):Entity(
-                                                _layer,
-                                                _id,
-                                                _team,
-                                                Enumeration::EntityType::Building,
-                                                baseData.maxHP,
-                                                baseData.viewRadius,
-                                                baseData.attackRange,
-                                                baseData.attackDamage,
-                                                baseData.attackSpeed,
-                                                baseData.metalCost,
-                                                baseData.crystalCost,
-                                                baseData.happinessVariation,
-                                                baseData.citizensVariation,
-                                                baseData.cellsX,
-                                                baseData.cellsY,
-                                                baseData.modelPath,
-                                                baseData.texturePath,
-                                                baseData.bbOffset
-                                                ), 
-                                                cityLevel(baseData.cityLevel),
-                                                buildingType(baseData.type),
-                                                callback(nullptr),
-                                                buildingManager(_buildingManager)
+Building::Building(
+	SceneNode *_layer,
+	i32 _id, 
+	Enumeration::Team _team, 
+	BuildingData baseData,
+	BuildingManager* _buildingManager) :
+		Entity(
+			_layer,
+			_id,
+			_team,
+			Enumeration::EntityType::Building,
+			baseData.maxHP,
+			baseData.viewRadius,
+			baseData.attackRange,
+			baseData.attackDamage,
+			baseData.attackSpeed,
+			baseData.metalCost,
+			baseData.crystalCost,
+			baseData.happinessVariation,
+			baseData.citizensVariation,
+			baseData.cellsX,
+			baseData.cellsY,
+			baseData.modelPath,
+			baseData.texturePath,
+			baseData.bbOffset
+		), 
+		cityLevel(baseData.cityLevel),
+		buildingType(baseData.type),
+		buildingTime(baseData.buildingTime),
+		callback(nullptr),
+		buildingManager(_buildingManager)
 {
     // Set the building timer
     buildTimer = new Timer(baseData.buildingTime, false, false);
@@ -100,6 +103,7 @@ void Building::takeDamage(i32 _damage) {
         return;
     }
     else{
+		//ToDo: revisar esto
         percentage = (100 * currentHP) / maxHP;
         bar->setColor(Color((100 - percentage) * 255 / 100.0f, percentage * 255 / 100.0f, 0));
         bar->setScale(percentage / 100.0f);
@@ -115,4 +119,8 @@ void Building::setTarget(Entity *newTarget) {
 
 void Building::setCantBuildColor() {
 	model -> setColor(Color(0, 0, 255, 255));
+}
+
+i32 Building::getBuildingTime(){
+	return buildingTime;
 }

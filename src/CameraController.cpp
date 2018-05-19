@@ -7,8 +7,6 @@
 #include "GraphicEngine/Window.h"
 
 CameraController::CameraController() {
-	Window *w = Window::Instance();
-
 	//Camera 
     camera = new Camera();
     camera -> setFarValue(42000.f); //JSON config
@@ -41,9 +39,6 @@ CameraController::CameraController() {
 
 	//Center
 	centerCameraMode = false;
-
-	//ToDo: deberia actualizarse al redimensionar la pantalla
-    screenCenter = Vector2<i32>(w->getWindowWidth()/2, w->getWindowHeight()/2);
 
 	int fractionsOfASecond = 70.f;
 	updateTimer = new Timer(1.f/fractionsOfASecond, true, false);
@@ -234,7 +229,7 @@ void CameraController::RotateAndInclinate(){
     if (IO::Instance() -> getMouse() -> middleMousePressed()) {
 		// get cursor data
         cursorPosSaved = IO::Instance() -> getMouse() -> getPosition();
-        IO::Instance() -> getMouse() -> setPosition(screenCenter);
+        IO::Instance() -> getMouse() -> setPosition(Window::Instance()->screenCenter);
 
 		IO::Instance() -> getMouse() -> hide();
 
@@ -251,16 +246,16 @@ void CameraController::RotateAndInclinate(){
 		Vector2<i32> cursorPosCurrent = IO::Instance() -> getMouse() -> getPosition();
 
 		//Increase or decease rotation angle
-		if (cursorPosCurrent.x < screenCenter.x - centerMargin.x) {
+		if (cursorPosCurrent.x < Window::Instance()->screenCenter.x - centerMargin.x) {
 			rotateDegrees.x += rotSpeed;
-		} else if (cursorPosCurrent.x > screenCenter.x + centerMargin.x) {
+		} else if (cursorPosCurrent.x > Window::Instance()->screenCenter.x + centerMargin.x) {
 			rotateDegrees.x -= rotSpeed;
 		}
 
 		//Increase or decease inclination angle
-		if (cursorPosCurrent.y < screenCenter.y - centerMargin.y) {
+		if (cursorPosCurrent.y < Window::Instance()->screenCenter.y - centerMargin.y) {
 			rotateDegrees.y += inclSpeed;
-		} else if (cursorPosCurrent.y > screenCenter.y + centerMargin.y) {
+		} else if (cursorPosCurrent.y > Window::Instance()->screenCenter.y + centerMargin.y) {
 			rotateDegrees.y -= inclSpeed;
 		}
 
@@ -273,7 +268,7 @@ void CameraController::RotateAndInclinate(){
         rotateDegrees.y = (rotateDegrees.y > maxInclination) ? maxInclination : rotateDegrees.y;
 
         // reset cursor position to center
-        IO::Instance() -> getMouse() -> setPosition(screenCenter); 
+        IO::Instance() -> getMouse() -> setPosition(Window::Instance()->screenCenter); 
 
 		// refresh distance to target
 		distanceToTarget = camPos.getDistanceTo(tarPos);

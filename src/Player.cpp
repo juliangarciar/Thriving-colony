@@ -10,12 +10,11 @@ Player::~Player() {
 }
 
 void Player::Init() {
-	//ToDo: seria ideal que todo fuera parametrizable y todo estuviera en el mismo sitio
     happiness = 0;
-    citizens = 20;
-    maxPeople = 20;
+    citizens = 0;
+    maxPeople = 0;
 
-    metalAmount = 1200;
+    metalAmount = 0;
     crystalAmount = 0;
 
     cityLevel = 10;
@@ -39,17 +38,17 @@ void Player::Init() {
 	citizenTimer = new Timer(5.00, true);
 
 	citizenTimer -> setCallback([&](){
-   		citizens += citizensByHappiness;
+   		citizens += (Map::Instance()->getCitizenIncrement() + citizensByHappiness);
 		if (citizens + getArmySize() > maxPeople) {
 			citizens = maxPeople - getArmySize();
 		}
 	});
 }
 
-void Player::Update() { //ToDo: config JSON
-	citizensByHappiness = floor(happiness / 50);
+void Player::Update() { //ToDo: config by JSON
+	citizensByHappiness = floor(happiness / 25);
     if (citizensByHappiness < 0) {
-        citizensByHappiness = 0; //ToDo: minimal citizens quantity
+        citizensByHappiness = 0;
     }
     resistanceModifier = floor(happiness * 10 / 100);
     if (resistanceModifier < 0) {
@@ -84,14 +83,14 @@ void Player::spendResources(i32 metalCost, i32 crystalCost) {
 
 void Player::increaseBuildableRange() {
 	if (influenceRangeIncrements < Map::Instance()->getInfluenceRangeIncrementLimit())
-    	buildableRange += Map::Instance()->getInfluenceRangeIncrement(); // ToDo: to map JSON
+    	buildableRange += Map::Instance()->getInfluenceRangeIncrement();
 	influenceRangeIncrements++;
 }
 
 /**
  * MODIFIYING METHODS
  */
-void Player::modifyHappiness(i32 h) { //ToDo: to config JSON
+void Player::modifyHappiness(i32 h) {
     happiness += h;
     if (happiness <= -100) {
         happiness = -100;

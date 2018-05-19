@@ -105,6 +105,13 @@ class Map {
 		 * @return i32 
 		 */
 		i32 getCrystalProductivity();
+
+		/**
+		 * @brief Get the Citizen Increment object
+		 * 
+		 * @return i32 
+		 */
+		i32 getCitizenIncrement();
 		
 		/**
 		 * @brief Get the Expansion Increment
@@ -171,6 +178,9 @@ class Map {
 
         //Production of crystal.
         i32 crystalProductivity;
+
+		//Citizen increment
+		i32 citizenIncrement;
 
 		//Terrain increment
 		i32 influenceRangeIncrement;

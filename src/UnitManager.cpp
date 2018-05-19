@@ -87,10 +87,10 @@ UnitManager::~UnitManager() {
 
     delete unitLayer;
 }
-/* This method is just so fucking weird, I just can't get it */
 //Create a new troops
 //In order to add a new unit, you must specify which one
 bool UnitManager::createTroop(std::string type) {
+	//ToDo: This method is just so fucking weird, I just can't get it
     if (baseUnits.find(type) != baseUnits.end()){
         if (checkCanPay(type)) {
             Unit *newUnit = new Unit(unitLayer, nextTroopId, team, baseUnits[type], this);
@@ -127,6 +127,9 @@ bool UnitManager::createTroop(std::string type) {
                     Hud::Instance()->addTroopToHall(u->getID(), u->getType());
                 }
             });
+
+			//Tax player
+			newUnit->preTaxPlayer();
 
             inQueueTroops -> insert(std::pair<i32, Unit*>(newUnit->getID(), newUnit));
             if (team == Enumeration::Team::Human){

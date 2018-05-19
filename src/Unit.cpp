@@ -114,13 +114,7 @@ Unit::~Unit() {
     delete chaseTimer;
 }
 
-void Unit::Init() {
-    //ToDo: esto ya no es necesario
-    preTaxPlayer();
-}
-
 void Unit::update() {
-    //returnToOriginalColor(); //ToDo: daba segfault aqui en el arbol very unhappy
     //State machine, color changes according to state
     updateUnitFighters();
     moveTroop();
@@ -132,28 +126,22 @@ void Unit::update() {
             //ToDo: inHomeState();
         break;
         case Enumeration::UnitState::Idle:
-            //ToDo: poner material idle
             idleState();
         break;
-        /* Maybe this shouldn't exist */
+        //ToDo: Maybe this shouldn't exist
         case Enumeration::UnitState::Move:
-            //ToDo: poner material moving
             moveState();
         break;
         case Enumeration::UnitState::AttackMove:
-            //ToDo: poner material attackMove
             attackMoveState();
         break;
         case Enumeration::UnitState::Attack:
-            //ToDo: poner material attack
             attackState();
         break;    
         case Enumeration::UnitState::Chase:
-            //s//ToDo: poner material chase
             chaseState();
         break;
         case Enumeration::UnitState::Retract:
-            ////ToDo: poner material retracting
             retractState();
         break;
         default: break;

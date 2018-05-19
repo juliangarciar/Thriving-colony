@@ -225,6 +225,9 @@ class UnitManager{
         //
         std::map<std::string, UnitData> baseUnits;
 
+		//Name of the building and quantity of troops in this building type queue
+		std::map<std::string, i32> inQueueTroopsByBuilding;
+
         //Pointer to a std::map object with all the units that are being trained.
         std::map<i32, Unit*> *inQueueTroops;
 

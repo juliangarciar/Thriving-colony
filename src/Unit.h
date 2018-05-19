@@ -223,11 +223,6 @@ class Unit : public Entity {
         void setTarget(Entity *newTarget);
         
     private:
-        /**
-         * @brief Initialize the variables.
-         */
-        void Init();
-
         //Current state of the unit that will conditione its actions.
         Enumeration::UnitState state;
 
