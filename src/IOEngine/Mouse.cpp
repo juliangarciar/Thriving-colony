@@ -2,6 +2,7 @@
 #include <GraphicEngine/Window.h>
 #include <IOEngine/IO.h>
 
+
 Mouse::Mouse(){
     visible = true;
     currentCursor = CURSOR_NORMAL;
@@ -45,6 +46,10 @@ Mouse::Mouse(){
             }
         }
     );
+    /* Custom cursors */
+    customCursor = std::vector< GLFWcursor* >();
+
+   
 }
 
 Mouse::~Mouse(){
@@ -224,4 +229,28 @@ i32 Mouse::getOldState(){
 
 void Mouse::setOldState(i32 data){
 
+}
+
+// Icon
+void Mouse::changeCustomIcon(i32 shape){
+    if (isVisible() && shape != currentCursor && shape < customCursor.size()) {
+        //glfwDestroyCursor(cursor);
+        //cursor = glfwCreateCursor(&customIcon[shape], 0, 0);
+        cursor = customCursor[shape];
+        glfwSetCursor(Window::Instance() -> getWindow(), customCursor[shape]);
+        currentCursor = shape;
+    }
+}
+
+void Mouse::loadCursorIcon(unsigned char* _data, i32 _width, i32 _height, i32 _channels){
+    unsigned char pixels[_width * _height * _channels];
+    memset(pixels, 0xff, sizeof(pixels));
+
+    GLFWimage image;
+    image.width = _width;
+    image.height = _height;
+    image.pixels = pixels;
+    GLFWcursor* newCursor = glfwCreateCursor(&image, 0, 0); 
+    customCursor.push_back(newCursor);
+    
 }

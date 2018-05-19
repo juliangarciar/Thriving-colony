@@ -142,7 +142,7 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/models/Drorania/Units/dorania_cannon/drorania_cannon.obj",
+				"modelPath": "media/models/Drorania/Units/drorania_cannon/drorania_cannon.obj",
 				"texturePath": ""
 			},
 			"flagPath": {
