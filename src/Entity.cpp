@@ -63,12 +63,9 @@ Entity::Entity(SceneNode* _layer,
 	// Set the color
     setBaseColor();
 
-	//ToDo: separa datos de la aplicacion
-    f32 billBoardOffset = 200.00;
-
 	Vector3<f32> pos(
 		getPosition().x, 
-		Map::Instance()->getTerrain()->getY(getPosition().x,getPosition().y) + billBoardOffset, 
+		Map::Instance()->getTerrain()->getY(getPosition().x,getPosition().y) + bbOffset, 
 		getPosition().y
 	);
 

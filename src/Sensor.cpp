@@ -25,7 +25,7 @@ void Sensor::update(){
 
     if(priorityTarget != nullptr){
         priorityTarget->addHostile(propietary);
-        std::cout << "Entidad encontrada en: " << priorityTarget->getPosition().x << " , " << priorityTarget->getPosition().y << "\n";
+        //std::cout << "Entidad encontrada en: " << priorityTarget->getPosition().x << " , " << priorityTarget->getPosition().y << "\n";
     }
 }
 

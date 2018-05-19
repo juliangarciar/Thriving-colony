@@ -22,7 +22,7 @@ CameraController::CameraController() {
 
 	// Cam movement initializations
 	direction = 0;
-	camSpeed = 700.0f; //JSON config
+	camSpeed = 850.0f; //JSON config
     movementMode = false;
 
 	// Cam zoom initializations
@@ -48,7 +48,7 @@ CameraController::CameraController() {
     screenCenter = Vector2<i32>(w->getInitialWindowWidth()/2, w->getInitialWindowHeight()/2);
 
 	int fractionsOfASecond = 70.f;
-	updateTimer = new Timer(1.f/fractionsOfASecond, true, false);
+	updateTimer = new Timer(0, true, false);
 
 	updateTimer -> setCallback([&](){
         updateCamera(Window::Instance() -> getDeltaTime());

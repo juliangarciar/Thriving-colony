@@ -29,6 +29,7 @@ void Billboard::setColor(Color totalColor) {
 
 void Billboard::setSize(f32 w, f32 h) {
     billboardNode -> setSize(core::dimension2d<f32>(w, h));
+    maxSize = w;
 }
 
 void Billboard::setID(i32 id) {
@@ -48,7 +49,7 @@ void Billboard::setScale(Vector3<f32> s) {
 }
 
 void Billboard::setScale(f32 s) {
-    billboardNode -> setScale(core::vector3df(s, 1, 1)); 
+    billboardNode->setSize(core::dimension2d<f32>(maxSize * s, 15.00)); 
 }
 
 void Billboard::setRotation(Vector3<f32> r){

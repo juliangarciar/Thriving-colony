@@ -11,7 +11,7 @@ Color::Color(i32 red, i32 green, i32 blue) {
     r = red;
     g = green;
     b = blue;
-    a = 1.f;
+    a = 255.0f;
 }
 
 Color::Color(i32 red, i32 green, i32 blue, i32 alpha) {

@@ -29,6 +29,7 @@ class Billboard {
 
     private:
         scene::IBillboardSceneNode* billboardNode;
+        f32 maxSize;
 };
 
 #endif

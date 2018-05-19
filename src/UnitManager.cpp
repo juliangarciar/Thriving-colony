@@ -428,3 +428,13 @@ const UnitData& UnitManager::getUnitData(std::string type) const{
 	}
     return it->second;
 }
+
+Unit* UnitManager::getUnit(i32 _id){
+    std::map<i32, Unit*>::iterator it = inMapTroops->find(_id);
+    if (it != inMapTroops->end()){
+        return it->second;
+    }
+    else{
+        return nullptr;
+    }
+}

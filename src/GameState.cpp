@@ -107,10 +107,10 @@ void GameState::Input() {
             //Interactions with IA's buildings
             i32 idBuildingIA =  ia -> getBuildingManager() -> getCollisionID();
             if (idBuildingIA != -1 && human -> getUnitManager() -> isTroopSelected()){
-                IO::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
-
+                IO::Instance() -> getMouse() -> changeIcon(CURSOR_VRESIZE);
+                
                 if (IO::Instance() -> getMouse() -> rightMousePressed()) {
-                    //ToDo: atacar
+                    human->getUnitManager()->getSelectedTroop()->setTarget(ia->getBuildingManager()->getBuilding(idBuildingIA));
                 }
                 
                 onMap = false;
@@ -133,10 +133,10 @@ void GameState::Input() {
 			//Interactions with IA Units
             i32 idTroopIA = ia -> getUnitManager() -> getCollisionID();
             if (idTroopIA != -1 && human -> getUnitManager() -> isTroopSelected()){
-                IO::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
+                IO::Instance() -> getMouse() -> changeIcon(CURSOR_VRESIZE);
 
                 if (IO::Instance() -> getMouse() -> rightMousePressed()){
-                    //ToDo: atacar
+                    human->getUnitManager()->getSelectedTroop()->setTarget(ia->getUnitManager()->getUnit(idTroopIA));
                 }
                 
                 onMap = false;

@@ -211,6 +211,7 @@ class UnitManager{
          * @return
          */
 		const UnitData& getUnitData(std::string) const;
+        Unit* getUnit(i32 _id);
 
     private:
         //Player's team: Enumeration::Team::Human or Enumeration::Team::IA.

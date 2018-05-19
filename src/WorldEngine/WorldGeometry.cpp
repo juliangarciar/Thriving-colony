@@ -319,7 +319,6 @@ bool WorldGeometry::checkCollision(Vector2<f32> _orig, Vector2<f32> _end) const{
             }
         }
     }
-   
     return false;
 }
 
