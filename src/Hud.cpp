@@ -31,9 +31,12 @@ void Hud::Init(){
         debug();
     });
 
-    toastTimer = new Timer(2);
+    toastTimer = new Timer(2, true);
     toastTimer -> setCallback([&](){
-        hideToast();
+		if (notificationQueue.size()){
+			showToast(notificationQueue.front());
+			notificationQueue.pop();
+		} else hideToast();
     });
 	
     // Building buttons panel
@@ -44,7 +47,6 @@ void Hud::Init(){
     // General
     generalWidget = new Widget(buildingsPanel);
     generalWidget -> setVerticalLayout();
-    //generalWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(generalWidget, "General functions");
 
@@ -182,7 +184,7 @@ void Hud::Init(){
 
     buttonExpandTerrain->setTooltip("Purchase a terrain expansion that will allow you to build a bigger city.\n Metal cost: 500.");
     buttonExpandTerrain->setCallback([&]{
-		showToast("Se ha expandido el terreno");
+		addToastToQueue("Se ha expandido el terreno");
         Human::Instance() -> increaseBuildableRange();
     });
 
@@ -257,7 +259,7 @@ void Hud::Init(){
     
     iaResources = new Panel("IA Resources");
     iaResources -> setVerticalLayout();
-    iaResources -> setPosition(Vector2<i32>(800, 0));
+    iaResources -> setPosition(Vector2<i32>(1000, 0));
     iaResources -> setSize(Vector2<i32> (200, 270));
     melees = 
         IA::Instance() -> getUnitManager() -> getTroopAmount("StandardM") + 
@@ -450,7 +452,7 @@ void Hud::Init(){
     tabContainer->center();
 
     toast = new Panel("");
-    toast->setPosition(Vector2<i32>(570, 50));
+    toast->setPosition(Vector2<i32>(600, 50));
     toastText = new Label(toast, "");
 
     //Hide tabs
@@ -741,12 +743,14 @@ void Hud::updatePositions() {
     tabContainer->center();
 }
 
+void Hud::addToastToQueue(std::string s){
+	notificationQueue.push(s);
+}
+
 void Hud::showToast(std::string s){
-    //ToDo: hacer cola de notificaciones
     toastText->setLabel(s);
     toast->refreshLayout();
     toast->show();
-    toastTimer -> restart();
 }
 
 void Hud::hideToast(){

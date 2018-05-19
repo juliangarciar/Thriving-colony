@@ -50,10 +50,10 @@ void GameState::Init() {
 
     //Hud events
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::showBuiltText, [&](){
-        hud->showToast("Se ha construido un edificio");
+        hud->addToastToQueue("Se ha construido un edificio");
     });
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::showRecruitedText, [&](){
-        hud->showToast("Se ha reclutado una tropa");
+        hud->addToastToQueue("Se ha reclutado una tropa");
     });
 
     //Init SoundSystem
