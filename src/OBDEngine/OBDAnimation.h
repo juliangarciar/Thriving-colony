@@ -2,10 +2,13 @@
 #define OBDANIMATION_H
 
 #include "OBDEntity.h"
+#include "OBDMesh.h"
+#include "OBDMaterial.h"
 #include "OBDSceneNode.h"
 
 #include "Graphics/TTransform.h"
-#include "Graphics/TAnimation.h"
+
+#include "ResourceManager/ResourceOBJ.h"
 
 class OBDAnimation : public OBDEntity {
     public:
@@ -14,7 +17,7 @@ class OBDAnimation : public OBDEntity {
          * 
          * @param parent 
          */
-        OBDAnimation(OBDSceneNode* parent);
+        OBDAnimation(OBDSceneNode* parent, std::vector<ResourceOBJ*> *objects, ResourceMTL *material);
 
         /**
          * @brief 
@@ -22,8 +25,22 @@ class OBDAnimation : public OBDEntity {
          */
         ~OBDAnimation();
 
+		/**
+		 * @brief 
+		 * 
+		 */
+		void updateFrame();
+
     private:
-        TNode* animationNode;
+		std::vector<ResourceOBJ*> *objects;
+		ResourceMTL *objectMaterial;
+
+		OBDMaterial *material;
+
+		std::vector<OBDMesh*> *frames;
+		i32 numberOfFrames;
+		i32 currentFrame;
+		i32 nextFrame;
 };
 
 #endif

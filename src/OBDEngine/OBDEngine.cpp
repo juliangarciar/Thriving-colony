@@ -114,6 +114,30 @@ OBDObject* OBDEngine::createObject(OBDSceneNode* layer, u32 id, std::string mesh
     return tempObject;
 }
 
+OBDAnimation* OBDEngine::createAnimation(std::vector<std::string> objects, std::string material) {
+	std::vector<ResourceOBJ*> *objs = new std::vector<ResourceOBJ*>();
+	objs->reserve(objects.size());
+	for (int i = 0; i< objects.size(); i++){
+		ResourceOBJ *obj = (ResourceOBJ*)OBDManager->getResource(objects[i], true);
+		objs->push_back(obj);
+	}
+    ResourceMTL *mtl = (ResourceMTL*)OBDManager->getResource(material, true);
+	
+    return new OBDAnimation(defaultSceneNode, objs, mtl);
+}
+
+OBDAnimation* OBDEngine::createAnimation(OBDSceneNode* layer, std::vector<std::string> objects, std::string material) {
+	std::vector<ResourceOBJ*> *objs = new std::vector<ResourceOBJ*>();
+	objs->reserve(objects.size());
+	for (int i = 0; i< objects.size(); i++){
+		ResourceOBJ *obj = (ResourceOBJ*)OBDManager->getResource(objects[i], true);
+		objs->push_back(obj);
+	}
+    ResourceMTL *mtl = (ResourceMTL*)OBDManager->getResource(material, true);
+	
+    return new OBDAnimation(defaultSceneNode, objs, mtl);
+}
+
 OBDTerrain *OBDEngine::createTerrain(std::string heightMap, f32 y_offset, f32 y_scale, i32 step){
 	return new OBDTerrain(defaultSceneNode, heightMap, y_offset, y_scale, step);
 }
@@ -235,15 +259,6 @@ ResourceManager *OBDEngine::getResourceManager(){
 }
 
 //////SANDBOX//////
-OBDAnimation* OBDEngine::createAnimation(std::string anim) {
-    //ToDo: hacer animaciones
-    return new OBDAnimation(defaultSceneNode);
-}
-
-OBDAnimation* OBDEngine::createAnimation(OBDSceneNode* layer, std::string anim) {
-    //ToDo: hacer animaciones
-    return new OBDAnimation(layer);
-}
 
 OBDBillboard* OBDEngine::createBillboard(OBDSceneNode* layer, glm::vec3 pos) {
     OBDBillboard* billboard = new OBDBillboard(layer, pos);
