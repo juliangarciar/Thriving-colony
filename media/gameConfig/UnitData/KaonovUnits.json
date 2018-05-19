@@ -18,12 +18,12 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/unitModels/Troops/Kaonov/kaonov_melee_soldier.obj",
+				"modelPath": "media/models/Kaonov/Units/kaonov_ranged_soldier/kaonov_ranged_soldier.obj",
 				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
-				"texturePath": "media/textures/placeholder.bmp"
+				"modelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
+				"texturePath": ""
 			},
 			"troops": 4,
 			"cellsX": 1,
@@ -49,12 +49,12 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/unitModels/Troops/Kaonov/creature_kaonov.obj",
+				"modelPath": "media/models/Kaonov/Units/kaonov_creature/kaonov_creature.obj",
 				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
-				"texturePath": "media/textures/placeholder.bmp"
+				"modelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
+				"texturePath": ""
 			},
 			"troops": 4,
 			"cellsX": 1,
@@ -80,12 +80,12 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/unitModels/Troops/Kaonov/kaonov_melee_soldier.obj",
+				"modelPath": "media/models/Kaonov/Units/kaonov_melee_soldier/kaonov_melee_soldier.obj",
 				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
-				"texturePath": "media/textures/placeholder.bmp"
+				"modelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
+				"texturePath": ""
 			},
 			"troops": 4,
 			"cellsX": 1,
@@ -111,12 +111,12 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/unitModels/Troops/Kaonov/creature_kaonov.obj",
+				"modelPath": "media/models/Kaonov/Units/kaonov_creature/kaonov_creature.obj",
 				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
-				"texturePath": "media/textures/placeholder.bmp"
+				"modelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
+				"texturePath": ""
 			},
 			"troops": 4,
 			"cellsX": 1,
@@ -142,12 +142,12 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/unitModels/Troops/Kaonov/kaonov_cannon.obj",
+				"modelPath": "media/models/Kaonov/Units/kaonov_cannon/kaonov_cannon.obj",
 				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
-				"texturePath": "media/textures/placeholder.bmp"
+				"modelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
+				"texturePath": ""
 			},
 			"troops": 4,
 			"cellsX": 1,
@@ -173,12 +173,12 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/unitModels/Troops/Kaonov/kaonov_walls_desintegrator.obj",
+				"modelPath": "media/models/Kaonov/Units/kaonov_walls_desintegrator/kaonov_walls_desintegrator.obj",
 				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
-				"texturePath": "media/textures/placeholder.bmp"
+				"modelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
+				"texturePath": ""
 			},
 			"troops": 4,
 			"cellsX": 1,
@@ -204,12 +204,12 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/unitModels/Troops/Kaonov/entinity_kaonov.obj",
+				"modelPath": "media/models/Kaonov/Units/kaonov_entity/kaonov_entity.obj",
 				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
-				"texturePath": "media/textures/placeholder.bmp"
+				"modelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
+				"texturePath": ""
 			},
 			"troops": 4,
 			"cellsX": 1,

@@ -18,11 +18,11 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/models/Drorania/Units/rank_soldier_drorania.obj",
+				"modelPath": "media/models/Drorania/Units/drorania_ranged/drorania_ranged_soldier.obj",
 				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/models/Drorania/Flags/dorania_flag.obj",
+				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 				"texturePath": ""
 			},
 			"troops": 6,
@@ -49,11 +49,11 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/models/Drorania/Units/Soldado_Rango_Drorania.obj",
+				"modelPath": "media/models/Drorania/Units/drorania_creature/drorania_creature.obj",
 				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/models/Drorania/Flags/dorania_flag.obj",
+				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 				"texturePath": ""
 			},
 			"troops": 4,
@@ -80,11 +80,11 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/models/Drorania/Units/criatura_drorania.obj",
+				"modelPath": "media/models/Drorania/Units/drorania_melee/drorania_melee_soldier.obj",
 				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/models/Drorania/Flags/dorania_flag.obj",
+				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 				"texturePath": ""
 			},
 			"troops": 4,
@@ -111,11 +111,11 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/models/Drorania/Units/criatura_drorania.obj",
+				"modelPath": "media/models/Drorania/Units/drorania_creature/drorania_creature.obj",
 				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/models/Drorania/Flags/dorania_flag.obj",
+				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 				"texturePath": ""
 			},
 			"troops": 4,
@@ -142,11 +142,11 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/models/Drorania/Units/dorania_cannon.obj",
+				"modelPath": "media/models/Drorania/Units/dorania_cannon/drorania_cannon.obj",
 				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/models/Drorania/Flags/dorania_flag.obj",
+				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 				"texturePath": ""
 			},
 			"troops": 4,
@@ -173,11 +173,11 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/models/Drorania/Units/drorania_walls_desintegrator.obj",
+				"modelPath": "media/models/Drorania/Units/drorania_walls_desintegrator/drorania_walls_desintegrator.obj",
 				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/models/Drorania/Flags/dorania_flag.obj",
+				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 				"texturePath": ""
 			},
 			"troops": 4,
@@ -204,11 +204,11 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/models/Drorania/Units/Ente_Drorania.obj",
+				"modelPath": "media/models/Drorania/Units/drorania_entity/drorania_entity.obj",
 				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/models/Drorania/Flags/dorania_flag.obj",
+				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 				"texturePath": ""
 			},
 			"troops": 4,
