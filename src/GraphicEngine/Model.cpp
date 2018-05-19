@@ -4,11 +4,13 @@
 Model::Model(i32 id, std::string path) {
    obj = Window::Instance()->getEngine()->createObject(id, path, true);
    std::cout << "Se ha cargado un edificio " << path << std::endl;
+   materials = obj->getMaterials();
 }
 
 Model::Model(SceneNode *parent, i32 id, std::string path) {
    obj = Window::Instance()->getEngine()->createObject(parent->getSceneNode(), id, path, true);
    std::cout << "Se ha cargado un edificio " << path << std::endl;
+   materials = obj->getMaterials();
 }
 
 Model::~Model() {
@@ -47,8 +49,9 @@ void Model::setMaterial(Material *m){
 }
 
 void Model::setColor(Color c){
-	//material -> setColor(c);
-	//setMaterial(material);
+	for (std::map<std::string, OBDMaterial*>::iterator it = materials->begin(); it != materials->end(); ++it){
+		it->second->setDiffuseColor(OBDColor(c.r/255, c.g/255, c.b/255, c.a/255));
+	}
 }
 
 Vector3<f32> Model::getPosition() {
