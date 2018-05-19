@@ -27,7 +27,8 @@ Building::Building(SceneNode *_layer,
                                                 baseData.cellsX,
                                                 baseData.cellsY,
                                                 baseData.modelPath,
-                                                baseData.texturePath
+                                                baseData.texturePath,
+                                                baseData.bbOffset
                                                 ), 
                                                 cityLevel(baseData.cityLevel),
                                                 buildingType(baseData.type),
@@ -89,14 +90,19 @@ std::string Building::getType(){
 }
 
 void Building::takeDamage(i32 _damage) {
+    f32 percentage(0);
     currentHP = currentHP - _damage;
+    
     if(currentHP < 1){
-        currentHP = 0;
-        std::cout << "Soy un edificio y me muero \n";
+        bar->setColor(Color(0,0,0));
+        bar->setScale(0);
         buildingManager->deleteBuilding(ID);
         return;
     }
     else{
+        percentage = (100 * currentHP) / maxHP;
+        bar->setColor(Color((100 - percentage) * 255 / 100.0f, percentage * 255 / 100.0f, 0));
+        bar->setScale(percentage / 100.0f);
         tookDamageTimer -> restart();
         // Tint the model red
         setDamageColor();

@@ -39,6 +39,9 @@ UnitManager::UnitManager(Enumeration::Team t, std::string b) {
             tmp.armyLevel = element["armyLevel"].get<i32>();
             tmp.moveSpeed = element["moveSpeed"].get<i32>();
             tmp.troops = element["troops"].get<i32>();
+            tmp.cellsX = element["cellsX"].get<i32>();
+            tmp.cellsY = element["cellsY"].get<i32>();
+            tmp.bbOffset = element["bbOffset"].get<f32>();
             tmp.attackEvent = element["attackEvent"].get<std::string>();
             tmp.moveEvent = element["moveEvent"].get<std::string>();
             tmp.selectEvent = element["selectEvent"].get<std::string>();

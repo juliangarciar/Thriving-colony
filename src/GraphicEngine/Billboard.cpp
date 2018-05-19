@@ -22,6 +22,11 @@ void Billboard::setColor(Color top, Color bot) {
     billboardNode -> setColor(video::SColor(top.a, top.r, top.g, top.b), video::SColor(bot.a, bot.r, bot.g, bot.b));
 }
 
+void Billboard::setColor(Color totalColor) {
+    billboardNode -> setColor(video::SColor(totalColor.a, totalColor.r, totalColor.g, totalColor.b),
+                              video::SColor(totalColor.a, totalColor.r, totalColor.g, totalColor.b));
+}
+
 void Billboard::setSize(f32 w, f32 h) {
     billboardNode -> setSize(core::dimension2d<f32>(w, h));
 }
@@ -40,6 +45,10 @@ void Billboard::setPosition(Vector3<f32> pos) {
 
 void Billboard::setScale(Vector3<f32> s) {
     billboardNode -> setScale(core::vector3df(s.x, s.y, s.z)); 
+}
+
+void Billboard::setScale(f32 s) {
+    billboardNode -> setScale(core::vector3df(s, 1, 1)); 
 }
 
 void Billboard::setRotation(Vector3<f32> r){

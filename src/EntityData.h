@@ -20,11 +20,13 @@ struct UnitData {
     i32 attackSpeed;
     i32 happinessVariation;
     i32 citizensVariation;
-
     i32 recruitingTime;
     i32 armyLevel; 
     i32 moveSpeed;
     i32 troops;
+    i32 cellsX;
+    i32 cellsY;
+    f32 bbOffset;
 
     std::string attackEvent; 
     std::string moveEvent;
@@ -45,7 +47,7 @@ struct BuildingData {
     i32 attackSpeed;
     i32 happinessVariation;
     i32 citizensVariation;
-    
+    f32 bbOffset;
     f32 buildingTime;
     i32 cityLevel;
     i32 cellsX;

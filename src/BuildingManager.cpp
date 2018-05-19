@@ -33,6 +33,7 @@ BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
 			tmp.attackSpeed = element["attackSpeed"].get<i32>();
 			tmp.happinessVariation = element["happinessVariation"].get<i32>();
 			tmp.citizensVariation = element["citizensVariation"].get<i32>();
+			tmp.bbOffset = element["bbOffset"].get<f32>();
 			tmp.buildingTime = element["buildingTime"].get<f32>();
 			tmp.cityLevel = element["cityLevel"].get<i32>();
 			tmp.cellsX = element["cellsX"].get<i32>();

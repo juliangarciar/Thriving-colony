@@ -41,7 +41,7 @@ class Entity {
          * @param _modelPath 
          * @param _texturePath 
          */
-        Entity(SceneNode*, i32 _id, Enumeration::Team, Enumeration::EntityType, i32 _maxHP, i32 _maxView, i32 _attackRange, i32 _attackDamage, i32 _attackSpeed, i32 _metal, i32 _crystal, i32 _happines, i32 _citizens, i32 _cellsX, i32 _cellsY, std::string _modelPath, std::string _texturePath);
+        Entity(SceneNode*, i32 _id, Enumeration::Team, Enumeration::EntityType, i32 _maxHP, i32 _maxView, i32 _attackRange, i32 _attackDamage, i32 _attackSpeed, i32 _metal, i32 _crystal, i32 _happines, i32 _citizens, i32 _cellsX, i32 _cellsY, std::string _modelPath, std::string _texturePath, f32 _bbOffset);
 
         /**
          * @brief Entity destructor.
@@ -217,18 +217,6 @@ class Entity {
          */
         std::vector<Entity*> getHostile() const;
 
-        /**
-         * @brief
-         * @return
-         */
-        i32 getCellsX() const;
-
-        /**
-         * @brief
-         * @return
-         */
-        i32 getCellsY() const;
-
 		/**
 		 * @brief Set the Base Color object
 		 * 
@@ -300,12 +288,6 @@ class Entity {
         Timer *tookDamageTimer;
 
         //
-        i32 kCellsX;
-
-        //
-        i32 kCellsY;
-
-        //
         Material *baseMat;
 
         //
@@ -313,5 +295,7 @@ class Entity {
 
         //
         Billboard* bar;
+
+        const f32 bbOffset;
 };
 #endif

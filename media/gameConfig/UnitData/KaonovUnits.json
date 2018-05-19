@@ -24,7 +24,10 @@
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
 				"texturePath": "media/textures/placeholder.bmp"
 			},
-			"troops": 4
+			"troops": 4,
+			"cellsX": 1,
+			"cellsY": 1,
+			"bbOffset": 200
 		},
 		{
 			"unitName": "AdvancedR",
@@ -51,7 +54,10 @@
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
 				"texturePath": "media/textures/placeholder.bmp"
 			},
-			"troops": 4
+			"troops": 4,
+			"cellsX": 1,
+			"cellsY": 1,
+			"bbOffset": 200
 		},
 		{
 			"unitName": "StandardM",
@@ -78,7 +84,10 @@
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
 				"texturePath": "media/textures/placeholder.bmp"
 			},
-			"troops": 4
+			"troops": 4,
+			"cellsX": 1,
+			"cellsY": 1,
+			"bbOffset": 200
 		},
 		{
 			"unitName": "AdvancedM",
@@ -105,7 +114,10 @@
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
 				"texturePath": "media/textures/placeholder.bmp"
 			},
-			"troops": 4
+			"troops": 4,
+			"cellsX": 1,
+			"cellsY": 1,
+			"bbOffset": 200
 		},
 		{
 			"unitName": "Launcher",
@@ -132,7 +144,10 @@
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
 				"texturePath": "media/textures/placeholder.bmp"
 			},
-			"troops": 4
+			"troops": 4,
+			"cellsX": 1,
+			"cellsY": 1,
+			"bbOffset": 200
 		},
 		{
 			"unitName": "Desintegrator",
@@ -159,7 +174,10 @@
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
 				"texturePath": "media/textures/placeholder.bmp"
 			},
-			"troops": 4
+			"troops": 4,
+			"cellsX": 1,
+			"cellsY": 1,
+			"bbOffset": 200
 		},
 		{
 			"unitName": "Idol",
@@ -186,7 +204,10 @@
 				"modelPath": "media/unitModels/Flags/Kaonov/flag.obj",
 				"texturePath": "media/textures/placeholder.bmp"
 			},
-			"troops": 4
+			"troops": 4,
+			"cellsX": 1,
+			"cellsY": 1,
+			"bbOffset": 200
 		}
 	]
 }
