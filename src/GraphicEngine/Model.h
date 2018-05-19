@@ -28,7 +28,7 @@ class Model {
         Vector3<f32> getRotation();
     private:
         OBDObject *obj;
-		Material *material;
+		std::map<std::string, OBDMaterial*> materials;
 };
 
 #endif
