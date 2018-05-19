@@ -39,8 +39,8 @@ void Player::Init() {
 
 	citizenTimer -> setCallback([&](){
    		citizens += (Map::Instance()->getCitizenIncrement() + citizensByHappiness);
-		if (citizens + getArmySize() > maxPeople) {
-			citizens = maxPeople - getArmySize();
+		if (citizens + units->getUnitFighters() > maxPeople) {
+			citizens = maxPeople - units->getUnitFighters();
 		}
 	});
 }
@@ -133,6 +133,7 @@ void Player::modifyArmyLevel(i32 lvl) {
 //==========
 i32 Player::getArmySize() {
     return units -> getTotalTroopAmount();
+	//getUnitFighters
 }
 
 i32 Player::getMetalProduction() {
