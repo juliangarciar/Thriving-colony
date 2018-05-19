@@ -72,16 +72,16 @@ Unit::Unit(SceneNode* _layer,
 
     enemySensorTimer = new Timer(0.5, true, true);
     enemySensorTimer->setCallback([&](){
-        //if(state != Enumeration::UnitState::InHome && state != Enumeration::UnitState::Recruiting){
+        if(state != Enumeration::UnitState::InHome && state != Enumeration::UnitState::Recruiting){
             unitSensor->update();
-        //}
+        }
     });
 
     attackTimer = new Timer(attackSpeed, true, true);
     attackTimer->setCallback([&](){
-        //if(!canAttack){
+        if(!canAttack){
             canAttack = true;
-        //}
+        }
     });
 
     chaseTimer = new Timer(0.5, false, false);
