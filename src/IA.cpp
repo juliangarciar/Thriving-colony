@@ -110,8 +110,11 @@ BehaviourTree* IA::getTree() {
 * until find the first empty position
 */
 
-Vector2<f32> IA::determinatePositionBuilding(const Box2D& buildingHitbox) const {
-    Vector2<f32> dummy = WorldGeometry::Instance() -> getValidCell(hallPosition.toVector2(), hallPosition.toVector2(), buildingHitbox, true) -> getPosition();
+Vector2<f32> IA::determinatePositionBuilding(const Box2D& buildingHitbox) const{
+    Vector2<f32> dummy = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(),
+                                                                 hallPosition.toVector2(),
+                                                                 buildingHitbox,
+                                                                 true)->getHitbox().TopLeft();
     return dummy;
 }
 

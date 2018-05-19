@@ -66,7 +66,7 @@ class WorldGeometry{
          * @param collision Assigns true or false, depending if it collides with already built buildings
          * @return Vector2<f32> The correct position
          */
-        Vector2<f32> correctBuildingPosition(Vector2<f32> targetPos, Building* buildingPtr) const;
+        Vector2<f32> correctBuildingPosition(Vector2<f32> targetPos, const Box2D& hitbox) const;
         /**
          * @brief Returns a valid cell, depending on the search mode
          * Case buildingPtr == nullptr -> searchs for the nearest cell to the reference target (non-blocked)

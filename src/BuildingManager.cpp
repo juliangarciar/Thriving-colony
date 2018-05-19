@@ -62,7 +62,7 @@ bool BuildingManager::setBuildingMode(std::string type) {
 	if (it != baseBuildings.end() && checkCanPay(type)) {
 		if (!buildingMode) {
 			buildingMode = true;
-			tempBuilding = new Building(buildingLayer, 0, team, it->second);
+			tempBuilding = new Building(buildingLayer, 0, team, it->second, this);
 			return true;
 		}
 	}
@@ -76,7 +76,7 @@ void BuildingManager::drawBuilding() {
         Vector2<f32> collisionPoint = Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2();
 		// Change 2nd parameter
 		bool canBuild = true;
-		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(collisionPoint, tempBuilding);
+		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(collisionPoint, tempBuilding->getHitbox());
 
 		tempBuilding -> setPosition(dummy);
 
@@ -123,9 +123,7 @@ void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 bui
 	if (it != baseBuildings.end()){
 		BuildingData b = it->second;
 		if (buildTime >= 0) b.buildingTime = buildTime;
-		tempBuilding = new Building(buildingLayer, 0, team, b);
-		//ToDo: Okey there's a problem
-		//Vector2<f32> correctPosition = WorldGeometry::Instance()->correctBuildingPosition(pos, tempBuilding);
+		tempBuilding = new Building(buildingLayer, 0, team, b, this);
 		buildBuilding(pos);
 	}
 }
@@ -218,20 +216,23 @@ SceneNode* BuildingManager::getBuildingLayer() {
 }
 
 void BuildingManager::deleteBuilding(i32 id) {
-	if (inMapBuildings -> find(id) -> second -> getTeam() == Enumeration::Team::Human) {
-		Human::Instance() -> modifyHappiness(-inMapBuildings -> find(id) -> second -> getHappinessVariation());
-		if (inMapBuildings -> find(id) -> second -> getType() == "House") {
-			Human::Instance() -> modifyMaxPeople(-inMapBuildings -> find(id) -> second -> getCitizensVariation());
+    std::map<i32, Building*>::iterator it = inMapBuildings->find(id);
+    if (it != inMapBuildings->end()){
+		if (it -> second -> getTeam() == Enumeration::Team::Human) {
+			Human::Instance() -> modifyHappiness(-it -> second -> getHappinessVariation());
+			if (it -> second -> getType() == "House") {
+				Human::Instance() -> modifyMaxPeople(-it -> second -> getCitizensVariation());
+			}
+		} else {
+			IA::Instance() -> modifyHappiness(-it -> second -> getHappinessVariation());
+			if (it -> second -> getType() == "House") {
+				IA::Instance() -> modifyMaxPeople(-it -> second -> getCitizensVariation());
+			}
 		}
-	} else {
-		IA::Instance() -> modifyHappiness(-inMapBuildings -> find(id) -> second -> getHappinessVariation());
-		if (inMapBuildings -> find(id) -> second -> getType() == "House") {
-			IA::Instance() -> modifyMaxPeople(-inMapBuildings -> find(id) -> second -> getCitizensVariation());
-		}
+		buildingAmounts[it -> second -> getType()]--;
+		delete it -> second;
+		inMapBuildings -> erase(id);
 	}
-	buildingAmounts[inMapBuildings -> find(id) -> second -> getType()]--;
-	delete inMapBuildings -> find(id) -> second;
-	inMapBuildings -> erase(id);
 } 
 
 Building *BuildingManager::getBuilding(i32 id){

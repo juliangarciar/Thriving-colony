@@ -152,41 +152,38 @@ bool WorldGeometry::checkHitBoxCollision(const Box2D& hitBox, bool amplifyBox) c
     }
 }
 
-Vector2<f32> WorldGeometry::correctBuildingPosition(Vector2<f32> targetPos, Building *buildingPtr) const{
+Vector2<f32> WorldGeometry::correctBuildingPosition(Vector2<f32> targetPos, const Box2D& hitbox) const{
     Vector2<f32> correctOne(0, 0);
-    if(buildingPtr != nullptr){
-        Cell* dummy = positionToCell(targetPos);
-        Vector2<f32> storage;
-        /* Change this method */
-        if(buildingPtr -> getCellsX() % 2 == 0){
-            storage = dummy->getHitbox().TopLeft();
-            correctOne = storage;
-            storage -= cellSize / 2;
-            storage.x -= (buildingPtr -> getCellsX() / 2) * (cellSize / 2);
-            storage.y -= (buildingPtr -> getCellsY() / 2) * (cellSize / 2);
-        }
-        else{
-            storage = dummy->getHitbox().Center();
-            correctOne = storage;
-            storage.x -= (buildingPtr -> getCellsX() - 1) * (cellSize / 2);
-            storage.y -= (buildingPtr -> getCellsY() - 1) * (cellSize / 2);
-        }
+    Cell* dummy = positionToCell(targetPos);
+    Vector2<f32> storage;
+    /* Change this method */
+    if( hitbox.getCellsX() % 2 == 0){
+        storage = dummy->getHitbox().TopLeft();
+        correctOne = storage;
+        storage -= cellSize / 2;
+        storage.x -= (hitbox.getCellsX() / 2) * (cellSize / 2);
+        storage.y -= (hitbox.getCellsY() / 2) * (cellSize / 2);
     }
+    else{
+        storage = dummy->getHitbox().Center();
+        correctOne = storage;
+        storage.x -= (hitbox.getCellsX() - 1) * (cellSize / 2);
+        storage.y -= (hitbox.getCellsY() - 1) * (cellSize / 2);
+    }
+    
     return correctOne;
 }
 
 /* Semms that is working (yay) */
 /* NEEDS A HARD CLEAN !!! */
-/* Change to vector2 */
 Cell* WorldGeometry::getValidCell(Vector2<f32> referenceTarget, Vector2<f32> referenceOrigin, const Box2D& entityHitbox, bool amplifyBox) const{
+    Vector2<f32> correctPosition(0,0);
     Box2D dummyHitbox = entityHitbox;
     /* The wanted Cell */
     Cell* validCell = nullptr;
     /* Intended swap */
     Cell* sourceCell = positionToCell(referenceTarget);
     Cell* targetCell = positionToCell(referenceOrigin);
-    //i32 sourceIndex = sourceCell->getIndex();
-    //i32 targetIndex = targetCell->getIndex();
     /* Check what's needed and what's not */
     std::vector<f32> GCosts = std::vector<f32>(maxCells, 0);
     std::vector<f32> FCosts = std::vector<f32>(maxCells, 0);
@@ -202,11 +199,13 @@ Cell* WorldGeometry::getValidCell(Vector2<f32> referenceTarget, Vector2<f32> ref
     /* Adds the cell to the path vector */
         shortestPath[closestIndex] = searchFrontier[closestIndex];
     /* Stop condition, research about a system of conditions */
-        //if(!indexToCell(closestIndex)->isBlocked()){
-        //    validCell = indexToCell(closestIndex);
-        //    return validCell; 
-        //}
-        dummyHitbox.moveHitbox(indexToCell(closestIndex)->getPosition());
+        if(amplifyBox){
+            correctPosition = correctBuildingPosition(indexToCell(closestIndex)->getPosition(), dummyHitbox);
+            dummyHitbox.moveHitbox(correctPosition);
+        }
+        else{
+            dummyHitbox.moveHitbox(indexToCell(closestIndex)->getPosition());
+        }
         if(checkHitBoxCollision(dummyHitbox, amplifyBox)){
             validCell = indexToCell(closestIndex);
             return validCell; 
@@ -218,8 +217,6 @@ Cell* WorldGeometry::getValidCell(Vector2<f32> referenceTarget, Vector2<f32> ref
             i32 potentialNode = neighbors[i]->getIndex();
             f32 HCost = calculateDistance(neighbors[i]->getPosition(), targetCell->getPosition());
             f32 GCost = GCosts[closestIndex] + getCost(closestIndex, i);
-            //std::cout << "Distancia H: " << HCost << "\n";
-            //std::cout << "Distancia G: " << GCost << "\n";
             if(searchFrontier[potentialNode] == nullptr){
                 FCosts[potentialNode] = GCost + HCost;
                 GCosts[potentialNode] = GCost;

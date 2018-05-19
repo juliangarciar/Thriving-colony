@@ -18,7 +18,9 @@ Box2D::Box2D(Vector2<f32> tl, Vector2<f32> br):m_vTopLeft(tl),
                                                m_vBottomRight(br),
                                                m_vCenter((tl + br) / 2.0f),
                                                m_vTopRight(br.x, tl.y),
-                                               m_vBottomLeft(tl.x, br.y)
+                                               m_vBottomLeft(tl.x, br.y),
+                                               cellsX((tl.x - br.y) / cSize),
+                                               cellsY((tl.y - br.y) / cSize)
 {}
 
 void Box2D::moveHitbox(f32 x, f32 y){
@@ -89,4 +91,12 @@ Box2D Box2D::getAmplifiedBox(f32 distance) const{
     Vector2<f32> bR = m_vBottomRight + distance;
     Box2D dummy(tL, bR);
     return dummy;
+}
+
+i32 Box2D::getCellsX() const{
+    return cellsX;
+}
+
+i32 Box2D::getCellsY() const{
+    return cellsY;
 }

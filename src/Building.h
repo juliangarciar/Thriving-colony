@@ -12,6 +12,7 @@
  * @class Building.
  * @brief Create a Building type object. Public heritage from Entity class.
  */
+class BuildingManager;
 class Building : public Entity {
     public:
         /**
@@ -22,7 +23,7 @@ class Building : public Entity {
          * @param Enumeration::Team is the team to which belongs the building: Enumeration::Team::Human or Enumeration::Team::IA.
          * @param BuildingData is the data of the building.
          */
-        Building(SceneNode*, i32, Enumeration::Team, BuildingData);
+        Building(SceneNode*, i32, Enumeration::Team, BuildingData, BuildingManager* _buildingManager);
 
         /**
          * @brief Building destructor.
@@ -101,6 +102,7 @@ class Building : public Entity {
 
         //Finish the building.
         std::function<void(Building*)> callback;
+        BuildingManager* buildingManager;
 };
 
 #endif

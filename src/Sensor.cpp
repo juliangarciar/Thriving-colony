@@ -21,9 +21,10 @@ void Sensor::update(){
     }
     priorityTarget = nullptr;
     WorldGeometry::Instance()->getCollidingEntities(sensorHitbox, &priorityTarget, propietary->getTeam());
+    propietary->setTarget(priorityTarget);
+
     if(priorityTarget != nullptr){
         priorityTarget->addHostile(propietary);
-        propietary->setTarget(priorityTarget);
         std::cout << "Entidad encontrada en: " << priorityTarget->getPosition().x << " , " << priorityTarget->getPosition().y << "\n";
     }
 }

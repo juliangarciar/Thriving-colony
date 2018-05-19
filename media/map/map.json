@@ -14,10 +14,10 @@
 			"height": 10240
 		},
 		"margins":{
-			"top": 1000,
+			"top": 2000,
 			"right": 9000,
 			"bottom": 9000,
-			"left": 1000
+			"left": 2000
 		}
 	},
 	"game":{
