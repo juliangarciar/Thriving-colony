@@ -1,5 +1,5 @@
 #include "IO.h"
-
+#include <OBDEngine/ResourceManager/ResourceIMG.h>
 IO* IO::pinstance = 0;
 
 IO* IO::Instance() {
@@ -61,4 +61,9 @@ EventSystem *IO::getEventManager() {
 
 ResourceManager *IO::getResourceManager(){
     return resourceManager;
+}
+
+void IO::loadImageIcon(std::string _path){
+    ResourceIMG *tmp = (ResourceIMG*)resourceManager->getResource(_path, true);
+    cursor->loadCursorIcon(tmp->getResource(), tmp->getWidth(), tmp->getHeight(), tmp->getChannels());
 }

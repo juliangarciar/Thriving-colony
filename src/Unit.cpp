@@ -119,12 +119,12 @@ void Unit::preTaxPlayer() {
     if (getTeam() == Enumeration::Team::Human) {
         Human::Instance() -> spendResources(getMetalCost(), getCrystalCost());
         Human::Instance() -> modifyHappiness(getHappinessVariation());
-        Human::Instance() -> modifyCitizens(getCitizensVariation());
+        Human::Instance() -> modifyCitizens(-getCitizensVariation());
         Human::Instance() -> modifyArmyLevel(armyLevel);
     } else {
         IA::Instance() -> spendResources(getMetalCost(), getCrystalCost());
         IA::Instance() -> modifyHappiness(getHappinessVariation());
-        IA::Instance() -> modifyCitizens(getCitizensVariation());
+        IA::Instance() -> modifyCitizens(-getCitizensVariation());
         IA::Instance() -> modifyArmyLevel(armyLevel);
     }
 }

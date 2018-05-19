@@ -308,7 +308,7 @@ class Hud {
         Label *playerCitizens;
 
         //Player's individual units amount.
-        Label *playerUnits;
+        Label *playerUnitFighters;
 
         //Player's happiness amount.
         Label *playerHappiness;
@@ -339,6 +339,9 @@ class Hud {
 
         //AI's citizens amount.
         Label *iaCitizens;
+
+        //AI's citizens amount.
+        Label *iaUnitFighters;
 
         //AI's happiness amount.
         Label *iaHappiness;

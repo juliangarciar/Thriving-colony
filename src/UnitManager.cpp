@@ -113,7 +113,7 @@ bool UnitManager::createTroop(std::string type) {
                 return false;
             }
             newUnit -> getModel() -> setActive(false);
-            totalUnitFighters += it->second.troops;
+			adjustUnitFighter(it->second.troops);
             newUnit -> setRecruitedCallback([&] (Unit* u){
                 //Delete in Queue
                 inQueueTroops->erase(inQueueTroops->find(u->getID()));
@@ -349,11 +349,12 @@ void UnitManager::moveOrder() {
  * to avoid cluttering the setBuildingMode() method, as it used to be there in the first place.
  */
 bool UnitManager::checkCanPay(std::string type) {
-	if (baseUnits->find(type) != baseUnits->end()){
+	std::map<std::string,UnitData>::iterator it = baseUnits->find(type);
+	if (it != baseUnits->end()){
 		if (team == Enumeration::Team::Human)
-			return Human::Instance() -> isSolvent(baseUnits->at(type).metalCost, baseUnits->at(type).crystalCost, baseUnits->at(type).citizensVariation);
+			return Human::Instance() -> isSolvent(it->second.metalCost, it->second.crystalCost, it->second.citizensVariation);
 		else
-			return IA::Instance() -> isSolvent(baseUnits->at(type).metalCost, baseUnits->at(type).crystalCost, baseUnits->at(type).citizensVariation);
+			return IA::Instance() -> isSolvent(it->second.metalCost, it->second.crystalCost, it->second.citizensVariation);
 	}
 	return false;
 }
@@ -452,4 +453,8 @@ Unit* UnitManager::getUnit(i32 _id){
 
 void UnitManager::adjustUnitFighter(i32 qnty){
     totalUnitFighters += qnty;
+}
+
+i32 UnitManager::getUnitFighters(){
+	return totalUnitFighters;
 }
