@@ -95,7 +95,7 @@ Unit::Unit(SceneNode* _layer,
     pathManager = new PathManager(this);
 
     for(std::size_t i = 0; i < unitFighters.size(); i++){
-        unitFighters[i] = new UnitFighter(_layer, _id, baseData.troopModel, baseData.moveSpeed);
+        unitFighters[i] = new UnitFighter(_layer, baseData.troopModel, baseData.moveSpeed);
     }
 }
 

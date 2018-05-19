@@ -199,7 +199,7 @@ void Quadtree::getCollidingEntities(const Box2D& hitbox, Entity** priorityEntity
                         if(buildingTmp->getTeam() != teamTarget){
                             if(*priorityEntity == nullptr){
                                 *priorityEntity = buildingTmp;
-                                std::cout << "Edificio ";
+                                //std::cout << "Edificio ";
                                 //if(teamTarget == Enumeration::Team::IA){
                                 //    std::cout << "Humano";
                                 //}

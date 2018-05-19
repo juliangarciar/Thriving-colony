@@ -11,7 +11,7 @@ class Timer;
 
 class UnitFighter{
     public:
-        UnitFighter(SceneNode* _parent, i32 _id, std::string _path, f32 _speed);
+        UnitFighter(SceneNode* _parent, std::string _path, f32 _speed);
         ~UnitFighter();
 
         // Setters

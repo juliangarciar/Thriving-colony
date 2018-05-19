@@ -7,7 +7,7 @@
 BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
 	team = t;
 
-	nextBuildingId = 0;
+	nextBuildingId = 1;
     buildingMode = false;
 
 	buildingLayer = new SceneNode();

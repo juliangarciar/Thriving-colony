@@ -74,7 +74,7 @@ void IA::Update() {
 	Player::Update();
     units -> updateUnitManager();
     Vector3<f32> tarPos = Map::Instance() -> getCamera() -> getTargetPosition();
-    Vector2<f32> IAPos = buildings -> getBuilding(0) -> getPosition();
+    Vector2<f32> IAPos = hallPosition.toVector2();
 
     if (((IAPos . x + 2000 > tarPos.x && IAPos . x - 2000 < tarPos.x) && (IAPos . y + 2000 > tarPos.z && IAPos . y - 2000 < tarPos.z)) || underAttack) {
         if (updateSlowTimer -> isRunning() && !updateFastTimer -> isRunning()){

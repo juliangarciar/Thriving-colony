@@ -4,8 +4,8 @@
 #include "GraphicEngine/Window.h"
 #include "IOEngine/Timer.h"
 #include "IOEngine/IO.h"
-UnitFighter::UnitFighter(SceneNode* _parent, i32 _id, std::string _path, f32 _speed):speed(_speed), maxDesviation(_speed * 0.5f), maxTime(0), unitFighterClock(nullptr){
-    fighterModel = new Model(_parent, _id, _path);
+UnitFighter::UnitFighter(SceneNode* _parent, std::string _path, f32 _speed):speed(_speed), maxDesviation(_speed * 0.5f), maxTime(0), unitFighterClock(nullptr){
+    fighterModel = new Model(_parent, 0, _path);
     vectorPosition = Vector2<f32>(0, 0);
     vectorSpeed = Vector2<f32>(0, 0);
     vectorDestiny = Vector2<f32>(0, 0);
