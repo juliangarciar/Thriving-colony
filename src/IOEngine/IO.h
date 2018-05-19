@@ -61,6 +61,8 @@ class IO {
          * @return ResourceManager* 
          */
         ResourceManager *getResourceManager();
+
+        void loadImageIcon(std::string _path);
     protected:
         /**
          * @brief 
