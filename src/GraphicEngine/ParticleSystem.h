@@ -1,14 +1,11 @@
 #ifndef PARTICLESYSTEM_H
 #define PARTICLESYSTEM_H
 
-#include <irrlicht/irrlicht.h>
 #include <Types.h>
 #include <MathEngine/Vector3.h>
 #include <MathEngine/Color.h>
 #include "Window.h"
 #include "SceneNode.h"
-
-using namespace irr;
 
 class ParticleSystem {
     
@@ -29,7 +26,7 @@ class ParticleSystem {
         void setParticleSize(Vector2<f32> size);
 
     private:
-        scene::IParticleSystemSceneNode* particleSystemNode;
+	
 };
 
 #endif

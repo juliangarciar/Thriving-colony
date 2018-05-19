@@ -24,7 +24,7 @@ Map::Map() {
 }
 
 Map::~Map() {
-    delete skydome; //Violacion del segmento al borrar.
+    delete skybox;
     delete terrain;
     delete camera;
 }
@@ -32,7 +32,7 @@ Map::~Map() {
 void Map::Init() {
     loadProgress(0);
 
-    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/map/map.json");
+    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/maps/test_map/map.json", true);
     json j = *r -> getJSON();
 
     loadProgress(5);
@@ -51,17 +51,18 @@ void Map::Init() {
     loadProgress(20);
 
     //Skydome
-    skydome = new SkyDome(new Texture(j["map"]["skybox_texture"].get<std::string>().c_str()));
+    skybox = new Skybox(new Texture(j["map"]["skybox_texture"].get<std::string>().c_str()));
+    //skydome = new SkyDome(new Texture(j["map"]["skybox_texture"].get<std::string>().c_str()));
 
     loadProgress(30);
 
     //Luz
     for (auto& element : j["lights"]){
         Vector3<f32> lp;
-        lp.x = element["position"]["x"].get<int>();
-        lp.z = element["position"]["z"].get<int>();
-        lp.y = terrain -> getY(lp.x, lp.z) + element["height"].get<int>();
-        Light *light = new Light(lp, Color(255, 255, 255), element["intensity"].get<int>()); 
+        lp.x = element["position"]["x"].get<i32>();
+        lp.z = element["position"]["z"].get<i32>();
+        lp.y = terrain -> getY(lp.x, lp.z) + element["height"].get<i32>();
+        Light *light = new Light(lp, Color(1, 1, 1), element["intensity"].get<i32>()); //Color(255, 255, 255)
         lights.push_back(light);
     }
 
@@ -137,7 +138,7 @@ void Map::Input() {
     camera -> Zoom();
     camera -> CenterCamera();
 
-    collisionPoint = terrain->getPointCollision(IO::Instance()->getMouse());
+    collisionPoint = terrain->getPointCollision(IO::Instance()->getMouse()->getPosition());
 }
 
 void Map::Update(){
@@ -149,13 +150,14 @@ void Map::Render() {
 }
 
 void Map::CleanUp() {
-    for(int i=0; i<lights.size(); i++){
+    for(i32 i=0; i<lights.size(); i++){
         delete lights[i];
     }
     lights.clear();
     delete terrain;
     delete camera;
-    delete skydome;
+    //delete skydome;
+	delete skybox;
 }
 
 Vector2<f32> Map::getHumanStartPosition(){

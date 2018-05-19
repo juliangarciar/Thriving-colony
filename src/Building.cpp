@@ -92,6 +92,7 @@ std::string Building::getType(){
     return buildingType;
 }
 
+//ToDo: revisar billboards
 void Building::takeDamage(i32 _damage) {
     f32 percentage(0);
     currentHP = currentHP - _damage;

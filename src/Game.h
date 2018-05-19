@@ -1,9 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <IOEngine/IO.h>
-
 #include <GraphicEngine/Window.h>
+
+#include <IOEngine/IO.h>
 
 #include <SoundEngine/SoundSystem.h>
 

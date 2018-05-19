@@ -13,13 +13,13 @@ TabPanel::TabPanel(GUIElement *parent){
 }
 
 TabPanel::~TabPanel(){
-    for (int i = 0; i < children.size(); i++){
+    for (i32 i = 0; i < children.size(); i++){
         //ToDo: eliminar hijos
     }
     //ToDo: eliminar este
     hide();
 
-    for (int i = 0; i < tabs.size(); i++){
+    for (i32 i = 0; i < tabs.size(); i++){
         delete tabs.at(i);
     }
     tabs.clear();

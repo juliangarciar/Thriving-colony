@@ -18,12 +18,12 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/unitModels/Troops/Drorania/rank_soldier_drorania.obj",
-				"texturePath": "media/textures/Drorania/drorania_barn.jpg"
+				"modelPath": "media/models/Drorania/Units/rank_soldier_drorania.obj",
+				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/unitModels/Flags/Drorania/flag.obj",
-				"texturePath": "media/textures/placeholder.bmp"
+				"modelPath": "media/models/Drorania/Flags/dorania_flag.obj",
+				"texturePath": ""
 			},
 			"troops": 6,
 			"cellsX": 1,
@@ -49,12 +49,12 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/unitModels/Troops/Drorania/Soldado_Rango_Drorania.obj",
-				"texturePath": "media/textures/Drorania/drorania_barn.jpg"
+				"modelPath": "media/models/Drorania/Units/Soldado_Rango_Drorania.obj",
+				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/unitModels/Flags/Drorania/flag.obj",
-				"texturePath": "media/textures/placeholder.bmp"
+				"modelPath": "media/models/Drorania/Flags/dorania_flag.obj",
+				"texturePath": ""
 			},
 			"troops": 4,
 			"cellsX": 1,
@@ -80,12 +80,12 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/unitModels/Troops/Drorania/Melee_Soldier_Drorania.obj",
-				"texturePath": "media/textures/Drorania/drorania_barn.jpg"
+				"modelPath": "media/models/Drorania/Units/criatura_drorania.obj",
+				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/unitModels/Flags/Drorania/flag.obj",
-				"texturePath": "media/textures/placeholder.bmp"
+				"modelPath": "media/models/Drorania/Flags/dorania_flag.obj",
+				"texturePath": ""
 			},
 			"troops": 4,
 			"cellsX": 1,
@@ -111,12 +111,12 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/unitModels/Troops/Drorania/criatura_drorania.obj",
-				"texturePath": "media/textures/Drorania/drorania_barn.jpg"
+				"modelPath": "media/models/Drorania/Units/criatura_drorania.obj",
+				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/unitModels/Flags/Drorania/flag.obj",
-				"texturePath": "media/textures/placeholder.bmp"
+				"modelPath": "media/models/Drorania/Flags/dorania_flag.obj",
+				"texturePath": ""
 			},
 			"troops": 4,
 			"cellsX": 1,
@@ -142,12 +142,12 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/unitModels/Troops/Drorania/dorania_cannon.obj",
-				"texturePath": "media/textures/Drorania/drorania_barn.jpg"
+				"modelPath": "media/models/Drorania/Units/dorania_cannon.obj",
+				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/unitModels/Flags/Drorania/flag.obj",
-				"texturePath": "media/textures/placeholder.bmp"
+				"modelPath": "media/models/Drorania/Flags/dorania_flag.obj",
+				"texturePath": ""
 			},
 			"troops": 4,
 			"cellsX": 1,
@@ -173,12 +173,12 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/unitModels/Troops/Drorania/drorania_walls_desintegrator.obj",
-				"texturePath": "media/textures/Drorania/drorania_barn.jpg"
+				"modelPath": "media/models/Drorania/Units/drorania_walls_desintegrator.obj",
+				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/unitModels/Flags/Drorania/flag.obj",
-				"texturePath": "media/textures/placeholder.bmp"
+				"modelPath": "media/models/Drorania/Flags/dorania_flag.obj",
+				"texturePath": ""
 			},
 			"troops": 4,
 			"cellsX": 1,
@@ -204,12 +204,12 @@
 			"metalCost": 120,
 			"crystalCost": 0,
 			"troopPath":{
-				"modelPath": "media/unitModels/Troops/Drorania/Ente_Drorania.obj",
-				"texturePath": "media/textures/Drorania/drorania_barn.jpg"
+				"modelPath": "media/models/Drorania/Units/Ente_Drorania.obj",
+				"texturePath": ""
 			},
 			"flagPath": {
-				"modelPath": "media/unitModels/Flags/Drorania/flag.obj",
-				"texturePath": "media/textures/placeholder.bmp"
+				"modelPath": "media/models/Drorania/Flags/dorania_flag.obj",
+				"texturePath": ""
 			},
 			"troops": 4,
 			"cellsX": 1,

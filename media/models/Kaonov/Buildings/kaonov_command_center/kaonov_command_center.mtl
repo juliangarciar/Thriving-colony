@@ -1,0 +1,31 @@
+# Blender MTL File: 'kaonov_command_center.blend'
+# Material Count: 2
+
+newmtl kaonov_command_center
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Bump kaonov_command_center_Normal_OpenGL.bmp
+map_Ka kaonov_command_center_Mixed_AO.bmp
+map_Kd kaonov_command_center_Base_Color.bmp
+map_Ks kaonov_command_center_Metallic.bmp
+
+newmtl kaonov_crystal_command_center
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.594883
+illum 2
+map_Bump kaonov_crystal_command_center_Normal_OpenGL.bmp
+map_Ka kaonov_crystal_command_center_Mixed_AO.bmp
+map_Kd kaonov_crystal_command_center_Base_Color.bmp
+map_Ks kaonov_crystal_command_center_Metallic.bmp
+map_d kaonov_crystal_command_center_Opacity.bmp

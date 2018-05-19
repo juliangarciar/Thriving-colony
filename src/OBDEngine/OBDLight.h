@@ -97,7 +97,7 @@ class OBDLight {
          * 
          * @param newType 
          */
-        void setType(OBDEnums::LightTypes newType);
+        void setType(i32 t);
     private:
         TNode* lightNode;
 };

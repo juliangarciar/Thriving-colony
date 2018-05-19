@@ -197,13 +197,6 @@ class UnitManager{
          * @return A pointer to a std::map object that will be the value of inMapTroops variable.
          */
         std::map<i32, Unit*> *getInMapTroops();
-
-        /**
-         * @brief
-         * 
-         * @return
-         */
-		std::string getCollisionName();
         
         /**
          * @brief
@@ -220,8 +213,8 @@ class UnitManager{
         //Layer were the units are going to be created.
         SceneNode *unitLayer;
 
-        //
-		SceneNode *currentCollision;
+        // ID
+		u32 currentCollisionID;
 
         //
         std::map<std::string, UnitData> *baseUnits;

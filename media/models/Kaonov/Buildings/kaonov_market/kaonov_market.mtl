@@ -1,0 +1,17 @@
+# Blender MTL File: 'kaonov_market.blend'
+# Material Count: 1
+
+newmtl kaonov_market
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.635854
+illum 2
+map_Bump kaonov_market_Normal_OpenGL.bmp
+map_Ka kaonov_market_Mixed_AO.bmp
+map_Kd kaonov_market_Base_Color.bmp
+map_Ks kaonov_market_Metallic.bmp
+map_d kaonov_market_Opacity.bmp

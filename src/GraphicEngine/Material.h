@@ -1,23 +1,23 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-#include <irrlicht/irrlicht.h>
+#include <OBDEngine/OBDMaterial.h>
+
 #include "Texture.h"
 #include <MathEngine/Color.h>
 #include <Types.h>
-
-using namespace irr;
+#include <MathEngine/Color.h>
 
 class Material {
     public:
         Material(Texture *tex);
         ~Material();
+		
+        void setColor(Color c);
 
-        void setColor(Color);
-
-        video::SMaterial *getMaterial();
+        OBDMaterial *getMaterial();
     private:
-        video::SMaterial *material;
+		OBDMaterial *material;
 };
 
 #endif

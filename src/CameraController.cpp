@@ -41,7 +41,7 @@ CameraController::CameraController() {
 	centerCameraMode = false;
 
 	int fractionsOfASecond = 70.f;
-	updateTimer = new Timer(0, true, false);
+	updateTimer = new Timer(0, true, false); //ToDo: revisar
 
 	updateTimer -> setCallback([&](){
         updateCamera(Window::Instance() -> getDeltaTime());
@@ -53,7 +53,7 @@ CameraController::~CameraController() {
 	delete updateTimer;
 }
 
-void CameraController::Init(Vector3<float> v){
+void CameraController::Init(Vector3<f32> v){
 	//Set camera and target positions
 	tarPos = v;
 	camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
@@ -144,6 +144,7 @@ void CameraController::updateCamera(f32 deltaTime) {
 	}
 
     if (movementMode || rotationOrInclinationMode || zoomMode || centerCameraMode){
+		tarPos.y = Map::Instance() -> getTerrain() -> getY(tarPos.x, tarPos.z);
 		camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
 
 		i32 camHeight = camPos.y - tarPos.y;

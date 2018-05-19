@@ -229,6 +229,9 @@ class Entity {
 		 */
 		void setDamageColor();
 
+        void createBar();
+        void deleteBar();
+
     protected:
         //Number that identifies the entity.
         i32 ID;
@@ -290,10 +293,10 @@ class Entity {
         //
         Material *baseMat;
 
-        //
+        //Pointer to a billboard with the HP of the entity.
         Billboard* barBg;
 
-        //
+        //Pointer to a billboard with the HP of the entity.
         Billboard* bar;
 
         const f32 bbOffset;

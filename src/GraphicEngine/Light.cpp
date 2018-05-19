@@ -1,17 +1,20 @@
 #include "Light.h"
 #include "Window.h"
 
-using namespace irr;
-
 Light::Light(Vector3<f32> pos, Color c, f32 intensity) {
-    light = Window::Instance()->getSceneManager()->addLightSceneNode(
-		0, 
-		core::vector3df(pos.x, pos.y, pos.z),
-    	video::SColorf(c.a, c.r, c.g, c.b), intensity
-	);
+    l = Window::Instance()->getEngine()->createLight(OBDColor(c.r, c.g, c.b), intensity, 0.00001, 0.1);
+	l->setPosition(glm::vec3(pos.x, pos.y, pos.z));
 }
 
 Light::~Light(){
-    light->remove();
-    light = nullptr;
+    delete l;
+	l = nullptr;
+}
+
+void Light::setPosition(Vector3<f32> pos){
+	l->setPosition(glm::vec3(pos.x, pos.y, pos.z));
+}
+
+void Light::setType(i32 t) {
+	l -> setType(t);
 }

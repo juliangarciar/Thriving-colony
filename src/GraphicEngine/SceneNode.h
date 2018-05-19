@@ -1,12 +1,11 @@
 #ifndef SCENE_NODE_H
 #define SCENE_NODE_H
 
-#include <irrlicht/irrlicht.h>
-#include <Types.h>
-#include <MathEngine/Vector3.h>
-#include <IOEngine/Mouse.h>
+#include <OBDEngine/OBDSceneNode.h>
 
-using namespace irr;
+#include <Types.h>
+#include <MathEngine/Vector2.h>
+#include <MathEngine/Vector3.h>
 
 class SceneNode {
 	public:
@@ -15,17 +14,14 @@ class SceneNode {
 
 		virtual ~SceneNode();
 
-		SceneNode *getNodeCollision(Mouse *cursor);
-
-		i32 getID();
-		std::string getName();
+		i32 getNodeCollision(Vector2<i32> cursor);
 		
-		scene::ISceneNode *getSceneNode();
+		OBDSceneNode *getSceneNode();
 	private:
-		SceneNode(scene::ISceneNode *node);
-		scene::ISceneNode *node;
-
+		SceneNode(OBDSceneNode *node);
 		SceneNode *collisionNode;
+
+		OBDSceneNode *node;
 };
 
 #endif

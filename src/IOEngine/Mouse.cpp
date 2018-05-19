@@ -17,13 +17,13 @@ Mouse::Mouse(){
     
     //Handle events on queue
     glfwSetCursorPosCallback(window,
-            [](GLFWwindow *w, double x, double y) {
+            [](GLFWwindow *w, f64 x, f64 y) {
             Window::Instance() -> getGUIEnvironment() -> cursorPosCallbackEvent(x, y);
         }
     );
 
     glfwSetScrollCallback(window,
-        [](GLFWwindow *w, double x, double y) {
+        [](GLFWwindow *w, f64 x, f64 y) {
             Window::Instance() -> getGUIEnvironment() -> scrollCallbackEvent(x, y);
             Mouse *s = IO::Instance() -> getMouse();
             s -> wheel.x = x;
@@ -204,7 +204,7 @@ void Mouse::hide(){
 }
 
 Vector2<i32> Mouse::getPosition() {
-    double x, y;
+    f64 x, y;
     glfwGetCursorPos(Window::Instance() -> getWindow(), &x, &y);
     position.set(x, y);
     return position;

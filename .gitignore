@@ -10,5 +10,5 @@ bin/*
 test/*
 # o files
 *.o
-# propietary libs
-libvboindexer.a
+# d files
+*.d

@@ -1,11 +1,10 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include <irrlicht/irrlicht.h>
+#include <OBDEngine/OBDCamera.h>
+
 #include <Types.h>
 #include <MathEngine/Vector3.h>
-
-using namespace irr;
 
 class Camera {
     
@@ -21,7 +20,7 @@ class Camera {
         Vector3<f32> getCameraPosition();
         Vector3<f32> getTargetPosition();
     private:
-        scene::ICameraSceneNode* camera;
+		OBDCamera *c;
 };
 
 #endif

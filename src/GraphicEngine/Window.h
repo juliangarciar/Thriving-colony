@@ -1,14 +1,12 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
-#include <irrlicht/irrlicht.h>
+#include <OBDEngine/OBDEngine.h>
 #include <GLFW/glfw3.h>
 #include <nanogui/nanogui.h>
 
 #include <Types.h>
 #include <MathEngine/Vector2.h>
-
-using namespace irr;
 
 class Window {
     public:
@@ -16,13 +14,12 @@ class Window {
 
 		void Init(i32, i32);
 
-        void setEventReceiver(IEventReceiver *receiver);
         void handleGUIEvents();
 
         void setGUI();
 
         void beginScene();
-        void endScene(bool b);
+        void endScene();
 
         void close();
 
@@ -30,13 +27,12 @@ class Window {
         
         void onClose();
 
+		OBDEngine *getEngine();
+
 		void setResizeCallback(std::function<void(i32, i32)>);
 
 		void triggerResizeCallback(i32, i32);
-
-        IrrlichtDevice* getDevice();
-        video::IVideoDriver* getVideoDriver();
-        scene::ISceneManager* getSceneManager();
+		
         nanogui::Screen* getGUIEnvironment();
 
         i32 getWindowWidth();
@@ -64,6 +60,14 @@ class Window {
          * @return i32 framerate
          */
         i32 getFrameRate();
+
+        /**
+         * @brief Get the layer where are going to be created all billboards.
+         * 
+         * @return OBDSceneNode* that is going to be the value of billboardLayer.
+         */
+        OBDSceneNode* getBillboardLayer();
+
         
         i32 windowWidth;
         i32 windowHeight;
@@ -82,15 +86,16 @@ class Window {
 
         bool closeWindow;
 
-        IrrlichtDevice* device;
-        video::IVideoDriver* driver;
-        scene::ISceneManager* scene;
+		OBDEngine *e;
+
+        //Lyer where are going to be created all billboards;
+        OBDSceneNode* billboardLayer;
+
         nanogui::Screen* gui;
         
-        double dtThen;
-        double deltaTime;
-        double lastDeltaTime;
-
+        f64 dtThen;
+        f64 deltaTime;
+        f64 lastDeltaTime;
         i32 framerate;
 
 		std::function<void(i32, i32)> resizeCallback;

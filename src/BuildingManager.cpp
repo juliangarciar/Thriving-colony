@@ -11,7 +11,7 @@ BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
     buildingMode = false;
 
 	buildingLayer = new SceneNode();
-	currentCollision = nullptr;
+	currentCollisionID = -1;
 	inMapBuildings = new std::map<i32, Building*>();
 	tempBuilding = nullptr;
 
@@ -54,7 +54,7 @@ BuildingManager::~BuildingManager() {
 
 void BuildingManager::testRaycastCollisions() {
 	if (!buildingMode) {
-		currentCollision = buildingLayer -> getNodeCollision(IO::Instance() -> getMouse());
+		currentCollisionID = buildingLayer -> getNodeCollision(IO::Instance() -> getMouse() -> getPosition());
 	}
 }
 
@@ -63,7 +63,7 @@ bool BuildingManager::setBuildingMode(std::string type) {
 	if (it != baseBuildings.end() && checkCanPay(type)) {
 		if (!buildingMode) {
 			buildingMode = true;
-			tempBuilding = new Building(buildingLayer, 0, team, it->second, this);
+			tempBuilding = new Building(buildingLayer, nextBuildingId++, team, it->second, this);
 			return true;
 		}
 	}
@@ -74,7 +74,7 @@ bool BuildingManager::setBuildingMode(std::string type) {
 void BuildingManager::drawBuilding() {
     if (buildingMode && tempBuilding != nullptr) {
 		//Get position where the cursor is pointing to the terrain
-        Vector2<f32> collisionPoint = Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2();
+        Vector2<f32> collisionPoint = Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse() -> getPosition()).toVector2();
 		// Change 2nd parameter
 		bool canBuild = true;
 		Vector2<f32> dummy = WorldGeometry::Instance()->correctBuildingPosition(collisionPoint, tempBuilding->getHitbox());
@@ -95,7 +95,8 @@ void BuildingManager::drawBuilding() {
 		//Pressing the right mouse button cancels the building
 		if (IO::Instance() -> getMouse() -> rightMouseDown()){
 			buildingMode = false;
-			delete tempBuilding;		
+			delete tempBuilding;	
+			/* ToDo: comprobar que esto esta bien comentado, sin comentar da error */	
 			tempBuilding = nullptr;
 			return;
 		}
@@ -124,7 +125,7 @@ void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 bui
 	if (it != baseBuildings.end()){
 		BuildingData b = it->second;
 		if (buildTime >= 0) b.buildingTime = buildTime;
-		tempBuilding = new Building(buildingLayer, 0, team, b, this);
+		tempBuilding = new Building(buildingLayer, nextBuildingId++, team, b, this);
 		buildBuilding(pos);
 	}
 }
@@ -133,8 +134,6 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
 	if (tempBuilding != nullptr){
 		//Establece la posicion inicial del edificio
 		tempBuilding -> setPosition(pos);
-		//Establece la ID inicial del edificio
-		tempBuilding -> setID(nextBuildingId);
 		//Establece un callback que se ejecutará al acabar de construir
 		tempBuilding -> setFinishedCallback([&](Building *b){
 			buildingAmounts[b -> getType()]++;
@@ -149,7 +148,7 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
 		});
 
 		//Insert building in a map
-		inMapBuildings -> insert(std::pair<i32,Building*>(nextBuildingId, tempBuilding));
+		inMapBuildings -> insert(std::pair<i32,Building*>(tempBuilding->getID(), tempBuilding));
 		
 		//Start the construction of the building
 		tempBuilding -> startBuilding();
@@ -159,7 +158,6 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
 
 		//Finish everything
 		tempBuilding = nullptr;
-		nextBuildingId++;
 	} else {
 		std::cout << "Error, se ha intentado construir un edificio inexistente" << std::endl;
 		exit(0);
@@ -195,17 +193,7 @@ i32 BuildingManager::getAmount(std::string type){
 }
 
 i32 BuildingManager::getCollisionID() {
-	if (currentCollision != nullptr) {
-		return currentCollision -> getID();
-	}
-	return -1;
-}
-
-std::string BuildingManager::getCollisionName() {
-	if (currentCollision != nullptr) {
-		return currentCollision -> getName();
-	}
-	return nullptr;
+	return currentCollisionID;
 }
 
 std::map<i32, Building*>* BuildingManager::getBuildings() {

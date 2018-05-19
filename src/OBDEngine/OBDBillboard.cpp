@@ -1,4 +1,5 @@
 #include "OBDBillboard.h"
+#include "../GraphicEngine/Window.h"
 
 OBDBillboard::OBDBillboard(OBDSceneNode* parent, glm::vec3 position) {
     billboardNode = new TNode(new TBillboard(position));
@@ -15,7 +16,7 @@ void OBDBillboard::setPosition(glm::vec3 pos) {
     aux -> setPosition(pos);
 }
 
-void OBDBillboard::setColor(OBDColor* newTopColor, OBDColor* newBottomColor) {
+void OBDBillboard::setColor(OBDColor newTopColor, OBDColor newBottomColor) {
     TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
     aux -> setColor(newTopColor, newBottomColor);
 }

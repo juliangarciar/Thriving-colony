@@ -1,10 +1,8 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
-#include <irrlicht/irrlicht.h>
 #include <Types.h>
-
-using namespace irr;
+#include <OBDEngine/OBDTexture.h>
 
 class Texture {
 
@@ -12,10 +10,9 @@ class Texture {
         Texture(const char *path);
         ~Texture();
         
-        video::ITexture *getTexture();
-        
+        OBDTexture *getTexture();
     private:
-        video::ITexture *texture;
+		OBDTexture *texture;
 };
 
 #endif

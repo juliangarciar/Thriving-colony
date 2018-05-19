@@ -46,7 +46,7 @@ void Game::Update() {
 void Game::Render() {
     Window::Instance() -> beginScene();
     state -> Render();
-    Window::Instance() -> endScene(stateData == Enumeration::State::GameState);
+    Window::Instance() -> endScene();
 }
 
 void Game::CleanUp() {

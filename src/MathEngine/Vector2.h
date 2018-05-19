@@ -3,7 +3,7 @@
 
 #include "../Types.h"
 
-#include <irrlicht/irrlicht.h>
+#include <cmath>
 #include <glm/vec2.hpp>
 
 #define PI 3.14159265
@@ -38,13 +38,12 @@ class Vector2 {
         Vector2<T> operator /(const f32 &num) const;
         Vector2<T> operator *(const f32 &num) const;
         
-        
         bool operator ==(const Vector2<T> &p);
         bool operator !=(const Vector2<T> &p);
 };
 
 template<class T> inline std::ostream& operator<<(std::ostream& out, const Vector2<T>& val){
-    out << "x: " << val.x << " y " << val.y;
+    out << "x: " << val.x << " - y: " << val.y;
     return out;
 }
 

@@ -15,8 +15,8 @@
 			"cityLevel": 15,
 			"cellsX": 2,
 			"cellsY": 2,
-			"modelPath": "media/buildingModels/barn.obj",
-			"texturePath": "media/textures/Drorania/drorania_barn.jpg"
+			"modelPath": "media/models/Drorania/Buildings/drorania_barn/drorania_barn.obj",
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Barrack",
@@ -34,8 +34,8 @@
 			"cityLevel": 10,
 			"cellsX": 4,
 			"cellsY": 4,
-			"modelPath": "media/buildingModels/barrack.obj",
-			"texturePath": "media/textures/Drorania/drorania_barrack.jpg"
+			"modelPath": "media/models/Drorania/Buildings/drorania_barrack/drorania_barrack.obj",
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Hospital",
@@ -53,8 +53,8 @@
 			"cityLevel": 5,
 			"cellsX": 4,
 			"cellsY": 4,
-			"modelPath": "media/buildingModels/hospital.obj",
-			"texturePath": "media/textures/Drorania/drorania_hospital.jpg"
+			"modelPath": "media/models/Drorania/Buildings/drorania_hospital/drorania_hospital.obj",
+			"texturePath": ""
 		},
 		{
 			"buildingName": "House",
@@ -72,8 +72,8 @@
 			"cityLevel": 5,
 			"cellsX": 1,
 			"cellsY": 1,
-			"modelPath": "media/buildingModels/house.obj",
-			"texturePath": "media/textures/Drorania/drorania_house.jpg"
+			"modelPath": "media/models/Drorania/Buildings/drorania_house/drorania_house.obj",
+			"texturePath": ""
 		},
 		{
 			"buildingName": "MainBuilding",
@@ -91,8 +91,8 @@
 			"cityLevel": 0,
 			"cellsX": 5,
 			"cellsY": 5,
-			"modelPath": "media/buildingModels/command_center.obj",
-			"texturePath": "media/textures/Drorania/drorania_command_center.jpg"
+			"modelPath": "media/models/Drorania/Buildings/drorania_command_center/drorania_command_center.obj",
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Market",
@@ -110,8 +110,8 @@
 			"cityLevel": 5,
 			"cellsX": 3,
 			"cellsY": 4,
-			"modelPath": "media/buildingModels/market.obj",
-			"texturePath": "media/textures/Drorania/drorania_market.jpg"
+			"modelPath": "media/models/Drorania/Buildings/drorania_market/drorania_market.obj",
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Quarry",
@@ -129,8 +129,8 @@
 			"cityLevel": 15,
 			"cellsX": 4,
 			"cellsY": 4,
-			"modelPath": "media/buildingModels/quarry.obj",
-			"texturePath": "media/textures/Drorania/drorania_quarry.jpg"
+			"modelPath": "media/models/Drorania/Buildings/drorania_quarry/drorania_quarry.obj",
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Siderurgy",
@@ -148,8 +148,8 @@
 			"cityLevel": 5,
 			"cellsX": 5,
 			"cellsY": 3,
-			"modelPath": "media/buildingModels/siderurgy.obj",
-			"texturePath": "media/textures/Drorania/drorania_siderurgy.jpg"
+			"modelPath": "media/models/Drorania/Buildings/drorania_siderurgy/drorania_siderurgy.obj",
+			"texturePath": ""
 		},
 		{
 			"buildingName": "School",
@@ -167,8 +167,8 @@
 			"cityLevel": 5,
 			"cellsX": 3,
 			"cellsY": 4,
-			"modelPath": "media/buildingModels/school.obj",
-			"texturePath": "media/textures/Drorania/drorania_school.jpg"
+			"modelPath": "media/models/Drorania/Buildings/drorania_school/drorania_school.obj",
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Tower",
@@ -186,8 +186,8 @@
 			"cityLevel": 5,
 			"cellsX": 1,
 			"cellsY": 1,
-			"modelPath": "media/buildingModels/tower.obj",
-			"texturePath": "media/textures/Drorania/drorania_tower.jpg"
+			"modelPath": "media/models/Drorania/Buildings/drorania_tower/drorania_tower.obj",
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Wall",
@@ -205,8 +205,8 @@
 			"cityLevel": 1,
 			"cellsX": 2,
 			"cellsY": 1,
-			"modelPath": "media/buildingModels/wall.obj",
-			"texturePath": "media/textures/Drorania/drorania_wall.jpg"
+			"modelPath": "media/models/Drorania/Buildings/drorania_wall/drorania_wall.obj",
+			"texturePath": ""
 		},
 		{
 			"buildingName": "Workshop",
@@ -224,8 +224,8 @@
 			"cityLevel": 15,
 			"cellsX": 3,
 			"cellsY": 4,
-			"modelPath": "media/buildingModels/workshop.obj",
-			"texturePath": "media/textures/Drorania/drorania_workshop.jpg"
+			"modelPath": "media/models/Drorania/Buildings/drorania_workshop/drorania_workshop.obj",
+			"texturePath": ""
 		}
 	]
 }

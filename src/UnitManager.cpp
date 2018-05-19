@@ -64,6 +64,8 @@ UnitManager::UnitManager(Enumeration::Team t, std::string b) {
     inHallTroops = new std::map<i32, Unit*>();
     inMapTroops = new std::map<i32, Unit*>();
 
+	currentCollisionID = -1;
+
     deployingTroop = false;
     currentDeployingTroop = -1;
 
@@ -176,7 +178,7 @@ void UnitManager::updateUnitManager() {
             selectedTroop -> switchState(Enumeration::UnitState::Retract);
         }
     }
-    int i = 0;
+    i32 i = 0;
     for (std::map<i32,Unit*>::iterator it = inQueueTroops -> begin(); it != inQueueTroops -> end() && i < inQueueTroops->size(); ++it) {
         if (it -> second != nullptr) {
             it -> second -> update();
@@ -201,7 +203,7 @@ void UnitManager::updateUnitManager() {
 
 void UnitManager::testRaycastCollisions() {
 	if (!deployingTroop) {
-		currentCollision = unitLayer -> getNodeCollision(IO::Instance() -> getMouse());
+		currentCollisionID = unitLayer -> getNodeCollision(IO::Instance() -> getMouse()->getPosition());
 	}
 } 
 
@@ -325,16 +327,14 @@ void UnitManager::unSelectTroop() {
 //Pass the order to the selected unit
 void UnitManager::moveOrder() {
     if (selectedTroop != nullptr) {
-        //selectedTroop -> setUnitDestination(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
         if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_A)) { //ToDo: fachada
-            // ToDo by Julian -> change attack iddle to pathfinding mode
             selectedTroop->switchState(Enumeration::UnitState::AttackMove);
 
-            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
+            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()->getPosition()).toVector2());
         } else {
             selectedTroop->switchState(Enumeration::UnitState::Move);
 
-            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()).toVector2());
+            selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()->getPosition()).toVector2());
         }
         //MOVEMENT VOICE
         //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
@@ -382,17 +382,7 @@ void UnitManager::deleteUnit(i32 id) {
 }
 
 i32 UnitManager::getCollisionID() {
-	if (currentCollision != nullptr) {
-		return currentCollision -> getID();
-	}
-	return -1;
-}
-
-std::string UnitManager::getCollisionName() {
-	if (currentCollision != nullptr) {
-		return currentCollision -> getName();
-	}
-	return nullptr;
+	return currentCollisionID;
 }
 
 i32 UnitManager::getDeployingTroopID(){

@@ -68,10 +68,10 @@ Entity::Entity(SceneNode* _layer,
 		getPosition().y
 	);
 
-    barBg = new Billboard(_layer, ID, pos, Color(0,0,0,255), Color(0,0,0,255));
-	bar = new Billboard(_layer, ID, pos, Color(0, 255, 0, 255), Color(0, 255, 0, 255));
-    barBg -> setSize((hitBox.Right() - hitBox.Left()) * 0.8f, 15.00);
-    bar -> setSize((hitBox.Right() - hitBox.Left()) * 0.8f, 15.00);
+    barBg = new Billboard(_layer, pos, Color(0,0,0,255), Color(0,0,0,255));
+	bar = new Billboard(_layer, pos, Color(0, 255, 0, 255), Color(0, 255, 0, 255));
+    barBg -> setSize((hitBox.Right() - hitBox.Left()) * 0.8f, 0, 15.00);
+    bar -> setSize((hitBox.Right() - hitBox.Left()) * 0.8f, 0, 15.00);
 }
 
 Entity::~Entity() {
@@ -228,6 +228,13 @@ void Entity::setDamageColor() {
 
     animatedModel -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y), vectorData.y));
 
+void Entity::createBar() {
+    bar = new Billboard(Vector3<f32>(getPosition().x, 200, getPosition().y));
+}
+
+void Entity::deleteBar() {
+    delete bar;
+}
 	Animation* Entity::getModel() const
 	  
 	return animatedModel;

@@ -1,61 +1,35 @@
 #include "SceneNode.h"
 #include "Window.h"
 
-using namespace irr;
-
 SceneNode::SceneNode() {
-	scene::ISceneManager *w = Window::Instance() -> getSceneManager();
-	node = w -> addEmptySceneNode(w -> getRootSceneNode());
 	collisionNode = nullptr;
+	node = Window::Instance()->getEngine()->createSceneNode();
 }
 
 SceneNode::SceneNode(SceneNode *parent) {
-	scene::ISceneManager *w = Window::Instance() -> getSceneManager();
-	node = w -> addEmptySceneNode(parent -> getSceneNode()); 
 	collisionNode = nullptr;
+	node = Window::Instance()->getEngine()->createSceneNode(parent->getSceneNode());
 }
 
-SceneNode::SceneNode(scene::ISceneNode *n){ 
+SceneNode::SceneNode(OBDSceneNode *n){ 
 	node = n;
 }
 
 SceneNode::~SceneNode() {
-	node -> remove();
+	delete node;
 	node = nullptr;
 }
  
-SceneNode *SceneNode::getNodeCollision(Mouse *cursor){
-	scene::ISceneCollisionManager *collisionManager = Window::Instance() -> getSceneManager() -> getSceneCollisionManager();
+i32 SceneNode::getNodeCollision(Vector2<i32> cursor){
+	OBDLine l = Window::Instance()->getEngine()->getRaycastFromScreenCoordinates(glm::vec2(cursor.x, cursor.y));
 
-	Vector2<i32> p = cursor -> getPosition();
-	core::position2d<s32> pos = core::position2d<s32>(p.x, p.y);
-	core::vector3df point;
-	core::triangle3df triangle;
-    const core::line3d<f32> ray = collisionManager -> getRayFromScreenCoordinates(pos);
-
-	if (!collisionNode) {
-		delete collisionNode;
-		collisionNode = nullptr;
+	std::vector<u32> res = node->getCollisionID(l);
+	if (res.size() > 0) {
+		return res[0];
 	}
-
-	scene::ISceneNode *n = collisionManager -> getSceneNodeAndCollisionPointFromRay(ray, point, triangle, 0, node);
-
-	if (n && n != nullptr) {
-		collisionNode = new SceneNode(n);
-		return collisionNode;
-	}
-
-	return nullptr;
+	return -1;
 }
 
-i32 SceneNode::getID(){
-	return node->getID();
-}
-
-std::string SceneNode::getName(){
-	return node->getName();
-}
-
-scene::ISceneNode *SceneNode::getSceneNode(){
+OBDSceneNode *SceneNode::getSceneNode(){
 	return node;
 }

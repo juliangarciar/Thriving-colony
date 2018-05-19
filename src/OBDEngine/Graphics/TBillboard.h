@@ -15,15 +15,15 @@ class TBillboard : public TEntity {
 
         void endDraw();
 
-        void setColor(OBDColor*, OBDColor*);
+        void setColor(OBDColor, OBDColor);
 
         void setPosition(glm::vec3);
 
         void setSize(f32, f32, f32);
 
-        OBDColor* getTopColor();
+        OBDColor getTopColor();
 
-        OBDColor* getBottomColor();
+        OBDColor getBottomColor();
 
         glm::vec3 getPosition();
 
@@ -38,8 +38,8 @@ class TBillboard : public TEntity {
 
         GLuint vertexbuffer;
 
-        OBDColor* topColor;
-        OBDColor* bottomColor;
+        OBDColor topColor;
+        OBDColor bottomColor;
         
         f32 height;
         f32 topWidth;

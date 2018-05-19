@@ -35,6 +35,8 @@ WorldGeometry::~WorldGeometry(){
     delete quadTree;
 }
 
+const f32 PI = 3.14159265359f;
+
 void WorldGeometry::Init(i32 _cellSize, i32 _mapX, i32 _mapY, i32 _quadDepth){
 /* Calculates the maximun N cells and reserve memory */
     cellSize = _cellSize;

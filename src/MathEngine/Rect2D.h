@@ -1,10 +1,7 @@
 #ifndef RECT_H
 #define RECT_H
 
-#include <irrlicht/irrlicht.h>
 #include <Types.h>
-
-using namespace irr;
 
 template <class T>
 class Rect2D {

@@ -6,7 +6,7 @@
 
 #include <GraphicEngine/Terrain.h>
 #include <GraphicEngine/Light.h>
-#include <GraphicEngine/SkyDome.h>
+#include <GraphicEngine/Skybox.h>
 
 #include <Types.h>
 
@@ -166,9 +166,12 @@ class Map {
 
         //Position of the terrain correspondent to the position of the mouse cursor.
         Vector3<f32> collisionPoint;
+		
+        //Skybox of the map.
+        Skybox* skybox;
 
         //Skydome of the map.
-        SkyDome *skydome;
+        //SkyDome *skydome;
 
 		//MapMargins
 		Margins *mapMargins;

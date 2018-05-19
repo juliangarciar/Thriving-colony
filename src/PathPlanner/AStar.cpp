@@ -25,7 +25,7 @@ AStar::~AStar(){
 }
 
 void AStar::Search(){
-    IndexedPriorityQLow<float> pq(FCosts, MAX);
+    IndexedPriorityQLow<f32> pq(FCosts, MAX);
     pq.insert(sourceIndex);
     while(!pq.empty()){
         i32 closestIndex = pq.Pop();

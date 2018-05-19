@@ -1,21 +1,21 @@
 #include "Window.h"
-using namespace irr;
 
 Window* Window::pinstance = 0;
 
 Window* Window::Instance() {
-    
     if(pinstance == 0) {
         pinstance = new Window();
     }
-    
     return pinstance;
 }
 
 Window::Window() {
     closeWindow = false;
     
-    glfwInit();
+    if(!glfwInit()) {
+		std::cout << "Failed to initialize GLFW" << std::endl;
+		exit(0);
+	}
 
     // Init last delta time
     lastDeltaTime = 0.014;
@@ -32,6 +32,12 @@ void Window::Init(i32 width, i32 height){
 
     glfwSetTime(0);
 
+	glfwWindowHint(GLFW_SAMPLES, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // To make MacOS happy; should not be needed
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
     // Create an application window with the following settings:
     window = glfwCreateWindow(windowWidth, windowHeight, "Thriving Colony", nullptr, nullptr);
     if (window == nullptr) {
@@ -40,26 +46,14 @@ void Window::Init(i32 width, i32 height){
         exit(0);
     }
 
+    std::cout << "Using OpenGL version: " <<  glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MAJOR) << "." << glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MINOR) << std::endl;
+
     glfwMakeContextCurrent(window);
 
-    irr::SIrrlichtCreationParameters params;
-    params.DeviceType = E_DEVICE_TYPE::EIDT_GLFW3;
-    params.DriverType = video::E_DRIVER_TYPE::EDT_OPENGL;
-    params.WindowId = window;
-    params.IgnoreInput = true;
-    params.WindowSize = core::dimension2du(windowWidth, windowHeight);
-    device = createDeviceEx(params);
-    if (!device) {
-        std::cout << "Failed to initialize Irrlicht" << std::endl;
-        exit(0); 
-    }
-
-    // create video driver
-	driver = device -> getVideoDriver();
-    driver -> setTextureCreationFlag(video::ETCF_ALWAYS_32_BIT, true);
-
-    // create scene manager
-	scene = device -> getSceneManager();
+    e = new OBDEngine();
+	e -> Init(windowWidth, windowHeight);
+	e -> createShaderProgram("defaultProgram", "media/shaders/vertexShader.glsl", "media/shaders/fragmentShader.glsl");
+	e -> setCurrentShaderProgram("defaultProgram");
    
     // create gui manager    
     gui = new nanogui::Screen();
@@ -75,6 +69,7 @@ void Window::Init(i32 width, i32 height){
 
     glfwSetFramebufferSizeCallback(window,
         [](GLFWwindow *w, i32 width, i32 height) {
+			Window::Instance() -> getEngine() -> setWindowSize(width, height);
             Window::Instance() -> getGUIEnvironment() -> resizeCallbackEvent(width, height);
 			Window::Instance() -> windowWidth = width;
 			Window::Instance() -> windowHeight = height;
@@ -84,6 +79,8 @@ void Window::Init(i32 width, i32 height){
     );
 
     dtThen = glfwGetTime();
+
+    billboardLayer = e -> createShaderedSceneNode("media/shaders/vertexShaderBillboards.glsl", "media/shaders/fragmentShaderBillboards.glsl");
 }
 
 void Window::setGUI(){ 
@@ -92,20 +89,18 @@ void Window::setGUI(){
 }
 
 void Window::beginScene(){
-    double now = glfwGetTime();
+    f64 now = glfwGetTime();
     lastDeltaTime = deltaTime;
-    deltaTime = (double)(now - dtThen); // Time in seconds
+    deltaTime = (f64)(now - dtThen); // Time in seconds
     dtThen = now;
-    
-
-    driver -> beginScene(true, true, video::SColor(0,0,0,0));
 }
 
-void Window::endScene(bool b){
-    if (b) scene -> drawAll();
+void Window::endScene(){
+	e->draw();
     gui -> drawWidgets();
     glEnable(GL_DEPTH_TEST);
-    driver -> endScene();
+	glfwSwapBuffers(window);
+    glfwPollEvents();
 }
 
 void Window::close(){
@@ -113,13 +108,15 @@ void Window::close(){
 }
 
 bool Window::isOpen(){
-    glfwPollEvents();
     return (!glfwWindowShouldClose(window) && !closeWindow);
 }
 
 void Window::onClose(){
-    device -> drop();
     glfwTerminate();
+}
+
+OBDEngine *Window::getEngine(){
+	return e;
 }
 
 void Window::setResizeCallback(std::function<void(i32, i32)> f){
@@ -128,18 +125,6 @@ void Window::setResizeCallback(std::function<void(i32, i32)> f){
 
 void Window::triggerResizeCallback(i32 width, i32 height){
 	if (resizeCallback) resizeCallback(width, height);
-}
-
-IrrlichtDevice* Window::getDevice() {
-    return device;
-}
-
-video::IVideoDriver* Window::getVideoDriver() {
-    return driver;
-}
-
-scene::ISceneManager* Window::getSceneManager() {
-    return scene;
 }
 
 nanogui::Screen* Window::getGUIEnvironment(){
@@ -167,9 +152,13 @@ f32 Window::getDeltaTimeVariance() const{
 }
 
 void Window::calculateFramerate() {
-    framerate = floor(1.0 / getDeltaTime());
+    framerate = floor(1.0 / deltaTime);
 }
 
 i32 Window::getFrameRate() {
     return framerate;
+}
+
+OBDSceneNode* Window::getBillboardLayer() {
+    return billboardLayer;
 }

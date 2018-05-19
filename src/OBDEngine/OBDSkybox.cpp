@@ -2,8 +2,8 @@
 
 #include "Graphics/TEntity.h"
 
-OBDSkybox::OBDSkybox(TTexture* texture) {
-    skyboxNode = new TNode(new TSkybox(texture));
+OBDSkybox::OBDSkybox(OBDTexture* texture) {
+    skyboxNode = new TNode(new TSkybox(texture->getTexture()));
 }
 
 OBDSkybox::~OBDSkybox() {

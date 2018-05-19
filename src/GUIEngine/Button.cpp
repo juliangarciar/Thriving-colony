@@ -13,7 +13,7 @@ Button::Button(GUIElement *parent, std::string buttonText) {
 }
 
 Button::~Button() {
-    for (int i = 0; i < children.size(); i++){
+    for (i32 i = 0; i < children.size(); i++){
         //if (children[i] != nullptr && children[i] -> getGUIElement() != nullptr) delete children[i];
     }
     //ToDo: eliminar este

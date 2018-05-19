@@ -16,7 +16,6 @@
  * @brief Create a CameraController type object.
  */
 class CameraController {
-	
 	public:
 		/**
 		* @brief CameraController constructor
@@ -33,7 +32,7 @@ class CameraController {
 		* 
 		* @param Vector3 that will be the target position.
 		*/
-		void Init(Vector3<float>);
+		void Init(Vector3<f32>);
 
 		/**
 		* @brief Move the camera up, down, right or left if the mouse cursor is on the up, down, right or left edge of the window.

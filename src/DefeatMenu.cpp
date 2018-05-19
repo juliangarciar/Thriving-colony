@@ -4,10 +4,10 @@
 
 DefeatMenu::DefeatMenu() {
     buttonQuit = new Button("Quit");
-    buttonQuit -> setPosition(Vector2<int>(600, 400));
+    buttonQuit -> setPosition(Vector2<i32>(600, 400));
 
     buttonStart = new Button("Main Menu");
-    buttonStart -> setPosition(Vector2<int>(600, 300));
+    buttonStart -> setPosition(Vector2<i32>(600, 300));
 
     winText = new Label("Defeat");
     Window::Instance() -> setGUI();

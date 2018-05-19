@@ -1,18 +1,17 @@
 #include "Texture.h"
 #include "Window.h"
 
-using namespace irr;
-
 Texture::Texture(const char* path) {
-    texture = Window::Instance() -> getVideoDriver() -> getTexture(path);
+	if (strchr(path,'.') != NULL){
+		texture = Window::Instance()->getEngine()->createTexture(OBDEnums::TextureTypes::TEXTURE_DIFFUSE, path);
+	}
 }
 
 Texture::~Texture() {
-    //texture -> remove();
     delete texture;
-    texture = nullptr;
+	texture = nullptr;
 }
 
-video::ITexture *Texture::getTexture() {
+OBDTexture *Texture::getTexture() {
     return texture;
 }

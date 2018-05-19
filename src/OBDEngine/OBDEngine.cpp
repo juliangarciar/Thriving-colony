@@ -235,7 +235,6 @@ ResourceManager *OBDEngine::getResourceManager(){
 }
 
 //////SANDBOX//////
-
 OBDAnimation* OBDEngine::createAnimation(std::string anim) {
     //ToDo: hacer animaciones
     return new OBDAnimation(defaultSceneNode);
@@ -256,10 +255,9 @@ OBDTile* OBDEngine::createTile(ResourceIMG* _texture, glm::vec2 _position){
     return tmp;
 }
 
-OBDSkybox* OBDEngine::createSkybox(TTexture* texture) {
+OBDSkybox* OBDEngine::createSkybox(OBDTexture* texture) {
     OBDSkybox* skybox = new OBDSkybox(texture);
     defaultSceneNode -> addChild(skybox);
     return skybox;
 }
-
 /////////////////

@@ -281,7 +281,7 @@ class OBDEngine {
          * @param texture 
          * @return OBDSkybox* 
          */
-        OBDSkybox* createSkybox(TTexture* texture);
+        OBDSkybox* createSkybox(OBDTexture* texture);
 
 		/////////////////////////////
     private:
