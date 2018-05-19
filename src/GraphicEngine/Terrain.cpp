@@ -7,11 +7,15 @@ Terrain::Terrain(const char* heightMap) {
 	t->rotate(glm::vec3(0, 1, 0), 180);
 	t->translate(glm::vec3(256, 0, 0));
 	t->refreshModelMatrix(glm::mat4(1.0f));
+	terrainTex = nullptr;
+	detailTex = nullptr;
 }
 
 Terrain::~Terrain() {
 	delete t;
 	t = nullptr;
+	if (terrainTex != nullptr) delete terrainTex;
+	if (detailTex != nullptr) delete detailTex;
 }
 
 void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture) {

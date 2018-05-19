@@ -104,6 +104,27 @@ class OBDEngine {
          */
         OBDObject* createObject(OBDSceneNode*, u32, std::string, bool);
 
+        /**
+         * @brief 
+         * 
+         * @param vector of objects
+         * @param material
+         * @param autoload
+         * @return OBDAnimation* 
+         */
+        OBDAnimation* createAnimation(std::vector<std::string>, std::string, bool);
+        
+        /**
+         * @brief 
+         * 
+         * @param parent
+         * @param vector of objects
+         * @param material
+         * @param autoload
+         * @return OBDAnimation* 
+         */
+        OBDAnimation* createAnimation(OBDSceneNode*, std::vector<std::string>, std::string, bool);
+
 		/**
 		 * @brief Create a Terrain object
 		 * @param terrain path
@@ -156,6 +177,13 @@ class OBDEngine {
          * @param sync 
          */
         void loadObjectTexturesFromMTL(OBDObject *, ResourceMTL *m, bool = true);
+
+        /**
+         * @brief 
+         * @param r 
+         * @param sync 
+         */
+        void loadAnimationTexturesFromMTL(OBDAnimation *, ResourceMTL *m, bool = true);
 
         /**
          * @brief 
@@ -241,23 +269,6 @@ class OBDEngine {
 
         
 		////////////SANDBOX////////////
-
-        /**
-         * @brief 
-         * 
-         * @param 
-         * @return OBDAnimation* 
-         */
-        OBDAnimation* createAnimation(std::string);
-        
-        /**
-         * @brief 
-         * 
-         * @param 
-         * @param 
-         * @return OBDAnimation* 
-         */
-        OBDAnimation* createAnimation(OBDSceneNode*, std::string);
 
 		/**
 		 * @brief Julian, genera comentarios, primer aviso xD

@@ -4,11 +4,17 @@ OBDMesh::OBDMesh(glslMesh *m, OBDMaterial *mat) : OBDEntity() {
 	aabbMin = glm::vec4(0,0,0,1);
 	aabbMax = glm::vec4(1,1,1,1);
 
+	mesh = m;
+	material = mat;
+
     meshNode = new TNode(new TMesh(m, mat), scaleNode);
 }
 
 OBDMesh::~OBDMesh() {
-	//Se borra en OBDEntity
+	delete mesh;
+	mesh = nullptr;
+	delete material;
+	material = nullptr;
 }
 
 void OBDMesh::refreshBoundingBox(){

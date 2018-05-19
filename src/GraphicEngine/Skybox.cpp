@@ -8,5 +8,6 @@ Skybox::Skybox(Texture* tex) {
 }
 
 Skybox::~Skybox() {
-    
+    delete skybox;
+	skybox = nullptr;
 }

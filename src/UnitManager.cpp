@@ -93,6 +93,9 @@ UnitManager::~UnitManager() {
     delete inMapTroops;
 
     delete unitLayer;
+
+	delete baseUnits;
+	delete inQueueTroopsByBuilding;
 }
 //Create a new troops
 //In order to add a new unit, you must specify which one

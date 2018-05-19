@@ -397,14 +397,14 @@ void Unit::takeDamage(i32 _damage){
     tookDamageTimer -> restart();
     setDamageColor();
     if (currentHP < 1) {
-        bar->setColor(Color(0,0,0));
+        //bar->setColor(Color(0,0,0));
         //bar->setScale(0);
         unitManager->deleteUnit(ID);
         return;
     }
     else{
         percentage = currentHP / maxHP;
-        bar->setColor(Color((1.0f - percentage) * 255.0f, percentage * 255.0f, 0));
+        //bar->setColor(Color((1.0f - percentage) * 255.0f, percentage * 255.0f, 0));
         //bar->setScale(percentage);
         i32 _qnty = std::floor(currentHP / unitFighterHP);
         if(currentHP % unitFighterHP != 0){

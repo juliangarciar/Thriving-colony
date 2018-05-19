@@ -54,11 +54,6 @@ Entity::Entity(SceneNode* _layer,
 
     //Set model
     model = new Model(_layer, _id, _modelPath);
-    
-    //Set texture
-    baseMat = new Material(new Texture(_texturePath.c_str()));
-    baseMat -> setColor(Color(255, 255, 255, 255));
-	model -> setMaterial(baseMat);
 
 	// Set the color
     setBaseColor();
@@ -86,7 +81,6 @@ Entity::~Entity() {
     
     delete tookDamageTimer;
 
-    delete baseMat;
 	//Billboard
     delete barBg;
     delete bar;

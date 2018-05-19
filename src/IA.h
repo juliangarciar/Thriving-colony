@@ -93,6 +93,14 @@ class IA : public Player {
          * @return Pointer to a ActiveSelector that will be the value of rootNode variable.
          */
         ActiveSelector* getRootNode();
+
+        /**
+         * @brief Checks if there are units idling.
+         * 
+         * @return true there are units idling or moving.
+         * @return false if there are units attacking.
+         */
+        bool getIdleTroops();
         
         /**
          * @brief Get the speed at which is going to be update the next choose of the AI.
