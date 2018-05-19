@@ -16,8 +16,8 @@ GameState::~GameState() {
 
 void GameState::Init() {
     //Init players
-    human -> Init("Kaonov"); 
-    ia -> Init("Drorania");
+    human -> Init("Drorania"); 
+    ia -> Init("Kaonov");
 
     //Init HUD
     hud -> Init();
@@ -75,7 +75,7 @@ void GameState::Input() {
             i32 idBuilding = human -> getBuildingManager() -> getCollisionID();
             if (idBuilding != -1){
                 if (!human -> getUnitManager() -> isTroopSelected())
-                    IO::Instance() -> getMouse() -> changeCustomIcon(0);
+                    IO::Instance() -> getMouse() -> changeCustomIcon(1);
                 
                 if (IO::Instance() -> getMouse() -> leftMousePressed()) {
                     Building *b = human->getBuildingManager()->getBuilding(idBuilding);
@@ -104,24 +104,24 @@ void GameState::Input() {
 
             //Interactions with IA's buildings
             i32 idBuildingIA =  ia -> getBuildingManager() -> getCollisionID();
-            if (idBuildingIA != -1 && human -> getUnitManager() -> isTroopSelected()){
-                IO::Instance() -> getMouse() -> changeCustomIcon(0);
+            if (idBuildingIA != -1){
+                IO::Instance() -> getMouse() -> changeCustomIcon(2);
                 
-                if (IO::Instance() -> getMouse() -> rightMousePressed()) {
-                    human->getUnitManager()->getSelectedTroop()->setTarget(ia->getBuildingManager()->getBuilding(idBuildingIA));
+                if(human -> getUnitManager() -> isTroopSelected()){
+                    if (IO::Instance() -> getMouse() -> rightMousePressed()) {
+                        human->getUnitManager()->getSelectedTroop()->setTarget(ia->getBuildingManager()->getBuilding(idBuildingIA));
+                    }
                 }
-                
+
                 onMap = false;
             }
             
 			//Interactions with Human Units
             i32 idTroop = human -> getUnitManager() -> getCollisionID();
             if (idTroop != -1){
-                //if (!human -> getUnitManager() -> isTroopSelected())
-                //IO::Instance() -> getMouse() -> changeCustomIcon(0);
-                IO::Instance() -> getMouse() -> changeCustomIcon(0);
+                IO::Instance() -> getMouse() -> changeCustomIcon(1);
+
                 if (IO::Instance() -> getMouse() -> leftMousePressed()){
-                    IO::Instance() -> getMouse() -> changeCustomIcon(0);
                     human -> getUnitManager() -> selectTroop(idTroop);
                 }
                 
@@ -130,13 +130,15 @@ void GameState::Input() {
 
 			//Interactions with IA Units
             i32 idTroopIA = ia -> getUnitManager() -> getCollisionID();
-            if (idTroopIA != -1 && human -> getUnitManager() -> isTroopSelected()){
-                IO::Instance() -> getMouse() -> changeCustomIcon(0);
+            if (idTroopIA != -1){
+                IO::Instance() -> getMouse() -> changeCustomIcon(2);
 
-                if (IO::Instance() -> getMouse() -> rightMousePressed()){
-                    human->getUnitManager()->getSelectedTroop()->setTarget(ia->getUnitManager()->getUnit(idTroopIA));
+                if(human -> getUnitManager() -> isTroopSelected()){
+                    if (IO::Instance() -> getMouse() -> rightMousePressed()){
+                        human->getUnitManager()->getSelectedTroop()->setTarget(ia->getUnitManager()->getUnit(idTroopIA));
+                    }
                 }
-                
+
                 onMap = false;
             }
             
@@ -144,7 +146,8 @@ void GameState::Input() {
             if (onMap){
                 if (human -> getUnitManager() -> isTroopSelected()){
                     IO::Instance() -> getMouse() -> changeCustomIcon(0);
-                } else if (human -> getUnitManager() -> isDeployingTroop()){
+                } 
+                else if (human -> getUnitManager() -> isDeployingTroop()){
                     IO::Instance() -> getMouse() -> changeCustomIcon(0);
                     i32 idTroop = human -> getUnitManager() -> getDeployingTroopID();
                     if (idTroop > 0){
@@ -175,6 +178,7 @@ void GameState::Input() {
                     hud -> hidePopup();
                 // Si no, pausa el juego
                 else {
+                    IO::Instance() -> getMouse() -> changeCustomIcon(0);
                     pauseMenu = new PauseMenu();
                     Window::Instance() -> setGUI();
                     pauseMenu -> setHUDEvents();
