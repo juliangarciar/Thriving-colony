@@ -190,7 +190,7 @@ void Mouse::setPosition(Vector2<i32> p){
 // Icon
 void Mouse::changeIcon(i32 shape){
     if (isVisible() && shape != currentCursor) {
-        glfwDestroyCursor(cursor);
+        //glfwDestroyCursor(cursor);
         cursor = glfwCreateStandardCursor(shape);
         glfwSetCursor(Window::Instance() -> getWindow(), cursor);
         currentCursor = shape;
@@ -243,14 +243,10 @@ void Mouse::changeCustomIcon(i32 shape){
 }
 
 void Mouse::loadCursorIcon(unsigned char* _data, i32 _width, i32 _height, i32 _channels){
-    unsigned char pixels[_width * _height * _channels];
-    memset(pixels, 0xff, sizeof(pixels));
-
     GLFWimage image;
     image.width = _width;
     image.height = _height;
-    image.pixels = pixels;
+    image.pixels = _data;
     GLFWcursor* newCursor = glfwCreateCursor(&image, 0, 0); 
     customCursor.push_back(newCursor);
-    
 }
