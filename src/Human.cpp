@@ -27,6 +27,7 @@ Human::~Human() {
 
 void Human::Init(std::string _race) {
     Player::Init();
+
     buildings = new BuildingManager(Enumeration::Team::Human, _race);
     units = new UnitManager(Enumeration::Team::Human, _race);
 }

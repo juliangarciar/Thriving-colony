@@ -61,28 +61,13 @@ class CameraController {
 		* @return A pointer to an object of Camera type.
 		*/
 		Camera *getCamera();
-		
-		/**
-		* @brief Set the value of zoomDistanceFromTarget variable.
-		* 
-		* @param i32 is the value that will be assigned to zoomDistanceFromTarget variable.
-		*/
-		void setZoomDistanceFromTarget(i32);
-		
-		/**
-		* @brief Set the value of rotateDegrees variable.
-		* 
-		* @param i32 x is the value that will be assigned to the x component of rotateDegrees variable.
-		* @param i32 y is the value that will be assigned to the y component of rotateDegrees variable. 
-		*/
-		void setRotateDegrees(i32 x, i32 y);
 
 		/**
 		* @brief Get the position of the current target.
 		* 
 		* @return Vector3 with the value of tarPos variable.
 		*/
-		Vector3<f32> getTarPos();
+		Vector3<f32> getTargetPosition();
 
 		/**
 		* @brief Get the current position of the camera.
@@ -90,7 +75,48 @@ class CameraController {
 		* @return Vector3 with the value of camPos variable.
 		*/
 		Vector3<f32> getCameraPosition();
+
+		//Edges of the window. 
+		Vector2<f32> screenMargin;
+
+		//Center of the screen margin for rotation/inclination
+		Vector2<f32> centerMargin;
+
+		//Speed at which the camera is going to move.
+		f32 camSpeed;
+
+		//Speed at which the camera is going to rotate.
+		f32 rotSpeed;
+
+		//Speed at which the camera is going to tilt.
+		f32 inclSpeed;
+
+		//Number of times you can scroll for zoom
+		i32 zoomLevels;
+
+		//Minimum tilt of the camera.
+		f32 minInclination;
+
+		//Maximum tilt of the camera.
+		i32 maxInclination;
+
+		//Minimun zoom of the camera.
+		i32 minZoom;
 		
+		//Maximum zoom of the camera.
+		i32 maxZoom;
+
+		//Center point of the current window size.
+		Vector2<i32> screenCenter;
+
+		//Initial rotation degrees of the camera.
+		Vector2<f32> rotateDegrees;
+
+		//Initial distance from the target position to the camera position.
+		Vector3<f32> distanceToTarget;
+
+		//Initial zoom distance from target
+		f32 zoomDistanceFromTarget;
 	private:
 		/**
 		* @brief 
@@ -121,62 +147,18 @@ class CameraController {
 		bool zoomMode;
 
 		//True when the space has been pressed since the last update and false in other case.
-	bool centerCameraMode;
+		bool centerCameraMode;
 
-		//Up and down edges of the window. 
-		i32 screenMarginV;
-
-		//Right and left edges of the window.
-		i32 screenMarginH;
-
-		//
+		//Camera direction
 		i32 direction;
-
-		//Speed at which the camera is going to move.
-		f32 camSpeed;
-
-		//Speed at which the camera is going to rotate.
-		f32 rotSpeed;
-
-		//Speed at which the camera is going to tilt.
-		f32 inclSpeed;
-
-		//Minimum tilt of the camera.
-		f32 minInclination;
-
-		//Maximum tilt of the camera.
-		i32 maxInclination;
-
-		//Current rotate degrees of the camera.
-		Vector2<f32> rotateDegrees;
-
-		//Current distance from the target position to the camera position.
-		Vector3<f32> distanceToTarget;
-
-		//Minimun zoom of the camera.
-		i32 minZoom;
-		
-		//Maximum zoom of the camera.
-		i32 maxZoom;
-
-		//
-		i32 zoomLevels;
-
-		//
-		f32 zoomDistanceFromTarget;
 
 		//
 		f32 recipsqrt2;
 
-		//
-		i32 centerMargin;
-
 		//Current mouse cursor position.
 		Vector2<i32> cursorPosSaved;
 		
-		//Center point of the current window size.
-		Vector2<i32> screenCenter;
-
+		//LoD timer
 		Timer* updateTimer;
 };
 #endif

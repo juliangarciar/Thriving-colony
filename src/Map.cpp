@@ -39,11 +39,21 @@ void Map::Init() {
 
     //Create map
     terrain = new Terrain(j["map"]["heightmap"].get<std::string>().c_str());
-    //Set map texture
     terrain -> setTexture(new Texture(j["map"]["texture"].get<std::string>().c_str()), new Texture(j["map"]["detail_texture"].get<std::string>().c_str()));
-    terrain -> setSize(Vector3<f32>(j["map"]["size"]["x"].get<int>(), j["map"]["size"]["y"].get<int>(), j["map"]["size"]["z"].get<int>()));
-    
+    terrain -> setSize(Vector3<f32>(j["map"]["scale"]["x"].get<int>(), j["map"]["scale"]["y"].get<int>(), j["map"]["scale"]["z"].get<int>()));
+	mapMargins = new Margins();
+	mapMargins->top = j["map"]["margins"]["top"].get<int>();
+	mapMargins->right = j["map"]["margins"]["right"].get<int>();
+	mapMargins->bottom = j["map"]["margins"]["bottom"].get<int>();
+	mapMargins->left = j["map"]["margins"]["left"].get<int>();
+    WorldGeometry::Instance() -> Init(cSize, i32(j["map"]["size"]["width"].get<int>()), i32(j["map"]["size"]["height"].get<int>()), cDepth);
+
     loadProgress(20);
+
+    //Skydome
+    skydome = new SkyDome(new Texture(j["map"]["skybox_texture"].get<std::string>().c_str()));
+
+    loadProgress(30);
 
     //Luz
     for (auto& element : j["lights"]){
@@ -55,34 +65,30 @@ void Map::Init() {
         lights.push_back(light);
     }
 
-    loadProgress(30);
+    loadProgress(35);
 
     //Hud buttons
     for (auto& element : j["buildables"]){
         Hud::Instance()->setButtonStatus(element["type"].get<std::string>(), element["isBuildable"].get<bool>());
     }
     Hud::Instance()->setButtonStatus("expandableTerrain", j["expandableTerrain"].get<bool>());
-    loadProgress(40);
+    
+	loadProgress(40);
 
-    //ToDo: leer del mapa JSON el tamaño de celulas y de mapa
-    WorldGeometry* newSystem = WorldGeometry::Instance();
-    newSystem->Init(cSize, i32(10240), i32(10240), 4);
-
-    //Skydome
-    skydome = new SkyDome(new Texture(j["map"]["skybox_texture"].get<std::string>().c_str()));
-
-    loadProgress(50);
+    //Game productivity
+    metalProductivity = j["game"]["metal_productivity"].get<i32>();
+    crystalProductivity = j["game"]["crystal_productivity"].get<i32>();
+	
+	loadProgress(50);
 
     //Human
-    Human::Instance()->setMetalAmount(j["player"]["initial_metal"].get<i32>());
-    Human::Instance()->setCrystalAmount(j["player"]["initial_crystal"].get<i32>());
-    Human::Instance()->setSiderurgyProductivity(j["player"]["siderurgy_productivity"].get<i32>());
-    Human::Instance()->setQuarryProductivity(j["player"]["quarry_productivity"].get<i32>());
-    Human::Instance()->setBuildingRadious(j["player"]["building_radious"].get<f32>());
+    Human::Instance() -> metalAmount = j["player"]["initial_metal"].get<i32>();
+    Human::Instance() -> crystalAmount = j["player"]["initial_crystal"].get<i32>();
+    Human::Instance() -> buildableRange = j["player"]["building_radius"].get<f32>();
 
     Vector2<f32> humanPosition(j["player"]["mainBuilding"]["position"]["x"], j["player"]["mainBuilding"]["position"]["z"]);
     Human::Instance() -> getBuildingManager() -> createBuilding(humanPosition, "MainBuilding", 0);
-    Human::Instance() -> setHallPosition(Vector3<f32>(humanPosition.x, terrain->getY(humanPosition.x, humanPosition.y), humanPosition.y));
+    Human::Instance() -> hallPosition = Vector3<f32>(humanPosition.x, terrain->getY(humanPosition.x, humanPosition.y), humanPosition.y);
     humanStartPos = humanPosition;
 
     for (auto& element : j["player"]["buildings"]){
@@ -93,15 +99,13 @@ void Map::Init() {
     loadProgress(70);
 
     //IA
-    IA::Instance()->setMetalAmount(j["IA"]["initial_metal"].get<i32>());
-    IA::Instance()->setCrystalAmount(j["IA"]["initial_crystal"].get<i32>());
-    IA::Instance()->setSiderurgyProductivity(j["IA"]["siderurgy_productivity"].get<i32>());
-    IA::Instance()->setQuarryProductivity(j["IA"]["quarry_productivity"].get<i32>());
-    IA::Instance()->setBuildingRadious(j["IA"]["building_radious"].get<f32>());
+    IA::Instance() -> metalAmount = j["IA"]["initial_metal"].get<i32>();
+    IA::Instance() -> crystalAmount = j["IA"]["initial_crystal"].get<i32>();
+    IA::Instance() -> buildableRange = j["IA"]["building_radius"].get<f32>();
 
     Vector2<f32> iaPosition(j["IA"]["mainBuilding"]["position"]["x"], j["IA"]["mainBuilding"]["position"]["z"]);
     IA::Instance() -> getBuildingManager() -> createBuilding(iaPosition, "MainBuilding", 0);
-    IA::Instance() -> setHallPosition(Vector3<f32>(iaPosition.x, terrain->getY(iaPosition.x, iaPosition.y), iaPosition.y));
+    IA::Instance() -> hallPosition = Vector3<f32>(iaPosition.x, terrain->getY(iaPosition.x, iaPosition.y), iaPosition.y);
     iaStartPos = iaPosition;
     
     for(auto& element : j["IA"]["buildings"]){
@@ -113,8 +117,12 @@ void Map::Init() {
 
     //Init camera controller
     camera = new CameraController();
-    camera -> setZoomDistanceFromTarget(j["camera"]["zoomDistanceFromTarget"].get<int>());
-    camera -> setRotateDegrees(j["camera"]["delta_x"].get<int>(), j["camera"]["delta_y"].get<int>());
+	camera -> minZoom = j["camera"]["zoom"]["min"].get<int>();
+	camera -> maxZoom = j["camera"]["zoom"]["max"].get<int>();
+	camera -> zoomDistanceFromTarget = j["camera"]["zoom"]["initialDistanceFromTarget"].get<int>();
+	camera -> minInclination = j["camera"]["rotation"]["min_inclination"].get<int>();
+	camera -> maxInclination = j["camera"]["rotation"]["max_inclination"].get<int>();
+	camera -> rotateDegrees = Vector2<f32>(j["camera"]["rotation"]["initialRotation"]["x"].get<int>(), j["camera"]["rotation"]["initialRotation"]["y"].get<int>());
     camera -> Init(Vector3<f32>(humanStartPos.x, terrain->getY(humanStartPos.x,humanStartPos.y), humanStartPos.y));
 
     loadProgress(100);
@@ -165,6 +173,18 @@ Terrain* Map::getTerrain() {
 
 CameraController* Map::getCamera() {
     return camera;
+}
+
+Margins *Map::getMapMargins(){
+	return mapMargins;
+}
+
+i32 Map::getMetalProductivity(){
+	return metalProductivity;
+}
+
+i32 Map::getCrystalProductivity(){
+	return crystalProductivity;
 }
 
 void Map::loadProgress(i32 p){

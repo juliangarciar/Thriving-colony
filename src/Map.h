@@ -85,6 +85,27 @@ class Map {
          */
         CameraController* getCamera();
 
+		/**
+		 * @brief Get the Map Margins object
+		 * 
+		 * @return Margins* 
+		 */
+		Margins *getMapMargins();
+
+		/**
+		 * @brief Get the Metal Productivity object
+		 * 
+		 * @return i32 
+		 */
+		i32 getMetalProductivity();
+
+		/**
+		 * @brief Get the Crystal Productivity objects
+		 * 
+		 * @return i32 
+		 */
+		i32 getCrystalProductivity();
+
     protected:
         /**
 		 * @brief Map constructor.
@@ -126,8 +147,16 @@ class Map {
         Vector3<f32> collisionPoint;
 
         //Skydome of the map.
-        SkyDome* skydome;
+        SkyDome *skydome;
 
+		//MapMargins
+		Margins *mapMargins;
+		
+        //Production of metal.
+        i32 metalProductivity;
+
+        //Production of crystal.
+        i32 crystalProductivity;
 };
 
 #endif

@@ -54,10 +54,8 @@ void UnitFighter::move(){
     }
 }
 
-//ToDo: Check this method
 void UnitFighter::update(){
     if(isMoving){
-        //nearFighters = _nearFighters;
         move();
     }
 }

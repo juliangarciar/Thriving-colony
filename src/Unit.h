@@ -42,11 +42,6 @@ class Unit : public Entity {
         virtual void preTaxPlayer();
 
         /**
-         * #brief Increase the palyer's army size.
-         */
-        virtual void posTaxPlayer();
-
-        /**
          * @brief Update the troop depending of its state.
         */
         void update();
@@ -125,7 +120,7 @@ class Unit : public Entity {
          * 
          * @param The Vector2 is the position that is going to be assigned to the unit.
          */
-        void setTroopPosition(Vector2<f32>);
+        void setUnitPosition(Vector2<f32>);
 
         /**
          * @brief Set the position where the unit is going to walk to.

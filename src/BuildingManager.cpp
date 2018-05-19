@@ -81,9 +81,9 @@ void BuildingManager::drawBuilding() {
 		tempBuilding -> setPosition(dummy);
 
 		if(team == Enumeration::Team::Human){
-			Vector3<f32> tmp = Human::Instance()->getHallPosition();
+			Vector3<f32> tmp = Human::Instance()->hallPosition;
 			f32 distance = std::sqrt(std::pow(tmp.x - dummy.x, 2) + std::pow(tmp.z - dummy.y, 2));
-			if(Human::Instance()->getBuildingRadious() < distance){
+			if(Human::Instance()->buildableRange < distance){
 				canBuild = false;
 			}
 			else{
@@ -99,10 +99,10 @@ void BuildingManager::drawBuilding() {
 			return;
 		}
 
-		if (IO::Instance() -> getKeyboard() -> keyPressed(82)) {
+		if (IO::Instance() -> getKeyboard() -> keyPressed(82)) { //ToDo: fachada
 			f32 rot = tempBuilding -> getModel() -> getRotation() . y;
 			rot += 90;
-			tempBuilding -> getModel() -> setRotation(Vector3<f32>(0,rot,0));
+			tempBuilding -> getModel() -> setRotation(Vector3<f32>(0, rot, 0));
 		}
 		
 		if (!canBuild) {
@@ -118,7 +118,6 @@ void BuildingManager::drawBuilding() {
     }
 }
 
-/* Check this sida method */
 void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 buildTime){
 	std::map<std::string, BuildingData>::iterator it = baseBuildings.find(type);
 	if (it != baseBuildings.end()){
@@ -166,23 +165,6 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
 	}
 }
 
-//Checks if the player, either the human or the AI can afford to build a specific building 
-bool BuildingManager::isSolvent(i32 metalCost, i32 crystalCost) {
-	i32 metalAmt = 0;
-	i32 crystalAmt = 0;
-	if (team == Enumeration::Team::Human) {
-		metalAmt = Human::Instance() -> getMetalAmount();
-		crystalAmt = Human::Instance() -> getCrystalAmount();
-	} else {
-		metalAmt = IA::Instance() -> getMetalAmount();
-		crystalAmt = IA::Instance() -> getCrystalAmount();
-	}
-	bool canPayMetal = metalAmt >= metalCost;
-	bool canPayCrystal = crystalAmt >= crystalCost;
-    
-    return (canPayMetal && canPayCrystal);
-}
-
 /**
  * This method is responsible for managing calls to isSolvent() for the human, registering the type
  * of the desired building and sending the aforementhioned method the prices. It has its own method
@@ -191,7 +173,10 @@ bool BuildingManager::isSolvent(i32 metalCost, i32 crystalCost) {
 bool BuildingManager::checkCanPay(std::string type) {
 	std::map<std::string, BuildingData>::iterator it = baseBuildings.find(type);
 	if (it != baseBuildings.end()){
-		return isSolvent(it->second.metalCost, it->second.crystalCost);
+		if (team == Enumeration::Team::Human)
+			return Human::Instance() -> isSolvent(it->second.metalCost, it->second.crystalCost, 0);
+		else
+			return IA::Instance() -> isSolvent(it->second.metalCost, it->second.crystalCost, 0);
 	}
 	return false;
 }
@@ -234,14 +219,14 @@ void BuildingManager::deleteBuilding(i32 id) {
     std::map<i32, Building*>::iterator it = inMapBuildings->find(id);
     if (it != inMapBuildings->end()){
 		if (it -> second -> getTeam() == Enumeration::Team::Human) {
-			Human::Instance() -> decreaseHappiness(it -> second -> getHappinessVariation());
+			Human::Instance() -> modifyHappiness(-it -> second -> getHappinessVariation());
 			if (it -> second -> getType() == "House") {
-				Human::Instance() -> decreasePeople(it -> second -> getCitizensVariation());
+				Human::Instance() -> modifyMaxPeople(-it -> second -> getCitizensVariation());
 			}
 		} else {
-			IA::Instance() -> decreaseHappiness(it -> second -> getHappinessVariation());
+			IA::Instance() -> modifyHappiness(-it -> second -> getHappinessVariation());
 			if (it -> second -> getType() == "House") {
-				IA::Instance() -> decreasePeople(it -> second -> getCitizensVariation());
+				IA::Instance() -> modifyMaxPeople(-it -> second -> getCitizensVariation());
 			}
 		}
 		buildingAmounts[it -> second -> getType()]--;

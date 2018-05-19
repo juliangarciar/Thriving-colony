@@ -162,22 +162,14 @@ void Unit::update() {
 void Unit::preTaxPlayer() {
     if (getTeam() == Enumeration::Team::Human) {
         Human::Instance() -> spendResources(getMetalCost(), getCrystalCost());
-        Human::Instance() -> increaseHappiness(getHappinessVariation());
-        Human::Instance() -> increaseCitizens(getCitizensVariation());
-        Human::Instance() -> increaseArmyLevel(armyLevel);
+        Human::Instance() -> modifyHappiness(getHappinessVariation());
+        Human::Instance() -> modifyCitizens(getCitizensVariation());
+        Human::Instance() -> modifyArmyLevel(armyLevel);
     } else {
         IA::Instance() -> spendResources(getMetalCost(), getCrystalCost());
-        IA::Instance() -> increaseHappiness(getHappinessVariation());
-        IA::Instance() -> increaseCitizens(getCitizensVariation());
-        IA::Instance() -> increaseArmyLevel(armyLevel);
-    }
-}
-
-void Unit::posTaxPlayer(){
-    if (getTeam() == Enumeration::Team::Human) {
-        Human::Instance() -> increaseArmySize();
-    } else {
-        IA::Instance() -> increaseArmySize();
+        IA::Instance() -> modifyHappiness(getHappinessVariation());
+        IA::Instance() -> modifyCitizens(getCitizensVariation());
+        IA::Instance() -> modifyArmyLevel(armyLevel);
     }
 }
 
@@ -320,7 +312,7 @@ void Unit::setUnitCell(Vector2<f32> vectorPosition) {
     WorldGeometry::Instance() -> setUnitCell(vectorPosition, this);
 }
 
-void Unit::setTroopPosition(Vector2<f32> vectorData) {
+void Unit::setUnitPosition(Vector2<f32> vectorData) {
     setPosition(vectorData);
     std::size_t size = unitFighters.size();
     for(std::size_t i = 0; i < size; i++){
@@ -437,10 +429,10 @@ void Unit::takeDamage(i32 _damage){
     
     i32 resistance = 0;
     if (team == Enumeration::Team::Human) {
-        resistance = Human::Instance() -> getResistance();
+        resistance = Human::Instance() -> getResistanceModifier();
     } 
     else {
-        resistance = IA::Instance() -> getResistance();
+        resistance = IA::Instance() -> getResistanceModifier();
     }
     i32 dmg = _damage - resistance;
 

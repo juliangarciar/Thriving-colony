@@ -72,7 +72,7 @@ void IA::Init(std::string _race) {
 
 void IA::Update() {
     units -> updateUnitManager();
-    Vector3<f32> tarPos = Map::Instance() -> getCamera() -> getTarPos();
+    Vector3<f32> tarPos = Map::Instance() -> getCamera() -> getTargetPosition();
     Vector2<f32> IAPos = buildings -> getBuilding(0) -> getPosition();
 
     if (((IAPos . x + 2000 > tarPos.x && IAPos . x - 2000 < tarPos.x) && (IAPos . y + 2000 > tarPos.z && IAPos . y - 2000 < tarPos.z)) || underAttack) {
@@ -95,7 +95,6 @@ void IA::CleanUp() {
     delete units;
     choices -> clear();
     delete choices;
-    delete updateTimer;
     delete updateFastTimer;
     delete updateSlowTimer;
     delete rootNode;

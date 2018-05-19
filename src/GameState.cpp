@@ -33,7 +33,7 @@ void GameState::Init() {
         ia -> getUnitManager() -> retractAllTroops();
     });
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::DeployTroopsIA, [&]() {
-        Vector3<f32> p = ia -> getHallPosition();
+        Vector3<f32> p = ia -> hallPosition;
         p.x = p.x + 200; //ToDo: hacer bien
         ia -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
     });
@@ -43,8 +43,8 @@ void GameState::Init() {
         human -> getUnitManager() -> retractAllTroops();
     });
     IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::DeployTroopsHuman, [&]() {
-        Vector3<f32> p = human -> getHallPosition();
-        p.x = p.x + 400; //ToDo: hacer bien
+        Vector3<f32> p = human -> hallPosition;
+        p.x = p.x + 200; //ToDo: hacer bien
         human -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
     });
 
@@ -73,7 +73,7 @@ void GameState::Input() {
 
             i32 onMap = true;
             bool sentToMainHall = false;
-            //Interactions with our entities
+            //Interactions with our buildings
             i32 idBuilding = human -> getBuildingManager() -> getCollisionID();
             if (idBuilding != -1){
                 if (!human -> getUnitManager() -> isTroopSelected())
@@ -83,6 +83,7 @@ void GameState::Input() {
                     Building *b = human->getBuildingManager()->getBuilding(idBuilding);
                     if (b != nullptr){
                         if (human -> getBuildingManager() -> checkFinished(idBuilding)) {
+							//ShowPopup
                             hud -> showPopup(b->getType());
                         }
                     }
@@ -93,6 +94,7 @@ void GameState::Input() {
                     if (human -> getUnitManager() -> isTroopSelected()) {
                         // Main hall
                         if (idBuilding == 0) {
+							//Retract
                             human -> getUnitManager() -> getSelectedTroop() -> switchState(Enumeration::UnitState::Retract);
                             sentToMainHall = true;
                         }
@@ -101,7 +103,20 @@ void GameState::Input() {
 
                 onMap = false;
             }
+
+            //Interactions with IA's buildings
+            i32 idBuildingIA =  ia -> getBuildingManager() -> getCollisionID();
+            if (idBuildingIA != -1 && human -> getUnitManager() -> isTroopSelected()){
+                IO::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
+
+                if (IO::Instance() -> getMouse() -> rightMousePressed()) {
+                    //ToDo: atacar
+                }
+                
+                onMap = false;
+            }
             
+			//Interactions with Human Units
             i32 idTroop = human -> getUnitManager() -> getCollisionID();
             if (idTroop != -1){
                 if (!human -> getUnitManager() -> isTroopSelected())
@@ -115,24 +130,13 @@ void GameState::Input() {
                 onMap = false;
             }
 
-            //Interactions with IA's entities
-            i32 idBuildingIA =  ia -> getBuildingManager() -> getCollisionID();
-            if (idBuildingIA != -1 && human -> getUnitManager() -> isTroopSelected()){
-                IO::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
-
-                if (IO::Instance() -> getMouse() -> rightMousePressed()) {
-                    //ToDo: atacar
-                }
-                
-                onMap = false;
-            }
-
+			//Interactions with IA Units
             i32 idTroopIA = ia -> getUnitManager() -> getCollisionID();
             if (idTroopIA != -1 && human -> getUnitManager() -> isTroopSelected()){
                 IO::Instance() -> getMouse() -> changeIcon(CURSOR_IBEAM);
 
                 if (IO::Instance() -> getMouse() -> rightMousePressed()){
-                    //ToDo: retract
+                    //ToDo: atacar
                 }
                 
                 onMap = false;

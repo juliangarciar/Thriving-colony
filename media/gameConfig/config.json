@@ -1,0 +1,14 @@
+{
+	"camera": {
+		"farValue": 42000,
+		"centerMargin": 20,
+		"camSpeed": 700,
+		"screenMargin": {
+			"width": 20,
+			"height": 20
+		},
+		"zoomLevels": 10,
+		"rotationSpeed": 2.0,
+		"inclinationSpeed": 2.0
+	}
+}

@@ -45,6 +45,7 @@ Building::Building(SceneNode *_layer,
 
 Building::~Building() {
     delete buildTimer;
+    buildTimer = nullptr;
 }
 
 void Building::startBuilding() {
@@ -65,13 +66,13 @@ void Building::taxPlayer(){
 void Building::adjustCityStats() {
     // Adjust the stats of the player
     if (getTeam() == Enumeration::Team::Human) {
-        Human::Instance() -> increaseHappiness(getHappinessVariation());
-        Human::Instance() -> increasePeople(getCitizensVariation());   
-        Human::Instance() -> increaseCityLevel(cityLevel);
+        Human::Instance() -> modifyHappiness(getHappinessVariation());
+        Human::Instance() -> modifyMaxPeople(getCitizensVariation());   
+        Human::Instance() -> modifyCityLevel(cityLevel);
     } else {
-        IA::Instance() -> increaseHappiness(getHappinessVariation());
-        IA::Instance() -> increasePeople(getCitizensVariation());   
-        IA::Instance() -> increaseCityLevel(cityLevel);
+        IA::Instance() -> modifyHappiness(getHappinessVariation());
+        IA::Instance() -> modifyMaxPeople(getCitizensVariation());   
+        IA::Instance() -> modifyCityLevel(cityLevel);
     }
 }
 

@@ -48,7 +48,7 @@ void WorldGeometry::Init(i32 _cellSize, i32 _mapX, i32 _mapY, i32 _quadDepth){
     quadTree = nullptr;
     squadPosition = std::vector< std::vector< Vector2<f32> > >(maxGameUnits);
     f32 gradesPerUnit;
-    const f32 radious = cellSize / 2;
+    const f32 radius = cellSize / 2;
 /* Pre-calculates postions for unitFighters */
     for(i32 i = 0; i < maxGameUnits; i++){
         squadPosition[i] = std::vector< Vector2<f32> >(i + 1);
@@ -59,7 +59,7 @@ void WorldGeometry::Init(i32 _cellSize, i32 _mapX, i32 _mapY, i32 _quadDepth){
             else{
                 gradesPerUnit = (360 / squadPosition[i].size()) * j * (PI / 180.0f);
             }
-            squadPosition[i][j] = Vector2<f32>(radious * std::cos(gradesPerUnit), radious * std::sin(gradesPerUnit)); 
+            squadPosition[i][j] = Vector2<f32>(radius * std::cos(gradesPerUnit), radius * std::sin(gradesPerUnit)); 
         }
     }
 /* Especifies the N cells each axis has */    

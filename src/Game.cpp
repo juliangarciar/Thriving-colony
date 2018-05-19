@@ -10,10 +10,6 @@ Game* Game::Instance() {
 }
 
 Game::Game() {
-    window = Window::Instance();
-
-    io = IO::Instance();
-
     menu = new MenuState();
     game = new GameState();
     win = new WinState();
@@ -33,6 +29,8 @@ Game::~Game() {
 }
 
 void Game::Init() {
+	Window::Instance() -> Init(1280, 720);
+	IO::Instance() -> Init();
     state -> Init();
 }
 
@@ -41,19 +39,19 @@ void Game::Input() {
 }
 
 void Game::Update() {
-	io -> Update();
+	IO::Instance() -> Update();
     state -> Update();
 }
 
 void Game::Render() {
-    window -> beginScene();
+    Window::Instance() -> beginScene();
     state -> Render();
-    window -> endScene(stateData == Enumeration::State::GameState);
+    Window::Instance() -> endScene(stateData == Enumeration::State::GameState);
 }
 
 void Game::CleanUp() {
     state -> CleanUp();
-    window -> close();
+    Window::Instance() -> close();
 }
 
 void Game::changeState(Enumeration::State data) {

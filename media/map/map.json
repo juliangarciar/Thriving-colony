@@ -4,16 +4,40 @@
 		"texture": "media/map/map-texture.jpg",
 		"detail_texture": "media/map/map-detail-texture.jpg",
 		"skybox_texture": "media/map/skybox-texture.jpg",
-		"size":{
+		"scale":{
 			"x": 40,
 			"y": 20,
 			"z": 40
+		},
+		"size":{
+			"width": 10240,
+			"height": 10240
+		},
+		"margins":{
+			"top": 2000,
+			"right": 9000,
+			"bottom": 9000,
+			"left": 2000
 		}
 	},
+	"game":{
+		"metal_productivity": 20,
+		"crystal_productivity": 20
+	},
 	"camera":{
-		"zoomDistanceFromTarget": 750,
-		"delta_x": 0,
-		"delta_y": 230
+		"zoom": {
+			"min": 400,
+			"max": 1000,
+			"initialDistanceFromTarget": 750
+		},
+		"rotation": {
+			"min_inclination": 200,
+			"max_inclination": 260,
+			"initialRotation": {
+				"x": 0,
+				"y": 230
+			}
+		}
 	},
 	"lights":[
 		{
@@ -45,7 +69,7 @@
 		"initial_crystal": 0,
 		"siderurgy_productivity": 10,
 		"quarry_productivity": 5,
-		"building_radious": 2000,
+		"building_radius": 2000,
 		"mainBuilding": {
 			"position": {
 				"x": 8040,
@@ -88,7 +112,7 @@
 		"initial_crystal": 5,
 		"siderurgy_productivity": 15,
 		"quarry_productivity": 10,
-		"building_radious": 2000,
+		"building_radius": 2000,
 		"mainBuilding": {
 			"position": {
 				"x": 1960,
@@ -240,14 +264,3 @@
 		}
 	]
 }
-	
-
-	
-	
-  
-    
-	
-
-
-
-

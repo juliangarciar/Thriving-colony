@@ -14,6 +14,8 @@ class Window {
     public:
         static Window* Instance();
 
+		void Init(i32, i32);
+
         void setEventReceiver(IEventReceiver *receiver);
         void handleGUIEvents();
 
@@ -63,7 +65,7 @@ class Window {
         i32 getFrameRate();
         
     protected:
-        Window(i32 width, i32 height);
+        Window();
         virtual ~Window();
         Window(const Window & );
         Window &operator = (const Window & );

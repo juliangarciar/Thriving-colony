@@ -111,17 +111,7 @@ class UnitManager{
          * @return True when there is a troop selected and false in other case.
          */
         bool isTroopSelected();
-
-        /**
-		 * @brief Check if the player's metalAmount and crystalAmount variables are higher than the ones passed by parameter.
-		 * 
-         * @param metalCost is the metal cost of the unit.
-		 * @param crystalCost is the crystal cost of the unit.
-         * @param citizensCost is the citizens cost of the unit.
-		 * @return True if the three player's variables are higher than the three passed by parameter and false in other case.
-		 */
-		bool isSolvent(i32 metalCost, i32 crystalCost, i32 citizensCost);
-
+		
         /** 
          * @brief Responsible for managing calls to isSolvent() for the human player, registering the type of the desired unit and sending the aforementhioned method the prices.
 		 * 
