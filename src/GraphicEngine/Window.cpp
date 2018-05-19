@@ -72,15 +72,12 @@ void Window::Init(i32 width, i32 height){
         }
     );
 
-    glfwSetDropCallback(window,
-        [](GLFWwindow *w, i32 count, const char **filenames) {
-            //Window::Instance() -> getGUIEnvironment() -> dropCallbackEvent(count, filenames);
-        }
-    );
-
     glfwSetFramebufferSizeCallback(window,
         [](GLFWwindow *w, i32 width, i32 height) {
             Window::Instance() -> getGUIEnvironment() -> resizeCallbackEvent(width, height);
+			Window::Instance() -> windowWidth = width;
+			Window::Instance() -> windowHeight = height;
+			Window::Instance() -> triggerResizeCallback();
         }
     );
 
@@ -103,7 +100,6 @@ void Window::beginScene(){
 }
 
 void Window::endScene(bool b){
-    // DA ERROR AQUI
     if (b) scene -> drawAll();
     gui -> drawWidgets();
     glEnable(GL_DEPTH_TEST);
@@ -124,6 +120,14 @@ void Window::onClose(){
     glfwTerminate();
 }
 
+void Window::setResizeCallback(std::function<void()> f){
+	resizeCallback = f;
+}
+
+void Window::triggerResizeCallback(){
+	resizeCallback();
+}
+
 IrrlichtDevice* Window::getDevice() {
     return device;
 }
@@ -140,22 +144,12 @@ nanogui::Screen* Window::getGUIEnvironment(){
     return gui;
 }
 
-i32 Window::getInitialWindowWidth(){
+i32 Window::getWindowWidth(){
     return windowWidth;
 }
 
-i32 Window::getInitialWindowHeight(){
+i32 Window::getWindowHeight(){
     return windowHeight;
-}
-
-i32 Window::getRealWindowWidth(){
-    return windowWidth;
-    //return driver -> getViewPort().getWidth(); 
-}
-
-i32 Window::getRealWindowHeight(){
-    return windowHeight;
-    //return driver -> getViewPort().getHeight(); 
 }
 
 f32 Window::getDeltaTime() const{
@@ -171,7 +165,7 @@ f32 Window::getDeltaTimeVariance() const{
 }
 
 void Window::calculateFramerate() {
-    framerate = floor(1.0 / Window::Instance() -> getDeltaTime());
+    framerate = floor(1.0 / getDeltaTime());
 }
 
 i32 Window::getFrameRate() {

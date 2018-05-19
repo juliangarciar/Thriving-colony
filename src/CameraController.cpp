@@ -45,7 +45,7 @@ CameraController::CameraController() {
 	centerCameraMode = false;
 
 	//ToDo: deberia actualizarse al redimensionar la pantalla
-    screenCenter = Vector2<i32>(w->getInitialWindowWidth()/2, w->getInitialWindowHeight()/2);
+    screenCenter = Vector2<i32>(w->getWindowWidth()/2, w->getWindowHeight()/2);
 
 	int fractionsOfASecond = 70.f;
 	updateTimer = new Timer(1.f/fractionsOfASecond, true, false);
@@ -175,16 +175,16 @@ void CameraController::Move() {
 	if (cursorPosCurrent.x <= 0) {
 		cursorPosCurrent.x = 0;
 		cursorOffLimits = true;
-	} else if (cursorPosCurrent.x >= w -> getRealWindowWidth()) {
-		cursorPosCurrent.x = w -> getRealWindowWidth();
+	} else if (cursorPosCurrent.x >= w -> getWindowWidth()) {
+		cursorPosCurrent.x = w -> getWindowWidth();
 		cursorOffLimits = true;
 	}
 
 	if (cursorPosCurrent.y <= 0) {
 		cursorPosCurrent.y = 0;
 		cursorOffLimits = true;
-	} else if (cursorPosCurrent.y >= w -> getRealWindowHeight()) {
-		cursorPosCurrent.y = w -> getRealWindowHeight();
+	} else if (cursorPosCurrent.y >= w -> getWindowHeight()) {
+		cursorPosCurrent.y = w -> getWindowHeight();
 		cursorOffLimits = true;
 	}
 
@@ -193,7 +193,7 @@ void CameraController::Move() {
 	if (cursorPosCurrent.y < screenMargin.y) {
 		direction |= 1 << 0;
         movementMode = true;
-	} else if (cursorPosCurrent.y > (w -> getRealWindowHeight() - screenMargin.y)) {
+	} else if (cursorPosCurrent.y > (w -> getWindowHeight() - screenMargin.y)) {
 		direction |= 1 << 2;
         movementMode = true;
 	}
@@ -201,7 +201,7 @@ void CameraController::Move() {
 	if (cursorPosCurrent.x < screenMargin.x) {
 		direction |= 1 << 1;
         movementMode = true;
-	} else if (cursorPosCurrent.x > (w -> getRealWindowWidth() - screenMargin.x)) {
+	} else if (cursorPosCurrent.x > (w -> getWindowWidth() - screenMargin.x)) {
 		direction |= 1 << 3;
         movementMode = true;
 	}

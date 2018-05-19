@@ -40,9 +40,6 @@ class Rect2D {
          */
         void setRect2D(T rX, T rY, T rW, T rH);
 
-        //Get Fixed Rect 2D
-        Rect2D<T> getFixed();
-        
         friend std::ostream& operator << (std::ostream &o,const Rect2D<f32> &p);
         friend std::ostream& operator << (std::ostream &o,const Rect2D<i32> &p);
 };
