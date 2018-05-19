@@ -13,7 +13,7 @@ CBuild::~CBuild() {
 
 Enumeration::BehaviourState CBuild::Update() {
     if (IA::Instance() -> getRootNode() -> getPriority() == nullptr) {
-        if (type == "Barn"){
+        if (type == "Barn") {
                 if (IA::Instance() -> getTree() -> getRequireBarn()) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildBarn);
                     actionToDo();
@@ -21,7 +21,7 @@ Enumeration::BehaviourState CBuild::Update() {
                 } else {
                     return Enumeration::BehaviourState::Failure;
                 }
-        } else if (type == "Barrack"){
+        } else if (type == "Barrack") {
                 if (IA::Instance() -> getTree() -> getRequireBarrack()) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildBarrack);
                     actionToDo();
@@ -37,7 +37,7 @@ Enumeration::BehaviourState CBuild::Update() {
                 } else {
                     return Enumeration::BehaviourState::Failure;
                 }
-        } else if (type == "Hospital"){
+        } else if (type == "Hospital") {
                 if (IA::Instance() -> getHappiness() < IA::Instance() -> getTree() -> getHappinessThreshold() && IA::Instance() -> getCityLevel() >= IA::Instance() -> getTree() -> getHospitalMilestone()) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildHospital);
                     actionToDo();
@@ -45,7 +45,7 @@ Enumeration::BehaviourState CBuild::Update() {
                 } else {
                     return Enumeration::BehaviourState::Failure;
                 }
-        } else if (type == "House"){
+        } else if (type == "House") {
                 if (IA::Instance() -> getTree() -> calculateCitizensRate() < IA::Instance() -> getTree() -> getCitizensThreshold()) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildHome);
                     actionToDo();
@@ -53,11 +53,11 @@ Enumeration::BehaviourState CBuild::Update() {
                 } else {
                     return Enumeration::BehaviourState::Failure;
                 }
-        } else if (type == "LastChoiceHouse"){
+        } else if (type == "LastChoiceHouse") {
                 IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildHome);
                 actionToDo();
                 return Enumeration::BehaviourState::Success;
-        } else if (type == "Market"){
+        } else if (type == "Market") {
                 if (IA::Instance() -> getHappiness() < IA::Instance() -> getTree() -> getHappinessThreshold() && IA::Instance() -> getCityLevel() >= IA::Instance() -> getTree() -> getMarketMilestone()) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildMarket);
                     actionToDo();
@@ -65,7 +65,7 @@ Enumeration::BehaviourState CBuild::Update() {
                 } else {
                     return Enumeration::BehaviourState::Failure;
                 }
-        } else if (type == "Quarry"){
+        } else if (type == "Quarry") {
                 if (IA::Instance() -> getTree() -> getRequireCrystal() || (IA::Instance() -> getTree() -> getShortOnCrystal() && IA::Instance() -> getCityLevel() >= IA::Instance() -> getTree() -> getQuarryMilestone())) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildQuarry);
                     actionToDo();
@@ -73,7 +73,7 @@ Enumeration::BehaviourState CBuild::Update() {
                 } else {
                     return Enumeration::BehaviourState::Failure;
                 }
-        } else if (type == "School"){
+        } else if (type == "School") {
                 if (IA::Instance() -> getHappiness() < IA::Instance() -> getTree() -> getHappinessThreshold()) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildSchool);
                     actionToDo();
@@ -81,7 +81,7 @@ Enumeration::BehaviourState CBuild::Update() {
                 } else {
                     return Enumeration::BehaviourState::Failure;
                 }
-        } else if (type == "Siderurgy"){
+        } else if (type == "Siderurgy") {
                 if (IA::Instance() -> getTree() -> getShortOnMetal()) { 
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildSiderurgy);
                     actionToDo();
@@ -89,7 +89,7 @@ Enumeration::BehaviourState CBuild::Update() {
                 } else {
                     return Enumeration::BehaviourState::Failure;
                 }
-        } else if (type == "Workshop"){
+        } else if (type == "Workshop") {
                 if (IA::Instance() -> getTree() -> getRequireWorkshop()) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildWorkshop);
                     actionToDo();

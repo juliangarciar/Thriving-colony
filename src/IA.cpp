@@ -43,6 +43,11 @@ IA::~IA() {
 void IA::Init(std::string _race) {
     Player::Init();
 
+    happinessInComing = 0;
+    cityLevelInComing = 0;
+    armyLevelInComing = 0;
+	maxPeopleInComing = 0;
+
     buildings = new BuildingManager(Enumeration::Team::IA, _race);
     units = new UnitManager(Enumeration::Team::IA, _race);
 
@@ -111,11 +116,8 @@ BehaviourTree* IA::getTree() {
 * until find the first empty position
 */
 
-Vector2<f32> IA::determinatePositionBuilding(const Box2D& buildingHitbox) const{
-    Vector2<f32> dummy = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(),
-                                                                 hallPosition.toVector2(),
-                                                                 buildingHitbox,
-                                                                 true)->getHitbox().TopLeft();
+Vector2<f32> IA::determinatePositionBuilding(const Box2D& buildingHitbox) const {
+    Vector2<f32> dummy = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(), hallPosition.toVector2(), buildingHitbox, true) -> getHitbox().TopLeft();
     return dummy;
 }
 
@@ -538,6 +540,22 @@ ActiveSelector* IA::getRootNode() {
 
 bool IA::getFast() {
     return fast;
+}
+
+i32 IA::getCityLevel() {
+    return cityLevel + cityLevelInComing;
+}
+
+i32 IA::getHappiness() {
+    return happiness + happinessInComing;
+}
+
+i32 IA::getMaxPeople() {
+    return maxPeople + maxPeopleInComing;
+}
+
+i32 IA::getArmyLevel() {
+    return armyLevel + armyLevelInComing;
 }
 
 // Down here so it doesn't clutter the constructor

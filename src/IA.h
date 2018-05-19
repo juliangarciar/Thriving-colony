@@ -126,6 +126,34 @@ class IA : public Player {
          */
         void veryUnhappyBehaviour();
 
+        /**
+         * @brief Get the AI's city level plus the city level that is going to recive when all the buildings that are being built finish.
+         * 
+         * @return i32 that will be the sum of the values of cityLevel and cityLevelInComing variables.
+         */
+        i32 getCityLevel();
+
+        /**
+         * @brief Get the happiness of the AI's city plus the happiness that is going to recive when all the buildings that are being built finish.
+         * 
+         * @return i32 that will be the sum of the values of happiness and happinessInComing variables.
+         */
+        i32 getHappiness();
+
+        /**
+         * @brief Get the maximum people of the AI's city plus the people that is going to recive when all the buildings that are being built finish.
+         * 
+         * @return i32 that will be the sum of the values of maxPeople and maxPeopleInComing variables.
+         */
+        i32 getMaxPeople();
+
+        /**
+         * @brief Get the army level of the AI's city plus the army level that is going to recive when all the buildings that are being built finish.
+         * 
+         * @return i32 that will be the sum of the values of armyLevel and armyLevelInComing variables.
+         */
+        i32 getArmyLevel();
+
     protected:
         /**
          * @brief IA constructor.
@@ -167,6 +195,18 @@ class IA : public Player {
 
         //Timer used to update slow tha AI's choices.
         Timer* updateSlowTimer;
+
+        //Happiness of the AI's city that is going to recive when all the buildings that are being built finish.
+        i32 happinessInComing;
+
+        //AI's city level that is going to recive when all the buildings that are being built finish.
+        i32 cityLevelInComing;
+
+        //AI's army level that is going to recive when all the buildings that are being built finish.
+        i32 armyLevelInComing;
+
+		//Player's max people amount that is going to recive when all the buildings that are being built finish.
+		i32 maxPeopleInComing;
 };
 
 #endif
