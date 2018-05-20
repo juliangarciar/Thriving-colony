@@ -62,7 +62,7 @@ class Player {
         /**
          * @brief increase the range where the player can build.
          */
-        void increaseBuildableRange();
+        bool increaseBuildableRange();
 
 		/**
 		 * @brief 

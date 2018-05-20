@@ -295,6 +295,28 @@ void UnitManager::deployAllTroops(Vector2<f32> p){
     deployingTroop = false;
 }
 
+void UnitManager::commandAttack(Vector2 <f32> p) {
+    for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
+        Unit *temp = it -> second;
+
+        Cell* target;
+        Vector3<f32> hallPosition(0, 0, 0);        
+        //ToDo: Check this, can return a nullptr
+        target = WorldGeometry::Instance()->getValidCell(temp -> getPosition(), p, temp->getHitbox());
+        
+        Vector2<f32> dummy;
+        dummy = target->getPosition();
+        temp -> setUnitPosition(dummy);
+        temp -> setUnitCell(dummy);
+        temp -> getModel() -> setActive(true);
+        temp -> setPathToTarget(p);
+        temp -> switchState(Enumeration::UnitState::Move); 
+        if (team == Enumeration::Team::Human){
+            Hud::Instance()->removeTroopFromHall(temp->getID());
+        }
+    }
+}
+
 void UnitManager::retractAllTroops() {
     for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
         Unit *temp = it -> second;

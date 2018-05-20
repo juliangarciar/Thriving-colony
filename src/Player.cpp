@@ -81,10 +81,16 @@ void Player::spendResources(i32 metalCost, i32 crystalCost) {
 	if (crystalAmount < 0) crystalAmount = 0;
 }
 
-void Player::increaseBuildableRange() {
-	if (influenceRangeIncrements < Map::Instance()->getInfluenceRangeIncrementLimit())
-    	buildableRange += Map::Instance()->getInfluenceRangeIncrement();
-	influenceRangeIncrements++;
+bool Player::increaseBuildableRange() {
+    bool increased = false;
+    if (isSolvent(1000,0,0)) {
+        if (influenceRangeIncrements < Map::Instance()->getInfluenceRangeIncrementLimit())
+            buildableRange += Map::Instance()->getInfluenceRangeIncrement();
+        influenceRangeIncrements++;
+        spendResources(1000,0);
+        increased = true;
+    }
+    return increased;
 }
 
 /**
