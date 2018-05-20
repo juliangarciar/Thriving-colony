@@ -65,6 +65,9 @@ void Building::taxPlayer(){
         Human::Instance() -> spendResources(getMetalCost(), getCrystalCost());
     } else {
         IA::Instance() -> spendResources(getMetalCost(), getCrystalCost());
+        IA::Instance() -> modifyHappinessInComing(getHappinessVariation());
+        IA::Instance() -> modifyMaxPeopleInComing(getCitizensVariation());   
+        IA::Instance() -> modifyCityLevelInComing(cityLevel);
     }
 }
 
@@ -78,6 +81,9 @@ void Building::adjustCityStats() {
         IA::Instance() -> modifyHappiness(getHappinessVariation());
         IA::Instance() -> modifyMaxPeople(getCitizensVariation());   
         IA::Instance() -> modifyCityLevel(cityLevel);
+        IA::Instance() -> modifyHappinessInComing(- getHappinessVariation());
+        IA::Instance() -> modifyMaxPeopleInComing(- getCitizensVariation());   
+        IA::Instance() -> modifyCityLevelInComing(- cityLevel);
     }
 }
 

@@ -34,7 +34,8 @@ class Animation {
 		SceneNode *animationLayer;
         std::map<std::string, f32> *animationDelays;
         std::map<std::string, OBDAnimation*> *animations;
-
+        
+        
 		Timer *frameTimer;
 
 		OBDAnimation *currentAnimation;

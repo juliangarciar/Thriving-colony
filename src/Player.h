@@ -203,6 +203,7 @@ class Player {
 
         //Player's building range (for expandable terrains)
         f32 buildableRange;
+        
     protected:
         //Happiness of the player's city.
         i32 happiness;

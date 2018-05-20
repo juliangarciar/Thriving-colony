@@ -43,6 +43,11 @@ IA::~IA() {
 void IA::Init(std::string _race) {
     Player::Init();
 
+    happinessInComing = 0;
+    cityLevelInComing = 0;
+    armyLevelInComing = 0;
+	maxPeopleInComing = 0;
+
     buildings = new BuildingManager(Enumeration::Team::IA, _race);
     units = new UnitManager(Enumeration::Team::IA, _race);
 
@@ -56,13 +61,13 @@ void IA::Init(std::string _race) {
     choiceIndex = 0;
     initializeChoices();
 
-    updateFastTimer = new Timer(100.00, true);
+    updateFastTimer = new Timer(1.00, true);
 	updateFastTimer -> setCallback([&](){
 		rootNode -> Update();
 		updateFastTimer -> restart();
 		updateSlowTimer -> restart();
 	});
-    updateSlowTimer = new Timer(300.00, true);
+    updateSlowTimer = new Timer(3.00, true);
 	updateSlowTimer -> setCallback([&](){
 		rootNode -> Update();
 		updateFastTimer -> restart();
@@ -111,43 +116,44 @@ BehaviourTree* IA::getTree() {
 * until find the first empty position
 */
 
-Vector2<f32> IA::determinatePositionBuilding(const Box2D& buildingHitbox) const{
-    Vector2<f32> dummy = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(),
-                                                                 hallPosition.toVector2(),
-                                                                 buildingHitbox,
-                                                                 true)->getHitbox().TopLeft();
+Vector2<f32> IA::determinatePositionBuilding(const Box2D& buildingHitbox) const {
+    Vector2<f32> dummy = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(), hallPosition.toVector2(), buildingHitbox, true) -> getHitbox().TopLeft();
     return dummy;
 }
 
 bool IA::getUnderAttack() {
     underAttack = false;
-    Vector2<f32> pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
-    i32 requesterRange = 1000;
-    
-    f32 xaux = 0;
-    f32 yaux = 0;
-    f32 dist = 0;
+    if (Human::Instance() -> getUnitManager() -> getInMapTroops() -> empty() != false) {
 
-        // Get units in the map of the opposing team
-        std::map<i32, Unit*> *inMapTroops = Human::Instance() -> getUnitManager() -> getInMapTroops();
-        // Iterate through the map
-        for (std::map<i32, Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
-            if (it -> second != nullptr) {
-            // Calculate distance between troop requesting target and posible targets
-                xaux = it -> second -> getPosition().x - pos.x;
-                yaux = it -> second -> getPosition().y - pos.y;
-                dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
+        Vector2<f32> pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
+        i32 requesterRange = 1000;
+        
+        f32 xaux = 0;
+        f32 yaux = 0;
+        f32 dist = 0;
 
-            if (dist <= requesterRange) {
-                underAttack = false;
+            // Get units in the map of the opposing team
+            std::map<i32, Unit*> *inMapTroops = Human::Instance() -> getUnitManager() -> getInMapTroops();
+            // Iterate through the map
+            for (std::map<i32, Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
+                if (it -> second != nullptr) {
+                // Calculate distance between troop requesting target and posible targets
+                    xaux = it -> second -> getPosition().x - pos.x;
+                    yaux = it -> second -> getPosition().y - pos.y;
+                    dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
+                    std::cout << dist << std::endl;
+
+                if (dist <= requesterRange) {
+                    underAttack = true;
+                }
             }
         }
-    }
+    } 
     return underAttack;
 }
 
 void IA::chooseBehaviour() {
-    // RAndomize the seed
+    // Randomize the seed
     srand(time(nullptr));
     // Determine a number between 0 and 4, the number of possible behaviours for the AI to choose
     behaviour = (Enumeration::IABehaviour)(rand() % (4-0 + 1) + 0);
@@ -177,7 +183,7 @@ void IA::chooseBehaviour() {
 
 void IA::veryHappyBehaviour() {
     std::vector<Behaviour*> auxroot;
-/*
+
     //Defend
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
@@ -192,7 +198,7 @@ void IA::veryHappyBehaviour() {
     auxat.push_back(new CRetreat(new ARetreat()));
     auxat.push_back(new CAttack(new AAttack()));
     auxroot.push_back(new Selector(auxat));
-*/
+
     //City
     std::vector<Behaviour*> auxcity;
     //Services
@@ -246,7 +252,7 @@ void IA::veryHappyBehaviour() {
 
 void IA::happyBehaviour() {
     std::vector<Behaviour*> auxroot;
-/*
+
     //Defend
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
@@ -261,7 +267,7 @@ void IA::happyBehaviour() {
     auxat.push_back(new CRetreat(new ARetreat()));
     auxat.push_back(new CAttack(new AAttack()));
     auxroot.push_back(new Selector(auxat));
-*/
+
     //City
     std::vector<Behaviour*> auxcity;
     //Houses
@@ -315,7 +321,7 @@ void IA::happyBehaviour() {
 
 void IA::neutralBehaviour() {
     std::vector<Behaviour*> auxroot;
-/*
+
     //Defend
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
@@ -330,7 +336,7 @@ void IA::neutralBehaviour() {
     auxat.push_back(new CRetreat(new ARetreat()));
     auxat.push_back(new CAttack(new AAttack()));
     auxroot.push_back(new Selector(auxat));
-*/
+
     //City
     std::vector<Behaviour*> auxcity;
     //Resources
@@ -384,7 +390,7 @@ void IA::neutralBehaviour() {
 
 void IA::unhappyBehaviour() {
    std::vector<Behaviour*> auxroot;
-/*
+
     //Defend
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
@@ -399,7 +405,7 @@ void IA::unhappyBehaviour() {
     auxat.push_back(new CRetreat(new ARetreat()));
     auxat.push_back(new CAttack(new AAttack()));
     auxroot.push_back(new Selector(auxat));
-*/
+
     //City
     std::vector<Behaviour*> auxcity;
     //Resources
@@ -453,7 +459,7 @@ void IA::unhappyBehaviour() {
 
 void IA::veryUnhappyBehaviour() {
     std::vector<Behaviour*> auxroot;
-/*
+
     //Defend
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
@@ -468,7 +474,7 @@ void IA::veryUnhappyBehaviour() {
     auxat.push_back(new CRetreat(new ARetreat()));
     auxat.push_back(new CAttack(new AAttack()));
     auxroot.push_back(new Selector(auxat));
-*/
+
     //City
     std::vector<Behaviour*> auxcity;
     //Army
@@ -540,6 +546,39 @@ bool IA::getFast() {
     return fast;
 }
 
+i32 IA::getCityLevel() {
+    return cityLevel + cityLevelInComing;
+}
+
+i32 IA::getHappiness() {
+    return happiness + happinessInComing;
+}
+
+i32 IA::getMaxPeople() {
+    return maxPeople + maxPeopleInComing;
+}
+
+i32 IA::getArmyLevel() {
+    return armyLevel + armyLevelInComing;
+}
+
+void IA::modifyCityLevelInComing(i32 c) {
+    cityLevelInComing = cityLevelInComing + c;
+}
+
+void IA::modifyHappinessInComing(i32 h) {
+    happinessInComing = happinessInComing + h;
+}
+
+void IA::modifyArmyLevelInComing(i32 a) {
+    armyLevelInComing = armyLevelInComing + a;
+}
+
+void IA::modifyMaxPeopleInComing(i32 m) {
+    maxPeopleInComing = maxPeopleInComing + m;
+}
+
+// Down here so it doesn't clutter the constructor
 void IA::initializeChoices() {
     choices = new std::vector<std::string>();
     choices -> push_back("Deploying troops");

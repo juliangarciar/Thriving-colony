@@ -54,7 +54,7 @@ f32 BehaviourTree::calculateCrystalProductionRate() {
 */
 f32 BehaviourTree::calculateCitizensRate() {
     f32 cityLvl = IA::Instance() -> getCityLevel();
-    f32 citizens = IA::Instance() -> getCitizens();
+    f32 citizens = IA::Instance() -> getMaxPeople();
     return (citizens / cityLvl);
 }
 
