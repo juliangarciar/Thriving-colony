@@ -7,7 +7,7 @@
 #include "ResourceIMG.h"
 
 ResourceManager::ResourceManager(){
-    std::string temp[] = {"obj","mtl","json","glsl","fbx","bmp","jpg","jpeg","png"};
+    std::string temp[] = {"obj","mtl","json","glsl","bmp","jpg","jpeg","png"};
     supportedFormats.insert(supportedFormats.end(),temp,std::end(temp));
 }
 
@@ -25,45 +25,41 @@ void ResourceManager::Update(){
 void ResourceManager::load(std::string path, bool sync){
     std::size_t found = path.find_last_of(".");
     std::string extension = path.substr(found+1);
-    if (extension == "obj"){
+
+    if (extension.find("obj") != std::string::npos){
         Resource *r = new ResourceOBJ();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
-    } else if (extension == "mtl") {
+    } else if (extension.find("mtl") != std::string::npos) {
         Resource *r = new ResourceMTL();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
-    } else if (extension == "json") {
+    } else if (extension.find("json") != std::string::npos) {
         Resource *r = new ResourceJSON();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
-    } else if (extension == "glsl") {
+    } else if (extension.find("glsl") != std::string::npos) {
         Resource *r = new ResourceGLSL();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
-    } else if (extension == "bmp" || extension == "jpg" || extension == "jpeg" || extension == "png"){
+    } else if (extension.find("bmp") != std::string::npos || extension.find("jpg") != std::string::npos || extension.find("jpeg") != std::string::npos || extension.find("png") != std::string::npos){
         Resource *r = new ResourceIMG();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
     } else {
-        std::cout << "Error: formato no soportado (" << extension << ") in file '" << path << "'." << std::endl;
+        std::cout << "Error: extension no soportada (" << extension << ") en el archivo '" << path << "'." << std::endl;
+
+		//std::vector<std::string>::iterator it = find(supportedFormats.begin(), supportedFormats.end(), extension);
+		//assert(it != supportedFormats.end());
+
         exit(0);
     }
 }
 
 void ResourceManager::push(std::string path){
-    std::size_t found = path.find_last_of(".");
-    std::string extension = path.substr(found+1);
-    std::vector<std::string>::iterator it;
-    it = find(supportedFormats.begin(),supportedFormats.end(),extension);
-    if (it != supportedFormats.end()){
-        threads.push(std::thread([=](){
-            load(path, false);
-        }));
-    } else {
-        std::cout << "Error: formato no soportado (" << extension << ") in file '" << path << "'." << std::endl;
-        exit(0);
-    }
+	threads.push(std::thread([=](){
+		load(path, false);
+	}));
 }
 
 void ResourceManager::loadResource(std::string path, bool sync){

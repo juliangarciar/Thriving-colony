@@ -12,6 +12,6 @@ uniform vec4 frontColor;
 uniform float frontWidth;
 
 void main(){
-	if (UV.x < (1.0/frontWidth)) outColor = frontColor;
+	if (UV.x < frontWidth) outColor = frontColor;
 	else outColor = color;
 }

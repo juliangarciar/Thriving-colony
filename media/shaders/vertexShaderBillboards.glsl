@@ -19,6 +19,6 @@ void main(){
     + CameraUp_worldspace * vertexPosition_modelspace.y * size.y;
 	
 	gl_Position = VP * vec4(vertexPosition_worldspace, 1.0f);
-	
+
 	UV = vertexPosition_modelspace.xy + vec2(0.5, 0.5);
 }

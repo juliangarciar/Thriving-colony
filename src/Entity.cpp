@@ -62,8 +62,8 @@ Entity::Entity(SceneNode* _layer,
 		getPosition().y
 	);
 
-	Vector2<f32> size(hitBox.Right() - hitBox.Left() * 0.8f, 15.00);
-    bar = new Billboard(_layer, pos, size, Color(0,0,0,255), Color(0,255,0,255));
+	Vector2<f32> size(hitBox.Right() - hitBox.Left() * 0.8f, 115.00);
+    bar = new Billboard(_layer, pos, size, Color(0,0,0,1), Color(0,1,0,1));
 }
 
 Entity::~Entity() {
@@ -117,7 +117,7 @@ void Entity::setPosition(Vector2<f32> vectorData) {
     vectorPos = vectorData;
 
     model -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y), vectorData.y));
-	std::cout << vectorData.x << " " << Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y) << " " << vectorData.y << std::endl;
+	//std::cout << vectorData.x << " " << Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y) << " " << vectorData.y << std::endl;
     bar -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y) + bbOffset, vectorData.y));
 
     hitBox.moveHitbox(vectorData);
