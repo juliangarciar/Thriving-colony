@@ -42,7 +42,7 @@ class Vector2 {
         bool operator !=(const Vector2<T> &p);
 };
 
-template<class T> inline std::ostream& operator<<(std::ostream& out, const Vector2<T>& val){
+template<class T> inline std::ostream& operator<<(std::ostream& out, const Vector2<T>& val) {
     out << "x: " << val.x << " - y: " << val.y;
     return out;
 }

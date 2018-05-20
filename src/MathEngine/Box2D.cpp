@@ -23,7 +23,7 @@ Box2D::Box2D(Vector2<f32> tl, Vector2<f32> br):m_vTopLeft(tl),
                                                cellsY((tl.y - br.y) / cSize)
 {}
 
-void Box2D::moveHitbox(f32 x, f32 y){
+void Box2D::moveHitbox(f32 x, f32 y) {
     Vector2<f32> vectorDirection = Vector2<f32>(x, y) - m_vCenter;
     
     m_vCenter += vectorDirection;
@@ -33,7 +33,7 @@ void Box2D::moveHitbox(f32 x, f32 y){
     m_vBottomRight += vectorDirection;
 }
 
-void Box2D::moveHitbox(Vector2<f32> _vectorPos){
+void Box2D::moveHitbox(Vector2<f32> _vectorPos) {
     Vector2<f32> vectorDirection = _vectorPos - m_vCenter;
 
     m_vCenter += vectorDirection;
@@ -51,10 +51,10 @@ bool Box2D::isOverlappedWith(const Box2D& other) const{
 }
 
 bool Box2D::isOverlappedWith(Vector2<f32> point) const{
-    if(point.x <= Left() || point.x >= Right()){
+    if (point.x <= Left() || point.x >= Right()) {
         return false;
     }
-    if(point.y <= Bottom() || point.y >= Top()){
+    if (point.y <= Bottom() || point.y >= Top()) {
         return false;
     }
     return true;

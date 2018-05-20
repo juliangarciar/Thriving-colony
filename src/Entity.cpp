@@ -47,7 +47,7 @@ Entity::Entity(SceneNode* _layer,
 {
     //set Timer
     tookDamageTimer = new Timer(0.1);
-    tookDamageTimer -> setCallback([&](){
+    tookDamageTimer -> setCallback([&]() {
         setBaseColor();
     });
 
@@ -67,11 +67,11 @@ Entity::Entity(SceneNode* _layer,
 }
 
 Entity::~Entity() {
-    if(target != nullptr){
+    if (target != nullptr) {
         target -> removeHostile(this);
     }
     putHostileTargetsToNull();
-    if (model != nullptr){
+    if (model != nullptr) {
         delete model;
     }
     hostile.clear();
@@ -108,7 +108,7 @@ void Entity::putHostileTargetsToNull() {
 }
 
 //SETTERS
-void Entity::setID(i32 id){
+void Entity::setID(i32 id) {
     ID = id;
     model -> setID(id);
 }

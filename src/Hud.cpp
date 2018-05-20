@@ -25,15 +25,15 @@ Hud::~Hud() {
     //Al cleanUp
 }
 
-void Hud::Init(){
+void Hud::Init() {
     debugTimer = new Timer (0.5, true);
-    debugTimer -> setCallback([&](){
+    debugTimer -> setCallback([&]() {
         debug();
     });
 
     toastTimer = new Timer(2, true);
-    toastTimer -> setCallback([&](){
-		if (notificationQueue.size()){
+    toastTimer -> setCallback([&]() {
+		if (notificationQueue.size()) {
 			showToast(notificationQueue.front());
 			notificationQueue.pop();
 		} else hideToast();
@@ -191,7 +191,7 @@ void Hud::Init(){
     buttonOpenPanel->setTooltip("Open your panel to manage your city.");
 
     buttonOpenPanel->setCallback([&]{
-        if (!tabContainer->isVisible()){
+        if (!tabContainer->isVisible()) {
             showPopup();
         } else {
             hidePopup();
@@ -504,7 +504,7 @@ void Hud::Update() {
 	
 }
 
-void Hud::CleanUp(){
+void Hud::CleanUp() {
     delete toastTimer;
     delete debugTimer;
 
@@ -572,7 +572,7 @@ void Hud::CleanUp(){
     delete framerateLabel;
 }
 
-void Hud::enableTab(std::string t){
+void Hud::enableTab(std::string t) {
     if (t == "Barrack") {
         barrackEmpty -> hide();
         barrackContent -> show();
@@ -587,7 +587,7 @@ void Hud::enableTab(std::string t){
     tabContainer -> refreshLayout();
 }
 
-void Hud::disableTab(std::string t){
+void Hud::disableTab(std::string t) {
     if (t == "Barrack") {
         barrackEmpty->show();
         barrackContent->hide();
@@ -602,13 +602,13 @@ void Hud::disableTab(std::string t){
     tabContainer->refreshLayout();
 }
 
-void Hud::showPopup(){
+void Hud::showPopup() {
     tabContainer -> show();
     buttonOpenPanel -> setText("Close Panel");
     popUpOpen = true;
 }
 
-void Hud::showPopup(std::string t){
+void Hud::showPopup(std::string t) {
     bool show = false;
     if (t == "MainBuilding") {
         show = true;
@@ -630,13 +630,13 @@ void Hud::showPopup(std::string t){
     }
 }
 
-void Hud::hidePopup(){
+void Hud::hidePopup() {
     tabContainer -> hide();
     buttonOpenPanel -> setText("Open Panel");
     popUpOpen = false;
 }
 
-void Hud::addTroopToHall(i32 idTroop, std::string t){
+void Hud::addTroopToHall(i32 idTroop, std::string t) {
     if (t == "StandardM") {
         hallTroopList -> addOption("Melee footman");
     } else if (t == "StandardR") {
@@ -657,7 +657,7 @@ void Hud::addTroopToHall(i32 idTroop, std::string t){
     tabContainer -> refreshLayout();
 }
 
-void Hud::removeTroopFromHall(i32 idTroop){
+void Hud::removeTroopFromHall(i32 idTroop) {
    std::vector<i32>::iterator it = find(troopsInHallIDs.begin(), troopsInHallIDs.end(), idTroop);
    if (it != troopsInHallIDs.end()) {
         i32 nPosition = std::distance(troopsInHallIDs.begin(), it);
@@ -667,7 +667,7 @@ void Hud::removeTroopFromHall(i32 idTroop){
    }
 }
 /* Kind of trash code */
-void Hud::addTroopToQueue(i32 idTroop, std::string t){
+void Hud::addTroopToQueue(i32 idTroop, std::string t) {
     if (t == "StandardM") {
         Widget *p = new Widget(barrackTroopQueueWidget);
         p->setVerticalLayout();
@@ -722,7 +722,7 @@ void Hud::addTroopToQueue(i32 idTroop, std::string t){
     tabContainer->refreshLayout();
 }
 
-void Hud::modifyTroopFromQueue(i32 idTroop, f32 newValue){
+void Hud::modifyTroopFromQueue(i32 idTroop, f32 newValue) {
     std::map<i32,ProgressBar*>::iterator it = troopQueueProgressBars . find(idTroop);
     if (it != troopQueueProgressBars.end()) {
         it -> second -> setValue(newValue);
@@ -730,7 +730,7 @@ void Hud::modifyTroopFromQueue(i32 idTroop, f32 newValue){
     tabContainer->refreshLayout();
 }
 
-void Hud::removeTroopFromQueue(i32 idTroop){
+void Hud::removeTroopFromQueue(i32 idTroop) {
     std::map<i32,ProgressBar*>::iterator it = troopQueueProgressBars . find(idTroop);
     if (it != troopQueueProgressBars.end()) {
         troopQueueProgressBars.erase(it);
@@ -751,55 +751,55 @@ void Hud::updatePositions() {
     tabContainer->center();
 }
 
-void Hud::addToastToQueue(std::string s){
+void Hud::addToastToQueue(std::string s) {
 	notificationQueue.push(s);
 }
 
-void Hud::showToast(std::string s){
+void Hud::showToast(std::string s) {
     toastText->setLabel(s);
     toast->refreshLayout();
     toast->show();
 }
 
-void Hud::hideToast(){
+void Hud::hideToast() {
     toast->hide();
 }
 
-void Hud::setButtonStatus(std::string t, bool status){
-    if (t == "Barn"){
+void Hud::setButtonStatus(std::string t, bool status) {
+    if (t == "Barn") {
         if (status) buttonBarn -> show();
         else buttonBarn -> hide();
-    } else if (t == "Barrack"){
+    } else if (t == "Barrack") {
         if (status) buttonBarrack -> show();
         else buttonBarrack -> hide();
-    } else if (t == "Hospital"){
+    } else if (t == "Hospital") {
         if (status) buttonHospital -> show();
         else buttonHospital -> hide();
-    } else if (t == "House"){
+    } else if (t == "House") {
         if (status) buttonHouse -> show();
         else buttonHouse -> hide();
-    } else if (t == "Market"){
+    } else if (t == "Market") {
         if (status) buttonMarket -> show();
         else buttonMarket -> hide();
-    } else if (t == "Quarry"){
+    } else if (t == "Quarry") {
         if (status) buttonQuarry -> show();
         else buttonQuarry -> hide();
-    } else if (t == "School"){
+    } else if (t == "School") {
         if (status) buttonSchool -> show();
         else buttonSchool -> hide();
-    } else if (t == "Siderurgy"){
+    } else if (t == "Siderurgy") {
         if (status) buttonSiderurgy -> show();
         else buttonSiderurgy -> hide();
-    } else if (t == "Tower"){
+    } else if (t == "Tower") {
         if (status) buttonTower -> show();
         else buttonTower -> hide();
-    } else if (t == "Wall"){
+    } else if (t == "Wall") {
         if (status) buttonWall -> show();
         else buttonWall -> hide();
-    } else if (t == "Workshop"){
+    } else if (t == "Workshop") {
         if (status) buttonWorkshop -> show();
         else buttonWorkshop -> hide();
-    } else if (t == "expandableTerrain"){
+    } else if (t == "expandableTerrain") {
         if (status) buttonExpandTerrain -> show();
         else buttonExpandTerrain -> hide();
     } 
@@ -808,7 +808,7 @@ void Hud::setButtonStatus(std::string t, bool status){
     buildingsPanel -> refreshLayout();
 }
 
-void Hud::adjustMenuVisibility(){
+void Hud::adjustMenuVisibility() {
     if (!buttonSiderurgy -> isVisible() && !buttonQuarry -> isVisible() && !buttonHouse -> isVisible()) resourceWidget -> hide();
     else resourceWidget -> show();
 
@@ -828,7 +828,7 @@ void Hud::adjustMenuVisibility(){
     else buildingsPanel -> show();
 }
 
-void Hud::debug(){
+void Hud::debug() {
     i32 melees = 
         Human::Instance() -> getUnitManager() -> getTroopAmount("StandardM") + 
         Human::Instance() -> getUnitManager() -> getTroopAmount("AdvancedM");

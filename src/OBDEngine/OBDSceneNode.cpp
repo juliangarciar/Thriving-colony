@@ -16,17 +16,17 @@ OBDSceneNode::~OBDSceneNode() {
 
 }
 
-void OBDSceneNode::addChild(OBDEntity *e){
+void OBDSceneNode::addChild(OBDEntity *e) {
     e -> getFirstNode() -> setParent(scaleNode);
     scaleNode -> addChild(e -> getFirstNode());
 }
 
-void OBDSceneNode::addChild(TNode *e){
+void OBDSceneNode::addChild(TNode *e) {
     e -> setParent(scaleNode);
     scaleNode -> addChild(e);
 }
 
-void OBDSceneNode::refreshModelMatrix(glm::mat4 parent){
+void OBDSceneNode::refreshModelMatrix(glm::mat4 parent) {
 	OBDEntity::refreshModelMatrix(parent);
     for (std::vector<OBDEntity*>::iterator i = children.begin(); i != children.end(); ++i) {
 		OBDEntity *temp = *i;
@@ -34,19 +34,19 @@ void OBDSceneNode::refreshModelMatrix(glm::mat4 parent){
 	}
 }
 
-void OBDSceneNode::insertBoundingBox(u32 id, aabb::AABB box){
+void OBDSceneNode::insertBoundingBox(u32 id, aabb::AABB box) {
 	octree.insertParticle(id, box.lowerBound, box.upperBound);
 }
 
-void OBDSceneNode::refreshBoundingBox(u32 id, aabb::AABB box){
+void OBDSceneNode::refreshBoundingBox(u32 id, aabb::AABB box) {
 	octree.updateParticle(id, box.lowerBound, box.upperBound);
 }
 
-void OBDSceneNode::removeBoundingBox(u32 id){
+void OBDSceneNode::removeBoundingBox(u32 id) {
 	octree.removeParticle(id);
 }
 
-std::vector<u32> OBDSceneNode::getCollisionID(OBDLine ray){
+std::vector<u32> OBDSceneNode::getCollisionID(OBDLine ray) {
 	aabb::Ray r;
 	r.rayStart = ray.start;
 	r.rayEnd = ray.end;

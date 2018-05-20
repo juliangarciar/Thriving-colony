@@ -89,7 +89,7 @@ void TBillboard::setSize(glm::vec2 newSize) {
 	size = newSize;
 }
 
-void TBillboard::setFrontWidth(f32 newFrontWidth){
+void TBillboard::setFrontWidth(f32 newFrontWidth) {
 	frontWidth = newFrontWidth;
 }
 

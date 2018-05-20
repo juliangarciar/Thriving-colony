@@ -10,8 +10,8 @@
 #include <cstdlib> 
 
 WorldGeometry* WorldGeometry::pinstance = 0;
-WorldGeometry* WorldGeometry::Instance(){
-    if(pinstance == 0){
+WorldGeometry* WorldGeometry::Instance() {
+    if (pinstance == 0) {
         pinstance = new WorldGeometry();
     }
     return pinstance;
@@ -29,8 +29,8 @@ WorldGeometry::WorldGeometry():mCells(),
                                mapArea(0)
 {}
 
-WorldGeometry::~WorldGeometry(){
-    for(std::size_t i = 0; i < mCells.size(); i++){
+WorldGeometry::~WorldGeometry() {
+    for (std::size_t i = 0; i < mCells.size(); i++) {
         delete mCells[i];
     }
     mCells.clear();
@@ -40,7 +40,7 @@ WorldGeometry::~WorldGeometry(){
 
 const f32 PI = 3.14159265359f;
 
-void WorldGeometry::Init(i32 _cellSize, i32 _mapX, i32 _mapY, i32 _quadDepth){
+void WorldGeometry::Init(i32 _cellSize, i32 _mapX, i32 _mapY, i32 _quadDepth) {
 /* Calculates the maximun N cells and reserve memory */
     cellSize = _cellSize;
     mapAxis = Vector2<i32>(_mapX, _mapY);
@@ -55,21 +55,21 @@ void WorldGeometry::Init(i32 _cellSize, i32 _mapX, i32 _mapY, i32 _quadDepth){
     f32 gradesPerUnit;
     const f32 radius = cellSize / 2;
 /* Pre-calculates postions for unitFighters */
-    for(i32 i = 0; i < maxGameUnits; i++){
+    for (i32 i = 0; i < maxGameUnits; i++) {
         squadPosition[i] = std::vector< Vector2<f32> >(i + 1);
-        for(std::size_t j = 0; j < squadPosition[i].size(); j++){
-            if(squadPosition[i].size() == 1){
+        for (std::size_t j = 0; j < squadPosition[i].size(); j++) {
+            if (squadPosition[i].size() == 1) {
                 squadPosition[i][j] = Vector2<f32>(0, 0);
             }
-            else{
+            else {
                 gradesPerUnit = (360 / squadPosition[i].size()) * j * (PI / 180.0f);
             }
             squadPosition[i][j] = Vector2<f32>(radius * std::cos(gradesPerUnit), radius * std::sin(gradesPerUnit)); 
         }
     }
 /* Especifies the N cells each axis has */    
-    for (i32 y = 0; y < maxCellsY; y++){
-        for (i32 x = 0; x < maxCellsX; x++){
+    for (i32 y = 0; y < maxCellsY; y++) {
+        for (i32 x = 0; x < maxCellsX; x++) {
         /* Calculates the index */
             i32 index = y * maxCellsX + x;
         /* Especifies the center where the cell is allocated */
@@ -92,71 +92,71 @@ void WorldGeometry::Init(i32 _cellSize, i32 _mapX, i32 _mapY, i32 _quadDepth){
     Vector2<f32> center(botRight / 2);
     quadTree = new Quadtree(center, hitBox, _quadDepth);
 /* Adds each cell in the quadtree */
-    for(i32 i = 0; i < maxCells; i++){
+    for (i32 i = 0; i < maxCells; i++) {
         quadTree->insertCell(mCells[i]);
     }
 /* Calculate neighbors for each cell (apparently working) */
-    for(i32 i = 0; i < mCells.size(); i++){
+    for (i32 i = 0; i < mCells.size(); i++) {
         quadTree->assignNeighbors(mCells[i]);
     }
 /* Debug system, quadtree insertion works fine */
-    //for(i32 i = 0; i < maxCellsY; i++){
-    //    for(i32 x = 0; x < maxCellsX; x++){
+    //for (i32 i = 0; i < maxCellsY; i++) {
+    //    for (i32 x = 0; x < maxCellsX; x++) {
     //        std::cout << mCells[i * maxCellsX + x]->getNeighbors().size();
     //    }
     //    std::cout << "\n";
     //}
 /* Pre-calculate the distance between each cell and his neighbors */
-    for(i32 j = 0; j < maxCells; j++){
+    for (i32 j = 0; j < maxCells; j++) {
         std::vector<Cell*> neighbors = mCells[j]->getNeighbors();
         i32 size = neighbors.size();
         cellsDistance[j] = std::vector<f32>(size);
-        for(i32 k = 0; k < size; k++){
+        for (i32 k = 0; k < size; k++) {
             cellsDistance[j][k] = calculateDistance(mCells[j]->getPosition(), neighbors[k]->getPosition());
             // Debug intended
-            if(cellsDistance[j][k] == 0){
+            if (cellsDistance[j][k] == 0) {
                 std::cout << "Weird stuff happens at init at: " << j << "," << k << "\n";
             }
         }
     }
 }
 
-void WorldGeometry::Clear(){
+void WorldGeometry::Clear() {
     mCells.clear();
     cellsDistance.clear();
     delete quadTree;
 }
 
-void WorldGeometry::build(Building* buildingPtr){
+void WorldGeometry::build(Building* buildingPtr) {
     quadTree->insertBuilding(buildingPtr);
 }
 
-void WorldGeometry::updateUnitCell(Vector2<f32> oldPosition, Vector2<f32> newPosition, Unit* unitPtr){
+void WorldGeometry::updateUnitCell(Vector2<f32> oldPosition, Vector2<f32> newPosition, Unit* unitPtr) {
     Cell* oldCell = positionToCell(oldPosition);
     Cell* newCell = positionToCell(newPosition);
-    if(oldCell != newCell){
+    if (oldCell != newCell) {
         oldCell->clearInhabitingUnit(unitPtr);
         newCell->setInhabitingUnit(unitPtr);
     }
 }
-void WorldGeometry::clearUnitCell(Vector2<f32> positionVector, Unit* unitPtr){
+void WorldGeometry::clearUnitCell(Vector2<f32> positionVector, Unit* unitPtr) {
     positionToCell(positionVector)->clearInhabitingUnit(unitPtr);
 }
 
-void WorldGeometry::clearBuildingCell(Building* buildingPtr){
+void WorldGeometry::clearBuildingCell(Building* buildingPtr) {
     quadTree->clearBuilding(buildingPtr);
 }
 
-void WorldGeometry::setUnitCell(Vector2<f32> positionVector, Unit* unitPtr){
+void WorldGeometry::setUnitCell(Vector2<f32> positionVector, Unit* unitPtr) {
     positionToCell(positionVector)->setInhabitingUnit(unitPtr);
 }
 
 bool WorldGeometry::checkHitBoxCollision(const Box2D& hitBox, bool amplifyBox) const{
-    if(amplifyBox){
+    if (amplifyBox) {
         Box2D dummy = hitBox.getAmplifiedBox(cellSize / 2.0f);
         return quadTree->checkCollision(dummy, true);
     }
-    else{
+    else {
         return quadTree->checkCollision(hitBox, false);
     }
 }
@@ -166,14 +166,14 @@ Vector2<f32> WorldGeometry::correctBuildingPosition(Vector2<f32> targetPos, cons
     Cell* dummy = positionToCell(targetPos);
     Vector2<f32> storage;
     /* Change this method */
-    if( hitbox.getCellsX() % 2 == 0){
+    if ( hitbox.getCellsX() % 2 == 0) {
         storage = dummy->getHitbox().TopLeft();
         correctOne = storage;
         storage -= cellSize / 2;
         storage.x -= (hitbox.getCellsX() / 2) * (cellSize / 2);
         storage.y -= (hitbox.getCellsY() / 2) * (cellSize / 2);
     }
-    else{
+    else {
         storage = dummy->getHitbox().Center();
         correctOne = storage;
         storage.x -= (hitbox.getCellsX() - 1) * (cellSize / 2);
@@ -203,30 +203,30 @@ Cell* WorldGeometry::getValidCell(Vector2<f32> referenceTarget, Vector2<f32> ref
     IndexedPriorityQLow<float> pq(FCosts, maxCells);
     pq.insert(sourceCell->getIndex());
     /* Algorithm start */ 
-    while(!pq.empty()){
+    while(!pq.empty()) {
         i32 closestIndex = pq.Pop();
     /* Adds the cell to the path vector */
         shortestPath[closestIndex] = searchFrontier[closestIndex];
     /* Stop condition, research about a system of conditions */
-        if(amplifyBox){
+        if (amplifyBox) {
             correctPosition = correctBuildingPosition(indexToCell(closestIndex)->getPosition(), dummyHitbox);
             dummyHitbox.moveHitbox(correctPosition);
         }
-        else{
+        else {
             dummyHitbox.moveHitbox(indexToCell(closestIndex)->getPosition());
         }
-        if(checkHitBoxCollision(dummyHitbox, amplifyBox)){
+        if (checkHitBoxCollision(dummyHitbox, amplifyBox)) {
             validCell = indexToCell(closestIndex);
             return validCell; 
         }
     /* Get neighbors of the chosen cell */
         std::vector<Cell*> neighbors = getNeighbors(closestIndex);
     /* Calculate the cost for each neighbor to the targetCell */
-        for(i32 i = 0; i < neighbors.size(); i++){
+        for (i32 i = 0; i < neighbors.size(); i++) {
             i32 potentialNode = neighbors[i]->getIndex();
             f32 HCost = calculateDistance(neighbors[i]->getPosition(), targetCell->getPosition());
             f32 GCost = GCosts[closestIndex] + getCost(closestIndex, i);
-            if(searchFrontier[potentialNode] == nullptr){
+            if (searchFrontier[potentialNode] == nullptr) {
                 FCosts[potentialNode] = GCost + HCost;
                 GCosts[potentialNode] = GCost;
 
@@ -234,7 +234,7 @@ Cell* WorldGeometry::getValidCell(Vector2<f32> referenceTarget, Vector2<f32> ref
                 searchFrontier[potentialNode] = indexToCell(closestIndex);
             }
         /* Fix this method, isn't working properly */
-            else if((GCost < GCosts[potentialNode]) && (shortestPath[potentialNode] == nullptr)){
+            else if ((GCost < GCosts[potentialNode]) && (shortestPath[potentialNode] == nullptr)) {
                 FCosts[potentialNode] = GCost + HCost;
                 GCosts[potentialNode] = GCost;
 
@@ -249,10 +249,10 @@ Cell* WorldGeometry::positionToCell(Vector2<f32> position) const{
     i32 idx = (i32)((maxCellsX) * position.x / mapAxis.x) + 
                 ((i32)((maxCellsY) * position.y / mapAxis.y) * maxCellsX);
 
-    if(idx < 0 || idx > maxCells){
+    if (idx < 0 || idx > maxCells) {
         return nullptr;
     }
-    if (idx == maxCells){
+    if (idx == maxCells) {
         idx = maxCells - 1;
     }
     
@@ -275,12 +275,12 @@ f32 WorldGeometry::getCost(i32 indexA, i32 indexB) const{
     return cellsDistance[indexA][indexB];
 }
 
-std::vector< Unit* > WorldGeometry::getNeighborUnits(Vector2<f32> positionVector){
+std::vector< Unit* > WorldGeometry::getNeighborUnits(Vector2<f32> positionVector) {
     std::vector< Unit* > neighborUnits;
     std::vector< Cell* > neighborCells = positionToCell(positionVector)->getNeighbors();
     neighborCells.push_back(positionToCell(positionVector));
-    for(size_t i = 0; i < neighborCells.size(); i++){
-        if(neighborCells[i]->getTotalInhabitingUnits() != 0){
+    for (size_t i = 0; i < neighborCells.size(); i++) {
+        if (neighborCells[i]->getTotalInhabitingUnits() != 0) {
             std::vector< Unit* > tmp = neighborCells[i]->getInhabitingUnits();
             neighborUnits.insert(neighborUnits.end(), tmp.begin(),  tmp.end());
         }
@@ -312,7 +312,7 @@ bool WorldGeometry::checkLineCollision(Vector2<f32> _orig, Vector2<f32> _end) co
     Vector2<f32> vectorOrig(_orig);
     Vector2<f32> vectorDirection(_end - _orig);
     
-    if(vectorDirection.x != 0 || vectorDirection.y != 0){
+    if (vectorDirection.x != 0 || vectorDirection.y != 0) {
         // Normalize vector 
         f32 length(std::sqrt(std::pow(vectorDirection.x, 2) + 
                              std::pow(vectorDirection.y, 2)));
@@ -320,10 +320,10 @@ bool WorldGeometry::checkLineCollision(Vector2<f32> _orig, Vector2<f32> _end) co
         // Calculate speed vector
         vectorDirection = (vectorDirection / length) * speed;
         // Iterate line collision
-        while(totalDistance < length){
+        while(totalDistance < length) {
             vectorOrig += vectorDirection;
             totalDistance += speed;
-            if(positionToCell(vectorOrig) != nullptr && positionToCell(vectorOrig)->isBlocked()){
+            if (positionToCell(vectorOrig) != nullptr && positionToCell(vectorOrig)->isBlocked()) {
                 return true;
             }
         }

@@ -19,7 +19,7 @@ BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
     ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/gameConfig/BuildingData/"+b+"Buildings.json");
     json j = *r -> getJSON();
 
-    for (auto& element : j["Buildings"]){
+    for (auto& element : j["Buildings"]) {
 		BuildingData tmp;
 			tmp.type = element["buildingName"].get<std::string>();
 			tmp.modelPath = element["modelPath"].get<std::string>();
@@ -80,19 +80,19 @@ void BuildingManager::drawBuilding() {
 
 		tempBuilding -> setPosition(dummy);
 
-		if(team == Enumeration::Team::Human){
+		if (team == Enumeration::Team::Human) {
 			Vector3<f32> tmp = Human::Instance()->hallPosition;
 			f32 distance = std::sqrt(std::pow(tmp.x - dummy.x, 2) + std::pow(tmp.z - dummy.y, 2));
-			if(Human::Instance()->buildableRange < distance){
+			if (Human::Instance()->buildableRange < distance) {
 				canBuild = false;
 			}
-			else{
+			else {
 				canBuild = WorldGeometry::Instance()->checkHitBoxCollision(tempBuilding->getHitbox(), true);
 			}
 		}
 
 		//Pressing the right mouse button cancels the building
-		if (IO::Instance() -> getMouse() -> rightMouseDown()){
+		if (IO::Instance() -> getMouse() -> rightMouseDown()) {
 			buildingMode = false;
 			delete tempBuilding;	
 			/* ToDo: comprobar que esto esta bien comentado, sin comentar da error */	
@@ -119,9 +119,9 @@ void BuildingManager::drawBuilding() {
     }
 }
 
-void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 buildTime){
+void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 buildTime) {
 	std::map<std::string, BuildingData>::iterator it = baseBuildings.find(type);
-	if (it != baseBuildings.end()){
+	if (it != baseBuildings.end()) {
 		BuildingData b = it -> second;
 		if (buildTime >= 0) b.buildingTime = buildTime;
 		tempBuilding = new Building(buildingLayer, nextBuildingId++, team, b, this);
@@ -131,14 +131,14 @@ void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 bui
 }
 
 void BuildingManager::buildBuilding(Vector2<f32> pos) {
-	if (tempBuilding != nullptr){
+	if (tempBuilding != nullptr) {
 		//Establece la posicion inicial del edificio
 		tempBuilding -> setPosition(pos);
 		//Establece un callback que se ejecutará al acabar de construir
-		tempBuilding -> setFinishedCallback([&](Building *b){
+		tempBuilding -> setFinishedCallback([&](Building *b) {
 			buildingAmounts[b -> getType()]++;
 			
-			if (team == Enumeration::Team::Human){
+			if (team == Enumeration::Team::Human) {
 				if (buildingAmounts[b -> getType()] == 1 
 					&& (b -> getType() == "Barrack" || b -> getType() == "Barn" || b -> getType() == "Workshop")) {
 					Hud::Instance() -> enableTab(b -> getType());
@@ -170,7 +170,7 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
  */
 bool BuildingManager::checkCanPay(std::string type) {
 	std::map<std::string, BuildingData>::iterator it = baseBuildings.find(type);
-	if (it != baseBuildings.end()){
+	if (it != baseBuildings.end()) {
 		if (team == Enumeration::Team::Human)
 			return Human::Instance() -> isSolvent(it->second.metalCost, it->second.crystalCost, 0);
 		else
@@ -183,9 +183,9 @@ bool BuildingManager::checkFinished(i32 _id) {
 	return (inMapBuildings -> find(_id) -> second -> getFinished());	
 }
 
-i32 BuildingManager::getAmount(std::string type){
+i32 BuildingManager::getAmount(std::string type) {
 	std::map<std::string, BuildingData>::iterator it = baseBuildings.find(type);
-	if (it != baseBuildings.end()){
+	if (it != baseBuildings.end()) {
 		return buildingAmounts[type];
 	} 
 	return 0;
@@ -205,7 +205,7 @@ SceneNode* BuildingManager::getBuildingLayer() {
 
 void BuildingManager::deleteBuilding(i32 id) {
     std::map<i32, Building*>::iterator it = inMapBuildings->find(id);
-    if (it != inMapBuildings->end()){
+    if (it != inMapBuildings->end()) {
 		if (it -> second -> getTeam() == Enumeration::Team::Human) {
 			Human::Instance() -> modifyHappiness(-it -> second -> getHappinessVariation());
 			if (it -> second -> getType() == "House") {
@@ -223,7 +223,7 @@ void BuildingManager::deleteBuilding(i32 id) {
 	}
 } 
 
-Building *BuildingManager::getBuilding(i32 id){
+Building *BuildingManager::getBuilding(i32 id) {
   	std::map<i32,Building*>::iterator it;
 	it = inMapBuildings->find(id);
   	if (it != inMapBuildings->end())

@@ -14,9 +14,9 @@ Animation::Animation(SceneNode* parent, std::string animationJSON) {
     json j = *animation -> getJSON();
 
 	std::vector<std::string> animation_objects;
-    for (auto& element : j["animations"]){
+    for (auto& element : j["animations"]) {
 		std::string animationName = element["name"].get<std::string>();
-    	for (auto& subelement : element["objects"]){
+    	for (auto& subelement : element["objects"]) {
 			std::string objectName = subelement.get<std::string>();
 
 			animation_objects.push_back(subpath+"/"+animationName+"/"+objectName);
@@ -32,7 +32,7 @@ Animation::Animation(SceneNode* parent, std::string animationJSON) {
 	currentAnimation -> setActive(true);
 
 	frameTimer = new Timer(animationDelays->at(j["defaultAnimation"].get<std::string>()), true);
-	frameTimer -> setCallback([&](){
+	frameTimer -> setCallback([&]() {
 		currentAnimation->updateFrame();
 	});
 }
@@ -40,7 +40,7 @@ Animation::Animation(SceneNode* parent, std::string animationJSON) {
 Animation::~Animation() {
 	delete animationLayer;
 	animationLayer = nullptr;
-	for (std::map<std::string, OBDAnimation*>::iterator it = animations->begin(); it != animations->end(); ++it){
+	for (std::map<std::string, OBDAnimation*>::iterator it = animations->begin(); it != animations->end(); ++it) {
 		delete it->second;
 	}
 	animations->clear();
@@ -51,9 +51,9 @@ Animation::~Animation() {
 }
 
 //ToDo: cola de animaciones
-void Animation::changeAnimation(std::string animationName){
+void Animation::changeAnimation(std::string animationName) {
 	auto it = animations->find(animationName);
-	if (it != animations->end()){
+	if (it != animations->end()) {
 		currentAnimation -> setActive(false);
 		currentAnimation = it->second;
 		currentAnimation -> setActive(true);
@@ -78,6 +78,6 @@ void Animation::setActive(bool a) {
     animationLayer->setActive(a);
 }
 
-void Animation::setColor(Color c){
+void Animation::setColor(Color c) {
 	currentAnimation->getMaterial()->setDiffuseColor(OBDColor(c.r, c.g, c.b, c.a));
 }

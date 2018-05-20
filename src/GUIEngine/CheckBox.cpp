@@ -11,7 +11,7 @@ CheckBox::CheckBox(GUIElement *parent, std::string text) {
 }
 
 CheckBox::~CheckBox() {
-    for (i32 i = 0; i < children.size(); i++){
+    for (i32 i = 0; i < children.size(); i++) {
         //if (children[i] -> getGUIElement() -> getRefCount() > 1) children[i] -> getGUIElement() -> decRef();
     }
     //ToDo: eliminar este
@@ -22,38 +22,38 @@ void CheckBox::addChild(GUIElement *elem) {
     children.push_back(elem);
 }
 
-void CheckBox::show(){
+void CheckBox::show() {
     checkbox -> setVisible(true);
 }
  
-void CheckBox::hide(){
+void CheckBox::hide() {
     checkbox -> setVisible(false);
 }
 
-bool CheckBox::isVisible(){
+bool CheckBox::isVisible() {
     return checkbox -> visible();
 }
 
-void CheckBox::setPosition(Vector2<i32> position){
+void CheckBox::setPosition(Vector2<i32> position) {
     checkbox -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 
-void CheckBox::setSize(Vector2<i32> size){
+void CheckBox::setSize(Vector2<i32> size) {
     checkbox -> setSize(Eigen::Vector2i(size.x, size.y));
 }
 
-void CheckBox::setTooltip(std::string text){
+void CheckBox::setTooltip(std::string text) {
     checkbox -> setTooltip(text);
 }
 
-void CheckBox::setCallback(std::function<void(bool)> callback){
+void CheckBox::setCallback(std::function<void(bool)> callback) {
     checkbox -> setCallback(callback);
 }
 
-i32 CheckBox::isChecked(){
+i32 CheckBox::isChecked() {
     return checkbox -> checked();
 }
 
-nanogui::Widget *CheckBox::getGUIElement(){
+nanogui::Widget *CheckBox::getGUIElement() {
     return checkbox; 
 }

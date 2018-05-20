@@ -1,25 +1,25 @@
 #include "TShaderSwapper.h"
 
-TShaderSwapper::TShaderSwapper(GLuint p){
+TShaderSwapper::TShaderSwapper(GLuint p) {
 	programID = p;
 }
 
-TShaderSwapper::~TShaderSwapper(){
+TShaderSwapper::~TShaderSwapper() {
 
 }
 
-void TShaderSwapper::beginDraw(){
+void TShaderSwapper::beginDraw() {
 	if (programID != 0) glUseProgram(programID);
 }
 
-void TShaderSwapper::endDraw(){
+void TShaderSwapper::endDraw() {
     if (programID != 0) glUseProgram(TEntity::cache.getID(OBDEnums::OpenGLIDs::CURRENT_PROGRAM_ID));
 }
 
-void TShaderSwapper::setProgramID(GLuint p){
+void TShaderSwapper::setProgramID(GLuint p) {
 	programID = p;
 }
 
-GLuint TShaderSwapper::getProgramID(){
+GLuint TShaderSwapper::getProgramID() {
 	return programID;
 }

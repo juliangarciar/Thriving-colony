@@ -1,6 +1,6 @@
 #include "OBDAnimation.h"
 
-OBDAnimation::OBDAnimation(OBDSceneNode* p, std::vector<ResourceOBJ*> *o, ResourceMTL *m) : OBDEntity(p){
+OBDAnimation::OBDAnimation(OBDSceneNode* p, std::vector<ResourceOBJ*> *o, ResourceMTL *m) : OBDEntity(p) {
 	objects = o;
 	objectMaterial = m;
 
@@ -15,7 +15,7 @@ OBDAnimation::OBDAnimation(OBDSceneNode* p, std::vector<ResourceOBJ*> *o, Resour
 
 	material = new OBDMaterial(m, it->first);
 
-	for (int i = 0; i < o->size(); i++){
+	for (int i = 0; i < o->size(); i++) {
 		glslMesh *tmp = new glslMesh();
 		tmp -> vbo = o->at(i)->getResource()->begin()->second->vbo;
 		tmp -> ibo = o->at(i)->getResource()->begin()->second->indices;
@@ -39,7 +39,7 @@ OBDAnimation::~OBDAnimation() {
 
 }
 
-void OBDAnimation::updateFrame(){
+void OBDAnimation::updateFrame() {
 	frames -> at(currentFrame) -> setActive(false);
 	frames -> at(nextFrame) -> setActive(true);
 	currentFrame = nextFrame;
@@ -47,6 +47,6 @@ void OBDAnimation::updateFrame(){
 	if (nextFrame >= numberOfFrames) nextFrame = 0;
 }
 
-OBDMaterial *OBDAnimation::getMaterial(){
+OBDMaterial *OBDAnimation::getMaterial() {
 	return material;
 }

@@ -1,6 +1,6 @@
 #include "Composite.h"
 
-Composite::Composite(std::vector<Behaviour*> newChildren) : Behaviour(){
+Composite::Composite(std::vector<Behaviour*> newChildren) : Behaviour() {
     children = newChildren;
 }
 

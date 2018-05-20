@@ -44,7 +44,7 @@ void Human::CleanUp() {
 }
 
 bool Human::getUnderAttack() {
-    if(underAttack == false){
+    if (underAttack == false) {
         Vector2<f32> pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
         i32 requesterRange = 1000;
         
@@ -54,7 +54,7 @@ bool Human::getUnderAttack() {
         // Get units in the map of the opposing team
         std::map<i32, Unit*> *inMapTroops = IA::Instance() -> getUnitManager() -> getInMapTroops();
         // Iterate through the map
-        for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
+        for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it) {
             if (it  -> second != nullptr) {
             // Calculate distance between troop requesting target and posible targets
                 xaux = it -> second -> getPosition().x - pos.x;

@@ -17,7 +17,7 @@ Panel::Panel(GUIElement *parent, std::string title) {
 }
 
 Panel::~Panel() {
-    for (i32 i = 0; i < children.size(); i++){
+    for (i32 i = 0; i < children.size(); i++) {
         //if (children[i] != nullptr && children[i] -> getGUIElement() -> getRefCount() > 1) children[i] -> getGUIElement() -> decRef();
     }
     //ToDo: eliminar este
@@ -28,31 +28,31 @@ void Panel::addChild(GUIElement *elem) {
     children.push_back(elem);
 }
 
-void Panel::show(){
+void Panel::show() {
     panel -> setVisible(true);
 }
  
-void Panel::hide(){
+void Panel::hide() {
     panel -> setVisible(false);
 }
 
-bool Panel::isVisible(){
+bool Panel::isVisible() {
     return panel -> visible();
 }
 
-void Panel::center(){
+void Panel::center() {
     panel -> center();
 }
 
-void Panel::refreshLayout(){
+void Panel::refreshLayout() {
     Window::Instance()->getGUIEnvironment()->performLayout();
 }
 
-void Panel::setPosition(Vector2<i32> position){
+void Panel::setPosition(Vector2<i32> position) {
     panel -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 
-void Panel::setTooltip(std::string text){
+void Panel::setTooltip(std::string text) {
     panel->setTooltip(text);
 }
 
@@ -72,6 +72,6 @@ void Panel::setSize(Vector2<i32> size) {
     panel -> setFixedSize(Eigen::Vector2i(size.x, size.y));
 }
 
-nanogui::Widget *Panel::getGUIElement(){
+nanogui::Widget *Panel::getGUIElement() {
     return panel;
 }

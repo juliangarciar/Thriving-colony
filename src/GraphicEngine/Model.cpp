@@ -44,12 +44,12 @@ void Model::setActive(bool a) {
     obj->setActive(a);
 }
 
-void Model::setMaterial(Material *m){
+void Model::setMaterial(Material *m) {
     //ToDo
 }
 
-void Model::setColor(Color c){
-	for (std::map<std::string, OBDMaterial*>::iterator it = materials->begin(); it != materials->end(); ++it){
+void Model::setColor(Color c) {
+	for (std::map<std::string, OBDMaterial*>::iterator it = materials->begin(); it != materials->end(); ++it) {
 		it->second->setDiffuseColor(OBDColor(c.r/255, c.g/255, c.b/255, c.a/255));
 	}
 }

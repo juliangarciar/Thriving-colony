@@ -13,7 +13,7 @@ Widget::Widget(GUIElement *parent) {
 }
 
 Widget::~Widget() {
-    for (i32 i = 0; i < children.size(); i++){
+    for (i32 i = 0; i < children.size(); i++) {
         //if (children[i] -> getGUIElement() -> getRefCount() > 1) children[i] -> getGUIElement() -> decRef();
     }
     //ToDo: eliminar este
@@ -24,15 +24,15 @@ void Widget::addChild(GUIElement *elem) {
     children.push_back(elem);
 }
 
-void Widget::setPosition(Vector2<i32> position){
+void Widget::setPosition(Vector2<i32> position) {
     widget -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 
-void Widget::setSize(Vector2<i32> size){
+void Widget::setSize(Vector2<i32> size) {
     widget -> setSize(Eigen::Vector2i(size.x, size.y));
 }
 
-void Widget::setTooltip(std::string t){
+void Widget::setTooltip(std::string t) {
     widget -> setTooltip(t);
 }
 
@@ -44,18 +44,18 @@ void Widget::setGroupLayout() {
     widget -> setLayout(new nanogui::GroupLayout());
 }
 
-void Widget::show(){
+void Widget::show() {
     widget -> setVisible(true);
 }
  
-void Widget::hide(){
+void Widget::hide() {
     widget -> setVisible(false);
 }
 
-bool Widget::isVisible(){
+bool Widget::isVisible() {
     return widget -> visible();
 }
 
-nanogui::Widget *Widget::getGUIElement(){
+nanogui::Widget *Widget::getGUIElement() {
     return widget;
 }

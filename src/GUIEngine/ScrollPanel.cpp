@@ -11,7 +11,7 @@ ScrollPanel::ScrollPanel(GUIElement *parent) {
 }
 
 ScrollPanel::~ScrollPanel() {
-    for (i32 i = 0; i < children.size(); i++){
+    for (i32 i = 0; i < children.size(); i++) {
         //if (children[i] -> getGUIElement() -> getRefCount() > 1) children[i] -> getGUIElement() -> decRef();
     }
     //ToDo: eliminar este
@@ -22,23 +22,23 @@ void ScrollPanel::addChild(GUIElement *elem) {
     children.push_back(elem);
 }
 
-void ScrollPanel::setPosition(Vector2<i32> position){
+void ScrollPanel::setPosition(Vector2<i32> position) {
     spanel -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 
-void ScrollPanel::setTooltip(std::string t){
+void ScrollPanel::setTooltip(std::string t) {
     spanel -> setTooltip(t);
 }
 
-void ScrollPanel::show(){
+void ScrollPanel::show() {
     spanel -> setVisible(true);
 }
  
-void ScrollPanel::hide(){
+void ScrollPanel::hide() {
     spanel -> setVisible(false);
 }
 
-bool ScrollPanel::isVisible(){
+bool ScrollPanel::isVisible() {
     return spanel -> visible();
 }
 
@@ -46,6 +46,6 @@ void ScrollPanel::setSize(Vector2<i32> size) {
     spanel -> setFixedSize(Eigen::Vector2i(size.x, size.y));
 }
 
-nanogui::Widget *ScrollPanel::getGUIElement(){
+nanogui::Widget *ScrollPanel::getGUIElement() {
     return spanel;
 }

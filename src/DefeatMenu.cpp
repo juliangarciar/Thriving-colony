@@ -19,7 +19,7 @@ DefeatMenu::~DefeatMenu() {
     delete winText;
 }
 
-void DefeatMenu::setHUDEvents(){
+void DefeatMenu::setHUDEvents() {
     buttonQuit -> setCallback([]{
         Window::Instance() -> close();
     });

@@ -14,7 +14,7 @@ ARedirect::~ARedirect() {
 Enumeration::BehaviourState ARedirect::Update() {
     if (IA::Instance()->getIdleTroops()) {
         if (IA::Instance() -> getTree() -> readyToAttack()) {
-            IA::Instance() -> getUnitManager() -> commandAttack(Human::Instance()->hallPosition.toVector2());
+            IA::Instance() -> getUnitManager() -> commandAttack(Human::Instance() -> hallPosition.toVector2());
         } else {
             IA::Instance() -> getUnitManager() -> retractAllTroops();
         }
