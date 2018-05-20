@@ -186,6 +186,7 @@ void Unit::switchState(Enumeration::UnitState newState){
         case Enumeration::UnitState::Move:
             chaseTimer->stop();
             enemySensorTimer->stop();
+            switchUnitFigthersState(Enumeration::UnitFighterState::ufMove);
             state = newState;
         break;
 
@@ -196,6 +197,7 @@ void Unit::switchState(Enumeration::UnitState newState){
         case Enumeration::UnitState::Attack:
             chaseTimer->stop();
             enemySensorTimer->stop();
+            switchUnitFigthersState(Enumeration::UnitFighterState::ufConfront);
             state = newState;
         break;   
 
@@ -534,5 +536,14 @@ void Unit::updateFlockingSensor() {
     nearUnitFighters = dummyFighters;
     for(std::size_t i = 0; i < unitFighters.size(); i++){
         unitFighters[i] -> setNearFighters(nearUnitFighters);
+    }
+}
+
+void Unit::switchUnitFigthersState(Enumeration::UnitFighterState _state){
+    //std::cout << "\n";
+    for(std::size_t i = 0; i < unitFighters.size(); ++i){
+        //std::cout << "Fighter " << i << ": ";
+        unitFighters[i]->switchState(_state);
+        //std::cout << "\n";
     }
 }

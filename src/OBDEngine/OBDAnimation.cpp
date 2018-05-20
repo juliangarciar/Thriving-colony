@@ -50,3 +50,7 @@ void OBDAnimation::updateFrame(){
 OBDMaterial *OBDAnimation::getMaterial(){
 	return material;
 }
+
+void OBDAnimation::setFrame(i32 nFrame){
+	nextFrame = nFrame;
+}

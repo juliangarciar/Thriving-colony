@@ -31,6 +31,7 @@ Animation::Animation(SceneNode* parent, std::string animationJSON) {
 	currentAnimation = animations->at(j["defaultAnimation"].get<std::string>());
 	currentAnimation -> setActive(true);
 
+	/* Por que un string */
 	frameTimer = new Timer(animationDelays->at(j["defaultAnimation"].get<std::string>()), true);
 	frameTimer -> setCallback([&](){
 		currentAnimation->updateFrame();
@@ -55,8 +56,10 @@ void Animation::changeAnimation(std::string animationName){
 	auto it = animations->find(animationName);
 	if (it != animations->end()){
 		currentAnimation -> setActive(false);
+		//it->second->setFrame(0);
 		currentAnimation = it->second;
 		currentAnimation -> setActive(true);
+		
 		frameTimer->changeDuration(animationDelays->at(animationName));
 		frameTimer->restart();
 	}

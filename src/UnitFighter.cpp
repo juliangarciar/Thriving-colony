@@ -4,7 +4,7 @@
 #include "GraphicEngine/Window.h"
 #include "IOEngine/Timer.h"
 #include "IOEngine/IO.h"
-UnitFighter::UnitFighter(SceneNode* _parent, std::string _path, f32 _speed):speed(_speed), isMoving(false), maxDesviation(_speed * 0.5f), maxTime(0), unitFighterClock(nullptr), fighterState(Enumeration::UnitFighterState::ufIdle){
+UnitFighter::UnitFighter(SceneNode* _parent, std::string _path, f32 _speed):speed(_speed), isMoving(false), maxDesviation(_speed * 0.5f), maxTime(0), unitFighterClock(nullptr), fighterState(Enumeration::UnitFighterState::ufMove){
     fighterModel = new Animation(_parent, _path);
     vectorPosition = Vector2<f32>(0, 0);
     vectorSpeed = Vector2<f32>(0, 0);
@@ -18,7 +18,6 @@ UnitFighter::UnitFighter(SceneNode* _parent, std::string _path, f32 _speed):spee
 }
 
 UnitFighter::~UnitFighter(){
-    IO::Instance()->unregisterTimer(unitFighterClock);
     delete unitFighterClock;
     delete fighterModel;
     nearFighters.clear();
@@ -29,10 +28,13 @@ void UnitFighter::setPosition(Vector2<f32> _pos){
 }
 
 void UnitFighter::setDestiny(Vector2<f32> _dest){
+    if(fighterState != Enumeration::UnitFighterState::ufMove && fighterState != Enumeration::UnitFighterState::ufConfront){
+        switchState(Enumeration::UnitFighterState::ufMove);
+    }
     vectorDestiny = _dest;
     Vector2<f32> vectorDistance = (vectorDestiny - vectorPosition);
     maxTime = (std::sqrt(std::pow(vectorDistance.x, 2) + std::pow(vectorDistance.y, 2))) / speed * 0.016f ;
-    maxTime += 0.1f * maxTime;
+    maxTime += 0.15f * maxTime;
     unitFighterClock->changeDuration(maxTime);
     unitFighterClock->restart();
 
@@ -40,22 +42,24 @@ void UnitFighter::setDestiny(Vector2<f32> _dest){
 }
 
 void UnitFighter::move(){
-    if(!hasArrived()){
-        calculateDirection();
-        Vector2<f32> _oldPosition = vectorPosition;
-        vectorSpeed = vectorDirection * speed;
-        vectorPosition += vectorSpeed;
-        vectorPosition = _oldPosition + (vectorPosition - _oldPosition) * Window::Instance()->getDeltaTimeVariance();
-        fighterModel->setPosition(Vector3<f32>(vectorPosition.x, Map::Instance()->getTerrain()->getY(vectorPosition.x, vectorPosition.y), vectorPosition.y));
-    }   
-    else{
-        isMoving = false;
-        unitFighterClock->stop();
-        if(fighterState == Enumeration::UnitFighterState::ufMove){
-            switchState(Enumeration::UnitFighterState::ufIdle);
-        }
-        if(fighterState == Enumeration::UnitFighterState::ufConfront){
-            switchState(Enumeration::UnitFighterState::ufAttack);
+    if(isMoving){
+        if(!hasArrived()){
+            calculateDirection();
+            Vector2<f32> _oldPosition = vectorPosition;
+            vectorSpeed = vectorDirection * speed;
+            vectorPosition += vectorSpeed;
+            vectorPosition = _oldPosition + (vectorPosition - _oldPosition) * Window::Instance()->getDeltaTimeVariance();
+            fighterModel->setPosition(Vector3<f32>(vectorPosition.x, Map::Instance()->getTerrain()->getY(vectorPosition.x, vectorPosition.y), vectorPosition.y));
+        }   
+        else{
+            isMoving = false;
+            unitFighterClock->stop();
+            if(fighterState == Enumeration::UnitFighterState::ufMove){
+                switchState(Enumeration::UnitFighterState::ufIdle);
+            }
+            if(fighterState == Enumeration::UnitFighterState::ufConfront){
+                switchState(Enumeration::UnitFighterState::ufAttack);
+            }
         }
     }
 }
@@ -91,23 +95,35 @@ void UnitFighter::switchState(Enumeration::UnitFighterState _state){
     // Do something (clocks ?)
     switch(_state){
         case Enumeration::UnitFighterState::ufAttack:
-            fighterState = _state;
-            ufAttackState();
+            if(fighterState != Enumeration::UnitFighterState::ufAttack){
+                //std::cout << "Estado attack";
+                fighterState = _state;
+                ufAttackState();
+            }
         break;
 
         case Enumeration::UnitFighterState::ufMove:
-            fighterState = _state;
-            ufMoveState();
+            if(fighterState != Enumeration::UnitFighterState::ufMove){
+                //std::cout << "Estado move";
+                fighterState = _state;
+                ufMoveState();
+            }
         break;
 
         case Enumeration::UnitFighterState::ufIdle:
-            fighterState = _state;
-            ufIdleState();
+            if(fighterState != Enumeration::UnitFighterState::ufIdle){
+                //std::cout << "Estado idle";
+                fighterState = _state;
+                ufIdleState();
+            }
         break;
 
         case Enumeration::UnitFighterState::ufConfront:
-            fighterState = _state;
-            ufConfrontState();
+            if(fighterState != Enumeration::UnitFighterState::ufConfront){
+                //std::cout << "Estado confront";
+                fighterState = _state;
+                ufConfrontState();
+            }
         break;
 
         default: 

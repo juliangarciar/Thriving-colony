@@ -37,6 +37,8 @@ class OBDAnimation : public OBDEntity {
 		 * @return OBDMaterial* 
 		 */
 		OBDMaterial *getMaterial();
+
+		void setFrame(i32 nFrame);
     private:
 		std::vector<ResourceOBJ*> *objects;
 		ResourceMTL *objectMaterial;
