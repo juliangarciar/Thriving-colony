@@ -5,7 +5,7 @@
 #include "IOEngine/Timer.h"
 #include "IOEngine/IO.h"
 UnitFighter::UnitFighter(SceneNode* _parent, std::string _path, f32 _speed):speed(_speed), isMoving(false), maxDesviation(_speed * 0.5f), maxTime(0), unitFighterClock(nullptr), fighterState(Enumeration::UnitFighterState::ufIdle){
-    fighterModel = new Model(_parent, 0, _path);
+    fighterModel = new Animation(_parent, _path);
     vectorPosition = Vector2<f32>(0, 0);
     vectorSpeed = Vector2<f32>(0, 0);
     vectorDestiny = Vector2<f32>(0, 0);
@@ -253,6 +253,7 @@ void UnitFighter::calculateDirection(){
 
             vectorDirection = vectorDirection / distance;   
         }
+        fighterModel->setRotation(Vector3<f32>(vectorDirection.x, 0, vectorDirection.y));
     }   
     else{
         vectorDirection = Vector2<f32>(0, 0);

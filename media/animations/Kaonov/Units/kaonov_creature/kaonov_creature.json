@@ -1,0 +1,78 @@
+{
+    "animations": [
+        {
+        "name": "idle",
+        "delay": 0.15,
+        "objects": [
+            "kaonov_creature.obj"
+            ]
+        },
+        {
+        "name": "walk",
+        "delay": 0.15,
+        "objects": [
+            "kaonov_creature_walk_000020.obj",
+            "kaonov_creature_walk_000021.obj",
+            "kaonov_creature_walk_000022.obj",
+            "kaonov_creature_walk_000023.obj",
+            "kaonov_creature_walk_000024.obj",
+            "kaonov_creature_walk_000025.obj",
+            "kaonov_creature_walk_000026.obj",
+            "kaonov_creature_walk_000027.obj",
+            "kaonov_creature_walk_000028.obj",
+            "kaonov_creature_walk_000029.obj",
+            "kaonov_creature_walk_000030.obj",
+            "kaonov_creature_walk_000031.obj",
+            "kaonov_creature_walk_000032.obj",
+            "kaonov_creature_walk_000033.obj",
+            "kaonov_creature_walk_000034.obj",
+            "kaonov_creature_walk_000035.obj",
+            "kaonov_creature_walk_000036.obj",
+            "kaonov_creature_walk_000037.obj",
+            "kaonov_creature_walk_000038.obj",
+            "kaonov_creature_walk_000039.obj",
+            "kaonov_creature_walk_000040.obj",
+            "kaonov_creature_walk_000041.obj",
+            "kaonov_creature_walk_000042.obj",
+            "kaonov_creature_walk_000043.obj",
+            "kaonov_creature_walk_000044.obj",
+            "kaonov_creature_walk_000045.obj",
+            "kaonov_creature_walk_000046.obj"
+            ]
+        },
+        {
+        "name": "attack",
+        "delay": 0.15,
+        "objects": [
+            "kaonov_creature_attack_000020.obj",
+            "kaonov_creature_attack_000021.obj",
+            "kaonov_creature_attack_000022.obj",
+            "kaonov_creature_attack_000023.obj",
+            "kaonov_creature_attack_000024.obj",
+            "kaonov_creature_attack_000025.obj",
+            "kaonov_creature_attack_000026.obj",
+            "kaonov_creature_attack_000027.obj",
+            "kaonov_creature_attack_000028.obj",
+            "kaonov_creature_attack_000029.obj",
+            "kaonov_creature_attack_000030.obj",
+            "kaonov_creature_attack_000031.obj",
+            "kaonov_creature_attack_000032.obj",
+            "kaonov_creature_attack_000033.obj",
+            "kaonov_creature_attack_000034.obj",
+            "kaonov_creature_attack_000035.obj",
+            "kaonov_creature_attack_000036.obj",
+            "kaonov_creature_attack_000037.obj",
+            "kaonov_creature_attack_000038.obj",
+            "kaonov_creature_attack_000039.obj",
+            "kaonov_creature_attack_000040.obj",
+            "kaonov_creature_attack_000041.obj",
+            "kaonov_creature_attack_000042.obj",
+            "kaonov_creature_attack_000043.obj",
+            "kaonov_creature_attack_000044.obj",
+            "kaonov_creature_attack_000045.obj"
+            ]
+        }
+    ],
+    "material": "kaonov_entity.mtl",
+    "defaultAnimation": "idle"
+    } 
