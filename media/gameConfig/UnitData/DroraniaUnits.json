@@ -17,14 +17,8 @@
 			"selectEvent": "event:/UnitSelect/Drorania_ranged_S",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"troopPath":{
-				"modelPath": "media/models/Drorania/Units/drorania_ranged/drorania_ranged_soldier.obj",
-				"texturePath": ""
-			},
-			"flagPath": {
-				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
-				"texturePath": ""
-			},
+			"troopModelPath": "media/animations/Drorania/Units/drorania_ranged_soldier/drorania_ranged_soldier.json",
+			"flagModelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 			"troops": 6,
 			"cellsX": 1,
 			"cellsY": 1,
@@ -48,14 +42,8 @@
 			"selectEvent": "event:/UnitSelect/Drorania_ranged_A",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"troopPath":{
-				"modelPath": "media/models/Drorania/Units/drorania_creature/drorania_creature.obj",
-				"texturePath": ""
-			},
-			"flagPath": {
-				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
-				"texturePath": ""
-			},
+			"troopModelPath": "media/animations/Drorania/Units/drorania_creature/drorania_creature.json",
+			"flagModelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 			"troops": 4,
 			"cellsX": 1,
 			"cellsY": 1,
@@ -79,14 +67,8 @@
 			"selectEvent": "event:/UnitSelect/Drorania_melee_S",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"troopPath":{
-				"modelPath": "media/models/Drorania/Units/drorania_melee/drorania_melee_soldier.obj",
-				"texturePath": ""
-			},
-			"flagPath": {
-				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
-				"texturePath": ""
-			},
+			"troopModelPath": "media/animations/Drorania/Units/drorania_melee_soldier/drorania_melee_soldier.json",
+			"flagModelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 			"troops": 6,
 			"cellsX": 1,
 			"cellsY": 1,
@@ -110,14 +92,8 @@
 			"selectEvent": "event:/UnitSelect/Drorania_melee_A",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"troopPath":{
-				"modelPath": "media/models/Drorania/Units/drorania_creature/drorania_creature.obj",
-				"texturePath": ""
-			},
-			"flagPath": {
-				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
-				"texturePath": ""
-			},
+			"troopModelPath": "media/animations/Drorania/Units/drorania_creature/drorania_creature.json",
+			"flagModelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 			"troops": 4,
 			"cellsX": 1,
 			"cellsY": 1,
@@ -141,14 +117,8 @@
 			"selectEvent": "event:/UnitSelect/Drorania_ranged_S",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"troopPath":{
-				"modelPath": "media/models/Drorania/Units/drorania_cannon/drorania_cannon.obj",
-				"texturePath": ""
-			},
-			"flagPath": {
-				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
-				"texturePath": ""
-			},
+			"troopModelPath": "media/animations/Drorania/Units/drorania_cannon/drorania_cannon.json",
+			"flagModelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 			"troops": 1,
 			"cellsX": 1,
 			"cellsY": 1,
@@ -172,14 +142,8 @@
 			"selectEvent": "event:/UnitSelect/Drorania_ranged_A",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"troopPath":{
-				"modelPath": "media/models/Drorania/Units/drorania_walls_desintegrator/drorania_walls_desintegrator.obj",
-				"texturePath": ""
-			},
-			"flagPath": {
-				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
-				"texturePath": ""
-			},
+			"troopModelPath": "media/animations/Drorania/Units/drorania_walls_desintegrator/drorania_walls_desintegrator.json",
+			"flagModelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 			"troops": 1,
 			"cellsX": 1,
 			"cellsY": 1,
@@ -203,14 +167,8 @@
 			"selectEvent": "event:/UnitSelect/Drorania_melee_A",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"troopPath":{
-				"modelPath": "media/models/Drorania/Units/drorania_entity/drorania_entity.obj",
-				"texturePath": ""
-			},
-			"flagPath": {
-				"modelPath": "media/models/Drorania/Flags/drorania_flag.obj",
-				"texturePath": ""
-			},
+			"troopModelPath": "media/animations/Drorania/Units/drorania_entity/drorania_entity.json",
+			"flagModelPath": "media/models/Drorania/Flags/drorania_flag.obj",
 			"troops": 1,
 			"cellsX": 1,
 			"cellsY": 1,

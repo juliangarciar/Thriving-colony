@@ -38,7 +38,6 @@ Unit::Unit(SceneNode* _layer,
 			baseData.cellsX,
 			baseData.cellsY,
 			baseData.flagModel,
-			baseData.flagTexture,
 			baseData.bbOffset
 		),
 		state(Enumeration::UnitState::Recruiting),

@@ -19,6 +19,7 @@
 
 #include <string>
 #include <cstdint>
+#include <cstddef>
 #include <thread>
 
 typedef int32_t i32;

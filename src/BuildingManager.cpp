@@ -23,7 +23,6 @@ BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
 		BuildingData tmp;
 			tmp.type = element["buildingName"].get<std::string>();
 			tmp.modelPath = element["modelPath"].get<std::string>();
-			tmp.texturePath = element["texturePath"].get<std::string>();
 			tmp.metalCost = element["metalCost"].get<i32>();
 			tmp.crystalCost = element["crystalCost"].get<i32>();
 			tmp.maxHP = element["maxHP"].get<i32>();

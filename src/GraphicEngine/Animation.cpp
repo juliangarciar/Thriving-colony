@@ -25,13 +25,13 @@ Animation::Animation(SceneNode* parent, std::string animationJSON) {
 		tempAnimation->setActive(false);
 
 		animations->insert(std::pair<std::string, OBDAnimation*>(animationName, tempAnimation));
-		animationDelays->insert(std::pair<std::string, f32>(animationName, element["delay"]));
+		animationDelays->insert(std::pair<std::string, f32>(animationName, element["delay"].get<f32>()));
 	}
 
-	currentAnimation = animations->begin()->second;
+	currentAnimation = animations->at(j["defaultAnimation"].get<std::string>());
 	currentAnimation -> setActive(true);
 
-	frameTimer = new Timer(animationDelays->begin()->second, true);
+	frameTimer = new Timer(animationDelays->at(j["defaultAnimation"].get<std::string>()), true);
 	frameTimer -> setCallback([&](){
 		currentAnimation->updateFrame();
 	});
@@ -46,6 +46,8 @@ Animation::~Animation() {
 	animations->clear();
 	delete animations;
 	animations = nullptr;
+	delete frameTimer;
+	frameTimer = nullptr;
 }
 
 //ToDo: cola de animaciones

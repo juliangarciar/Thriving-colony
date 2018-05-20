@@ -29,7 +29,6 @@ Building::Building(
 			baseData.cellsX,
 			baseData.cellsY,
 			baseData.modelPath,
-			baseData.texturePath,
 			baseData.bbOffset
 		), 
 		cityLevel(baseData.cityLevel),

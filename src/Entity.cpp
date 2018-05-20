@@ -22,7 +22,6 @@ Entity::Entity(SceneNode* _layer,
                 i32 _cellsX,
                 i32 _cellsY,
                 std::string _modelPath,
-                std::string _texturePath,
                 f32 _bbOffset) : 
                     ID(_id),
                     team(_team),
