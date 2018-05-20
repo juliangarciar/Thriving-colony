@@ -141,7 +141,6 @@ bool IA::getUnderAttack() {
                     xaux = it -> second -> getPosition().x - pos.x;
                     yaux = it -> second -> getPosition().y - pos.y;
                     dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
-                    std::cout << dist << std::endl;
 
                 if (dist <= requesterRange) {
                     underAttack = true;
@@ -157,6 +156,7 @@ void IA::chooseBehaviour() {
     srand(time(nullptr));
     // Determine a number between 0 and 4, the number of possible behaviours for the AI to choose
     behaviour = (Enumeration::IABehaviour)(rand() % (4-0 + 1) + 0);
+    behaviour = Enumeration::IABehaviour::VeryHappy;
     switch (behaviour) {
         case Enumeration::IABehaviour::VeryHappy:
             chosenBehaviour = "Very happy";
@@ -179,6 +179,7 @@ void IA::chooseBehaviour() {
             veryUnhappyBehaviour();
         break;
     }
+    std::cout << chosenBehaviour << std::endl;
 }
 
 void IA::veryHappyBehaviour() {

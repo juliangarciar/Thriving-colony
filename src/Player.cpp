@@ -41,7 +41,10 @@ void Player::Init() {
    		citizens += (Map::Instance()->getCitizenIncrement() + citizensByHappiness);
 		if (citizens + units->getUnitFighters() > maxPeople) {
 			citizens = maxPeople - units->getUnitFighters();
-		}
+            limitReached = true;
+		} else {
+            limitReached = false;
+        }
 	});
 }
 
@@ -184,4 +187,8 @@ BuildingManager *Player::getBuildingManager(){
 
 UnitManager *Player::getUnitManager(){
 	return units;
+}
+
+bool Player::getLimitReached() {
+    return limitReached;
 }

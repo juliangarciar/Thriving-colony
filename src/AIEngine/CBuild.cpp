@@ -14,7 +14,7 @@ CBuild::~CBuild() {
 Enumeration::BehaviourState CBuild::Update() {
     if (IA::Instance() -> getRootNode() -> getPriority() == nullptr) {
         if (type == "Barn") {
-                if (IA::Instance() -> getTree() -> getRequireBarn()) {
+                if (IA::Instance() -> getTree() -> getRequireBarn() && IA::Instance() -> getCityLevel() >= IA::Instance()-> getTree()->barnMilestone) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildBarn);
                     actionToDo();
                     return Enumeration::BehaviourState::Success;
@@ -46,7 +46,7 @@ Enumeration::BehaviourState CBuild::Update() {
                     return Enumeration::BehaviourState::Failure;
                 }
         } else if (type == "House") {
-                if (IA::Instance() -> getTree() -> calculateCitizensRate() < IA::Instance() -> getTree() -> getCitizensThreshold()) {
+                if (IA::Instance() -> getLimitReached() || (IA::Instance() -> getTree() -> calculateCitizensRate() < IA::Instance() -> getTree() -> getCitizensThreshold())) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildHome);
                     actionToDo();
                     return Enumeration::BehaviourState::Success;
@@ -89,8 +89,8 @@ Enumeration::BehaviourState CBuild::Update() {
                 } else {
                     return Enumeration::BehaviourState::Failure;
                 }
-        } else if (type == "Workshop") {
-                if (IA::Instance() -> getTree() -> getRequireWorkshop()) {
+        } else if (type == "Workshop" ) {
+                if (IA::Instance() -> getTree() -> getRequireWorkshop() && IA::Instance() -> getCityLevel() >= IA::Instance()-> getTree()->workshopMilestone) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildWorkshop);
                     actionToDo();
                     return Enumeration::BehaviourState::Success;

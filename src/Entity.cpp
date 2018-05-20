@@ -117,7 +117,7 @@ void Entity::setPosition(Vector2<f32> vectorData) {
     vectorPos = vectorData;
 
     model -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y), vectorData.y));
-	std::cout << vectorData.x << " " << Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y) << " " << vectorData.y << std::endl;
+	//std::cout << vectorData.x << " " << Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y) << " " << vectorData.y << std::endl;
     bar -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y) + bbOffset, vectorData.y));
 
     hitBox.moveHitbox(vectorData);
