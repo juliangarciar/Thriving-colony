@@ -192,6 +192,14 @@ class Player {
          */
         UnitManager* getUnitManager();
 
+        /**
+         * @brief Get the Limit Reached object
+         * 
+         * @return true 
+         * @return false 
+         */
+        bool getLimitReached();
+
         //Position of the player's command center.
         Vector3<f32> hallPosition;
 
@@ -203,6 +211,7 @@ class Player {
 
         //Player's building range (for expandable terrains)
         f32 buildableRange;
+        
     protected:
         //Happiness of the player's city.
         i32 happiness;
@@ -245,6 +254,9 @@ class Player {
 
         //PLayer's troops.
         UnitManager *units;
+
+        //Denizen limit
+        bool limitReached = false;
 
     private:
         

@@ -2,7 +2,7 @@
 #include "Window.h"
 
 Texture::Texture(const char* path) {
-	if (strchr(path,'.') != NULL){
+	if (strchr(path,'.') != NULL) {
 		texture = Window::Instance()->getEngine()->createTexture(OBDEnums::TextureTypes::TEXTURE_DIFFUSE, path);
 	}
 }

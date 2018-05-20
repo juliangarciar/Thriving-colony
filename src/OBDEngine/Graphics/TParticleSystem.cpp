@@ -1,6 +1,6 @@
 #include "TParticleSystem.h"
 
-TParticleSystem::TParticleSystem() : TEntity(){
+TParticleSystem::TParticleSystem() : TEntity() {
 
 }
 

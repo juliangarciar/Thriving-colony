@@ -1,6 +1,6 @@
 #include "OBDTexture.h"
 
-OBDTexture::OBDTexture(OBDEnums::TextureTypes t, ResourceIMG* i){
+OBDTexture::OBDTexture(OBDEnums::TextureTypes t, ResourceIMG* i) {
 	type = t;
 	tex = new TTexture(i);
 }
@@ -10,10 +10,10 @@ OBDTexture::~OBDTexture() {
 	tex = nullptr;
 }
 
-OBDEnums::TextureTypes OBDTexture::getType(){
+OBDEnums::TextureTypes OBDTexture::getType() {
 	return type;
 }
 
-TTexture *OBDTexture::getTexture(){
+TTexture *OBDTexture::getTexture() {
 	return tex;
 }

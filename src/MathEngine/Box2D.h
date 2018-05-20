@@ -20,17 +20,20 @@ class Box2D
         Vector2<f32> TopRight() const;
         Vector2<f32> BottomLeft() const;
         Vector2<f32> Center() const;
-        f32    Top() const;
-        f32    Left() const;
-        f32    Bottom() const;
-        f32    Right() const;
+
+        f32 Top() const;
+        f32 Left() const;
+        f32 Bottom() const;
+        f32 Right() const;
+
         Box2D getAmplifiedBox(f32 distance) const;
         bool isOverlappedWith(const Box2D& other) const;
         bool isOverlappedWith(Vector2<f32> point) const;
-        f32 getHalfSize() const;
 
+        f32 getHalfSize() const;
         i32 getCellsX() const;
         i32 getCellsY() const;
+        
     private:
         Vector2<f32> m_vTopLeft;
         Vector2<f32> m_vBottomRight;

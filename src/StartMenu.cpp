@@ -119,7 +119,7 @@ StartMenu::~StartMenu() {
 
 }
 
-void StartMenu::setHUDEvents(){
+void StartMenu::setHUDEvents() {
     buttonQuit -> setCallback([]{
         Window::Instance() -> close();
     });

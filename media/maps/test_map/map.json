@@ -112,7 +112,7 @@
 	"IA":
 	{
 		"initial_metal": 1200,
-		"initial_crystal": 5,
+		"initial_crystal": 0,
 		"siderurgy_productivity": 15,
 		"quarry_productivity": 10,
 		"building_radius": 2000,

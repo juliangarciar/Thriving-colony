@@ -9,7 +9,7 @@
 Keyboard::Keyboard() {
     GLFWwindow *window = Window::Instance() -> getWindow();
 
-    for (i32 i = 0; i < GLFW_KEY_LAST;i++){
+    for (i32 i = 0; i < GLFW_KEY_LAST;i++) {
         keyState[i] = Enumeration::UP;
     }
 

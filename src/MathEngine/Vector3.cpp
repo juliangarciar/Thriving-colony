@@ -2,9 +2,9 @@
 
 template <class T>
 Vector3<T>::Vector3() {
-    this -> x = 0;
-    this -> y = 0;
-    this -> z = 0;
+    x = 0;
+    y = 0;
+    z = 0;
 }
 
 template <class T>
@@ -28,9 +28,9 @@ void Vector3<T>::set(T x, T y, T z) {
 
 template <class T>
 void Vector3<T>::set(Vector3<T> v) {
-    this -> x = v.x;
-    this -> y = v.y;
-    this -> z = v.z;
+    x = v.x;
+    y = v.y;
+    z = v.z;
 }
 
 template <class T>
@@ -40,7 +40,7 @@ Vector3<T> Vector3<T>::normalize() {
     T length = x*x + y*y + z*z;
     length = sqrt(length);
 
-    if(length != 0){
+    if (length != 0) {
         vector.x = (T) x/length;
         vector.y = (T) y/length;
         vector.z = (T) y/length;
@@ -71,60 +71,60 @@ Vector3<T> Vector3<T>::rotateFromPoint(f32 r, f32 phi, f32 theta) {
 template <class T>
 Vector2<T> Vector3<T>::toVector2() const{
     Vector2<T> dummy;
-    dummy.x = this->x;
-    dummy.y = this->z;
+    dummy.x = x;
+    dummy.y = z;
     return dummy;
 }
 //      **      //
 
 template <class T>
 bool Vector3<T>::operator == (const Vector3<T> &p) const {
-    return this -> x == p.x && this -> y == p.y && this -> z == p.z;
+    return x == p.x && y == p.y && z == p.z;
 }
 
 template <class T>
 bool Vector3<T>::operator != (const Vector3<T> &p) const {
-    return this -> x != p.x || this -> y != p.y || this -> z != p.z;
+    return x != p.x || y != p.y || z != p.z;
 }
 
 template <class T>
 Vector3<T> Vector3<T>::operator + (const Vector3<T> &p) const {
-    return Vector3<T>(this -> x+p.x, this -> y+p.y, this -> z+p.z);
+    return Vector3<T>(x + p.x, y + p.y, z + p.z);
 }
 
 template <class T>
 Vector3<T> Vector3<T>::operator + (const f32 &p) const {
-    return Vector3<T>(this -> x+p, this -> y+p, this -> z+p);
+    return Vector3<T>(x + p, y + p, z + p);
 }
 
 template <class T>
 Vector3<T> Vector3<T>::operator - (const Vector3<T> &p) const {
-    return Vector3<T>(this -> x-p.x, this -> y-p.y, this -> z-p.z);
+    return Vector3<T>(x - p.x, y - p.y, z - p.z);
 }
 
 template <class T>
 Vector3<T> Vector3<T>::operator - (const f32 &p) const {
-    return Vector3<T>(this -> x-p, this -> y-p, this -> z-p);
+    return Vector3<T>(x - p, y - p, z - p);
 }
 
 template <class T>
 Vector3<T> Vector3<T>::operator * (const Vector3<T> &p) const {
-    return Vector3<T>(this -> x*p.x, this -> y*p.y, this -> z*p.z);
+    return Vector3<T>(x * p.x, y * p.y, z * p.z);
 }
 
 template <class T>
 Vector3<T> Vector3<T>::operator * (const f32 &p) const {
-    return Vector3<T>(this -> x*p, this -> y*p, this -> z*p);
+    return Vector3<T>(x * p, y * p, z * p);
 }
 
 template <class T>
 Vector3<T> Vector3<T>::operator / (const Vector3<T> &p) const {
-    return Vector3<T>(this -> x/p.x, this -> y/p.y, this -> z/p.z);
+    return Vector3<T>(x / p.x, y / p.y, z / p.z);
 }
 
 template <class T>
 Vector3<T> Vector3<T>::operator / (const f32 &p) const {
-    return Vector3<T>(this -> x/p, this -> y/p, this -> z/p);
+    return Vector3<T>(x / p, y / p, z / p);
 }
 
 template class Vector3<i32>;

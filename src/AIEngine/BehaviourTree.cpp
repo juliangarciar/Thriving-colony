@@ -10,6 +10,10 @@ BehaviourTree::BehaviourTree() {
 
     underAttack = false;
     requireCrystal = false;
+
+    barracks = 0;
+    barns = 0;
+    workshops = 0;
 }
 
 
@@ -54,7 +58,7 @@ f32 BehaviourTree::calculateCrystalProductionRate() {
 */
 f32 BehaviourTree::calculateCitizensRate() {
     f32 cityLvl = IA::Instance() -> getCityLevel();
-    f32 citizens = IA::Instance() -> getCitizens();
+    f32 citizens = IA::Instance() -> getMaxPeople();
     return (citizens / cityLvl);
 }
 
@@ -73,7 +77,7 @@ f32 BehaviourTree::calculateArmyCitizensRate() {
  */
 bool BehaviourTree::needArmyInvestment() {
     needSoldiers = calculateArmyCitizensRate() < armyThreshold;
-    
+    std::cout << needSoldiers << std::endl;
     /**
      * A recruitment building is considered needed when:
      * A player doesn't have it yet
@@ -182,6 +186,7 @@ f32 BehaviourTree::getCitizensThreshold() {
 
 
 bool BehaviourTree::getNeedSoldiers() {
+    needSoldiers = calculateArmyCitizensRate() < armyThreshold;
     return needSoldiers;
 }
 
@@ -264,6 +269,30 @@ bool BehaviourTree::getRequireCitizens() {
     return requireCitizens;
 }
 
+i32 BehaviourTree::getBarracks() {
+    return barracks;
+}
+
+i32 BehaviourTree::getBarns() {
+    return barns;
+}
+
+i32 BehaviourTree::getWorkshops() {
+    return workshops;
+}
+
+void BehaviourTree::addBarrack() {
+    barracks ++;
+}
+
+void BehaviourTree::addBarn() {
+    barns++;
+}
+
+void BehaviourTree::addWorkshop() {
+    workshops++;
+}
+
 // Down here so it doesnt clutter the top
 void BehaviourTree::init(i32 behaviour) {
     // Set the variables' values according to the behaviour choosen by the AI
@@ -276,21 +305,21 @@ void BehaviourTree::init(i32 behaviour) {
             marketMilestone = 150;
             hospitalMilestone = 450;
             // Resource milestones
-            quarryMilestone = 300;
+            quarryMilestone = 120;
             // Unit milestones
             mountedCreatureMilestone = 80;
             creatureMilestone = 100;
             // Military buildings milestones
-            wallMilestone = 70;
-            towerMilestone = 90;
-            barnMilestone = 60;
-            workshopMilestone = 65;
+            wallMilestone = 150;
+            towerMilestone = 200;
+            barnMilestone = 200;
+            workshopMilestone = 300;
             // Resource generation thresholds
             metalThreshold = 0.2;
             crystalThreshold = 0.2;
             citizensThreshold = 0.3;
             // Army thresholds
-            armyThreshold = 0.2;
+            armyThreshold = 0.3;
             meleeThreshold = 0.5;
             rangeThreshold = 0.45;
             siegeThreshold = 0.05;
@@ -298,7 +327,7 @@ void BehaviourTree::init(i32 behaviour) {
         case Enumeration::IABehaviour::Happy: 
             // Happiness thresholds
             happinessThreshold = 25;
-            attackThreshold = 100;
+            attackThreshold = 10;
             // Service milestones
             marketMilestone = 150;
             hospitalMilestone = 450;

@@ -6,7 +6,7 @@ OBDBillboard::OBDBillboard(OBDSceneNode* parent, OBDShaderProgram *sP, glm::vec3
 	parent -> addChild(billboardNode);
 }
 
-OBDBillboard::~OBDBillboard(){
+OBDBillboard::~OBDBillboard() {
 	delete billboardNode;
 	billboardNode = nullptr;
 }
@@ -31,7 +31,7 @@ void OBDBillboard::setFrontWidth(f32 s) {
     aux -> setFrontWidth(s);
 }
 
-void OBDBillboard::setActive(bool a){
+void OBDBillboard::setActive(bool a) {
 	billboardNode -> setActive(a);
 }
 

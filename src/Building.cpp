@@ -48,7 +48,7 @@ Building::Building(
 }
 
 Building::~Building() {
-    WorldGeometry::Instance()->clearBuildingCell(this);
+    WorldGeometry::Instance() -> clearBuildingCell(this);
     delete buildTimer;
     buildTimer = nullptr;
 }
@@ -59,12 +59,15 @@ void Building::startBuilding() {
     buildTimer -> start();
 }
 
-void Building::taxPlayer(){
+void Building::taxPlayer() {
     //Tax the player
     if (getTeam() == Enumeration::Team::Human) {
         Human::Instance() -> spendResources(getMetalCost(), getCrystalCost());
     } else {
         IA::Instance() -> spendResources(getMetalCost(), getCrystalCost());
+        IA::Instance() -> modifyHappinessInComing(getHappinessVariation());
+        IA::Instance() -> modifyMaxPeopleInComing(getCitizensVariation());   
+        IA::Instance() -> modifyCityLevelInComing(cityLevel);
     }
 }
 
@@ -78,18 +81,21 @@ void Building::adjustCityStats() {
         IA::Instance() -> modifyHappiness(getHappinessVariation());
         IA::Instance() -> modifyMaxPeople(getCitizensVariation());   
         IA::Instance() -> modifyCityLevel(cityLevel);
+        IA::Instance() -> modifyHappinessInComing(- getHappinessVariation());
+        IA::Instance() -> modifyMaxPeopleInComing(- getCitizensVariation());   
+        IA::Instance() -> modifyCityLevelInComing(- cityLevel);
     }
 }
 
-void Building::setFinishedCallback(std::function<void(Building*)> f){
+void Building::setFinishedCallback(std::function<void(Building*)> f) {
     callback = f;
 }
 
-bool Building::getFinished(){
+bool Building::getFinished() {
     return buildTimer->isFinished();
 }
 
-std::string Building::getType(){
+std::string Building::getType() {
     return buildingType;
 }
 
@@ -98,13 +104,13 @@ void Building::takeDamage(i32 _damage) {
     f32 percentage(0);
     currentHP = currentHP - _damage;
     
-    if(currentHP < 1){
+    if (currentHP < 1) {
         //bar->setColor(Color(0,0,0));
         //bar->setScale(0);
         buildingManager->deleteBuilding(ID);
         return;
     }
-    else{
+    else {
         percentage = currentHP / maxHP;
         //bar->setColor(Color((1.0f - percentage) * 255.0f, percentage * 255.0f, 0));
         //bar->setScale(percentage);
@@ -122,6 +128,6 @@ void Building::setCantBuildColor() {
 	model -> setColor(Color(0, 0, 255, 255));
 }
 
-i32 Building::getBuildingTime(){
+i32 Building::getBuildingTime() {
 	return buildingTime;
 }

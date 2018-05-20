@@ -61,7 +61,7 @@ void TMesh::beginDraw() {
 	glUniform3fv(cache.getID(OBDEnums::OpenGLIDs::CAMERA_POSITION), 1, &cache.getCameraPosition()[0]);
 
 	//Send lights
-	if (cache.getLights()->size()){   
+	if (cache.getLights()->size()) {   
 		i32 lightNumber = cache.getLights()->size();
     	if (lightNumber > MAX_LIGHTS) lightNumber = MAX_LIGHTS;
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::LIGHT_AMOUNT), lightNumber);
@@ -82,28 +82,28 @@ void TMesh::beginDraw() {
 
 	i32 loadedTextures = 0;
 
-	if (material->getGLSLActiveTextures()->diffuseTexture == 1){
+	if (material->getGLSLActiveTextures()->diffuseTexture == 1) {
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
 		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_DIFFUSE)->getTexture()->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_DIFFUSE), loadedTextures);
 		loadedTextures++;
 	}
 
-	if (material->getGLSLActiveTextures()->oclusionsTexture == 1){
+	if (material->getGLSLActiveTextures()->oclusionsTexture == 1) {
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
 		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_OCLUSIONS)->getTexture()->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_OCLUSIONS), loadedTextures);
 		loadedTextures++;
 	}
 
-	if (material->getGLSLActiveTextures()->specularTexture == 1){
+	if (material->getGLSLActiveTextures()->specularTexture == 1) {
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
 		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_SPECULAR)->getTexture()->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_SPECULAR), loadedTextures);
 		loadedTextures++;
 	}
 
-	if (material->getGLSLActiveTextures()->alphaTexture == 1){
+	if (material->getGLSLActiveTextures()->alphaTexture == 1) {
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
 		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_ALPHA)->getTexture()->getTextureID());
 		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_ALPHA), loadedTextures);
@@ -147,10 +147,10 @@ void TMesh::endDraw() {
 	glDisableVertexAttribArray(2);
 }
 
-void TMesh::setMaterial(OBDMaterial *m){
+void TMesh::setMaterial(OBDMaterial *m) {
 	material = m;
 }
 
-OBDMaterial *TMesh::getMaterial(){
+OBDMaterial *TMesh::getMaterial() {
 	return material;
 }

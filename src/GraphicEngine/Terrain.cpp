@@ -22,12 +22,12 @@ void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture) {
 	t->setTexture(terrainTexture->getTexture());
 }
 
-void Terrain::setSize(Vector3<f32> s){
+void Terrain::setSize(Vector3<f32> s) {
 	t->setScale(glm::vec3(s.x, s.y, s.z));
 	t->refreshModelMatrix(glm::mat4(1.0f));
 }
 
-Vector3<f32> Terrain::getPointCollision(Vector2<i32> cursor){
+Vector3<f32> Terrain::getPointCollision(Vector2<i32> cursor) {
 	OBDLine l = Window::Instance()->getEngine()->getRaycastFromScreenCoordinates(glm::vec2(cursor.x, cursor.y));
 	glm::vec3 c = t->getRayCollision(l);
 	return Vector3<f32>(c.x, c.y, -c.z);

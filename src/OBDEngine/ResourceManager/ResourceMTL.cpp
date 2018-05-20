@@ -3,12 +3,12 @@
 #define NAMESPACE mtl_objl
 #include <objloader/OBJ_Loader.h>
 
-ResourceMTL::ResourceMTL(){
+ResourceMTL::ResourceMTL() {
 	materialArray = new std::map<std::string, ResourceMaterial*>();
 }
 
-ResourceMTL::~ResourceMTL(){
-	for (std::map<std::string, ResourceMaterial*>::iterator it = materialArray->begin(); it != materialArray->end(); ++it){
+ResourceMTL::~ResourceMTL() {
+	for (std::map<std::string, ResourceMaterial*>::iterator it = materialArray->begin(); it != materialArray->end(); ++it) {
 		delete it->second;
 	}
 	materialArray->clear();
@@ -16,7 +16,7 @@ ResourceMTL::~ResourceMTL(){
 	materialArray = nullptr;
 }
 
-void ResourceMTL::load(const char *path){
+void ResourceMTL::load(const char *path) {
     setIdentifier(path);
     mtl_objl::Loader loader;
 
@@ -54,18 +54,18 @@ void ResourceMTL::load(const char *path){
     }
 }
 
-void ResourceMTL::release(){
+void ResourceMTL::release() {
     materialArray->clear();
 }
 
-void ResourceMTL::setIdentifier(const char *i){
+void ResourceMTL::setIdentifier(const char *i) {
     identifier = i;
 }
 
-const char *ResourceMTL::getIdentifier(){
+const char *ResourceMTL::getIdentifier() {
     return identifier;
 }
 
-std::map<std::string, ResourceMaterial*> *ResourceMTL::getResource(){
+std::map<std::string, ResourceMaterial*> *ResourceMTL::getResource() {
     return materialArray;
 }

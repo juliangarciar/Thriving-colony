@@ -1,6 +1,6 @@
 #include "TLight.h"
 
-TLight::TLight(OBDColor c, f32 i, f32 am, f32 at) : TEntity(){
+TLight::TLight(OBDColor c, f32 i, f32 am, f32 at) : TEntity() {
     setType(OBDEnums::LightTypes::LIGHT_POINT); //ToDo: varios tipos?
 
     setColor(c, i);
@@ -11,32 +11,32 @@ TLight::TLight(OBDColor c, f32 i, f32 am, f32 at) : TEntity(){
     active = true;
 }
 
-TLight::~TLight(){
+TLight::~TLight() {
 }
 
-void TLight::beginDraw(){
+void TLight::beginDraw() {
     if (active) {
         cache.getLights()->push_back(components);
     }
 }
 
-void TLight::endDraw(){
+void TLight::endDraw() {
 }
         
-void TLight::setColor(OBDColor c, f32 i){
+void TLight::setColor(OBDColor c, f32 i) {
 	glm::vec3 o = c.getRGB() * (f32)i;
     components.intensity = glm::vec4(o, 1);
 }
 
-void TLight::setAmbientCoeficient(f32 c){
+void TLight::setAmbientCoeficient(f32 c) {
 	components.ambientCoeficient = c;
 }
 
-void TLight::setAttenuationCoeficient(f32 c){
+void TLight::setAttenuationCoeficient(f32 c) {
 	components.attenuationCoeficient = c;
 }
 
-void TLight::setActive(bool a){
+void TLight::setActive(bool a) {
     active = a;
 }
 

@@ -39,17 +39,17 @@ OBDTerrain::~OBDTerrain() {
 	material = nullptr;
 }
 
-void OBDTerrain::setTexture(OBDTexture* t){
+void OBDTerrain::setTexture(OBDTexture* t) {
     TMesh* m = (TMesh*) terrainNode -> getEntity();
     m -> getMaterial() -> setTexture(t);
 }
 
-TMesh *OBDTerrain::getTerrainMesh(){
+TMesh *OBDTerrain::getTerrainMesh() {
 	TMesh* t = (TMesh*) terrainNode -> getEntity();
 	return t;
 }
 
-f32 OBDTerrain::getY(f32 x, f32 z){
+f32 OBDTerrain::getY(f32 x, f32 z) {
 	OBDLine line;
 	line.start = inverse_model_matrix * glm::vec4(glm::vec3(x+EPSILON, -10000, z+EPSILON), 1); //ToDo: Revisar
 	line.end = inverse_model_matrix * glm::vec4(glm::vec3(x+EPSILON, 10000, z+EPSILON), 1); //ToDo: Revisar
@@ -66,7 +66,7 @@ f32 OBDTerrain::getY(f32 x, f32 z){
 	return 0;
 }
 
-glm::vec3 OBDTerrain::getRayCollision(OBDLine line){
+glm::vec3 OBDTerrain::getRayCollision(OBDLine line) {
 	line.start = inverse_model_matrix * glm::vec4(line.start, 1);
 	line.end = inverse_model_matrix * glm::vec4(line.end, 1);
 

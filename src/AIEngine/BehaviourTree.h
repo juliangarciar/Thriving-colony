@@ -76,9 +76,14 @@ class BehaviourTree {
 
         void init(i32);
 
-    protected:
-        i32 happinessThreshold;
-        i32 attackThreshold;
+        i32 getBarracks();
+        i32 getBarns();
+        i32 getWorkshops();
+
+        void addBarrack();
+        void addBarn();
+        void addWorkshop();
+
         i32 quarryMilestone;
         i32 mountedCreatureMilestone;
         i32 wallMilestone;
@@ -86,6 +91,9 @@ class BehaviourTree {
         i32 barnMilestone;
         i32 workshopMilestone;
         i32 creatureMilestone;
+    protected:
+        i32 happinessThreshold;
+        i32 attackThreshold;
 
         i32 hospitalMilestone;
         i32 marketMilestone;
@@ -97,6 +105,10 @@ class BehaviourTree {
         f32 meleeThreshold;
         f32 rangeThreshold;
         f32 siegeThreshold;
+
+        i32 barracks;
+        i32 barns;
+        i32 workshops;
 
         bool underAttack;
         // The production rate of a given resource is low in comparison with your city level

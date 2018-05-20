@@ -1,6 +1,6 @@
 #include "OBDMaterial.h"
 
-OBDMaterial::OBDMaterial(){
+OBDMaterial::OBDMaterial() {
 	material = new glslMaterial();
 
 	material->ambientColor = glm::vec4(1, 1, 1, 1);
@@ -21,9 +21,9 @@ OBDMaterial::OBDMaterial(){
 	alphaTextureMap = nullptr;
 }
 
-OBDMaterial::OBDMaterial(ResourceMTL *m, std::string n){
+OBDMaterial::OBDMaterial(ResourceMTL *m, std::string n) {
 	std::map<std::string, ResourceMaterial*>::iterator it = m->getResource()->find(n);
-	if (it != m->getResource()->end()){
+	if (it != m->getResource()->end()) {
 		material = new glslMaterial();
 
 		material->ambientColor = glm::vec4(it -> second -> ambientColor, 1);
@@ -68,7 +68,7 @@ OBDMaterial::OBDMaterial(ResourceMTL *m, std::string n){
 	}
 }
 
-OBDMaterial::~OBDMaterial(){
+OBDMaterial::~OBDMaterial() {
     delete material;
 	delete activeTextures;
 	material = nullptr;
@@ -85,28 +85,28 @@ OBDMaterial::~OBDMaterial(){
 	alphaTextureMap = nullptr;
 }
 
-void OBDMaterial::setMaterialName(std::string n){
+void OBDMaterial::setMaterialName(std::string n) {
 	name = n;
 }
 
-void OBDMaterial::setAmbientColor(OBDColor c){
+void OBDMaterial::setAmbientColor(OBDColor c) {
 	material->ambientColor = c.getRGBA();
 }
 
-void OBDMaterial::setDiffuseColor(OBDColor c){
+void OBDMaterial::setDiffuseColor(OBDColor c) {
 	material->diffuseColor = c.getRGBA();
 }
 
-void OBDMaterial::setSpecularColor(OBDColor c){
+void OBDMaterial::setSpecularColor(OBDColor c) {
 	material->specularColor = c.getRGBA();
 }
 
-void OBDMaterial::setSpecularShininess(i32 i){
+void OBDMaterial::setSpecularShininess(i32 i) {
 	material->shininess = i;
 }
 
-void OBDMaterial::setTexture(OBDTexture *p){
-	switch(p->getType()){
+void OBDMaterial::setTexture(OBDTexture *p) {
+	switch(p->getType()) {
 		case OBDEnums::TextureTypes::TEXTURE_DIFFUSE:
 			diffuseTextureMap = p;
 			activeTextures->diffuseTexture = 1;
@@ -127,28 +127,28 @@ void OBDMaterial::setTexture(OBDTexture *p){
 	}
 }
 
-std::string OBDMaterial::getMaterialName(){
+std::string OBDMaterial::getMaterialName() {
 	return name;
 }
 
-OBDColor OBDMaterial::getAmbientColor(){
+OBDColor OBDMaterial::getAmbientColor() {
 	return OBDColor(material->ambientColor);
 }
 
-OBDColor OBDMaterial::getDiffuseColor(){
+OBDColor OBDMaterial::getDiffuseColor() {
 	return OBDColor(material->diffuseColor);
 }
 
-OBDColor OBDMaterial::getSpecularColor(){
+OBDColor OBDMaterial::getSpecularColor() {
 	return OBDColor(material->specularColor);
 }
 
-i32 OBDMaterial::getSpecularShininess(){
+i32 OBDMaterial::getSpecularShininess() {
 	return material->shininess;
 }
 
-OBDTexture* OBDMaterial::getTexture(OBDEnums::TextureTypes tt){
-	switch(tt){
+OBDTexture* OBDMaterial::getTexture(OBDEnums::TextureTypes tt) {
+	switch(tt) {
 		case OBDEnums::TextureTypes::TEXTURE_DIFFUSE:
 			return diffuseTextureMap;
 		break;
@@ -167,10 +167,10 @@ OBDTexture* OBDMaterial::getTexture(OBDEnums::TextureTypes tt){
 	}
 }
 
-glslMaterial *OBDMaterial::getGLSLMaterial(){
+glslMaterial *OBDMaterial::getGLSLMaterial() {
 	return material;
 }
 
-glslTexture *OBDMaterial::getGLSLActiveTextures(){
+glslTexture *OBDMaterial::getGLSLActiveTextures() {
 	return activeTextures;
 }

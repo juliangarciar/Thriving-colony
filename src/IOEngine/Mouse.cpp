@@ -3,11 +3,11 @@
 #include <IOEngine/IO.h>
 
 
-Mouse::Mouse(){
+Mouse::Mouse() {
     visible = true;
     currentCursor = CURSOR_NORMAL;
     oldState = GLFW_RELEASE;
-    for (i32 i = 0; i < GLFW_MOUSE_BUTTON_LAST;i++){
+    for (i32 i = 0; i < GLFW_MOUSE_BUTTON_LAST;i++) {
         mouseButtonState[i] = Enumeration::UP;
     }
 
@@ -52,14 +52,14 @@ Mouse::Mouse(){
    
 }
 
-Mouse::~Mouse(){
+Mouse::~Mouse() {
     glfwDestroyCursor(cursor);
     cursor = nullptr;
 }
 
-void Mouse::refreshStates(){
+void Mouse::refreshStates() {
     // Reset pressed
-    for (i32 i = 0; i < GLFW_MOUSE_BUTTON_LAST;i++){
+    for (i32 i = 0; i < GLFW_MOUSE_BUTTON_LAST;i++) {
         if (mouseButtonState[i] == Enumeration::PRESSED) {
             mouseButtonState[i] = Enumeration::DOWN; // Set to Pressed
         } else if (mouseButtonState[i] == Enumeration::RELEASED) {
@@ -171,24 +171,24 @@ bool Mouse::rightMouseDown() {
 }
 
 // Mouse wheel
-f32 Mouse::getWheelX(){
+f32 Mouse::getWheelX() {
     return wheel.x;
 }
 
-f32 Mouse::getWheelY(){
+f32 Mouse::getWheelY() {
     return wheel.y;
 }
 
 // Set position
-void Mouse::setPosition(Vector2<i32> p){
-    if (position.x != p.x || position.y != p.y){
+void Mouse::setPosition(Vector2<i32> p) {
+    if (position.x != p.x || position.y != p.y) {
         glfwSetCursorPos(Window::Instance() -> getWindow(), p.x, p.y);
         position.set(p.x, p.y);
     }
 }
 
 // Icon
-void Mouse::changeIcon(i32 shape){
+void Mouse::changeIcon(i32 shape) {
     if (isVisible() && shape != currentCursor) {
         //glfwDestroyCursor(cursor);
         cursor = glfwCreateStandardCursor(shape);
@@ -198,12 +198,12 @@ void Mouse::changeIcon(i32 shape){
 }
 
 // Mouse visible
-void Mouse::show(){
+void Mouse::show() {
     glfwSetInputMode(Window::Instance() -> getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     visible = true;
 }
 
-void Mouse::hide(){
+void Mouse::hide() {
     glfwSetInputMode(Window::Instance() -> getWindow(), GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
     visible = false;
 }
@@ -215,24 +215,24 @@ Vector2<i32> Mouse::getPosition() {
     return position;
 }
 
-GLFWcursor *Mouse::getMouse(){
+GLFWcursor *Mouse::getMouse() {
     return cursor;
 }
 
-bool Mouse::isVisible(){
+bool Mouse::isVisible() {
     return visible;
 }
 
-i32 Mouse::getOldState(){
+i32 Mouse::getOldState() {
     return oldState;
 }
 
-void Mouse::setOldState(i32 data){
+void Mouse::setOldState(i32 data) {
 
 }
 
 // Icon
-void Mouse::changeCustomIcon(i32 shape){
+void Mouse::changeCustomIcon(i32 shape) {
     if (isVisible() && shape != currentCursor && shape < customCursor.size()) {
         //glfwDestroyCursor(cursor);
         //cursor = glfwCreateCursor(&customIcon[shape], 0, 0);
@@ -242,7 +242,7 @@ void Mouse::changeCustomIcon(i32 shape){
     }
 }
 
-void Mouse::loadCursorIcon(unsigned char* _data, i32 _width, i32 _height, i32 _channels){
+void Mouse::loadCursorIcon(unsigned char* _data, i32 _width, i32 _height, i32 _channels) {
     GLFWimage image;
     image.width = _width;
     image.height = _height;
