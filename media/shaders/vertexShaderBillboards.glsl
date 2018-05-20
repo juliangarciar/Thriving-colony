@@ -8,8 +8,8 @@ out vec2 UV;
 // Values that stay constant for the whole mesh.
 uniform vec3 CameraRight_worldspace;
 uniform vec3 CameraUp_worldspace;
-uniform mat4 VP; // Model-View-Projection matrix, but without the Model (the position is in BillboardPos; the orientation depends on the camera)
-uniform vec3 position; // Position of the center of the billboard
+uniform mat4 VP; // View-Projection matrix (the position is in BillboardPos; the orientation depends on the camera)
+uniform vec3 position; // Position of the center of the billboard, in world units (probably meters)
 uniform vec2 size; // Size of the billboard, in world units (probably meters)
 
 void main(){

@@ -41,6 +41,15 @@ void TBillboard::beginDraw() {
 
 	glm::mat4 vpM = pM * vM;
 
+	/*glm::vec3 vertexPosition_worldspace =
+    position
+    + glm::vec3(vM[0][0], vM[1][0], vM[2][0]) * 0.5f * size.x
+    + glm::vec3(vM[0][1], vM[1][1], vM[2][1]) * 0.5f * size.y;
+
+	vertexPosition_worldspace = vpM * glm::vec4(vertexPosition_worldspace, 1);
+
+	std::cout << vertexPosition_worldspace.x << " " << vertexPosition_worldspace.y << " " << vertexPosition_worldspace.z << std::endl;*/
+	
 	glUniform3f(CameraRight_worldspace_ID, vM[0][0], vM[1][0], vM[2][0]);
 	glUniform3f(CameraUp_worldspace_ID, vM[0][1], vM[1][1], vM[2][1]);
 	glUniformMatrix4fv(ViewProjMatrixID, 1, GL_FALSE, &vpM[0][0]);
@@ -51,6 +60,7 @@ void TBillboard::beginDraw() {
 	glUniform4f(frontColorID, frontColor.x, frontColor.y, frontColor.z, frontColor.a);
 
     glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glVertexAttribPointer(
         0,                  
         3,                  

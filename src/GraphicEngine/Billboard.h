@@ -14,8 +14,8 @@ class Billboard {
 
         void setColor(Color top, Color bot);
         void setColor(Color totalColor);
-        void setSize(glm::vec3);
         void setPosition(Vector3<f32> pos);
+        void setSize(Vector2<f32>);
         void setActive(bool a);
 
         Vector3<f32> getPosition();

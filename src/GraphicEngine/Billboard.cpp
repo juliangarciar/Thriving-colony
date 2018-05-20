@@ -29,12 +29,12 @@ void Billboard::setColor(Color t) {
     billboard -> setColor(totalColor, totalColor);
 }
 
-void Billboard::setSize(glm::vec3 s) {
-    billboard -> setSize(s);
-}
-
 void Billboard::setPosition(Vector3<f32> pos) {
     billboard -> setPosition(glm::vec3(pos.x, pos.y, pos.z));
+}
+
+void Billboard::setSize(Vector2<f32> pos) {
+    billboard -> setSize(glm::vec2(pos.x, pos.y));
 }
 
 void Billboard::setActive(bool a) {
