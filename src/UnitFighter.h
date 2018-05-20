@@ -3,7 +3,7 @@
 
 #include "Types.h"
 #include "MathEngine/Vector2.h"
-#include "GraphicEngine/Model.h"
+#include "GraphicEngine/Animation.h"
 #include "Enumeration.h"
 #include <vector>
 
@@ -34,7 +34,7 @@ class UnitFighter{
         void ufMoveState();
         void ufIdleState();
         void ufConfrontState();
-        Model* fighterModel;
+        Animation* fighterModel;
         const f32 speed;
         bool isMoving;
         Vector2<f32> vectorPosition;
