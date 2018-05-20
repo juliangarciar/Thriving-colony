@@ -118,6 +118,6 @@
             ]
         }
     ],
-    "material": "kaonov_entity.mtl",
+    "material": "kaonov_ranged_soldier.mtl",
     "defaultAnimation": "idle"
     } 

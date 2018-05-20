@@ -73,6 +73,6 @@
             ]
         }
     ],
-    "material": "kaonov_entity.mtl",
+    "material": "kaonov_creature.mtl",
     "defaultAnimation": "idle"
     } 

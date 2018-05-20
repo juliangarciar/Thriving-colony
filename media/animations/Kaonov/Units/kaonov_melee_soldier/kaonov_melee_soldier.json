@@ -109,6 +109,6 @@
             ]
         }
     ],
-    "material": "kaonov_entity.mtl",
+    "material": "kaonov_melee_soldier.mtl",
     "defaultAnimation": "idle"
     }
