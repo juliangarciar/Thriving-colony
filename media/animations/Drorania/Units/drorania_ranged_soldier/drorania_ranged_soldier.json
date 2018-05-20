@@ -2,7 +2,7 @@
 "animations": [
 	{
 	"name": "idle",
-	"delay": 0.15,
+	"delay": 0.05,
 	"objects": [
 		"drorania_ranged_soldier_idle_000069.obj",
 		"drorania_ranged_soldier_idle_000070.obj",
