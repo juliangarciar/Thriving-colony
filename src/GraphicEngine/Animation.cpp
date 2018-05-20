@@ -57,6 +57,8 @@ void Animation::changeAnimation(std::string animationName){
 		currentAnimation -> setActive(false);
 		currentAnimation = it->second;
 		currentAnimation -> setActive(true);
+		frameTimer->changeDuration(animationDelays->at(animationName));
+		frameTimer->restart();
 	}
 }
 
