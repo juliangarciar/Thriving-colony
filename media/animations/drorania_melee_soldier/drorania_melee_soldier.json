@@ -2,6 +2,7 @@
 "animations": [
 	{
 	"name": "walk",
+	"delay": 0.15,
 	"objects": [
 		"drorania_melee_soldier_walk_000054.obj",
 		"drorania_melee_soldier_walk_000055.obj",

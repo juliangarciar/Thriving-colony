@@ -14,13 +14,13 @@
 
 #include <MathEngine/Color.h>
 
+#include <IOEngine/Timer.h>
+
 class Animation {
     public:
         Animation(SceneNode *parent, std::string animationJSON);
 
         ~Animation();
-
-        void update();
 
 		void changeAnimation(std::string animationName);
 
@@ -32,7 +32,10 @@ class Animation {
         void setScale(Vector3<f32> s);
     private:
 		SceneNode *animationLayer;
+        std::map<std::string, f32> *animationDelays;
         std::map<std::string, OBDAnimation*> *animations;
+
+		Timer *frameTimer;
 
 		OBDAnimation *currentAnimation;
 };
