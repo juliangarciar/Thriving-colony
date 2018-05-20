@@ -56,13 +56,13 @@ void IA::Init(std::string _race) {
     choiceIndex = 0;
     initializeChoices();
 
-    updateFastTimer = new Timer(100.00, true);
+    updateFastTimer = new Timer(1.00, true);
 	updateFastTimer -> setCallback([&](){
 		rootNode -> Update();
 		updateFastTimer -> restart();
 		updateSlowTimer -> restart();
 	});
-    updateSlowTimer = new Timer(300.00, true);
+    updateSlowTimer = new Timer(3.00, true);
 	updateSlowTimer -> setCallback([&](){
 		rootNode -> Update();
 		updateFastTimer -> restart();
@@ -121,28 +121,32 @@ Vector2<f32> IA::determinatePositionBuilding(const Box2D& buildingHitbox) const{
 
 bool IA::getUnderAttack() {
     underAttack = false;
-    Vector2<f32> pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
-    i32 requesterRange = 1000;
-    
-    f32 xaux = 0;
-    f32 yaux = 0;
-    f32 dist = 0;
+    if (Human::Instance() -> getUnitManager() -> getInMapTroops() -> empty() != false) {
 
-        // Get units in the map of the opposing team
-        std::map<i32, Unit*> *inMapTroops = Human::Instance() -> getUnitManager() -> getInMapTroops();
-        // Iterate through the map
-        for (std::map<i32, Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
-            if (it -> second != nullptr) {
-            // Calculate distance between troop requesting target and posible targets
-                xaux = it -> second -> getPosition().x - pos.x;
-                yaux = it -> second -> getPosition().y - pos.y;
-                dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
+        Vector2<f32> pos = buildings -> getBuildings() -> begin() -> second -> getPosition();
+        i32 requesterRange = 1000;
+        
+        f32 xaux = 0;
+        f32 yaux = 0;
+        f32 dist = 0;
 
-            if (dist <= requesterRange) {
-                underAttack = false;
+            // Get units in the map of the opposing team
+            std::map<i32, Unit*> *inMapTroops = Human::Instance() -> getUnitManager() -> getInMapTroops();
+            // Iterate through the map
+            for (std::map<i32, Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
+                if (it -> second != nullptr) {
+                // Calculate distance between troop requesting target and posible targets
+                    xaux = it -> second -> getPosition().x - pos.x;
+                    yaux = it -> second -> getPosition().y - pos.y;
+                    dist = sqrtf(pow(xaux, 2) - pow(yaux, 2));
+                    std::cout << dist << std::endl;
+
+                if (dist <= requesterRange) {
+                    underAttack = true;
+                }
             }
         }
-    }
+    } 
     return underAttack;
 }
 
@@ -177,7 +181,7 @@ void IA::chooseBehaviour() {
 
 void IA::veryHappyBehaviour() {
     std::vector<Behaviour*> auxroot;
-/*
+
     //Defend
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
@@ -192,7 +196,7 @@ void IA::veryHappyBehaviour() {
     auxat.push_back(new CRetreat(new ARetreat()));
     auxat.push_back(new CAttack(new AAttack()));
     auxroot.push_back(new Selector(auxat));
-*/
+
     //City
     std::vector<Behaviour*> auxcity;
     //Services
@@ -246,7 +250,7 @@ void IA::veryHappyBehaviour() {
 
 void IA::happyBehaviour() {
     std::vector<Behaviour*> auxroot;
-/*
+
     //Defend
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
@@ -261,7 +265,7 @@ void IA::happyBehaviour() {
     auxat.push_back(new CRetreat(new ARetreat()));
     auxat.push_back(new CAttack(new AAttack()));
     auxroot.push_back(new Selector(auxat));
-*/
+
     //City
     std::vector<Behaviour*> auxcity;
     //Houses
@@ -315,7 +319,7 @@ void IA::happyBehaviour() {
 
 void IA::neutralBehaviour() {
     std::vector<Behaviour*> auxroot;
-/*
+
     //Defend
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
@@ -330,7 +334,7 @@ void IA::neutralBehaviour() {
     auxat.push_back(new CRetreat(new ARetreat()));
     auxat.push_back(new CAttack(new AAttack()));
     auxroot.push_back(new Selector(auxat));
-*/
+
     //City
     std::vector<Behaviour*> auxcity;
     //Resources
@@ -384,7 +388,7 @@ void IA::neutralBehaviour() {
 
 void IA::unhappyBehaviour() {
    std::vector<Behaviour*> auxroot;
-/*
+
     //Defend
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
@@ -399,7 +403,7 @@ void IA::unhappyBehaviour() {
     auxat.push_back(new CRetreat(new ARetreat()));
     auxat.push_back(new CAttack(new AAttack()));
     auxroot.push_back(new Selector(auxat));
-*/
+
     //City
     std::vector<Behaviour*> auxcity;
     //Resources
@@ -453,7 +457,7 @@ void IA::unhappyBehaviour() {
 
 void IA::veryUnhappyBehaviour() {
     std::vector<Behaviour*> auxroot;
-/*
+
     //Defend
     std::vector<Behaviour*> auxdef;
     auxdef.push_back(new CDeployTroops(new ADeployTroops()));
@@ -468,7 +472,7 @@ void IA::veryUnhappyBehaviour() {
     auxat.push_back(new CRetreat(new ARetreat()));
     auxat.push_back(new CAttack(new AAttack()));
     auxroot.push_back(new Selector(auxat));
-*/
+
     //City
     std::vector<Behaviour*> auxcity;
     //Army
