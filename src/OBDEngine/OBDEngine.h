@@ -140,6 +140,13 @@ class OBDEngine {
 		OBDTerrain *createTerrain(OBDSceneNode*, std::string, f32 y_offset, f32 y_scale, i32 step);
 
         /**
+         * @brief
+         * @param a 
+         * @param c 
+         */
+        OBDBillboard* createBillboard(OBDSceneNode*, OBDShaderProgram *, glm::vec3, glm::vec2);
+
+        /**
          * @brief Create a Shader Program object
          * 
          * @param a 
@@ -169,7 +176,7 @@ class OBDEngine {
 		 * 
 		 * @return OBDSceneNode* 
 		 */
-		OBDSceneNode* createShaderedSceneNode(std::string vs, std::string fs);
+		OBDSceneNode* createShaderedSceneNode(std::string sN, std::string vs, std::string fs);
 
         /**
          * @brief 
@@ -267,6 +274,13 @@ class OBDEngine {
 		 */
 		ResourceManager *getResourceManager();
 
+		/**
+		 * @brief Get the Shader Program object
+		 * 
+		 * @return OBDShaderProgram* 
+		 */
+		OBDShaderProgram *getRegisteredShaderProgram(std::string);
+
         
 		////////////SANDBOX////////////
 
@@ -278,13 +292,6 @@ class OBDEngine {
 		 * @return OBDTile* 
 		 */
         OBDTile* createTile(ResourceIMG* _texture, glm::vec2 _position);
-
-        /**
-         * @brief
-         * @param a 
-         * @param c 
-         */
-        OBDBillboard* createBillboard(OBDSceneNode*, glm::vec3);
 
         /**
          * @brief Create a Skybox object

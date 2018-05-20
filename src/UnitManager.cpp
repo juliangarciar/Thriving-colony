@@ -440,7 +440,7 @@ i32 UnitManager::getTroopAmount(std::string t){
 }
 
 bool UnitManager::areTroopsDeployed(){
-    return (inHallTroops -> size() == 0);
+    return (inHallTroops -> empty());
 }
 
 bool UnitManager::areTroopsInMap(){
