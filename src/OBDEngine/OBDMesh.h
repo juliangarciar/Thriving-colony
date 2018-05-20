@@ -85,6 +85,9 @@ class OBDMesh : public OBDEntity {
 		glm::vec4 aabbMin;
 		glm::vec4 aabbMax;
 		aabb::AABB boundingBox;
+		
+        glslMesh *mesh;
+        OBDMaterial *material;
 };
 
 #endif

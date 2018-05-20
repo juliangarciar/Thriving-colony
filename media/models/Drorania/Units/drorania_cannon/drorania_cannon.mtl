@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 0.518006
 illum 2
-map_Bump drorania_cannon_Normal_OpenGL.bmp
+
 map_Ka drorania_cannon_Mixed_AO.bmp
 map_Kd drorania_cannon_Base_Color.bmp
 map_Ks drorania_cannon_Metallic.bmp

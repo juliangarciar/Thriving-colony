@@ -10,7 +10,6 @@ CRetreat::~CRetreat() {
 }
 
 Enumeration::BehaviourState CRetreat::Update() {
-	//ToDo: julian, he quitado este metodo
     //if (IA::Instance() -> losingBattle()) {
         IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::RetractingTroops);
         action -> Update();

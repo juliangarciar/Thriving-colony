@@ -23,7 +23,6 @@ BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
 		BuildingData tmp;
 			tmp.type = element["buildingName"].get<std::string>();
 			tmp.modelPath = element["modelPath"].get<std::string>();
-			tmp.texturePath = element["texturePath"].get<std::string>();
 			tmp.metalCost = element["metalCost"].get<i32>();
 			tmp.crystalCost = element["crystalCost"].get<i32>();
 			tmp.maxHP = element["maxHP"].get<i32>();
@@ -126,6 +125,7 @@ void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 bui
 		BuildingData b = it->second;
 		if (buildTime >= 0) b.buildingTime = buildTime;
 		tempBuilding = new Building(buildingLayer, nextBuildingId++, team, b, this);
+		
 		buildBuilding(pos);
 	}
 }
@@ -155,7 +155,6 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
 		
 		//Build
 		WorldGeometry::Instance() -> build(tempBuilding);
-
 		//Finish everything
 		tempBuilding = nullptr;
 	} else {

@@ -114,6 +114,34 @@ OBDObject* OBDEngine::createObject(OBDSceneNode* layer, u32 id, std::string mesh
     return tempObject;
 }
 
+OBDAnimation* OBDEngine::createAnimation(std::vector<std::string> objects, std::string material, bool autoload) {
+	std::vector<ResourceOBJ*> *objs = new std::vector<ResourceOBJ*>();
+	objs->reserve(objects.size());
+	for (int i = 0; i< objects.size(); i++){
+		ResourceOBJ *obj = (ResourceOBJ*)OBDManager->getResource(objects[i], true);
+		objs->push_back(obj);
+	}
+    ResourceMTL *mtl = (ResourceMTL*)OBDManager->getResource(material, true);
+
+	OBDAnimation *tempAnim = new OBDAnimation(defaultSceneNode, objs, mtl);
+	if (autoload) loadAnimationTexturesFromMTL(tempAnim, mtl, true);
+    return tempAnim;
+}
+
+OBDAnimation* OBDEngine::createAnimation(OBDSceneNode* layer, std::vector<std::string> objects, std::string material, bool autoload) {
+	std::vector<ResourceOBJ*> *objs = new std::vector<ResourceOBJ*>();
+	objs->reserve(objects.size());
+	for (int i = 0; i< objects.size(); i++){
+		ResourceOBJ *obj = (ResourceOBJ*)OBDManager->getResource(objects[i], true);
+		objs->push_back(obj);
+	}
+    ResourceMTL *mtl = (ResourceMTL*)OBDManager->getResource(material, true);
+	
+	OBDAnimation *tempAnim = new OBDAnimation(layer, objs, mtl);
+	if (autoload) loadAnimationTexturesFromMTL(tempAnim, mtl, true);
+    return tempAnim;
+}
+
 OBDTerrain *OBDEngine::createTerrain(std::string heightMap, f32 y_offset, f32 y_scale, i32 step){
 	return new OBDTerrain(defaultSceneNode, heightMap, y_offset, y_scale, step);
 }
@@ -144,6 +172,7 @@ OBDSceneNode *OBDEngine::createShaderedSceneNode(std::string vs, std::string fs)
 	ResourceGLSL *s1 = (ResourceGLSL*)OBDManager->getResource(vs, true);
 	ResourceGLSL *s2 = (ResourceGLSL*)OBDManager->getResource(fs, true);
 	OBDShaderProgram *p = new OBDShaderProgram(s1, s2);
+    shaderPrograms.insert(std::pair<std::string, OBDShaderProgram*>(vs+fs, p));
 	return new OBDSceneNode(new TNode(new TShaderSwapper(p->getShaderProgram()), rootNode));
 }
 
@@ -167,10 +196,28 @@ void OBDEngine::loadObjectTexturesFromMTL(OBDObject *obj, ResourceMTL *mtl, bool
 				ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->alphaTextureMap, sync);
 				it->second->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_ALPHA, tmp));
 			}
-			if (resource->second->bumpMap != ""){
-				ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->bumpMap, sync);
-				it->second->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_BUMP, tmp));
-			}
+		}
+	}
+}
+
+void OBDEngine::loadAnimationTexturesFromMTL(OBDAnimation *obj, ResourceMTL *mtl, bool sync){
+	auto resource = mtl->getResource()->find(obj->getMaterial()->getMaterialName());
+	if (resource != mtl->getResource()->end()){
+		if (resource->second->diffuseTextureMap != ""){
+			ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->diffuseTextureMap, sync);
+			obj->getMaterial()->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_DIFFUSE, tmp));
+		}
+		if (resource->second->ambientOclusionsTextureMap != ""){
+			ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->ambientOclusionsTextureMap, sync);
+			obj->getMaterial()->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_OCLUSIONS, tmp));
+		}
+		if (resource->second->specularTextureMap != ""){
+			ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->specularTextureMap, sync);
+			obj->getMaterial()->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_SPECULAR, tmp));
+		}
+		if (resource->second->alphaTextureMap != ""){
+			ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->alphaTextureMap, sync);
+			obj->getMaterial()->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_ALPHA, tmp));
 		}
 	}
 }
@@ -235,29 +282,18 @@ ResourceManager *OBDEngine::getResourceManager(){
 }
 
 //////SANDBOX//////
-OBDAnimation* OBDEngine::createAnimation(std::string anim) {
-    //ToDo: hacer animaciones
-    return new OBDAnimation(defaultSceneNode);
-}
-
-OBDAnimation* OBDEngine::createAnimation(OBDSceneNode* layer, std::string anim) {
-    //ToDo: hacer animaciones
-    return new OBDAnimation(layer);
-}
 
 OBDBillboard* OBDEngine::createBillboard(OBDSceneNode* layer, glm::vec3 pos) {
-    OBDBillboard* billboard = new OBDBillboard(layer, pos);
-    return billboard;
+    return new OBDBillboard(layer, pos);
 }
 
 OBDTile* OBDEngine::createTile(ResourceIMG* _texture, glm::vec2 _position){
-    OBDTile* tmp = new OBDTile(defaultSceneNode, _texture, _position);
-    return tmp;
+    return new OBDTile(defaultSceneNode, _texture, _position);
 }
 
 OBDSkybox* OBDEngine::createSkybox(OBDTexture* texture) {
     OBDSkybox* skybox = new OBDSkybox(texture);
-    defaultSceneNode -> addChild(skybox);
+    defaultSceneNode -> addChild(skybox); // ¿?
     return skybox;
 }
 /////////////////

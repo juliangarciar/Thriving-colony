@@ -83,14 +83,12 @@ void Quadtree::insertCell(Cell* cellPtr){
         }
     }
 }
-/* This doesnt work properly (maybe yes) */
+
 void Quadtree::insertBuilding(Building* buildingPtr){
     if(this->depth == 0){
-        i32 size = 0;
         for(std::size_t i = 0; i < innerCells.size(); i++){
             if(innerCells[i]->getHitbox().isOverlappedWith(buildingPtr->getHitbox()) && !innerCells[i]->isBlocked()){
                 innerCells[i]->setInhabitingBuilding(buildingPtr);
-                ++size;
             }
         }
     }
@@ -98,6 +96,23 @@ void Quadtree::insertBuilding(Building* buildingPtr){
         for(i32 i = 0; i < 4; i++){
             if(innerTrees[i]->getHitbox().isOverlappedWith(buildingPtr->getHitbox())){
                 innerTrees[i]->insertBuilding(buildingPtr);
+            }
+        }
+    }
+}
+
+void Quadtree::clearBuilding(Building* buildingPtr){
+    if(this->depth == 0){
+        for(std::size_t i = 0; i < innerCells.size(); i++){
+            if(innerCells[i]->getHitbox().isOverlappedWith(buildingPtr->getHitbox()) && innerCells[i]->getInhabitingBuilding() == buildingPtr){
+                innerCells[i]->clearInhabitingBuilding();
+            }
+        }
+    }
+    else{
+        for(i32 i = 0; i < 4; i++){
+            if(innerTrees[i]->getHitbox().isOverlappedWith(buildingPtr->getHitbox())){
+                innerTrees[i]->clearBuilding(buildingPtr);
             }
         }
     }
@@ -123,21 +138,33 @@ void Quadtree::assignNeighbors(Cell* cellPtr){
     }
 }
 
-bool Quadtree::checkCollision(const Box2D& otherHitbox) const{
+bool Quadtree::checkCollision(const Box2D& otherHitbox, bool isBuilding) const{
     bool newCenter = true;
     
     if(this->depth == 0){
         for(std::size_t i = 0; i < innerCells.size(); i++){
-            if(innerCells[i]->getHitbox().isOverlappedWith(otherHitbox) && innerCells[i]->isBlocked() && innerCells[i]->getTotalInhabitingUnits() == 0){
-                newCenter = false;
-                return newCenter;
+            if(isBuilding){
+                if(innerCells[i]->getHitbox().isOverlappedWith(otherHitbox) && (innerCells[i]->isBlocked() || innerCells[i]->getTotalInhabitingUnits() > 0)){
+                    newCenter = false;
+                    return newCenter;
+                }
+            }
+            else{
+                if(innerCells[i]->getHitbox().isOverlappedWith(otherHitbox)){
+                    if(innerCells[i]->getInhabitingBuilding() != nullptr){
+                        if(innerCells[i]->getInhabitingBuilding()->getHitbox().isOverlappedWith(otherHitbox)){
+                            newCenter = false;
+                            return newCenter;
+                        }
+                    }
+                }
             }
         }
     }
     else{
         for(i32 i = 0; i < 4; i++){
             if(innerTrees[i]->getHitbox().isOverlappedWith(otherHitbox)){
-                newCenter = innerTrees[i]->checkCollision(otherHitbox);
+                newCenter = innerTrees[i]->checkCollision(otherHitbox, isBuilding);
                 if(!newCenter){
                     return newCenter;
                 }
@@ -165,14 +192,6 @@ void Quadtree::getCollidingEntities(const Box2D& hitbox, Entity** priorityEntity
                         if(unitTmp[k]->getTeam() != teamTarget){
                             if(*priorityEntity == nullptr){
                                 *priorityEntity = unitTmp[k];
-                                //std::cout << "Unidad ";
-                                //if(teamTarget == Enumeration::Team::IA){
-                                //    std::cout << "Humana";
-                                //}
-                                //else{
-                                //    std::cout << "IA";
-                                //}
-                                //std::cout << " detectada en " << (*priorityEntity)->getPosition().x << " , " << (*priorityEntity)->getPosition().y << "\n";
                             }
                             else if(*priorityEntity != unitTmp[k]){
                                 Vector2<f32> vectorDistance1 = (*priorityEntity)->getPosition() - hitbox.Center();
@@ -180,14 +199,6 @@ void Quadtree::getCollidingEntities(const Box2D& hitbox, Entity** priorityEntity
                                 if( (std::sqrt(std::pow(vectorDistance1.x, 2) + std::pow(vectorDistance1.y, 2))) > 
                                     (std::sqrt(std::pow(vectorDistance2.x, 2) + std::pow(vectorDistance2.y, 2))) ){
                                     *priorityEntity = unitTmp[k];
-                                    //std::cout << "Unidad ";
-                                    //if(teamTarget == Enumeration::Team::IA){
-                                    //    std::cout << "Humana";
-                                    //}
-                                    //else{
-                                    //    std::cout << "IA";
-                                    //}
-                                    //std::cout << " detectada en " << (*priorityEntity)->getPosition().x << " , " << (*priorityEntity)->getPosition().y << "\n";
                                 }
                             }
                         }
@@ -199,14 +210,6 @@ void Quadtree::getCollidingEntities(const Box2D& hitbox, Entity** priorityEntity
                         if(buildingTmp->getTeam() != teamTarget){
                             if(*priorityEntity == nullptr){
                                 *priorityEntity = buildingTmp;
-                                //std::cout << "Edificio ";
-                                //if(teamTarget == Enumeration::Team::IA){
-                                //    std::cout << "Humano";
-                                //}
-                                //else{
-                                //    std::cout << "IA";
-                                //}
-                                //std::cout << " detectada en " << (*priorityEntity)->getPosition().x << " , " << (*priorityEntity)->getPosition().y << "\n";
                             }
                             else if((*priorityEntity)->getEntityType() == Enumeration::EntityType::Building && *priorityEntity != buildingTmp){
                                 Vector2<f32> vectorDistance1 = (*priorityEntity)->getPosition() - hitbox.Center();
@@ -214,14 +217,6 @@ void Quadtree::getCollidingEntities(const Box2D& hitbox, Entity** priorityEntity
                                 if( (std::sqrt(std::pow(vectorDistance1.x, 2) + std::pow(vectorDistance1.y, 2))) > 
                                     (std::sqrt(std::pow(vectorDistance2.x, 2) + std::pow(vectorDistance2.y, 2))) ){
                                     *priorityEntity = buildingTmp;
-                                    //std::cout << "Edificio ";
-                                    //if(teamTarget == Enumeration::Team::IA){
-                                    //    std::cout << "Humano";
-                                    //}
-                                    //else{
-                                    //    std::cout << "IA";
-                                    //}
-                                    //std::cout << " detectada en " << (*priorityEntity)->getPosition().x << " , " << (*priorityEntity)->getPosition().y << "\n";
                                 }
                             }
                         }

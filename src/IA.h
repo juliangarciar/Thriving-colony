@@ -93,6 +93,14 @@ class IA : public Player {
          * @return Pointer to a ActiveSelector that will be the value of rootNode variable.
          */
         ActiveSelector* getRootNode();
+
+        /**
+         * @brief Checks if there are units idling.
+         * 
+         * @return true there are units idling or moving.
+         * @return false if there are units attacking.
+         */
+        bool getIdleTroops();
         
         /**
          * @brief Get the speed at which is going to be update the next choose of the AI.
@@ -153,6 +161,34 @@ class IA : public Player {
          * @return i32 that will be the sum of the values of armyLevel and armyLevelInComing variables.
          */
         i32 getArmyLevel();
+        
+        /**
+         * @brief Modify the AI's city level that is going to recive when all the buildings that are being built finish based on the city level passed by parameter.
+         * 
+         * @param i32 that will be the amount that is going to be added to or substracted from the cityLevelInComing variable.
+         */
+        void modifyCityLevelInComing(i32);
+
+        /**
+         * @brief Modify the happiness of the AI's city that is going to recive when all the buildings that are being built finish based on the happiness passed by parameter.
+         * 
+         * @param i32 that will be the amount that is going to be added to or substracted from the happinessInComing variable.
+         */
+        void modifyHappinessInComing(i32);
+
+        /**
+         * @brief Modify the maximum people of the AI's city that is going to recive when all the buildings that are being built finish based on the maximum people passed by parameter.
+         * 
+         * @param i32 that will be the amount that is going to be added to or substracted from the maxPeopleInComing variable.
+         */
+        void modifyMaxPeopleInComing(i32);
+
+        /**
+         * @brief Modify the army level of the AI's city that is going to recive when all the buildings that are being built finish based on the army level passed by parameter.
+         * 
+         * @param i32 that will be the amount that is going to be added to or substracted from the armyLevelInComing variable.
+         */
+        void modifyArmyLevelInComing(i32);
 
     protected:
         /**

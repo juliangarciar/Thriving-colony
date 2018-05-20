@@ -66,6 +66,8 @@ class UnitManager{
          */
         void deployAllTroops(Vector2<f32>);
 
+        void commandAttack(Vector2<f32>);
+
         /**
          * @brief Retract all the player's troops from the map to the command center.
          */
@@ -205,7 +207,8 @@ class UnitManager{
          */
 		const UnitData& getUnitData(std::string) const;
         Unit* getUnit(i32 _id);
-
+        void adjustUnitFighter(i32 qnty);
+		i32 getUnitFighters();
     private:
         //Player's team: Enumeration::Team::Human or Enumeration::Team::IA.
         Enumeration::Team team;
@@ -246,7 +249,8 @@ class UnitManager{
         //Id number that is going to be asigned as the key of the next unit created.
         i32 nextTroopId;
 
-        
+		//Total
+        i32 totalUnitFighters;
 };
 
 #endif

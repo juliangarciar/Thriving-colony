@@ -1,0 +1,92 @@
+{
+"animations": [
+	{
+	"name": "idle",
+	"delay": 0.15,
+	"objects": [
+		"drorania_creature.obj"
+		]
+	},
+	{
+	"name": "walk",
+	"delay": 0.15,
+	"objects": [
+		"drorania_creature_walk_000020.obj",
+		"drorania_creature_walk_000021.obj",
+		"drorania_creature_walk_000022.obj",
+		"drorania_creature_walk_000023.obj",
+		"drorania_creature_walk_000024.obj",
+		"drorania_creature_walk_000025.obj",
+		"drorania_creature_walk_000026.obj",
+		"drorania_creature_walk_000027.obj",
+		"drorania_creature_walk_000028.obj",
+		"drorania_creature_walk_000029.obj",
+		"drorania_creature_walk_000030.obj",
+		"drorania_creature_walk_000031.obj",
+		"drorania_creature_walk_000032.obj",
+		"drorania_creature_walk_000033.obj",
+		"drorania_creature_walk_000034.obj",
+		"drorania_creature_walk_000035.obj",
+		"drorania_creature_walk_000036.obj",
+		"drorania_creature_walk_000037.obj",
+		"drorania_creature_walk_000038.obj",
+		"drorania_creature_walk_000039.obj",
+		"drorania_creature_walk_000040.obj",
+		"drorania_creature_walk_000041.obj",
+		"drorania_creature_walk_000042.obj",
+		"drorania_creature_walk_000043.obj",
+		"drorania_creature_walk_000044.obj",
+		"drorania_creature_walk_000045.obj",
+		"drorania_creature_walk_000046.obj",
+		"drorania_creature_walk_000047.obj",
+		"drorania_creature_walk_000048.obj",
+		"drorania_creature_walk_000049.obj",
+		"drorania_creature_walk_000050.obj",
+		"drorania_creature_walk_000051.obj",
+		"drorania_creature_walk_000052.obj",
+		"drorania_creature_walk_000053.obj",
+		"drorania_creature_walk_000054.obj",
+		"drorania_creature_walk_000055.obj"
+		]
+	},
+	{
+	"name": "attack",
+	"delay": 0.15,
+	"objects": [
+		"drorania_creature_attack_000020.obj",
+		"drorania_creature_attack_000021.obj",
+		"drorania_creature_attack_000022.obj",
+		"drorania_creature_attack_000023.obj",
+		"drorania_creature_attack_000024.obj",
+		"drorania_creature_attack_000025.obj",
+		"drorania_creature_attack_000026.obj",
+		"drorania_creature_attack_000027.obj",
+		"drorania_creature_attack_000028.obj",
+		"drorania_creature_attack_000029.obj",
+		"drorania_creature_attack_000030.obj",
+		"drorania_creature_attack_000031.obj",
+		"drorania_creature_attack_000032.obj",
+		"drorania_creature_attack_000033.obj",
+		"drorania_creature_attack_000034.obj",
+		"drorania_creature_attack_000035.obj",
+		"drorania_creature_attack_000036.obj",
+		"drorania_creature_attack_000037.obj",
+		"drorania_creature_attack_000038.obj",
+		"drorania_creature_attack_000039.obj",
+		"drorania_creature_attack_000040.obj",
+		"drorania_creature_attack_000041.obj",
+		"drorania_creature_attack_000042.obj",
+		"drorania_creature_attack_000043.obj",
+		"drorania_creature_attack_000044.obj",
+		"drorania_creature_attack_000045.obj",
+		"drorania_creature_attack_000046.obj",
+		"drorania_creature_attack_000047.obj",
+		"drorania_creature_attack_000048.obj",
+		"drorania_creature_attack_000049.obj",
+		"drorania_creature_attack_000050.obj"
+		]
+	}
+],
+"material": "drorania_creature.mtl",
+"defaultAnimation": "idle"
+}

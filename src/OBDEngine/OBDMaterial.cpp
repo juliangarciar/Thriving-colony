@@ -14,7 +14,11 @@ OBDMaterial::OBDMaterial(){
 	activeTextures->oclusionsTexture = 0;
 	activeTextures->specularTexture = 0;
 	activeTextures->alphaTexture = 0;
-	activeTextures->bumpTexture = 0;
+
+	diffuseTextureMap = nullptr;
+	ambientOclusionsTextureMap = nullptr;
+	specularTextureMap = nullptr;
+	alphaTextureMap = nullptr;
 }
 
 OBDMaterial::OBDMaterial(ResourceMTL *m, std::string n){
@@ -33,7 +37,11 @@ OBDMaterial::OBDMaterial(ResourceMTL *m, std::string n){
 		activeTextures->oclusionsTexture = 0;
 		activeTextures->specularTexture = 0;
 		activeTextures->alphaTexture = 0;
-		activeTextures->bumpTexture = 0;
+
+		diffuseTextureMap = nullptr;
+		ambientOclusionsTextureMap = nullptr;
+		specularTextureMap = nullptr;
+		alphaTextureMap = nullptr;
 
 		name = it->second->materialName;
 	} else {
@@ -52,7 +60,11 @@ OBDMaterial::OBDMaterial(ResourceMTL *m, std::string n){
 		activeTextures->oclusionsTexture = 0;
 		activeTextures->specularTexture = 0;
 		activeTextures->alphaTexture = 0;
-		activeTextures->bumpTexture = 0;
+
+		diffuseTextureMap = nullptr;
+		ambientOclusionsTextureMap = nullptr;
+		specularTextureMap = nullptr;
+		alphaTextureMap = nullptr;
 	}
 }
 
@@ -61,6 +73,16 @@ OBDMaterial::~OBDMaterial(){
 	delete activeTextures;
 	material = nullptr;
 	activeTextures = nullptr;
+
+	if (diffuseTextureMap != nullptr) delete diffuseTextureMap;
+	if (ambientOclusionsTextureMap != nullptr) delete ambientOclusionsTextureMap;
+	if (specularTextureMap != nullptr) delete specularTextureMap;
+	if (alphaTextureMap != nullptr) delete alphaTextureMap;
+
+	diffuseTextureMap = nullptr;
+	ambientOclusionsTextureMap = nullptr;
+	specularTextureMap = nullptr;
+	alphaTextureMap = nullptr;
 }
 
 void OBDMaterial::setMaterialName(std::string n){
@@ -86,24 +108,20 @@ void OBDMaterial::setSpecularShininess(i32 i){
 void OBDMaterial::setTexture(OBDTexture *p){
 	switch(p->getType()){
 		case OBDEnums::TextureTypes::TEXTURE_DIFFUSE:
-			diffuseTextureMap = p->getTexture();
+			diffuseTextureMap = p;
 			activeTextures->diffuseTexture = 1;
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_OCLUSIONS:
-			ambientOclusionsTextureMap = p->getTexture();
+			ambientOclusionsTextureMap = p;
 			activeTextures->oclusionsTexture = 1;
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_SPECULAR:
-			specularTextureMap = p->getTexture();
+			specularTextureMap = p;
 			activeTextures->specularTexture = 1;
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_ALPHA:
-			alphaTextureMap = p->getTexture();
+			alphaTextureMap = p;
 			activeTextures->alphaTexture = 1;
-		break;
-		case OBDEnums::TextureTypes::TEXTURE_BUMP:
-			bumpMap = p->getTexture();
-			activeTextures->bumpTexture = 1;
 		break;
 		default: break;
 	}
@@ -129,7 +147,7 @@ i32 OBDMaterial::getSpecularShininess(){
 	return material->shininess;
 }
 
-TTexture* OBDMaterial::getTexture(OBDEnums::TextureTypes tt){
+OBDTexture* OBDMaterial::getTexture(OBDEnums::TextureTypes tt){
 	switch(tt){
 		case OBDEnums::TextureTypes::TEXTURE_DIFFUSE:
 			return diffuseTextureMap;
@@ -142,9 +160,6 @@ TTexture* OBDMaterial::getTexture(OBDEnums::TextureTypes tt){
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_ALPHA:
 			return alphaTextureMap;
-		break;
-		case OBDEnums::TextureTypes::TEXTURE_BUMP:
-			return bumpMap;
 		break;
 		default: 
 			return nullptr;

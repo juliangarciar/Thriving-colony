@@ -23,7 +23,6 @@ class OBDEnums {
             TEXTURE_OCLUSIONS,
             TEXTURE_SPECULAR,
             TEXTURE_ALPHA,
-            TEXTURE_BUMP,
 
             TEXTURE_SIZE
         };
@@ -57,7 +56,6 @@ class OBDEnums {
             SAMPLER_DIFFUSE,
             SAMPLER_SPECULAR,
             SAMPLER_ALPHA,
-            SAMPLER_BUMP,
 
             PARAMS
         };

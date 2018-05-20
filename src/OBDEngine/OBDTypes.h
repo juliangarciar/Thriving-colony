@@ -19,6 +19,7 @@
 
 #include <string>
 #include <cstdint>
+#include <cstddef>
 #include <thread>
 
 typedef int32_t i32;
@@ -55,7 +56,6 @@ struct glslTexture {
     GLint oclusionsTexture;
     GLint specularTexture;
     GLint alphaTexture;
-    GLint bumpTexture;
 };
 
 struct OBDLine {

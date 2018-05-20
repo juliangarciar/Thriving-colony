@@ -22,7 +22,6 @@ Entity::Entity(SceneNode* _layer,
                 i32 _cellsX,
                 i32 _cellsY,
                 std::string _modelPath,
-                std::string _texturePath,
                 f32 _bbOffset) : 
                     ID(_id),
                     team(_team),
@@ -54,11 +53,6 @@ Entity::Entity(SceneNode* _layer,
 
     //Set model
     model = new Model(_layer, _id, _modelPath);
-    
-    //Set texture
-    baseMat = new Material(new Texture(_texturePath.c_str()));
-    baseMat -> setColor(Color(255, 255, 255, 255));
-	model -> setMaterial(baseMat);
 
 	// Set the color
     setBaseColor();
@@ -86,7 +80,6 @@ Entity::~Entity() {
     
     delete tookDamageTimer;
 
-    delete baseMat;
 	//Billboard
     delete barBg;
     delete bar;
@@ -129,7 +122,6 @@ void Entity::setPosition(Vector2<f32> vectorData) {
     model -> setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y), vectorData.y));
 
     hitBox.moveHitbox(vectorData);
-
     barBg->setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y) + bbOffset, vectorData.y));
     bar->setPosition(Vector3<f32>(vectorData.x, Map::Instance() -> getTerrain() -> getY(vectorData.x, vectorData.y) + bbOffset, vectorData.y));
 }

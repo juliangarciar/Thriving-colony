@@ -3,7 +3,8 @@
 
 #include "Types.h"
 #include "MathEngine/Vector2.h"
-#include "GraphicEngine/Model.h"
+#include "GraphicEngine/Animation.h"
+#include "Enumeration.h"
 #include <vector>
 
 //class Model;
@@ -21,14 +22,19 @@ class UnitFighter{
         void update();
         void setNearFighters(std::vector<UnitFighter*>& _nearFighters);
         void setActive(bool _active);
-		
+		void switchState(Enumeration::UnitFighterState _state);
+
         // Getters
         Vector2<f32> getVectorPosition() const;
         Vector2<f32> getVectorSpeed() const;
         Vector2<f32> getVectorDestiny() const;
         const f32 getSpeed() const;
     private:
-        Model* fighterModel;
+        void ufAttackState();
+        void ufMoveState();
+        void ufIdleState();
+        void ufConfrontState();
+        Animation* fighterModel;
         const f32 speed;
         bool isMoving;
         Vector2<f32> vectorPosition;
@@ -40,7 +46,7 @@ class UnitFighter{
         Timer* unitFighterClock;
         /* Check in the future */
         std::vector<UnitFighter*> nearFighters;
-        
+        Enumeration::UnitFighterState fighterState;
         bool hasArrived();
         Vector2<f32> calculateFlocking();
         void calculateDirection();

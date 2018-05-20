@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 0.450151
 illum 2
-map_Bump drorania_command_center_Normal_OpenGL.bmp
+
 map_Ka drorania_command_center_Mixed_AO.bmp
 map_Kd drorania_command_center_Base_Color.bmp
 map_Ks drorania_command_center_Metallic.bmp

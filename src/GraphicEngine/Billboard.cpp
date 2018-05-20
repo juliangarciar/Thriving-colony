@@ -8,7 +8,7 @@ Billboard::Billboard(SceneNode* parent, Vector3<f32> pos, Color top, Color bot) 
 }
 
 Billboard::~Billboard() {
-    
+    delete billboard;
 }
 
 void Billboard::setColor(Color top, Color bot) {

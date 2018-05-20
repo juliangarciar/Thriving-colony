@@ -26,10 +26,8 @@ UnitManager::UnitManager(Enumeration::Team t, std::string b) {
         UnitData tmp;
             tmp.type = element["unitName"].get<std::string>();
             tmp.buildingType = element["buildingType"].get<std::string>();
-            tmp.troopModel = element["troopPath"]["modelPath"].get<std::string>();
-            tmp.troopTexture = element["troopPath"]["texturePath"].get<std::string>();
-            tmp.flagModel = element["flagPath"]["modelPath"].get<std::string>();
-            tmp.flagTexture = element["flagPath"]["texturePath"].get<std::string>();
+            tmp.troopModel = element["troopModelPath"].get<std::string>();
+            tmp.flagModel = element["flagModelPath"].get<std::string>();
             tmp.metalCost = element["metalCost"].get<i32>();
             tmp.crystalCost = element["crystalCost"].get<i32>();
             tmp.maxHP = element["maxHP"].get<i32>();
@@ -55,7 +53,7 @@ UnitManager::UnitManager(Enumeration::Team t, std::string b) {
     
     selectedTroop = 0; 
     nextTroopId = 1;
-
+    totalUnitFighters = 0;
     team = t;
 
     unitLayer = new SceneNode();
@@ -93,25 +91,30 @@ UnitManager::~UnitManager() {
     delete inMapTroops;
 
     delete unitLayer;
+
+	delete baseUnits;
+	delete inQueueTroopsByBuilding;
 }
 //Create a new troops
 //In order to add a new unit, you must specify which one
 bool UnitManager::createTroop(std::string type) {
 	//ToDo: This method is just so fucking weird, I just can't get it
-    if (baseUnits->find(type) != baseUnits->end()){
+    std::map<std::string, UnitData>::iterator it = baseUnits->find(type);
+    if (it != baseUnits->end()){
 		//Check if there are space in the queue
         if (team == Enumeration::Team::Human){
-			if (inQueueTroopsByBuilding->at(baseUnits->at(type).buildingType) >= Human::Instance()->getBuildingManager()->getAmount(baseUnits->at(type).buildingType)) return false;
+			if (inQueueTroopsByBuilding->at(it->second.buildingType) >= Human::Instance()->getBuildingManager()->getAmount(it->second.buildingType)) return false;
 		} else {
-			if (inQueueTroopsByBuilding->at(baseUnits->at(type).buildingType) >= IA::Instance()->getBuildingManager()->getAmount(baseUnits->at(type).buildingType)) return false;
+			if (inQueueTroopsByBuilding->at(it->second.buildingType) >= IA::Instance()->getBuildingManager()->getAmount(it->second.buildingType)) return false;
 		}
 		//Check if can pay it
         if (checkCanPay(type)) {
-            Unit *newUnit = new Unit(unitLayer, nextTroopId, team, baseUnits->at(type), this);
+            Unit *newUnit = new Unit(unitLayer, nextTroopId, team, it->second, this);
             if (newUnit == nullptr) {
                 return false;
             }
             newUnit -> getModel() -> setActive(false);
+			adjustUnitFighter(it->second.troops);
             newUnit -> setRecruitedCallback([&] (Unit* u){
                 //Delete in Queue
                 inQueueTroops->erase(inQueueTroops->find(u->getID()));
@@ -150,7 +153,7 @@ bool UnitManager::createTroop(std::string type) {
 
 			//Add to queues
             inQueueTroops -> insert(std::pair<i32, Unit*>(newUnit->getID(), newUnit));
-			inQueueTroopsByBuilding->at(baseUnits->at(type).buildingType)++;
+			inQueueTroopsByBuilding->at(it->second.buildingType)++;
             if (team == Enumeration::Team::Human){
                 Hud::Instance()->addTroopToQueue(newUnit->getID(), newUnit->getType());
             }
@@ -292,6 +295,28 @@ void UnitManager::deployAllTroops(Vector2<f32> p){
     deployingTroop = false;
 }
 
+void UnitManager::commandAttack(Vector2 <f32> p) {
+    for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
+        Unit *temp = it -> second;
+
+        Cell* target;
+        Vector3<f32> hallPosition(0, 0, 0);        
+        //ToDo: Check this, can return a nullptr
+        target = WorldGeometry::Instance()->getValidCell(temp -> getPosition(), p, temp->getHitbox());
+        
+        Vector2<f32> dummy;
+        dummy = target->getPosition();
+        temp -> setUnitPosition(dummy);
+        temp -> setUnitCell(dummy);
+        temp -> getModel() -> setActive(true);
+        temp -> setPathToTarget(p);
+        temp -> switchState(Enumeration::UnitState::Move); 
+        if (team == Enumeration::Team::Human){
+            Hud::Instance()->removeTroopFromHall(temp->getID());
+        }
+    }
+}
+
 void UnitManager::retractAllTroops() {
     for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
         Unit *temp = it -> second;
@@ -347,11 +372,12 @@ void UnitManager::moveOrder() {
  * to avoid cluttering the setBuildingMode() method, as it used to be there in the first place.
  */
 bool UnitManager::checkCanPay(std::string type) {
-	if (baseUnits->find(type) != baseUnits->end()){
+	std::map<std::string,UnitData>::iterator it = baseUnits->find(type);
+	if (it != baseUnits->end()){
 		if (team == Enumeration::Team::Human)
-			return Human::Instance() -> isSolvent(baseUnits->at(type).metalCost, baseUnits->at(type).crystalCost, baseUnits->at(type).citizensVariation);
+			return Human::Instance() -> isSolvent(it->second.metalCost, it->second.crystalCost, it->second.citizensVariation);
 		else
-			return IA::Instance() -> isSolvent(baseUnits->at(type).metalCost, baseUnits->at(type).crystalCost, baseUnits->at(type).citizensVariation);
+			return IA::Instance() -> isSolvent(it->second.metalCost, it->second.crystalCost, it->second.citizensVariation);
 	}
 	return false;
 }
@@ -446,4 +472,12 @@ Unit* UnitManager::getUnit(i32 _id){
     else{
         return nullptr;
     }
+}
+
+void UnitManager::adjustUnitFighter(i32 qnty){
+    totalUnitFighters += qnty;
+}
+
+i32 UnitManager::getUnitFighters(){
+	return totalUnitFighters;
 }

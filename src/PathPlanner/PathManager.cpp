@@ -15,30 +15,26 @@ bool PathManager::createPathTo(Vector2<f32> targetPos){
     Vector2<f32> finalPos(0, 0);
 
     Cell* origin = WorldGeometry::Instance()->positionToCell(initPos);
-    Cell* end = WorldGeometry::Instance()->positionToCell(targetPos);
-
-    if(end->isBlocked()){
-        end = WorldGeometry::Instance()->getValidCell(targetPos, initPos, propietary->getHitbox());
-        finalPos = end->getPosition();
-    }
-    else{
-        finalPos = targetPos;
-    }
-
-    AStar* astar = new AStar(origin, end);
-    astar->Search();
-    std::list< Vector2<f32> > finalPath = astar->getPath();
+    Cell* end = WorldGeometry::Instance()->getValidCell(targetPos, initPos, propietary->getHitbox());
+    
+    AStar astar(origin, end);
+    astar.Search();
+    std::list< Vector2<f32> > finalPath = astar.getPath();
 
     finalPath.push_front(initPos);
+    /* Check for final path */
+    Box2D tmp = propietary->getHitbox();
+    tmp.moveHitbox(targetPos);
 
-    if(finalPath.back() != finalPos){
-        finalPath.push_back(finalPos);
+    if(WorldGeometry::Instance()->checkHitBoxCollision(tmp, false)){
+        finalPath.push_back(targetPos);
     }
+
+    /* Smooth the path */
     //std::cout << "Path sin smooth: " << finalPath.size();
     if(finalPath.size() > 2){
-        /* I think is fixed, check */
-        /* Nope, needs more checks */
-        //smoothPath(finalPath);
+        /* Maybe make a hitbox test collision instead */
+        smoothPath(finalPath);
     }    
     //std::cout << ". Con smooth: " << finalPath.size() << ".\n";
     propietary->setPath(finalPath);
@@ -54,7 +50,7 @@ void PathManager::smoothPath(std::list< Vector2<f32> >& _path){
     v3++;
     v3++;
     while(v2 != _path.end() && _path.size() > 2){
-        if(!WorldGeometry::Instance()->checkCollision(*v1, *v3)){
+        if(!WorldGeometry::Instance()->checkLineCollision(*v1, *v3)){
             v2 = _path.erase(v2);
             v3++;
         }

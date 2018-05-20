@@ -16,12 +16,12 @@ OBDTerrain::OBDTerrain(OBDSceneNode* parent, std::string path, f32 y_offset, f32
 	octree->build();
 
 	//glslMesh
-	glslMesh *mesh = new glslMesh();
+	mesh = new glslMesh();
 	mesh -> vbo = std::vector<f32>(terrain->vertices, terrain->vertices+(terrain->num_vertices*8));
 	mesh -> ibo = std::vector<u32>(terrain->indices, terrain->indices+terrain->num_indices);
 
 	//Empty material
-	OBDMaterial *material = new OBDMaterial();
+	material = new OBDMaterial();
 
 	//Create Node
 	terrainNode = new TNode(new TMesh(mesh, material), scaleNode);
@@ -30,9 +30,13 @@ OBDTerrain::OBDTerrain(OBDSceneNode* parent, std::string path, f32 y_offset, f32
 OBDTerrain::~OBDTerrain() {
 	delete terrain;
 	delete octree;
+	delete mesh;
+	delete material;
 
 	terrain = nullptr;
 	octree = nullptr;
+	mesh = nullptr;
+	material = nullptr;
 }
 
 void OBDTerrain::setTexture(OBDTexture* t){

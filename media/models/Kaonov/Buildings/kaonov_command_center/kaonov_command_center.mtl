@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Bump kaonov_command_center_Normal_OpenGL.bmp
+
 map_Ka kaonov_command_center_Mixed_AO.bmp
 map_Kd kaonov_command_center_Base_Color.bmp
 map_Ks kaonov_command_center_Metallic.bmp
@@ -24,7 +24,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 0.594883
 illum 2
-map_Bump kaonov_crystal_command_center_Normal_OpenGL.bmp
+
 map_Ka kaonov_crystal_command_center_Mixed_AO.bmp
 map_Kd kaonov_crystal_command_center_Base_Color.bmp
 map_Ks kaonov_crystal_command_center_Metallic.bmp

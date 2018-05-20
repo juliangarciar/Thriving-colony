@@ -26,7 +26,6 @@ struct myTexture {
     int haveAmbientOclusionsTexture;
     int haveSpecularTexture;
     int haveAlphaTexture;
-    int haveBumpTexture;
 };
 
 // Interpolated values from the vertex shaders
@@ -61,7 +60,6 @@ uniform sampler2D textureDiffuse;
 uniform sampler2D textureOclusions;
 uniform sampler2D textureSpecular;
 uniform sampler2D textureAlpha;
-uniform sampler2D textureBump;
 
 // FUNCION QUE CALCULA EL MODELO DE REFLEXION DE PHONG
 vec3 Phong(myLight light, vec3 surfaceColor, vec3 specularColor) {

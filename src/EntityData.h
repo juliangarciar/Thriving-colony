@@ -37,7 +37,6 @@ struct UnitData {
 struct BuildingData {
     std::string type;
     std::string modelPath;
-    std::string texturePath;
 
     i32 metalCost;
     i32 crystalCost;

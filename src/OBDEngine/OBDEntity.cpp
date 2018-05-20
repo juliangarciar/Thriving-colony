@@ -80,7 +80,7 @@ void OBDEntity::setPosition(glm::vec3 p) {
 
 void OBDEntity::setRotation(glm::vec3 r) {
 	TTransform* t = (TTransform*) rotationNode -> getEntity();
-	r = glm::vec3(r.x/360, r.y/360, r.z/360);
+	r = glm::vec3(r.x/360.f, r.y/360.f, r.z/360.f);
 	glm::vec3 o = r - node_rotation;
 	t -> rotate(o, 360);
 	node_rotation = r;

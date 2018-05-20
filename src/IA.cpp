@@ -61,13 +61,13 @@ void IA::Init(std::string _race) {
     choiceIndex = 0;
     initializeChoices();
 
-    updateFastTimer = new Timer(100.00, true);
+    updateFastTimer = new Timer(1.00, true);
 	updateFastTimer -> setCallback([&](){
 		rootNode -> Update();
 		updateFastTimer -> restart();
 		updateSlowTimer -> restart();
 	});
-    updateSlowTimer = new Timer(300.00, true);
+    updateSlowTimer = new Timer(3.00, true);
 	updateSlowTimer -> setCallback([&](){
 		rootNode -> Update();
 		updateFastTimer -> restart();
@@ -149,7 +149,7 @@ bool IA::getUnderAttack() {
 }
 
 void IA::chooseBehaviour() {
-    // RAndomize the seed
+    // Randomize the seed
     srand(time(nullptr));
     // Determine a number between 0 and 4, the number of possible behaviours for the AI to choose
     behaviour = (Enumeration::IABehaviour)(rand() % (4-0 + 1) + 0);
@@ -558,15 +558,24 @@ i32 IA::getArmyLevel() {
     return armyLevel + armyLevelInComing;
 }
 
+void IA::modifyCityLevelInComing(i32 c) {
+    cityLevelInComing = cityLevelInComing + c;
+}
+
+void IA::modifyHappinessInComing(i32 h) {
+    happinessInComing = happinessInComing + h;
+}
+
+void IA::modifyArmyLevelInComing(i32 a) {
+    armyLevelInComing = armyLevelInComing + a;
+}
+
+void IA::modifyMaxPeopleInComing(i32 m) {
+    maxPeopleInComing = maxPeopleInComing + m;
+}
+
 // Down here so it doesn't clutter the constructor
 void IA::initializeChoices() {
-    // IMPORTANTE::::::::
-    // TIENE QUE ESTAR EN EL ORDEN DE LA ENUMERACION
-    // IAChoices QUE HAY EN enumeration.h, SI NO NO IRA BIEN
-    // Y NOS LIAREMOS. SI SE PUEDE PASAR ALGUN DIA A ARRAY
-    // ENTONCES SE PUEDE QUEDAR CONTROLAR QUE INDICE TIENE QUE STRING
-    // Y TODO ES MAS MANEJABLE. PERO POR AHORA NO HACE MAS QUE DAR ERRORES
-    // ASI QUE LO HE DEJADO COMO VECTOR Y AU (Y quizas un map?)
     choices = new std::vector<std::string>();
     choices -> push_back("Deploying troops");
     choices -> push_back("Train melee footman");
@@ -589,34 +598,14 @@ void IA::initializeChoices() {
     choices -> push_back("Build workshop");
     choices -> push_back("Build tower");
     choices -> push_back("Build wall");
-    
-    //ARRAY FORM
-    // SI ALGUN DIA SE PONE ASI SERIA FANTISTOCOSO
-    /*
-    // Commented choices are repeated through
-    choices[Enumeration::IAChoices::DeployingTroops] = "Deploying troops";
-    choices[Enumeration::IAChoices::TrainMeleeFootman] = "Train melee footman";
-    choices[Enumeration::IAChoices::BuildBarrack] = "Build barrack";
-    choices[Enumeration::IAChoices::Attacking] = "Attacking";
-    choices[Enumeration::IAChoices::RetractingTroops] = "Retracting troops";
-    choices[Enumeration::IAChoices::BuildSchool] = "Build school";
-    choices[Enumeration::IAChoices::BuildMarket] = "Build market";
-    choices[Enumeration::IAChoices::BuildHospital] = "Build hospital";
-    choices[Enumeration::IAChoices::BuildSiderurgy] = "Build siderurgy";
-    choices[Enumeration::IAChoices::BuildQuarry] = "Build quarry";
-    choices[Enumeration::IAChoices::BuildHome] = "Build home";
-    //choices[0] = "Melee footman";
-    choices[Enumeration::IAChoices::TrainMountedMelee] = "Train mounted melee";
-    choices[Enumeration::IAChoices::TrainCreature] = "Train creature";
-    choices[Enumeration::IAChoices::TrainRangedFootman] = "Train ranged footman";
-    choices[Enumeration::IAChoices::TrainMountedRanged] = "Train mounted ranged";
-    choices[Enumeration::IAChoices::TrainCatapult] = "Train catapult";
-    choices[Enumeration::IAChoices::TrainRam] = "Train ram";
-    //choices[0] = "Barrack";
-    choices[Enumeration::IAChoices::BuildBarn] = "Build barn";
-    choices[Enumeration::IAChoices::BuildWorkshop] = "Build workshop";
-    choices[Enumeration::IAChoices::BuildTower] = "Build tower";
-    choices[Enumeration::IAChoices::BuildWall] = "Build wall";
-    //choices[0] = "House"
-    */
+}
+
+bool IA::getIdleTroops() {
+    std::map <int, Unit*> *inMap = getUnitManager() -> getInMapTroops();
+    for (std::map<i32,Unit*>::iterator it = inMap -> begin(); it != inMap -> end(); ++it) {
+        if (it -> second -> getState() != Enumeration::Attack) {
+            return false;
+        } 
+    }
+    return true;
 }

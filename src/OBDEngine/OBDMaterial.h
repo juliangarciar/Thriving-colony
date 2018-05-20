@@ -31,7 +31,7 @@ class OBDMaterial {
 		OBDColor getSpecularColor();
 		i32 getSpecularShininess();
 
-		TTexture *getTexture(OBDEnums::TextureTypes);
+		OBDTexture *getTexture(OBDEnums::TextureTypes);
 
 		glslMaterial *getGLSLMaterial();
 		glslTexture *getGLSLActiveTextures();
@@ -41,11 +41,10 @@ class OBDMaterial {
         glslMaterial *material;
 		glslTexture *activeTextures;
 
-		TTexture* diffuseTextureMap;
-		TTexture* ambientOclusionsTextureMap;
-		TTexture* specularTextureMap;
-		TTexture* alphaTextureMap;
-		TTexture* bumpMap;
+		OBDTexture* diffuseTextureMap;
+		OBDTexture* ambientOclusionsTextureMap;
+		OBDTexture* specularTextureMap;
+		OBDTexture* alphaTextureMap;
 };
 
 #endif

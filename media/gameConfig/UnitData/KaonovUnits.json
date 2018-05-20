@@ -10,22 +10,16 @@
 			"maxHP": 60,
 			"recruitingTime": 1,
 			"happiness": -10,
-			"citizens": -10,
+			"citizens": 6,
 			"armyLevel": 5,
 			"attackEvent": "event:/UnitAttack/Kaonov_ranged_S",
 			"moveEvent": "event:/UnitMovement/Kaonov_ranged_S",
 			"selectEvent": "event:/UnitSelect/Kaonov_ranged_S",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"troopPath":{
-				"modelPath": "media/models/Kaonov/Units/kaonov_ranged_soldier/kaonov_ranged_soldier.obj",
-				"texturePath": ""
-			},
-			"flagPath": {
-				"modelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
-				"texturePath": ""
-			},
-			"troops": 4,
+			"troopModelPath": "media/animations/Kaonov/Units/kaonov_ranged_soldier/kaonov_ranged_soldier.json",
+			"flagModelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
+			"troops": 6,
 			"cellsX": 1,
 			"cellsY": 1,
 			"bbOffset": 200
@@ -41,21 +35,15 @@
 			"maxHP": 110,
 			"recruitingTime": 1,
 			"happiness": -10,
-			"citizens": -10,
+			"citizens": 4,
 			"armyLevel": 10,
 			"attackEvent": "event:/UnitAttack/Kaonov_ranged_A",
 			"moveEvent": "event:/UnitMovement/Kaonov_ranged_A",
 			"selectEvent": "event:/UnitSelect/Kaonov_ranged_A",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"troopPath":{
-				"modelPath": "media/models/Kaonov/Units/kaonov_creature/kaonov_creature.obj",
-				"texturePath": ""
-			},
-			"flagPath": {
-				"modelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
-				"texturePath": ""
-			},
+			"troopModelPath": "media/animations/Kaonov/Units/kaonov_creature/kaonov_creature.json",
+			"flagModelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
 			"troops": 4,
 			"cellsX": 1,
 			"cellsY": 1,
@@ -72,22 +60,16 @@
 			"maxHP": 80,
 			"recruitingTime": 1,
 			"happiness": -10,
-			"citizens": -10,
+			"citizens": 6,
 			"armyLevel": 5,
 			"attackEvent": "event:/UnitAttack/Kaonov_melee_S",
 			"moveEvent": "event:/UnitMovement/Kaonov_melee_S",
 			"selectEvent": "event:/UnitSelect/Kaonov_melee_S",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"troopPath":{
-				"modelPath": "media/models/Kaonov/Units/kaonov_melee_soldier/kaonov_melee_soldier.obj",
-				"texturePath": ""
-			},
-			"flagPath": {
-				"modelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
-				"texturePath": ""
-			},
-			"troops": 4,
+			"troopModelPath": "media/animations/Kaonov/Units/kaonov_melee_soldier/kaonov_melee_soldier.json",
+			"flagModelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
+			"troops": 6,
 			"cellsX": 1,
 			"cellsY": 1,
 			"bbOffset": 200
@@ -103,21 +85,15 @@
 			"maxHP": 140,
 			"recruitingTime": 1,
 			"happiness": -10,
-			"citizens": -10,
+			"citizens": 4,
 			"armyLevel": 10,
 			"attackEvent": "event:/UnitAttack/Kaonov_melee_A",
 			"moveEvent": "event:/UnitMovement/Kaonov_melee_A",
 			"selectEvent": "event:/UnitSelect/Kaonov_melee_A",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"troopPath":{
-				"modelPath": "media/models/Kaonov/Units/kaonov_creature/kaonov_creature.obj",
-				"texturePath": ""
-			},
-			"flagPath": {
-				"modelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
-				"texturePath": ""
-			},
+			"troopModelPath": "media/animations/Kaonov/Units/kaonov_creature/kaonov_creature.json",
+			"flagModelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
 			"troops": 4,
 			"cellsX": 1,
 			"cellsY": 1,
@@ -134,22 +110,16 @@
 			"maxHP": 180,
 			"recruitingTime": 1,
 			"happiness": -10,
-			"citizens": -10,
+			"citizens": 1,
 			"armyLevel": 7,
 			"attackEvent": "event:/UnitAttack/Kaonov_ranged_S",
 			"moveEvent": "event:/UnitMovement/Kaonov_ranged_S",
 			"selectEvent": "event:/UnitSelect/Kaonov_ranged_S",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"troopPath":{
-				"modelPath": "media/models/Kaonov/Units/kaonov_cannon/kaonov_cannon.obj",
-				"texturePath": ""
-			},
-			"flagPath": {
-				"modelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
-				"texturePath": ""
-			},
-			"troops": 4,
+			"troopModelPath": "media/animations/Kaonov/Units/kaonov_cannon/kaonov_cannon.json",
+			"flagModelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
+			"troops": 1,
 			"cellsX": 1,
 			"cellsY": 1,
 			"bbOffset": 200
@@ -165,22 +135,16 @@
 			"maxHP": 220,
 			"recruitingTime": 1,
 			"happiness": -10,
-			"citizens": -10,
+			"citizens": 1,
 			"armyLevel": 7,
 			"attackEvent": "event:/UnitAttack/Kaonov_ranged_A",
 			"moveEvent": "event:/UnitMovement/Kaonov_ranged_A",
 			"selectEvent": "event:/UnitSelect/Kaonov_ranged_A",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"troopPath":{
-				"modelPath": "media/models/Kaonov/Units/kaonov_walls_desintegrator/kaonov_walls_desintegrator.obj",
-				"texturePath": ""
-			},
-			"flagPath": {
-				"modelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
-				"texturePath": ""
-			},
-			"troops": 4,
+			"troopModelPath": "media/animations/Kaonov/Units/kaonov_walls_desintegrator/kaonov_walls_desintegrator.json",
+			"flagModelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
+			"troops": 1,
 			"cellsX": 1,
 			"cellsY": 1,
 			"bbOffset": 200
@@ -196,22 +160,16 @@
 			"maxHP": 180,
 			"recruitingTime": 1,
 			"happiness": -10,
-			"citizens": -10,
+			"citizens": 1,
 			"armyLevel": 15,
 			"attackEvent": "event:/UnitAttack/Kaonov_melee_A",
 			"moveEvent": "event:/UnitMovement/Kaonov_melee_A",
 			"selectEvent": "event:/UnitSelect/Kaonov_melee_A",
 			"metalCost": 120,
 			"crystalCost": 0,
-			"troopPath":{
-				"modelPath": "media/models/Kaonov/Units/kaonov_entity/kaonov_entity.obj",
-				"texturePath": ""
-			},
-			"flagPath": {
-				"modelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
-				"texturePath": ""
-			},
-			"troops": 4,
+			"troopModelPath": "media/animations/Kaonov/Units/kaonov_entity/kaonov_entity.json",
+			"flagModelPath": "media/models/Kaonov/Flags/kaonov_flag.obj",
+			"troops": 1,
 			"cellsX": 1,
 			"cellsY": 1,
 			"bbOffset": 200

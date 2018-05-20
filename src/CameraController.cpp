@@ -40,7 +40,6 @@ CameraController::CameraController() {
 	//Center
 	centerCameraMode = false;
 
-	int fractionsOfASecond = 70.f;
 	updateTimer = new Timer(0, true, false); //ToDo: revisar
 
 	updateTimer -> setCallback([&](){

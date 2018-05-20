@@ -44,10 +44,25 @@ void Box2D::moveHitbox(Vector2<f32> _vectorPos){
 }
 
 bool Box2D::isOverlappedWith(const Box2D& other) const{
-    return !((other.Top() >= this->Bottom()) ||
-             (other.Bottom() <= this->Top()) ||
-             (other.Left() >= this->Right()) ||
-             (other.Right() <= this->Left()));
+    return !((other.Top() >= Bottom()) ||
+             (other.Bottom() <= Top()) ||
+             (other.Left() >= Right()) ||
+             (other.Right() <= Left()));
+}
+
+bool Box2D::isOverlappedWith(Vector2<f32> point) const{
+    if(point.x <= Left() || point.x >= Right()){
+        return false;
+    }
+    if(point.y <= Bottom() || point.y >= Top()){
+        return false;
+    }
+    return true;
+    //return (point.x > Left() && point.x < Right() && point.y > Bottom() && point.y < Top());
+}
+
+f32 Box2D::getHalfSize() const{
+    return ((Right() - Left()) / 2.0f);
 }
 
 Vector2<f32> Box2D::TopLeft() const{
