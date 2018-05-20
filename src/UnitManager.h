@@ -66,6 +66,8 @@ class UnitManager{
          */
         void deployAllTroops(Vector2<f32>);
 
+        void commandAttack(Vector2<f32>);
+
         /**
          * @brief Retract all the player's troops from the map to the command center.
          */
