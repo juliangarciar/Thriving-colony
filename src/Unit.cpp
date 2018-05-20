@@ -289,11 +289,11 @@ void Unit::retractState() {
 }
 
 void Unit::moveUnit() {
-    if (moving) {
+    //if (moving) {
         // close to destination, stop
         if (hasArrived()) {
             if (pathFollow.empty()) {
-                moving = false;
+                //moving = false;
                 if (state == Enumeration::UnitState::Retract) {
                     readyToEnter = true;
                     Human::Instance() -> getUnitManager() -> unSelectTroop();
@@ -322,7 +322,7 @@ void Unit::moveUnit() {
             unitSensor -> move(vectorPos);
             updateUnitFighters();
         }
-    }
+    //}
 }
 
 void Unit::triggerRecruitedCallback(){
@@ -355,7 +355,7 @@ void Unit::setUnitDestination(Vector2<f32> _vectorData) {
     for (std::size_t i = 0; i < size; i++) {
         unitFighters[i] -> setDestiny(_vectorData + WorldGeometry::Instance() -> getSquadPosition(size - 1, i));
     }
-    moving = true;
+    //moving = true;
 }
 
 void Unit::setPath(const std::list< Vector2<f32> >& path) {
