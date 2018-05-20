@@ -66,7 +66,7 @@ Unit::Unit(SceneNode* _layer,
 
     recruitingTimer = new Timer(baseData.recruitingTime, false);
     recruitingTimer -> setCallback([&](){
-        recruitedCallback(this);
+        if (recruitedCallback) recruitedCallback(this);
         switchState(Enumeration::UnitState::InHome);
     });
 
@@ -290,7 +290,7 @@ void Unit::chaseState() {
 void Unit::retractState() {
     updateUnitFighters();
     if (readyToEnter){
-        retractedCallback(this);
+        if (retractedCallback) retractedCallback(this);
         for(std::size_t i = 0; i < unitFighters.size(); ++i){
             unitFighters[i] -> setActive(false);
         }
@@ -338,11 +338,11 @@ void Unit::moveUnit() {
 }
 
 void Unit::triggerRecruitedCallback(){
-    recruitedCallback(this);
+    if (recruitedCallback) recruitedCallback(this);
 }
 
 void Unit::triggerRetractedCallback() {
-    retractedCallback(this);
+    if (retractedCallback) retractedCallback(this);
 }
 
 void Unit::setUnitCell(Vector2<f32> vectorPosition) {
