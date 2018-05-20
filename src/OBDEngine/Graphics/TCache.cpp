@@ -39,7 +39,6 @@ std::vector<GLuint> TCache::generateAllIDs(GLuint programID){
     paramIDs[OBDEnums::OpenGLIDs::SAMPLER_OCLUSIONS] = glGetUniformLocation(programID, "textureOclusions");
 	paramIDs[OBDEnums::OpenGLIDs::SAMPLER_SPECULAR] = glGetUniformLocation(programID, "textureSpecular");
 	paramIDs[OBDEnums::OpenGLIDs::SAMPLER_ALPHA] = glGetUniformLocation(programID, "textureAlpha");
-	paramIDs[OBDEnums::OpenGLIDs::SAMPLER_BUMP] = glGetUniformLocation(programID, "textureBump");
 
     return std::vector<GLuint>(paramIDs, paramIDs + OBDEnums::OpenGLIDs::PARAMS);
 }

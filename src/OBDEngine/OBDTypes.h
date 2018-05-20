@@ -55,7 +55,6 @@ struct glslTexture {
     GLint oclusionsTexture;
     GLint specularTexture;
     GLint alphaTexture;
-    GLint bumpTexture;
 };
 
 struct OBDLine {

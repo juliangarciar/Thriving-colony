@@ -5,6 +5,7 @@ Animation::Animation(SceneNode* parent, std::string animationJSON) {
 	animationLayer = new SceneNode(parent);
 
 	animations = new std::map<std::string, OBDAnimation*>();
+	animationDelays = new std::map<std::string, f32>();
 
 	size_t last = animationJSON.rfind("/");
 	std::string subpath = animationJSON.substr(0, last);
@@ -24,12 +25,17 @@ Animation::Animation(SceneNode* parent, std::string animationJSON) {
 		tempAnimation->setActive(false);
 
 		animations->insert(std::pair<std::string, OBDAnimation*>(animationName, tempAnimation));
+		animationDelays->insert(std::pair<std::string, f32>(animationName, element["delay"]));
 	}
 
 	currentAnimation = animations->begin()->second;
 	currentAnimation -> setActive(true);
-}
 
+	frameTimer = new Timer(animationDelays->begin()->second, true);
+	frameTimer -> setCallback([&](){
+		currentAnimation->updateFrame();
+	});
+}
 
 Animation::~Animation() {
 	delete animationLayer;
@@ -40,10 +46,6 @@ Animation::~Animation() {
 	animations->clear();
 	delete animations;
 	animations = nullptr;
-}
-
-void Animation::update() {
-    currentAnimation->updateFrame();
 }
 
 //ToDo: cola de animaciones

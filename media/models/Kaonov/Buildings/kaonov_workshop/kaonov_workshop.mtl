@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 0.483709
 illum 2
-map_Bump kaonov_crane_workshop_Normal_OpenGL.bmp
+
 map_Ka kaonov_crane_workshop_Mixed_AO.bmp
 map_Kd kaonov_crane_workshop_Base_Color.bmp
 map_Ks kaonov_crane_workshop_Metallic.bmp
@@ -25,7 +25,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Bump kaonov_workshop_Normal_OpenGL.bmp
+
 map_Ka kaonov_workshop_Mixed_AO.bmp
 map_Kd kaonov_workshop_Base_Color.bmp
 map_Ks kaonov_workshop_Metallic.bmp

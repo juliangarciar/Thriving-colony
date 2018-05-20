@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Bump drorania_melee_soldier_Normal_OpenGL.bmp
+
 map_Ka drorania_melee_soldier_Mixed_AO.bmp
 map_Kd drorania_melee_soldier_Base_Color.bmp
 map_Ks drorania_melee_soldier_Metallic.bmp

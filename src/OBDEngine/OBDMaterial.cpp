@@ -14,13 +14,11 @@ OBDMaterial::OBDMaterial(){
 	activeTextures->oclusionsTexture = 0;
 	activeTextures->specularTexture = 0;
 	activeTextures->alphaTexture = 0;
-	activeTextures->bumpTexture = 0;
 
 	diffuseTextureMap = nullptr;
 	ambientOclusionsTextureMap = nullptr;
 	specularTextureMap = nullptr;
 	alphaTextureMap = nullptr;
-	bumpMap = nullptr;
 }
 
 OBDMaterial::OBDMaterial(ResourceMTL *m, std::string n){
@@ -39,13 +37,11 @@ OBDMaterial::OBDMaterial(ResourceMTL *m, std::string n){
 		activeTextures->oclusionsTexture = 0;
 		activeTextures->specularTexture = 0;
 		activeTextures->alphaTexture = 0;
-		activeTextures->bumpTexture = 0;
 
 		diffuseTextureMap = nullptr;
 		ambientOclusionsTextureMap = nullptr;
 		specularTextureMap = nullptr;
 		alphaTextureMap = nullptr;
-		bumpMap = nullptr;
 
 		name = it->second->materialName;
 	} else {
@@ -64,13 +60,11 @@ OBDMaterial::OBDMaterial(ResourceMTL *m, std::string n){
 		activeTextures->oclusionsTexture = 0;
 		activeTextures->specularTexture = 0;
 		activeTextures->alphaTexture = 0;
-		activeTextures->bumpTexture = 0;
 
 		diffuseTextureMap = nullptr;
 		ambientOclusionsTextureMap = nullptr;
 		specularTextureMap = nullptr;
 		alphaTextureMap = nullptr;
-		bumpMap = nullptr;
 	}
 }
 
@@ -84,13 +78,11 @@ OBDMaterial::~OBDMaterial(){
 	if (ambientOclusionsTextureMap != nullptr) delete ambientOclusionsTextureMap;
 	if (specularTextureMap != nullptr) delete specularTextureMap;
 	if (alphaTextureMap != nullptr) delete alphaTextureMap;
-	if (bumpMap != nullptr) delete bumpMap;
 
 	diffuseTextureMap = nullptr;
 	ambientOclusionsTextureMap = nullptr;
 	specularTextureMap = nullptr;
 	alphaTextureMap = nullptr;
-	bumpMap = nullptr;
 }
 
 void OBDMaterial::setMaterialName(std::string n){
@@ -131,10 +123,6 @@ void OBDMaterial::setTexture(OBDTexture *p){
 			alphaTextureMap = p;
 			activeTextures->alphaTexture = 1;
 		break;
-		case OBDEnums::TextureTypes::TEXTURE_BUMP:
-			bumpMap = p;
-			activeTextures->bumpTexture = 1;
-		break;
 		default: break;
 	}
 }
@@ -172,9 +160,6 @@ OBDTexture* OBDMaterial::getTexture(OBDEnums::TextureTypes tt){
 		break;
 		case OBDEnums::TextureTypes::TEXTURE_ALPHA:
 			return alphaTextureMap;
-		break;
-		case OBDEnums::TextureTypes::TEXTURE_BUMP:
-			return bumpMap;
 		break;
 		default: 
 			return nullptr;

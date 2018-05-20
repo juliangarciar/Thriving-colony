@@ -41,12 +41,10 @@ class OBDMaterial {
         glslMaterial *material;
 		glslTexture *activeTextures;
 
-		//ToDo: almacenar OBDTexture
 		OBDTexture* diffuseTextureMap;
 		OBDTexture* ambientOclusionsTextureMap;
 		OBDTexture* specularTextureMap;
 		OBDTexture* alphaTextureMap;
-		OBDTexture* bumpMap;
 };
 
 #endif

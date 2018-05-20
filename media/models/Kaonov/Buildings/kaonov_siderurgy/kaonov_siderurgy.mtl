@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Bump kaonov_siderurgy_Normal_OpenGL.bmp
+
 map_Ka kaonov_siderurgy_Mixed_AO.bmp
 map_Kd kaonov_siderurgy_Base_Color.bmp
 map_Ks kaonov_siderurgy_Metallic.bmp

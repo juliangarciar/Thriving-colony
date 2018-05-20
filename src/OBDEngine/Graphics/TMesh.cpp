@@ -110,13 +110,6 @@ void TMesh::beginDraw() {
 		loadedTextures++;
 	}
 
-	if (material->getGLSLActiveTextures()->bumpTexture == 1){
-		glActiveTexture(GL_TEXTURE0 + loadedTextures);
-		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_BUMP)->getTexture()->getTextureID());
-		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::SAMPLER_BUMP), loadedTextures);
-		loadedTextures++;
-	}
-
 	glBindBuffer(GL_ARRAY_BUFFER, VBOID);
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, (3 + 3 + 2) * sizeof(f32), BUFFER_OFFSET(0));

@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Bump -bm 0.244332 kaonov_barn_Normal_OpenGL.bmp
+
 map_Ka kaonov_barn_Mixed_AO.bmp
 map_Kd kaonov_barn_Base_Color.bmp
 map_Ks kaonov_barn_Metallic.bmp
@@ -24,7 +24,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
 illum 2
-map_Bump kaonov_barn_creatures_Normal_OpenGL.bmp
+
 map_Ka kaonov_barn_creatures_Mixed_AO.bmp
 map_Kd kaonov_barn_creatures_Base_Color.bmp
 map_Ks kaonov_barn_creatures_Metallic.bmp
