@@ -1,46 +1,66 @@
 #include "TBillboard.h"
 #include "TShader.h"
 
-TBillboard::TBillboard(glm::vec3 pos) : TEntity() {
-    position = pos;
-    height = 200;
-    topWidth = 500;
-    bottomWidth = 100;
-    
-    bottomColor = OBDColor(255, 255, 255);
-    topColor = OBDColor();
+TBillboard::TBillboard(GLuint programID, glm::vec3 p, glm::vec2 s) : TEntity() {
+    position = p;
+	size = s;
 
-    static const GLfloat g_vertex_buffer_data[] = {
-        position.x - bottomWidth / 2, position.y + 0.0f, position.z,
-        position.x + bottomWidth / 2, position.y + 0.0f + height, position.z,
-        position.x - bottomWidth / 2, position.y + 0.0f + height, position.z,
-        position.x - bottomWidth / 2, position.y + 0.0f, position.z,
-        position.x + bottomWidth / 2, position.y + 0.0f, position.z,
-        position.x + bottomWidth / 2, position.y + 0.0f + height, position.z,
-        
-        position.x - bottomWidth / 2, position.y + 0.0f, position.z,
-        position.x + topWidth / 2, position.y + 0.0f + height, position.z,
-        position.x - bottomWidth / 2, position.y + 0.0f + height, position.z,
-        position.x - bottomWidth / 2, position.y + 0.0f, position.z,
-        position.x + topWidth / 2, position.y + 0.0f, position.z,
-        position.x + topWidth / 2, position.y + 0.0f + height, position.z
-    };
+	frontWidth = 0;
+    color = glm::vec4(0, 0, 0, 0);
+    frontColor = glm::vec4(1, 1, 1, 1);
+
+	CameraRight_worldspace_ID = glGetUniformLocation(programID, "CameraRight_worldspace");
+	CameraUp_worldspace_ID = glGetUniformLocation(programID, "CameraUp_worldspace");
+	ViewProjMatrixID = glGetUniformLocation(programID, "VP");
+	positionID = glGetUniformLocation(programID, "position");
+	sizeID = glGetUniformLocation(programID, "size");
+	colorID = glGetUniformLocation(programID, "color");
+	frontWidthID = glGetUniformLocation(programID, "frontWidth");
+	frontColorID = glGetUniformLocation(programID, "frontColor");
+
+	// The VBO containing the 4 vertices of the particles.
+	static const GLfloat g_vertex_buffer_data[] = { 
+		 -0.5f, -0.5f, 0.0f,
+		  0.5f, -0.5f, 0.0f,
+		 -0.5f,  0.5f, 0.0f,
+		  0.5f,  0.5f, 0.0f,
+	};
 
     glGenBuffers(1, &vertexbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-
-    /*glm::vec3 _color = glm::vec3(1,0,1);
-    GLuint colorID = glGetUniformLocation("color");
-    glUniform3f(colorID, 1, GL_FALSE, _color[0]);*/
 }
 
 TBillboard::~TBillboard() {
-	
+	glDeleteBuffers(1, &vertexbuffer);
 }
 
 void TBillboard::beginDraw() {
-    /*glEnableVertexAttribArray(0);
+	glm::mat4 pM = *cache.getProjectionMatrix();
+	glm::mat4 vM = *cache.getViewMatrix();
+
+	glm::mat4 vpM = pM * vM;
+
+	/*glm::vec3 vertexPosition_worldspace =
+    position
+    + glm::vec3(vM[0][0], vM[1][0], vM[2][0]) * 0.5f * size.x
+    + glm::vec3(vM[0][1], vM[1][1], vM[2][1]) * 0.5f * size.y;
+
+	vertexPosition_worldspace = vpM * glm::vec4(vertexPosition_worldspace, 1);
+
+	std::cout << vertexPosition_worldspace.x << " " << vertexPosition_worldspace.y << " " << vertexPosition_worldspace.z << std::endl;*/
+	
+	glUniform3f(CameraRight_worldspace_ID, vM[0][0], vM[1][0], vM[2][0]);
+	glUniform3f(CameraUp_worldspace_ID, vM[0][1], vM[1][1], vM[2][1]);
+	glUniformMatrix4fv(ViewProjMatrixID, 1, GL_FALSE, &vpM[0][0]);
+	glUniform3f(positionID, position.x, position.y, position.z);
+	glUniform2f(sizeID, size.x, size.y);
+	glUniform4f(colorID, color.x, color.y, color.z, color.a);
+	glUniform1f(frontWidthID, frontWidth);
+	glUniform4f(frontColorID, frontColor.x, frontColor.y, frontColor.z, frontColor.a);
+
+    glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glVertexAttribPointer(
         0,                  
         3,                  
@@ -49,57 +69,46 @@ void TBillboard::beginDraw() {
         0,                  
         (void*)0            
     );
-    glDrawArrays(GL_TRIANGLES, 0, 12);
-    glDisableVertexAttribArray(0);*/
+    glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 }
 
 void TBillboard::endDraw() {
-
+    glDisableVertexAttribArray(0);
 }
 
 void TBillboard::setPosition(glm::vec3 pos) {
     position = pos;
 }
 
-void TBillboard::setColor(OBDColor newTopColor, OBDColor newBottomColor) {
-    topColor = newTopColor;
-    bottomColor = newBottomColor;
+void TBillboard::setColor(OBDColor newColor, OBDColor newFrontColor) {
+    color = newColor.getRGBA();
+    frontColor = newFrontColor.getRGBA();
 }
 
-void TBillboard::setSize(f32 newHeight, f32 newTopWidth, f32 newBottomWidth) {
-    if (newHeight != -1) {
-        height = newHeight;
-    }
-
-    if (newTopWidth != -1) {
-        topWidth = newTopWidth;
-    }
-
-    if (newBottomWidth != -1) {
-        bottomWidth = newBottomWidth;
-    }
+void TBillboard::setSize(glm::vec2 newSize) {
+	size = newSize;
 }
 
-OBDColor TBillboard::getTopColor() {
-    return topColor;
+void TBillboard::setFrontWidth(f32 newFrontWidth){
+	frontWidth = newFrontWidth;
 }
 
-OBDColor TBillboard::getBottomColor() {
-    return bottomColor;
+OBDColor TBillboard::getColor() {
+    return OBDColor(color);
+}
+
+OBDColor TBillboard::getFrontColor() {
+    return frontColor;
 }
 
 glm::vec3 TBillboard::getPosition() {
     return position;
 }
 
-f32 TBillboard::getHeight() {
-    return height;
+glm::vec2 TBillboard::getSize() {
+    return size;
 }
 
-f32 TBillboard::getTopWidth() {
-    return topWidth;
-}
-
-f32 TBillboard::getBottomWidth() {
-    return bottomWidth;
+f32 TBillboard::getFrontWidth() {
+    return frontWidth;
 }

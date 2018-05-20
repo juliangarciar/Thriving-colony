@@ -7,7 +7,7 @@
 class TBillboard : public TEntity {
     
     public:
-        TBillboard(glm::vec3);
+        TBillboard(GLuint, glm::vec3, glm::vec2);
 
         virtual ~TBillboard();
 
@@ -19,31 +19,38 @@ class TBillboard : public TEntity {
 
         void setPosition(glm::vec3);
 
-        void setSize(f32, f32, f32);
+        void setSize(glm::vec2);
 
-        OBDColor getTopColor();
+		void setFrontWidth(f32);
 
-        OBDColor getBottomColor();
+        OBDColor getColor();
+
+        OBDColor getFrontColor();
 
         glm::vec3 getPosition();
 
-        f32 getHeight();
+        glm::vec2 getSize();
 
-        f32 getTopWidth();
-
-        f32 getBottomWidth();
+        f32 getFrontWidth();
 
     private:
         glm::vec3 position;
+		glm::vec2 size;
+        glm::vec4 color;
 
-        GLuint vertexbuffer;
-
-        OBDColor topColor;
-        OBDColor bottomColor;
+		f32 frontWidth;
+        glm::vec4 frontColor;
         
-        f32 height;
-        f32 topWidth;
-        f32 bottomWidth;
+        GLuint vertexbuffer;
+		GLuint CameraRight_worldspace_ID;
+		GLuint CameraUp_worldspace_ID;
+		GLuint ViewProjMatrixID;
+		GLuint positionID;
+		GLuint sizeID;
+		GLuint colorID;
+		GLuint frontWidthID;
+		GLuint frontColorID;
+
 };
 
 #endif
