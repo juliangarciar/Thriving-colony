@@ -143,6 +143,10 @@ void WorldGeometry::clearUnitCell(Vector2<f32> positionVector, Unit* unitPtr){
     positionToCell(positionVector)->clearInhabitingUnit(unitPtr);
 }
 
+void WorldGeometry::clearBuildingCell(Building* buildingPtr){
+    quadTree->clearBuilding(buildingPtr);
+}
+
 void WorldGeometry::setUnitCell(Vector2<f32> positionVector, Unit* unitPtr){
     positionToCell(positionVector)->setInhabitingUnit(unitPtr);
 }

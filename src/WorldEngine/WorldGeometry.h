@@ -49,6 +49,7 @@ class WorldGeometry{
         /* New methods */
         void updateUnitCell(Vector2<f32> oldPosition, Vector2<f32> newPosition, Unit* unitPtr);
         void clearUnitCell(Vector2<f32> positionVector, Unit* unitPtr);
+        void clearBuildingCell(Building* buildingPtr);
         void setUnitCell(Vector2<f32> positionVector, Unit* unitPtr);
         /**
          * @brief Check the terrain to build

@@ -128,7 +128,6 @@ void Unit::preTaxPlayer() {
 }
 
 void Unit::update() {
-    updateUnitFighters();
     //State machine, color changes according to state
     switch (state) {
         case Enumeration::UnitState::Recruiting:
@@ -185,14 +184,12 @@ void Unit::switchState(Enumeration::UnitState newState){
             chaseTimer->stop();
             enemySensorTimer->restart();
             state = newState;
-            switchUnitFigthersState(Enumeration::UnitFighterState::ufIdle);
         break;
 
         case Enumeration::UnitState::Move:
             chaseTimer->stop();
             enemySensorTimer->stop();
             state = newState;
-            switchUnitFigthersState(Enumeration::UnitFighterState::ufMove);
         break;
 
         case Enumeration::UnitState::AttackMove:
@@ -203,14 +200,12 @@ void Unit::switchState(Enumeration::UnitState newState){
             chaseTimer->stop();
             enemySensorTimer->stop();
             state = newState;
-            //switchUnitFigthersState(Enumeration::UnitFighterState::ufAttack);
         break;   
 
         case Enumeration::UnitState::Chase:
             chaseTimer->restart();
             enemySensorTimer->stop();
             state = newState;
-            //switchUnitFigthersState(Enumeration::UnitFighterState::ufConfront);
         break;
 
         case Enumeration::UnitState::Retract:
@@ -239,26 +234,26 @@ void Unit::inHomeState(){
 }
 
 void Unit::idleState() {
-    //updateUnitFighters();
+    updateUnitFighters();
     if (target != nullptr) {
         switchState(Enumeration::UnitState::Attack);
     }
 }
 
 void Unit::moveState() {
-    //updateUnitFighters();
+    updateUnitFighters();
     moveUnit();
 }
 
 /* ToDo: Tenemos que hablar si existen shortcuts para llamar este */
 /* End this method */
 void Unit::attackMoveState() {
-    //updateUnitFighters();
+    updateUnitFighters();
     moveUnit();
 }
 
 void Unit::attackState() {
-    //updateUnitFighters();
+    updateUnitFighters();
     if(target != nullptr){
         if(inRangeOfAttack()) {
             if(canAttack){
@@ -279,7 +274,7 @@ void Unit::attackState() {
 }
 
 void Unit::chaseState() {
-    //updateUnitFighters();
+    updateUnitFighters();
     if(target == nullptr){
         switchState(Enumeration::UnitState::Idle);
     }
@@ -294,7 +289,7 @@ void Unit::chaseState() {
 }
 
 void Unit::retractState() {
-    //updateUnitFighters();
+    updateUnitFighters();
     if (readyToEnter){
         retractedCallback(this);
         for(std::size_t i = 0; i < unitFighters.size(); ++i){
@@ -340,13 +335,6 @@ void Unit::moveUnit() {
         WorldGeometry::Instance() -> updateUnitCell(_oldPosition, vectorPos, this);
         setPosition(vectorPos);
         unitSensor -> move(vectorPos);
-        //updateUnitFighters();
-    }
-}
-
-void Unit::switchUnitFigthersState(Enumeration::UnitFighterState _ufState){
-    for(std::size_t i = 0; i < unitFighters.size(); i++){
-        unitFighters[i]->switchState(_ufState);
     }
 }
 

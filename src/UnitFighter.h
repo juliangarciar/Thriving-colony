@@ -36,6 +36,7 @@ class UnitFighter{
         void ufConfrontState();
         Model* fighterModel;
         const f32 speed;
+        bool isMoving;
         Vector2<f32> vectorPosition;
         Vector2<f32> vectorSpeed;
         Vector2<f32> vectorDestiny;
