@@ -65,6 +65,13 @@ f32 Box2D::getHalfSize() const{
     return ((Right() - Left()) / 2.0f);
 }
 
+f32 Box2D::getRadius() const{
+    Vector2<f32> vDistance(BottomRight() - TopLeft());
+    f32 distance = std::sqrt(std::pow(vDistance.x, 2) +
+                             std::pow(vDistance.y, 2));
+    return distance / 2.0f;
+}
+
 Vector2<f32> Box2D::TopLeft() const{
     return m_vTopLeft;
 }

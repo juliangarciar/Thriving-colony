@@ -29,7 +29,7 @@
 			"happinessVariation": 0,
 			"citizensVariation": 0,
 			"bbOffset": 200,
-			"buildingTime": 40,
+			"buildingTime": 1,
 			"cityLevel": 10,
 			"cellsX": 4,
 			"cellsY": 4,

@@ -51,6 +51,8 @@ OBDMaterial *OBDAnimation::getMaterial(){
 	return material;
 }
 
+/* Me pase de listo */
 void OBDAnimation::setFrame(i32 nFrame){
+	currentFrame = nFrame;
 	nextFrame = nFrame;
 }

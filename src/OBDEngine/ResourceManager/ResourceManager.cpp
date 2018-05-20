@@ -46,7 +46,7 @@ void ResourceManager::load(std::string path, bool sync){
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
     } else {
-        std::cout << "Error: formato no soportado (" << extension << ") in file '" << path << "'." << std::endl;
+        std::cout << "Error: formato no soportado " << extension << " in file '" << path << "'." << std::endl;
         exit(0);
     }
 }

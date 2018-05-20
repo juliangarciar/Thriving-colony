@@ -45,7 +45,7 @@ class Unit : public Entity {
         const std::string getBuildingName() const;
         Enumeration::UnitState getState() const;
         const i32 getArmyLevel() const;
-        const std::vector< Vector2<f32> >& getUnitFightersPosition() const; /* Not implemented */    
+        std::vector< Vector2<f32> > getInnerComponentsPosition() const;
         const std::vector< UnitFighter* >& getUnitFighters() const;
 
     private:
@@ -68,9 +68,9 @@ class Unit : public Entity {
         void calculateDirection();
         void updateUnitFighters();
         void updateFlockingSensor();
-
+        void updateConfrontation();
+        
         Enumeration::UnitState state;
-        Enumeration::UnitFighterState unitFightersState;
         
         const std::string type;
 
@@ -88,6 +88,8 @@ class Unit : public Entity {
         Timer* enemySensorTimer;
         Timer* attackTimer;
         Timer* chaseTimer;
+        Timer* confrontTimer;
+
         PathManager* pathManager;
         std::list< Vector2<f32> > pathFollow;
         std::function<void(Unit*)> recruitedCallback;

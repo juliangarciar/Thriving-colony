@@ -230,7 +230,7 @@ class Entity {
 
         void createBar();
         void deleteBar();
-
+        virtual std::vector< Vector2<f32> > getInnerComponentsPosition() const = 0;
     protected:
         //Number that identifies the entity.
         i32 ID;

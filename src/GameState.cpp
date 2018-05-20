@@ -16,7 +16,7 @@ GameState::~GameState() {
 
 void GameState::Init() {
     //Init players
-    human -> Init("Drorania"); 
+    human -> Init("Kaonov"); 
     ia -> Init("Kaonov");
 
     //Init HUD
@@ -106,7 +106,6 @@ void GameState::Input() {
             i32 idBuildingIA =  ia -> getBuildingManager() -> getCollisionID();
             if (idBuildingIA != -1){
                 IO::Instance() -> getMouse() -> changeCustomIcon(2);
-                
                 if(human -> getUnitManager() -> isTroopSelected()){
                     if (IO::Instance() -> getMouse() -> rightMousePressed()) {
                         human->getUnitManager()->getSelectedTroop()->setTarget(ia->getBuildingManager()->getBuilding(idBuildingIA));
@@ -141,6 +140,14 @@ void GameState::Input() {
 
                 onMap = false;
             }
+
+            if(onMap){
+                if(human -> getUnitManager() -> isTroopSelected()){
+                    if (IO::Instance()-> getMouse() -> rightMousePressed()) {
+                        human -> getUnitManager() -> moveOrder();
+                    }
+                }
+            }
             
             //If nothing happens
             if (onMap){
@@ -170,10 +177,10 @@ void GameState::Input() {
                 if (IO::Instance() -> getMouse() -> leftMousePressed())
                     human -> getUnitManager() -> unSelectTroop();
             }
-            onMap = false;
+            //onMap = false;
 
             if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_ESCAPE)) { //ToDo: fachada
-                // Si el popup esta abierto, cierralo
+                // Si el popup esta abierto, cierralo (ToDo: no funca)
                 if (hud -> getPopUpOpen())
                     hud -> hidePopup();
                 // Si no, pausa el juego
@@ -184,10 +191,6 @@ void GameState::Input() {
                     pauseMenu -> setHUDEvents();
                     gamePaused = true;
                 }
-            }
-
-            if (IO::Instance()-> getMouse() -> rightMousePressed()) {
-                human -> getUnitManager() -> moveOrder();
             }
         } else {
             IO::Instance() -> getMouse() -> changeCustomIcon(0);

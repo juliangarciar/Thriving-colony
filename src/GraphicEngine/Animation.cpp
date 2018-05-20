@@ -39,7 +39,6 @@ Animation::Animation(SceneNode* parent, std::string animationJSON) {
 }
 
 Animation::~Animation() {
-	delete animationLayer;
 	animationLayer = nullptr;
 	for (std::map<std::string, OBDAnimation*>::iterator it = animations->begin(); it != animations->end(); ++it){
 		delete it->second;
@@ -49,6 +48,7 @@ Animation::~Animation() {
 	animations = nullptr;
 	delete frameTimer;
 	frameTimer = nullptr;
+	delete animationLayer;
 }
 
 //ToDo: cola de animaciones
@@ -56,10 +56,11 @@ void Animation::changeAnimation(std::string animationName){
 	auto it = animations->find(animationName);
 	if (it != animations->end()){
 		currentAnimation -> setActive(false);
-		//it->second->setFrame(0);
+		
 		currentAnimation = it->second;
 		currentAnimation -> setActive(true);
-		
+		//currentAnimation -> setFrame(0);
+
 		frameTimer->changeDuration(animationDelays->at(animationName));
 		frameTimer->restart();
 	}

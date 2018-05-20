@@ -88,6 +88,9 @@ class Building : public Entity {
 		 * @return i32 
 		 */
 		i32 getBuildingTime();
+
+        std::vector< Vector2<f32> > getInnerComponentsPosition() const;
+
     private:
         /**
          * @brief Subtract the metal and crystal cost of the building to the metal and crystal available of the player (Human or IA) and add the city level that provided by the building to the player's city level (Human or IA).

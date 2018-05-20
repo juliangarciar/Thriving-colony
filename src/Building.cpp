@@ -131,3 +131,9 @@ void Building::setCantBuildColor() {
 i32 Building::getBuildingTime(){
 	return buildingTime;
 }
+
+std::vector< Vector2<f32> > Building::getInnerComponentsPosition() const{
+    std::vector< Vector2<f32> > dummy;
+    dummy.push_back(vectorPos);
+    return dummy;
+}
