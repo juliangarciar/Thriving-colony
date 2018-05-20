@@ -13,6 +13,12 @@ class SceneNode {
 		SceneNode(SceneNode *parent);
 
 		virtual ~SceneNode();
+		
+        void setActive(bool a);
+
+        void setPosition(Vector3<f32> pos);
+        void setRotation(Vector3<f32> r);
+        void setScale(Vector3<f32> s);
 
 		i32 getNodeCollision(Vector2<i32> cursor);
 		
