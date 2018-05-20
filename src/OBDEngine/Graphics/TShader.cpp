@@ -1,11 +1,11 @@
 #include "TShader.h"
 
-TShader::TShader(ResourceGLSL *s){
+TShader::TShader(ResourceGLSL *s) {
     GLint shaderResult = GL_FALSE;
     i32 shaderInfoLogLength;
 
     // Read the shader Shader code from the file
-    if (s->getShaderType() == OBDEnums::ShaderType::VERTEX){
+    if (s->getShaderType() == OBDEnums::ShaderType::VERTEX) {
         shaderID = glCreateShader(GL_VERTEX_SHADER);
     } else {
         shaderID = glCreateShader(GL_FRAGMENT_SHADER);
@@ -19,7 +19,7 @@ TShader::TShader(ResourceGLSL *s){
     // Check shader Shader
     glGetShaderiv(shaderID, GL_COMPILE_STATUS, &shaderResult);
     glGetShaderiv(shaderID, GL_INFO_LOG_LENGTH, &shaderInfoLogLength);
-    if (shaderInfoLogLength > 0){
+    if (shaderInfoLogLength > 0) {
         std::vector<char> shaderErrorMessage(shaderInfoLogLength+1);
         glGetShaderInfoLog(shaderID, shaderInfoLogLength, NULL, &shaderErrorMessage[0]);
         std::cout << &shaderErrorMessage[0] << std::endl;
@@ -27,10 +27,10 @@ TShader::TShader(ResourceGLSL *s){
     }
 }
 
-TShader::~TShader(){
+TShader::~TShader() {
     glDeleteShader(shaderID);
 }
 
-GLuint TShader::getShaderID(){
+GLuint TShader::getShaderID() {
     return shaderID;
 }

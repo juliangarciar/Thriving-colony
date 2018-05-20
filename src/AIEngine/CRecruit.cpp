@@ -13,9 +13,10 @@ CRecruit::~CRecruit() {
 }
 
 Enumeration::BehaviourState CRecruit::Update() {
-    if (IA::Instance() -> getRootNode() -> getPriority() == nullptr) {
+    //Con esto no va bien
+    //if (IA::Instance() -> getRootNode() -> getPriority() == nullptr) {
         if (IA::Instance() -> getTree() -> getNeedSoldiers()) {
-            if (type == "AdvancedM"){
+            if (type == "AdvancedM") {
                     if (IA::Instance() -> getTree() -> getRequireBarn() == false && IA::Instance() -> getTree() -> calculateMeleeRate() < IA::Instance() -> getTree() -> getMeleeThreshold()) {
                         if (IA::Instance() -> getCityLevel() >= IA::Instance() -> getTree() -> getMountedCreatureMilestone()) {
                             IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::TrainMountedMelee);
@@ -72,10 +73,10 @@ Enumeration::BehaviourState CRecruit::Update() {
             }
         }
         return Enumeration::BehaviourState::Failure;
-    } else {
+    /*} else {
         actionToDo();
         return Enumeration::BehaviourState::Success;
-    }
+    }*/
 }
 
 void CRecruit::actionToDo() {

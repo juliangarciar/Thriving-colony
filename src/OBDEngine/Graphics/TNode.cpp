@@ -1,75 +1,75 @@
 #include "TNode.h"
 
-TNode::TNode(){
+TNode::TNode() {
     entity = nullptr;
     parent = nullptr;
     active = true;
 }
 
-TNode::TNode(TEntity *t){
+TNode::TNode(TEntity *t) {
     entity = t;
     parent = nullptr;
     active = true;
 }
 
-TNode::TNode(TEntity *t, TNode *p){
+TNode::TNode(TEntity *t, TNode *p) {
     entity = t;
     parent = p;
-    parent->addChild(this);
+    parent -> addChild(this);
     active = true;
 }
 
-TNode::~TNode(){
+TNode::~TNode() {
     if (entity != nullptr) delete entity;
-    if (parent != nullptr) parent->removeChild(this);
-    for (i32 i = 0; i < children.size(); i++){
+    if (parent != nullptr) parent -> removeChild(this);
+    for (i32 i = 0; i < children.size(); i++) {
         delete children[i];
     }
 }
 
-void TNode::addChild(TNode *c){
+void TNode::addChild(TNode *c) {
     children.push_back(c);
 }
 
-void TNode::removeChild(TNode *c){
+void TNode::removeChild(TNode *c) {
     children.erase(std::remove(children.begin(), children.end(), c), children.end());
 }
 
-void TNode::draw(){
+void TNode::draw() {
     if (!active) return;
     if (entity != nullptr) entity->beginDraw();
-    for (i32 i=0; i<children.size(); i++){
+    for (i32 i=0; i<children.size(); i++) {
         children[i] -> draw();
     }
     if (entity != nullptr) entity->endDraw();
 }
 
-void TNode::setEntity(TEntity *e){
+void TNode::setEntity(TEntity *e) {
     if (e != nullptr) entity = e;
 }
 
-void TNode::removeEntity(){
+void TNode::removeEntity() {
     if (entity != nullptr) delete entity;
 }
 
-TEntity *TNode::getEntity(){
+TEntity *TNode::getEntity() {
     return entity;
 }
 
-void TNode::setActive(bool a){
+void TNode::setActive(bool a) {
     active = a;
 }
 
-bool TNode::getActive(){
+bool TNode::getActive() {
     return active;
 }
 
-void TNode::setParent(TNode *p){
-    if (parent != nullptr) parent->removeChild(this);
+void TNode::setParent(TNode *p) {
+    if (parent != nullptr) parent -> removeChild(this);
     
     parent = p;
 }
 
-TNode *TNode::getParent(){
+TNode *TNode::getParent() {
     return parent;
 }

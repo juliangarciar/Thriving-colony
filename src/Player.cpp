@@ -30,18 +30,21 @@ void Player::Init() {
 
     resourceTimer = new Timer(1.00, true);
 
-	resourceTimer -> setCallback([&](){
+	resourceTimer -> setCallback([&]() {
 		metalAmount += getMetalProduction();
 		crystalAmount += getCrystalProduction();
 	});
 
 	citizenTimer = new Timer(5.00, true);
 
-	citizenTimer -> setCallback([&](){
+	citizenTimer -> setCallback([&]() {
    		citizens += (Map::Instance()->getCitizenIncrement() + citizensByHappiness);
 		if (citizens + units->getUnitFighters() > maxPeople) {
 			citizens = maxPeople - units->getUnitFighters();
-		}
+            limitReached = true;
+		} else {
+            limitReached = false;
+        }
 	});
 }
 
@@ -60,7 +63,7 @@ void Player::Update() { //ToDo: config by JSON
     }
 }
 
-void Player::CleanUp(){
+void Player::CleanUp() {
     delete resourceTimer;
 	resourceTimer = nullptr;
     delete citizenTimer;
@@ -70,7 +73,7 @@ void Player::CleanUp(){
 /**
  * CONTROL METHODS
  */
-bool Player::isSolvent(i32 metalCost, i32 crystalCost, i32 citizenCost){
+bool Player::isSolvent(i32 metalCost, i32 crystalCost, i32 citizenCost) {
 	return (metalCost <= metalAmount && crystalCost <= crystalAmount && citizenCost <= citizens);
 }
 
@@ -150,7 +153,7 @@ i32 Player::getCrystalProduction() {
     return buildings->getAmount("Quarry") * Map::Instance()->getCrystalProductivity();
 }
 
-i32 Player::getHappiness(){
+i32 Player::getHappiness() {
 	return happiness;
 }
 
@@ -158,15 +161,15 @@ i32 Player::getCitizens() {
 	return citizens;
 }
 
-i32 Player::getMaxPeople(){
+i32 Player::getMaxPeople() {
 	return maxPeople;
 }
 
-i32 Player::getCityLevel(){
+i32 Player::getCityLevel() {
 	return cityLevel;
 }
 
-i32 Player::getArmyLevel(){
+i32 Player::getArmyLevel() {
 	return armyLevel;
 }
 
@@ -178,10 +181,14 @@ i32 Player::getDamageModifier() {
 	return damageModifier;
 }
 
-BuildingManager *Player::getBuildingManager(){
+BuildingManager *Player::getBuildingManager() {
 	return buildings;
 }
 
-UnitManager *Player::getUnitManager(){
+UnitManager *Player::getUnitManager() {
 	return units;
+}
+
+bool Player::getLimitReached() {
+    return limitReached;
 }

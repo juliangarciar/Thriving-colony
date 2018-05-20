@@ -13,14 +13,14 @@ IO::IO() {
 
 }
 
-IO::~IO(){
+IO::~IO() {
     delete cursor;
     delete keyboard;
     delete events;
     delete resourceManager;
 }
 
-void IO::Init(){
+void IO::Init() {
     cursor = new Mouse();
     keyboard = new Keyboard();
 
@@ -29,25 +29,25 @@ void IO::Init(){
     resourceManager = new ResourceManager();
 }
 
-void IO::Update(){
+void IO::Update() {
     cursor -> refreshStates();
-	for (int i = 0; i < timers.size(); i++){
+	for (int i = 0; i < timers.size(); i++) {
 		timers[i]->tick();
 	}
 }
 
-void IO::registerTimer(Timer* t){
+void IO::registerTimer(Timer* t) {
 	timers.push_back(t);
 }
 
-void IO::unregisterTimer(Timer* t){
+void IO::unregisterTimer(Timer* t) {
 	std::vector<Timer*>::iterator it = std::find(timers.begin(), timers.end(), t);
-	if (it != timers.end()){
+	if (it != timers.end()) {
 		timers.erase(it);
 	}
 }
 
-Keyboard *IO::getKeyboard(){
+Keyboard *IO::getKeyboard() {
     return keyboard;
 }
 
@@ -59,11 +59,11 @@ EventSystem *IO::getEventManager() {
     return events;
 }
 
-ResourceManager *IO::getResourceManager(){
+ResourceManager *IO::getResourceManager() {
     return resourceManager;
 }
 
-void IO::loadImageIcon(std::string _path){
+void IO::loadImageIcon(std::string _path) {
     ResourceIMG *tmp = (ResourceIMG*)resourceManager->getResource(_path, true);
     cursor->loadCursorIcon(tmp->getResource(), tmp->getWidth(), tmp->getHeight(), tmp->getChannels());
 }

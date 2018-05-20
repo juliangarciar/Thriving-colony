@@ -11,17 +11,17 @@ OBDLight::~OBDLight() {
     lightNode = nullptr;
 }
 
-void OBDLight::setColor(OBDColor color, f32 intensity){
+void OBDLight::setColor(OBDColor color, f32 intensity) {
     TLight* l = (TLight*) lightNode -> getEntity();
     l -> setColor(color, intensity);
 }
 
-void OBDLight::setAmbientCoeficient(f32 am){
+void OBDLight::setAmbientCoeficient(f32 am) {
     TLight* l = (TLight*) lightNode -> getEntity();
 	l -> setAmbientCoeficient(am);
 }
 
-void OBDLight::setAttenuationCoeficient(f32 at){
+void OBDLight::setAttenuationCoeficient(f32 at) {
     TLight* l = (TLight*) lightNode -> getEntity();
 	l -> setAttenuationCoeficient(at);
 }
@@ -50,7 +50,7 @@ TLight* OBDLight::getLightEntity() {
     return (TLight*) lightNode -> getEntity();
 }
 
-TNode *OBDLight::getFirstNode(){
+TNode *OBDLight::getFirstNode() {
     return lightNode;
 }
 

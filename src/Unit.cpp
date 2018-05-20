@@ -63,26 +63,26 @@ Unit::Unit(SceneNode* _layer,
     unitSensor = new Sensor(this);
 
     recruitingTimer = new Timer(baseData.recruitingTime, false);
-    recruitingTimer -> setCallback([&](){
+    recruitingTimer -> setCallback([&]() {
         if (recruitedCallback) recruitedCallback(this);
         switchState(Enumeration::UnitState::InHome);
     });
 
     enemySensorTimer = new Timer(0.5, true, false);
-    enemySensorTimer->setCallback([&](){
-        //if(state != Enumeration::UnitState::InHome && state != Enumeration::UnitState::Recruiting){
+    enemySensorTimer -> setCallback([&]() {
+        //if (state != Enumeration::UnitState::InHome && state != Enumeration::UnitState::Recruiting) {
             unitSensor->update();
         // }
     });
     attackTimer = new Timer(attackSpeed, false, false);
-    attackTimer->setCallback([&](){
+    attackTimer -> setCallback([&]() {
         canAttack = true;
     });
 
     chaseTimer = new Timer(0.5, true, false);
-    chaseTimer->setCallback([&](){
-        if(target != nullptr){
-            setPathToTarget(target->getPosition());
+    chaseTimer -> setCallback([&]() {
+        if (target != nullptr) {
+            setPathToTarget(target -> getPosition());
         }
     });
 
@@ -100,7 +100,7 @@ Unit::Unit(SceneNode* _layer,
 
 Unit::~Unit() {
     WorldGeometry::Instance()->clearUnitCell(getPosition(), this);
-    for(std::size_t i = 0; i < unitFighters.size(); i++){
+    for (std::size_t i = 0; i < unitFighters.size(); i++) {
         unitManager->adjustUnitFighter(-1);
         delete unitFighters[i];
     }
@@ -170,7 +170,7 @@ void Unit::update() {
     }
 }
 
-void Unit::switchState(Enumeration::UnitState newState){
+void Unit::switchState(Enumeration::UnitState newState) {
     switch (newState) {
         case Enumeration::UnitState::Recruiting:
             state = newState;
@@ -224,8 +224,8 @@ void Unit::switchState(Enumeration::UnitState newState){
         break;
 
         case Enumeration::UnitState::Retract:
-            chaseTimer->stop();
-            enemySensorTimer->stop();
+            chaseTimer -> stop();
+            enemySensorTimer -> stop();
             state = newState;
         break;
 
@@ -244,7 +244,7 @@ void Unit::recruitingState() {
 }
 
 /* Nothing? */
-void Unit::inHomeState(){
+void Unit::inHomeState() {
     
 }
 
@@ -269,35 +269,35 @@ void Unit::attackMoveState() {
 
 void Unit::attackState() {
     updateUnitFighters();
-    if(target != nullptr){
-        if(inRangeOfAttack()) {
-            if(canAttack){
-                target->takeDamage(attackDamage);
+    if (target != nullptr) {
+        if (inRangeOfAttack()) {
+            if (canAttack) {
+                target -> takeDamage(attackDamage);
                 canAttack = false;
-                attackTimer->restart();
+                attackTimer -> restart();
             }
         }
-        else{
+        else {
             switchState(Enumeration::UnitState::Chase);
-            setPathToTarget(target->getPosition());
+            setPathToTarget(target -> getPosition());
             moveUnit();
         }
     }
-    else{
+    else {
         switchState(Enumeration::UnitState::Idle);
     }
 }
 
 void Unit::chaseState() {
     updateUnitFighters();
-    if(target == nullptr){
+    if (target == nullptr) {
         switchState(Enumeration::UnitState::Idle);
     }
-    else{
-        if(inRangeOfAttack()) {
+    else {
+        if (inRangeOfAttack()) {
             switchState(Enumeration::UnitState::Attack);
         }
-        else{
+        else {
             moveUnit();
         }
     }
@@ -305,9 +305,9 @@ void Unit::chaseState() {
 
 void Unit::retractState() {
     updateUnitFighters();
-    if (readyToEnter){
+    if (readyToEnter) {
         if (retractedCallback) retractedCallback(this);
-        for(std::size_t i = 0; i < unitFighters.size(); ++i){
+        for (std::size_t i = 0; i < unitFighters.size(); ++i) {
             unitFighters[i] -> setActive(false);
         }
         getModel() -> setActive(false);
@@ -315,7 +315,7 @@ void Unit::retractState() {
         // ToDo: Aqui peta
         //triggerRetractedCallback();        
     }
-    else{
+    else {
         moveUnit();
     }
 }
@@ -328,19 +328,17 @@ void Unit::moveUnit() {
                 Human::Instance() -> getUnitManager() -> unSelectTroop();
                 //triggerRetractedCallback();
             }
-            else if(state == Enumeration::UnitState::Chase){
+            else if (state == Enumeration::UnitState::Chase) {
                 switchState(Enumeration::UnitState::Attack);
             }
-            else if(state == Enumeration::UnitState::Move){
+            else if (state == Enumeration::UnitState::Move) {
                 switchState(Enumeration::UnitState::Idle);
             }
-        }
-        else{
-            setUnitDestination(this->pathFollow.front());
+        } else {
+            setUnitDestination(pathFollow.front());
             pathFollow.pop_front();
         }
-    }
-    else{
+    } else {
         calculateDirection();
         Vector2<f32> _oldPosition = vectorPos;
         vectorSpd = vectorDir * moveSpeed;
@@ -352,7 +350,7 @@ void Unit::moveUnit() {
     }
 }
 
-void Unit::triggerRecruitedCallback(){
+void Unit::triggerRecruitedCallback() {
     if (recruitedCallback) recruitedCallback(this);
 }
 
@@ -368,8 +366,8 @@ void Unit::setUnitPosition(Vector2<f32> vectorData) {
     setPosition(vectorData);
     std::size_t size = unitFighters.size();
 
-    for(std::size_t i = 0; i < size; i++){
-        unitFighters[i]->setPosition(vectorData + WorldGeometry::Instance()->getSquadPosition(size - 1, i));
+    for (std::size_t i = 0; i < size; i++) {
+        unitFighters[i] -> setPosition(vectorData + WorldGeometry::Instance()->getSquadPosition(size - 1, i));
     }
 }
 
@@ -406,13 +404,12 @@ void Unit::setRetractedCallback(std::function<void(Unit*)> f) {
     retractedCallback = f;
 }
 
-void Unit::takeDamage(i32 _damage){
+void Unit::takeDamage(i32 _damage) {
     i32 resistance(0);
     f32 percentage(0);
     if (team == Enumeration::Team::Human) {
         resistance = Human::Instance() -> getResistanceModifier();
-    } 
-    else {
+    } else {
         resistance = IA::Instance() -> getResistanceModifier();
     }
     i32 dmg = _damage - resistance;
@@ -429,16 +426,15 @@ void Unit::takeDamage(i32 _damage){
         //bar->setScale(0);
         unitManager->deleteUnit(ID);
         return;
-    }
-    else{
+    } else {
         percentage = currentHP / maxHP;
         //bar->setColor(Color((1.0f - percentage) * 255.0f, percentage * 255.0f, 0));
         //bar->setScale(percentage);
         i32 _qnty = std::floor(currentHP / unitFighterHP);
-        if(currentHP % unitFighterHP != 0){
+        if (currentHP % unitFighterHP != 0) {
             _qnty++;
         }
-        while(_qnty < unitFighters.size()){
+        while(_qnty < unitFighters.size()) {
             unitManager->adjustUnitFighter(-1);
             UnitFighter* tmp = unitFighters[unitFighters.size() - 1];
             unitFighters.erase(unitFighters.end() - 1);
@@ -521,7 +517,7 @@ const std::vector< UnitFighter* >& Unit::getUnitFighters() const{
     return unitFighters;
 }
 
-bool Unit::hasArrived(){
+bool Unit::hasArrived() {
     if ((vectorPos - vectorDes).dotProduct() < maxPositionDesviation) {
         vectorSpd = Vector2<f32>(0, 0);
         return true;
@@ -534,10 +530,10 @@ void Unit::calculateDirection() {
     /* Normalize */
     f32 distance = std::sqrt(std::pow(_incVector.x, 2) + std::pow(_incVector.y ,2));
     
-    if(distance != 0){
+    if (distance != 0) {
         vectorDir = _incVector / distance;        
     }   
-    else{
+    else {
         vectorDir = Vector2<f32>(0, 0);
     }
 }
@@ -553,12 +549,12 @@ void Unit::updateFlockingSensor() {
     std::vector<Unit*> nearUnits = WorldGeometry::Instance() -> getNeighborUnits(vectorPos);
     std::vector<UnitFighter*> dummyFighters;
     std::vector<UnitFighter*> dummySpace;
-    for(std::size_t i = 0; i < nearUnits.size(); i++) {
+    for (std::size_t i = 0; i < nearUnits.size(); i++) {
         dummySpace = nearUnits[i] -> getUnitFighters();
         dummyFighters.insert(dummyFighters.end(), dummySpace.begin(), dummySpace.end());
     }
     nearUnitFighters = dummyFighters;
-    for(std::size_t i = 0; i < unitFighters.size(); i++){
+    for (std::size_t i = 0; i < unitFighters.size(); i++) {
         unitFighters[i] -> setNearFighters(nearUnitFighters);
     }
 }

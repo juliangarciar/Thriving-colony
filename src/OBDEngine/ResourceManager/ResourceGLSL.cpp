@@ -1,14 +1,14 @@
 #include "ResourceGLSL.h"
 
-ResourceGLSL::ResourceGLSL(){
+ResourceGLSL::ResourceGLSL() {
 
 }
 
-ResourceGLSL::~ResourceGLSL(){
+ResourceGLSL::~ResourceGLSL() {
 	
 }
 
-void ResourceGLSL::load(const char *path){
+void ResourceGLSL::load(const char *path) {
     setIdentifier(path);
     std::string file_path(path);
     
@@ -36,21 +36,21 @@ void ResourceGLSL::load(const char *path){
     }
 }
 
-void ResourceGLSL::release(){
+void ResourceGLSL::release() {
 }
 
-void ResourceGLSL::setIdentifier(const char *i){
+void ResourceGLSL::setIdentifier(const char *i) {
     identifier = i;
 }
 
-const char *ResourceGLSL::getIdentifier(){
+const char *ResourceGLSL::getIdentifier() {
     return identifier;
 }
 
-std::string *ResourceGLSL::getShaderCode(){
+std::string *ResourceGLSL::getShaderCode() {
     return &shaderCode;
 }
 
-OBDEnums::ShaderType ResourceGLSL::getShaderType(){
+OBDEnums::ShaderType ResourceGLSL::getShaderType() {
     return type;
 }

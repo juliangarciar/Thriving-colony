@@ -11,24 +11,19 @@ Sensor::Sensor(Entity* _entity) :
     std::sqrt(std::pow(_entity->getViewRadius(),2) + std::pow(_entity->getViewRadius(),2))))
 {}
 
-Sensor::~Sensor(){
+Sensor::~Sensor() {
 
 }
 
-void Sensor::update(){
-    if(priorityTarget != nullptr){
+void Sensor::update() {
+    if (priorityTarget != nullptr) {
         priorityTarget->removeHostile(propietary);
     }
     priorityTarget = nullptr;
     WorldGeometry::Instance()->getCollidingEntities(sensorHitbox, &priorityTarget, propietary->getTeam());
     propietary->setTarget(priorityTarget);
-
-    //if(priorityTarget != nullptr){
-    //    priorityTarget->addHostile(propietary);
-    //    //std::cout << "Entidad encontrada en: " << priorityTarget->getPosition().x << " , " << priorityTarget->getPosition().y << "\n";
-    //}
 }
 
-void Sensor::move(Vector2<f32> _vectorPosition){
+void Sensor::move(Vector2<f32> _vectorPosition) {
     sensorHitbox.moveHitbox(_vectorPosition);
 }

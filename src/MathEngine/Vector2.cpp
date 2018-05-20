@@ -2,8 +2,8 @@
 
 template <class T>
 Vector2<T>::Vector2() {
-    this -> x = 0;
-    this -> y = 0;
+    x = 0;
+    y = 0;
 }
 
 template <class T>
@@ -30,7 +30,7 @@ Vector2<T> Vector2<T>::normalize() {
     T length = x*x + y*y;
     length = sqrt(length);
 
-    if(length != 0){
+    if (length != 0) {
         vector.x = (T) x/length;
         vector.y = (T) y/length;
     }
@@ -52,76 +52,76 @@ Vector2<T> Vector2<T>::getFromPolarCoordinates(f32 r, f32 phi) {
 }
 
 template <class T>
-T Vector2<T>::dotProduct(){
+T Vector2<T>::dotProduct() {
     return std::sqrt(std::pow(x, 2) + std::pow(y, 2));
 }
 
 template <class T>
-T Vector2<T>::calculateDistance(Vector2<T> b){
+T Vector2<T>::calculateDistance(Vector2<T> b) {
     
     T disX, disY;
-    disX = this->x - b.x;
-    disY = this->y - b.y;
+    disX = x - b.x;
+    disY = y - b.y;
     T distance = std::sqrt(disX * disX + disY * disY);
     return distance;
 }
 
 template <class T>
 Vector2<T> Vector2<T>::operator + (const Vector2<T> &p) const {
-    return Vector2<T>(this -> x + p.x, this -> y + p.y);
+    return Vector2<T>(x + p.x, y + p.y);
 }
 template <class T>
 Vector2<T> Vector2<T>::operator + (const f32 &num) const {
-    return Vector2<T>(this -> x + num, this -> y + num);
+    return Vector2<T>(x + num, y + num);
 }
 template <class T>
-Vector2<T> Vector2<T>::operator += (const Vector2<T> &p){
-    this->x = this->x + p.x; 
-    this->y = this->y + p.y;
+Vector2<T> Vector2<T>::operator += (const Vector2<T> &p) {
+    x = x + p.x; 
+    y = y + p.y;
     return *this;
 }
 template <class T>
-Vector2<T> Vector2<T>::operator += (const f32 &num){
-    this->x = this->x + num; 
-    this->y = this->y + num;
+Vector2<T> Vector2<T>::operator += (const f32 &num) {
+    x = x + num; 
+    y = y + num;
     return *this;
 }
 template <class T>
 Vector2<T> Vector2<T>::operator - (const Vector2<T> &p) const {
-    return Vector2<T>(this -> x - p.x, this -> y - p.y);
+    return Vector2<T>(x - p.x, y - p.y);
 }
 template <class T>
 Vector2<T> Vector2<T>::operator - (const f32 &num) const {
-    return Vector2<T>(this -> x - num, this -> y - num);
+    return Vector2<T>(x - num, y - num);
 }
 template <class T>
-Vector2<T> Vector2<T>::operator -= (const Vector2<T> &p){
-    this->x = this->x - p.x; 
-    this->y = this->y - p.y;
+Vector2<T> Vector2<T>::operator -= (const Vector2<T> &p) {
+    x = x - p.x; 
+    y = y - p.y;
     return *this;
 }
 template <class T>
-Vector2<T> Vector2<T>::operator -= (const f32 &num){
-    this->x = this->x - num; 
-    this->y = this->y - num;
+Vector2<T> Vector2<T>::operator -= (const f32 &num) {
+    x = x - num; 
+    y = y - num;
     return *this;
 }
 template <class T>
 Vector2<T> Vector2<T>::operator / (const f32 &num) const {
-    return Vector2<T>(this -> x / num, this -> y / num);
+    return Vector2<T>(x / num, y / num);
 }
 template <class T>
 Vector2<T> Vector2<T>::operator * (const f32 &num) const{
-    return Vector2<T>(this->x * num, this->y * num);
+    return Vector2<T>(x * num, y * num);
 }
 
 template <class T>
-bool Vector2<T>::operator ==(const Vector2<T> &p){
-    return (this->x == p.x && this->y == p.y);
+bool Vector2<T>::operator ==(const Vector2<T> &p) {
+    return (x == p.x && y == p.y);
 }
 template <class T>
-bool Vector2<T>::operator !=(const Vector2<T> &p){
-    return (this->x != p.x || this->y != p.y);
+bool Vector2<T>::operator !=(const Vector2<T> &p) {
+    return (x != p.x || y != p.y);
 }
 
 template class Vector2<i32>;

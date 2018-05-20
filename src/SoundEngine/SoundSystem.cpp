@@ -12,7 +12,7 @@ void ERRCHECK_fn(FMOD_RESULT result, const char *file, i32 line) {
 SoundSystem* SoundSystem::pinstance = 0;
 
 SoundSystem* SoundSystem::Instance() {
-    if(pinstance == 0) {
+    if (pinstance == 0) {
         pinstance = new SoundSystem();
     }
     return pinstance;
@@ -128,7 +128,7 @@ void SoundSystem::setListernerPosition(Vector3<f32> vectorData) {
 }
 
 void SoundSystem::update() {
-    if(!paused)
+    if (!paused)
         ERRCHECK(FMOD_Studio_System_Update(system));
 }
 
@@ -173,18 +173,18 @@ void SoundSystem::playEvent(SoundEvent* event) {
 }
 
 void SoundSystem::playMusicEvent(string c) {
-    if(musicPlay) {
+    if (musicPlay) {
         ERRCHECK(FMOD_Studio_EventInstance_GetPlaybackState(musicInstance, &state));
-        if(state == FMOD_STUDIO_PLAYBACK_STOPPED) {
+        if (state == FMOD_STUDIO_PLAYBACK_STOPPED) {
             musicInstance = soundEvents.find(c) -> second;
             ERRCHECK(FMOD_Studio_EventInstance_Start(musicInstance));
         }
     }
-    else{
+    else {
         FMOD_STUDIO_EVENTINSTANCE * instance;
         instance = soundEvents.find(c) -> second;
         ERRCHECK(FMOD_Studio_EventInstance_GetPlaybackState(instance, &state));
-        if(state == FMOD_STUDIO_PLAYBACK_STOPPED) {
+        if (state == FMOD_STUDIO_PLAYBACK_STOPPED) {
             ERRCHECK(FMOD_Studio_EventInstance_Start(instance));   
             musicInstance = instance;
             musicPlay = true;
@@ -193,18 +193,18 @@ void SoundSystem::playMusicEvent(string c) {
 }
 
 void SoundSystem::playVoiceEvent(string c) {
-    if(voicePlay) {
+    if (voicePlay) {
         ERRCHECK(FMOD_Studio_EventInstance_GetPlaybackState(voiceInstance, &state));
-        if(state == FMOD_STUDIO_PLAYBACK_STOPPED) {
+        if (state == FMOD_STUDIO_PLAYBACK_STOPPED) {
             voiceInstance = soundEvents.find(c) -> second;
             ERRCHECK(FMOD_Studio_EventInstance_Start(voiceInstance));
         }
     }
-    else{
+    else {
         FMOD_STUDIO_EVENTINSTANCE * instance;
         instance = soundEvents.find(c) -> second;
         ERRCHECK(FMOD_Studio_EventInstance_GetPlaybackState(instance, &state));
-        if(state == FMOD_STUDIO_PLAYBACK_STOPPED) {
+        if (state == FMOD_STUDIO_PLAYBACK_STOPPED) {
             ERRCHECK(FMOD_Studio_EventInstance_Start(instance));  
             voiceInstance = instance;
             voicePlay = true; 
@@ -265,7 +265,7 @@ bool SoundEvent::isPlaying() {
     bool playing = false;
     FMOD_STUDIO_PLAYBACK_STATE state;
     ERRCHECK(FMOD_Studio_EventInstance_GetPlaybackState(soundInstance, &state));
-    if(state == 0) {
+    if (state == 0) {
         playing = true;
     }
     return playing;

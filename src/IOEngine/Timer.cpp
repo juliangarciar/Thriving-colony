@@ -5,15 +5,15 @@
 Timer::Timer(f32 maxD, bool l, bool a) : loop(l), running(false),
 	maxDuration(maxD), elapsedTime(0), callback(nullptr) 
 {
-	IO::Instance()->registerTimer(this);
+	IO::Instance() -> registerTimer(this);
     if (a) start();
 }
 
 Timer::~Timer() {
-	IO::Instance()->unregisterTimer(this);
+	IO::Instance() -> unregisterTimer(this);
 }
 
-void Timer::start(){
+void Timer::start() {
     running = true;
 }
 
@@ -22,18 +22,18 @@ void Timer::restart() {
     running = true;
 }
 
-void Timer::pause(){
+void Timer::pause() {
     running = false;
 }
 
-void Timer::stop(){
+void Timer::stop() {
     elapsedTime = 0;
     running = false;
 }
 
 void Timer::tick() {
-    if (running){
-        if (maxDuration >= 0 && elapsedTime >= maxDuration){
+    if (running) {
+        if (maxDuration >= 0 && elapsedTime >= maxDuration) {
             if (callback != nullptr) callback();
             if (loop) restart();
             else running = false;
@@ -47,19 +47,19 @@ void Timer::changeDuration(f32 d) {
     maxDuration = d;
 }
 
-void Timer::setCallback(std::function<void()> c){
+void Timer::setCallback(std::function<void()> c) {
     callback = c;
 }
 
-void Timer::triggerCallback(){
+void Timer::triggerCallback() {
     callback();
 }
 
-bool Timer::isRunning(){
+bool Timer::isRunning() {
     return running;
 }
 
-bool Timer::isFinished(){
+bool Timer::isFinished() {
     return (elapsedTime >= maxDuration && !loop);
 }
 

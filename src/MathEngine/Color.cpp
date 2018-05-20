@@ -1,6 +1,6 @@
 #include "Color.h"
 
-Color::Color(){
+Color::Color() {
     r = 0;
     g = 0;
     b = 0;
@@ -25,14 +25,14 @@ Color::~Color() {
 
 }
 
-void Color::set(i32 red, i32 green, i32 blue){
+void Color::set(i32 red, i32 green, i32 blue) {
     r = red;
     g = green;
     b = blue;
     a = 0;
 }
 
-void Color::set(i32 red, i32 green, i32 blue, i32 alpha){
+void Color::set(i32 red, i32 green, i32 blue, i32 alpha) {
     r = red;
     g = green;
     b = blue;

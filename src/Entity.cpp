@@ -47,7 +47,7 @@ Entity::Entity(SceneNode* _layer,
 {
     //set Timer
     tookDamageTimer = new Timer(0.1);
-    tookDamageTimer -> setCallback([&](){
+    tookDamageTimer -> setCallback([&]() {
         setBaseColor();
     });
 
@@ -62,16 +62,16 @@ Entity::Entity(SceneNode* _layer,
 		getPosition().y
 	);
 
-	Vector2<f32> size(hitBox.Right() - hitBox.Left() * 0.8f, 15.00);
-    bar = new Billboard(_layer, pos, size, Color(0,0,0,255), Color(0,255,0,255));
+	Vector2<f32> size(hitBox.Right() - hitBox.Left() * 0.8f, 115.00);
+    bar = new Billboard(_layer, pos, size, Color(0,0,0,1), Color(0,1,0,1));
 }
 
 Entity::~Entity() {
-    if(target != nullptr){
-        target->removeHostile(this);
+    if (target != nullptr) {
+        target -> removeHostile(this);
     }
     putHostileTargetsToNull();
-    if (model != nullptr){
+    if (model != nullptr) {
         delete model;
     }
     hostile.clear();
@@ -108,7 +108,7 @@ void Entity::putHostileTargetsToNull() {
 }
 
 //SETTERS
-void Entity::setID(i32 id){
+void Entity::setID(i32 id) {
     ID = id;
     model -> setID(id);
 }

@@ -2,7 +2,7 @@
 
 #include "Graphics/TEntity.h"
 
-OBDShaderProgram::OBDShaderProgram(ResourceGLSL* vs, ResourceGLSL* fs){
+OBDShaderProgram::OBDShaderProgram(ResourceGLSL* vs, ResourceGLSL* fs) {
 	vertexShader = new TShader(vs);
 	fragmentShader = new TShader(fs);
 
@@ -17,7 +17,7 @@ OBDShaderProgram::OBDShaderProgram(ResourceGLSL* vs, ResourceGLSL* fs){
     i32 InfoLogLength;
 	glGetProgramiv(pid, GL_LINK_STATUS, &Result);
 	glGetProgramiv(pid, GL_INFO_LOG_LENGTH, &InfoLogLength);
-	if (InfoLogLength > 0){
+	if (InfoLogLength > 0) {
 		std::vector<char> ProgramErrorMessage(InfoLogLength+1);
 		glGetProgramInfoLog(pid, InfoLogLength, NULL, &ProgramErrorMessage[0]);
 		std::cout << &ProgramErrorMessage[0] << std::endl;
@@ -27,7 +27,7 @@ OBDShaderProgram::OBDShaderProgram(ResourceGLSL* vs, ResourceGLSL* fs){
 	paramIDs = TEntity::cache.generateAllIDs(pid);
 }
 
-OBDShaderProgram::~OBDShaderProgram(){
+OBDShaderProgram::~OBDShaderProgram() {
 	glDetachShader(pid, vertexShader->getShaderID());
 	glDeleteShader(vertexShader->getShaderID());
 	glDetachShader(pid, fragmentShader->getShaderID());
@@ -38,10 +38,10 @@ OBDShaderProgram::~OBDShaderProgram(){
 	fragmentShader = nullptr;
 }
     
-std::vector<GLuint> OBDShaderProgram::getParamIDs(){
+std::vector<GLuint> OBDShaderProgram::getParamIDs() {
 	return paramIDs;
 }
     
-GLuint OBDShaderProgram::getShaderProgram(){
+GLuint OBDShaderProgram::getShaderProgram() {
 	return pid;
 }

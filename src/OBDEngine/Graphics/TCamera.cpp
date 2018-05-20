@@ -1,6 +1,6 @@
 #include "TCamera.h"
 
-TCamera::TCamera(OBDEnums::CameraProjection projectionMode, f32 n, f32 f, f32 t, f32 b, f32 l, f32 r, f32 fo) : TEntity(){
+TCamera::TCamera(OBDEnums::CameraProjection projectionMode, f32 n, f32 f, f32 t, f32 b, f32 l, f32 r, f32 fo) : TEntity() {
 	near = n;
 	far = f;
 	top = t;
@@ -16,17 +16,17 @@ TCamera::TCamera(OBDEnums::CameraProjection projectionMode, f32 n, f32 f, f32 t,
     recalculateViewMatrix();
 }
 
-TCamera::~TCamera(){
+TCamera::~TCamera() {
 
 }
 
-void TCamera::beginDraw(){
+void TCamera::beginDraw() {
     cache.setProjectionMatrix(pMat);
     cache.setViewMatrix(vMat);
 	cache.setCameraPosition(cameraPosition);
 }
 
-void TCamera::endDraw(){
+void TCamera::endDraw() {
 
 }
 
@@ -38,8 +38,8 @@ void TCamera::recalculateViewMatrix() {
     );
 }
 
-void TCamera::recalculateProjectionMatrix(){
-    if (projection == OBDEnums::CameraProjection::ProjectionPerspective){
+void TCamera::recalculateProjectionMatrix() {
+    if (projection == OBDEnums::CameraProjection::ProjectionPerspective) {
         // Calculate aspect ratio
         f32 width = right - left;
         f32 height = bottom - top;
@@ -60,7 +60,7 @@ void TCamera::setCameraPosition(glm::vec3 p) {
     recalculateViewMatrix();
 }
 
-void TCamera::setProjection(OBDEnums::CameraProjection cp){
+void TCamera::setProjection(OBDEnums::CameraProjection cp) {
     projection = cp;
 	recalculateProjectionMatrix();
 }
@@ -70,32 +70,32 @@ void TCamera::setFov(f32 f) {
 	recalculateProjectionMatrix();
 }
 
-void TCamera::setNear(f32 n){
+void TCamera::setNear(f32 n) {
     near = n;
 	recalculateProjectionMatrix();
 }
 
-void TCamera::setFar(f32 f){
+void TCamera::setFar(f32 f) {
     far = f;
 	recalculateProjectionMatrix();
 }
 
-void TCamera::setTop(f32 t){
+void TCamera::setTop(f32 t) {
     top = t;
 	recalculateProjectionMatrix();
 }
 
-void TCamera::setBottom(f32 b){
+void TCamera::setBottom(f32 b) {
     bottom = b;
 	recalculateProjectionMatrix();
 }
 
-void TCamera::setLeft(f32 l){
+void TCamera::setLeft(f32 l) {
     left = l;
 	recalculateProjectionMatrix();
 }
 
-void TCamera::setRight(f32 r){
+void TCamera::setRight(f32 r) {
     right = r;
 	recalculateProjectionMatrix();
 }
@@ -112,30 +112,30 @@ f32 TCamera::getFov() {
     return fov;
 }
 
-f32 TCamera::getNear(){
+f32 TCamera::getNear() {
     return near;
 }
 
-f32 TCamera::getFar(){
+f32 TCamera::getFar() {
     return far;
 }
 
-f32 TCamera::getTop(){
+f32 TCamera::getTop() {
     return top;
 }
 
-f32 TCamera::getBottom(){
+f32 TCamera::getBottom() {
     return bottom;
 }
 
-f32 TCamera::getLeft(){
+f32 TCamera::getLeft() {
     return left;
 }
 
-f32 TCamera::getRight(){
+f32 TCamera::getRight() {
     return right;
 }
 
-OBDEnums::CameraProjection TCamera::getProjection(){
+OBDEnums::CameraProjection TCamera::getProjection() {
     return projection;
 }

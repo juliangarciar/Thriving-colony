@@ -33,7 +33,7 @@ OBDObject::OBDObject(OBDSceneNode* p, u32 id, ResourceOBJ *obj, ResourceMTL *mtl
 	if (ID) p -> insertBoundingBox(ID, boundingBox);
 }
 
-OBDObject::~OBDObject(){
+OBDObject::~OBDObject() {
     for (std::map<std::string, OBDMesh*>::iterator it = meshes->begin(); it != meshes->end(); ++it) {
         delete it->second;
     }
@@ -54,8 +54,8 @@ OBDObject::~OBDObject(){
 	if (parent != nullptr && ID) parent -> removeBoundingBox(ID);
 }
 
-void OBDObject::refreshBoundingBox(){
-	if (ID){
+void OBDObject::refreshBoundingBox() {
+	if (ID) {
 		meshes->begin()->second->refreshBoundingBox();
 		aabb::AABB matrix = meshes->begin()->second->getBoundingBox();
 		for (std::map<std::string, OBDMesh*>::iterator i = meshes->begin(); i != meshes->end(); ++i) {
@@ -64,22 +64,22 @@ void OBDObject::refreshBoundingBox(){
 		}
 		boundingBox = matrix;
 
-		if (parent != nullptr){
+		if (parent != nullptr) {
 			parent -> refreshBoundingBox(ID, boundingBox);
 		}
 	}
 }
 
-void OBDObject::refreshModelMatrix(glm::mat4 parent){
+void OBDObject::refreshModelMatrix(glm::mat4 parent) {
 	OBDEntity::refreshModelMatrix(parent);
     for (std::map<std::string, OBDMesh*>::iterator i = meshes->begin(); i != meshes->end(); ++i) {
 		i->second->refreshModelMatrix(model_matrix);
 	}
 }
 
-void OBDObject::setMaterial(std::string s, OBDMaterial *mtl){
+void OBDObject::setMaterial(std::string s, OBDMaterial *mtl) {
 	std::map<std::string, OBDMesh*>::iterator it = meshes->find(s);
-	if (it != meshes->end()){
+	if (it != meshes->end()) {
 		it->second->setMaterial(mtl);
 		materials->at(it->second->getMaterialName()) = mtl;
 	}
@@ -100,31 +100,31 @@ void OBDObject::setMaterials(ResourceMTL *mtl) {
     }
 }
 
-OBDMesh *OBDObject::getMesh(std::string meshName){
+OBDMesh *OBDObject::getMesh(std::string meshName) {
 	std::map<std::string, OBDMesh*>::iterator i = meshes->find(meshName);
 	if (i != meshes->end()) return i->second;
     else return nullptr;
 }
 
-std::map<std::string, OBDMesh*> *OBDObject::getMeshes(){
+std::map<std::string, OBDMesh*> *OBDObject::getMeshes() {
     return meshes;
 }
 
-u32 OBDObject::getMeshAmount(){
+u32 OBDObject::getMeshAmount() {
     return meshes->size();
 }
 
-OBDMaterial *OBDObject::getMaterial(std::string meshName){
+OBDMaterial *OBDObject::getMaterial(std::string meshName) {
 	std::map<std::string, OBDMaterial*>::iterator i = materials->find(meshName);
 	if (i != materials->end()) return i->second;
     else return nullptr;
 }
 
-std::map<std::string, OBDMaterial*> *OBDObject::getMaterials(){
+std::map<std::string, OBDMaterial*> *OBDObject::getMaterials() {
     return materials;
 }
 
-aabb::AABB OBDObject::getBoundingBox(){
+aabb::AABB OBDObject::getBoundingBox() {
 	return boundingBox;
 }
 

@@ -7,11 +7,11 @@ Label::Label(std::string t) {
 
 Label::Label(GUIElement *parent, std::string t) {
     label = parent -> getGUIElement() -> add<nanogui::Label>(t);
-    parent->addChild(this);
+    parent -> addChild(this);
 }
 
 Label::~Label() {
-    for (i32 i = 0; i < children.size(); i++){
+    for (i32 i = 0; i < children.size(); i++) {
         //ToDo: eliminar hijos
     }
     //ToDo: eliminar este
@@ -22,12 +22,12 @@ void Label::addChild(GUIElement *elem) {
     children.push_back(elem);
 }
 
-void Label::setPosition(Vector2<i32> position){
+void Label::setPosition(Vector2<i32> position) {
     label -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
 
-void Label::setTooltip(std::string t){
-    label->setTooltip(t);
+void Label::setTooltip(std::string t) {
+    label -> setTooltip(t);
 }
 
 void Label::setLabel(std::string t) {
@@ -38,22 +38,22 @@ void Label::setSize(Vector2<i32> size) {
     label -> setFixedSize(Eigen::Vector2i(size.x, size.y));
 }
 
-void Label::show(){
+void Label::show() {
     label -> setVisible(true);
 }
  
-void Label::hide(){
+void Label::hide() {
     label -> setVisible(false);
 }
 
-void Label::setColor(i32 a, i32 r, i32 g, i32 b){
+void Label::setColor(i32 a, i32 r, i32 g, i32 b) {
     label -> setColor(nanogui::Color(r, g, b, a));
 }
 
-bool Label::isVisible(){
+bool Label::isVisible() {
     return label -> visible();
 }
 
-nanogui::Widget *Label::getGUIElement(){
+nanogui::Widget *Label::getGUIElement() {
     return label;
 }

@@ -181,7 +181,7 @@ void UnitFighter::setNearFighters(std::vector<UnitFighter*>& _nearFighters) {
 }
 
 void UnitFighter::setActive(bool _active) {
-    fighterModel->setActive(_active);
+    fighterModel -> setActive(_active);
 }
 
 Vector2<f32> UnitFighter::getVectorPosition() const{
