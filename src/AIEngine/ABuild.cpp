@@ -34,17 +34,17 @@ Enumeration::BehaviourState ABuild::Update(std::string type) {
     // Si puede pagarlo sigue
     IA::Instance() -> getBuildingManager() -> createBuilding(v, type, false);
     // Solo llega aqui si ha podido contruir el edificio, confirma los cambios
-    if (type == "Barn"){
+    if (type == "Barn") {
             IA::Instance() -> getTree() -> setRequireBarn(false);
             IA::Instance() -> getTree() -> addBarn();
-	} else if (type == "Barrack"){
+	} else if (type == "Barrack") {
             IA::Instance() -> getTree() -> setRequireBarrack(false);
             IA::Instance() -> getTree() -> addBarrack();
-	} else if (type == "DefenseBarrack"){
+	} else if (type == "DefenseBarrack") {
             IA::Instance() -> getTree() -> setRequireBarrack(false);
             type = "Barrack";
             IA::Instance() -> getTree() -> addBarrack();
-	} else if (type == "House"){
+	} else if (type == "House") {
             IA::Instance() -> getTree() -> setRequireCitizens(false);
 	} else if (type == "LastChoiceHouse") {
             IA::Instance() -> getTree() -> setRequireCitizens(false);
