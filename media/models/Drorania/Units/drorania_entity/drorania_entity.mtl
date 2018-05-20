@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.000000
 d 0.558528
 illum 2
-map_Bump drorania_entity_Normal_OpenGL.bmp
+
 map_Ka kaonov_entity_Mixed_AO.bmp
 map_Kd drorania_entity_Base_Color.bmp
 map_Ks drorania_entity_Metallic.bmp

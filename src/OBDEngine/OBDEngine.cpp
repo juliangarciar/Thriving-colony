@@ -196,10 +196,6 @@ void OBDEngine::loadObjectTexturesFromMTL(OBDObject *obj, ResourceMTL *mtl, bool
 				ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->alphaTextureMap, sync);
 				it->second->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_ALPHA, tmp));
 			}
-			if (resource->second->bumpMap != ""){
-				ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->bumpMap, sync);
-				it->second->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_BUMP, tmp));
-			}
 		}
 	}
 }
@@ -222,10 +218,6 @@ void OBDEngine::loadAnimationTexturesFromMTL(OBDAnimation *obj, ResourceMTL *mtl
 		if (resource->second->alphaTextureMap != ""){
 			ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->alphaTextureMap, sync);
 			obj->getMaterial()->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_ALPHA, tmp));
-		}
-		if (resource->second->bumpMap != ""){
-			ResourceIMG *tmp = (ResourceIMG*)OBDManager->getResource(resource->second->bumpMap, sync);
-			obj->getMaterial()->setTexture(new OBDTexture(OBDEnums::TextureTypes::TEXTURE_BUMP, tmp));
 		}
 	}
 }

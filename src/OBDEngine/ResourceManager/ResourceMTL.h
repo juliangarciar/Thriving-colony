@@ -20,7 +20,6 @@ struct ResourceMaterial{
     std::string ambientOclusionsTextureMap;
     std::string specularTextureMap;
     std::string alphaTextureMap;
-    std::string bumpMap;
 };
 
 class ResourceMTL : public Resource {
