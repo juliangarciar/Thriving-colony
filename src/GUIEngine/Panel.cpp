@@ -11,7 +11,7 @@ Panel::Panel(std::string t) {
 
 Panel::Panel(GUIElement *parent, std::string title) {
     panel = new nanogui::Window(parent -> getGUIElement(), title);
-    parent->addChild(this);
+    parent -> addChild(this);
     panel -> setLayout(new nanogui::BoxLayout(nanogui::Orientation::Horizontal, nanogui::Alignment::Middle, 0, 6));
     panel -> setFontSize(1);
 }

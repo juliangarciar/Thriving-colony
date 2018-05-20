@@ -7,7 +7,7 @@ Label::Label(std::string t) {
 
 Label::Label(GUIElement *parent, std::string t) {
     label = parent -> getGUIElement() -> add<nanogui::Label>(t);
-    parent->addChild(this);
+    parent -> addChild(this);
 }
 
 Label::~Label() {
@@ -27,7 +27,7 @@ void Label::setPosition(Vector2<i32> position){
 }
 
 void Label::setTooltip(std::string t){
-    label->setTooltip(t);
+    label -> setTooltip(t);
 }
 
 void Label::setLabel(std::string t) {

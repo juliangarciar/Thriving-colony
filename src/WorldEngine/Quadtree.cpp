@@ -71,7 +71,7 @@ void Quadtree::Clear(){
 }
 
 void Quadtree::insertCell(Cell* cellPtr){
-    if(this->depth == 0){
+    if(depth == 0){
         innerCells.push_back(cellPtr);
     }
     else{
@@ -85,7 +85,7 @@ void Quadtree::insertCell(Cell* cellPtr){
 }
 
 void Quadtree::insertBuilding(Building* buildingPtr){
-    if(this->depth == 0){
+    if(depth == 0){
         for(std::size_t i = 0; i < innerCells.size(); i++){
             if(innerCells[i]->getHitbox().isOverlappedWith(buildingPtr->getHitbox()) && !innerCells[i]->isBlocked()){
                 innerCells[i]->setInhabitingBuilding(buildingPtr);
@@ -102,7 +102,7 @@ void Quadtree::insertBuilding(Building* buildingPtr){
 }
 
 void Quadtree::clearBuilding(Building* buildingPtr){
-    if(this->depth == 0){
+    if(depth == 0){
         for(std::size_t i = 0; i < innerCells.size(); i++){
             if(innerCells[i]->getHitbox().isOverlappedWith(buildingPtr->getHitbox()) && innerCells[i]->getInhabitingBuilding() == buildingPtr){
                 innerCells[i]->clearInhabitingBuilding();
@@ -119,7 +119,7 @@ void Quadtree::clearBuilding(Building* buildingPtr){
 }
 
 void Quadtree::assignNeighbors(Cell* cellPtr){
-    if(this->depth == 0){
+    if(depth == 0){
         Box2D tmp = cellPtr->getHitbox().getAmplifiedBox(2.0f);
         for(std::size_t i = 0; i < innerCells.size(); i++){
             if(innerCells[i]->getHitbox().isOverlappedWith(tmp)){
@@ -141,7 +141,7 @@ void Quadtree::assignNeighbors(Cell* cellPtr){
 bool Quadtree::checkCollision(const Box2D& otherHitbox, bool isBuilding) const{
     bool newCenter = true;
     
-    if(this->depth == 0){
+    if(depth == 0){
         for(std::size_t i = 0; i < innerCells.size(); i++){
             if(isBuilding){
                 if(innerCells[i]->getHitbox().isOverlappedWith(otherHitbox) && (innerCells[i]->isBlocked() || innerCells[i]->getTotalInhabitingUnits() > 0)){
@@ -183,7 +183,7 @@ const Vector2<f32> Quadtree::getPosition() const{
 /* Check this method, maybe ensure they are colliding, more precise but slower */
 /* Is not working properly for some reason */
 void Quadtree::getCollidingEntities(const Box2D& hitbox, Entity** priorityEntity, Enumeration::Team teamTarget) const{    
-    if(this->depth == 0){
+    if(depth == 0){
         for(std::size_t i = 0; i < innerCells.size(); i++){
             if(innerCells[i]->getHitbox().isOverlappedWith(hitbox)){
                 std::vector< Unit* > unitTmp = innerCells[i]->getInhabitingUnits();

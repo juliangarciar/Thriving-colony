@@ -324,7 +324,7 @@ void Hud::Init(){
             Button *b = new Button(mainBuildingTab, "Close");
             b->setTooltip("Close popup");
             b->setCallback([&] {
-                this->hidePopup();
+                hidePopup();
             });
 
             hallTroopList = new ComboBox(mainBuildingTab, {});
@@ -358,7 +358,7 @@ void Hud::Init(){
             Button *b = new Button(barrackTab, "Close");
             b->setTooltip("Close popup");
             b->setCallback([&] {
-                this->hidePopup();
+                hidePopup();
             });
 
             barrackEmpty = new Widget(barrackTab);
@@ -390,7 +390,7 @@ void Hud::Init(){
             Button *b = new Button(barnTab, "Close");
             b->setTooltip("Close popup");
             b->setCallback([&] {
-                this->hidePopup();
+                hidePopup();
             });
 
             barnEmpty = new Widget(barnTab);
@@ -428,7 +428,7 @@ void Hud::Init(){
             Button *b = new Button(workshopTab, "Close");
             b->setTooltip("Close popup");
             b->setCallback([&] {
-                this->hidePopup();
+                hidePopup();
             });
 
             workshopEmpty = new Widget(workshopTab);

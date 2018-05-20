@@ -4,14 +4,14 @@
 ComboBox::ComboBox(std::vector<std::string> opts) {
     combobox = Window::Instance() -> getGUIEnvironment() -> add<nanogui::ComboBox>(opts);
     options = opts;
-    if (options.size() < 1) this->hide();
+    if (options.size() < 1) hide();
 }
 
 ComboBox::ComboBox(GUIElement *parent, std::vector<std::string> opts) {
     combobox = parent -> getGUIElement() -> add<nanogui::ComboBox>(opts);
-    parent->addChild(this);
+    parent -> addChild(this);
     options = opts;
-    if (options.size() < 1) this->hide();
+    if (options.size() < 1) hide();
 }
 
 ComboBox::~ComboBox() {
@@ -57,14 +57,14 @@ void ComboBox::setCallback(std::function<void(bool)> callback){
 i32 ComboBox::addOption(std::string option){
     options.push_back(option);
     combobox->setItems(options);
-    if (options.size() == 1) this->show();
+    if (options.size() == 1) show();
     return options.size()-1;
 }
 
 void ComboBox::removeOption(i32 option){
     options.erase(options.begin()+option);
     combobox->setItems(options);
-    if (options.size() < 1) this->hide();
+    if (options.size() < 1) hide();
 }
 
 void ComboBox::removeOption(std::string option){
@@ -72,7 +72,7 @@ void ComboBox::removeOption(std::string option){
     if (it != options.end()) {
         options.erase(it);
         combobox->setItems(options);
-        if (options.size() < 1) this->hide();
+        if (options.size() < 1) hide();
     }
 }
 

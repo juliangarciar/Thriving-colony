@@ -69,19 +69,19 @@ Unit::Unit(SceneNode* _layer,
     });
 
     enemySensorTimer = new Timer(0.5, true, false);
-    enemySensorTimer->setCallback([&](){
+    enemySensorTimer -> setCallback([&](){
         //if(state != Enumeration::UnitState::InHome && state != Enumeration::UnitState::Recruiting){
             unitSensor->update();
         // }
     });
     std::cout << "AttackSpeed: " << attackSpeed << "\n";
     attackTimer = new Timer(attackSpeed, false, false);
-    attackTimer->setCallback([&](){
+    attackTimer -> setCallback([&](){
         canAttack = true;
     });
 
     chaseTimer = new Timer(0.5, true, false);
-    chaseTimer->setCallback([&](){
+    chaseTimer -> setCallback([&](){
         if(target != nullptr){
             setPathToTarget(target->getPosition());
         }
@@ -172,20 +172,20 @@ void Unit::switchState(Enumeration::UnitState newState){
         break;
 
         case Enumeration::UnitState::InHome:
-            chaseTimer->stop();
-            enemySensorTimer->stop();
+            chaseTimer -> stop();
+            enemySensorTimer -> stop();
             state = newState;
         break;
 
         case Enumeration::UnitState::Idle:
-            chaseTimer->stop();
-            enemySensorTimer->restart();
+            chaseTimer -> stop();
+            enemySensorTimer -> restart();
             state = newState;
         break;
 
         case Enumeration::UnitState::Move:
-            chaseTimer->stop();
-            enemySensorTimer->stop();
+            chaseTimer -> stop();
+            enemySensorTimer -> stop();
             state = newState;
         break;
 
@@ -194,20 +194,20 @@ void Unit::switchState(Enumeration::UnitState newState){
         break;
 
         case Enumeration::UnitState::Attack:
-            chaseTimer->stop();
-            enemySensorTimer->stop();
+            chaseTimer -> stop();
+            enemySensorTimer -> stop();
             state = newState;
         break;   
 
         case Enumeration::UnitState::Chase:
-            chaseTimer->restart();
-            enemySensorTimer->stop();
+            chaseTimer -> restart();
+            enemySensorTimer -> stop();
             state = newState;
         break;
 
         case Enumeration::UnitState::Retract:
-            chaseTimer->stop();
-            enemySensorTimer->stop();
+            chaseTimer -> stop();
+            enemySensorTimer -> stop();
             state = newState;
         break;
 
@@ -254,14 +254,14 @@ void Unit::attackState() {
     if(target != nullptr){
         if(inRangeOfAttack()) {
             if(canAttack){
-                target->takeDamage(attackDamage);
+                target -> takeDamage(attackDamage);
                 canAttack = false;
-                attackTimer->restart();
+                attackTimer -> restart();
             }
         }
         else{
             switchState(Enumeration::UnitState::Chase);
-            setPathToTarget(target->getPosition());
+            setPathToTarget(target -> getPosition());
             moveUnit();
         }
     }
@@ -317,13 +317,11 @@ void Unit::moveUnit() {
             else if(state == Enumeration::UnitState::Move){
                 switchState(Enumeration::UnitState::Idle);
             }
-        }
-        else{
-            setUnitDestination(this->pathFollow.front());
+        } else{
+            setUnitDestination(pathFollow.front());
             pathFollow.pop_front();
         }
-    }
-    else{
+    } else{
         calculateDirection();
         Vector2<f32> _oldPosition = vectorPos;
         vectorSpd = vectorDir * moveSpeed;
@@ -412,8 +410,7 @@ void Unit::takeDamage(i32 _damage){
         //bar->setScale(0);
         unitManager->deleteUnit(ID);
         return;
-    }
-    else{
+    } else{
         percentage = currentHP / maxHP;
         //bar->setColor(Color((1.0f - percentage) * 255.0f, percentage * 255.0f, 0));
         //bar->setScale(percentage);
@@ -444,11 +441,9 @@ bool Unit::inRangeOfAttack() {
     bool inRange = false;
     if(target != nullptr){
         Vector2<f32> tmp(target->getPosition() - vectorPos);
-        f32 distance = std::sqrt(std::pow(tmp.x, 2) + 
-                                 std::pow(tmp.y, 2));
-
-        distance = distance - target->getHitbox().getHalfSize() - this->getHitbox().getHalfSize();
-        if( distance <= attackRange){
+        f32 distance = std::sqrt(std::pow(tmp.x, 2) + std::pow(tmp.y, 2));
+        distance = distance - target->getHitbox().getHalfSize() - getHitbox().getHalfSize();
+        if(distance <= attackRange){
             inRange = true;
         }
     }

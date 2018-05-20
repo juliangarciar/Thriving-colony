@@ -7,7 +7,7 @@ CheckBox::CheckBox(std::string text) {
 
 CheckBox::CheckBox(GUIElement *parent, std::string text) {
     checkbox = parent -> getGUIElement() -> add<nanogui::CheckBox>(text);
-    parent->addChild(this);
+    parent -> addChild(this);
 }
 
 CheckBox::~CheckBox() {

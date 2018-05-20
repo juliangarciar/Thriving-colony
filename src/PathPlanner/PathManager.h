@@ -33,6 +33,7 @@ class PathManager{
          * @return false Else
          */
         bool createPathTo(Vector2<f32> targetPos);
+        
         void smoothPath(std::list< Vector2<f32> >& _path);
 };
 #endif /* PATHMANAGER_H */

@@ -48,7 +48,7 @@ Building::Building(
 }
 
 Building::~Building() {
-    WorldGeometry::Instance()->clearBuildingCell(this);
+    WorldGeometry::Instance() -> clearBuildingCell(this);
     delete buildTimer;
     buildTimer = nullptr;
 }

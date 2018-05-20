@@ -8,7 +8,7 @@ Button::Button(std::string buttonText) {
 
 Button::Button(GUIElement *parent, std::string buttonText) {
     button = parent -> getGUIElement() -> add<nanogui::Button>(buttonText);
-    parent->addChild(this);
+    parent -> addChild(this);
     button -> setFontSize(16);
 }
 

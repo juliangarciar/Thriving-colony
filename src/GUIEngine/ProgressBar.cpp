@@ -7,7 +7,7 @@ ProgressBar::ProgressBar() {
 
 ProgressBar::ProgressBar(GUIElement *parent) {
     progressBar = parent -> getGUIElement() -> add<nanogui::ProgressBar>();
-    parent->addChild(this);
+    parent -> addChild(this);
 }
 
 ProgressBar::~ProgressBar() {

@@ -70,8 +70,7 @@ class Cell{
         void setBlocked(bool data);
 
         /**
-         * @brief Prepares the cell for a new instance of the game, clearing
-         * what's inside this
+         * @brief Prepares the cell for a new instance of the game, clearing what's inside this
          */
         void Clear();
 

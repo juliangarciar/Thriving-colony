@@ -7,7 +7,7 @@ TextBox::TextBox(std::string t) {
 
 TextBox::TextBox(GUIElement *parent, std::string t) {
     textbox = parent -> getGUIElement() -> add<nanogui::TextBox>(t);
-    parent->addChild(this);
+    parent -> addChild(this);
 }
 
 TextBox::~TextBox() {

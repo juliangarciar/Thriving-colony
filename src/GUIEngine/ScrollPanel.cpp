@@ -7,7 +7,7 @@ ScrollPanel::ScrollPanel() {
 
 ScrollPanel::ScrollPanel(GUIElement *parent) {
     spanel = parent -> getGUIElement() -> add<nanogui::VScrollPanel>();
-    parent->addChild(this);
+    parent -> addChild(this);
 }
 
 ScrollPanel::~ScrollPanel() {

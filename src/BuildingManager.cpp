@@ -62,7 +62,7 @@ bool BuildingManager::setBuildingMode(std::string type) {
 	if (it != baseBuildings.end() && checkCanPay(type)) {
 		if (!buildingMode) {
 			buildingMode = true;
-			tempBuilding = new Building(buildingLayer, nextBuildingId++, team, it->second, this);
+			tempBuilding = new Building(buildingLayer, nextBuildingId++, team, it -> second, this);
 			return true;
 		}
 	}
@@ -122,7 +122,7 @@ void BuildingManager::drawBuilding() {
 void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 buildTime){
 	std::map<std::string, BuildingData>::iterator it = baseBuildings.find(type);
 	if (it != baseBuildings.end()){
-		BuildingData b = it->second;
+		BuildingData b = it -> second;
 		if (buildTime >= 0) b.buildingTime = buildTime;
 		tempBuilding = new Building(buildingLayer, nextBuildingId++, team, b, this);
 		

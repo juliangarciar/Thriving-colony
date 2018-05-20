@@ -17,22 +17,22 @@ OBDAnimation::OBDAnimation(OBDSceneNode* p, std::vector<ResourceOBJ*> *o, Resour
 
 	for (int i = 0; i < o->size(); i++){
 		glslMesh *tmp = new glslMesh();
-		tmp->vbo = o->at(i)->getResource()->begin()->second->vbo;
-		tmp->ibo = o->at(i)->getResource()->begin()->second->indices;
+		tmp -> vbo = o->at(i)->getResource()->begin()->second->vbo;
+		tmp -> ibo = o->at(i)->getResource()->begin()->second->indices;
 
         OBDMesh *tempMesh = new OBDMesh(tmp, material);
-		tempMesh->setMaterialName(m->getResource()->begin()->first);
-		tempMesh->setBoundingBox(o->at(i)->getResource()->begin()->second->aabbMin, o->at(i)->getResource()->begin()->second->aabbMax);
+		tempMesh -> setMaterialName(m -> getResource()->begin()->first);
+		tempMesh -> setBoundingBox(o -> at(i)->getResource()->begin()->second->aabbMin, o->at(i)->getResource()->begin()->second->aabbMax);
 
-        tempMesh->getFirstNode()->setParent(scaleNode);
-        scaleNode->addChild(tempMesh->getFirstNode());
+        tempMesh -> getFirstNode()->setParent(scaleNode);
+        scaleNode -> addChild(tempMesh->getFirstNode());
 
-		tempMesh->setActive(false);
+		tempMesh -> setActive(false);
 
-		frames->push_back(tempMesh);
+		frames -> push_back(tempMesh);
 	}
 
-    p->addChild(this);
+    p -> addChild(this);
 }
 
 OBDAnimation::~OBDAnimation() {
@@ -40,8 +40,8 @@ OBDAnimation::~OBDAnimation() {
 }
 
 void OBDAnimation::updateFrame(){
-	frames->at(currentFrame)->setActive(false);
-	frames->at(nextFrame)->setActive(true);
+	frames -> at(currentFrame) -> setActive(false);
+	frames -> at(nextFrame) -> setActive(true);
 	currentFrame = nextFrame;
 	nextFrame++;
 	if (nextFrame >= numberOfFrames) nextFrame = 0;

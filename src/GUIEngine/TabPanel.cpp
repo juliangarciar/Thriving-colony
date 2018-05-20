@@ -3,13 +3,13 @@
 
 TabPanel::TabPanel(){
     ctrl = Window::Instance() -> getGUIEnvironment() -> add<nanogui::TabWidget>();
-    ctrl ->setLayout(new nanogui::GroupLayout());
+    ctrl -> setLayout(new nanogui::GroupLayout());
 }
 
 TabPanel::TabPanel(GUIElement *parent){
     ctrl = parent -> getGUIElement() -> add<nanogui::TabWidget>();
-    parent->addChild(this);
-    ctrl ->setLayout(new nanogui::GroupLayout());
+    parent -> addChild(this);
+    ctrl -> setLayout(new nanogui::GroupLayout());
 }
 
 TabPanel::~TabPanel(){
@@ -31,7 +31,7 @@ void TabPanel::addChild(GUIElement *elem) {
 
 Tab *TabPanel::createTab(std::string title){ 
     nanogui::Widget *layer = ctrl -> createTab(title);
-    layer->setLayout(new nanogui::GroupLayout());
+    layer -> setLayout(new nanogui::GroupLayout());
 
     Tab *t = new Tab(layer);
     tabs.push_back(t);
@@ -56,7 +56,7 @@ void TabPanel::setSize(Vector2<i32> size){
 }
 
 void TabPanel::setTooltip(std::string text){
-    ctrl->setTooltip(text);
+    ctrl -> setTooltip(text);
 }
 
 void TabPanel::show(){

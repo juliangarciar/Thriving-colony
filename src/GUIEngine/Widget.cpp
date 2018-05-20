@@ -8,7 +8,7 @@ Widget::Widget() {
 
 Widget::Widget(GUIElement *parent) {
     widget = parent -> getGUIElement() -> add<nanogui::Widget>();
-    parent->addChild(this);
+    parent -> addChild(this);
     widget -> setFontSize(4);
 }
 
@@ -33,7 +33,7 @@ void Widget::setSize(Vector2<i32> size){
 }
 
 void Widget::setTooltip(std::string t){
-    widget->setTooltip(t);
+    widget -> setTooltip(t);
 }
 
 void Widget::setVerticalLayout() {

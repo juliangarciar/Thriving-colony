@@ -3,13 +3,13 @@
 OBDSceneNode::OBDSceneNode(TNode* parent) : OBDEntity() {
 	octree = aabb::Tree();
 
-	parent->addChild(rotationNode);
+	parent -> addChild(rotationNode);
 }
 
 OBDSceneNode::OBDSceneNode(OBDSceneNode* parent) : OBDEntity(parent) {
 	octree = aabb::Tree();
 
-    parent->addChild(this);
+    parent -> addChild(this);
 }
 
 OBDSceneNode::~OBDSceneNode() {
@@ -17,13 +17,13 @@ OBDSceneNode::~OBDSceneNode() {
 }
 
 void OBDSceneNode::addChild(OBDEntity *e){
-    e->getFirstNode()->setParent(scaleNode);
-    scaleNode->addChild(e->getFirstNode());
+    e -> getFirstNode() -> setParent(scaleNode);
+    scaleNode -> addChild(e -> getFirstNode());
 }
 
 void OBDSceneNode::addChild(TNode *e){
-    e->setParent(scaleNode);
-    scaleNode->addChild(e);
+    e -> setParent(scaleNode);
+    scaleNode -> addChild(e);
 }
 
 void OBDSceneNode::refreshModelMatrix(glm::mat4 parent){

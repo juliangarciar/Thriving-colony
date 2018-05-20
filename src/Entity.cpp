@@ -68,7 +68,7 @@ Entity::Entity(SceneNode* _layer,
 
 Entity::~Entity() {
     if(target != nullptr){
-        target->removeHostile(this);
+        target -> removeHostile(this);
     }
     putHostileTargetsToNull();
     if (model != nullptr){

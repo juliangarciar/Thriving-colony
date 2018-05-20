@@ -15,13 +15,13 @@ TNode::TNode(TEntity *t){
 TNode::TNode(TEntity *t, TNode *p){
     entity = t;
     parent = p;
-    parent->addChild(this);
+    parent -> addChild(this);
     active = true;
 }
 
 TNode::~TNode(){
     if (entity != nullptr) delete entity;
-    if (parent != nullptr) parent->removeChild(this);
+    if (parent != nullptr) parent -> removeChild(this);
     for (i32 i = 0; i < children.size(); i++){
         delete children[i];
     }
@@ -65,7 +65,7 @@ bool TNode::getActive(){
 }
 
 void TNode::setParent(TNode *p){
-    if (parent != nullptr) parent->removeChild(this);
+    if (parent != nullptr) parent -> removeChild(this);
     
     parent = p;
 }

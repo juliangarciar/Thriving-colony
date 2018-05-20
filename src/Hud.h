@@ -196,7 +196,7 @@ class Hud {
         //List of troops that are being trained and their progress.
         std::map<i32, ProgressBar*> troopQueueProgressBars;
 
-		//This
+		//
 		std::queue<std::string> notificationQueue;
 
         //Panel with all types of buildings.

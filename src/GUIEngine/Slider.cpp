@@ -22,7 +22,7 @@ void Slider::setPosition(Vector2<i32> position){
 }
 
 void Slider::setTooltip(std::string t){
-    slider->setTooltip(t);
+    slider -> setTooltip(t);
 }
 
 void Slider::setRange(std::pair<f32,f32> r) {
