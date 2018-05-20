@@ -30,7 +30,7 @@ PauseMenu::~PauseMenu() {
     delete bgMenu;
 }
 
-void PauseMenu::setHUDEvents(){
+void PauseMenu::setHUDEvents() {
     buttonQuit -> setCallback([]{
         Window::Instance() -> close();
     });

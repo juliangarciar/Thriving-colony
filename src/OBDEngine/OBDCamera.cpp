@@ -35,7 +35,7 @@ void OBDCamera::setFarValue(f32 f) {
     c -> setFar(f);
 }
 
-void OBDCamera::setFov(f32 fov){
+void OBDCamera::setFov(f32 fov) {
     TCamera* c = (TCamera*) cameraNode -> getEntity();
     c -> setFov(fov);
 }
@@ -84,10 +84,10 @@ glm::vec3 OBDCamera::getTargetPosition() {
     return c -> getTargetPosition();
 }
 
-TCamera* OBDCamera::getCameraEntity(){
+TCamera* OBDCamera::getCameraEntity() {
     return (TCamera*) cameraNode -> getEntity();
 }
 
-TNode *OBDCamera::getFirstNode(){
+TNode *OBDCamera::getFirstNode() {
     return cameraNode;
 }

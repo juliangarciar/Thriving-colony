@@ -42,7 +42,7 @@ CameraController::CameraController() {
 
 	updateTimer = new Timer(0, true, false); //ToDo: revisar
 
-	updateTimer -> setCallback([&](){
+	updateTimer -> setCallback([&]() {
         updateCamera(Window::Instance() -> getDeltaTime());
 	});
 }
@@ -52,7 +52,7 @@ CameraController::~CameraController() {
 	delete updateTimer;
 }
 
-void CameraController::Init(Vector3<f32> v){
+void CameraController::Init(Vector3<f32> v) {
 	//Set camera and target positions
 	tarPos = v;
 	camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
@@ -138,11 +138,11 @@ void CameraController::updateCamera(f32 deltaTime) {
 		}
 	}
 
-	if (centerCameraMode){
+	if (centerCameraMode) {
 		tarPos = userPos;
 	}
 
-    if (movementMode || rotationOrInclinationMode || zoomMode || centerCameraMode){
+    if (movementMode || rotationOrInclinationMode || zoomMode || centerCameraMode) {
 		tarPos.y = Map::Instance() -> getTerrain() -> getY(tarPos.x, tarPos.z);
 		camPos = tarPos.rotateFromPoint(zoomDistanceFromTarget, rotateDegrees.x, rotateDegrees.y);
 
@@ -200,7 +200,7 @@ void CameraController::Move() {
 	}
 }
 
-void CameraController::Zoom(){
+void CameraController::Zoom() {
 	zoomMode = false;
 
 	if (IO::Instance() -> getMouse() -> getWheelY() > 0.0f) {
@@ -224,7 +224,7 @@ void CameraController::Zoom(){
 	}
 }
 
-void CameraController::RotateAndInclinate(){
+void CameraController::RotateAndInclinate() {
     // If mouse button pressed
     if (IO::Instance() -> getMouse() -> middleMousePressed()) {
 		// get cursor data
@@ -275,10 +275,10 @@ void CameraController::RotateAndInclinate(){
 	}
 }
 
-void CameraController::CenterCamera(){
+void CameraController::CenterCamera() {
 	centerCameraMode = false;
 	if (IO::Instance() -> getKeyboard() -> keyPressed(GLFW_KEY_SPACE)) { //ToDo: fachada
-		if(Human::Instance() -> getUnitManager() -> getSelectedTroop() != nullptr) {
+		if (Human::Instance() -> getUnitManager() -> getSelectedTroop() != nullptr) {
 			userPos.x = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition() . x;
 			userPos.z = Human::Instance() -> getUnitManager() -> getSelectedTroop() -> getPosition() . y;
 			userPos.y = Map::Instance() -> getTerrain() -> getY(userPos.x, userPos.z);

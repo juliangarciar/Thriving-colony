@@ -19,7 +19,7 @@ UnitFighter::UnitFighter(SceneNode* _parent, std::string _path, f32 _speed):spee
 }
 
 UnitFighter::~UnitFighter() {
-    IO::Instance()->unregisterTimer(unitFighterClock);
+    IO::Instance() -> unregisterTimer(unitFighterClock);
     delete unitFighterClock;
     delete fighterModel;
     nearFighters.clear();
@@ -34,8 +34,8 @@ void UnitFighter::setDestiny(Vector2<f32> _dest) {
     Vector2<f32> vectorDistance = (vectorDestiny - vectorPosition);
     maxTime = (std::sqrt(std::pow(vectorDistance.x, 2) + std::pow(vectorDistance.y, 2))) / speed * 0.016f ;
     maxTime += 0.1f * maxTime;
-    unitFighterClock->changeDuration(maxTime);
-    unitFighterClock->restart();
+    unitFighterClock -> changeDuration(maxTime);
+    unitFighterClock -> restart();
 
     isMoving = true;
 }
@@ -50,7 +50,7 @@ void UnitFighter::move() {
         fighterModel->setPosition(Vector3<f32>(vectorPosition.x, Map::Instance()->getTerrain()->getY(vectorPosition.x, vectorPosition.y), vectorPosition.y));
     } else {
         isMoving = false;
-        unitFighterClock->stop();
+        unitFighterClock -> stop();
         if (fighterState == Enumeration::UnitFighterState::ufMove) {
             switchState(Enumeration::UnitFighterState::ufIdle);
         }
@@ -129,7 +129,7 @@ void UnitFighter::setNearFighters(std::vector<UnitFighter*>& _nearFighters) {
 }
 
 void UnitFighter::setActive(bool _active) {
-    fighterModel->setActive(_active);
+    fighterModel -> setActive(_active);
 }
 
 Vector2<f32> UnitFighter::getVectorPosition() const{

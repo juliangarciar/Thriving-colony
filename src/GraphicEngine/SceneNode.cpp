@@ -11,7 +11,7 @@ SceneNode::SceneNode(SceneNode *parent) {
 	node = Window::Instance()->getEngine()->createSceneNode(parent->getSceneNode());
 }
 
-SceneNode::SceneNode(OBDSceneNode *n){ 
+SceneNode::SceneNode(OBDSceneNode *n) { 
 	node = n;
 }
 
@@ -39,7 +39,7 @@ void SceneNode::setActive(bool a) {
     node->setActive(a);
 }
 
-i32 SceneNode::getNodeCollision(Vector2<i32> cursor){
+i32 SceneNode::getNodeCollision(Vector2<i32> cursor) {
 	OBDLine l = Window::Instance()->getEngine()->getRaycastFromScreenCoordinates(glm::vec2(cursor.x, cursor.y));
 
 	std::vector<u32> res = node->getCollisionID(l);
@@ -49,6 +49,6 @@ i32 SceneNode::getNodeCollision(Vector2<i32> cursor){
 	return -1;
 }
 
-OBDSceneNode *SceneNode::getSceneNode(){
+OBDSceneNode *SceneNode::getSceneNode() {
 	return node;
 }

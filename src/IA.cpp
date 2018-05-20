@@ -62,13 +62,13 @@ void IA::Init(std::string _race) {
     initializeChoices();
 
     updateFastTimer = new Timer(1.00, true);
-	updateFastTimer -> setCallback([&](){
+	updateFastTimer -> setCallback([&]() {
 		rootNode -> Update();
 		updateFastTimer -> restart();
 		updateSlowTimer -> restart();
 	});
     updateSlowTimer = new Timer(3.00, true);
-	updateSlowTimer -> setCallback([&](){
+	updateSlowTimer -> setCallback([&]() {
 		rootNode -> Update();
 		updateFastTimer -> restart();
 		updateSlowTimer -> restart();
@@ -82,12 +82,12 @@ void IA::Update() {
     Vector2<f32> IAPos = hallPosition.toVector2();
 
     if (((IAPos . x + 2000 > tarPos.x && IAPos . x - 2000 < tarPos.x) && (IAPos . y + 2000 > tarPos.z && IAPos . y - 2000 < tarPos.z)) || underAttack) {
-        if (updateSlowTimer -> isRunning() && !updateFastTimer -> isRunning()){
+        if (updateSlowTimer -> isRunning() && !updateFastTimer -> isRunning()) {
 			updateSlowTimer -> stop();
 			updateFastTimer -> restart();
 		}
     } else {
-		if (!updateSlowTimer -> isRunning() && updateFastTimer->isRunning()){
+		if (!updateSlowTimer -> isRunning() && updateFastTimer->isRunning()) {
 			updateSlowTimer -> restart();
 			updateFastTimer -> stop();
 		}
@@ -135,7 +135,7 @@ bool IA::getUnderAttack() {
             // Get units in the map of the opposing team
             std::map<i32, Unit*> *inMapTroops = Human::Instance() -> getUnitManager() -> getInMapTroops();
             // Iterate through the map
-            for (std::map<i32, Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it){
+            for (std::map<i32, Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end() && underAttack == false; ++it) {
                 if (it -> second != nullptr) {
                 // Calculate distance between troop requesting target and posible targets
                     xaux = it -> second -> getPosition().x - pos.x;

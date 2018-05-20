@@ -17,7 +17,7 @@ OBDMesh::~OBDMesh() {
 	material = nullptr;
 }
 
-void OBDMesh::refreshBoundingBox(){
+void OBDMesh::refreshBoundingBox() {
 	glm::vec4 mmin = model_matrix * aabbMin;
 	glm::vec4 mmax = model_matrix * aabbMax;
 
@@ -27,12 +27,12 @@ void OBDMesh::refreshBoundingBox(){
 	boundingBox = aabb::AABB(min, max);
 }
 
-void OBDMesh::setBoundingBox(glm::vec3 min, glm::vec3 max){
+void OBDMesh::setBoundingBox(glm::vec3 min, glm::vec3 max) {
 	aabbMin = glm::vec4(min, 1);
 	aabbMax = glm::vec4(max, 1);
 }
 
-void OBDMesh::setMaterial(OBDMaterial *mat){
+void OBDMesh::setMaterial(OBDMaterial *mat) {
     TMesh* m = (TMesh*) meshNode -> getEntity();
     m->setMaterial(mat);
 }
@@ -54,6 +54,6 @@ TMesh* OBDMesh::getMeshEntity() {
     return (TMesh*) meshNode -> getEntity();
 }
 
-aabb::AABB OBDMesh::getBoundingBox(){
+aabb::AABB OBDMesh::getBoundingBox() {
 	return boundingBox;
 }

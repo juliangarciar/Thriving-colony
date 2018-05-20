@@ -4,19 +4,19 @@
 
 #define MAX_LIGHTS 10
 
-TTile::TTile(){
+TTile::TTile() {
     texture = nullptr;
 }
-TTile::TTile(ResourceIMG* _texture, glm::vec2 _position){
+TTile::TTile(ResourceIMG* _texture, glm::vec2 _position) {
     texture = new TTexture(_texture);
     textureID = texture->getTextureID();
     position = _position;
 }
-TTile::~TTile(){
+TTile::~TTile() {
     //ToDo: Revisalo julian
     delete texture;
 }
-void TTile::beginDraw(){
+void TTile::beginDraw() {
     glBindTexture(GL_TEXTURE_2D, textureID);
     
     //glPushMatrix();
@@ -37,21 +37,21 @@ void TTile::beginDraw(){
         glEnd();
     //glPopMatrix();
 }
-void TTile::endDraw(){
+void TTile::endDraw() {
 
 }
-void TTile::setTexture(ResourceIMG* _texture){
-    if(texture == nullptr)
+void TTile::setTexture(ResourceIMG* _texture) {
+    if (texture == nullptr)
         texture = new TTexture(_texture);
-    else{
+    else {
         delete texture;
         texture = new TTexture(_texture);
     }
     textureID = texture->getTextureID();
 }
-void TTile::setPosition(glm::vec2 _position){
+void TTile::setPosition(glm::vec2 _position) {
     position = _position;
 }
-glm::vec2 TTile::getPosition(){
+glm::vec2 TTile::getPosition() {
     return position;
 }

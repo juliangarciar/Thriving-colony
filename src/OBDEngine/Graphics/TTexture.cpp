@@ -1,7 +1,7 @@
 #include "TTexture.h"
 #include "../ResourceManager/ResourceIMG.h"
 
-TTexture::TTexture(ResourceIMG *t){
+TTexture::TTexture(ResourceIMG *t) {
 	texture = t;
 
 	glGenTextures(1, &textureID);
@@ -28,14 +28,14 @@ TTexture::TTexture(ResourceIMG *t){
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-TTexture::~TTexture(){
+TTexture::~TTexture() {
 	//El ResourceIMG no se libera aqui sino en el gestor de recursos
 }
 
-GLuint TTexture::getTextureID(){
+GLuint TTexture::getTextureID() {
     return textureID;
 }
 
-ResourceIMG *TTexture::getResourceIMG(){
+ResourceIMG *TTexture::getResourceIMG() {
 	return texture;
 }

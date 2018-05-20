@@ -3,12 +3,12 @@
 #include <objloader/OBJ_Loader.h>
 #include <glm/glm.hpp>
 
-ResourceOBJ::ResourceOBJ(){
+ResourceOBJ::ResourceOBJ() {
 	meshArray = new std::map<std::string, ResourceMesh*>();
 }
 
-ResourceOBJ::~ResourceOBJ(){
-	for (std::map<std::string, ResourceMesh*>::iterator it = meshArray->begin(); it != meshArray->end(); ++it){
+ResourceOBJ::~ResourceOBJ() {
+	for (std::map<std::string, ResourceMesh*>::iterator it = meshArray->begin(); it != meshArray->end(); ++it) {
 		delete it->second;
 	}
 	meshArray->clear();
@@ -16,7 +16,7 @@ ResourceOBJ::~ResourceOBJ(){
 	meshArray = nullptr;
 }
 
-void ResourceOBJ::load(const char *path){
+void ResourceOBJ::load(const char *path) {
     setIdentifier(path);
     objl::Loader loader;
     
@@ -54,11 +54,11 @@ void ResourceOBJ::load(const char *path){
 
             glm::vec3 act(curMesh.Vertices[j].Position.X,curMesh.Vertices[j].Position.Y,curMesh.Vertices[j].Position.Z);
             
-            if(act.x <= min.x){
+            if (act.x <= min.x) {
 				min.x = act.x;
 			}
 
-			if (act.y <= min.y){
+			if (act.y <= min.y) {
                 min.y = act.y;
             }
 			
@@ -66,7 +66,7 @@ void ResourceOBJ::load(const char *path){
 				min.z = act.z;
 			}
 
-            if(act.x >= max.x){
+            if (act.x >= max.x) {
 				max.x = act.x;
 			}
 			
@@ -74,7 +74,7 @@ void ResourceOBJ::load(const char *path){
 				max.y = act.y;
 			}
 
-			if (act.z >= max.z){
+			if (act.z >= max.z) {
                 max.z = act.z;
             }
         }
@@ -91,22 +91,22 @@ void ResourceOBJ::load(const char *path){
     }
 }
 
-void ResourceOBJ::release(){
+void ResourceOBJ::release() {
     meshArray->clear();
 }
 
-void ResourceOBJ::setIdentifier(const char *i){
+void ResourceOBJ::setIdentifier(const char *i) {
     identifier = i;
 }
 
-const char *ResourceOBJ::getIdentifier(){
+const char *ResourceOBJ::getIdentifier() {
     return identifier;
 }
 
-std::map<std::string, ResourceMesh*> *ResourceOBJ::getResource(){
+std::map<std::string, ResourceMesh*> *ResourceOBJ::getResource() {
     return meshArray;
 }
 
-std::string ResourceOBJ::getDefaultMaterialPath(){
+std::string ResourceOBJ::getDefaultMaterialPath() {
     return defaultMaterialPath;
 }

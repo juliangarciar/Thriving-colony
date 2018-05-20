@@ -5,7 +5,7 @@ i32 main() {
 
     game -> Init();
 
-    while (Window::Instance() -> isOpen()){
+    while (Window::Instance() -> isOpen()) {
         game -> Input();
         game -> Update();
         game -> Render();

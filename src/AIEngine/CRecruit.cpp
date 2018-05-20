@@ -13,12 +13,10 @@ CRecruit::~CRecruit() {
 }
 
 Enumeration::BehaviourState CRecruit::Update() {
-    std::cout << "1" << std::endl;
+    //Con esto no va bien
     //if (IA::Instance() -> getRootNode() -> getPriority() == nullptr) {
-        std::cout << "2" << std::endl;
         if (IA::Instance() -> getTree() -> getNeedSoldiers()) {
-            std::cout << "3" << std::endl;
-            if (type == "AdvancedM"){
+            if (type == "AdvancedM") {
                     if (IA::Instance() -> getTree() -> getRequireBarn() == false && IA::Instance() -> getTree() -> calculateMeleeRate() < IA::Instance() -> getTree() -> getMeleeThreshold()) {
                         if (IA::Instance() -> getCityLevel() >= IA::Instance() -> getTree() -> getMountedCreatureMilestone()) {
                             IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::TrainMountedMelee);

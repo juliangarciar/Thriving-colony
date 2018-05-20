@@ -6,12 +6,12 @@ Light::Light(Vector3<f32> pos, Color c, f32 intensity) {
 	l->setPosition(glm::vec3(pos.x, pos.y, pos.z));
 }
 
-Light::~Light(){
+Light::~Light() {
     delete l;
 	l = nullptr;
 }
 
-void Light::setPosition(Vector3<f32> pos){
+void Light::setPosition(Vector3<f32> pos) {
 	l->setPosition(glm::vec3(pos.x, pos.y, pos.z));
 }
 

@@ -18,7 +18,7 @@ WinMenu::~WinMenu() {
     delete winText;
 }
 
-void WinMenu::setHUDEvents(){
+void WinMenu::setHUDEvents() {
     buttonQuit -> setCallback([]{
         Window::Instance() -> close();
     });

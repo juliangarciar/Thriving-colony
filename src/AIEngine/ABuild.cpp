@@ -46,12 +46,12 @@ Enumeration::BehaviourState ABuild::Update(std::string type) {
             IA::Instance() -> getTree() -> addBarrack();
 	} else if (type == "House"){
             IA::Instance() -> getTree() -> setRequireCitizens(false);
-	} else if (type == "LastChoiceHouse"){
+	} else if (type == "LastChoiceHouse") {
             IA::Instance() -> getTree() -> setRequireCitizens(false);
             type = "House";
-	} else if (type == "Quarry"){
+	} else if (type == "Quarry") {
             IA::Instance() -> getTree() -> setRequireCrystal(false);
-	} else if (type == "Workshop"){
+	} else if (type == "Workshop") {
             IA::Instance() -> getTree() -> setRequireBarrack(false);
             IA::Instance() -> getTree() -> addWorkshop();
 	}

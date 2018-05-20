@@ -8,7 +8,7 @@ TTransform::~TTransform() {
     
 }
 
-void TTransform::beginDraw(){
+void TTransform::beginDraw() {
     cache.getMatrixStack().push(matrix * cache.getMatrixStack().top());
 }
 

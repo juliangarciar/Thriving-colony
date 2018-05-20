@@ -22,7 +22,7 @@ UnitManager::UnitManager(Enumeration::Team t, std::string b) {
     baseUnits = new std::map<std::string, UnitData>();
     inQueueTroopsByBuilding = new std::map<std::string, i32>();
 
-    for (auto& element : j["Units"]){
+    for (auto& element : j["Units"]) {
         UnitData tmp;
             tmp.type = element["unitName"].get<std::string>();
             tmp.buildingType = element["buildingType"].get<std::string>();
@@ -72,13 +72,13 @@ UnitManager::UnitManager(Enumeration::Team t, std::string b) {
 
 //Destroyer
 UnitManager::~UnitManager() {
-    for (std::map<i32, Unit*>::iterator it = inQueueTroops -> begin(); it != inQueueTroops -> end(); ++it){
+    for (std::map<i32, Unit*>::iterator it = inQueueTroops -> begin(); it != inQueueTroops -> end(); ++it) {
         delete it -> second;
     }
     inQueueTroops -> clear();
     delete inQueueTroops;
 
-    for (std::map<i32, Unit*>::iterator it = inHallTroops -> begin(); it != inHallTroops -> end(); ++it){
+    for (std::map<i32, Unit*>::iterator it = inHallTroops -> begin(); it != inHallTroops -> end(); ++it) {
         delete it -> second;
     }
     inHallTroops -> clear();
@@ -100,9 +100,9 @@ UnitManager::~UnitManager() {
 bool UnitManager::createTroop(std::string type) {
 	//ToDo: This method is just so fucking weird, I just can't get it
     std::map<std::string, UnitData>::iterator it = baseUnits->find(type);
-    if (it != baseUnits->end()){
+    if (it != baseUnits->end()) {
 		//Check if there are space in the queue
-        if (team == Enumeration::Team::Human){
+        if (team == Enumeration::Team::Human) {
 			if (inQueueTroopsByBuilding->at(it->second.buildingType) >= Human::Instance()->getBuildingManager()->getAmount(it->second.buildingType)) return false;
 		} else {
 			if (inQueueTroopsByBuilding->at(it->second.buildingType) >= IA::Instance()->getBuildingManager()->getAmount(it->second.buildingType)) return false;
@@ -115,7 +115,7 @@ bool UnitManager::createTroop(std::string type) {
             }
             newUnit -> getModel() -> setActive(false);
 			adjustUnitFighter(it->second.troops);
-            newUnit -> setRecruitedCallback([&] (Unit* u){
+            newUnit -> setRecruitedCallback([&] (Unit* u) {
                 //Delete in Queue
                 inQueueTroops->erase(inQueueTroops->find(u->getID()));
 
@@ -126,7 +126,7 @@ bool UnitManager::createTroop(std::string type) {
                 inHallTroops->insert(std::pair<i32, Unit*>(u->getID(), u));
 
                 //Añadir al HUD
-                if (team == Enumeration::Team::Human){
+                if (team == Enumeration::Team::Human) {
                     Hud::Instance()->removeTroopFromQueue(u->getID());
                     Hud::Instance()->addTroopToHall(u->getID(), u->getType());
 
@@ -134,7 +134,7 @@ bool UnitManager::createTroop(std::string type) {
                     IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showRecruitedText);  
                 }
             });
-            newUnit -> setRetractedCallback([&] (Unit *u){
+            newUnit -> setRetractedCallback([&] (Unit *u) {
                 //Add in Hall
                 inHallTroops->insert(std::pair<i32, Unit*>(u->getID(), u));
                 //Delete in Map
@@ -143,7 +143,7 @@ bool UnitManager::createTroop(std::string type) {
 
 
                 //Añadir al HUD
-                if (team == Enumeration::Team::Human){
+                if (team == Enumeration::Team::Human) {
                     Hud::Instance()->addTroopToHall(u->getID(), u->getType());
                 }
             });
@@ -154,7 +154,7 @@ bool UnitManager::createTroop(std::string type) {
 			//Add to queues
             inQueueTroops -> insert(std::pair<i32, Unit*>(newUnit->getID(), newUnit));
 			inQueueTroopsByBuilding->at(it->second.buildingType)++;
-            if (team == Enumeration::Team::Human){
+            if (team == Enumeration::Team::Human) {
                 Hud::Instance()->addTroopToQueue(newUnit->getID(), newUnit->getType());
             }
 
@@ -174,7 +174,7 @@ void UnitManager::updateUnitManager() {
     // Retractear una sola unidad
     if (selectedTroop != nullptr) {
         if (IO::Instance() -> getKeyboard() -> keyPressed(82)) { //ToDo: fachada -- 82 = R, R de retracted
-            if (team == Enumeration::Team::Human){
+            if (team == Enumeration::Team::Human) {
 				Vector3<f32> p = Human::Instance()->hallPosition;
                 selectedTroop -> setUnitDestination(Vector2<f32>(p.x, p.z));
             }
@@ -234,7 +234,7 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
         Cell* target;
         Vector3<f32> hallPosition(0, 0, 0);
 
-        if (team == Enumeration::Team::IA){
+        if (team == Enumeration::Team::IA) {
             hallPosition = IA::Instance()->hallPosition;
 			target = WorldGeometry::Instance()->positionToCell(hallPosition.toVector2());
         } else {
@@ -248,7 +248,7 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
         temp -> getModel() -> setActive(true);
         temp -> setPathToTarget(p);
         temp -> switchState(Enumeration::UnitState::Move);
-        if (team == Enumeration::Team::Human){
+        if (team == Enumeration::Team::Human) {
             Hud::Instance()->removeTroopFromHall(temp->getID());
         }
 
@@ -258,7 +258,7 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
 }
 
 /* Probably add the new deploy system used above */
-void UnitManager::deployAllTroops(Vector2<f32> p){
+void UnitManager::deployAllTroops(Vector2<f32> p) {
     for (std::map<i32,Unit*>::iterator it = inHallTroops -> begin(); it != inHallTroops -> end(); ++it) {
         Unit *temp = it -> second;
 
@@ -267,7 +267,7 @@ void UnitManager::deployAllTroops(Vector2<f32> p){
 
         Cell* target;
         Vector3<f32> hallPosition(0, 0, 0);
-        if (team == Enumeration::Team::IA){
+        if (team == Enumeration::Team::IA) {
 			hallPosition = IA::Instance()->hallPosition;
             target = WorldGeometry::Instance()->positionToCell(hallPosition.toVector2());
         } else {
@@ -284,7 +284,7 @@ void UnitManager::deployAllTroops(Vector2<f32> p){
         temp -> getModel() -> setActive(true);
         temp -> setPathToTarget(p);
         temp -> switchState(Enumeration::UnitState::Move); 
-        if (team == Enumeration::Team::Human){
+        if (team == Enumeration::Team::Human) {
             Hud::Instance()->removeTroopFromHall(temp->getID());
         }
     }
@@ -311,7 +311,7 @@ void UnitManager::commandAttack(Vector2 <f32> p) {
         temp -> getModel() -> setActive(true);
         temp -> setPathToTarget(p);
         temp -> switchState(Enumeration::UnitState::Move); 
-        if (team == Enumeration::Team::Human){
+        if (team == Enumeration::Team::Human) {
             Hud::Instance()->removeTroopFromHall(temp->getID());
         }
     }
@@ -320,7 +320,7 @@ void UnitManager::commandAttack(Vector2 <f32> p) {
 void UnitManager::retractAllTroops() {
     for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
         Unit *temp = it -> second;
-        if (team == Enumeration::Team::IA){
+        if (team == Enumeration::Team::IA) {
 			Vector3<f32> p = IA::Instance()->hallPosition;
             temp -> setPathToTarget(Vector2<f32>(p.x, p.z));
         } else {
@@ -343,7 +343,7 @@ void UnitManager::selectTroop(i32 troopID) {
 
 //Select a troop
 void UnitManager::unSelectTroop() {
-    if (selectedTroop != nullptr){
+    if (selectedTroop != nullptr) {
         selectedTroop = nullptr;
         IO::Instance() -> getMouse() -> changeIcon(CURSOR_NORMAL);
     }
@@ -373,7 +373,7 @@ void UnitManager::moveOrder() {
  */
 bool UnitManager::checkCanPay(std::string type) {
 	std::map<std::string,UnitData>::iterator it = baseUnits->find(type);
-	if (it != baseUnits->end()){
+	if (it != baseUnits->end()) {
 		if (team == Enumeration::Team::Human)
 			return Human::Instance() -> isSolvent(it->second.metalCost, it->second.crystalCost, it->second.citizensVariation);
 		else
@@ -387,19 +387,19 @@ bool UnitManager::isTroopSelected() {
     else return false;
 }
 
-bool UnitManager::isDeployingTroop(){
+bool UnitManager::isDeployingTroop() {
     return deployingTroop;
 }
 
 void UnitManager::deleteUnit(i32 id) {
     std::map<i32, Unit*>::iterator it = inMapTroops->find(id);
-    if (it != inMapTroops->end()){
+    if (it != inMapTroops->end()) {
         if (team == Enumeration::Team::Human) {
             Human::Instance() -> modifyArmyLevel(-it -> second -> getArmyLevel());
         } else {
             IA::Instance() -> modifyArmyLevel(-it -> second -> getArmyLevel());
         }
-        if(selectedTroop == it->second){
+        if (selectedTroop == it->second) {
             selectedTroop = nullptr;
         }
         delete it -> second;
@@ -411,8 +411,8 @@ i32 UnitManager::getCollisionID() {
 	return currentCollisionID;
 }
 
-i32 UnitManager::getDeployingTroopID(){
-    if (deployingTroop){
+i32 UnitManager::getDeployingTroopID() {
+    if (deployingTroop) {
         return currentDeployingTroop;
     } else {
         return -1;
@@ -435,15 +435,15 @@ Unit* UnitManager::getSelectedTroop() {
     return selectedTroop;
 }
 
-i32 UnitManager::getTroopAmount(std::string t){
+i32 UnitManager::getTroopAmount(std::string t) {
     return troopsAmount[t];
 }
 
-bool UnitManager::areTroopsDeployed(){
+bool UnitManager::areTroopsDeployed() {
     return (inHallTroops -> empty());
 }
 
-bool UnitManager::areTroopsInMap(){
+bool UnitManager::areTroopsInMap() {
     return (inMapTroops -> size() != 0);
 }
 
@@ -454,9 +454,9 @@ i32 UnitManager::getTotalTroopAmount() {
 
 const UnitData& UnitManager::getUnitData(std::string type) const{
 	std::map<std::string, UnitData>::const_iterator it = baseUnits->find(type);
-	/*if (it != baseUnits->end()){
+	/*if (it != baseUnits->end()) {
 		//return &it->second;
-	}*/ if (it == baseUnits->end()){
+	}*/ if (it == baseUnits->end()) {
 		std::cout << "El tipo de unidad " << type << " no es valido." << std::endl;
 		exit(0);
 		//return &it->second;
@@ -464,20 +464,20 @@ const UnitData& UnitManager::getUnitData(std::string type) const{
     return it->second;
 }
 
-Unit* UnitManager::getUnit(i32 _id){
+Unit* UnitManager::getUnit(i32 _id) {
     std::map<i32, Unit*>::iterator it = inMapTroops->find(_id);
-    if (it != inMapTroops->end()){
+    if (it != inMapTroops->end()) {
         return it->second;
     }
-    else{
+    else {
         return nullptr;
     }
 }
 
-void UnitManager::adjustUnitFighter(i32 qnty){
+void UnitManager::adjustUnitFighter(i32 qnty) {
     totalUnitFighters += qnty;
 }
 
-i32 UnitManager::getUnitFighters(){
+i32 UnitManager::getUnitFighters() {
 	return totalUnitFighters;
 }

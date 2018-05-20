@@ -1,7 +1,7 @@
 #include "OBDEntity.h"
 #include "OBDSceneNode.h"
 
-OBDEntity::OBDEntity(){
+OBDEntity::OBDEntity() {
 	node_position = glm::vec3(0);
 	node_rotation = glm::vec3(0);
 	node_scale = glm::vec3(0);
@@ -19,7 +19,7 @@ OBDEntity::OBDEntity(){
 	refreshModelMatrix(parent_model_matrix);
 }
 
-OBDEntity::OBDEntity(OBDSceneNode *p){
+OBDEntity::OBDEntity(OBDSceneNode *p) {
 	node_position = glm::vec3(0);
 	node_rotation = glm::vec3(0);
 	node_scale = glm::vec3(0);
@@ -33,18 +33,18 @@ OBDEntity::OBDEntity(OBDSceneNode *p){
 	scaleNode = new TNode(new TTransform(), translationNode);
 
 	parent = p;
-    p->addChild(this);
+    p -> addChild(this);
 
 	refreshModelMatrix(parent_model_matrix);
 }
 
-OBDEntity::~OBDEntity(){
+OBDEntity::~OBDEntity() {
 	delete rotationNode;
 	rotationNode=nullptr;
 	parent = nullptr;
 }
 
-void OBDEntity::refreshModelMatrix(glm::mat4 parent){
+void OBDEntity::refreshModelMatrix(glm::mat4 parent) {
 	parent_model_matrix = parent;
 	TTransform* r = (TTransform*) rotationNode -> getEntity();
 	TTransform* t = (TTransform*) translationNode -> getEntity();
@@ -97,15 +97,15 @@ void OBDEntity::setActive(bool a) {
 	rotationNode -> setActive(a);
 }
 
-glm::vec3 OBDEntity::getPosition(){
+glm::vec3 OBDEntity::getPosition() {
 	return node_position;
 }
 
-glm::vec3 OBDEntity::getRotation(){
+glm::vec3 OBDEntity::getRotation() {
 	return glm::vec3(node_rotation.x * 360, node_rotation.y * 360, node_rotation.y * 360);
 }
 
-glm::vec3 OBDEntity::getScale(){
+glm::vec3 OBDEntity::getScale() {
 	return node_scale;
 }
 
@@ -114,6 +114,6 @@ bool OBDEntity::getActive() {
 	return t;
 }
 
-TNode *OBDEntity::getFirstNode(){
+TNode *OBDEntity::getFirstNode() {
 	return rotationNode;
 }

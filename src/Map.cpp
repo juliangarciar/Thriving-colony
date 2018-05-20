@@ -57,7 +57,7 @@ void Map::Init() {
     loadProgress(30);
 
     //Luz
-    for (auto& element : j["lights"]){
+    for (auto& element : j["lights"]) {
         Vector3<f32> lp;
         lp.x = element["position"]["x"].get<i32>();
         lp.z = element["position"]["z"].get<i32>();
@@ -69,7 +69,7 @@ void Map::Init() {
     loadProgress(35);
 
     //Hud buttons
-    for (auto& element : j["buildables"]){
+    for (auto& element : j["buildables"]) {
         Hud::Instance()->setButtonStatus(element["type"].get<std::string>(), element["isBuildable"].get<bool>());
     }
     Hud::Instance()->setButtonStatus("expandableTerrain", j["expandableTerrain"].get<bool>());
@@ -95,7 +95,7 @@ void Map::Init() {
     Human::Instance() -> hallPosition = Vector3<f32>(humanPosition.x, terrain->getY(humanPosition.x, humanPosition.y), humanPosition.y);
     humanStartPos = humanPosition;
 
-    for (auto& element : j["player"]["buildings"]){
+    for (auto& element : j["player"]["buildings"]) {
         Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
         Human::Instance() -> getBuildingManager() -> createBuilding(v, element["type"].get<std::string>(), 0);
     }
@@ -112,7 +112,7 @@ void Map::Init() {
     IA::Instance() -> hallPosition = Vector3<f32>(iaPosition.x, terrain->getY(iaPosition.x, iaPosition.y), iaPosition.y);
     iaStartPos = iaPosition;
     
-    for(auto& element : j["IA"]["buildings"]){
+    for (auto& element : j["IA"]["buildings"]) {
         Vector2<f32> iaPosition(element["position"]["x"], element["position"]["z"]);
         IA::Instance() -> getBuildingManager() -> createBuilding(iaPosition, element["type"].get<std::string>(), 0);
     }
@@ -141,7 +141,7 @@ void Map::Input() {
     collisionPoint = terrain->getPointCollision(IO::Instance()->getMouse()->getPosition());
 }
 
-void Map::Update(){
+void Map::Update() {
 	
 }
 
@@ -150,7 +150,7 @@ void Map::Render() {
 }
 
 void Map::CleanUp() {
-    for(i32 i=0; i<lights.size(); i++){
+    for (i32 i=0; i<lights.size(); i++) {
         delete lights[i];
     }
     lights.clear();
@@ -160,11 +160,11 @@ void Map::CleanUp() {
 	delete skybox;
 }
 
-Vector2<f32> Map::getHumanStartPosition(){
+Vector2<f32> Map::getHumanStartPosition() {
     return humanStartPos;
 }
 
-Vector2<f32> Map::getIAStartPosition(){
+Vector2<f32> Map::getIAStartPosition() {
     return iaStartPos;
 }
 
@@ -180,30 +180,30 @@ CameraController* Map::getCamera() {
     return camera;
 }
 
-Margins *Map::getMapMargins(){
+Margins *Map::getMapMargins() {
 	return mapMargins;
 }
 
-i32 Map::getMetalProductivity(){
+i32 Map::getMetalProductivity() {
 	return metalProductivity;
 }
 
-i32 Map::getCrystalProductivity(){
+i32 Map::getCrystalProductivity() {
 	return crystalProductivity;
 }
 
-i32 Map::getCitizenIncrement(){
+i32 Map::getCitizenIncrement() {
 	return citizenIncrement;
 }
 
-i32 Map::getInfluenceRangeIncrement(){
+i32 Map::getInfluenceRangeIncrement() {
 	return influenceRangeIncrement;
 }
 
-i32 Map::getInfluenceRangeIncrementLimit(){
+i32 Map::getInfluenceRangeIncrementLimit() {
 	return influenceRangeIncrementLimit;
 }
 
-void Map::loadProgress(i32 p){
+void Map::loadProgress(i32 p) {
     std::cout << "Porcentaje de carga del mapa: " << p << "%" << std::endl;
 }

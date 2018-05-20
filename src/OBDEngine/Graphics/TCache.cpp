@@ -1,7 +1,7 @@
 #include "TCache.h"
 
 TCache::TCache() {
-    for (i32 i = 0; i < (i32)OBDEnums::OpenGLIDs::PARAMS; i++){
+    for (i32 i = 0; i < (i32)OBDEnums::OpenGLIDs::PARAMS; i++) {
         parameterIDs.push_back(0);
     }
     lights = new std::vector<glslLight>();
@@ -14,7 +14,7 @@ TCache::~TCache() {
     lights = nullptr;
 }
 
-std::vector<GLuint> TCache::generateAllIDs(GLuint programID){
+std::vector<GLuint> TCache::generateAllIDs(GLuint programID) {
     GLuint paramIDs[OBDEnums::OpenGLIDs::PARAMS];
 
 	// Get a handle for our "MVP" uniform
@@ -43,43 +43,43 @@ std::vector<GLuint> TCache::generateAllIDs(GLuint programID){
     return std::vector<GLuint>(paramIDs, paramIDs + OBDEnums::OpenGLIDs::PARAMS);
 }
 
-void TCache::setAllIDs(std::vector<GLuint> v){
+void TCache::setAllIDs(std::vector<GLuint> v) {
     parameterIDs = v;
 }
 
-void TCache::setID(OBDEnums::OpenGLIDs s, GLuint i){
+void TCache::setID(OBDEnums::OpenGLIDs s, GLuint i) {
     parameterIDs[(i32)s] = i;
 }
 
-GLuint TCache::getID(OBDEnums::OpenGLIDs s){
+GLuint TCache::getID(OBDEnums::OpenGLIDs s) {
     return parameterIDs[(i32)s];
 }
 
-void TCache::setViewMatrix(glm::mat4 m){
+void TCache::setViewMatrix(glm::mat4 m) {
     viewMatrix = m;
 }
 
-glm::mat4 *TCache::getViewMatrix(){
+glm::mat4 *TCache::getViewMatrix() {
     return &viewMatrix;
 }
 
-void TCache::setProjectionMatrix(glm::mat4 m){
+void TCache::setProjectionMatrix(glm::mat4 m) {
     projectionMatrix = m;
 }
 
-glm::mat4 *TCache::getProjectionMatrix(){
+glm::mat4 *TCache::getProjectionMatrix() {
     return &projectionMatrix;
 }
 
-void TCache::setCameraPosition(glm::vec3 m){
+void TCache::setCameraPosition(glm::vec3 m) {
     cameraPosition = m;
 }
 
-glm::vec3 TCache::getCameraPosition(){
+glm::vec3 TCache::getCameraPosition() {
     return cameraPosition;
 }
 
-std::vector<glslLight> *TCache::getLights(){
+std::vector<glslLight> *TCache::getLights() {
     return lights;
 }
 
