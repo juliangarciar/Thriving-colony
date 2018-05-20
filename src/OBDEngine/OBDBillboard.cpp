@@ -1,8 +1,8 @@
 #include "OBDBillboard.h"
 #include "../GraphicEngine/Window.h"
 
-OBDBillboard::OBDBillboard(OBDSceneNode* parent, glm::vec3 position) {
-    billboardNode = new TNode(new TBillboard(position));
+OBDBillboard::OBDBillboard(OBDSceneNode* parent, OBDShaderProgram *sP, glm::vec3 position, glm::vec2 size) {
+    billboardNode = new TNode(new TBillboard(sP->getShaderProgram(), position, size));
 	parent -> addChild(billboardNode);
 }
 
@@ -16,14 +16,23 @@ void OBDBillboard::setPosition(glm::vec3 pos) {
     aux -> setPosition(pos);
 }
 
-void OBDBillboard::setColor(OBDColor newTopColor, OBDColor newBottomColor) {
+void OBDBillboard::setColor(OBDColor newBackColor, OBDColor newFrontColor) {
     TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
-    aux -> setColor(newTopColor, newBottomColor);
+    aux -> setColor(newBackColor, newFrontColor);
 }
 
-void OBDBillboard::setSize(f32 newHeight, f32 newTopWidth, f32 newBottomWidth) {
+void OBDBillboard::setSize(glm::vec2 s) {
     TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
-    aux -> setSize(newHeight, newTopWidth, newBottomWidth);
+    aux -> setSize(s);
+}
+
+void OBDBillboard::setFrontWidth(f32 s) {
+    TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
+    aux -> setFrontWidth(s);
+}
+
+void OBDBillboard::setActive(bool a){
+	billboardNode -> setActive(a);
 }
 
 glm::vec3 OBDBillboard::getPosition() {
@@ -31,17 +40,12 @@ glm::vec3 OBDBillboard::getPosition() {
     return aux -> getPosition();
 }
 
-f32 OBDBillboard::getHeight() {
+glm::vec2 OBDBillboard::getSize() {
     TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
-    return aux -> getHeight();
+    return aux -> getSize();
 }
 
-f32 OBDBillboard::getTopWidth() {
+f32 OBDBillboard::getFrontWidth() {
     TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
-    return aux -> getTopWidth();
-}
-
-f32 OBDBillboard::getBottomWidth() {
-    TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
-    return aux -> getBottomWidth();
+    return aux -> getFrontWidth();
 }

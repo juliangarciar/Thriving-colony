@@ -62,10 +62,9 @@ Entity::Entity(SceneNode* _layer,
 		getPosition().y
 	);
 
-    barBg = new Billboard(_layer, pos, Color(0,0,0,255), Color(0,0,0,255));
-	bar = new Billboard(_layer, pos, Color(0, 255, 0, 255), Color(0, 255, 0, 255));
-    barBg -> setSize((hitBox.Right() - hitBox.Left()) * 0.8f, 0, 15.00);
-    bar -> setSize((hitBox.Right() - hitBox.Left()) * 0.8f, 0, 15.00);
+	Vector2<f32> size(hitBox.Right() - hitBox.Left() * 0.8f, 15.00);
+    barBg = new Billboard(_layer, pos, size, Color(0,0,0,255), Color(0,0,0,255));
+	bar = new Billboard(_layer, pos, size, Color(0, 255, 0, 255), Color(0, 255, 0, 255));
 }
 
 Entity::~Entity() {

@@ -14,7 +14,7 @@ class OBDBillboard {
          * @param parent
          * @param position
          */
-        OBDBillboard(OBDSceneNode*, glm::vec3);
+        OBDBillboard(OBDSceneNode*, OBDShaderProgram *sP, glm::vec3, glm::vec2);
 
         /**
          * @brief 
@@ -38,7 +38,19 @@ class OBDBillboard {
          * @brief Set the Size object
          * 
          */
-        void setSize(f32, f32, f32);
+        void setSize(glm::vec2);
+
+        /**
+         * @brief Set the Wid object
+         * 
+         */
+        void setFrontWidth(f32);
+
+		/**
+		 * @brief Set the Active object
+		 * @param b
+		 */
+		void setActive(bool);
 
         /**
          * @brief 
@@ -51,21 +63,14 @@ class OBDBillboard {
          * 
          * @return f32 
          */
-        f32 getHeight();
+        glm::vec2 getSize();
 
         /**
          * @brief Get the Top width object
          * 
          * @return f32 
          */
-        f32 getTopWidth();
-
-        /**
-         * @brief Get the Bottom Width object
-         * 
-         * @return f32 
-         */
-        f32 getBottomWidth();
+        f32 getFrontWidth();
 
          /**
          * @brief Get the Node object
