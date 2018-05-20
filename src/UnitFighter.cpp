@@ -66,19 +66,19 @@ void UnitFighter::update(){
     }
     switch(fighterState){
         case Enumeration::UnitFighterState::ufAttack:
-            ufAttackState();
+            //ufAttackState();
         break;
 
         case Enumeration::UnitFighterState::ufMove:
-            ufMoveState();
+            //ufMoveState();
         break;
 
         case Enumeration::UnitFighterState::ufIdle:
-            ufIdleState();
+            //ufIdleState();
         break;
 
         case Enumeration::UnitFighterState::ufConfront:
-            ufConfrontState();
+            //ufConfrontState();
         break;
     
         default: 
@@ -92,16 +92,24 @@ void UnitFighter::switchState(Enumeration::UnitFighterState _state){
     switch(_state){
         case Enumeration::UnitFighterState::ufAttack:
             fighterState = _state;
+            ufAttackState();
         break;
 
         case Enumeration::UnitFighterState::ufMove:
             fighterState = _state;
+            ufMoveState();
         break;
 
         case Enumeration::UnitFighterState::ufIdle:
             fighterState = _state;
+            ufIdleState();
         break;
-    
+
+        case Enumeration::UnitFighterState::ufConfront:
+            fighterState = _state;
+            ufConfrontState();
+        break;
+
         default: 
             std::cout << "INVALID UNITfightER STATE \n";
         break;
@@ -110,18 +118,22 @@ void UnitFighter::switchState(Enumeration::UnitFighterState _state){
 
 void UnitFighter::ufAttackState(){
     /* Animation attack */
+    fighterModel->changeAnimation("attack");
 }
 
 void UnitFighter::ufMoveState(){
     /* Animation move */
+    fighterModel->changeAnimation("walk");
 }
 
 void UnitFighter::ufIdleState(){
     /* Animation IDLE */
+    fighterModel->changeAnimation("idle");
 }
 
 void UnitFighter::ufConfrontState(){
     /* LOCURA */
+    fighterModel->changeAnimation("walk");
 }
 
 void UnitFighter::setNearFighters(std::vector<UnitFighter*>& _nearFighters){
@@ -253,7 +265,7 @@ void UnitFighter::calculateDirection(){
 
             vectorDirection = vectorDirection / distance;   
         }
-        fighterModel->setRotation(Vector3<f32>(vectorDirection.x, 0, vectorDirection.y));
+        //fighterModel->setRotation(Vector3<f32>(vectorDirection.x, 0, vectorDirection.y));
     }   
     else{
         vectorDirection = Vector2<f32>(0, 0);
