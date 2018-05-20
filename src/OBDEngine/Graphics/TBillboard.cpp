@@ -9,7 +9,7 @@ TBillboard::TBillboard(glm::vec3 pos) : TEntity() {
     
     bottomColor = OBDColor(255, 255, 255);
     topColor = OBDColor();
-	
+
     static const GLfloat g_vertex_buffer_data[] = {
         position.x - bottomWidth / 2, position.y + 0.0f, position.z,
         position.x + bottomWidth / 2, position.y + 0.0f + height, position.z,
@@ -29,6 +29,10 @@ TBillboard::TBillboard(glm::vec3 pos) : TEntity() {
     glGenBuffers(1, &vertexbuffer);
     glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+
+    /*glm::vec3 _color = glm::vec3(1,0,1);
+    GLuint colorID = glGetUniformLocation("color");
+    glUniform3f(colorID, 1, GL_FALSE, _color[0]);*/
 }
 
 TBillboard::~TBillboard() {
@@ -36,11 +40,7 @@ TBillboard::~TBillboard() {
 }
 
 void TBillboard::beginDraw() {
-
-    /*glm::vec3 _color = glm::vec3(1,0,1);
-    GLuint colorID = glGetUniformLocation("color");
-    glUniform3f(colorID, 1, GL_FALSE, _color[0]);*/
-    glEnableVertexAttribArray(0);
+    /*glEnableVertexAttribArray(0);
     glVertexAttribPointer(
         0,                  
         3,                  
@@ -50,7 +50,7 @@ void TBillboard::beginDraw() {
         (void*)0            
     );
     glDrawArrays(GL_TRIANGLES, 0, 12);
-    glDisableVertexAttribArray(0);
+    glDisableVertexAttribArray(0);*/
 }
 
 void TBillboard::endDraw() {
