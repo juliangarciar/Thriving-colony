@@ -42,6 +42,8 @@ class Quadtree{
          * @param buildingPtr Pointer to the building
          */
         void insertBuilding(Building* buildingPtr);
+
+        void clearBuilding(Building* buildingPtr);
         /**
          * @brief Assign each cell his neighbors, by checking the hitbox (really slow method)
          * 

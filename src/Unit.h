@@ -59,6 +59,7 @@ class Unit : public Entity {
         void retractState();
         void moveUnit();
         bool inRangeOfAttack();
+        void switchUnitFigthersState(Enumeration::UnitFighterState _ufState);
         const std::string getAttackEvent() const;
         const std::string getMoveEvent() const;
         const std::string getSelectEvent() const;
@@ -69,6 +70,8 @@ class Unit : public Entity {
         void updateFlockingSensor();
 
         Enumeration::UnitState state;
+        Enumeration::UnitFighterState unitFightersState;
+        
         const std::string type;
 
 		//Recruit building name
@@ -78,7 +81,6 @@ class Unit : public Entity {
         const i32 moveSpeed;
         const i32 attackSpeed;
         const i32 attackDamage;
-        bool moving;
         bool canAttack;
         const i32 armyLevel;
 

@@ -46,7 +46,6 @@ Unit::Unit(SceneNode* _layer,
 		moveSpeed(baseData.moveSpeed),
 		attackSpeed(baseData.attackSpeed),
 		attackDamage(baseData.attackDamage),
-		moving(false),
 		canAttack(true),
 		armyLevel(baseData.armyLevel),
 		pathManager(nullptr),
@@ -133,28 +132,38 @@ void Unit::update() {
         case Enumeration::UnitState::Recruiting:
             recruitingState();
         break;
+
         case Enumeration::UnitState::InHome:
             inHomeState();
         break;
+
         case Enumeration::UnitState::Idle:
             idleState();
         break;
+
         case Enumeration::UnitState::Move:
             moveState();
         break;
+
         case Enumeration::UnitState::AttackMove:
             attackMoveState();
         break;
+
         case Enumeration::UnitState::Attack:
             attackState();
-        break;    
+        break;   
+
         case Enumeration::UnitState::Chase:
             chaseState();
         break;
+
         case Enumeration::UnitState::Retract:
             retractState();
         break;
-        default: break;
+
+        default: 
+            std::cout << "ERROR UNIT STATE \n";
+        break;
     }
 }
 
@@ -163,39 +172,47 @@ void Unit::switchState(Enumeration::UnitState newState){
         case Enumeration::UnitState::Recruiting:
             state = newState;
         break;
+
         case Enumeration::UnitState::InHome:
             chaseTimer->stop();
             enemySensorTimer->stop();
             state = newState;
         break;
+
         case Enumeration::UnitState::Idle:
             chaseTimer->stop();
             enemySensorTimer->restart();
             state = newState;
         break;
+
         case Enumeration::UnitState::Move:
             chaseTimer->stop();
             enemySensorTimer->stop();
             state = newState;
         break;
+
         case Enumeration::UnitState::AttackMove:
             state = newState;
         break;
+
         case Enumeration::UnitState::Attack:
             chaseTimer->stop();
             enemySensorTimer->stop();
             state = newState;
-        break;    
+        break;   
+
         case Enumeration::UnitState::Chase:
             chaseTimer->restart();
             enemySensorTimer->stop();
             state = newState;
         break;
+
         case Enumeration::UnitState::Retract:
             chaseTimer->stop();
             enemySensorTimer->stop();
             state = newState;
         break;
+
         default: 
             std::cout << "INVALID UNIT STATE \n";
         break;
@@ -216,26 +233,26 @@ void Unit::inHomeState(){
 }
 
 void Unit::idleState() {
-    //updateUnitFighters();
+    updateUnitFighters();
     if (target != nullptr) {
         switchState(Enumeration::UnitState::Attack);
     }
 }
 
 void Unit::moveState() {
-    //updateUnitFighters();
+    updateUnitFighters();
     moveUnit();
 }
 
 /* ToDo: Tenemos que hablar si existen shortcuts para llamar este */
 /* End this method */
 void Unit::attackMoveState() {
-    //updateUnitFighters();
+    updateUnitFighters();
     moveUnit();
 }
 
 void Unit::attackState() {
-    //updateUnitFighters();
+    updateUnitFighters();
     if(target != nullptr){
         if(inRangeOfAttack()) {
             if(canAttack){
@@ -256,7 +273,7 @@ void Unit::attackState() {
 }
 
 void Unit::chaseState() {
-    //updateUnitFighters();
+    updateUnitFighters();
     if(target == nullptr){
         switchState(Enumeration::UnitState::Idle);
     }
@@ -271,7 +288,7 @@ void Unit::chaseState() {
 }
 
 void Unit::retractState() {
-    //updateUnitFighters();
+    updateUnitFighters();
     if (readyToEnter){
         retractedCallback(this);
         for(std::size_t i = 0; i < unitFighters.size(); ++i){
@@ -288,40 +305,36 @@ void Unit::retractState() {
 }
 
 void Unit::moveUnit() {
-    //if (moving) {
-        // close to destination, stop
-        if (hasArrived()) {
-            if (pathFollow.empty()) {
-                //moving = false;
-                if (state == Enumeration::UnitState::Retract) {
-                    readyToEnter = true;
-                    Human::Instance() -> getUnitManager() -> unSelectTroop();
-                    //triggerRetractedCallback();
-                }
-                else if(state == Enumeration::UnitState::Chase){
-                    switchState(Enumeration::UnitState::Attack);
-                }
-                else if(state == Enumeration::UnitState::Move){
-                    switchState(Enumeration::UnitState::Idle);
-                }
+    // close to destination, stop
+    if (hasArrived()) {
+        if (pathFollow.empty()) {
+            if (state == Enumeration::UnitState::Retract) {
+                readyToEnter = true;
+                Human::Instance() -> getUnitManager() -> unSelectTroop();
+                //triggerRetractedCallback();
             }
-            else{
-                setUnitDestination(this->pathFollow.front());
-                pathFollow.pop_front();
+            else if(state == Enumeration::UnitState::Chase){
+                switchState(Enumeration::UnitState::Attack);
+            }
+            else if(state == Enumeration::UnitState::Move){
+                switchState(Enumeration::UnitState::Idle);
             }
         }
         else{
-            calculateDirection();
-            Vector2<f32> _oldPosition = vectorPos;
-            vectorSpd = vectorDir * moveSpeed;
-            vectorPos += vectorSpd;
-            vectorPos = _oldPosition + (vectorPos - _oldPosition) * Window::Instance() -> getDeltaTimeVariance();
-            WorldGeometry::Instance() -> updateUnitCell(_oldPosition, vectorPos, this);
-            setPosition(vectorPos);
-            unitSensor -> move(vectorPos);
-            updateUnitFighters();
+            setUnitDestination(this->pathFollow.front());
+            pathFollow.pop_front();
         }
-    //}
+    }
+    else{
+        calculateDirection();
+        Vector2<f32> _oldPosition = vectorPos;
+        vectorSpd = vectorDir * moveSpeed;
+        vectorPos += vectorSpd;
+        vectorPos = _oldPosition + (vectorPos - _oldPosition) * Window::Instance() -> getDeltaTimeVariance();
+        WorldGeometry::Instance() -> updateUnitCell(_oldPosition, vectorPos, this);
+        setPosition(vectorPos);
+        unitSensor -> move(vectorPos);
+    }
 }
 
 void Unit::triggerRecruitedCallback(){
@@ -339,6 +352,7 @@ void Unit::setUnitCell(Vector2<f32> vectorPosition) {
 void Unit::setUnitPosition(Vector2<f32> vectorData) {
     setPosition(vectorData);
     std::size_t size = unitFighters.size();
+
     for(std::size_t i = 0; i < size; i++){
         unitFighters[i]->setPosition(vectorData + WorldGeometry::Instance()->getSquadPosition(size - 1, i));
     }
@@ -351,10 +365,10 @@ void Unit::setUnitDestination(Vector2<f32> _vectorData) {
 
     vectorDes = _vectorData;
     std::size_t size = unitFighters.size();
+
     for (std::size_t i = 0; i < size; i++) {
         unitFighters[i] -> setDestiny(_vectorData + WorldGeometry::Instance() -> getSquadPosition(size - 1, i));
     }
-    //moving = true;
 }
 
 void Unit::setPath(const std::list< Vector2<f32> >& path) {

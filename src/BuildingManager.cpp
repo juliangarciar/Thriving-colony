@@ -125,6 +125,7 @@ void BuildingManager::createBuilding(Vector2<f32> pos, std::string type, i32 bui
 		BuildingData b = it->second;
 		if (buildTime >= 0) b.buildingTime = buildTime;
 		tempBuilding = new Building(buildingLayer, nextBuildingId++, team, b, this);
+		
 		buildBuilding(pos);
 	}
 }
@@ -154,7 +155,6 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
 		
 		//Build
 		WorldGeometry::Instance() -> build(tempBuilding);
-
 		//Finish everything
 		tempBuilding = nullptr;
 	} else {

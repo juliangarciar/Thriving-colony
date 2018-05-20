@@ -4,7 +4,7 @@
 #include "GraphicEngine/Window.h"
 #include "IOEngine/Timer.h"
 #include "IOEngine/IO.h"
-UnitFighter::UnitFighter(SceneNode* _parent, std::string _path, f32 _speed):speed(_speed), maxDesviation(_speed * 0.5f), maxTime(0), unitFighterClock(nullptr), fighterState(Enumeration::UnitFighterState::ufIdle){
+UnitFighter::UnitFighter(SceneNode* _parent, std::string _path, f32 _speed):speed(_speed), isMoving(false), maxDesviation(_speed * 0.5f), maxTime(0), unitFighterClock(nullptr), fighterState(Enumeration::UnitFighterState::ufIdle){
     fighterModel = new Model(_parent, 0, _path);
     vectorPosition = Vector2<f32>(0, 0);
     vectorSpeed = Vector2<f32>(0, 0);
@@ -51,6 +51,12 @@ void UnitFighter::move(){
     else{
         isMoving = false;
         unitFighterClock->stop();
+        if(fighterState == Enumeration::UnitFighterState::ufMove){
+            switchState(Enumeration::UnitFighterState::ufIdle);
+        }
+        if(fighterState == Enumeration::UnitFighterState::ufConfront){
+            switchState(Enumeration::UnitFighterState::ufAttack);
+        }
     }
 }
 
@@ -58,6 +64,64 @@ void UnitFighter::update(){
     if(isMoving){
         move();
     }
+    switch(fighterState){
+        case Enumeration::UnitFighterState::ufAttack:
+            ufAttackState();
+        break;
+
+        case Enumeration::UnitFighterState::ufMove:
+            ufMoveState();
+        break;
+
+        case Enumeration::UnitFighterState::ufIdle:
+            ufIdleState();
+        break;
+
+        case Enumeration::UnitFighterState::ufConfront:
+            ufConfrontState();
+        break;
+    
+        default: 
+            std::cout << "INVALID UNITfightER STATE \n";
+        break;
+    }
+}
+
+void UnitFighter::switchState(Enumeration::UnitFighterState _state){
+    // Do something (clocks ?)
+    switch(_state){
+        case Enumeration::UnitFighterState::ufAttack:
+            fighterState = _state;
+        break;
+
+        case Enumeration::UnitFighterState::ufMove:
+            fighterState = _state;
+        break;
+
+        case Enumeration::UnitFighterState::ufIdle:
+            fighterState = _state;
+        break;
+    
+        default: 
+            std::cout << "INVALID UNITfightER STATE \n";
+        break;
+    }
+}
+
+void UnitFighter::ufAttackState(){
+    /* Animation attack */
+}
+
+void UnitFighter::ufMoveState(){
+    /* Animation move */
+}
+
+void UnitFighter::ufIdleState(){
+    /* Animation IDLE */
+}
+
+void UnitFighter::ufConfrontState(){
+    /* LOCURA */
 }
 
 void UnitFighter::setNearFighters(std::vector<UnitFighter*>& _nearFighters){

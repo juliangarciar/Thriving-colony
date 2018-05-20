@@ -5,6 +5,7 @@
 #include "IA.h"
 #include "GraphicEngine/Window.h"
 #include "BuildingManager.h"
+#include <WorldEngine/WorldGeometry.h>
 
 Building::Building(
 	SceneNode *_layer,
@@ -47,6 +48,7 @@ Building::Building(
 }
 
 Building::~Building() {
+    WorldGeometry::Instance()->clearBuildingCell(this);
     delete buildTimer;
     buildTimer = nullptr;
 }

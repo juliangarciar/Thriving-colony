@@ -22,13 +22,18 @@ class UnitFighter{
         void update();
         void setNearFighters(std::vector<UnitFighter*>& _nearFighters);
         void setActive(bool _active);
-		
+		void switchState(Enumeration::UnitFighterState _state);
+
         // Getters
         Vector2<f32> getVectorPosition() const;
         Vector2<f32> getVectorSpeed() const;
         Vector2<f32> getVectorDestiny() const;
         const f32 getSpeed() const;
     private:
+        void ufAttackState();
+        void ufMoveState();
+        void ufIdleState();
+        void ufConfrontState();
         Model* fighterModel;
         const f32 speed;
         bool isMoving;

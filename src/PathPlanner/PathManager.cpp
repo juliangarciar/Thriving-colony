@@ -16,15 +16,7 @@ bool PathManager::createPathTo(Vector2<f32> targetPos){
 
     Cell* origin = WorldGeometry::Instance()->positionToCell(initPos);
     Cell* end = WorldGeometry::Instance()->getValidCell(targetPos, initPos, propietary->getHitbox());
-
     
-    if(end->isBlocked()){
-        end = WorldGeometry::Instance()->getValidCell(targetPos, initPos, propietary->getHitbox());
-        finalPos = end->getPosition();
-    }
-    else{
-        finalPos = targetPos;
-    }
     AStar astar(origin, end);
     astar.Search();
     std::list< Vector2<f32> > finalPath = astar.getPath();
