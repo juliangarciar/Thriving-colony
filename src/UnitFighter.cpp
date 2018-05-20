@@ -13,7 +13,7 @@ UnitFighter::UnitFighter(SceneNode* _parent, std::string _path, f32 _speed):spee
     nearFighters = std::vector< UnitFighter* >();
     unitFighterClock = new Timer(1, false, false);
     unitFighterClock->setCallback([&]{
-        isMoving = false;
+        switchState(Enumeration::UnitFighterState::ufIdle);
     });
 }
 
@@ -35,8 +35,6 @@ void UnitFighter::setDestiny(Vector2<f32> _dest){
     maxTime += 0.1f * maxTime;
     unitFighterClock->changeDuration(maxTime);
     unitFighterClock->restart();
-
-    isMoving = true;
 }
 
 void UnitFighter::move(){
@@ -49,15 +47,84 @@ void UnitFighter::move(){
         fighterModel->setPosition(Vector3<f32>(vectorPosition.x, Map::Instance()->getTerrain()->getY(vectorPosition.x, vectorPosition.y), vectorPosition.y));
     }   
     else{
-        isMoving = false;
         unitFighterClock->stop();
+        if(fighterState == Enumeration::UnitFighterState::ufMove){
+            switchState(Enumeration::UnitFighterState::ufIdle);
+        }
+        else if(fighterState == Enumeration::UnitFighterState::ufConfront){
+            switchState(Enumeration::UnitFighterState::ufAttack);
+        }
     }
 }
 
 void UnitFighter::update(){
-    if(isMoving){
-        move();
+    switch(fighterState){
+        case Enumeration::UnitFighterState::ufAttack:
+            ufAttackState();
+        break;
+
+        case Enumeration::UnitFighterState::ufMove:
+            ufMoveState();
+        break;
+
+        case Enumeration::UnitFighterState::ufIdle:
+            ufIdleState();
+        break;
+
+        case Enumeration::UnitFighterState::ufConfront:
+            ufConfrontState();
+        break;
+    
+        default: 
+            std::cout << "INVALID UNITfightER STATE \n";
+        break;
     }
+}
+
+void UnitFighter::switchState(Enumeration::UnitFighterState _state){
+    // Do something (clocks ?)
+    switch(_state){
+        case Enumeration::UnitFighterState::ufAttack:
+            fighterState = _state;
+            unitFighterClock->stop();
+        break;
+
+        case Enumeration::UnitFighterState::ufMove:
+            fighterState = _state;
+            unitFighterClock->restart();
+        break;
+
+        case Enumeration::UnitFighterState::ufIdle:
+            fighterState = _state;
+            unitFighterClock->stop();
+        break;
+        /* Check what to do with this */
+        case Enumeration::UnitFighterState::ufConfront:
+            fighterState = _state;
+            unitFighterClock->restart();
+        break;
+    
+        default: 
+            std::cout << "INVALID UNITfightER STATE \n";
+        break;
+    }
+}
+
+void UnitFighter::ufAttackState(){
+    /* Animation attack */
+    /* Check range */
+}
+
+void UnitFighter::ufMoveState(){
+    move();
+}
+
+void UnitFighter::ufIdleState(){
+    /* Animation IDLE */
+}
+
+void UnitFighter::ufConfrontState(){
+    /* Cach target */
 }
 
 void UnitFighter::setNearFighters(std::vector<UnitFighter*>& _nearFighters){
