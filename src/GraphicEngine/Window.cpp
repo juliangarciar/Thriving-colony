@@ -80,7 +80,8 @@ void Window::Init(i32 width, i32 height){
 
     dtThen = glfwGetTime();
 
-    billboardLayer = e -> createShaderedSceneNode("media/shaders/vertexShaderBillboards.glsl", "media/shaders/fragmentShaderBillboards.glsl");
+    billboardLayer = e -> createShaderedSceneNode("billboardShader", "media/shaders/vertexShaderBillboards.glsl", "media/shaders/fragmentShaderBillboards.glsl");
+	billboardProgram = e -> getRegisteredShaderProgram("billboardShader");
 }
 
 void Window::setGUI(){ 
@@ -157,6 +158,10 @@ void Window::calculateFramerate() {
 
 i32 Window::getFrameRate() {
     return framerate;
+}
+
+OBDShaderProgram* Window::getBillboardProgram() {
+    return billboardProgram;
 }
 
 OBDSceneNode* Window::getBillboardLayer() {

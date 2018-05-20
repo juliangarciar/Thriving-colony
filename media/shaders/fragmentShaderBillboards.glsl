@@ -1,7 +1,17 @@
 #version 330 core
 
-out vec3 color;
+// Interpolated values from the vertex shaders
+in vec2 UV;
+
+// Ouput data
+out vec4 outColor;
+
+//data
+uniform vec4 color;
+uniform vec4 frontColor;
+uniform float frontWidth;
 
 void main(){
-  color = vec3(1,0,0);
+	if (UV.x < (1.0/frontWidth)) outColor = frontColor;
+	else outColor = color;
 }

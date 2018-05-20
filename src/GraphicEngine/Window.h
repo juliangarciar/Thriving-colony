@@ -62,6 +62,13 @@ class Window {
         i32 getFrameRate();
 
         /**
+         * @brief Get the program where are going to be created all billboards.
+         * 
+         * @return OBDShaderProgram* that is going to be the value of billboardLayer.
+         */
+        OBDShaderProgram* getBillboardProgram();
+
+        /**
          * @brief Get the layer where are going to be created all billboards.
          * 
          * @return OBDSceneNode* that is going to be the value of billboardLayer.
@@ -89,6 +96,7 @@ class Window {
 		OBDEngine *e;
 
         //Lyer where are going to be created all billboards;
+		OBDShaderProgram *billboardProgram;
         OBDSceneNode* billboardLayer;
 
         nanogui::Screen* gui;
