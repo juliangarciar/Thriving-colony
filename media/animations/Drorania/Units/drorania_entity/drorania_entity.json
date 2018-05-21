@@ -2,7 +2,7 @@
 "animations": [
 	{
 	"name": "idle",
-	"delay": 0.15,
+	"delay": 0.03,
 	"objects": [
 		"drorania_entity_idle_000048.obj",
 		"drorania_entity_idle_000049.obj",
@@ -78,7 +78,7 @@
 	},
 	{
 	"name": "walk",
-	"delay": 0.15,
+	"delay": 0.03,
 	"objects": [
 		"drorania_entity_walk_000062.obj",
 		"drorania_entity_walk_000063.obj",
@@ -131,7 +131,7 @@
 	},
 	{
 	"name": "attack",
-	"delay": 0.15,
+	"delay": 0.03,
 	"objects": [
 		"drorania_entity_attack_000079.obj",
 		"drorania_entity_attack_000080.obj",

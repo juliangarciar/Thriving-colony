@@ -29,7 +29,7 @@
 	},
 	{
 	"name": "walk",
-	"delay": 0.15,
+	"delay": 0.03,
 	"objects": [
 		"drorania_ranged_soldier_walk_000041.obj",
 		"drorania_ranged_soldier_walk_000042.obj",
@@ -54,7 +54,7 @@
 	},
 	{
 	"name": "attack",
-	"delay": 0.15,
+	"delay": 0.03,
 	"objects": [
 		"drorania_ranged_soldier_attack_000083.obj",
 		"drorania_ranged_soldier_attack_000084.obj",

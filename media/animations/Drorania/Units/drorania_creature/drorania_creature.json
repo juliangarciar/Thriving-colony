@@ -2,14 +2,14 @@
 "animations": [
 	{
 	"name": "idle",
-	"delay": 0.15,
+	"delay": 0.03,
 	"objects": [
 		"drorania_creature.obj"
 		]
 	},
 	{
 	"name": "walk",
-	"delay": 0.15,
+	"delay": 0.03,
 	"objects": [
 		"drorania_creature_walk_000020.obj",
 		"drorania_creature_walk_000021.obj",
@@ -51,7 +51,7 @@
 	},
 	{
 	"name": "attack",
-	"delay": 0.15,
+	"delay": 0.03,
 	"objects": [
 		"drorania_creature_attack_000020.obj",
 		"drorania_creature_attack_000021.obj",
