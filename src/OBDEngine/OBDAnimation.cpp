@@ -40,19 +40,28 @@ OBDAnimation::~OBDAnimation() {
 }
 
 void OBDAnimation::updateFrame() {
-	frames -> at(currentFrame) -> setActive(false);
-	frames -> at(nextFrame) -> setActive(true);
-	currentFrame = nextFrame;
-	nextFrame++;
-	if (nextFrame >= numberOfFrames) nextFrame = 0;
+	if (getActive()){
+		frames -> at(currentFrame) -> setActive(false);
+		frames -> at(nextFrame) -> setActive(true);
+		currentFrame = nextFrame;
+		nextFrame++;
+		if (nextFrame >= numberOfFrames) nextFrame = 0;
+	}
 }
 
 OBDMaterial *OBDAnimation::getMaterial() {
 	return material;
 }
 
+void OBDAnimation::setActive(bool a){
+	OBDEntity::setActive(a);
+	setFrame(0);
+}
+
 /* Me pase de listo */
 void OBDAnimation::setFrame(i32 nFrame){
+	frames -> at(currentFrame) -> setActive(false);
 	currentFrame = nFrame;
 	nextFrame = nFrame;
+	frames -> at(currentFrame) -> setActive(true);
 }

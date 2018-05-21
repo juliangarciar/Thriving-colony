@@ -28,7 +28,7 @@ class OBDEntity {
          * @brief 
          * 
          */
-        void translate(glm::vec3 t);
+        virtual void translate(glm::vec3 t);
 
         /**
          * @brief 
@@ -36,63 +36,63 @@ class OBDEntity {
          * @param r
          * @param a
          */
-        void rotate(glm::vec3 r, f32 a);
+        virtual void rotate(glm::vec3 r, f32 a);
 
         /**
          * @brief 
          * 
          * @param s
          */
-        void scale(glm::vec3 s);
+        virtual void scale(glm::vec3 s);
 
         /**
          * @brief Set the Position
          * 
          * @param p 
          */
-        void setPosition(glm::vec3 p);
+        virtual void setPosition(glm::vec3 p);
 
         /**
          * @brief Set the Rotation
          * 
          * @param r 
          */
-        void setRotation(glm::vec3 r);
+        virtual void setRotation(glm::vec3 r);
 
         /**
          * @brief Set the Scale
          * 
          * @param s 
          */
-        void setScale(glm::vec3 s);
+        virtual void setScale(glm::vec3 s);
 
         /**
          * @brief Set the Active object
          * 
          * @param a 
          */
-        void setActive(bool a);
+        virtual void setActive(bool a);
 
 		/**
 		 * @brief Get the Position object
 		 * 
 		 * @return glm::vec3 
 		 */
-		glm::vec3 getPosition();
+		virtual glm::vec3 getPosition();
 
 		/**
 		 * @brief Get the Rotation object
 		 * 
 		 * @return glm::vec3 
 		 */
-		glm::vec3 getRotation();
+		virtual glm::vec3 getRotation();
 
 		/**
 		 * @brief Get the Scale object
 		 * 
 		 * @return glm::vec3 
 		 */
-		glm::vec3 getScale();
+		virtual glm::vec3 getScale();
 
         /**
          * @brief Get the Active object
@@ -100,21 +100,21 @@ class OBDEntity {
          * @return true 
          * @return false 
          */
-        bool getActive();
+        virtual bool getActive();
 
 		/**
 		 * @brief 
 		 * 
 		 * @param modelMatrix
 		 */
-		void refreshModelMatrix(glm::mat4);
+		virtual void refreshModelMatrix(glm::mat4);
 
          /**
          * @brief Get the First Node object
          * 
          * @return TNode* 
          */
-        TNode *getFirstNode();
+        virtual TNode *getFirstNode();
 	protected:
 		/**
 		 * @brief Construct a new OBDEntity object

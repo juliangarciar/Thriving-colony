@@ -32,6 +32,12 @@ class OBDAnimation : public OBDEntity {
 		void updateFrame();
 
 		/**
+		 * @brief Set the Active object
+		 * 
+		 */
+		void setActive(bool);
+
+		/**
 		 * @brief Get the Material object
 		 * 
 		 * @return OBDMaterial* 

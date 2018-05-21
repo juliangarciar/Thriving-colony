@@ -13,8 +13,8 @@ Animation::Animation(SceneNode* parent, std::string animationJSON) {
 	ResourceJSON *animation = (ResourceJSON*)Window::Instance()->getEngine()->getResourceManager()->getResource(animationJSON, true);
     json j = *animation -> getJSON();
 
-	std::vector<std::string> animation_objects;
     for (auto& element : j["animations"]) {
+		std::vector<std::string> animation_objects;
 		std::string animationName = element["name"].get<std::string>();
     	for (auto& subelement : element["objects"]) {
 			std::string objectName = subelement.get<std::string>();
@@ -58,8 +58,8 @@ void Animation::changeAnimation(std::string animationName) {
 		currentAnimation -> setActive(false);
 		
 		currentAnimation = it->second;
+
 		currentAnimation -> setActive(true);
-		//currentAnimation -> setFrame(0);
 
 		frameTimer->changeDuration(animationDelays->at(animationName));
 		frameTimer->restart();

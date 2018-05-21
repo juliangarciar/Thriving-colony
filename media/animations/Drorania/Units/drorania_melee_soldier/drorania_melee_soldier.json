@@ -102,5 +102,5 @@
 	}
 ],
 "material": "drorania_melee_soldier.mtl",
-"defaultAnimation": "idle"
+"defaultAnimation": "walk"
 }
