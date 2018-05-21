@@ -6,24 +6,36 @@
 #include "IOEngine/IO.h"
 #include "Entity.h"
 
-UnitFighter::UnitFighter(SceneNode* _parent, Unit* _unitLeader, std::string _path, f32 _speed, f32 _attackRange):unitLeader(_unitLeader),
-                                                                                                                speed(_speed), 
-                                                                                                                attackRange(_attackRange),
-                                                                                                                vectorPosition(0, 0),
-                                                                                                                vectorSpeed(0, 0),
-                                                                                                                vectorDestiny(0, 0),
-                                                                                                                vectorDirection(0, 0),
-                                                                                                                maxDesviation(_speed * 0.5f), 
-                                                                                                                maxTime(0), 
-                                                                                                                unitFighterClock(nullptr), 
-                                                                                                                fighterState(Enumeration::UnitFighterState::ufIdle),
-                                                                                                                nearFighters(std::vector< UnitFighter* >())
+UnitFighter::UnitFighter(SceneNode* _parent, 
+                        Unit* _unitLeader, 
+                        std::string _path, 
+                        f32 _speed, 
+                        f32 _attackRange, 
+                        i32 _fighterIndex):unitLeader(_unitLeader),
+                                            speed(_speed), 
+                                            attackRange(_attackRange),
+                                            fighterIndex(_fighterIndex),
+                                            vectorPosition(0, 0),
+                                            vectorSpeed(0, 0),
+                                            vectorDestiny(0, 0),
+                                            vectorDirection(0, 0),
+                                            maxDesviation(_speed * 0.5f), 
+                                            maxTime(0), 
+                                            unitFighterClock(nullptr), 
+                                            nearFighters(std::vector< UnitFighter* >()),
+                                            fighterState(Enumeration::UnitFighterState::ufIdle)                                                                                                            
 {
     fighterModel = new Animation(_parent, _path);
     
     unitFighterClock = new Timer(1, false, false);
     unitFighterClock->setCallback([&]{
         /* Stop movement */
+        if(fighterState == Enumeration::UnitFighterState::ufMove){
+            switchState(Enumeration::UnitFighterState::ufIdle);
+        }
+        else if(fighterState == Enumeration::UnitFighterState::ufConfront){
+            switchState(Enumeration::UnitFighterState::ufAttack);
+        }
     });
 }
 
@@ -35,21 +47,12 @@ UnitFighter::~UnitFighter(){
 
 void UnitFighter::setPosition(Vector2<f32> _pos) {
     vectorPosition = _pos;
+    fighterModel->setPosition(Vector3<f32>(_pos.x, Map::Instance()->getTerrain()->getY(_pos.x, _pos.y), _pos.y));
 }
 
 void UnitFighter::setDestiny(Vector2<f32> _dest){
-    /*if(fighterState == Enumeration::UnitFighterState::ufConfront){
-        if(inRange()){
-            return ;
-        }
-    }
-    else if(fighterState != Enumeration::UnitFighterState::ufMove){
-        switchState(Enumeration::UnitFighterState::ufMove);
-    }*/
-     
     vectorDestiny = _dest;
     Vector2<f32> vectorDistance = (vectorDestiny - vectorPosition);
-    /* Meter delta time */
     maxTime = (std::sqrt(std::pow(vectorDistance.x, 2) + std::pow(vectorDistance.y, 2))) / speed * 0.016f ;
     maxTime += 0.15f * maxTime;
     unitFighterClock->changeDuration(maxTime);
@@ -57,35 +60,15 @@ void UnitFighter::setDestiny(Vector2<f32> _dest){
 }
 
 void UnitFighter::move(){
-    /*if(isMoving){*/
-        /*if(fighterState == Enumeration::UnitFighterState::ufConfront){
-            if(inRange()){
-                unitFighterClock->stop();
-                switchState(Enumeration::UnitFighterState::ufAttack);
-            }
-        }
-        else{*/
-            /*if(!hasArrived()){*/
-                calculateDirection();
-                Vector2<f32> _oldPosition = vectorPosition;
-                vectorSpeed = vectorDirection * speed;
-                vectorPosition += vectorSpeed;
-                vectorPosition = _oldPosition + (vectorPosition - _oldPosition) * Window::Instance()->getDeltaTimeVariance();
-                fighterModel->setPosition(Vector3<f32>(vectorPosition.x, Map::Instance()->getTerrain()->getY(vectorPosition.x, vectorPosition.y), vectorPosition.y));
-            /*}   
-            else{
-                unitFighterClock->stop();
-                switchState(Enumeration::UnitFighterState::ufIdle);
-            }
-        }*/
-    /*}*/
+    calculateDirection();
+    Vector2<f32> _oldPosition = vectorPosition;
+    vectorSpeed = vectorDirection * speed;
+    vectorPosition += vectorSpeed;
+    vectorPosition = _oldPosition + (vectorPosition - _oldPosition) * Window::Instance()->getDeltaTimeVariance();
+    fighterModel->setPosition(Vector3<f32>(vectorPosition.x, Map::Instance()->getTerrain()->getY(vectorPosition.x, vectorPosition.y), vectorPosition.y));
 }
 
 void UnitFighter::update() {
-    //if (isMoving) {
-    //    move();
-    //}
-    
     switch(fighterState) {
         case Enumeration::UnitFighterState::ufAttack:
             ufAttackState();
@@ -117,7 +100,6 @@ void UnitFighter::switchState(Enumeration::UnitFighterState _state) {
                 unitFighterClock->stop();
                 fighterModel->changeAnimation("attack");
                 fighterState = _state;
-                //ufAttackState();
             }
         break;
 
@@ -125,7 +107,6 @@ void UnitFighter::switchState(Enumeration::UnitFighterState _state) {
             if(fighterState != Enumeration::UnitFighterState::ufMove){
                 fighterModel->changeAnimation("walk");
                 fighterState = _state;
-                //ufMoveState();
             }
         break;
 
@@ -134,7 +115,6 @@ void UnitFighter::switchState(Enumeration::UnitFighterState _state) {
                 unitFighterClock->stop();
                 fighterModel->changeAnimation("idle");
                 fighterState = _state;
-                //ufIdleState();
             }
         break;
 
@@ -142,7 +122,6 @@ void UnitFighter::switchState(Enumeration::UnitFighterState _state) {
             if(fighterState != Enumeration::UnitFighterState::ufConfront){
                 fighterModel->changeAnimation("walk");
                 fighterState = _state;
-                //ufConfrontState();
             }
         break;
 
@@ -153,32 +132,61 @@ void UnitFighter::switchState(Enumeration::UnitFighterState _state) {
 }
 
 void UnitFighter::ufAttackState() {
-    /* Animation attack */
-    //fighterModel->changeAnimation("attack");
+    /* Do nothing */
 }
 
 void UnitFighter::ufMoveState() {
     move();
-    /* Animation move */
-    //fighterModel->changeAnimation("walk");
+    if(hasArrived()){
+        switchState(Enumeration::UnitFighterState::ufIdle);
+    }
 }
 
 void UnitFighter::ufIdleState() {
-    /* Animation IDLE */
-    //fighterModel->changeAnimation("idle");
+    /* Do nothing */
 }
 
+/* Yeah, hit hards the CPU */
 void UnitFighter::ufConfrontState() {
     move();
     if(inRange()){
         switchState(Enumeration::UnitFighterState::ufAttack);
     }
-    else if(unitLeader->getTarget() != nullptr){
-        /* To check this */
-        setDestiny(unitLeader->getTarget()->getPosition());
+    else{
+        Entity* dummyTarget = unitLeader->getTarget();
+        if(dummyTarget != nullptr){
+            if(dummyTarget->getEntityType() == Enumeration::EntityType::Building){
+                /* Fix this method */
+                Vector2<f32> vDirection = dummyTarget->getPosition() - vectorPosition;
+                f32 distance = std::sqrt(std::pow(vDirection.x, 2) +
+                                         std::pow(vDirection.y, 2));
+
+                vDirection = vDirection / distance;
+                vDirection = vDirection * (distance - dummyTarget->getHitbox().getRadius());
+                setDestiny(vectorPosition + vDirection);
+            }
+            else{
+                std::vector< Vector2<f32> > tmp = dummyTarget->getInnerComponentsPosition();
+                if(tmp.size() > 0){
+                    i32 counter = fighterIndex;
+                    if(counter < tmp.size()){
+                        setDestiny(tmp[counter]);
+                    }
+                    else{
+                        while(counter >= tmp.size()){
+                            counter -= tmp.size();
+                        }
+                        if(counter >= 0){
+                            setDestiny(tmp[counter]);
+                        }
+                        else{
+                            setDestiny(tmp[0]);
+                        }
+                    }
+                }
+            }
+        }
     }
-    /* Check how to pass to attack state */
-    //fighterModel->changeAnimation("walk");
 }
 
 void UnitFighter::setNearFighters(std::vector<UnitFighter*>& _nearFighters) {

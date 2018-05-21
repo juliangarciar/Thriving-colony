@@ -27,6 +27,7 @@ class Unit : public Entity {
         /* Do something functions */
         void update();
         void switchState(Enumeration::UnitState);
+        void switchUnitFigthersState(Enumeration::UnitFighterState _ufState);
         void triggerRecruitedCallback();
         void triggerRetractedCallback();
         void setUnitCell(Vector2<f32>);
@@ -59,7 +60,7 @@ class Unit : public Entity {
         void retractState();
         void moveUnit();
         bool inRangeOfAttack();
-        void switchUnitFigthersState(Enumeration::UnitFighterState _ufState);
+        
         const std::string getAttackEvent() const;
         const std::string getMoveEvent() const;
         const std::string getSelectEvent() const;
@@ -68,7 +69,6 @@ class Unit : public Entity {
         void calculateDirection();
         void updateUnitFighters();
         void updateFlockingSensor();
-        void updateConfrontation();
         
         Enumeration::UnitState state;
         
@@ -88,7 +88,6 @@ class Unit : public Entity {
         Timer* enemySensorTimer;
         Timer* attackTimer;
         Timer* chaseTimer;
-        Timer* confrontTimer;
 
         PathManager* pathManager;
         std::list< Vector2<f32> > pathFollow;

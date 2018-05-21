@@ -12,7 +12,7 @@ class Timer;
 class Unit;
 class UnitFighter{
     public:
-        UnitFighter(SceneNode* _parent, Unit* _unitLeader, std::string _path, f32 _speed, f32 _attackRange);
+        UnitFighter(SceneNode* _parent, Unit* _unitLeader, std::string _path, f32 _speed, f32 _attackRange, i32 _fighterIndex);
         ~UnitFighter();
 
         // Setters
@@ -45,6 +45,7 @@ class UnitFighter{
         Animation* fighterModel;
         const f32 speed;
         const f32 attackRange;
+        const i32 fighterIndex;
         //bool isMoving;
         Vector2<f32> vectorPosition;
         Vector2<f32> vectorSpeed;

@@ -248,6 +248,7 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
         temp -> getModel() -> setActive(true);
         temp -> setPathToTarget(p);
         temp -> switchState(Enumeration::UnitState::Move);
+        temp -> switchUnitFigthersState(Enumeration::UnitFighterState::ufMove);
         if (team == Enumeration::Team::Human) {
             Hud::Instance()->removeTroopFromHall(temp->getID());
         }

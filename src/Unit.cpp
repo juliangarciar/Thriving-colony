@@ -86,15 +86,10 @@ Unit::Unit(SceneNode* _layer,
         }
     });
 
-    confrontTimer = new Timer(0.2, true, false);
-    confrontTimer->setCallback([&](){
-        updateConfrontation();
-    });
-
     pathManager = new PathManager(this);
 
     for(std::size_t i = 0; i < unitFighters.size(); i++){
-        unitFighters[i] = new UnitFighter(_layer, this, baseData.troopModel, baseData.moveSpeed, baseData.attackRange);
+        unitFighters[i] = new UnitFighter(_layer, this, baseData.troopModel, baseData.moveSpeed, baseData.attackRange, i);
     }
 }
 
@@ -112,7 +107,6 @@ Unit::~Unit() {
     delete enemySensorTimer;
     delete attackTimer;
     delete chaseTimer;
-    delete confrontTimer;
 }
 
 void Unit::preTaxPlayer() {
@@ -180,38 +174,31 @@ void Unit::switchState(Enumeration::UnitState newState) {
         case Enumeration::UnitState::InHome:
             chaseTimer->stop();
             enemySensorTimer->stop();
-            //confrontTimer->stop();
             state = newState;
         break;
 
         case Enumeration::UnitState::Idle:
             chaseTimer->stop();
             enemySensorTimer->restart();
-            //confrontTimer->stop();
             state = newState;
         break;
 
         case Enumeration::UnitState::Move:
             chaseTimer->stop();
             enemySensorTimer->stop();
-            //confrontTimer->stop();
             switchUnitFigthersState(Enumeration::UnitFighterState::ufMove);
             state = newState;
         break;
 
         case Enumeration::UnitState::AttackMove:
             chaseTimer->stop();
-            
             enemySensorTimer->restart();
-            //confrontTimer->stop();
             state = newState;
         break;
 
         case Enumeration::UnitState::Attack:
             chaseTimer->stop();
             enemySensorTimer->stop();
-            //confrontTimer->restart();
-            //updateConfrontation();
             switchUnitFigthersState(Enumeration::UnitFighterState::ufConfront);
             state = newState;
         break;   
@@ -219,7 +206,6 @@ void Unit::switchState(Enumeration::UnitState newState) {
         case Enumeration::UnitState::Chase:
             chaseTimer->restart();
             enemySensorTimer->stop();
-            //confrontTimer->stop();
             switchUnitFigthersState(Enumeration::UnitFighterState::ufMove);
             state = newState;
         break;
@@ -251,26 +237,22 @@ void Unit::inHomeState() {
 }
 
 void Unit::idleState() {
-    //updateUnitFighters();
     if (target != nullptr) {
         switchState(Enumeration::UnitState::Attack);
     }
 }
 
 void Unit::moveState() {
-    //updateUnitFighters();
     moveUnit();
 }
 
 /* ToDo: Tenemos que hablar si existen shortcuts para llamar este */
 /* End this method */
 void Unit::attackMoveState() {
-    //updateUnitFighters();
     moveUnit();
 }
 
 void Unit::attackState() {
-    //updateUnitFighters();
     if (target != nullptr) {
         if (inRangeOfAttack()) {
             if (canAttack) {
@@ -291,7 +273,6 @@ void Unit::attackState() {
 }
 
 void Unit::chaseState() {
-    //updateUnitFighters();
     if (target == nullptr) {
         switchState(Enumeration::UnitState::Idle);
     }
@@ -306,7 +287,6 @@ void Unit::chaseState() {
 }
 
 void Unit::retractState() {
-    //updateUnitFighters();
     if (readyToEnter) {
         if (retractedCallback) retractedCallback(this);
         for (std::size_t i = 0; i < unitFighters.size(); ++i) {
@@ -560,34 +540,6 @@ void Unit::updateFlockingSensor() {
     nearUnitFighters = dummyFighters;
     for (std::size_t i = 0; i < unitFighters.size(); i++) {
         unitFighters[i] -> setNearFighters(nearUnitFighters);
-    }
-}
-
-void Unit::updateConfrontation() {
-    if(state == Enumeration::UnitState::Attack && target != nullptr){
-        std::cout << "Amo a pegarnos \n";
-        switchUnitFigthersState(Enumeration::UnitFighterState::ufConfront);
-        if(target->getEntityType() == Enumeration::EntityType::Building){
-            Vector2<f32> dummy = target->getPosition() - vectorPos;
-            f32 distance = std::sqrt(std::pow(dummy.x, 2) + std::pow(dummy.y, 2));
-            dummy = dummy / distance;
-            dummy = dummy * (distance - target->getHitbox().getRadius());
-            Vector2<f32> tmp = vectorPos + dummy;
-            for(std::size_t i = 0; i < unitFighters.size(); ++i){
-                unitFighters[i]->setDestiny(tmp);
-            }
-        }
-        else{
-            std::vector< Vector2<f32> > tmp = target->getInnerComponentsPosition();
-            i32 counter = 0;
-            for(std::size_t i = 0; i < unitFighters.size(); ++i){
-                if(counter >= tmp.size()){
-                    counter = 0;
-                }
-                unitFighters[i]->setDestiny(tmp[counter]);
-                ++counter;
-            }
-        }
     }
 }
 
