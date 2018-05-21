@@ -41,6 +41,7 @@ class Unit : public Entity {
         void setTarget(Entity *newTarget);
         /* Getters */
         Vector2<f32> getDestination() const;
+        Vector2<f32> getFinalDestination() const;
         const std::list< Vector2<f32> >& getPath() const;
         const std::string getType() const;
         const std::string getBuildingName() const;
@@ -96,6 +97,7 @@ class Unit : public Entity {
         Vector2<f32> vectorDes;
         Vector2<f32> vectorSpd;
         Vector2<f32> vectorDir;
+        Vector2<f32> vectorFinalDestiny;
         bool readyToEnter;
         const std::string attackEvent;
         const std::string moveEvent;

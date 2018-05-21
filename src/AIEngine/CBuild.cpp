@@ -46,7 +46,16 @@ Enumeration::BehaviourState CBuild::Update() {
                     return Enumeration::BehaviourState::Failure;
                 }
         } else if (type == "House") {
-                if (IA::Instance() -> getLimitReached() || (IA::Instance() -> getTree() -> calculateCitizensRate() < IA::Instance() -> getTree() -> getCitizensThreshold())) {
+                bool needHouse = IA::Instance() -> getLimitReached();
+                if (IA::Instance() -> getMaxPeople() != 200) { //El maximo?
+                    needHouse = false;
+                }
+                if (IA::Instance() -> getMaxPeople() / IA::Instance() -> getCityLevel() >= 0.2) {
+                    needHouse = false;
+                }
+
+
+                if (needHouse || (IA::Instance() -> getTree() -> calculateCitizensRate() < IA::Instance() -> getTree() -> getCitizensThreshold())) {
                     IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::BuildHome);
                     actionToDo();
                     return Enumeration::BehaviourState::Success;

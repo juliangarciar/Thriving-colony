@@ -359,6 +359,10 @@ void Unit::setUnitDestination(Vector2<f32> _vectorData) {
         target = nullptr;
     }
 
+    if (target == nullptr) {
+        vectorFinalDestiny = vectorDes;
+    }
+
     vectorDes = _vectorData;
     std::size_t size = unitFighters.size();
 
@@ -408,6 +412,10 @@ void Unit::takeDamage(i32 _damage) {
     tookDamageTimer -> restart();
     setDamageColor();
     if (currentHP < 1) {
+        for (std::size_t i = 0; i < hostile.size(); i++) {
+            Unit* aux = (Unit*)hostile[i];
+            aux -> setUnitDestination(aux -> getFinalDestination());
+        }
         unitManager->deleteUnit(ID);
         return;
     } else {
@@ -467,6 +475,10 @@ const string Unit::getSelectEvent() const{
 
 Vector2<f32> Unit::getDestination() const{
     return vectorDes;
+}
+
+Vector2<f32> Unit::getFinalDestination() const {
+    return vectorFinalDestiny;
 }
 
 const std::list< Vector2<f32> >& Unit::getPath() const{

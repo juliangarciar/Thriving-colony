@@ -1,7 +1,7 @@
 #include "Condition.h"
 
 Condition::Condition(Action* relatedAction) : Behaviour() {
-    action =  relatedAction;
+    action = relatedAction;
 }
 
 Condition::~Condition() {

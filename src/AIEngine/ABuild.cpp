@@ -27,7 +27,7 @@ Enumeration::BehaviourState ABuild::Update(std::string type) {
     f32 xComp = v.x - IA::Instance() -> hallPosition.x;
     f32 yComp = v.y - IA::Instance() -> hallPosition.y;
     // Si la distancia es menor que el rango - 100 (por si acaso), intenta aumentarlo, si no, sigue
-    if (xComp*xComp - yComp*yComp >= (IA::Instance()-> buildableRange - 100)) {
+    if (xComp*xComp - yComp*yComp > (IA::Instance()-> buildableRange)) {
         if (!IA::Instance() -> increaseBuildableRange()) 
             return Enumeration::BehaviourState::Failure;
     }

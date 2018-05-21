@@ -6,15 +6,18 @@
 
 #include "OBDAnimation.h"
 #include "OBDBillboard.h"
-#include "OBDSkybox.h"
 #include "OBDCamera.h"
+#include "OBDColor.h"
 #include "OBDLight.h"
+#include "OBDMaterial.h"
 #include "OBDObject.h"
 #include "OBDSceneNode.h"
 #include "OBDShaderProgram.h"
+#include "OBDSkybox.h"
 #include "OBDTerrain.h"
-#include "OBDTile.h"
 #include "OBDTexture.h"
+#include "OBDTile.h"
+#include "OBDVideo.h"
 
 #include "ResourceManager/ResourceManager.h"
 #include "Graphics/TNode.h"
@@ -53,6 +56,12 @@ class OBDEngine {
          * 
          */
         void draw();
+
+		/**
+		 * @brief 
+		 * 
+		 */
+		void InitVideoSystem();
 
         /**
          * @brief 
@@ -145,6 +154,13 @@ class OBDEngine {
          * @param c 
          */
         OBDBillboard* createBillboard(OBDSceneNode*, OBDShaderProgram *, glm::vec3, glm::vec2);
+
+        /**
+         * @brief
+         * @param a 
+         * @param c 
+         */
+        OBDVideo* createVideo(OBDSceneNode*, OBDShaderProgram *, std::string);
 
         /**
          * @brief Create a Shader Program object

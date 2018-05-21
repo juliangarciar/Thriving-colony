@@ -26,7 +26,7 @@ CPPFLAGS +=  -g -O3 -std=c++11 -m64 -ffast-math -pthread -Wall -Wno-macro-redefi
 # Lib paths
 LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L$(PROJECTROOT)/lib -Wl,-R -Wl,$(PROJECTROOT)/lib -Wl,--no-as-needed
 # Libs
-LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lXrandr -lXinerama -lXi -lpthread -ldl -lrt -lglfw -lnanogui -lfmod -lfmodstudio -lterterrain -laabbtree
+LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lXrandr -lXinerama -lXi -lpthread -ldl -lrt -lavformat -lavcodec -lavutil -lswresample -lswscale -lglfw -lnanogui -lfmod -lfmodstudio -lterterrain -laabbtree
 
 ######## DON'T EDIT ANYTHING BELOW THIS LINE
 EXECUTABLE := $(BINPATH)/$(TARGET)

@@ -26,13 +26,13 @@ class TMesh : public TEntity {
          * @brief 
          * 
          */
-        virtual void beginDraw();
+        void beginDraw();
 
         /**
          * @brief 
          * 
          */
-        virtual void endDraw();
+        void endDraw();
 
         /**
          * @brief Set the Material object

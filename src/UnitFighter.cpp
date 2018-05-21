@@ -170,8 +170,7 @@ void UnitFighter::ufConfrontState() {
                 vDirection = vDirection / distance;
                 vDirection = vDirection * (distance - dummyTarget->getHitbox().getRadius());
                 setDestiny(vectorPosition + vDirection);
-            }
-            else{
+            } else{
                 std::vector< Vector2<f32> > tmp = dummyTarget->getInnerComponentsPosition();
                 if(tmp.size() > 0){
                     i32 counter = fighterIndex;
@@ -326,3 +325,4 @@ bool UnitFighter::inRange(){
     
     return inRange;
 }
+
