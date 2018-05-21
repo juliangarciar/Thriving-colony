@@ -2,7 +2,7 @@
     "animations": [
         {
         "name": "idle",
-        "delay": 0.15,
+        "delay": 0.03,
         "objects": [
             "kaonov_melee_soldier_idle_000051.obj",
             "kaonov_melee_soldier_idle_000052.obj",
@@ -42,7 +42,7 @@
         },
         {
         "name": "walk",
-        "delay": 0.15,
+        "delay": 0.03,
         "objects": [
             "kaonov_melee_soldier_walk_000026.obj",
             "kaonov_melee_soldier_walk_000027.obj",
@@ -64,7 +64,7 @@
         },
         {
         "name": "attack",
-        "delay": 0.15,
+        "delay": 0.03,
         "objects": [
             "kaonov_melee_soldier_attack_000075.obj",
             "kaonov_melee_soldier_attack_000076.obj",

@@ -2,7 +2,7 @@
 "animations": [
 	{
 	"name": "idle",
-	"delay": 0.15,
+	"delay": 0.03,
 	"objects": [
 		"drorania_melee_soldier_idle_000056.obj",
 		"drorania_melee_soldier_idle_000057.obj",
@@ -52,7 +52,7 @@
 	},
 	{
 	"name": "walk",
-	"delay": 0.15,
+	"delay": 0.03,
 	"objects": [
 		"drorania_melee_soldier_walk_000054.obj",
 		"drorania_melee_soldier_walk_000055.obj",
@@ -75,7 +75,7 @@
 	},
 	{
 	"name": "attack",
-	"delay": 0.15,
+	"delay": 0.03,
 	"objects": [
 		"drorania_melee_soldier_attack_000043.obj",
         "drorania_melee_soldier_attack_000044.obj",
