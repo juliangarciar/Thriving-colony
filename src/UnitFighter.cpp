@@ -51,6 +51,9 @@ void UnitFighter::setPosition(Vector2<f32> _pos) {
 }
 
 void UnitFighter::setDestiny(Vector2<f32> _dest){
+    if(fighterState == Enumeration::UnitFighterState::ufIdle || fighterState == Enumeration::UnitFighterState::ufAttack){
+        switchState(Enumeration::UnitFighterState::ufMove);
+    }
     vectorDestiny = _dest;
     Vector2<f32> vectorDistance = (vectorDestiny - vectorPosition);
     maxTime = (std::sqrt(std::pow(vectorDistance.x, 2) + std::pow(vectorDistance.y, 2))) / speed * 0.016f ;
@@ -87,7 +90,7 @@ void UnitFighter::update() {
         break;
     
         default: 
-            std::cout << "INVALID UNITfightER STATE \n";
+            std::cout << "INVALID FIGHTER STATE \n";
         break;
     }
 }
@@ -137,13 +140,16 @@ void UnitFighter::ufAttackState() {
 
 void UnitFighter::ufMoveState() {
     move();
+    /* Esto es el bug */
     if(hasArrived()){
+        std::cout << "Pues he llegado primo \n";
         switchState(Enumeration::UnitFighterState::ufIdle);
     }
 }
 
 void UnitFighter::ufIdleState() {
     /* Do nothing */
+    //move();
 }
 
 /* Yeah, hit hards the CPU */

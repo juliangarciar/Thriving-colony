@@ -124,7 +124,7 @@ void Unit::preTaxPlayer() {
 }
 
 void Unit::update() {
-    //State machine, color changes according to state
+    updateUnitFighters();
     switch (state) {
         case Enumeration::UnitState::Recruiting:
             recruitingState();
@@ -162,7 +162,6 @@ void Unit::update() {
             std::cout << "ERROR UNIT STATE \n";
         break;
     }
-    updateUnitFighters();
 }
 
 void Unit::switchState(Enumeration::UnitState newState) {
@@ -174,6 +173,7 @@ void Unit::switchState(Enumeration::UnitState newState) {
         case Enumeration::UnitState::InHome:
             chaseTimer->stop();
             enemySensorTimer->stop();
+            switchUnitFigthersState(Enumeration::UnitFighterState::ufIdle);
             state = newState;
         break;
 

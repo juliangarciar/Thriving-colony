@@ -241,14 +241,18 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
             hallPosition = Human::Instance()->hallPosition;
             target = WorldGeometry::Instance()->positionToCell(hallPosition.toVector2());
         }
+        /* Something is going bad here */
         target = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(), p, temp->getHitbox());
         Vector2<f32> dummy = target->getPosition();
         temp -> setUnitPosition(dummy);
         temp -> setUnitCell(dummy);
         temp -> getModel() -> setActive(true);
-        temp -> setPathToTarget(p);
         temp -> switchState(Enumeration::UnitState::Move);
+        
+        temp -> setPathToTarget(p);
+        /* Esto creo que no hace nada */
         temp -> switchUnitFigthersState(Enumeration::UnitFighterState::ufMove);
+        
         if (team == Enumeration::Team::Human) {
             Hud::Instance()->removeTroopFromHall(temp->getID());
         }
