@@ -7,5 +7,5 @@ in vec2 UV;
 out vec4 fragColor;
 
 void main() {
-	fragColor = texture(videoTexture, UV);
+	fragColor = vec4(texture(videoTexture, UV).rgb, 1);
 }

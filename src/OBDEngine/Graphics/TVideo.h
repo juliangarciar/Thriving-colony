@@ -32,6 +32,7 @@ class TVideo : public TEntity {
         void endDraw();
 	private:
 		bool readFrame();
+		int decode(AVCodecContext *avctx, AVFrame *frame, int *got_frame, AVPacket *pkt);
 
 		VideoData *data;
 

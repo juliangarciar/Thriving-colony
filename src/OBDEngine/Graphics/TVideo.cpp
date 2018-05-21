@@ -43,11 +43,8 @@ TVideo::TVideo(GLuint pID, VideoData *d){
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, data -> codec_ctx->width, data -> codec_ctx->height, 
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, data->pCodecCtx->width, data->pCodecCtx->height, 
 		0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-	
-	glm::mat4 mvp = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
-	glUniformMatrix4fv(mvpID, 1, GL_FALSE, glm::value_ptr(mvp));
 }
 
 TVideo::~TVideo(){
@@ -59,6 +56,9 @@ TVideo::~TVideo(){
 
 void TVideo::beginDraw(){
 	readFrame();
+	
+	glm::mat4 mvp = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+	glUniformMatrix4fv(mvpID, 1, GL_FALSE, glm::value_ptr(mvp));
 
 	//Texture
 	glActiveTexture(GL_TEXTURE0);
@@ -85,43 +85,81 @@ void TVideo::beginDraw(){
 void TVideo::endDraw(){
 	glDisableVertexAttribArray(0);
 	glDisableVertexAttribArray(1);
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-bool TVideo::readFrame() {	
-	do {
-		if (av_read_frame(data->fmt_ctx, data->packet) < 0) {
-			av_packet_unref(data->packet);
-			return false;
-		}
+/*void SaveFrame(AVFrame *pFrame, int width, int height, int iFrame) {
+	FILE *pFile;
+	char szFilename[32];
 	
-		if (data->packet->stream_index == data->stream_idx) {
-			int frame_finished = 0;
+	// Open file
+	sprintf(szFilename, "frame%d.ppm", iFrame);
+	pFile=fopen(szFilename, "wb");
+	if(pFile==NULL)
+		return;
+	
+	// Write header
+	fprintf(pFile, "P6\n%d %d\n255\n", width, height);
+	
+	// Write pixel data
+	fwrite(pFrame->data[0], 1, width*height*3, pFile);
 		
-			if (avcodec_decode_video2(data->codec_ctx, data->av_frame, &frame_finished, 
-				data->packet) < 0) {
-				av_packet_unref(data->packet);
-				return false;
-			}
+	// Close file
+	fclose(pFile);
+}*/
+
+bool TVideo::readFrame() {
+	if (av_read_frame(data->pFormatCtx, &data->packet) != 0){
+		std::cout << "Error al leer el frame" << std::endl;
+		return false;
+	}
+	// Is this a packet from the video stream?
+	if(data->packet.stream_index==data->videoStream) {
+		// Decode video frame
+		decode(data->pCodecCtx, data->pFrame, &data->frameFinished, &data->packet);
 		
-			if (frame_finished) {
-				if (!data->conv_ctx) {
-					data->conv_ctx = sws_getContext(data->codec_ctx->width, 
-						data->codec_ctx->height, data->codec_ctx->pix_fmt, 
-						data->codec_ctx->width, data->codec_ctx->height, AV_PIX_FMT_RGB24,
-						SWS_BICUBIC, NULL, NULL, NULL);
-				}
+		// Did we get a video frame?
+		if(data->frameFinished) {
+			// Convert the image from its native format to RGB
+			sws_scale(data->sws_ctx, (uint8_t const * const *)data->pFrame->data,
+					data->pFrame->linesize, 0, data->pCodecCtx->height,
+					data->pFrameRGB->data, data->pFrameRGB->linesize);
 			
-				sws_scale(data->conv_ctx, data->av_frame->data, data->av_frame->linesize, 0, 
-					data->codec_ctx->height, data->gl_frame->data, data->gl_frame->linesize);
-					
-				glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, data->codec_ctx->width, 
-					data->codec_ctx->height, GL_RGB, GL_UNSIGNED_BYTE, 
-					data->gl_frame->data[0]);
-			}
+			glBindTexture(GL_TEXTURE_2D, frame_tex);
+			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, data->pCodecCtx->width, 
+				data->pCodecCtx->height, GL_RGB, GL_UNSIGNED_BYTE, 
+				data->pFrameRGB->data[0]);
+
+			// Save the frame to disk
+			//SaveFrame(data->pFrameRGB, data->pCodecCtx->width, data->pCodecCtx->height, i++);
 		}
-		
-		av_packet_unref(data->packet);
-	} while (data->packet->stream_index != data->stream_idx);
+	}
+	
+	// Free the packet that was allocated by av_read_frame
+	av_packet_unref(&data->packet);
 	
 	return true;
+}
+
+int TVideo::decode(AVCodecContext *avctx, AVFrame *frame, int *got_frame, AVPacket *pkt) {
+    int ret;
+
+    *got_frame = 0;
+
+    if (pkt) {
+        ret = avcodec_send_packet(avctx, pkt);
+        // In particular, we don't expect AVERROR(EAGAIN), because we read all
+        // decoded frames with avcodec_receive_frame() until done.
+        if (ret < 0)
+            return ret == AVERROR_EOF ? 0 : ret;
+    }
+
+    ret = avcodec_receive_frame(avctx, frame);
+    if (ret < 0 && ret != AVERROR(EAGAIN) && ret != AVERROR_EOF)
+        return ret;
+    if (ret >= 0)
+        *got_frame = 1;
+
+    return 0;
 }

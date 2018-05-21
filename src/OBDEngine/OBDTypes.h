@@ -34,6 +34,7 @@ extern "C" {
 	#include <libswresample/swresample.h>
 	#include <libswscale/swscale.h>
 	#include <libavutil/avutil.h>
+	#include <libavutil/imgutils.h>
 	#include <sys/time.h>
 }
 
@@ -91,16 +92,19 @@ enum {
 };
 
 // app data structure
-typedef struct {
-	AVFormatContext *fmt_ctx;
-	int stream_idx;
-	AVStream *video_stream;
-	AVCodecContext *codec_ctx;
-	AVCodec *decoder;
-	AVPacket *packet;
-	AVFrame *av_frame;
-	AVFrame *gl_frame;
-	struct SwsContext *conv_ctx;
-} VideoData;
+struct VideoData{
+	AVFormatContext	*pFormatCtx;
+	int				videoStream;
+	AVCodecContext	*pCodecCtxOrig;
+	AVCodecContext	*pCodecCtx;
+	AVCodec			*pCodec;
+	AVFrame			*pFrame;
+	AVFrame			*pFrameRGB;
+	AVPacket		packet;
+	int				frameFinished;
+	int				numBytes;
+	uint8_t			*buffer;
+	struct SwsContext *sws_ctx;
+};
 
 #endif
