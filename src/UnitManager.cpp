@@ -297,13 +297,23 @@ void UnitManager::deployAllTroops(Vector2<f32> p) {
 }
 
 void UnitManager::commandAttack(Vector2 <f32> p) {
-    for (std::map<i32,Unit*>::iterator it = inMapTroops -> begin(); it != inMapTroops -> end(); ++it) {
+     for (std::map<i32,Unit*>::iterator it = inHallTroops -> begin(); it != inHallTroops -> end(); ++it) {
         Unit *temp = it -> second;
 
+        //Insert in map
+        inMapTroops -> insert(std::pair<i32, Unit*>(temp -> getModel() -> getID(), temp));
+
         Cell* target;
-        Vector3<f32> hallPosition(0, 0, 0);        
+        Vector3<f32> hallPosition(0, 0, 0);
+        if (team == Enumeration::Team::IA) {
+			hallPosition = IA::Instance()->hallPosition;
+            target = WorldGeometry::Instance()->positionToCell(hallPosition.toVector2());
+        } else {
+			hallPosition = Human::Instance()->hallPosition;
+            target = WorldGeometry::Instance()->positionToCell(hallPosition.toVector2());
+        }
         //ToDo: Check this, can return a nullptr
-        target = WorldGeometry::Instance()->getValidCell(temp -> getPosition(), p, temp->getHitbox());
+        target = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(), p, temp->getHitbox());
         
         Vector2<f32> dummy;
         dummy = target->getPosition();
@@ -312,9 +322,6 @@ void UnitManager::commandAttack(Vector2 <f32> p) {
         temp -> getModel() -> setActive(true);
         temp -> setPathToTarget(p);
         temp -> switchState(Enumeration::UnitState::Move); 
-        if (team == Enumeration::Team::Human) {
-            Hud::Instance()->removeTroopFromHall(temp->getID());
-        }
     }
 }
 
