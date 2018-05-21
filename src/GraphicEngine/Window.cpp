@@ -52,6 +52,7 @@ void Window::Init(i32 width, i32 height) {
 
     e = new OBDEngine();
 	e -> Init(windowWidth, windowHeight);
+	e -> InitVideoSystem();
 	e -> createShaderProgram("defaultProgram", "media/shaders/vertexShader.glsl", "media/shaders/fragmentShader.glsl");
 	e -> setCurrentShaderProgram("defaultProgram");
    
@@ -82,6 +83,9 @@ void Window::Init(i32 width, i32 height) {
 
     billboardLayer = e -> createShaderedSceneNode("billboardShader", "media/shaders/vertexShaderBillboards.glsl", "media/shaders/fragmentShaderBillboards.glsl");
 	billboardProgram = e -> getRegisteredShaderProgram("billboardShader");
+
+    videoLayer = e -> createShaderedSceneNode("videoShader", "media/shaders/vertexShaderVideo.glsl", "media/shaders/fragmentShaderVideo.glsl");
+	videoProgram = e -> getRegisteredShaderProgram("videoShader");
 }
 
 void Window::setGUI() { 
@@ -166,4 +170,12 @@ OBDShaderProgram* Window::getBillboardProgram() {
 
 OBDSceneNode* Window::getBillboardLayer() {
     return billboardLayer;
+}
+
+OBDShaderProgram* Window::getVideoProgram(){
+	return videoProgram;
+}
+
+OBDSceneNode* Window::getVideoLayer(){
+	return videoLayer;
 }

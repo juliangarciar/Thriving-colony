@@ -2,6 +2,7 @@
 #include "Game.h"
 
 StartMenu::StartMenu() {
+	video = new Video("media/videos/20180520_231429.mp4");
     //Main
     bgMain = new Panel("Thriving colony");
     //bgMain -> setPosition(Vector2<i32>(400, 200));
@@ -117,6 +118,7 @@ StartMenu::~StartMenu() {
     delete buttonPlay;
     delete buttonBack;
 
+	delete video;
 }
 
 void StartMenu::setHUDEvents() {

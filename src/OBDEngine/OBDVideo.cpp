@@ -1,4 +1,7 @@
 #include "OBDVideo.h"
+#include "Graphics/TVideo.h"
+
+#include <libavutil/error.h>
 
 OBDVideo::OBDVideo(OBDSceneNode* parent, OBDShaderProgram *program, std::string path){
 	data = new VideoData();
@@ -13,9 +16,11 @@ OBDVideo::OBDVideo(OBDSceneNode* parent, OBDShaderProgram *program, std::string 
 	data->buffer = NULL;
 	data->sws_ctx = NULL;
 
+	int error = 0;
+
 	// open video
-	if(avformat_open_input(&data->pFormatCtx, path.c_str(), NULL, NULL) != 0) {
-		std::cout << "Error: failed to open file: " << path.c_str() << std::endl;
+	if((error = avformat_open_input(&data->pFormatCtx, path.c_str(), NULL, NULL)) != 0) {
+		std::cout << "Error " << av_err2str(error) << ": failed to open file: " << path.c_str() << std::endl;
 		exit(0);
 	}
 	

@@ -1,5 +1,5 @@
-#ifndef TMESH_H
-#define TMESH_H
+#ifndef TVIDEO_H
+#define TVIDEO_H
 
 #include "TEntity.h"
 

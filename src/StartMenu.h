@@ -1,12 +1,13 @@
 #ifndef STARTMENU_H
 #define STARTMENU_H
 
-#include <GUIEngine/Button.h>
 #include <Types.h>
+#include <GUIEngine/Button.h>
 #include <GUIEngine/Panel.h>
 #include <GUIEngine/ComboBox.h>
 #include <GUIEngine/Label.h>
 #include <GUIEngine/Slider.h>
+#include <GraphicEngine/Video.h>
 
 /**
  * @class StartMenu.
@@ -81,6 +82,9 @@ class StartMenu {
 
         //Pointer to Button object that goes to the main menu.
         Button *buttonBack;
+
+		//
+		Video *video;
 };
 
 #endif

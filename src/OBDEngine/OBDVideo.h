@@ -5,7 +5,6 @@
 #include "OBDSceneNode.h"
 
 #include "Graphics/TNode.h"
-#include "Graphics/TVideo.h"
 
 class OBDVideo {
     public:
