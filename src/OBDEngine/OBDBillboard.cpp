@@ -16,9 +16,14 @@ void OBDBillboard::setPosition(glm::vec3 pos) {
     aux -> setPosition(pos);
 }
 
-void OBDBillboard::setColor(OBDColor newBackColor, OBDColor newFrontColor) {
+void OBDBillboard::setColor(OBDColor newBackColor) {
     TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
-    aux -> setColor(newBackColor, newFrontColor);
+    aux -> setColor(newBackColor);
+}
+
+void OBDBillboard::setFrontColor(OBDColor newFrontColor) {
+    TBillboard* aux = (TBillboard*)(billboardNode -> getEntity());
+    aux -> setFrontColor(newFrontColor);
 }
 
 void OBDBillboard::setSize(glm::vec2 s) {

@@ -32,7 +32,13 @@ class OBDBillboard {
          * @brief 
          * 
          */
-        void setColor(OBDColor, OBDColor);
+        void setColor(OBDColor);
+
+        /**
+         * @brief 
+         * 
+         */
+        void setFrontColor(OBDColor);
 
         /**
          * @brief Set the Size object

@@ -15,7 +15,9 @@ class TBillboard : public TEntity {
 
         void endDraw();
 
-        void setColor(OBDColor, OBDColor);
+        void setColor(OBDColor);
+
+        void setFrontColor(OBDColor);
 
         void setPosition(glm::vec3);
 

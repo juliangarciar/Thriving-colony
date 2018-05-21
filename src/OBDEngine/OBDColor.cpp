@@ -7,14 +7,14 @@ OBDColor::OBDColor() {
     a = 0;
 }
 
-OBDColor::OBDColor(i32 red, i32 green, i32 blue, i32 alpha) {
+OBDColor::OBDColor(f32 red, f32 green, f32 blue, f32 alpha) {
     r = red;
     g = green;
     b = blue;
     a = alpha;
 }
 
-OBDColor::OBDColor(i32 red, i32 green, i32 blue) {
+OBDColor::OBDColor(f32 red, f32 green, f32 blue) {
     r = red;
     g = green;
     b = blue;
@@ -39,7 +39,7 @@ OBDColor::~OBDColor() {
 
 }
 
-void OBDColor::set(i32 red, i32 green, i32 blue, i32 alpha) {
+void OBDColor::set(f32 red, f32 green, f32 blue, f32 alpha) {
     r = red;
     g = green;
     b = blue;
@@ -53,18 +53,18 @@ void OBDColor::set(glm::vec4 v) {
     a = v.w;
 }
 
-void OBDColor::set(i32 red, i32 green, i32 blue) {
+void OBDColor::set(f32 red, f32 green, f32 blue) {
     r = red;
     g = green;
     b = blue;
-    a = 0;
+    a = 1.0f;
 }
 
 void OBDColor::set(glm::vec3 v) {
     r = v.x;
     g = v.y;
     b = v.z;
-    a = 0;
+    a = 1.0f;
 }
 
 glm::vec3 OBDColor::getRGB() {

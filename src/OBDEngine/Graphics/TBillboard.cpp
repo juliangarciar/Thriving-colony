@@ -41,19 +41,6 @@ void TBillboard::beginDraw() {
 
 	glm::mat4 vpM = pM * vM;
 
-	/*glm::vec3 vertexPosition_worldspace =
-    position
-    + glm::vec3(vM[0][0], vM[1][0], vM[2][0]) * 0.5f * size.x
-    + glm::vec3(vM[0][1], vM[1][1], vM[2][1]) * 0.5f * size.y;
-
-	std::cout << "Before = " << vertexPosition_worldspace.x << " " << vertexPosition_worldspace.y << " " << vertexPosition_worldspace.z << std::endl;
-
-	glm::vec3 vertexPosition_screenspace = glm::project(vertexPosition_worldspace, vM, pM, glm::vec4(0,0,1280,720));
-
-	std::cout << "After  = " << vertexPosition_screenspace.x << " " << vertexPosition_screenspace.y << " " << vertexPosition_screenspace.z << std::endl << std::endl;
-	*/
-	//ToDo: la componente z en screenSpace es mayor a 1 y eso hace que no salga
-	
 	glUniform3f(CameraRight_worldspace_ID, vM[0][0], vM[1][0], vM[2][0]);
 	glUniform3f(CameraUp_worldspace_ID, vM[0][1], vM[1][1], vM[2][1]);
 	glUniformMatrix4fv(ViewProjMatrixID, 1, GL_FALSE, &vpM[0][0]);
@@ -84,8 +71,11 @@ void TBillboard::setPosition(glm::vec3 pos) {
     position = pos;
 }
 
-void TBillboard::setColor(OBDColor newColor, OBDColor newFrontColor) {
+void TBillboard::setColor(OBDColor newColor) {
     color = newColor.getRGBA();
+}
+
+void TBillboard::setFrontColor(OBDColor newFrontColor) {
     frontColor = newFrontColor.getRGBA();
 }
 

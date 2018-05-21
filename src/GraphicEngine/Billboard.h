@@ -9,11 +9,11 @@
 
 class Billboard {
     public:
-        Billboard(SceneNode* parent, Vector3<f32> pos, Vector2<f32> size, Color top, Color bot);
+        Billboard(SceneNode* parent, Vector3<f32> pos, Vector2<f32> size, Color back, Color front);
         ~Billboard();
 
-        void setColor(Color top, Color bot);
-        void setColor(Color totalColor);
+        void setColor(Color);
+        void setFrontColor(Color);
         void setPosition(Vector3<f32> pos);
         void setSize(Vector2<f32>);
 		void setFrontWidth(f32);

@@ -62,8 +62,7 @@ void Map::Init() {
         lp.x = element["position"]["x"].get<i32>();
         lp.z = element["position"]["z"].get<i32>();
         lp.y = terrain -> getY(lp.x, lp.z) + element["height"].get<i32>();
-        Light *light = new Light(lp, Color(1, 1, 1), element["intensity"].get<i32>()); //Color(255, 255, 255)
-        lights.push_back(light);
+        Light *light = new Light(lp, Color(1, 1, 1), element["intensity"].get<i32>());
     }
 
     loadProgress(35);

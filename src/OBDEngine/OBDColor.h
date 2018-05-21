@@ -18,7 +18,7 @@ class OBDColor {
          * @param green 
          * @param blue 
          */
-        OBDColor(i32 red, i32 green, i32 blue);
+        OBDColor(f32 red, f32 green, f32 blue);
 
         /**
          * @brief 
@@ -42,7 +42,7 @@ class OBDColor {
          * @param blue 
          * @param alpha 
          */
-        OBDColor(i32 red, i32 green, i32 blue, i32 alpha);
+        OBDColor(f32 red, f32 green, f32 blue, f32 alpha);
 
         /**
          * @brief 
@@ -59,7 +59,7 @@ class OBDColor {
          * @param blue 
          * @param alpha 
          */
-        void set(i32 red, i32 green, i32 blue, i32 alpha);
+        void set(f32 red, f32 green, f32 blue, f32 alpha);
 
         /**
          * @brief 
@@ -76,7 +76,7 @@ class OBDColor {
          * @param blue 
          * @param alpha 
          */
-        void set(i32 red, i32 green, i32 blue);
+        void set(f32 red, f32 green, f32 blue);
 
         /**
          * @brief 
@@ -100,7 +100,7 @@ class OBDColor {
         glm::vec4 getRGBA();
 
         //Data
-        u32 r, g, b, a;
+        f32 r, g, b, a;
     private:
 };
 

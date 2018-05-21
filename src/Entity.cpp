@@ -62,9 +62,9 @@ Entity::Entity(SceneNode* _layer,
 		getPosition().y
 	);
 
-	Vector2<f32> size(hitBox.Right() - hitBox.Left() * 0.8f, 40.00);
+	Vector2<f32> size(hitBox.Right() - hitBox.Left() * 0.8f, hitBox.Top() - hitBox.Bottom() * 0.1f);
     bar = new Billboard(_layer, pos, size, Color(0,0,0,1), Color(0,1,0,1));
-	bar->setFrontWidth(0.5);
+	bar->setFrontWidth(1);
 }
 
 Entity::~Entity() {
@@ -198,11 +198,11 @@ std::vector<Entity*> Entity::getHostile() const{
 }
 
 void Entity::setBaseColor() {
-    model -> setColor(Color(255, 255, 255, 255));
+    model -> setColor(Color(1, 1, 1, 1));
 }
 
 void Entity::setDamageColor() {
-    model -> setColor(Color(255, 0, 0, 255));
+    model -> setColor(Color(1, 0, 0, 1));
 }
 
 /*

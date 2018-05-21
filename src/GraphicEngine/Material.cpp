@@ -4,7 +4,7 @@
 Material::Material(Texture *tex) {
 	//ToDo: textura?
    	material = new OBDMaterial();
-    setColor(Color(255, 255, 255));
+    setColor(Color(1, 1, 1));
 }
 
 Material::~Material() {
