@@ -41,7 +41,7 @@ void TBillboard::beginDraw() {
 
 	glm::mat4 vpM = pM * vM;
 
-	/*
+	
 	glm::vec3 vertexPosition_worldspace =
     position
     + glm::vec3(vM[0][0], vM[1][0], vM[2][0]) * 0.5f * size.x
@@ -52,7 +52,7 @@ void TBillboard::beginDraw() {
 	glm::vec3 vertexPosition_screenspace = glm::project(vertexPosition_worldspace, vM, pM, glm::vec4(0,0,1280,720));
 
 	std::cout << "After  = " << vertexPosition_screenspace.x << " " << vertexPosition_screenspace.y << " " << vertexPosition_screenspace.z << std::endl << std::endl;
-	*/
+	
 	//ToDo: la componente z en screenSpace es mayor a 1 y eso hace que no salga
 	
 	glUniform3f(CameraRight_worldspace_ID, vM[0][0], vM[1][0], vM[2][0]);
