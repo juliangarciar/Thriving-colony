@@ -54,7 +54,7 @@
 			"buildingType": "Barrack",
 			"moveSpeed": 3,
 			"attackDamage": 10,
-			"attackRange": 10,
+			"attackRange": 25,
 			"attackSpeed": 1,
 			"viewRadius": 450,
 			"maxHP": 80,

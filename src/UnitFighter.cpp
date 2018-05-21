@@ -51,7 +51,7 @@ void UnitFighter::setPosition(Vector2<f32> _pos) {
 }
 
 void UnitFighter::setDestiny(Vector2<f32> _dest){
-    if(fighterState == Enumeration::UnitFighterState::ufIdle || fighterState == Enumeration::UnitFighterState::ufAttack){
+    if(fighterState == Enumeration::UnitFighterState::ufIdle){
         switchState(Enumeration::UnitFighterState::ufMove);
     }
     vectorDestiny = _dest;
