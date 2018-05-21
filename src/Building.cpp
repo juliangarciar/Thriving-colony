@@ -55,7 +55,7 @@ Building::~Building() {
 
 void Building::startBuilding() {
     taxPlayer();
-	model -> setColor(Color(0, 255, 0, 255));
+	model -> setColor(Color(0, 1, 0, 1));
     buildTimer -> start();
 }
 
@@ -105,15 +105,13 @@ void Building::takeDamage(i32 _damage) {
     currentHP = currentHP - _damage;
     
     if (currentHP < 1) {
-        //bar->setColor(Color(0,0,0));
-        //bar->setScale(0);
         buildingManager->deleteBuilding(ID);
         return;
     }
     else {
-        percentage = currentHP / maxHP;
-        //bar->setColor(Color((1.0f - percentage) * 255.0f, percentage * 255.0f, 0));
-        //bar->setScale(percentage);
+        percentage = (float)currentHP / (float)maxHP;
+		bar->setFrontWidth(percentage);
+		bar->setFrontColor(Color(1.f-percentage, percentage, 0));
         tookDamageTimer -> restart();
         // Tint the model red
         setDamageColor();
@@ -125,7 +123,7 @@ void Building::setTarget(Entity *newTarget) {
 }
 
 void Building::setCantBuildColor() {
-	model -> setColor(Color(0, 0, 255, 255));
+	model -> setColor(Color(0, 0, 1, 1));
 }
 
 i32 Building::getBuildingTime() {

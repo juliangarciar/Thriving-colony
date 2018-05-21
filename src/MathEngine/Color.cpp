@@ -7,14 +7,14 @@ Color::Color() {
     a = 0;
 }
 
-Color::Color(i32 red, i32 green, i32 blue) {
+Color::Color(f32 red, f32 green, f32 blue) {
     r = red;
     g = green;
     b = blue;
-    a = 255.0f;
+    a = 1;
 }
 
-Color::Color(i32 red, i32 green, i32 blue, i32 alpha) {
+Color::Color(f32 red, f32 green, f32 blue, f32 alpha) {
     r = red;
     g = green;
     b = blue;
@@ -25,14 +25,14 @@ Color::~Color() {
 
 }
 
-void Color::set(i32 red, i32 green, i32 blue) {
+void Color::set(f32 red, f32 green, f32 blue) {
     r = red;
     g = green;
     b = blue;
-    a = 0;
+    a = 1;
 }
 
-void Color::set(i32 red, i32 green, i32 blue, i32 alpha) {
+void Color::set(f32 red, f32 green, f32 blue, f32 alpha) {
     r = red;
     g = green;
     b = blue;
