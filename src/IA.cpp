@@ -608,9 +608,9 @@ void IA::initializeChoices() {
 bool IA::getIdleTroops() {
     std::map <int, Unit*> *inMap = getUnitManager() -> getInMapTroops();
     for (std::map<i32,Unit*>::iterator it = inMap -> begin(); it != inMap -> end(); ++it) {
-        if (it -> second -> getState() != Enumeration::Attack) {
-            return false;
+        if (it -> second -> getState() == Enumeration::UnitState::Idle) {
+            return true;
         } 
     }
-    return true;
+    return false;
 }

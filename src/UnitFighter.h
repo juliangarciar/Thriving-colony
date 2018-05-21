@@ -9,10 +9,10 @@
 
 //class Model;
 class Timer;
-
+class Unit;
 class UnitFighter{
     public:
-        UnitFighter(SceneNode* _parent, std::string _path, f32 _speed, f32 _attackRange);
+        UnitFighter(SceneNode* _parent, Unit* _unitLeader, std::string _path, f32 _speed, f32 _attackRange, i32 _fighterIndex);
         ~UnitFighter();
 
         // Setters
@@ -30,15 +30,23 @@ class UnitFighter{
         Vector2<f32> getVectorDestiny() const;
         const f32 getSpeed() const;
     private:
+        /* Private functions */
         void ufAttackState();
         void ufMoveState();
         void ufIdleState();
         void ufConfrontState();
         bool inRange();
+        bool hasArrived();
+        Vector2<f32> calculateFlocking();
+        void calculateDirection();
+
+        /* Privamente member variables */
+        Unit* unitLeader;
         Animation* fighterModel;
         const f32 speed;
         const f32 attackRange;
-        bool isMoving;
+        const i32 fighterIndex;
+        //bool isMoving;
         Vector2<f32> vectorPosition;
         Vector2<f32> vectorSpeed;
         Vector2<f32> vectorDestiny;
@@ -49,8 +57,5 @@ class UnitFighter{
         /* Check in the future */
         std::vector<UnitFighter*> nearFighters;
         Enumeration::UnitFighterState fighterState;
-        bool hasArrived();
-        Vector2<f32> calculateFlocking();
-        void calculateDirection();
 };
 #endif /* UNITFIGHTER_H */

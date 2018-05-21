@@ -11,7 +11,7 @@ CAttack::~CAttack() {
 }
 
 Enumeration::BehaviourState CAttack::Update() {
-    if (IA::Instance() -> getUnitManager() -> areTroopsDeployed() == false) {
+    if (IA::Instance() -> getTree() -> readyToAttack() == true && IA::Instance() -> getUnitManager() -> areTroopsDeployed() == false) {
         IA::Instance() -> setChoiceIndex(Enumeration::IAChoices::Attacking);
         action -> Update();
         return Enumeration::BehaviourState::Success;
