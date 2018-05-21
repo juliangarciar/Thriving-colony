@@ -16,6 +16,7 @@ class Billboard {
         void setColor(Color totalColor);
         void setPosition(Vector3<f32> pos);
         void setSize(Vector2<f32>);
+		void setFrontWidth(f32);
         void setActive(bool a);
 
         Vector3<f32> getPosition();
