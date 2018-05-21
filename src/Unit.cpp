@@ -70,9 +70,9 @@ Unit::Unit(SceneNode* _layer,
 
     enemySensorTimer = new Timer(0.5, true, false);
     enemySensorTimer -> setCallback([&]() {
-        //if (state != Enumeration::UnitState::InHome && state != Enumeration::UnitState::Recruiting) {
+        if (state != Enumeration::UnitState::InHome && state != Enumeration::UnitState::Recruiting) {
             unitSensor->update();
-        // }
+        }
     });
     attackTimer = new Timer(attackSpeed, false, false);
     attackTimer -> setCallback([&]() {
@@ -94,7 +94,7 @@ Unit::Unit(SceneNode* _layer,
     pathManager = new PathManager(this);
 
     for(std::size_t i = 0; i < unitFighters.size(); i++){
-        unitFighters[i] = new UnitFighter(_layer, baseData.troopModel, baseData.moveSpeed, baseData.attackRange);
+        unitFighters[i] = new UnitFighter(_layer, this, baseData.troopModel, baseData.moveSpeed, baseData.attackRange);
     }
 }
 
@@ -168,6 +168,7 @@ void Unit::update() {
             std::cout << "ERROR UNIT STATE \n";
         break;
     }
+    updateUnitFighters();
 }
 
 void Unit::switchState(Enumeration::UnitState newState) {
@@ -179,21 +180,21 @@ void Unit::switchState(Enumeration::UnitState newState) {
         case Enumeration::UnitState::InHome:
             chaseTimer->stop();
             enemySensorTimer->stop();
-            confrontTimer->stop();
+            //confrontTimer->stop();
             state = newState;
         break;
 
         case Enumeration::UnitState::Idle:
             chaseTimer->stop();
             enemySensorTimer->restart();
-            confrontTimer->stop();
+            //confrontTimer->stop();
             state = newState;
         break;
 
         case Enumeration::UnitState::Move:
             chaseTimer->stop();
             enemySensorTimer->stop();
-            confrontTimer->stop();
+            //confrontTimer->stop();
             switchUnitFigthersState(Enumeration::UnitFighterState::ufMove);
             state = newState;
         break;
@@ -201,7 +202,7 @@ void Unit::switchState(Enumeration::UnitState newState) {
         case Enumeration::UnitState::AttackMove:
             chaseTimer->stop();
             
-            //enemySensorTimer->restart();
+            enemySensorTimer->restart();
             //confrontTimer->stop();
             state = newState;
         break;
@@ -209,16 +210,16 @@ void Unit::switchState(Enumeration::UnitState newState) {
         case Enumeration::UnitState::Attack:
             chaseTimer->stop();
             enemySensorTimer->stop();
-            confrontTimer->restart();
-            updateConfrontation();
-            //switchUnitFigthersState(Enumeration::UnitFighterState::ufConfront);
+            //confrontTimer->restart();
+            //updateConfrontation();
+            switchUnitFigthersState(Enumeration::UnitFighterState::ufConfront);
             state = newState;
         break;   
 
         case Enumeration::UnitState::Chase:
             chaseTimer->restart();
             enemySensorTimer->stop();
-            confrontTimer->stop();
+            //confrontTimer->stop();
             switchUnitFigthersState(Enumeration::UnitFighterState::ufMove);
             state = newState;
         break;
@@ -226,6 +227,7 @@ void Unit::switchState(Enumeration::UnitState newState) {
         case Enumeration::UnitState::Retract:
             chaseTimer -> stop();
             enemySensorTimer -> stop();
+            switchUnitFigthersState(Enumeration::UnitFighterState::ufMove);
             state = newState;
         break;
 
@@ -249,26 +251,26 @@ void Unit::inHomeState() {
 }
 
 void Unit::idleState() {
-    updateUnitFighters();
+    //updateUnitFighters();
     if (target != nullptr) {
         switchState(Enumeration::UnitState::Attack);
     }
 }
 
 void Unit::moveState() {
-    updateUnitFighters();
+    //updateUnitFighters();
     moveUnit();
 }
 
 /* ToDo: Tenemos que hablar si existen shortcuts para llamar este */
 /* End this method */
 void Unit::attackMoveState() {
-    updateUnitFighters();
+    //updateUnitFighters();
     moveUnit();
 }
 
 void Unit::attackState() {
-    updateUnitFighters();
+    //updateUnitFighters();
     if (target != nullptr) {
         if (inRangeOfAttack()) {
             if (canAttack) {
@@ -289,7 +291,7 @@ void Unit::attackState() {
 }
 
 void Unit::chaseState() {
-    updateUnitFighters();
+    //updateUnitFighters();
     if (target == nullptr) {
         switchState(Enumeration::UnitState::Idle);
     }
@@ -304,7 +306,7 @@ void Unit::chaseState() {
 }
 
 void Unit::retractState() {
-    updateUnitFighters();
+    //updateUnitFighters();
     if (readyToEnter) {
         if (retractedCallback) retractedCallback(this);
         for (std::size_t i = 0; i < unitFighters.size(); ++i) {
@@ -326,12 +328,13 @@ void Unit::moveUnit() {
             if (state == Enumeration::UnitState::Retract) {
                 readyToEnter = true;
                 Human::Instance() -> getUnitManager() -> unSelectTroop();
+                switchState(Enumeration::UnitState::InHome);
                 //triggerRetractedCallback();
             }
             else if (state == Enumeration::UnitState::Chase) {
                 switchState(Enumeration::UnitState::Attack);
             }
-            else if (state == Enumeration::UnitState::Move) {
+            else {
                 switchState(Enumeration::UnitState::Idle);
             }
         } else {
@@ -588,10 +591,7 @@ void Unit::updateConfrontation() {
 }
 
 void Unit::switchUnitFigthersState(Enumeration::UnitFighterState _state){
-    //std::cout << "\n";
     for(std::size_t i = 0; i < unitFighters.size(); ++i){
-        //std::cout << "Fighter " << i << ": ";
         unitFighters[i]->switchState(_state);
-        //std::cout << "\n";
     }
 }
