@@ -80,7 +80,7 @@ Enumeration::BehaviourState CRecruit::Update() {
 }
 
 void CRecruit::actionToDo() {
-    if (IA::Instance() -> isSolvent(metal, crystal, citizens)) {
+    if (IA::Instance() -> getUnitManager() -> checkCanPay(type)) {
         action -> Update(type);
         IA::Instance() -> getRootNode() -> setPriority(nullptr);
     } else {

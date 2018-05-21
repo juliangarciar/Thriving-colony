@@ -300,7 +300,7 @@ void BehaviourTree::init(i32 behaviour) {
         case Enumeration::IABehaviour::VeryHappy:
             // Happiness thresholds
             happinessThreshold = 50;
-            attackThreshold = 100;
+            attackThreshold = 10;
             // Service milestones
             marketMilestone = 150;
             hospitalMilestone = 450;
