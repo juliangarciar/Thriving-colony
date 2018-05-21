@@ -280,13 +280,14 @@ void UnitFighter::calculateDirection() {
     if (distance != 0) {
         vectorDirection = _incVector / distance;
         vectorDirection += calculateFlocking();
+
+        fighterModel->setRotation(Vector3<f32>(0, std::atan2(vectorDirection.y, vectorDirection.x)*180.0f/3.1415926f + 90.f, 0));
         
         /* Normalize */
         if (vectorDirection.x != 0 || vectorDirection.y != 0) {
             distance = std::sqrt(std::pow(vectorDirection.x, 2) + std::pow(vectorDirection.y, 2));
             vectorDirection = vectorDirection / distance;   
         }
-        //fighterModel->setRotation(Vector3<f32>(vectorDirection.x, 0, vectorDirection.y));
     }   
     else{
         vectorDirection = Vector2<f32>(0, 0);
