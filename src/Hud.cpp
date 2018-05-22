@@ -400,7 +400,7 @@ void Hud::InitDebug(){
     ///// DEBUG /////
     playerResources = new Panel("Player Resources");
     playerResources ->setVerticalLayout();
-    playerResources -> setSize(Vector2<i32> (120, 245));
+    playerResources -> setSize(Vector2<i32> (120, 165));
     i32 melees = 
         Human::Instance() -> getUnitManager() -> getTroopAmount("StandardM") + 
         Human::Instance() -> getUnitManager() -> getTroopAmount("AdvancedM");
@@ -413,48 +413,52 @@ void Hud::InitDebug(){
     std::stringstream os;
     os << "Metal: " << std::to_string(Human::Instance() -> metalAmount);
     playerMetalAmount = new Label(playerResources, os.str());
-    playerMetalAmount -> setColor(200, 0, 200, 0);
+    playerMetalAmount -> setColor(255, 255, 255, 255);
 
     os = std::stringstream();
     os << "Crystal: " << std::to_string(Human::Instance() -> crystalAmount);
     playerCrystalAmount = new Label(playerResources, os.str());
-    playerCrystalAmount -> setColor(150, 0, 0, 150);
+    playerCrystalAmount -> setColor(255, 255, 255, 255);
 
     os = std::stringstream();
-    os << "People: " << std::to_string(Human::Instance() -> getMaxPeople());
+    os << "Denizens: " << std::to_string(Human::Instance() -> getMaxPeople());
     playerPeople = new Label(playerResources, os.str());
-    playerPeople -> setColor(150, 200, 200, 0);
+    playerPeople -> setColor(255, 255, 255, 170);
 
     os = std::stringstream();
     os << "Citizens: " << std::to_string(Human::Instance() -> getCitizens());
     playerCitizens = new Label(playerResources, os.str());
-    playerCitizens -> setColor(150, 200, 200, 0);
+    playerCitizens -> setColor(255, 255, 255, 170);
 
     os = std::stringstream();
-    os << "UnitFighters: " << std::to_string(Human::Instance() -> getUnitManager() -> getUnitFighters());
+    os << "Warriors: " << std::to_string(Human::Instance() -> getUnitManager() -> getUnitFighters());
     playerUnitFighters = new Label(playerResources, os.str());
-    playerUnitFighters -> setColor(150, 200, 200, 0);
+    playerUnitFighters -> setColor(255, 255, 255, 170);
 
     os = std::stringstream();
     os << "Army size: " << std::to_string(Human::Instance() -> getArmySize());
     playerArmySize = new Label(playerResources, os.str());
     playerArmySize -> setColor(150, 200, 200, 0);
+    playerArmySize ->hide();
 
     os = std::stringstream();
     os << "Happiness: " << std::to_string(Human::Instance() -> getHappiness());
     playerHappiness = new Label(playerResources, os.str());
-    playerHappiness -> setColor(200, 210, 48, 130);
+    playerHappiness -> setColor(255, 255, 255, 255);
 
     os = std::stringstream();
     os << "Melee: " << std::to_string(melees);
     playerMelees = new Label(playerResources, os.str());
     os = std::stringstream();
+    playerMelees ->hide();
     os << "Ranged: " << std::to_string(ranges);
     playerRangeds = new Label(playerResources, os.str());
     os = std::stringstream();
+    playerRangeds ->hide();
     os << "Siege: " << std::to_string(sieges);
     playerSieges = new Label(playerResources, os.str());
     os = std::stringstream();
+    playerSieges ->hide();
     os << "FPS: " << std::to_string(Window::Instance() -> getFrameRate());
     framerateLabel = new Label(os.str());
     framerateLabel -> setSize(Vector2<i32> (50, 15));
@@ -462,6 +466,7 @@ void Hud::InitDebug(){
     os = std::stringstream();
     
     iaResources = new Panel("IA Resources");
+    iaResources -> hide();
     iaResources -> setVerticalLayout();
     iaResources -> setPosition(Vector2<i32>(1000, 0));
     iaResources -> setSize(Vector2<i32> (200, 270));
@@ -484,7 +489,7 @@ void Hud::InitDebug(){
     iaos << "Citizens: " << std::to_string(IA::Instance() -> getCitizens());
     iaCitizens = new Label(iaResources, iaos.str());
     iaos = std::stringstream();
-    iaos << "UnitFighters: " << std::to_string(IA::Instance() -> getUnitManager() -> getUnitFighters());
+    iaos << "Warriors: " << std::to_string(IA::Instance() -> getUnitManager() -> getUnitFighters());
     iaUnitFighters = new Label(iaResources, iaos.str());
     iaos = std::stringstream();
     iaos << "Happiness: " << std::to_string(IA::Instance() -> getHappiness());
@@ -868,13 +873,13 @@ void Hud::debug() {
     os << "Crystal: " << std::to_string(Human::Instance() -> crystalAmount);
     playerCrystalAmount -> setLabel(os.str());
     os = std::stringstream();
-    os << "People: " << std::to_string(Human::Instance() -> getMaxPeople());
+    os << "Denizens: " << std::to_string(Human::Instance() -> getMaxPeople());
     playerPeople -> setLabel(os.str());
     os = std::stringstream();
     os << "Citizens: " << std::to_string(Human::Instance() -> getCitizens());
     playerCitizens -> setLabel(os.str());
     os = std::stringstream();
-    os << "UnitFighters: " << std::to_string(Human::Instance() -> getUnitManager() -> getUnitFighters());
+    os << "Warriors: " << std::to_string(Human::Instance() -> getUnitManager() -> getUnitFighters());
     playerUnitFighters -> setLabel(os.str());
     os = std::stringstream();
     os << "Army Size: " << std::to_string(Human::Instance() -> getArmySize());

@@ -67,7 +67,7 @@ void IA::Init(std::string _race) {
 		updateFastTimer -> restart();
 		updateSlowTimer -> restart();
 	});
-    updateSlowTimer = new Timer(3.00, true);
+    updateSlowTimer = new Timer(1.00, true);
 	updateSlowTimer -> setCallback([&]() {
 		rootNode -> Update();
 		updateFastTimer -> restart();
@@ -115,7 +115,6 @@ BehaviourTree* IA::getTree() {
 * Goes over the vector of buildings looking up, right, down and left of every building built
 * until find the first empty position
 */
-
 Vector2<f32> IA::determinatePositionBuilding(const Box2D& buildingHitbox) const {
     Vector2<f32> dummy = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(), hallPosition.toVector2(), buildingHitbox, true) -> getHitbox().TopLeft();
     return dummy;
@@ -179,7 +178,6 @@ void IA::chooseBehaviour() {
             veryUnhappyBehaviour();
         break;
     }
-    std::cout << chosenBehaviour << std::endl;
 }
 
 void IA::veryHappyBehaviour() {

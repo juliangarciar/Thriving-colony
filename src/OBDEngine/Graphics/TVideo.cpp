@@ -106,7 +106,7 @@ bool TVideo::readFrame() {
 			avformat_seek_file(data->pFormatCtx, data->videoStream, 0, 0, stream->duration, 0);
 		} else return false;
 	} else {
-		std::cout << "Error " << error << " al leer el frame" << std::endl;
+		//std::cout << "Error " << error << " al leer el frame" << std::endl;
 		return false;
 	}
 	// Is this a packet from the video stream?
