@@ -53,6 +53,9 @@ void OBDEngine::Init(i32 sW, i32 sH) {
 	// Enable blending
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	//Antialiasing
+	glEnable(GL_MULTISAMPLE);  
     
 	//Gen VAO
     GLuint VAO = TEntity::cache.getID(OBDEnums::OpenGLIDs::VAO_BUFFER);
