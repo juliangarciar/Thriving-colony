@@ -20,10 +20,9 @@ ResourceManager::~ResourceManager() {
 
 void ResourceManager::Update() {
 	if (currentThreads < maxThreads && paths.size()){
-		std::string path = paths.front();
-		std::thread([=](){
-			load(path);
-			std::cout << "Se ha cargado asincronamente: " << path << std::endl;
+		std::thread([&](){
+			load(paths.front());
+			std::cout << "Se ha cargado asincronamente: " << paths.front() << std::endl;
 			currentThreads--;
 		}).detach();
 		paths.pop();
@@ -32,6 +31,8 @@ void ResourceManager::Update() {
 }
 
 void ResourceManager::load(std::string path) {
+	if (resources.find(path) != resources.end()) return;
+
     std::size_t found = path.find_last_of(".");
     std::string extension = path.substr(found+1);
 
