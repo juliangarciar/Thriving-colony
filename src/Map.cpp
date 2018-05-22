@@ -69,23 +69,6 @@ void Map::Init() {
 
     loadProgress(35);
 
-    //Hud buttons
-    hud -> Init();
-    for (auto& element : j["buildables"]) {
-        Hud::Instance()->setButtonStatus(element["type"].get<std::string>(), element["isBuildable"].get<bool>());
-    }
-    Hud::Instance()->setButtonStatus("expandableTerrain", j["expandableTerrain"].get<bool>());
-
-    //Hud events
-    IO::Instance() -> getEventManager() -> addEvent("showBuiltText", [&]() {
-        Hud::Instance() -> addToastToQueue("Se ha construido un edificio");
-    });
-    IO::Instance() -> getEventManager() -> addEvent("showRecruitedText", [&]() {
-        Hud::Instance() -> addToastToQueue("Se ha reclutado una tropa");
-    });
-    
-	loadProgress(45);
-
     //Game productivity
     metalProductivity = j["game"]["metal_productivity"].get<i32>();
     crystalProductivity = j["game"]["crystal_productivity"].get<i32>();
@@ -162,8 +145,8 @@ void Map::Init() {
 			Game::Instance() -> changeState(Enumeration::State::DefeatState);
 		}
 	});
-	
-	loadProgress(50);
+    
+	loadProgress(45);
 
     //Human
     human -> Init("Drorania"); 
@@ -190,7 +173,7 @@ void Map::Init() {
         Human::Instance() -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
     });
 
-    loadProgress(70);
+    loadProgress(60);
 
     //IA
     ia -> Init("Kaonov");
@@ -217,12 +200,25 @@ void Map::Init() {
         IA::Instance() -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
     });
 
-    loadProgress(90);
+    loadProgress(80);
 
-	//Init debug
+    //Hud buttons
+    hud -> Init();
+    for (auto& element : j["buildables"]) {
+        Hud::Instance()->setButtonStatus(element["type"].get<std::string>(), element["isBuildable"].get<bool>());
+    }
+    Hud::Instance()->setButtonStatus("expandableTerrain", j["expandableTerrain"].get<bool>());
+
+    //Hud events
+    IO::Instance() -> getEventManager() -> addEvent("showBuiltText", [&]() {
+        Hud::Instance() -> addToastToQueue("Se ha construido un edificio");
+    });
+    IO::Instance() -> getEventManager() -> addEvent("showRecruitedText", [&]() {
+        Hud::Instance() -> addToastToQueue("Se ha reclutado una tropa");
+    });
 	hud->InitDebug();
 
-    loadProgress(95);
+	loadProgress(95);
 
     //Init camera controller
     camera = new CameraController();
@@ -435,4 +431,6 @@ i32 Map::getInfluenceRangeIncrementLimit() {
 
 void Map::loadProgress(i32 p) {
     std::cout << "Porcentaje de carga del mapa: " << p << "%" << std::endl;
+	//ToDo: barra de carga
+	Window::Instance()->endScene();
 }
