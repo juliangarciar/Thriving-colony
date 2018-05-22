@@ -13,7 +13,7 @@ Window::Window() {
     closeWindow = false;
     
     if (!glfwInit()) {
-		std::cout << "Failed to initialize GLFW" << std::endl;
+		//std::cout << "Failed to initialize GLFW" << std::endl;
 		exit(0);
 	}
 
@@ -43,12 +43,12 @@ void Window::Init(i32 width, i32 height) {
     // Create an application window with the following settings:
     window = glfwCreateWindow(windowWidth, windowHeight, "Thriving Colony", nullptr, nullptr);
     if (window == nullptr) {
-        std::cout << "Failed to create GLFW window" << std::endl;
+        //std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         exit(0);
     }
 
-    std::cout << "Using OpenGL version: " <<  glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MAJOR) << "." << glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MINOR) << std::endl;
+    //std::cout << "Using OpenGL version: " <<  glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MAJOR) << "." << glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MINOR) << std::endl;
 
     glfwMakeContextCurrent(window);
 

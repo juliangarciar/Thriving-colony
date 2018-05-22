@@ -22,7 +22,7 @@ void ResourceMTL::load(const char *path) {
 
     bool loadout = loader.LoadMaterials(path);
     if (!loadout) {
-        std::cout << "Error al abrir el fichero " << path << std::endl;
+        //std::cout << "Error al abrir el fichero " << path << std::endl;
         exit(0);
     }
 
