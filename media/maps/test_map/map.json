@@ -32,7 +32,19 @@
 		"crystal_productivity": 20,
 		"expansion_increment": 20,
 		"expansion_increment_times": 5,
-		"citizen_increment": 1
+		"citizen_increment": 1,
+		"win_condition": {
+			"player": "IA", 
+			"building": "MainBuilding",
+			"condition": "==",
+			"value": 0
+		},
+		"lose_condition": {
+			"player": "Human", 
+			"building": "MainBuilding",
+			"condition": "==",
+			"value": 0
+		}
 	},
 	"camera":{
 		"zoom": {

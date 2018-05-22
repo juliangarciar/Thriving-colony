@@ -198,6 +198,10 @@ class Map {
 
 		//Number of times you can expand your terrain
 		i32 influenceRangeIncrementLimit;
+
+		//Conditions
+		Condition winCondition;
+		Condition loseCondition;
 };
 
 #endif

@@ -93,11 +93,72 @@ void Map::Init() {
 	influenceRangeIncrementLimit = j["game"]["expansion_increment_times"].get<i32>();
 	citizenIncrement = j["game"]["citizen_increment"].get<i32>();
 
-    IO::Instance() -> getEventManager() -> addEvent("checkWinCondition", [&]() {
-		if (IA::Instance() -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
+	winCondition = Condition();
+	winCondition.player = j["game"]["win_condition"]["player"].get<std::string>();
+	winCondition.building = j["game"]["win_condition"]["building"].get<std::string>();
+	winCondition.condition = j["game"]["win_condition"]["condition"].get<std::string>();
+	winCondition.value = j["game"]["win_condition"]["value"].get<i32>();
+
+    IO::Instance() -> getEventManager() -> addEvent("checkWinCondition", [=]() {
+		int amount = 0;
+		if (winCondition.player == "IA"){
+			amount = IA::Instance() -> getBuildingManager() -> getAmount(winCondition.building);
+		} else if (winCondition.player == "Human") {
+			amount = Human::Instance() -> getBuildingManager() -> getAmount(winCondition.building);
+		}
+
+		bool youWin = false;
+
+		if (winCondition.condition == "=="){
+			youWin = (amount == winCondition.value);
+		} else if (winCondition.condition == "<="){
+			youWin = (amount <= winCondition.value);
+		} else if (winCondition.condition == ">="){
+			youWin = (amount >= winCondition.value);
+		} else if (winCondition.condition == "<"){
+			youWin = (amount < winCondition.value);
+		} else if (winCondition.condition == ">"){
+			youWin = (amount > winCondition.value);
+		} else if (winCondition.condition == "!="){
+			youWin = (amount != winCondition.value);
+		}
+
+		if (youWin){
 			Game::Instance() -> changeState(Enumeration::State::WinState);
 		}
-		if (Human::Instance() -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
+	});
+
+	loseCondition = Condition();
+	loseCondition.player = j["game"]["lose_condition"]["player"].get<std::string>();
+	loseCondition.building = j["game"]["lose_condition"]["building"].get<std::string>();
+	loseCondition.condition = j["game"]["lose_condition"]["condition"].get<std::string>();
+	loseCondition.value = j["game"]["lose_condition"]["value"].get<i32>();
+
+    IO::Instance() -> getEventManager() -> addEvent("checkLoseCondition", [=]() {
+		int amount = 0;
+		if (loseCondition.player == "IA"){
+			amount = IA::Instance() -> getBuildingManager() -> getAmount(loseCondition.building);
+		} else if (loseCondition.player == "Human") {
+			amount = Human::Instance() -> getBuildingManager() -> getAmount(loseCondition.building);
+		}
+
+		bool youLose = false;
+
+		if (loseCondition.condition == "=="){
+			youLose = (amount == loseCondition.value);
+		} else if (loseCondition.condition == "<="){
+			youLose = (amount <= loseCondition.value);
+		} else if (loseCondition.condition == ">="){
+			youLose = (amount >= loseCondition.value);
+		} else if (loseCondition.condition == "<"){
+			youLose = (amount < loseCondition.value);
+		} else if (loseCondition.condition == ">"){
+			youLose = (amount > loseCondition.value);
+		} else if (loseCondition.condition == "!="){
+			youLose = (amount != loseCondition.value);
+		}
+
+		if (youLose){
 			Game::Instance() -> changeState(Enumeration::State::DefeatState);
 		}
 	});
@@ -310,6 +371,7 @@ void Map::Update() {
 
 	//Win/Lose
 	IO::Instance() -> getEventManager() -> triggerEvent("checkWinCondition");
+	IO::Instance() -> getEventManager() -> triggerEvent("checkLoseCondition");
 }
 
 void Map::Render() {

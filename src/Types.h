@@ -24,4 +24,11 @@ struct Margins{
 	i32 left;
 };
 
+struct Condition{
+	std::string player;
+	std::string building;
+	std::string condition;
+	i32 value;
+};
+
 #endif
