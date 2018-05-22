@@ -1,0 +1,13 @@
+{
+    "animations": [
+        {
+        "name": "idle",
+        "delay": 100,
+        "objects": [
+            "drorania_cannon.obj"
+            ]
+        }
+    ],
+    "material": "drorania_cannon.mtl",
+    "defaultAnimation": "idle"
+} 

@@ -16,6 +16,7 @@
 #include <queue>
 #include <map>
 #include <algorithm>
+#include <functional>
 
 #include <iostream>
 #include <fstream>

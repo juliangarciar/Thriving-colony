@@ -7,6 +7,8 @@
 #include "ResourceIMG.h"
 
 ResourceManager::ResourceManager() {
+	maxThreads = std::thread::hardware_concurrency();
+	currentThreads = 0;
     std::string temp[] = {"obj","mtl","json","glsl","bmp","tga","jpg","jpeg","png"};
     supportedFormats.insert(supportedFormats.end(),temp,std::end(temp));
 }
@@ -17,12 +19,19 @@ ResourceManager::~ResourceManager() {
 }
 
 void ResourceManager::Update() {
-    //ToDo: revisar cola de procesos
-    threads.front().join();
-    threads.pop();
+	if (currentThreads < maxThreads && paths.size()){
+		std::string path = paths.front();
+		std::thread([=](){
+			load(path);
+			std::cout << "Se ha cargado asincronamente: " << path << std::endl;
+			currentThreads--;
+		}).detach();
+		paths.pop();
+		currentThreads++;
+	}
 }
 
-void ResourceManager::load(std::string path, bool sync) {
+void ResourceManager::load(std::string path) {
     std::size_t found = path.find_last_of(".");
     std::string extension = path.substr(found+1);
 
@@ -53,15 +62,13 @@ void ResourceManager::load(std::string path, bool sync) {
 }
 
 void ResourceManager::push(std::string path) {
-	threads.push(std::thread([=]() {
-		load(path, false);
-	}));
+	paths.push(path);
 }
 
 void ResourceManager::loadResource(std::string path, bool sync) {
 	if (path.find(".") != std::string::npos) {
 		if (sync) {
-			load(path, true);
+			load(path);
 		} else {
 			push(path);
 		}

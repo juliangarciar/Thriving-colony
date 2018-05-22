@@ -15,8 +15,7 @@ BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
 	inMapBuildings = new std::map<i32, Building*>();
 	tempBuilding = nullptr;
 
-    IO::Instance() -> getResourceManager()->loadResource("media/gameConfig/BuildingData/"+b+"Buildings.json");
-    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/gameConfig/BuildingData/"+b+"Buildings.json");
+    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/gameConfig/BuildingData/"+b+"Buildings.json", true);
     json j = *r -> getJSON();
 
     for (auto& element : j["Buildings"]) {
@@ -37,6 +36,7 @@ BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
 			tmp.cityLevel = element["cityLevel"].get<i32>();
 			tmp.cellsX = element["cellsX"].get<i32>();
 			tmp.cellsY = element["cellsY"].get<i32>();
+			Window::Instance() -> getEngineResourceManager() -> loadResource(element["modelPath"].get<std::string>());
 		baseBuildings.insert(std::pair<std::string, BuildingData>(tmp.type, tmp));
 	}
 }

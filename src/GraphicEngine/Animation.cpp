@@ -65,6 +65,22 @@ void Animation::changeAnimation(std::string animationName) {
 	}
 }
 
+void Animation::preloadAnimation(std::string path){
+	size_t last = path.rfind("/");
+	std::string subpath = path.substr(0, last);
+
+	ResourceJSON *animation = (ResourceJSON*)Window::Instance()->getEngineResourceManager()->getResource(path, true);
+    json j = *animation -> getJSON();
+
+    for (auto& element : j["animations"]) {
+		std::string animationName = element["name"].get<std::string>();
+    	for (auto& subelement : element["objects"]) {
+			std::string objectName = subelement.get<std::string>();
+			Window::Instance()->getEngineResourceManager()->loadResource(subpath+"/"+animationName+"/"+objectName, false);
+		}
+	}
+}
+
 void Animation::setPosition(Vector3<f32> pos) {
     animationLayer->setPosition(pos);
 }

@@ -46,6 +46,13 @@ class Window {
             return window;
         }
 
+		/**
+		 * @brief Get the Engine Resource Manager object
+		 * 
+		 * @return ResourceManager* 
+		 */
+		ResourceManager *getEngineResourceManager();
+
         /**
          * @brief calculates the framerate of the window. It is important to call
          * this function after the game logic has fully executed to see how long it
@@ -120,7 +127,7 @@ class Window {
 
         bool closeWindow;
 
-		OBDEngine *e;
+		OBDEngine *engine;
 
         //Layer where are going to be created all skybox;
 		OBDShaderProgram *skyboxProgram;

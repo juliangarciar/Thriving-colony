@@ -24,6 +24,8 @@ class Animation {
 
 		void changeAnimation(std::string animationName);
 
+		static void preloadAnimation(std::string);
+
         void setActive(bool a);
 		void setColor(Color);
 
