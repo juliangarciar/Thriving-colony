@@ -118,3 +118,7 @@ bool OBDEntity::getActive() {
 TNode *OBDEntity::getFirstNode() {
 	return rotationNode;
 }
+
+TNode *OBDEntity::getLastNode() {
+	return scaleNode;
+}

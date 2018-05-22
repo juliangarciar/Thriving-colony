@@ -62,6 +62,20 @@ class Window {
         i32 getFrameRate();
 
         /**
+         * @brief Get the program where are going to be created all Skybox.
+         * 
+         * @return OBDShaderProgram* that is going to be the value of SkyboxLayer.
+         */
+        OBDShaderProgram* getSkyboxProgram();
+
+        /**
+         * @brief Get the layer where are going to be created all Skybox.
+         * 
+         * @return OBDSceneNode* that is going to be the value of SkyboxLayer.
+         */
+        OBDSceneNode* getSkyboxLayer();
+
+        /**
          * @brief Get the program where are going to be created all billboards.
          * 
          * @return OBDShaderProgram* that is going to be the value of billboardLayer.
@@ -107,6 +121,10 @@ class Window {
         bool closeWindow;
 
 		OBDEngine *e;
+
+        //Layer where are going to be created all skybox;
+		OBDShaderProgram *skyboxProgram;
+        OBDSceneNode* skyboxLayer;
 
         //Layer where are going to be created all billboards;
 		OBDShaderProgram *billboardProgram;

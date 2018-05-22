@@ -2,19 +2,19 @@
 #define OBDSKYBOX_H
 
 #include "OBDSceneNode.h"
-#include "Graphics/TTexture.h"
-#include "OBDTexture.h"
+#include "OBDShaderProgram.h"
 
+#include "Graphics/TCubemapTexture.h"
 #include "Graphics/TSkybox.h"
 
-class OBDSkybox : public OBDEntity {
+class OBDSkybox {
     
     public:
         /**
          * @brief 
          * 
          */
-        OBDSkybox(OBDTexture* texture);
+        OBDSkybox(OBDSceneNode *, OBDShaderProgram *, std::vector<ResourceIMG *>);
 
         /**
          * @brief 
@@ -27,24 +27,11 @@ class OBDSkybox : public OBDEntity {
          * 
          * @param texture 
          */
-        void setTexture(TTexture* texture);
-
-        /**
-         * @brief Get the Skybox Entity object
-         * 
-         * @return TSkybox* 
-         */
-        TSkybox* getSkyboxEntity();
-
-        /**
-         * @brief Get the First Node object
-         * 
-         * @return TNode* 
-         */
-        TNode* getFirstNode();
+        void setTexture(std::vector<ResourceIMG *>);
 
     private:
         TNode* skyboxNode;
+		TCubemapTexture *texture;
 };
 
 #endif

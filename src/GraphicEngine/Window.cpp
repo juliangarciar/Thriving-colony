@@ -81,6 +81,9 @@ void Window::Init(i32 width, i32 height) {
 
     dtThen = glfwGetTime();
 
+    skyboxLayer = e -> createShaderedSceneNode(e->getDefaultLayer(), "skyboxShader", "media/shaders/vertexShaderSkybox.glsl", "media/shaders/fragmentShaderSkybox.glsl");
+	skyboxProgram = e -> getRegisteredShaderProgram("skyboxShader");
+
     billboardLayer = e -> createShaderedSceneNode("billboardShader", "media/shaders/vertexShaderBillboards.glsl", "media/shaders/fragmentShaderBillboards.glsl");
 	billboardProgram = e -> getRegisteredShaderProgram("billboardShader");
 
@@ -162,6 +165,14 @@ void Window::calculateFramerate() {
 
 i32 Window::getFrameRate() {
     return framerate;
+}
+
+OBDShaderProgram* Window::getSkyboxProgram(){
+	return skyboxProgram;
+}
+
+OBDSceneNode* Window::getSkyboxLayer(){
+	return skyboxLayer;
 }
 
 OBDShaderProgram* Window::getBillboardProgram() {

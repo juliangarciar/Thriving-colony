@@ -163,6 +163,14 @@ OBDVideo* OBDEngine::createVideo(OBDSceneNode *layer, OBDShaderProgram *p, std::
 	return new OBDVideo(layer, p, path);
 }
 
+OBDSkybox* OBDEngine::createSkybox(OBDSceneNode* layer, OBDShaderProgram* program, std::vector<std::string> textures) {
+	std::vector<ResourceIMG*> images;
+	for (int i = 0; i < textures.size(); i++){
+		images.push_back((ResourceIMG*)OBDManager->getResource(textures[i], true));
+	}
+    return new OBDSkybox(layer, program, images);
+}
+
 OBDShaderProgram *OBDEngine::createShaderProgram(std::string programName, std::string vs, std::string fs) {
 	ResourceGLSL *s1 = (ResourceGLSL*)OBDManager->getResource(vs, true);
 	ResourceGLSL *s2 = (ResourceGLSL*)OBDManager->getResource(fs, true);
@@ -187,6 +195,16 @@ OBDSceneNode *OBDEngine::createShaderedSceneNode(std::string sN, std::string vs,
 	OBDShaderProgram *p = new OBDShaderProgram(s1, s2);
     shaderPrograms.insert(std::pair<std::string, OBDShaderProgram*>(sN, p));
 	return new OBDSceneNode(new TNode(new TShaderSwapper(p->getShaderProgram()), rootNode));
+}
+
+OBDSceneNode *OBDEngine::createShaderedSceneNode(OBDSceneNode *pa, std::string sN, std::string vs, std::string fs) {
+	ResourceGLSL *s1 = (ResourceGLSL*)OBDManager->getResource(vs, true);
+	ResourceGLSL *s2 = (ResourceGLSL*)OBDManager->getResource(fs, true);
+	OBDShaderProgram *p = new OBDShaderProgram(s1, s2);
+    shaderPrograms.insert(std::pair<std::string, OBDShaderProgram*>(sN, p));
+	TNode *t = new TNode(new TShaderSwapper(p->getShaderProgram()), pa->getLastNode());
+	pa->addChild(t);
+	return new OBDSceneNode(t);
 }
 
 void OBDEngine::loadObjectTexturesFromMTL(OBDObject *obj, ResourceMTL *mtl, bool sync) {
@@ -307,9 +325,4 @@ OBDTile* OBDEngine::createTile(ResourceIMG* _texture, glm::vec2 _position) {
     return new OBDTile(defaultSceneNode, _texture, _position);
 }
 
-OBDSkybox* OBDEngine::createSkybox(OBDTexture* texture) {
-    OBDSkybox* skybox = new OBDSkybox(texture);
-    defaultSceneNode -> addChild(skybox); // ¿?
-    return skybox;
-}
 /////////////////

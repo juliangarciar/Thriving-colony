@@ -3,7 +3,14 @@
 		"heightmap": "media/maps/test_map/mapa3-256x256.bmp",
 		"texture": "media/maps/test_map/map-texture.jpg",
 		"detail_texture": "media/maps/test_map/map-detail-texture.jpg",
-		"skybox_texture": "media/maps/test_map/skybox-texture.jpg",
+		"skybox_textures": [
+			"media/maps/test_map/bluefreeze_rt.tga",
+			"media/maps/test_map/bluefreeze_lf.tga",
+			"media/maps/test_map/bluefreeze_up.tga",
+			"media/maps/test_map/bluefreeze_dn.tga",
+			"media/maps/test_map/bluefreeze_bk.tga",
+			"media/maps/test_map/bluefreeze_ft.tga"
+		],
 		"scale":{
 			"x": 40,
 			"y": 20,
@@ -45,8 +52,14 @@
 	"lights":[
 		{
 			"position": {
-				"x": 4000,
-				"z": 4000
+				"x": 5000,
+				"y": 5000,
+				"z": 5000
+			},
+			"color": {
+				"r": 1,
+				"g": 1,
+				"b": 1
 			},
 			"height": 2000,
 			"intensity": 100000

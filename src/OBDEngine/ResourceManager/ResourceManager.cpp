@@ -7,7 +7,7 @@
 #include "ResourceIMG.h"
 
 ResourceManager::ResourceManager() {
-    std::string temp[] = {"obj","mtl","json","glsl","bmp","jpg","jpeg","png"};
+    std::string temp[] = {"obj","mtl","json","glsl","bmp","tga","jpg","jpeg","png"};
     supportedFormats.insert(supportedFormats.end(),temp,std::end(temp));
 }
 
@@ -42,7 +42,7 @@ void ResourceManager::load(std::string path, bool sync) {
         Resource *r = new ResourceGLSL();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
-    } else if (extension.find("bmp") != std::string::npos || extension.find("jpg") != std::string::npos || extension.find("jpeg") != std::string::npos || extension.find("png") != std::string::npos) {
+    } else if (extension.find("bmp") != std::string::npos || extension.find("tga") != std::string::npos || extension.find("jpg") != std::string::npos || extension.find("jpeg") != std::string::npos || extension.find("png") != std::string::npos) {
         Resource *r = new ResourceIMG();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));

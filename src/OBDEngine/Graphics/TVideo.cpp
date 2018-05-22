@@ -4,9 +4,6 @@ TVideo::TVideo(GLuint pID, VideoData *d){
 	programID = pID;
 	data = d;
 
-	mvpID = glGetUniformLocation(programID, "MVP");
-	textureID = glGetUniformLocation(programID, "videoTexture");
-
 	float quad[12] = {
 		-1.0f,  1.0f, 0.0f,
 		-1.0f, -1.0f, 0.0f,
@@ -45,6 +42,9 @@ TVideo::TVideo(GLuint pID, VideoData *d){
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, data->pCodecCtx->width, data->pCodecCtx->height, 
 		0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+
+	mvpID = glGetUniformLocation(programID, "MVP");
+	textureID = glGetUniformLocation(programID, "videoTexture");
 }
 
 TVideo::~TVideo(){

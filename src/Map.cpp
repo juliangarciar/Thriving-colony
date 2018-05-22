@@ -37,6 +37,22 @@ void Map::Init() {
 
     loadProgress(5);
 
+    //Skybox
+    skybox = new Skybox(j["map"]["skybox_textures"].get< std::vector<std::string> >());
+
+    loadProgress(10);
+
+    //Luz
+    for (auto& element : j["lights"]) {
+        Vector3<f32> lp;
+        lp.x = element["position"]["x"].get<i32>();
+        lp.y = element["position"]["y"].get<i32>();
+        lp.z = element["position"]["z"].get<i32>();
+        Light *light = new Light(lp, Color(element["color"]["r"].get<f32>(), element["color"]["g"].get<f32>(), element["color"]["b"].get<f32>()), element["intensity"].get<i32>());
+    }
+
+    loadProgress(15);
+
     //Create map
     terrain = new Terrain(j["map"]["heightmap"].get<std::string>().c_str());
     terrain -> setTexture(new Texture(j["map"]["texture"].get<std::string>().c_str()), new Texture(j["map"]["detail_texture"].get<std::string>().c_str()));
@@ -47,23 +63,6 @@ void Map::Init() {
 	mapMargins->bottom = j["map"]["margins"]["bottom"].get<int>();
 	mapMargins->left = j["map"]["margins"]["left"].get<int>();
     WorldGeometry::Instance() -> Init(cSize, i32(j["map"]["size"]["width"].get<int>()), i32(j["map"]["size"]["height"].get<int>()), cDepth);
-
-    loadProgress(20);
-
-    //Skydome
-    skybox = new Skybox(new Texture(j["map"]["skybox_texture"].get<std::string>().c_str()));
-    //skydome = new SkyDome(new Texture(j["map"]["skybox_texture"].get<std::string>().c_str()));
-
-    loadProgress(30);
-
-    //Luz
-    for (auto& element : j["lights"]) {
-        Vector3<f32> lp;
-        lp.x = element["position"]["x"].get<i32>();
-        lp.z = element["position"]["z"].get<i32>();
-        lp.y = terrain -> getY(lp.x, lp.z) + element["height"].get<i32>();
-        Light *light = new Light(lp, Color(1, 1, 1), element["intensity"].get<i32>());
-    }
 
     loadProgress(35);
 

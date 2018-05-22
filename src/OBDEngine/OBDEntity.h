@@ -115,6 +115,13 @@ class OBDEntity {
          * @return TNode* 
          */
         virtual TNode *getFirstNode();
+
+         /**
+         * @brief Get the First Node object
+         * 
+         * @return TNode* 
+         */
+        virtual TNode *getLastNode();
 	protected:
 		/**
 		 * @brief Construct a new OBDEntity object

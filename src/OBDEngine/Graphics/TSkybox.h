@@ -2,7 +2,7 @@
 #define TSKYBOX_H
 
 #include "TEntity.h"
-#include "TTexture.h"
+#include "TCubemapTexture.h"
 
 class TSkybox : public TEntity {
     public:
@@ -10,7 +10,7 @@ class TSkybox : public TEntity {
          * @brief 
          * 
          */
-        TSkybox(TTexture* texture);
+        TSkybox(GLuint, TCubemapTexture*);
 
         /**
          * @brief 
@@ -34,10 +34,17 @@ class TSkybox : public TEntity {
          * @brief Set the Texture object
          * 
          */
-        void setTexture(TTexture*);
+        void setTexture(TCubemapTexture*);
 
-    private:        
-        GLuint textureID;
+    private:
+		TCubemapTexture *texture;
+
+		GLuint programID;
+
+        GLuint vpID;
+        GLuint skyboxID;
+		GLuint vbo_cube_vertices;
+		GLuint ibo_cube_indices;
 };
 
 #endif

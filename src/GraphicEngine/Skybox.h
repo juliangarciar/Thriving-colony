@@ -7,11 +7,10 @@
 class Skybox {
 
     public:
-        Skybox(Texture*);
+        Skybox(std::vector<std::string>);
         ~Skybox();
         
     private:
-		Texture *t;
         OBDSkybox* skybox;
         
 };
