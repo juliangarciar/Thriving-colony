@@ -79,7 +79,7 @@ void Map::Init() {
 	influenceRangeIncrementLimit = j["game"]["expansion_increment_times"].get<i32>();
 	citizenIncrement = j["game"]["citizen_increment"].get<i32>();
 
-	winCondition = Condition();
+	winCondition = FinishCondition();
 	winCondition.player = j["game"]["win_condition"]["player"].get<std::string>();
 	winCondition.building = j["game"]["win_condition"]["building"].get<std::string>();
 	winCondition.condition = j["game"]["win_condition"]["condition"].get<std::string>();
@@ -114,7 +114,7 @@ void Map::Init() {
 		}
 	});
 
-	loseCondition = Condition();
+	loseCondition = FinishCondition();
 	loseCondition.player = j["game"]["lose_condition"]["player"].get<std::string>();
 	loseCondition.building = j["game"]["lose_condition"]["building"].get<std::string>();
 	loseCondition.condition = j["game"]["lose_condition"]["condition"].get<std::string>();

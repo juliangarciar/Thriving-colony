@@ -200,8 +200,8 @@ class Map {
 		i32 influenceRangeIncrementLimit;
 
 		//Conditions
-		Condition winCondition;
-		Condition loseCondition;
+		FinishCondition winCondition;
+		FinishCondition loseCondition;
 };
 
 #endif

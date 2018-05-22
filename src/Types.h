@@ -24,7 +24,7 @@ struct Margins{
 	i32 left;
 };
 
-struct Condition{
+struct FinishCondition{
 	std::string player;
 	std::string building;
 	std::string condition;
