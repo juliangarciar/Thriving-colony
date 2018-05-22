@@ -1,6 +1,8 @@
 #ifndef OBDVIDEO_H
 #define OBDVIDEO_H
 
+#ifdef USEVIDEO
+
 #include "OBDShaderProgram.h"
 #include "OBDSceneNode.h"
 
@@ -20,4 +22,5 @@ class OBDVideo {
 		TNode *videoNode;
 };
 
+#endif
 #endif

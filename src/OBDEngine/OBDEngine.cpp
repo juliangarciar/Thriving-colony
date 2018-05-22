@@ -82,11 +82,13 @@ void OBDEngine::draw() {
     // Clear light cache
     TEntity::cache.getLights()->clear();
 }
-		
+
+#ifdef USEVIDEO
 void OBDEngine::InitVideoSystem(){
 	av_register_all();
 	avformat_network_init();
 }
+#endif
 
 OBDLight* OBDEngine::createLight(OBDColor color, f32 intensity, f32 ambient, f32 attenuation) {
     OBDLight* lightNode = new OBDLight(clSceneNode, color, intensity, ambient, attenuation);
@@ -164,9 +166,11 @@ OBDBillboard* OBDEngine::createBillboard(OBDSceneNode* layer, OBDShaderProgram *
     return new OBDBillboard(layer, p, pos, size);
 }
 
+#ifdef USEVIDEO
 OBDVideo* OBDEngine::createVideo(OBDSceneNode *layer, OBDShaderProgram *p, std::string path){
 	return new OBDVideo(layer, p, path);
 }
+#endif
 
 OBDSkybox* OBDEngine::createSkybox(OBDSceneNode* layer, OBDShaderProgram* program, std::vector<std::string> textures) {
 	std::vector<ResourceIMG*> images;

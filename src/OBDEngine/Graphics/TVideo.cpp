@@ -1,5 +1,7 @@
 #include "TVideo.h"
 
+#ifdef USEVIDEO
+
 TVideo::TVideo(GLuint pID, VideoData *d){	
 	programID = pID;
 	data = d;
@@ -161,3 +163,5 @@ void TVideo::setPlay(bool p){
 void TVideo::setLoop(bool l){
 	loop = l;
 }
+
+#endif

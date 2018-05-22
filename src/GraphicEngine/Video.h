@@ -1,6 +1,8 @@
 #ifndef VIDEO_H
 #define VIDEO_H
 
+#ifdef USEVIDEO
+
 #include <Types.h>
 #include <OBDEngine/OBDVideo.h>
 
@@ -17,4 +19,5 @@ class Video {
 		OBDVideo *video;
 };
 
+#endif
 #endif

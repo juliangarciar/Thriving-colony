@@ -1,6 +1,8 @@
 #ifndef TVIDEO_H
 #define TVIDEO_H
 
+#ifdef USEVIDEO
+
 #include "TEntity.h"
 
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
@@ -63,4 +65,5 @@ class TVideo : public TEntity {
 		GLuint frame_tex;
 };
 
+#endif
 #endif

@@ -1,3 +1,5 @@
+#ifdef USEVIDEO
+
 #include "OBDVideo.h"
 #include "Graphics/TVideo.h"
 
@@ -147,3 +149,4 @@ void OBDVideo::setLoop(bool l){
     TVideo* v = (TVideo*) videoNode -> getEntity();
 	v -> setLoop(l);
 }
+#endif
