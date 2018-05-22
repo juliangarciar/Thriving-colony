@@ -56,6 +56,12 @@ class Hud {
 		 * @brief 
 		 * 
 		 */
+		void InitProgressBar();
+
+		/**
+		 * @brief 
+		 * 
+		 */
 		void InitDebug();
 
         /**
@@ -153,6 +159,20 @@ class Hud {
 		 */
 		void addToastToQueue(std::string);
 
+		/**
+		 * @brief 
+		 * 
+		 * @param a
+		 */
+		void setProgressBar(f32);
+
+		/**
+		 * @brief 
+		 * 
+		 * @param a 
+		 */
+		void showProgressBar(bool);
+
     protected:
         /**
          * @brief Hud constructor.
@@ -204,6 +224,12 @@ class Hud {
 
 		//
 		std::queue<std::string> notificationQueue;
+
+		//
+		Panel *loadPanel;
+
+		//
+		ProgressBar *loadProgressBar;
 
         //Panel with all types of buildings.
         Panel *buildingsPanel;
