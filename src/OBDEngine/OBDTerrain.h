@@ -30,6 +30,13 @@ class OBDTerrain : public OBDEntity {
 		 * 
 		 */
 		virtual ~OBDTerrain();
+		
+		/**
+		 * @brief 
+		 * 
+		 * @param parent 
+		 */
+		void refreshModelMatrix(glm::mat4);
 
         /**
          * @brief Set the glslTexture object

@@ -39,6 +39,15 @@ OBDTerrain::~OBDTerrain() {
 	material = nullptr;
 }
 
+void OBDTerrain::refreshModelMatrix(glm::mat4 parent) {
+	parent_model_matrix = parent;
+	TTransform* r = (TTransform*) rotationNode -> getEntity();
+	TTransform* t = (TTransform*) translationNode -> getEntity();
+	TTransform* s = (TTransform*) scaleNode -> getEntity();
+	model_matrix = s->getMatrix() * t->getMatrix() * r->getMatrix() * parent;
+	inverse_model_matrix = glm::inverse(model_matrix);
+}
+
 void OBDTerrain::setTexture(OBDTexture* t) {
     TMesh* m = (TMesh*) terrainNode -> getEntity();
     m -> getMaterial() -> setTexture(t);
