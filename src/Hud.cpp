@@ -197,118 +197,6 @@ void Hud::Init() {
             hidePopup();
         }
     });
-
-    ///// DEBUG /////
-    playerResources = new Panel("Player Resources");
-    playerResources ->setVerticalLayout();
-    playerResources -> setSize(Vector2<i32> (120, 245));
-    i32 melees = 
-        Human::Instance() -> getUnitManager() -> getTroopAmount("StandardM") + 
-        Human::Instance() -> getUnitManager() -> getTroopAmount("AdvancedM");
-    i32 ranges = 
-        Human::Instance() -> getUnitManager() -> getTroopAmount("StandardR") + 
-        Human::Instance() -> getUnitManager() -> getTroopAmount("AdvancedR");
-    i32 sieges = 
-        Human::Instance() -> getUnitManager() -> getTroopAmount("Desintegrator") + 
-        Human::Instance() -> getUnitManager() -> getTroopAmount("Launcher");
-    std::stringstream os;
-    os << "Metal: " << std::to_string(Human::Instance() -> metalAmount);
-    playerMetalAmount = new Label(playerResources, os.str());
-    playerMetalAmount -> setColor(200, 0, 200, 0);
-
-    os = std::stringstream();
-    os << "Crystal: " << std::to_string(Human::Instance() -> crystalAmount);
-    playerCrystalAmount = new Label(playerResources, os.str());
-    playerCrystalAmount -> setColor(150, 0, 0, 150);
-
-    os = std::stringstream();
-    os << "People: " << std::to_string(Human::Instance() -> getMaxPeople());
-    playerPeople = new Label(playerResources, os.str());
-    playerPeople -> setColor(150, 200, 200, 0);
-
-    os = std::stringstream();
-    os << "Citizens: " << std::to_string(Human::Instance() -> getCitizens());
-    playerCitizens = new Label(playerResources, os.str());
-    playerCitizens -> setColor(150, 200, 200, 0);
-
-    os = std::stringstream();
-    os << "UnitFighters: " << std::to_string(Human::Instance() -> getUnitManager() -> getUnitFighters());
-    playerUnitFighters = new Label(playerResources, os.str());
-    playerUnitFighters -> setColor(150, 200, 200, 0);
-
-    os = std::stringstream();
-    os << "Army size: " << std::to_string(Human::Instance() -> getArmySize());
-    playerArmySize = new Label(playerResources, os.str());
-    playerArmySize -> setColor(150, 200, 200, 0);
-
-    os = std::stringstream();
-    os << "Happiness: " << std::to_string(Human::Instance() -> getHappiness());
-    playerHappiness = new Label(playerResources, os.str());
-    playerHappiness -> setColor(200, 210, 48, 130);
-
-    os = std::stringstream();
-    os << "Melee: " << std::to_string(melees);
-    playerMelees = new Label(playerResources, os.str());
-    os = std::stringstream();
-    os << "Ranged: " << std::to_string(ranges);
-    playerRangeds = new Label(playerResources, os.str());
-    os = std::stringstream();
-    os << "Siege: " << std::to_string(sieges);
-    playerSieges = new Label(playerResources, os.str());
-    os = std::stringstream();
-    os << "FPS: " << std::to_string(Window::Instance() -> getFrameRate());
-    framerateLabel = new Label(os.str());
-    framerateLabel -> setSize(Vector2<i32> (50, 15));
-    framerateLabel -> setPosition(Vector2<i32> (0, 0));
-    os = std::stringstream();
-    
-    iaResources = new Panel("IA Resources");
-    iaResources -> setVerticalLayout();
-    iaResources -> setPosition(Vector2<i32>(1000, 0));
-    iaResources -> setSize(Vector2<i32> (200, 270));
-    melees = 
-        IA::Instance() -> getUnitManager() -> getTroopAmount("StandardM") + 
-        IA::Instance() -> getUnitManager() -> getTroopAmount("AdvancedM");
-    ranges = 
-        IA::Instance() -> getUnitManager() -> getTroopAmount("StandardR") + 
-        IA::Instance() -> getUnitManager() -> getTroopAmount("AdvancedR");
-    sieges = 
-        IA::Instance() -> getUnitManager() -> getTroopAmount("Desintegrator") + 
-        IA::Instance() -> getUnitManager() -> getTroopAmount("Launcher");
-    std::stringstream iaos;
-    iaos << "Metal: " << std::to_string(IA::Instance() -> metalAmount);
-    iaMetalAmount = new Label(iaResources, iaos.str());
-    iaos = std::stringstream();
-    iaos << "Crystal: " << std::to_string(IA::Instance() -> crystalAmount);
-    iaCrystalAmount = new Label(iaResources, iaos.str());
-    iaos = std::stringstream();
-    iaos << "Citizens: " << std::to_string(IA::Instance() -> getCitizens());
-    iaCitizens = new Label(iaResources, iaos.str());
-    iaos = std::stringstream();
-    iaos << "UnitFighters: " << std::to_string(IA::Instance() -> getUnitManager() -> getUnitFighters());
-    iaUnitFighters = new Label(iaResources, iaos.str());
-    iaos = std::stringstream();
-    iaos << "Happiness: " << std::to_string(IA::Instance() -> getHappiness());
-    iaHappiness = new Label(iaResources, iaos.str());
-    iaos = std::stringstream();
-    iaos << "Army size: " << std::to_string(IA::Instance() -> getArmySize());
-    iaArmySize = new Label(iaResources, iaos.str());
-    iaos = std::stringstream();
-    iaos << "Melee: " << std::to_string(melees);
-    iaMelees = new Label(iaResources, iaos.str());
-    iaos = std::stringstream();
-    iaos << "Ranged: " << std::to_string(ranges);
-    iaRangeds = new Label(iaResources, iaos.str());
-    iaos = std::stringstream();
-    iaos << "Siege: " << std::to_string(sieges);
-    iaSieges = new Label(iaResources, iaos.str());
-    iaos = std::stringstream();
-    iaos << "Next choice: " << IA::Instance() -> getNextChoice();
-    iaNextChoice = new Label(iaResources, iaos.str());
-    iaos = std::stringstream();
-    iaos << "Behaviour: " << IA::Instance() -> getChosenBehaviour();
-    iaBehaviour = new Label(iaResources, iaos.str());
-    iaos = std::stringstream();
     
     tabContainer = new Panel("Building viewer");
         tabContainer -> setSize(Vector2<i32>(350, 300));
@@ -498,6 +386,120 @@ void Hud::Init() {
     toast->hide();
 
     Window::Instance() -> setGUI();
+}
+
+void Hud::InitDebug(){
+    ///// DEBUG /////
+    playerResources = new Panel("Player Resources");
+    playerResources ->setVerticalLayout();
+    playerResources -> setSize(Vector2<i32> (120, 245));
+    i32 melees = 
+        Human::Instance() -> getUnitManager() -> getTroopAmount("StandardM") + 
+        Human::Instance() -> getUnitManager() -> getTroopAmount("AdvancedM");
+    i32 ranges = 
+        Human::Instance() -> getUnitManager() -> getTroopAmount("StandardR") + 
+        Human::Instance() -> getUnitManager() -> getTroopAmount("AdvancedR");
+    i32 sieges = 
+        Human::Instance() -> getUnitManager() -> getTroopAmount("Desintegrator") + 
+        Human::Instance() -> getUnitManager() -> getTroopAmount("Launcher");
+    std::stringstream os;
+    os << "Metal: " << std::to_string(Human::Instance() -> metalAmount);
+    playerMetalAmount = new Label(playerResources, os.str());
+    playerMetalAmount -> setColor(200, 0, 200, 0);
+
+    os = std::stringstream();
+    os << "Crystal: " << std::to_string(Human::Instance() -> crystalAmount);
+    playerCrystalAmount = new Label(playerResources, os.str());
+    playerCrystalAmount -> setColor(150, 0, 0, 150);
+
+    os = std::stringstream();
+    os << "People: " << std::to_string(Human::Instance() -> getMaxPeople());
+    playerPeople = new Label(playerResources, os.str());
+    playerPeople -> setColor(150, 200, 200, 0);
+
+    os = std::stringstream();
+    os << "Citizens: " << std::to_string(Human::Instance() -> getCitizens());
+    playerCitizens = new Label(playerResources, os.str());
+    playerCitizens -> setColor(150, 200, 200, 0);
+
+    os = std::stringstream();
+    os << "UnitFighters: " << std::to_string(Human::Instance() -> getUnitManager() -> getUnitFighters());
+    playerUnitFighters = new Label(playerResources, os.str());
+    playerUnitFighters -> setColor(150, 200, 200, 0);
+
+    os = std::stringstream();
+    os << "Army size: " << std::to_string(Human::Instance() -> getArmySize());
+    playerArmySize = new Label(playerResources, os.str());
+    playerArmySize -> setColor(150, 200, 200, 0);
+
+    os = std::stringstream();
+    os << "Happiness: " << std::to_string(Human::Instance() -> getHappiness());
+    playerHappiness = new Label(playerResources, os.str());
+    playerHappiness -> setColor(200, 210, 48, 130);
+
+    os = std::stringstream();
+    os << "Melee: " << std::to_string(melees);
+    playerMelees = new Label(playerResources, os.str());
+    os = std::stringstream();
+    os << "Ranged: " << std::to_string(ranges);
+    playerRangeds = new Label(playerResources, os.str());
+    os = std::stringstream();
+    os << "Siege: " << std::to_string(sieges);
+    playerSieges = new Label(playerResources, os.str());
+    os = std::stringstream();
+    os << "FPS: " << std::to_string(Window::Instance() -> getFrameRate());
+    framerateLabel = new Label(os.str());
+    framerateLabel -> setSize(Vector2<i32> (50, 15));
+    framerateLabel -> setPosition(Vector2<i32> (0, 0));
+    os = std::stringstream();
+    
+    iaResources = new Panel("IA Resources");
+    iaResources -> setVerticalLayout();
+    iaResources -> setPosition(Vector2<i32>(1000, 0));
+    iaResources -> setSize(Vector2<i32> (200, 270));
+    melees = 
+        IA::Instance() -> getUnitManager() -> getTroopAmount("StandardM") + 
+        IA::Instance() -> getUnitManager() -> getTroopAmount("AdvancedM");
+    ranges = 
+        IA::Instance() -> getUnitManager() -> getTroopAmount("StandardR") + 
+        IA::Instance() -> getUnitManager() -> getTroopAmount("AdvancedR");
+    sieges = 
+        IA::Instance() -> getUnitManager() -> getTroopAmount("Desintegrator") + 
+        IA::Instance() -> getUnitManager() -> getTroopAmount("Launcher");
+    std::stringstream iaos;
+    iaos << "Metal: " << std::to_string(IA::Instance() -> metalAmount);
+    iaMetalAmount = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Crystal: " << std::to_string(IA::Instance() -> crystalAmount);
+    iaCrystalAmount = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Citizens: " << std::to_string(IA::Instance() -> getCitizens());
+    iaCitizens = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "UnitFighters: " << std::to_string(IA::Instance() -> getUnitManager() -> getUnitFighters());
+    iaUnitFighters = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Happiness: " << std::to_string(IA::Instance() -> getHappiness());
+    iaHappiness = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Army size: " << std::to_string(IA::Instance() -> getArmySize());
+    iaArmySize = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Melee: " << std::to_string(melees);
+    iaMelees = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Ranged: " << std::to_string(ranges);
+    iaRangeds = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Siege: " << std::to_string(sieges);
+    iaSieges = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Next choice: " << IA::Instance() -> getNextChoice();
+    iaNextChoice = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
+    iaos << "Behaviour: " << IA::Instance() -> getChosenBehaviour();
+    iaBehaviour = new Label(iaResources, iaos.str());
+    iaos = std::stringstream();
 }
 
 void Hud::Update() { 

@@ -79,6 +79,8 @@ void Animation::preloadAnimation(std::string path){
 			Window::Instance()->getEngineResourceManager()->loadResource(subpath+"/"+animationName+"/"+objectName, false);
 		}
 	}
+
+	Window::Instance()->getEngineResourceManager()->loadResource(subpath+"/"+j["material"].get<std::string>(), false);
 }
 
 void Animation::setPosition(Vector3<f32> pos) {

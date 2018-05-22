@@ -52,6 +52,12 @@ class Hud {
 		 */
         void CleanUp();
 
+		/**
+		 * @brief 
+		 * 
+		 */
+		void InitDebug();
+
         /**
          * @brief Enable the tab pssaed by parameter.
          * 

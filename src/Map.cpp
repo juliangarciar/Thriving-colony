@@ -20,7 +20,9 @@ Map* Map::Instance() {
 }
 
 Map::Map() {
-
+    human = Human::Instance();
+    ia = IA::Instance();
+    hud = Hud::Instance();
 }
 
 Map::~Map() {
@@ -68,12 +70,13 @@ void Map::Init() {
     loadProgress(35);
 
     //Hud buttons
+    hud -> Init();
     for (auto& element : j["buildables"]) {
         Hud::Instance()->setButtonStatus(element["type"].get<std::string>(), element["isBuildable"].get<bool>());
     }
     Hud::Instance()->setButtonStatus("expandableTerrain", j["expandableTerrain"].get<bool>());
     
-	loadProgress(40);
+	loadProgress(45);
 
     //Game productivity
     metalProductivity = j["game"]["metal_productivity"].get<i32>();
@@ -85,38 +88,45 @@ void Map::Init() {
 	loadProgress(50);
 
     //Human
-    Human::Instance() -> metalAmount = j["player"]["initial_metal"].get<i32>();
-    Human::Instance() -> crystalAmount = j["player"]["initial_crystal"].get<i32>();
-    Human::Instance() -> buildableRange = j["player"]["building_radius"].get<f32>();
+    human -> Init("Drorania"); 
+    human -> metalAmount = j["player"]["initial_metal"].get<i32>();
+    human -> crystalAmount = j["player"]["initial_crystal"].get<i32>();
+    human -> buildableRange = j["player"]["building_radius"].get<f32>();
 
     Vector2<f32> humanPosition(j["player"]["mainBuilding"]["position"]["x"], j["player"]["mainBuilding"]["position"]["z"]);
-    Human::Instance() -> getBuildingManager() -> createBuilding(humanPosition, "MainBuilding", 0);
-    Human::Instance() -> hallPosition = Vector3<f32>(humanPosition.x, terrain->getY(humanPosition.x, humanPosition.y), humanPosition.y);
+    human -> getBuildingManager() -> createBuilding(humanPosition, "MainBuilding", 0);
+    human -> hallPosition = Vector3<f32>(humanPosition.x, terrain->getY(humanPosition.x, humanPosition.y), humanPosition.y);
     humanStartPos = humanPosition;
 
     for (auto& element : j["player"]["buildings"]) {
         Vector2<f32> v(element["position"]["x"], element["position"]["z"]);
-        Human::Instance() -> getBuildingManager() -> createBuilding(v, element["type"].get<std::string>(), 0);
+        human -> getBuildingManager() -> createBuilding(v, element["type"].get<std::string>(), 0);
     }
 
     loadProgress(70);
 
     //IA
-    IA::Instance() -> metalAmount = j["IA"]["initial_metal"].get<i32>();
-    IA::Instance() -> crystalAmount = j["IA"]["initial_crystal"].get<i32>();
-    IA::Instance() -> buildableRange = j["IA"]["building_radius"].get<f32>();
+    ia -> Init("Kaonov");
+    ia -> metalAmount = j["IA"]["initial_metal"].get<i32>();
+    ia -> crystalAmount = j["IA"]["initial_crystal"].get<i32>();
+    ia -> buildableRange = j["IA"]["building_radius"].get<f32>();
 
     Vector2<f32> iaPosition(j["IA"]["mainBuilding"]["position"]["x"], j["IA"]["mainBuilding"]["position"]["z"]);
-    IA::Instance() -> getBuildingManager() -> createBuilding(iaPosition, "MainBuilding", 0);
-    IA::Instance() -> hallPosition = Vector3<f32>(iaPosition.x, terrain->getY(iaPosition.x, iaPosition.y), iaPosition.y);
+    ia -> getBuildingManager() -> createBuilding(iaPosition, "MainBuilding", 0);
+    ia -> hallPosition = Vector3<f32>(iaPosition.x, terrain->getY(iaPosition.x, iaPosition.y), iaPosition.y);
     iaStartPos = iaPosition;
     
     for (auto& element : j["IA"]["buildings"]) {
         Vector2<f32> iaPosition(element["position"]["x"], element["position"]["z"]);
-        IA::Instance() -> getBuildingManager() -> createBuilding(iaPosition, element["type"].get<std::string>(), 0);
+        ia -> getBuildingManager() -> createBuilding(iaPosition, element["type"].get<std::string>(), 0);
     }
 
     loadProgress(90);
+
+	//Init debug
+	hud->InitDebug();
+
+    loadProgress(95);
 
     //Init camera controller
     camera = new CameraController();
@@ -138,10 +148,138 @@ void Map::Input() {
     camera -> CenterCamera();
 
     collisionPoint = terrain->getPointCollision(IO::Instance()->getMouse()->getPosition());
+	
+	human -> getBuildingManager() -> testRaycastCollisions();
+	human -> getUnitManager() -> testRaycastCollisions();
+
+	ia -> getBuildingManager() -> testRaycastCollisions();
+	ia -> getUnitManager() -> testRaycastCollisions();
+
+	i32 onMap = true;
+	//Interactions with our buildings
+	i32 idBuilding = human -> getBuildingManager() -> getCollisionID();
+	if (idBuilding != -1) {
+		if (!human -> getUnitManager() -> isTroopSelected())
+			IO::Instance() -> getMouse() -> changeCustomIcon(1);
+		
+		if (IO::Instance() -> getMouse() -> leftMousePressed()) {
+			Building *b = human -> getBuildingManager()->getBuilding(idBuilding);
+			if (b != nullptr) {
+				if (human -> getBuildingManager() -> checkFinished(idBuilding)) {
+					//ShowPopup
+					hud -> showPopup(b->getType());
+				}
+			}
+		}
+		// Right clicked
+		if (IO::Instance() -> getMouse() -> rightMousePressed()) {
+			// Have a troop
+			if (human -> getUnitManager() -> isTroopSelected()) {
+				// Main hall
+				if (idBuilding == 0) {
+					//Retract
+					human -> getUnitManager() -> getSelectedTroop() -> switchState(Enumeration::UnitState::Retract);
+				}
+			}
+		}
+
+		onMap = false;
+	}
+
+	//Interactions with IA's buildings
+	i32 idBuildingIA =  ia -> getBuildingManager() -> getCollisionID();
+	if (idBuildingIA != -1) {
+		IO::Instance() -> getMouse() -> changeCustomIcon(2);
+		
+		if (human -> getUnitManager() -> isTroopSelected()) {
+			if (IO::Instance() -> getMouse() -> rightMousePressed()) {
+				human -> getUnitManager()->getSelectedTroop()->setTarget(ia -> getBuildingManager()->getBuilding(idBuildingIA));
+			}
+		}
+
+		onMap = false;
+	}
+
+	//Interactions with Human Units
+	i32 idTroop = human -> getUnitManager() -> getCollisionID();
+	if (idTroop != -1) {
+		IO::Instance() -> getMouse() -> changeCustomIcon(1);
+
+		if (IO::Instance() -> getMouse() -> leftMousePressed()) {
+			human -> getUnitManager() -> selectTroop(idTroop);
+		}
+		
+		onMap = false;
+	}
+
+	//Interactions with IA Units
+	i32 idTroopIA = ia -> getUnitManager() -> getCollisionID();
+	if (idTroopIA != -1) {
+		IO::Instance() -> getMouse() -> changeCustomIcon(2);
+
+		if (human -> getUnitManager() -> isTroopSelected()) {
+			if (IO::Instance() -> getMouse() -> rightMousePressed()) {
+				human -> getUnitManager()->getSelectedTroop()->setTarget(ia -> getUnitManager()->getUnit(idTroopIA));
+			}
+		}
+
+		onMap = false;
+	}
+
+	if(onMap){
+		if(human -> getUnitManager() -> isTroopSelected()){
+			if (IO::Instance()-> getMouse() -> rightMousePressed()) {
+				human -> getUnitManager() -> moveOrder();
+			}
+		}
+	}
+
+	//If nothing happens
+	if (onMap) {
+		if (human -> getUnitManager() -> isTroopSelected()) {
+			IO::Instance() -> getMouse() -> changeCustomIcon(0);
+		} 
+		else if (human -> getUnitManager() -> isDeployingTroop()) {
+			IO::Instance() -> getMouse() -> changeCustomIcon(0);
+			i32 idTroop = human -> getUnitManager() -> getDeployingTroopID();
+			if (idTroop > 0) {
+				if (IO::Instance() -> getMouse() -> rightMousePressed()) {
+					Vector3<f32> p = getMouseCollitionPoint();
+					human -> getUnitManager() -> deploySelectedTroop(Vector2<f32>(p.x, p.z));
+					human -> getUnitManager() -> selectTroop(idTroop);
+				}
+			} else if (idTroop == 0) {
+				if (IO::Instance() -> getMouse() -> rightMousePressed()) {
+					Vector3<f32> p = getMouseCollitionPoint();
+					human -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
+				}
+			} else {
+				//Ninguna tropa seleccionada
+			}
+		} else {
+			IO::Instance() -> getMouse() -> changeCustomIcon(0);
+		}
+
+		if (IO::Instance() -> getMouse() -> leftMousePressed())
+			human -> getUnitManager() -> unSelectTroop();
+	}
 }
 
 void Map::Update() {
-	
+	//Update HUD
+	hud -> Update();
+
+	//Update human and IA status
+	human -> Update();
+	ia -> Update();
+
+	//Win/Lose
+	if (IA::Instance() -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
+		Game::Instance() -> changeState(Enumeration::State::WinState);
+	}
+	if (Human::Instance() -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
+		Game::Instance() -> changeState(Enumeration::State::DefeatState);
+	}
 }
 
 void Map::Render() {

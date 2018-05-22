@@ -64,7 +64,11 @@ void ResourceManager::load(std::string path) {
 }
 
 void ResourceManager::push(std::string path) {
-	paths.push(path);
+	if (maxThreads > 0){
+		paths.push(path);
+	} else {
+		load(path);
+	}
 }
 
 void ResourceManager::loadResource(std::string path, bool sync) {
