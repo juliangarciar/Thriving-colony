@@ -22,7 +22,7 @@ DBG = lldb
 # Include paths
 CPPFLAGS = -I/usr/include -I/usr/include/eigen3 -I$(PROJECTROOT)/include -I$(PROJECTROOT)/include/nanovg
 # Compiler params
-CPPFLAGS +=  -g -O3 -std=c++11 -m64 -ffast-math -pthread -Wall -Wno-macro-redefined -Wno-unsequenced -Wno-unused-value -DGL_GLEXT_PROTOTYPES
+CPPFLAGS += -O3 -std=c++11 -m64 -ffast-math -pthread -Wall -Wno-macro-redefined -Wno-unsequenced -Wno-unused-value -DGL_GLEXT_PROTOTYPES
 # Lib paths
 LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L$(PROJECTROOT)/lib -Wl,-R -Wl,$(PROJECTROOT)/lib -Wl,--no-as-needed
 # Libs
