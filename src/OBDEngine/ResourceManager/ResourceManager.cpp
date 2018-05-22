@@ -20,9 +20,10 @@ ResourceManager::~ResourceManager() {
 
 void ResourceManager::Update() {
 	if (currentThreads < maxThreads && paths.size()){
-		std::thread([&](){
-			load(paths.front());
-			std::cout << "Se ha cargado asincronamente: " << paths.front() << std::endl;
+		std::string path = paths.front();
+		std::thread([=](){
+			load(path);
+			std::cout << "Se ha cargado asincronamente: " << path << std::endl;
 			currentThreads--;
 		}).detach();
 		paths.pop();
