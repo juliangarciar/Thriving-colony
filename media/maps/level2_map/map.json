@@ -1,0 +1,253 @@
+{
+	"map": {
+		"heightmap": "media/map/level2_map_heightmap.bmp",
+		"texture": "media/map/level2_map_texture.jpg",
+		"detail_texture": "",
+		"skybox_texture": "media/map/skybox-texture.jpg",
+		"size":{
+			"x": 20,
+			"y": 20,
+			"z": 20
+		}
+	},
+	"camera":{
+		"zoomDistanceFromTarget": 750,
+		"delta_x": 0,
+		"delta_y": 230
+	},
+	"lights":[
+		{
+			"position": {
+				"x": 4000,
+				"z": 4000
+			},
+			"height": 2000,
+			"intensity": 100000
+		}
+	],
+	"buildables":[
+		{"type": "Barn", "isBuildable": true},
+		{"type": "Barrack", "isBuildable": true},
+		{"type": "Hospital", "isBuildable": true},
+		{"type": "House", "isBuildable": true},
+		{"type": "Market", "isBuildable": true},
+		{"type": "Quarry", "isBuildable": true},
+		{"type": "Siderurgy", "isBuildable": true},
+		{"type": "School", "isBuildable": true},
+		{"type": "Tower", "isBuildable": true},
+		{"type": "Wall", "isBuildable": true},
+		{"type": "Workshop", "isBuildable": true}
+	],
+	"expandableTerrain": true,
+	"player":
+	{
+		"initial_metal": 1200,
+		"initial_crystal": 0,
+		"siderurgy_productivity": 10,
+		"quarry_productivity": 5,
+		"building_radius": 2000,
+		"mainBuilding": {
+			"position": {
+				"x": 8040,
+				"z": 8040
+			},
+			"scale": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"rotation": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		},
+		"buildings":[
+			{
+				"type": "Siderurgy", 
+				"position": {
+					"x": 8120,
+					"z": 8600
+				},
+				"scale": {
+					"x": 0,
+					"y": 0,
+					"z": 0
+				},
+				"rotation": {
+					"x": 0,
+					"y": 0,
+					"z": 0
+				}
+			}
+		]
+	},
+	"IA":
+	{
+		"initial_metal": 1200,
+		"initial_crystal": 5,
+		"siderurgy_productivity": 15,
+		"quarry_productivity": 10,
+		"building_radius": 2000,
+		"mainBuilding": {
+			"position": {
+				"x": 1960,
+				"z": 1960
+			},
+			"scale": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"rotation": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		},
+		"buildings":[
+			{
+				"type": "Siderurgy", 
+				"position": {
+					"x": 2120,
+					"z": 1480
+				},
+				"scale": {
+					"x": 0,
+					"y": 0,
+					"z": 0
+				},
+				"rotation": {
+					"x": 0,
+					"y": 0,
+					"z": 0
+				},
+				"productivity": {
+					"tax": 1	
+				}
+			}
+		]
+	},
+	"trees": [
+		{
+  			"model": "media/trees/tree_model1.3ds",
+			"texture": "media/trees/tree_texture1.png",
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"scale": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"rotation": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		},
+		{
+  			"model": "media/trees/tree_model2.3ds",
+			"texture": "media/trees/tree_texture2.png",
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"scale": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"rotation": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		}
+	],
+	"rocks": [
+		{
+			"model": "media/rocks/rock_model1.3ds",
+			"texture": "media/rocks/rock_texture1.3ds",
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"scale": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"rotation": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		},
+		{
+			"model": "media/rocks/rock_model2.3ds",
+			"texture": "media/rocks/rock_texture2.3ds",
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"scale": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"rotation": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		}
+	],
+	"crystals": [
+		{
+			"model": "media/crystals/crystal_model1.3ds",
+			"texture": "media/crystals/crystal_texture1.3ds",
+			"position": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"scale": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			},
+			"rotation": {
+				"x": 0,
+				"y": 0,
+				"z": 0
+			}
+		}
+	],
+	"waypoints": [
+		{
+			"idx": 1,
+			"edge": [1, 2, 3],
+			"position": {
+				"x": 0.0,
+				"y": 0.0
+			}
+		}
+	]
+}
+	
+
+	
+	
+  
+    
+	
+
+
+
+

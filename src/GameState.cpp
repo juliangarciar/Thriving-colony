@@ -16,7 +16,7 @@ GameState::~GameState() {
 
 void GameState::Init() {
     //Init players
-    human -> Init("Drorania"); 
+    human -> Init("Kaonov"); 
     ia -> Init("Kaonov");
 
     //Init HUD

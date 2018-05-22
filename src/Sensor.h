@@ -13,7 +13,7 @@ class Sensor{
         void move(Vector2<f32> _vectorPosition);
     private:
         Entity* propietary;
-        Entity* priorityTarget;
+        //Entity* priorityTarget;
         Box2D sensorHitbox;
 };
 #endif

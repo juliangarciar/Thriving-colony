@@ -436,9 +436,13 @@ void Unit::takeDamage(i32 _damage) {
 }
 
 void Unit::setTarget(Entity *newTarget) {
+    if(target != nullptr){
+        target->removeHostile(this);
+    }
     target = newTarget;
     if (target == nullptr) {
         switchState(Enumeration::UnitState::Idle);
+        switchUnitFigthersState(Enumeration::UnitFighterState::ufIdle);
     }
     else{
         target->addHostile(this);
