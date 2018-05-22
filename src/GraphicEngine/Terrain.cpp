@@ -19,6 +19,8 @@ Terrain::~Terrain() {
 }
 
 void Terrain::setTexture(Texture* terrainTexture, Texture* detailTexture) {
+	terrainTex = terrainTexture;
+	detailTex = detailTexture;
 	t->setTexture(terrainTexture->getTexture());
 }
 

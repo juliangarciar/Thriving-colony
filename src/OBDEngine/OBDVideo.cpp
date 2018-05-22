@@ -124,6 +124,8 @@ OBDVideo::~OBDVideo(){
 	// Close the video file
 	if (data->pFormatCtx) avformat_close_input(&data->pFormatCtx);
 
+	if (data->sws_ctx) sws_freeContext(data->sws_ctx);
+
 	delete videoNode;
 	videoNode = nullptr;
 

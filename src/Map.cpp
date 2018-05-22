@@ -49,7 +49,8 @@ void Map::Init() {
         lp.y = element["position"]["y"].get<i32>();
         lp.z = element["position"]["z"].get<i32>();
         Light *light = new Light(lp, Color(element["color"]["r"].get<f32>(), element["color"]["g"].get<f32>(), element["color"]["b"].get<f32>()), element["intensity"].get<i32>());
-    }
+		lights.push_back(light);
+	}
 
     loadProgress(15);
 
@@ -154,8 +155,8 @@ void Map::CleanUp() {
     lights.clear();
     delete terrain;
     delete camera;
-    //delete skydome;
 	delete skybox;
+	delete mapMargins;
 }
 
 Vector2<f32> Map::getHumanStartPosition() {
