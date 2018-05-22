@@ -7,16 +7,15 @@
 #include <Types.h>
 
 class EventSystem {
-
     public:
         EventSystem();
         ~EventSystem();
         
-        void triggerEvent(Enumeration::EventType);
-        void addEvent(Enumeration::EventType, std::function<void()>);
+        void triggerEvent(std::string);
+        void addEvent(std::string, std::function<void()>);
         
     private:
-        std::map<Enumeration::EventType, std::function<void()>> *Events;
+        std::map<std::string, std::function<void()>> *Events;
 };
 
 #endif

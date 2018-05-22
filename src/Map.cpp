@@ -75,6 +75,14 @@ void Map::Init() {
         Hud::Instance()->setButtonStatus(element["type"].get<std::string>(), element["isBuildable"].get<bool>());
     }
     Hud::Instance()->setButtonStatus("expandableTerrain", j["expandableTerrain"].get<bool>());
+
+    //Hud events
+    IO::Instance() -> getEventManager() -> addEvent("showBuiltText", [&]() {
+        Hud::Instance() -> addToastToQueue("Se ha construido un edificio");
+    });
+    IO::Instance() -> getEventManager() -> addEvent("showRecruitedText", [&]() {
+        Hud::Instance() -> addToastToQueue("Se ha reclutado una tropa");
+    });
     
 	loadProgress(45);
 
@@ -84,6 +92,15 @@ void Map::Init() {
 	influenceRangeIncrement = j["game"]["expansion_increment"].get<i32>();
 	influenceRangeIncrementLimit = j["game"]["expansion_increment_times"].get<i32>();
 	citizenIncrement = j["game"]["citizen_increment"].get<i32>();
+
+    IO::Instance() -> getEventManager() -> addEvent("showBuiltText", [&]() {
+		if (IA::Instance() -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
+			Game::Instance() -> changeState(Enumeration::State::WinState);
+		}
+		if (Human::Instance() -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
+			Game::Instance() -> changeState(Enumeration::State::DefeatState);
+		}
+	});
 	
 	loadProgress(50);
 
@@ -103,6 +120,15 @@ void Map::Init() {
         human -> getBuildingManager() -> createBuilding(v, element["type"].get<std::string>(), 0);
     }
 
+    //Human events
+    IO::Instance() -> getEventManager() -> addEvent("RetractTroopsHuman", [&]() {
+        Human::Instance() -> getUnitManager() -> retractAllTroops();
+    });
+    IO::Instance() -> getEventManager() -> addEvent("DeployTroopsHuman", [&]() {
+        Vector3<f32> p = Human::Instance() -> hallPosition;
+        Human::Instance() -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
+    });
+
     loadProgress(70);
 
     //IA
@@ -120,6 +146,15 @@ void Map::Init() {
         Vector2<f32> iaPosition(element["position"]["x"], element["position"]["z"]);
         ia -> getBuildingManager() -> createBuilding(iaPosition, element["type"].get<std::string>(), 0);
     }
+
+    //IA Events
+    IO::Instance() -> getEventManager() -> addEvent("RetractTroopsIA", [&]() {
+        IA::Instance() -> getUnitManager() -> retractAllTroops();
+    });
+    IO::Instance() -> getEventManager() -> addEvent("DeployTroopsIA", [&]() {
+        Vector3<f32> p = IA::Instance() -> hallPosition;
+        IA::Instance() -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
+    });
 
     loadProgress(90);
 
@@ -274,12 +309,7 @@ void Map::Update() {
 	ia -> Update();
 
 	//Win/Lose
-	if (IA::Instance() -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
-		Game::Instance() -> changeState(Enumeration::State::WinState);
-	}
-	if (Human::Instance() -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
-		Game::Instance() -> changeState(Enumeration::State::DefeatState);
-	}
+	IO::Instance() -> getEventManager() -> triggerEvent("checkWinCondition");
 }
 
 void Map::Render() {

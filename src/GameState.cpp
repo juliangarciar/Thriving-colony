@@ -15,35 +15,6 @@ void GameState::Init() {
     //Load map
     map -> Init();
 
-    //Initialize the event system
-    //IA Events
-    IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::RetractTroopsIA, [&]() {
-        IA::Instance() -> getUnitManager() -> retractAllTroops();
-    });
-    IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::DeployTroopsIA, [&]() {
-        Vector3<f32> p = IA::Instance() -> hallPosition;
-        p.x = p.x + 200; //ToDo: hacer bien
-        IA::Instance() -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
-    });
-
-    //Human events
-    IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::RetractTroopsHuman, [&]() {
-        Human::Instance() -> getUnitManager() -> retractAllTroops();
-    });
-    IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::DeployTroopsHuman, [&]() {
-        Vector3<f32> p = Human::Instance() -> hallPosition;
-        p.x = p.x + 200; //ToDo: hacer bien
-        Human::Instance() -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
-    });
-
-    //Hud events
-    IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::showBuiltText, [&]() {
-        Hud::Instance() -> addToastToQueue("Se ha construido un edificio");
-    });
-    IO::Instance() -> getEventManager() -> addEvent(Enumeration::EventType::showRecruitedText, [&]() {
-        Hud::Instance() -> addToastToQueue("Se ha reclutado una tropa");
-    });
-
     //Init SoundSystem
     //SoundSystem::Instance() -> initSystem();
 }
