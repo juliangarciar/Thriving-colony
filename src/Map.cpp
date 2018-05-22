@@ -37,7 +37,7 @@ void Map::Init() {
 
     loadProgress(0);
 
-    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/maps/test_map/map.json", true);
+    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource(loadMap, true);
     json j = *r -> getJSON();
 
     loadProgress(5);
@@ -152,7 +152,7 @@ void Map::Init() {
 	loadProgress(45);
 
     //Human
-    human -> Init("Drorania"); 
+    human -> Init(humanBreed); 
     human -> metalAmount = j["player"]["initial_metal"].get<i32>();
     human -> crystalAmount = j["player"]["initial_crystal"].get<i32>();
     human -> buildableRange = j["player"]["building_radius"].get<f32>();
@@ -179,7 +179,7 @@ void Map::Init() {
     loadProgress(60);
 
     //IA
-    ia -> Init("Kaonov");
+    ia -> Init(iaBreed);
     ia -> metalAmount = j["IA"]["initial_metal"].get<i32>();
     ia -> crystalAmount = j["IA"]["initial_crystal"].get<i32>();
     ia -> buildableRange = j["IA"]["building_radius"].get<f32>();
@@ -389,6 +389,15 @@ void Map::CleanUp() {
 	delete mapMargins;
 }
 
+void Map::setMap(std::string l){
+	loadMap = l;
+}
+
+void Map::setBreeds(std::string b1, std::string b2){
+	humanBreed = b1;
+	iaBreed = b2;
+}
+
 Vector2<f32> Map::getHumanStartPosition() {
     return humanStartPos;
 }
@@ -435,7 +444,5 @@ i32 Map::getInfluenceRangeIncrementLimit() {
 
 void Map::loadProgress(i32 p) {
 	hud->setProgressBar(p/100.f);
-    //std::cout << "Porcentaje de carga del mapa: " << p << "%" << std::endl;
-	//ToDo: barra de carga
 	Window::Instance()->endScene();
 }

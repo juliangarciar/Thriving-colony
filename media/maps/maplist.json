@@ -1,0 +1,5 @@
+{"list":[
+	{"name": "Tutorial 1", "map": "media/maps/level1_map/map.json"},
+	{"name": "Tutorial 2", "map": "media/maps/level2_map/map.json"},
+	{"name": "Grim Hollow", "map": "media/maps/test_map/map.json"}
+]}

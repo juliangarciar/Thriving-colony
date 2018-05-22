@@ -58,6 +58,13 @@ class GameState : public State {
          */
         void cleanGamePaused();
 
+		/**
+		 * @brief Get the Map object
+		 * 
+		 * @return Map* 
+		 */
+		Map *getMap();
+
     private:
         //Pointer to the map that will be used.
         Map *map;

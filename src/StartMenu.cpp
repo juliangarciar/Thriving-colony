@@ -8,9 +8,11 @@ StartMenu::StartMenu() {
 	video -> setLoop(true);
 #endif
 
+    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/maps/maplist.json", true);
+    json j = *r -> getJSON();
+
     //Main
     bgMain = new Panel("Thriving colony");
-    //bgMain -> setPosition(Vector2<i32>(400, 200));
     bgMain -> setSize(Vector2<i32>(400, 300));
     bgMain -> setVerticalLayout();
     bgMain -> refreshLayout();
@@ -26,47 +28,37 @@ StartMenu::StartMenu() {
     bgOptions -> refreshLayout();
     bgOptions -> center();
 
-    std::vector<std::string> *languages = new std::vector<std::string>();
-    std::vector<std::string> *resolution = new std::vector<std::string>();
+    languages . push_back("English");
+    languages . push_back("Spanish");
 
-    languages -> push_back("English");
-    languages -> push_back("Spanish");
-
-    resolution -> push_back("640x480");
-    resolution -> push_back("1080x720");
-
+    resolution . push_back("640x480");
+    resolution . push_back("1280x720");
 
     languageP = new Label(bgOptions, "Choose a language.");
     languageP -> setSize(Vector2<i32>(120, 25));
 
-    languageCb = new ComboBox(bgOptions, *languages);
+    languageCb = new ComboBox(bgOptions, languages);
     languageCb -> setPosition(Vector2<i32>(400, 200));
     languageCb -> setSize(Vector2<i32>(120, 60));
 
     resolutionP = new Label(bgOptions, "Choose a screen resolution.");
     resolutionP -> setSize(Vector2<i32>(180, 25));
 
-    resolutionCb = new ComboBox(bgOptions, *resolution);
+    resolutionCb = new ComboBox(bgOptions, resolution);
     resolutionCb -> setPosition(Vector2<i32>(400, 200));
     resolutionCb -> setSize(Vector2<i32>(120, 60));
-
-
-    languages -> clear();
-    delete languages;
-    resolution -> clear();
-    delete resolution;
     
     buttonAccept = new Button(bgOptions, "Accept changes");
     bgOptions -> hide();
+
     //Play
+    races . push_back("Drorania");
+    races . push_back("Kaonov");
 
-    std::vector<std::string> *races = new std::vector<std::string>();
-    std::vector<std::string> *maps = new std::vector<std::string>();
-
-    races -> push_back("Drorania");
-    races -> push_back("Kaonov");
-
-    maps -> push_back("Grim hollow");
+    for (auto& element : j["list"]) {
+    	maps . push_back(element["name"].get<std::string>());
+    	map_paths . push_back(element["map"].get<std::string>());
+	}
 
     bgPlay = new Panel("Match options");
     bgPlay -> setSize(Vector2<i32>(400, 300));
@@ -74,35 +66,37 @@ StartMenu::StartMenu() {
     bgPlay -> refreshLayout();
     bgPlay -> center();
 
-
     racesP = new Label(bgPlay, "Select a race.");
     racesP -> setSize(Vector2<i32>(120, 25));
 
-    racesCb = new ComboBox(bgPlay, *races);
+    racesCb = new ComboBox(bgPlay, races);
     racesCb -> setPosition(Vector2<i32>(400, 200));
     racesCb -> setSize(Vector2<i32>(120, 60));
 
     mapsP = new Label(bgPlay, "Select a map.");
     mapsP -> setSize(Vector2<i32>(120, 25));
 
-    mapsCb = new ComboBox(bgPlay, *maps);
+    mapsCb = new ComboBox(bgPlay, maps);
     mapsCb -> setPosition(Vector2<i32>(400, 200));
     mapsCb -> setSize(Vector2<i32>(120, 60));
-
-    races -> clear();
-    delete races;
-    maps -> clear();
-    delete maps;
 
     buttonPlay = new Button(bgPlay, "Start match");
     buttonBack = new Button(bgPlay, "Main menu"); 
     bgPlay -> hide();
 
+    Window::Instance() -> setGUI();
 
-    Window::Instance() -> setGUI();   
+	Game::Instance() -> getGameState() -> getMap() -> setMap(map_paths[mapsCb->getSelectedOption()]);
+	if (races[racesCb->getSelectedOption()] == "Drorania") Game::Instance() -> getGameState() -> getMap() -> setBreeds("Drorania", "Kaonov");
+	else if (races[racesCb->getSelectedOption()] == "Kaonov") Game::Instance() -> getGameState() -> getMap() -> setBreeds("Kaonov", "Drorania");
 }
 
 StartMenu::~StartMenu() {
+    races . clear();
+    maps . clear();
+    languages . clear();
+    resolution . clear();
+
     delete buttonQuit;
     delete buttonStart;
     delete buttonOptions;
@@ -146,6 +140,15 @@ void StartMenu::setHUDEvents() {
         bgOptions -> hide();
         bgMain -> show();
     });
+
+	mapsCb -> setCallback([this] (bool a) {
+		Game::Instance() -> getGameState() -> getMap() -> setMap(map_paths[mapsCb->getSelectedOption()]);
+	});
+
+	racesCb -> setCallback([this] (bool a) {
+		if (races[racesCb->getSelectedOption()] == "Drorania") Game::Instance() -> getGameState() -> getMap() -> setBreeds("Drorania", "Kaonov");
+		else if (races[racesCb->getSelectedOption()] == "Kaonov") Game::Instance() -> getGameState() -> getMap() -> setBreeds("Kaonov", "Drorania");
+	});
 
     buttonPlay -> setCallback([]{
         Game::Instance() -> changeState(Enumeration::State::GameState);
