@@ -388,6 +388,14 @@ void Hud::Init() {
     Window::Instance() -> setGUI();
 }
 
+void Hud::InitProgressBar(){
+	loadPanel = new Panel("");
+	loadProgressBar = new ProgressBar(loadPanel);
+	loadPanel->refreshLayout();
+	loadPanel->center();
+	loadPanel -> hide();
+}
+
 void Hud::InitDebug(){
     ///// DEBUG /////
     playerResources = new Panel("Player Resources");
@@ -767,6 +775,16 @@ void Hud::showToast(std::string s) {
 
 void Hud::hideToast() {
     toast->hide();
+}
+
+void Hud::setProgressBar(f32 a){
+	loadProgressBar->setValue(a);
+    loadPanel->refreshLayout();
+}
+
+void Hud::showProgressBar(bool a){
+	if (a) loadPanel->show();
+	else loadPanel->hide();
 }
 
 void Hud::setButtonStatus(std::string t, bool status) {

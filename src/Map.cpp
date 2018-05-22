@@ -32,6 +32,9 @@ Map::~Map() {
 }
 
 void Map::Init() {
+	hud->InitProgressBar();
+	hud->showProgressBar(true);
+
     loadProgress(0);
 
     ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/maps/test_map/map.json", true);
@@ -231,6 +234,7 @@ void Map::Init() {
     camera -> Init(Vector3<f32>(humanStartPos.x, terrain->getY(humanStartPos.x,humanStartPos.y), humanStartPos.y));
 
     loadProgress(100);
+	hud->showProgressBar(false);
 }
 
 void Map::Input() {
@@ -430,6 +434,7 @@ i32 Map::getInfluenceRangeIncrementLimit() {
 }
 
 void Map::loadProgress(i32 p) {
+	hud->setProgressBar(p/100.f);
     std::cout << "Porcentaje de carga del mapa: " << p << "%" << std::endl;
 	//ToDo: barra de carga
 	Window::Instance()->endScene();
