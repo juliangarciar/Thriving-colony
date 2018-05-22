@@ -238,7 +238,7 @@ void Hud::Init() {
             b = new Button(mainBuildingTab, "Retract all troops");
             b -> setTooltip("Retract your units back into your town hall");
             b -> setCallback([&]{
-                IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::RetractTroopsHuman);
+                IO::Instance() -> getEventManager() -> triggerEvent("RetractTroopsHuman");
             });
         }
         //BarrackTab
@@ -500,6 +500,8 @@ void Hud::InitDebug(){
     iaos << "Behaviour: " << IA::Instance() -> getChosenBehaviour();
     iaBehaviour = new Label(iaResources, iaos.str());
     iaos = std::stringstream();
+    
+	Window::Instance() -> setGUI();
 }
 
 void Hud::Update() { 

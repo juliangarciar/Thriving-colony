@@ -132,7 +132,7 @@ bool UnitManager::createTroop(std::string type) {
                     Hud::Instance()->addTroopToHall(u->getID(), u->getType());
 
                     //Mostrar texto de reclutamiento
-                    IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showRecruitedText);  
+                    IO::Instance() -> getEventManager() -> triggerEvent("showRecruitedText");  
                 }
             });
             newUnit -> setRetractedCallback([&] (Unit *u) {

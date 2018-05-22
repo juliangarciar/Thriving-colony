@@ -8,6 +8,7 @@
 
 ResourceManager::ResourceManager() {
 	maxThreads = std::thread::hardware_concurrency();
+	std::cout << "Tienes acceso a " << maxThreads << " hilos de ejecucion." << std::endl;
 	currentThreads = 0;
     std::string temp[] = {"obj","mtl","json","glsl","bmp","tga","jpg","jpeg","png"};
     supportedFormats.insert(supportedFormats.end(),temp,std::end(temp));

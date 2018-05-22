@@ -22,6 +22,7 @@ void EventSystem::addEvent(std::string event, std::function<void()> function) {
 * The event must be a type of EventType declared on the Enumeration.h file.
 */
 void EventSystem::triggerEvent(std::string event) {
-    auto function = Events -> find(event);
-    function -> second();
+    auto it = Events -> find(event);
+	assert(it != Events -> end());
+    if (it->second != nullptr) it -> second();
 }

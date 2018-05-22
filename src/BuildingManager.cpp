@@ -144,7 +144,7 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
 					&& (b -> getType() == "Barrack" || b -> getType() == "Barn" || b -> getType() == "Workshop")) {
 					Hud::Instance() -> enableTab(b -> getType());
 				}
-				if (b -> getBuildingTime()) IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showBuiltText);  
+				if (b -> getBuildingTime()) IO::Instance() -> getEventManager() -> triggerEvent("showBuiltText");  
 			}
 		});
 

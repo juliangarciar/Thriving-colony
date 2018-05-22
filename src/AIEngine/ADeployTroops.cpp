@@ -11,7 +11,7 @@ ADeployTroops::~ADeployTroops() {
 }
 
 Enumeration::BehaviourState ADeployTroops::Update() {
-    IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::DeployTroopsIA);
+    IO::Instance() -> getEventManager() -> triggerEvent("DeployTroopsIA");
     return Enumeration::BehaviourState::Success;
 }
 

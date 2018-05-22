@@ -10,7 +10,7 @@ ARetreat::~ARetreat() {
 }
 
 Enumeration::BehaviourState ARetreat::Update() {
-    IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::RetractTroopsIA);
+    IO::Instance() -> getEventManager() -> triggerEvent("RetractTroopsIA");
     return Enumeration::BehaviourState::Success;
 }
 

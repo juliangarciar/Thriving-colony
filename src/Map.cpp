@@ -93,7 +93,7 @@ void Map::Init() {
 	influenceRangeIncrementLimit = j["game"]["expansion_increment_times"].get<i32>();
 	citizenIncrement = j["game"]["citizen_increment"].get<i32>();
 
-    IO::Instance() -> getEventManager() -> addEvent("showBuiltText", [&]() {
+    IO::Instance() -> getEventManager() -> addEvent("checkWinCondition", [&]() {
 		if (IA::Instance() -> getBuildingManager() -> getAmount("MainBuilding") == 0) {
 			Game::Instance() -> changeState(Enumeration::State::WinState);
 		}
