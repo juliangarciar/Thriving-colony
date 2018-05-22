@@ -15,8 +15,7 @@ BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
 	inMapBuildings = new std::map<i32, Building*>();
 	tempBuilding = nullptr;
 
-    IO::Instance() -> getResourceManager()->loadResource("media/gameConfig/BuildingData/"+b+"Buildings.json");
-    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/gameConfig/BuildingData/"+b+"Buildings.json");
+    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/gameConfig/BuildingData/"+b+"Buildings.json", true);
     json j = *r -> getJSON();
 
     for (auto& element : j["Buildings"]) {
@@ -37,6 +36,7 @@ BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
 			tmp.cityLevel = element["cityLevel"].get<i32>();
 			tmp.cellsX = element["cellsX"].get<i32>();
 			tmp.cellsY = element["cellsY"].get<i32>();
+			Window::Instance() -> getEngineResourceManager() -> loadResource(element["modelPath"].get<std::string>());
 		baseBuildings.insert(std::pair<std::string, BuildingData>(tmp.type, tmp));
 	}
 }
@@ -103,6 +103,7 @@ void BuildingManager::drawBuilding() {
 		if (IO::Instance() -> getKeyboard() -> keyPressed(82)) { //ToDo: fachada
 			f32 rot = tempBuilding -> getModel() -> getRotation() . y;
 			rot += 90;
+			if (rot > 360) rot = 0;
 			tempBuilding -> getModel() -> setRotation(Vector3<f32>(0, rot, 0));
 		}
 		
@@ -143,7 +144,7 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
 					&& (b -> getType() == "Barrack" || b -> getType() == "Barn" || b -> getType() == "Workshop")) {
 					Hud::Instance() -> enableTab(b -> getType());
 				}
-				if (b -> getBuildingTime()) IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showBuiltText);  
+				if (b -> getBuildingTime()) IO::Instance() -> getEventManager() -> triggerEvent("showBuiltText");  
 			}
 		});
 

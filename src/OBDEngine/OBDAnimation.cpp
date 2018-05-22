@@ -49,19 +49,24 @@ void OBDAnimation::updateFrame() {
 	}
 }
 
-OBDMaterial *OBDAnimation::getMaterial() {
-	return material;
-}
-
 void OBDAnimation::setActive(bool a){
 	OBDEntity::setActive(a);
-	setFrame(0);
+	setCurrentFrame(0);
 }
 
 /* Me pase de listo */
-void OBDAnimation::setFrame(i32 nFrame){
+void OBDAnimation::setCurrentFrame(i32 nFrame){
+	assert(nFrame >= 0 && nFrame < numberOfFrames);
 	frames -> at(currentFrame) -> setActive(false);
 	currentFrame = nFrame;
 	nextFrame = nFrame;
 	frames -> at(currentFrame) -> setActive(true);
+}
+
+i32 OBDAnimation::getNumberOfFrames(){
+	return numberOfFrames;
+}
+
+OBDMaterial *OBDAnimation::getMaterial() {
+	return material;
 }

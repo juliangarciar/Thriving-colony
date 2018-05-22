@@ -3,13 +3,11 @@
 
 Model::Model(i32 id, std::string path) {
    obj = Window::Instance()->getEngine()->createObject(id, path, true);
-   std::cout << "Se ha cargado un edificio " << path << std::endl;
    materials = obj->getMaterials();
 }
 
 Model::Model(SceneNode *parent, i32 id, std::string path) {
    obj = Window::Instance()->getEngine()->createObject(parent->getSceneNode(), id, path, true);
-   std::cout << "Se ha cargado un edificio " << path << std::endl;
    materials = obj->getMaterials();
 }
 

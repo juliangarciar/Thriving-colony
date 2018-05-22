@@ -1,0 +1,13 @@
+{
+    "animations": [
+        {
+        "name": "idle",
+        "delay": 100,
+        "objects": [
+            "drorania_walls_desintegrator.obj"
+            ]
+        }
+    ],
+    "material": "drorania_walls_desintegrator.mtl",
+    "defaultAnimation": "idle"
+} 

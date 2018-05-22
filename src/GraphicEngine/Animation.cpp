@@ -31,8 +31,7 @@ Animation::Animation(SceneNode* parent, std::string animationJSON) {
 	currentAnimation = animations->at(j["defaultAnimation"].get<std::string>());
 	currentAnimation -> setActive(true);
 
-	/* Por que un string */
-	frameTimer = new Timer(animationDelays->at(j["defaultAnimation"].get<std::string>()), true);
+	frameTimer = new Timer(animationDelays->at(j["defaultAnimation"].get<std::string>()), true, false);
 	frameTimer -> setCallback([&]() {
 		currentAnimation->updateFrame();
 	});
@@ -66,6 +65,24 @@ void Animation::changeAnimation(std::string animationName) {
 	}
 }
 
+void Animation::preloadAnimation(std::string path){
+	size_t last = path.rfind("/");
+	std::string subpath = path.substr(0, last);
+
+	ResourceJSON *animation = (ResourceJSON*)Window::Instance()->getEngineResourceManager()->getResource(path, true);
+    json j = *animation -> getJSON();
+
+    for (auto& element : j["animations"]) {
+		std::string animationName = element["name"].get<std::string>();
+    	for (auto& subelement : element["objects"]) {
+			std::string objectName = subelement.get<std::string>();
+			Window::Instance()->getEngineResourceManager()->loadResource(subpath+"/"+animationName+"/"+objectName, false);
+		}
+	}
+
+	Window::Instance()->getEngineResourceManager()->loadResource(subpath+"/"+j["material"].get<std::string>(), false);
+}
+
 void Animation::setPosition(Vector3<f32> pos) {
     animationLayer->setPosition(pos);
 }
@@ -84,4 +101,13 @@ void Animation::setActive(bool a) {
 
 void Animation::setColor(Color c) {
 	currentAnimation->getMaterial()->setDiffuseColor(OBDColor(c.r, c.g, c.b, c.a));
+}
+
+void Animation::setRandomFrame(){
+  	i32 random = rand() % (currentAnimation->getNumberOfFrames() - 1) + 0;
+	currentAnimation->setCurrentFrame(random);
+}
+
+Timer *Animation::getAnimationTimer(){
+	return frameTimer;
 }

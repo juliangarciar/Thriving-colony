@@ -10,11 +10,11 @@ class ResourceManager {
         ResourceManager();
         ~ResourceManager();
 
-        /**
-         * @brief 
-         * 
-         */
-        void Update();
+		/**
+		 * @brief 
+		 * 
+		 */
+		void Update();
 
         /**
          * @brief 
@@ -33,7 +33,7 @@ class ResourceManager {
          * @brief 
          * 
          */
-        void load(std::string, bool);
+        void load(std::string);
 
         /**
          * @brief 
@@ -41,8 +41,11 @@ class ResourceManager {
          */
         void push(std::string);
 
+		i32 maxThreads;
+		i32 currentThreads;
+
         std::map<std::string, Resource *> resources;
-        std::queue<std::thread> threads;
+        std::queue<std::string> paths;
         std::vector<std::string> supportedFormats;
 };
 

@@ -163,6 +163,14 @@ class OBDEngine {
         OBDVideo* createVideo(OBDSceneNode*, OBDShaderProgram *, std::string);
 
         /**
+         * @brief Create a Skybox object
+         * 
+         * @param texture 
+         * @return OBDSkybox* 
+         */
+        OBDSkybox* createSkybox(OBDSceneNode*, OBDShaderProgram*, std::vector<std::string>);
+
+        /**
          * @brief Create a Shader Program object
          * 
          * @param a 
@@ -193,6 +201,13 @@ class OBDEngine {
 		 * @return OBDSceneNode* 
 		 */
 		OBDSceneNode* createShaderedSceneNode(std::string sN, std::string vs, std::string fs);
+
+		/**
+		 * @brief Create a Overall Scene Node object
+		 * 
+		 * @return OBDSceneNode* 
+		 */
+		OBDSceneNode* createShaderedSceneNode(OBDSceneNode *p, std::string sN, std::string vs, std::string fs);
 
         /**
          * @brief 
@@ -308,14 +323,6 @@ class OBDEngine {
 		 * @return OBDTile* 
 		 */
         OBDTile* createTile(ResourceIMG* _texture, glm::vec2 _position);
-
-        /**
-         * @brief Create a Skybox object
-         * 
-         * @param texture 
-         * @return OBDSkybox* 
-         */
-        OBDSkybox* createSkybox(OBDTexture* texture);
 
 		/////////////////////////////
     private:

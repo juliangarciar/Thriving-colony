@@ -46,6 +46,13 @@ class Window {
             return window;
         }
 
+		/**
+		 * @brief Get the Engine Resource Manager object
+		 * 
+		 * @return ResourceManager* 
+		 */
+		ResourceManager *getEngineResourceManager();
+
         /**
          * @brief calculates the framerate of the window. It is important to call
          * this function after the game logic has fully executed to see how long it
@@ -60,6 +67,20 @@ class Window {
          * @return i32 framerate
          */
         i32 getFrameRate();
+
+        /**
+         * @brief Get the program where are going to be created all Skybox.
+         * 
+         * @return OBDShaderProgram* that is going to be the value of SkyboxLayer.
+         */
+        OBDShaderProgram* getSkyboxProgram();
+
+        /**
+         * @brief Get the layer where are going to be created all Skybox.
+         * 
+         * @return OBDSceneNode* that is going to be the value of SkyboxLayer.
+         */
+        OBDSceneNode* getSkyboxLayer();
 
         /**
          * @brief Get the program where are going to be created all billboards.
@@ -106,7 +127,11 @@ class Window {
 
         bool closeWindow;
 
-		OBDEngine *e;
+		OBDEngine *engine;
+
+        //Layer where are going to be created all skybox;
+		OBDShaderProgram *skyboxProgram;
+        OBDSceneNode* skyboxLayer;
 
         //Layer where are going to be created all billboards;
 		OBDShaderProgram *billboardProgram;

@@ -2,7 +2,9 @@
 #define MAP_H
 
 #include "CameraController.h"
-#include "Player.h"
+#include "Human.h"
+#include "IA.h"
+#include "Hud.h"
 
 #include <GraphicEngine/Terrain.h>
 #include <GraphicEngine/Light.h>
@@ -152,11 +154,23 @@ class Map {
         //Pointer to the current active camera.
         CameraController *camera;
 
-        //List of lights.
-        std::vector<Light*> lights;
+        //Pointer to the human player's object.
+        Human *human;
+
+        //Pointer to the AI player's object.
+        IA *ia;
+
+        //Pointer to the hud that will be used.
+        Hud *hud;
 
         //Pointer to the terrain.
         Terrain *terrain;
+
+        //Skybox of the map.
+        Skybox* skybox;
+
+        //List of lights.
+        std::vector<Light*> lights;
 
         //Position of the human player's command center.
         Vector2<f32> humanStartPos;
@@ -166,12 +180,6 @@ class Map {
 
         //Position of the terrain correspondent to the position of the mouse cursor.
         Vector3<f32> collisionPoint;
-		
-        //Skybox of the map.
-        Skybox* skybox;
-
-        //Skydome of the map.
-        //SkyDome *skydome;
 
 		//MapMargins
 		Margins *mapMargins;
@@ -190,6 +198,10 @@ class Map {
 
 		//Number of times you can expand your terrain
 		i32 influenceRangeIncrementLimit;
+
+		//Conditions
+		Condition winCondition;
+		Condition loseCondition;
 };
 
 #endif

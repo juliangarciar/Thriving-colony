@@ -10,6 +10,11 @@ class OBDVideo {
     public:
 		OBDVideo(OBDSceneNode* parent, OBDShaderProgram *program, std::string path);
 		~OBDVideo();
+
+		void play();
+		void pause();
+
+		void setLoop(bool);
 	private:
 		VideoData *data;
 		TNode *videoNode;

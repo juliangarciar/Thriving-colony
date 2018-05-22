@@ -46,10 +46,9 @@ OBDEntity::~OBDEntity() {
 
 void OBDEntity::refreshModelMatrix(glm::mat4 parent) {
 	parent_model_matrix = parent;
-	TTransform* r = (TTransform*) rotationNode -> getEntity();
 	TTransform* t = (TTransform*) translationNode -> getEntity();
 	TTransform* s = (TTransform*) scaleNode -> getEntity();
-	model_matrix = s->getMatrix() * t->getMatrix() * r->getMatrix() * parent;
+	model_matrix = s->getMatrix() * t->getMatrix() * parent;
 	inverse_model_matrix = glm::inverse(model_matrix);
 }
 
@@ -117,4 +116,8 @@ bool OBDEntity::getActive() {
 
 TNode *OBDEntity::getFirstNode() {
 	return rotationNode;
+}
+
+TNode *OBDEntity::getLastNode() {
+	return scaleNode;
 }

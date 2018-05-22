@@ -32,6 +32,8 @@ void Window::Init(i32 width, i32 height) {
 
     glfwSetTime(0);
 
+ 	srand(time(NULL));
+
 	glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -50,11 +52,11 @@ void Window::Init(i32 width, i32 height) {
 
     glfwMakeContextCurrent(window);
 
-    e = new OBDEngine();
-	e -> Init(windowWidth, windowHeight);
-	e -> InitVideoSystem();
-	e -> createShaderProgram("defaultProgram", "media/shaders/vertexShader.glsl", "media/shaders/fragmentShader.glsl");
-	e -> setCurrentShaderProgram("defaultProgram");
+    engine = new OBDEngine();
+	engine -> Init(windowWidth, windowHeight);
+	engine -> InitVideoSystem();
+	engine -> createShaderProgram("defaultProgram", "media/shaders/vertexShader.glsl", "media/shaders/fragmentShader.glsl");
+	engine -> setCurrentShaderProgram("defaultProgram");
    
     // create gui manager    
     gui = new nanogui::Screen();
@@ -81,11 +83,14 @@ void Window::Init(i32 width, i32 height) {
 
     dtThen = glfwGetTime();
 
-    billboardLayer = e -> createShaderedSceneNode("billboardShader", "media/shaders/vertexShaderBillboards.glsl", "media/shaders/fragmentShaderBillboards.glsl");
-	billboardProgram = e -> getRegisteredShaderProgram("billboardShader");
+    skyboxLayer = engine -> createShaderedSceneNode(engine->getDefaultLayer(), "skyboxShader", "media/shaders/vertexShaderSkybox.glsl", "media/shaders/fragmentShaderSkybox.glsl");
+	skyboxProgram = engine -> getRegisteredShaderProgram("skyboxShader");
 
-    videoLayer = e -> createShaderedSceneNode("videoShader", "media/shaders/vertexShaderVideo.glsl", "media/shaders/fragmentShaderVideo.glsl");
-	videoProgram = e -> getRegisteredShaderProgram("videoShader");
+    billboardLayer = engine -> createShaderedSceneNode("billboardShader", "media/shaders/vertexShaderBillboards.glsl", "media/shaders/fragmentShaderBillboards.glsl");
+	billboardProgram = engine -> getRegisteredShaderProgram("billboardShader");
+
+    videoLayer = engine -> createShaderedSceneNode("videoShader", "media/shaders/vertexShaderVideo.glsl", "media/shaders/fragmentShaderVideo.glsl");
+	videoProgram = engine -> getRegisteredShaderProgram("videoShader");
 }
 
 void Window::setGUI() { 
@@ -101,7 +106,7 @@ void Window::beginScene() {
 }
 
 void Window::endScene() {
-	e->draw();
+	engine->draw();
     gui -> drawWidgets();
     glEnable(GL_DEPTH_TEST);
 	glfwSwapBuffers(window);
@@ -121,7 +126,7 @@ void Window::onClose() {
 }
 
 OBDEngine *Window::getEngine() {
-	return e;
+	return engine;
 }
 
 void Window::setResizeCallback(std::function<void(i32, i32)> f) {
@@ -162,6 +167,18 @@ void Window::calculateFramerate() {
 
 i32 Window::getFrameRate() {
     return framerate;
+}
+
+ResourceManager *Window::getEngineResourceManager(){
+	return engine->getResourceManager();
+}
+
+OBDShaderProgram* Window::getSkyboxProgram(){
+	return skyboxProgram;
+}
+
+OBDSceneNode* Window::getSkyboxLayer(){
+	return skyboxLayer;
 }
 
 OBDShaderProgram* Window::getBillboardProgram() {

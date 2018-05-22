@@ -1,0 +1,17 @@
+# Blender MTL File: 'drorania_walls_desintegrator.blend'
+# Material Count: 1
+
+newmtl drorania_walls_desintegrator
+Ns 96.078431
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.000000
+d 0.520661
+illum 2
+
+map_Ka drorania_walls_desintegrator_Mixed_AO.bmp
+map_Kd drorania_walls_desintegrator_Base_Color.bmp
+map_Ks drorania_walls_desintegrator_Metallic.bmp
+map_d drorania_walls_desintegrator_Opacity.bmp

@@ -1,0 +1,13 @@
+{
+    "animations": [
+        {
+        "name": "idle",
+        "delay": 100,
+        "objects": [
+            "kaonov_cannon.obj"
+            ]
+        }
+    ],
+    "material": "kaonov_cannon.mtl",
+    "defaultAnimation": "idle"
+} 

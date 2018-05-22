@@ -15,8 +15,7 @@
 
 //Constructor
 UnitManager::UnitManager(Enumeration::Team t, std::string b) {
-    IO::Instance() -> getResourceManager()->loadResource("media/gameConfig/UnitData/"+b+"Units.json");
-    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/gameConfig/UnitData/"+b+"Units.json");
+    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/gameConfig/UnitData/"+b+"Units.json", true);
     json j = *r -> getJSON();
 
     baseUnits = new std::map<std::string, UnitData>();
@@ -47,6 +46,8 @@ UnitManager::UnitManager(Enumeration::Team t, std::string b) {
             tmp.attackEvent = element["attackEvent"].get<std::string>();
             tmp.moveEvent = element["moveEvent"].get<std::string>();
             tmp.selectEvent = element["selectEvent"].get<std::string>();
+			Window::Instance() -> getEngineResourceManager() -> loadResource(element["flagModelPath"].get<std::string>());
+			Animation::preloadAnimation(element["troopModelPath"].get<std::string>());
         baseUnits->insert(std::pair<std::string, UnitData>(tmp.type, tmp));
 		inQueueTroopsByBuilding->insert(std::pair<std::string, i32>(tmp.buildingType, 0));
     }
@@ -131,7 +132,7 @@ bool UnitManager::createTroop(std::string type) {
                     Hud::Instance()->addTroopToHall(u->getID(), u->getType());
 
                     //Mostrar texto de reclutamiento
-                    IO::Instance() -> getEventManager() -> triggerEvent(Enumeration::EventType::showRecruitedText);  
+                    IO::Instance() -> getEventManager() -> triggerEvent("showRecruitedText");  
                 }
             });
             newUnit -> setRetractedCallback([&] (Unit *u) {

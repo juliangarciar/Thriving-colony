@@ -1,10 +1,12 @@
 #include "Skybox.h"
 #include "Window.h"
 
-Skybox::Skybox(Texture* tex) {
-	skybox = Window::Instance()->getEngine()->createSkybox(tex->getTexture());
-	t = tex;
-    
+Skybox::Skybox(std::vector<std::string> textures) {
+	skybox = Window::Instance()->getEngine()->createSkybox(
+		Window::Instance()->getSkyboxLayer(), 
+		Window::Instance()->getSkyboxProgram(),
+		textures
+	);
 }
 
 Skybox::~Skybox() {

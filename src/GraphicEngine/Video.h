@@ -9,6 +9,10 @@ class Video {
 		Video(std::string);
 		~Video();
 
+		void play();
+		void pause();
+
+		void setLoop(bool);
 	private:
 		OBDVideo *video;
 };

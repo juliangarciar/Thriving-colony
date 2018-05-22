@@ -30,9 +30,24 @@ class TVideo : public TEntity {
          * 
          */
         void endDraw();
+
+		/**
+		 * @brief 
+		 * @param play
+		 */
+		void setPlay(bool);
+
+		/**
+		 * @brief Set the Loop
+		 * @param loop
+		 */
+		void setLoop(bool);
 	private:
 		bool readFrame();
 		int decode(AVCodecContext *avctx, AVFrame *frame, int *got_frame, AVPacket *pkt);
+
+		bool play;
+		bool loop;
 
 		VideoData *data;
 

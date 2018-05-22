@@ -59,17 +59,8 @@ class GameState : public State {
         void cleanGamePaused();
 
     private:
-        //Pointer to the human player's object.
-        Human *human;
-
-        //Pointer to the AI player's object.
-        IA *ia;
-
         //Pointer to the map that will be used.
         Map *map;
-
-        //Pointer to the hud that will be used.
-        Hud *hud;
 
         //Pointer to the hud of pause mode.
         PauseMenu *pauseMenu;

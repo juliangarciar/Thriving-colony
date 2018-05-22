@@ -27,21 +27,6 @@ class Enumeration {
             Building,
             Unit
         };
-
-        //Event types.
-        enum EventType {
-            //AI events.
-            DeployTroopsIA,
-            RetractTroopsIA,
-
-            //Human events.
-            DeployTroopsHuman,
-            RetractTroopsHuman,
-
-            //Text events.
-            showBuiltText,
-            showRecruitedText
-        };
         
         //Unit states.
         enum UnitState {

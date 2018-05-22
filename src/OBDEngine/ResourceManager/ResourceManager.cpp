@@ -7,7 +7,10 @@
 #include "ResourceIMG.h"
 
 ResourceManager::ResourceManager() {
-    std::string temp[] = {"obj","mtl","json","glsl","bmp","jpg","jpeg","png"};
+	maxThreads = std::thread::hardware_concurrency();
+	std::cout << "Tienes acceso a " << maxThreads << " hilos de ejecucion." << std::endl;
+	currentThreads = 0;
+    std::string temp[] = {"obj","mtl","json","glsl","bmp","tga","jpg","jpeg","png"};
     supportedFormats.insert(supportedFormats.end(),temp,std::end(temp));
 }
 
@@ -17,12 +20,21 @@ ResourceManager::~ResourceManager() {
 }
 
 void ResourceManager::Update() {
-    //ToDo: revisar cola de procesos
-    threads.front().join();
-    threads.pop();
+	if (currentThreads < maxThreads && paths.size()){
+		std::string path = paths.front();
+		std::thread([=](){
+			load(path);
+			std::cout << "Se ha cargado asincronamente: " << path << std::endl;
+			currentThreads--;
+		}).detach();
+		paths.pop();
+		currentThreads++;
+	}
 }
 
-void ResourceManager::load(std::string path, bool sync) {
+void ResourceManager::load(std::string path) {
+	if (resources.find(path) != resources.end()) return;
+
     std::size_t found = path.find_last_of(".");
     std::string extension = path.substr(found+1);
 
@@ -42,7 +54,7 @@ void ResourceManager::load(std::string path, bool sync) {
         Resource *r = new ResourceGLSL();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
-    } else if (extension.find("bmp") != std::string::npos || extension.find("jpg") != std::string::npos || extension.find("jpeg") != std::string::npos || extension.find("png") != std::string::npos) {
+    } else if (extension.find("bmp") != std::string::npos || extension.find("tga") != std::string::npos || extension.find("jpg") != std::string::npos || extension.find("jpeg") != std::string::npos || extension.find("png") != std::string::npos) {
         Resource *r = new ResourceIMG();
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
@@ -53,15 +65,17 @@ void ResourceManager::load(std::string path, bool sync) {
 }
 
 void ResourceManager::push(std::string path) {
-	threads.push(std::thread([=]() {
-		load(path, false);
-	}));
+	if (maxThreads > 0){
+		paths.push(path);
+	} else {
+		load(path);
+	}
 }
 
 void ResourceManager::loadResource(std::string path, bool sync) {
 	if (path.find(".") != std::string::npos) {
 		if (sync) {
-			load(path, true);
+			load(path);
 		} else {
 			push(path);
 		}

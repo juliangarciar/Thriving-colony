@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include <cassert>
 #include <cstdint>
 #include <iostream>
 
@@ -21,6 +22,13 @@ struct Margins{
 	i32 right;
 	i32 bottom;
 	i32 left;
+};
+
+struct Condition{
+	std::string player;
+	std::string building;
+	std::string condition;
+	i32 value;
 };
 
 #endif

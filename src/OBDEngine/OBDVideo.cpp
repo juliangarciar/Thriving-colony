@@ -124,9 +124,26 @@ OBDVideo::~OBDVideo(){
 	// Close the video file
 	if (data->pFormatCtx) avformat_close_input(&data->pFormatCtx);
 
+	if (data->sws_ctx) sws_freeContext(data->sws_ctx);
+
 	delete videoNode;
 	videoNode = nullptr;
 
 	delete data;
 	data = nullptr;
+}
+
+void OBDVideo::play(){
+    TVideo* v = (TVideo*) videoNode -> getEntity();
+	v -> setPlay(true);
+}
+
+void OBDVideo::pause(){
+    TVideo* v = (TVideo*) videoNode -> getEntity();
+	v -> setPlay(false);
+}
+
+void OBDVideo::setLoop(bool l){
+    TVideo* v = (TVideo*) videoNode -> getEntity();
+	v -> setLoop(l);
 }
