@@ -7,7 +7,7 @@
 #include "ResourceIMG.h"
 
 ResourceManager::ResourceManager() {
-	maxThreads = std::thread::hardware_concurrency();
+	maxThreads = std::thread::hardware_concurrency()-1;
 	std::cout << "Tienes acceso a " << maxThreads << " hilos de ejecucion." << std::endl;
 	currentThreads = 0;
     std::string temp[] = {"obj","mtl","json","glsl","bmp","tga","jpg","jpeg","png"};

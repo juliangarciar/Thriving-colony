@@ -24,9 +24,9 @@ CPPFLAGS = -I/usr/include -I/usr/include/eigen3 -I$(PROJECTROOT)/include -I$(PRO
 # Compiler params
 CPPFLAGS += -O3 -std=c++11 -m64 -ffast-math -pthread -Wall -Wno-macro-redefined -Wno-unsequenced -Wno-unused-value -DGL_GLEXT_PROTOTYPES
 # Lib paths
-LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L$(PROJECTROOT)/lib -Wl,-R -Wl,$(PROJECTROOT)/lib -Wl,--no-as-needed
+LDFLAGS = -L/usr/lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/X11 -L/usr/local/lib -L$(PROJECTROOT)/lib -Wl,-R -Wl,$(PROJECTROOT)/lib -Wl,--no-as-needed
 # Libs
-LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lXrandr -lXinerama -lXi -lpthread -ldl -lrt -lavformat -lavcodec -lavutil -lswresample -lswscale -lglfw -lnanogui -lfmod -lfmodstudio -lterterrain -laabbtree
+LIBS = -lGL -lXxf86vm -lXext -lX11 -lXcursor -lXrandr -lXinerama -lXi -lpthread -ldl -lrt -llavformat -llavcodec -llavutil -llswresample -llswscale -lglfw -lnanogui -lfmod -lfmodstudio -lterterrain -laabbtree
 
 ######## DON'T EDIT ANYTHING BELOW THIS LINE
 EXECUTABLE := $(BINPATH)/$(TARGET)
