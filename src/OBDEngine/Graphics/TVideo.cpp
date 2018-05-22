@@ -4,6 +4,9 @@ TVideo::TVideo(GLuint pID, VideoData *d){
 	programID = pID;
 	data = d;
 
+	play = false;
+	loop = false;
+
 	float quad[12] = {
 		-1.0f,  1.0f, 0.0f,
 		-1.0f, -1.0f, 0.0f,
@@ -55,7 +58,7 @@ TVideo::~TVideo(){
 }
 
 void TVideo::beginDraw(){
-	readFrame();
+	if (play) readFrame();
 	
 	glm::mat4 mvp = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
 	glUniformMatrix4fv(mvpID, 1, GL_FALSE, glm::value_ptr(mvp));
@@ -89,29 +92,19 @@ void TVideo::endDraw(){
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-/*void SaveFrame(AVFrame *pFrame, int width, int height, int iFrame) {
-	FILE *pFile;
-	char szFilename[32];
-	
-	// Open file
-	sprintf(szFilename, "frame%d.ppm", iFrame);
-	pFile=fopen(szFilename, "wb");
-	if(pFile==NULL)
-		return;
-	
-	// Write header
-	fprintf(pFile, "P6\n%d %d\n255\n", width, height);
-	
-	// Write pixel data
-	fwrite(pFrame->data[0], 1, width*height*3, pFile);
-		
-	// Close file
-	fclose(pFile);
-}*/
-
 bool TVideo::readFrame() {
-	if (av_read_frame(data->pFormatCtx, &data->packet) != 0){
-		std::cout << "Error al leer el frame" << std::endl;
+	int error;
+	error = av_read_frame(data->pFormatCtx, &data->packet);
+	if (error == 0) {
+		//Todo bien, todo correcto
+	} else if (error == AVERROR_EOF) {
+		if(loop) {
+			auto stream = data->pFormatCtx->streams[data->videoStream];
+			avio_seek(data->pFormatCtx->pb, 0, SEEK_SET);
+			avformat_seek_file(data->pFormatCtx, data->videoStream, 0, 0, stream->duration, 0);
+		} else return false;
+	} else {
+		std::cout << "Error " << error << " al leer el frame" << std::endl;
 		return false;
 	}
 	// Is this a packet from the video stream?
@@ -130,9 +123,6 @@ bool TVideo::readFrame() {
 			glTexSubImage2D(GL_TEXTURE_2D, 0, 0, 0, data->pCodecCtx->width, 
 				data->pCodecCtx->height, GL_RGB, GL_UNSIGNED_BYTE, 
 				data->pFrameRGB->data[0]);
-
-			// Save the frame to disk
-			//SaveFrame(data->pFrameRGB, data->pCodecCtx->width, data->pCodecCtx->height, i++);
 		}
 	}
 	
@@ -162,4 +152,12 @@ int TVideo::decode(AVCodecContext *avctx, AVFrame *frame, int *got_frame, AVPack
         *got_frame = 1;
 
     return 0;
+}
+
+void TVideo::setPlay(bool p){
+	play = p;
+}
+
+void TVideo::setLoop(bool l){
+	loop = l;
 }

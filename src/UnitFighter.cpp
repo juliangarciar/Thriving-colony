@@ -102,6 +102,7 @@ void UnitFighter::switchState(Enumeration::UnitFighterState _state) {
             if(fighterState != Enumeration::UnitFighterState::ufAttack){
                 unitFighterClock->stop();
                 fighterModel->changeAnimation("attack");
+				fighterModel->setRandomFrame();
                 fighterState = _state;
             }
         break;
@@ -109,6 +110,7 @@ void UnitFighter::switchState(Enumeration::UnitFighterState _state) {
         case Enumeration::UnitFighterState::ufMove:
             if(fighterState != Enumeration::UnitFighterState::ufMove){
                 fighterModel->changeAnimation("walk");
+				fighterModel->setRandomFrame();
                 fighterState = _state;
             }
         break;
@@ -117,6 +119,7 @@ void UnitFighter::switchState(Enumeration::UnitFighterState _state) {
             if(fighterState != Enumeration::UnitFighterState::ufIdle){
                 unitFighterClock->stop();
                 fighterModel->changeAnimation("idle");
+				fighterModel->setRandomFrame();
                 fighterState = _state;
             }
         break;
@@ -124,6 +127,7 @@ void UnitFighter::switchState(Enumeration::UnitFighterState _state) {
         case Enumeration::UnitFighterState::ufConfront:
             if(fighterState != Enumeration::UnitFighterState::ufConfront){
                 fighterModel->changeAnimation("walk");
+				fighterModel->setRandomFrame();
                 fighterState = _state;
             }
         break;

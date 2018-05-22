@@ -3,6 +3,9 @@
 
 StartMenu::StartMenu() {
 	video = new Video("media/videos/20180520_231429.mp4");
+	video -> play();
+	video -> setLoop(true);
+
     //Main
     bgMain = new Panel("Thriving colony");
     //bgMain -> setPosition(Vector2<i32>(400, 200));

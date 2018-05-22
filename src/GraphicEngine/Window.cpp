@@ -31,6 +31,8 @@ void Window::Init(i32 width, i32 height) {
     screenCenter = Vector2<i32>(windowWidth/2, windowHeight/2);
 
     glfwSetTime(0);
+	
+ 	srand(time(NULL));
 
 	glfwWindowHint(GLFW_SAMPLES, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);

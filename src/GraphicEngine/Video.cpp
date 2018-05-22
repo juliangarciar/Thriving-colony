@@ -13,3 +13,15 @@ Video::~Video(){
 	delete video;
 	video = nullptr;
 }
+
+void Video::play(){
+	video -> play();
+}
+
+void Video::pause(){
+	video -> pause();
+}
+
+void Video::setLoop(bool l){
+	video -> setLoop(l);
+}

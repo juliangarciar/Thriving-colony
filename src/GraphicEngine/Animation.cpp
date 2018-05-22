@@ -31,8 +31,7 @@ Animation::Animation(SceneNode* parent, std::string animationJSON) {
 	currentAnimation = animations->at(j["defaultAnimation"].get<std::string>());
 	currentAnimation -> setActive(true);
 
-	/* Por que un string */
-	frameTimer = new Timer(animationDelays->at(j["defaultAnimation"].get<std::string>()), true);
+	frameTimer = new Timer(animationDelays->at(j["defaultAnimation"].get<std::string>()), true, false);
 	frameTimer -> setCallback([&]() {
 		currentAnimation->updateFrame();
 	});
@@ -84,4 +83,13 @@ void Animation::setActive(bool a) {
 
 void Animation::setColor(Color c) {
 	currentAnimation->getMaterial()->setDiffuseColor(OBDColor(c.r, c.g, c.b, c.a));
+}
+
+void Animation::setRandomFrame(){
+  	i32 random = rand() % (currentAnimation->getNumberOfFrames() - 1) + 0;
+	currentAnimation->setCurrentFrame(random);
+}
+
+Timer *Animation::getAnimationTimer(){
+	return frameTimer;
 }

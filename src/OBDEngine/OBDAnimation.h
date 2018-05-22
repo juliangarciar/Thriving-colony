@@ -38,13 +38,25 @@ class OBDAnimation : public OBDEntity {
 		void setActive(bool);
 
 		/**
+		 * @brief Set the Frame object
+		 * 
+		 * @param nFrame 
+		 */
+		void setCurrentFrame(i32 nFrame);
+
+		/**
+		 * @brief Get the Number Of Frames object
+		 * 
+		 * @return i32 
+		 */
+		i32 getNumberOfFrames();
+
+		/**
 		 * @brief Get the Material object
 		 * 
 		 * @return OBDMaterial* 
 		 */
 		OBDMaterial *getMaterial();
-
-		void setFrame(i32 nFrame);
     private:
 		std::vector<ResourceOBJ*> *objects;
 		ResourceMTL *objectMaterial;

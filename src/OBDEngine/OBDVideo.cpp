@@ -132,3 +132,18 @@ OBDVideo::~OBDVideo(){
 	delete data;
 	data = nullptr;
 }
+
+void OBDVideo::play(){
+    TVideo* v = (TVideo*) videoNode -> getEntity();
+	v -> setPlay(true);
+}
+
+void OBDVideo::pause(){
+    TVideo* v = (TVideo*) videoNode -> getEntity();
+	v -> setPlay(false);
+}
+
+void OBDVideo::setLoop(bool l){
+    TVideo* v = (TVideo*) videoNode -> getEntity();
+	v -> setLoop(l);
+}
