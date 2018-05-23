@@ -16,7 +16,7 @@ void ResourceJSON::load(const char *path) {
         i >> j;
         i.close();
     }catch(std::ifstream::failure e) {
-        //std::cout << "Error al abrir el fichero " << path << std::endl;
+        std::cerr << "Error: no se pudo abrir el fichero " << path << std::endl;
         exit(0);
     }
 }

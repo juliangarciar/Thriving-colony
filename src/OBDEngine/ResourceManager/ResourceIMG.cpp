@@ -18,7 +18,7 @@ void ResourceIMG::load(const char *path) {
         STBI_default
     );
     if (!resource) {
-        //std::cout << "Failed opening " << path << " image. Check the path." << std::endl;
+        std::cerr << "Error: no se pudo leer la imagen '" << path << "'." << std::endl;
         exit(0);
     } 
 }

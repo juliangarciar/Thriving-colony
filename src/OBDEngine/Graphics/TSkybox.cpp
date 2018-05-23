@@ -14,9 +14,6 @@ TSkybox::TSkybox(GLuint p, TCubemapTexture* t) : TEntity() {
 		1.0,	1.0,	1.0,
 		-1.0,	1.0,	1.0,
     };
-    glGenBuffers(1, &vbo_cube_vertices);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_vertices);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
 
     GLushort cube_indices[36] = {    
 		0, 1, 3, 
@@ -32,9 +29,25 @@ TSkybox::TSkybox(GLuint p, TCubemapTexture* t) : TEntity() {
 		4, 5, 0, 
 		0, 5, 1
     };
+
+	glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &vbo_cube_vertices);
     glGenBuffers(1, &ibo_cube_indices);
+
+	glBindVertexArray(VAO);
+
+	// load data into vertex buffers
+    glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_vertices);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(cube_vertices), cube_vertices, GL_STATIC_DRAW);
+
+	// load data into index buffers
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_cube_indices);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(cube_indices), cube_indices, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), 0);
+	
+	glBindVertexArray(0);
 
 	vpID = glGetUniformLocation(programID, "VP");
 	skyboxID = glGetUniformLocation(programID, "skybox");
@@ -60,16 +73,10 @@ void TSkybox::beginDraw() {
 	glBindTexture(GL_TEXTURE_CUBE_MAP, texture->getTextureID());
 	glUniform1i(skyboxID, 0);
 
-	// Vertex bufer
-	glBindBuffer(GL_ARRAY_BUFFER, vbo_cube_vertices);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GL_FLOAT), 0);
-
-	// Index buffer
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo_cube_indices);
-
 	// Draw the triangles!
+	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_SHORT, 0);
+	glBindVertexArray(0);
 }
 
 void TSkybox::endDraw() {

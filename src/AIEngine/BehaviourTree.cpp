@@ -77,7 +77,7 @@ f32 BehaviourTree::calculateArmyCitizensRate() {
  */
 bool BehaviourTree::needArmyInvestment() {
     needSoldiers = calculateArmyCitizensRate() < armyThreshold;
-    std::cout << needSoldiers << std::endl;
+    //std::cout << needSoldiers << std::endl;
     /**
      * A recruitment building is considered needed when:
      * A player doesn't have it yet

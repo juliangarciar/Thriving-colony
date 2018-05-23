@@ -16,9 +16,10 @@ OBDAnimation::OBDAnimation(OBDSceneNode* p, std::vector<ResourceOBJ*> *o, Resour
 	material = new OBDMaterial(m, it->first);
 
 	for (int i = 0; i < o->size(); i++) {
+		o->at(i)->setupMesh(o->at(i)->getResource()->begin()->second);
 		glslMesh *tmp = new glslMesh();
-		tmp -> vbo = o->at(i)->getResource()->begin()->second->vbo;
-		tmp -> ibo = o->at(i)->getResource()->begin()->second->indices;
+		tmp -> VAO = o->at(i)->getResource()->begin()->second->VAO;
+		tmp -> num_indices = o->at(i)->getResource()->begin()->second->ibo->size();
 
         OBDMesh *tempMesh = new OBDMesh(tmp, material);
 		tempMesh -> setMaterialName(m -> getResource()->begin()->first);

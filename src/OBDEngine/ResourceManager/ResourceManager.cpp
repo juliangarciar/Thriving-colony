@@ -8,7 +8,7 @@
 
 ResourceManager::ResourceManager() {
 	maxThreads = std::thread::hardware_concurrency()-1;
-	//std::cout << "Tienes acceso a " << maxThreads << " hilos de ejecucion." << std::endl;
+	std::cout << "Info: Tienes acceso a " << maxThreads << " hilos de ejecucion." << std::endl;
 	currentThreads = 0;
     std::string temp[] = {"obj","mtl","json","glsl","bmp","tga","jpg","jpeg","png"};
     supportedFormats.insert(supportedFormats.end(),temp,std::end(temp));
@@ -59,7 +59,7 @@ void ResourceManager::load(std::string path) {
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
     } else {
-        //std::cout << "Error: extension no soportada (" << extension << ") en el archivo '" << path << "'." << std::endl;
+        std::cerr << "Error: extension no soportada (" << extension << ") en el archivo '" << path << "'." << std::endl;
         exit(0);
     }
 }
@@ -80,7 +80,7 @@ void ResourceManager::loadResource(std::string path, bool sync) {
 			push(path);
 		}
 	} else {
-        //std::cout << "Error: no se puede leer el archivo " << path << std::endl;
+        std::cerr << "Error: no se puede leer el archivo " << path << std::endl;
         exit(0);
 	}
 }
@@ -97,7 +97,7 @@ Resource *ResourceManager::getResource(std::string path, bool sync) {
 			else return nullptr;
 		}
 	} else {
-        //std::cout << "Error: no se puede leer el archivo " << path << std::endl;
+        std::cerr << "Error: no se puede leer el archivo " << path << std::endl;
         exit(0);
 	}
 }

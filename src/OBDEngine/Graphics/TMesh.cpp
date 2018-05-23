@@ -8,16 +8,6 @@ TMesh::TMesh(glslMesh *r, OBDMaterial *m) : TEntity() {
 
 	modelMatrix = glm::mat4(1.0f);
 
-	// Generate a buffer for the vertices
-	glGenBuffers(1, &VBOID);
-	glBindBuffer(GL_ARRAY_BUFFER, VBOID);
-	glBufferData(GL_ARRAY_BUFFER, mesh -> vbo.size() * sizeof(f32), &mesh -> vbo[0], GL_STATIC_DRAW);
-	
-	// Generate a buffer for the ibo as well
-	glGenBuffers(1, &IBOID);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBOID);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh -> ibo.size() * sizeof(u32), &mesh -> ibo[0] , GL_STATIC_DRAW);
-
 	// Lights
 	glGenBuffers(1, &lightID);
 	glBindBuffer(GL_UNIFORM_BUFFER, lightID);
@@ -39,8 +29,7 @@ TMesh::TMesh(glslMesh *r, OBDMaterial *m) : TEntity() {
 }
 
 TMesh::~TMesh() {
-	glDeleteBuffers(1, &VBOID);
-	glDeleteBuffers(1, &IBOID);
+	
 }
 
 void TMesh::beginDraw() { 
@@ -110,24 +99,9 @@ void TMesh::beginDraw() {
 		loadedTextures++;
 	}
 
-	glBindBuffer(GL_ARRAY_BUFFER, VBOID);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, (3 + 3 + 2) * sizeof(f32), BUFFER_OFFSET(0));
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, (3 + 3 + 2) * sizeof(f32), BUFFER_OFFSET(3 * sizeof(f32)));
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, (3 + 3 + 2) * sizeof(f32), BUFFER_OFFSET((3 + 3) * sizeof(f32)));
-
-	// Index buffer
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBOID);
-
-	// Draw the triangles!
-	glDrawElements(
-		GL_TRIANGLES,			// mode
-		mesh -> ibo.size(),	// count
-		GL_UNSIGNED_INT,		// type
-		(void*)0				// element array buffer offset
-	);
+	glBindVertexArray(mesh->VAO);
+	glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, 0);
+	glBindVertexArray(0);
 }
 
 void TMesh::endDraw() {
@@ -141,10 +115,6 @@ void TMesh::endDraw() {
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glActiveTexture(GL_TEXTURE4);
 	glBindTexture(GL_TEXTURE_2D, 0);
-
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
-	glDisableVertexAttribArray(2);
 }
 
 void TMesh::setMaterial(OBDMaterial *m) {

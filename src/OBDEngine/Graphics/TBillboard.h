@@ -43,7 +43,9 @@ class TBillboard : public TEntity {
 		f32 frontWidth;
         glm::vec4 frontColor;
         
-        GLuint vertexbuffer;
+		GLuint VAO;
+        GLuint VBO;
+
 		GLuint CameraRight_worldspace_ID;
 		GLuint CameraUp_worldspace_ID;
 		GLuint ViewProjMatrixID;

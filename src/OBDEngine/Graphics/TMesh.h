@@ -6,8 +6,6 @@
 
 #include "../OBDMaterial.h"
 
-#define BUFFER_OFFSET(i) ((char *)NULL + (i))
-
 class TMesh : public TEntity {
     public:
         /**
