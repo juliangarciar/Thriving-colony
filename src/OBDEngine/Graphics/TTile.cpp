@@ -2,8 +2,6 @@
 #include "TTexture.h"
 #include "../ResourceManager/ResourceIMG.h"
 
-#define MAX_LIGHTS 10
-
 TTile::TTile() {
     texture = nullptr;
 }

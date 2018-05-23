@@ -39,6 +39,7 @@ extern "C" {
 	#include <sys/time.h>
 }
 
+#define MAX_LIGHTS 10
 #define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 typedef int32_t i32;

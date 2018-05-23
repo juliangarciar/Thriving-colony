@@ -1,17 +1,10 @@
 #include "TMesh.h"
 
-#define MAX_LIGHTS 10
-
 TMesh::TMesh(glslMesh *r, OBDMaterial *m) : TEntity() {
 	mesh = r;
 	material = m;
 
 	modelMatrix = glm::mat4(1.0f);
-
-	// Lights
-	glGenBuffers(1, &lightID);
-	glBindBuffer(GL_UNIFORM_BUFFER, lightID);
-	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslLight) * MAX_LIGHTS, 0, GL_DYNAMIC_DRAW);
 
 	// Material
 	glGenBuffers(1, &materialID);
@@ -48,16 +41,6 @@ void TMesh::beginDraw() {
 
 	// Camera
 	glUniform3fv(cache.getID(OBDEnums::OpenGLIDs::CAMERA_POSITION), 1, &cache.getCameraPosition()[0]);
-
-	//Send lights
-	if (cache.getLights()->size()) {   
-		i32 lightNumber = cache.getLights()->size();
-    	if (lightNumber > MAX_LIGHTS) lightNumber = MAX_LIGHTS;
-		glUniform1i(cache.getID(OBDEnums::OpenGLIDs::LIGHT_AMOUNT), lightNumber);
-		glBindBuffer(GL_UNIFORM_BUFFER, lightID);
-		glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslLight) * cache.getLights()->size(), &cache.getLights()->at(0));
-		glBindBufferBase(GL_UNIFORM_BUFFER, 1, lightID);
-	}
 
 	//Send material
 	glBindBuffer(GL_UNIFORM_BUFFER, materialID);

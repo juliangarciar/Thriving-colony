@@ -1,7 +1,6 @@
 #ifndef TVIDEO_H
 #define TVIDEO_H
 
-#define USEVIDEO
 #ifdef USEVIDEO
 
 #include "TEntity.h"
