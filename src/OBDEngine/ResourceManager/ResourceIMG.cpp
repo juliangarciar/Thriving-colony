@@ -52,7 +52,7 @@ void ResourceIMG::setGLTexture(){
 
 		glBindTexture(GL_TEXTURE_2D, 0);
 
-		glTextureSet = false;
+		glTextureSet = true;
 	}
 }
 
