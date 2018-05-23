@@ -54,6 +54,8 @@ void UnitFighter::setDestiny(Vector2<f32> _dest){
     if(fighterState == Enumeration::UnitFighterState::ufIdle){
         switchState(Enumeration::UnitFighterState::ufMove);
     }
+    //calculateDirection();
+    /* Put here the flocking and rotation */
     vectorDestiny = _dest;
     Vector2<f32> vectorDistance = (vectorDestiny - vectorPosition);
     maxTime = (std::sqrt(std::pow(vectorDistance.x, 2) + std::pow(vectorDistance.y, 2))) / speed * 0.016f ;
@@ -61,11 +63,12 @@ void UnitFighter::setDestiny(Vector2<f32> _dest){
     unitFighterClock->changeDuration(maxTime);
     unitFighterClock->restart();
 }
-
+// Poner aqui la rotacion
 void UnitFighter::move(){
     calculateDirection();
     Vector2<f32> _oldPosition = vectorPosition;
     vectorSpeed = vectorDirection * speed;
+    fighterModel->setRotation(Vector3<f32>(0, std::atan2(vectorSpeed.y, vectorSpeed.x)*180.0f/3.1415926f + 90.f, 0));
     vectorPosition += vectorSpeed;
     vectorPosition = _oldPosition + (vectorPosition - _oldPosition) * Window::Instance()->getDeltaTimeVariance();
     fighterModel->setPosition(Vector3<f32>(vectorPosition.x, Map::Instance()->getTerrain()->getY(vectorPosition.x, vectorPosition.y), vectorPosition.y));
@@ -96,11 +99,11 @@ void UnitFighter::update() {
 }
 
 void UnitFighter::switchState(Enumeration::UnitFighterState _state) {
-    // Do something (clocks ?)
     switch(_state) {
         case Enumeration::UnitFighterState::ufAttack:
+            unitFighterClock->stop();
             if(fighterState != Enumeration::UnitFighterState::ufAttack){
-                unitFighterClock->stop();
+                calculateDirection();
                 fighterModel->changeAnimation("attack");
 				fighterModel->setRandomFrame();
                 fighterState = _state;
@@ -116,8 +119,8 @@ void UnitFighter::switchState(Enumeration::UnitFighterState _state) {
         break;
 
         case Enumeration::UnitFighterState::ufIdle:
+            unitFighterClock->stop();
             if(fighterState != Enumeration::UnitFighterState::ufIdle){
-                unitFighterClock->stop();
                 fighterModel->changeAnimation("idle");
 				fighterModel->setRandomFrame();
                 fighterState = _state;
@@ -158,7 +161,6 @@ void UnitFighter::ufIdleState() {
 
 /* Yeah, hit hards the CPU */
 void UnitFighter::ufConfrontState() {
-    move();
     if(inRange()){
         switchState(Enumeration::UnitFighterState::ufAttack);
     }
@@ -194,6 +196,7 @@ void UnitFighter::ufConfrontState() {
                     }
                 }
             }
+            move();
         }
     }
 }
@@ -303,15 +306,19 @@ void UnitFighter::calculateDirection() {
         vectorDirection = _incVector / distance;
         vectorDirection += calculateFlocking();
 
-        fighterModel->setRotation(Vector3<f32>(0, std::atan2(vectorDirection.y, vectorDirection.x)*180.0f/3.1415926f + 90.f, 0));
-        
         /* Normalize */
         if (vectorDirection.x != 0 || vectorDirection.y != 0) {
             distance = std::sqrt(std::pow(vectorDirection.x, 2) + std::pow(vectorDirection.y, 2));
             vectorDirection = vectorDirection / distance;   
+            
+            fighterModel->setRotation(Vector3<f32>(0, std::atan2(vectorDirection.y, vectorDirection.x) * 180.0f / 3.1415926f + 90.f, 0));
+        }
+        else{
+            std::cout << "Te pille cabron \n";
         }
     }   
     else{
+        std::cout << "Ops \n";
         vectorDirection = Vector2<f32>(0, 0);
     }
 }
@@ -322,11 +329,10 @@ bool UnitFighter::inRange(){
     Vector2<f32> tmp(vectorDestiny - vectorPosition);
     f32 distance = std::sqrt(std::pow(tmp.x, 2) + 
                              std::pow(tmp.y, 2));
-
+ 
     if( distance <= attackRange){
         inRange = true;
     }
     
     return inRange;
 }
-

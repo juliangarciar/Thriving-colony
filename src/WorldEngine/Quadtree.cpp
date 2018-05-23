@@ -4,6 +4,7 @@
 #include <MathEngine/Box2D.h>
 #include <Building.h>
 #include <Unit.h>
+#include <Map.h>
 
 Quadtree::Quadtree(Vector2<f32> positionData, const Box2D& hitboxData, i32 deepValue):position(positionData),
                                                                                       hitBox(hitboxData),
@@ -124,7 +125,14 @@ void Quadtree::assignNeighbors(Cell* cellPtr) {
         for (std::size_t i = 0; i < innerCells.size(); i++) {
             if (innerCells[i]->getHitbox().isOverlappedWith(tmp)) {
                 if (innerCells[i] != cellPtr) {
-                    cellPtr->setNeighbor(innerCells[i]);
+                    /* New method */
+                    //f32 a = Map::Instance()->getTerrain()->getY(innerCells[i]->getPosition().x , innerCells[i]->getPosition().y);
+                    //f32 b = Map::Instance()->getTerrain()->getY(cellPtr->getPosition().x , cellPtr->getPosition().y);
+                    //f32 distance = std::abs(b - a);
+                    //std::cout << distance << "\n";
+                    //if( distance < 10.0f){
+                        cellPtr->setNeighbor(innerCells[i]);
+                    //}
                 }
             }
         }

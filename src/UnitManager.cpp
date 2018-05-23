@@ -237,10 +237,8 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
 
         if (team == Enumeration::Team::IA) {
             hallPosition = IA::Instance()->hallPosition;
-			target = WorldGeometry::Instance()->positionToCell(hallPosition.toVector2());
         } else {
             hallPosition = Human::Instance()->hallPosition;
-            target = WorldGeometry::Instance()->positionToCell(hallPosition.toVector2());
         }
         /* Something is going bad here */
         target = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(), p, temp->getHitbox());
@@ -251,8 +249,6 @@ void UnitManager::deploySelectedTroop(Vector2<f32> p) {
         temp -> switchState(Enumeration::UnitState::Move);
         
         temp -> setPathToTarget(p);
-        /* Esto creo que no hace nada */
-        temp -> switchUnitFigthersState(Enumeration::UnitFighterState::ufMove);
         
         if (team == Enumeration::Team::Human) {
             Hud::Instance()->removeTroopFromHall(temp->getID());
@@ -275,10 +271,8 @@ void UnitManager::deployAllTroops(Vector2<f32> p) {
         Vector3<f32> hallPosition(0, 0, 0);
         if (team == Enumeration::Team::IA) {
 			hallPosition = IA::Instance()->hallPosition;
-            target = WorldGeometry::Instance()->positionToCell(hallPosition.toVector2());
         } else {
 			hallPosition = Human::Instance()->hallPosition;
-            target = WorldGeometry::Instance()->positionToCell(hallPosition.toVector2());
         }
         //ToDo: Check this, can return a nullptr
         target = WorldGeometry::Instance()->getValidCell(hallPosition.toVector2(), p, temp->getHitbox());
@@ -350,7 +344,7 @@ void UnitManager::selectTroop(i32 troopID) {
     if (it != inMapTroops -> end()) {
         selectedTroop = it -> second;
         //SELECT VOICE
-        //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getSelectEvent());
+        SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getSelectEvent());
     }
 }
 
@@ -375,7 +369,7 @@ void UnitManager::moveOrder() {
             selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()->getPosition()).toVector2());
         }
         //MOVEMENT VOICE
-        //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
+        SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
     }
 }
 

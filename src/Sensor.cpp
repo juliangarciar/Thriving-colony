@@ -5,7 +5,7 @@
 
 Sensor::Sensor(Entity* _entity) :
 	propietary(_entity),
-    priorityTarget(nullptr),
+    /*priorityTarget(nullptr),*/
     sensorHitbox(Vector2<f32>(0,0),
     Vector2<f32>(std::sqrt(std::pow(_entity->getViewRadius(),2) + std::pow(_entity->getViewRadius(),2)),
     std::sqrt(std::pow(_entity->getViewRadius(),2) + std::pow(_entity->getViewRadius(),2))))
@@ -16,10 +16,10 @@ Sensor::~Sensor() {
 }
 
 void Sensor::update() {
-    if (priorityTarget != nullptr) {
-        priorityTarget->removeHostile(propietary);
-    }
-    priorityTarget = nullptr;
+    //if (priorityTarget != nullptr) {
+    //    priorityTarget->removeHostile(propietary);
+    //}
+    Entity* priorityTarget(nullptr);
     WorldGeometry::Instance()->getCollidingEntities(sensorHitbox, &priorityTarget, propietary->getTeam());
     propietary->setTarget(priorityTarget);
 }

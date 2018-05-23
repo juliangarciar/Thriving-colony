@@ -50,6 +50,10 @@ class Unit : public Entity {
         std::vector< Vector2<f32> > getInnerComponentsPosition() const;
         const std::vector< UnitFighter* >& getUnitFighters() const;
 
+        const std::string getAttackEvent() const;
+        const std::string getMoveEvent() const;
+        const std::string getSelectEvent() const;
+        
     private:
         void recruitingState();
         void inHomeState();
@@ -62,10 +66,7 @@ class Unit : public Entity {
         void moveUnit();
         bool inRangeOfAttack();
         
-        const std::string getAttackEvent() const;
-        const std::string getMoveEvent() const;
-        const std::string getSelectEvent() const;
-
+        
         bool hasArrived();
         void calculateDirection();
         void updateUnitFighters();
