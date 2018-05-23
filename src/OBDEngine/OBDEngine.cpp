@@ -55,17 +55,10 @@ void OBDEngine::Init(i32 sW, i32 sH) {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	//Antialiasing
-	glEnable(GL_MULTISAMPLE);  
-    
-	//Gen VAO
-    GLuint VAO = TEntity::cache.getID(OBDEnums::OpenGLIDs::VAO_BUFFER);
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
+	glEnable(GL_MULTISAMPLE);
 }
 
 void OBDEngine::End() {
-    GLuint VAO = TEntity::cache.getID(OBDEnums::OpenGLIDs::VAO_BUFFER);
-	glDeleteVertexArrays(1, &VAO);
 }
 
 void OBDEngine::draw() {
@@ -74,6 +67,7 @@ void OBDEngine::draw() {
     // Clear the screen
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	//Async
 	OBDManager->Update();
 
     // Draw our tree
@@ -326,12 +320,3 @@ OBDShaderProgram *OBDEngine::getRegisteredShaderProgram(std::string sN) {
 	assert(it != shaderPrograms.end());
 	return it->second;
 }
-
-//////SANDBOX//////
-
-
-OBDTile* OBDEngine::createTile(ResourceIMG* _texture, glm::vec2 _position) {
-    return new OBDTile(defaultSceneNode, _texture, _position);
-}
-
-/////////////////

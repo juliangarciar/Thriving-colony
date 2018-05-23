@@ -22,7 +22,7 @@ TShader::TShader(ResourceGLSL *s) {
     if (shaderInfoLogLength > 0) {
         std::vector<char> shaderErrorMessage(shaderInfoLogLength+1);
         glGetShaderInfoLog(shaderID, shaderInfoLogLength, NULL, &shaderErrorMessage[0]);
-        //std::cout << &shaderErrorMessage[0] << std::endl;
+        std::cerr << "Error: " << &shaderErrorMessage[0] << std::endl;
         exit(0);
     }
 }

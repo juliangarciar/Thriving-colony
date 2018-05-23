@@ -52,7 +52,7 @@ class OBDParticleAffector {
     private:
         bool enabled;
         
-        ParticleAffectorType type;
+        //ParticleAffectorType type;
 };
 
 #endif

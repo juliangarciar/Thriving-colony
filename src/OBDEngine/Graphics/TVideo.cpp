@@ -9,33 +9,38 @@ TVideo::TVideo(GLuint pID, VideoData *d){
 	play = false;
 	loop = false;
 
-	float quad[12] = {
-		-1.0f,  1.0f, 0.0f,
-		-1.0f, -1.0f, 0.0f,
-		 1.0f, -1.0f, 0.0f,
-		 1.0f,  1.0f, 0.0f,
+	float quad[20] = {
+		-1.0f,  1.0f, 0.0f, 0.0f, 0.0f,
+		-1.0f, -1.0f, 0.0f, 0.0f, 1.0f,
+		 1.0f, -1.0f, 0.0f, 1.0f, 1.0f,
+		 1.0f,  1.0f, 0.0f, 1.0f, 0.0f
 	};
-	glGenBuffers(1, &vert_buf);
-	glBindBuffer(GL_ARRAY_BUFFER, vert_buf);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(quad), quad, GL_STATIC_DRAW);
-
-	float uvs[8] = {
-		0.0f, 0.0f,
-		0.0f, 1.0f,
-		1.0f, 1.0f,
-		1.0f, 0.0f
-	};
-	glGenBuffers(1, &uv_buf);
-	glBindBuffer(GL_ARRAY_BUFFER, uv_buf);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(uvs), uvs, GL_STATIC_DRAW);
 	
 	unsigned short elem[6] = {
 		0, 1, 2,
 		0, 2, 3
 	};
-	glGenBuffers(1, &elem_buf);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elem_buf);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elem), elem, GL_STATIC_DRAW);
+
+	glGenVertexArrays(1, &VAO);
+    glGenBuffers(1, &vert_buf);
+    glGenBuffers(1, &elem_buf);
+
+	glBindVertexArray(VAO);
+
+	// load data into vertex buffers
+    glBindBuffer(GL_ARRAY_BUFFER, vert_buf);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(quad), quad, GL_STATIC_DRAW);
+
+	// load data into index buffers
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elem_buf);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elem), elem, GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, (3 + 2) * sizeof(f32), BUFFER_OFFSET(0));
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, (3 + 2) * sizeof(f32), BUFFER_OFFSET(3 * sizeof(f32)));
+	
+	glBindVertexArray(0);
 	
 	glActiveTexture(GL_TEXTURE0);
 	glGenTextures(1, &frame_tex);
@@ -70,21 +75,10 @@ void TVideo::beginDraw(){
 	glBindTexture(GL_TEXTURE_2D, frame_tex);
 	glUniform1i(textureID, 0);
 
-	// Vertex bufer
-	glBindBuffer(GL_ARRAY_BUFFER, vert_buf);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 12, 0);
-
-	// Vertex bufer
-	glBindBuffer(GL_ARRAY_BUFFER, uv_buf);
-	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 8, 0);
-
-	// Index buffer
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elem_buf);
-
 	// Draw the triangles!
+	glBindVertexArray(VAO);
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+	glBindVertexArray(0);
 }
 
 void TVideo::endDraw(){
@@ -106,7 +100,7 @@ bool TVideo::readFrame() {
 			avformat_seek_file(data->pFormatCtx, data->videoStream, 0, 0, stream->duration, 0);
 		} else return false;
 	} else {
-		//std::cout << "Error " << error << " al leer el frame" << std::endl;
+		std::cerr << "Error " << error << " al leer el frame" << std::endl;
 		return false;
 	}
 	// Is this a packet from the video stream?

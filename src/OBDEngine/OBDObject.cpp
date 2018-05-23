@@ -7,9 +7,11 @@ OBDObject::OBDObject(OBDSceneNode* p, u32 id, ResourceOBJ *obj, ResourceMTL *mtl
     std::map<std::string, ResourceMesh*> *meshmap = obj->getResource();
 
     for (std::map<std::string, ResourceMesh*>::iterator it = meshmap->begin(); it != meshmap->end(); ++it) {
+		obj->setupMesh(it->second);
+
 		glslMesh *tmp = new glslMesh();
-		tmp->vbo = it->second->vbo;
-		tmp->ibo = it->second->indices;
+		tmp->VAO = it->second->VAO;
+		tmp->num_indices = it->second->ibo->size();
 
 		OBDMaterial *tempMat = new OBDMaterial(mtl, it->second->defaultMaterialName);
 

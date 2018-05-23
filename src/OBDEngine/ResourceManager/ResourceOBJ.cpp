@@ -22,7 +22,7 @@ void ResourceOBJ::load(const char *path) {
     
     bool loadout = loader.LoadFile(path);
     if (!loadout) {
-        //std::cout << "Error al abrir el fichero " << path << std::endl;
+        std::cerr << "Error: no se pudo abrir el fichero " << path << std::endl;
         exit(0);
     }
 
@@ -34,23 +34,27 @@ void ResourceOBJ::load(const char *path) {
 
         ResourceMesh *tempMesh = new ResourceMesh();
 
-        std::vector<f32> vbo;
+        std::vector<f32> *vbo = new std::vector<f32>();
 
-        vbo.reserve(curMesh.Vertices.size() * 8);
+        tempMesh->name = curMesh.MeshName;
+        tempMesh->defaultMaterialName = curMesh.MeshMaterial.name;
+		tempMesh->isSetup = false;
+
+        vbo->reserve(curMesh.Vertices.size() * 8);
 
         // Min and max bounding box
         glm::vec3 min(curMesh.Vertices[0].Position.X,curMesh.Vertices[0].Position.Y,curMesh.Vertices[0].Position.Z);
         glm::vec3 max(curMesh.Vertices[0].Position.X,curMesh.Vertices[0].Position.Y,curMesh.Vertices[0].Position.Z);
 
         for (i32 j = 0; j < curMesh.Vertices.size(); j++) {
-            vbo.push_back(curMesh.Vertices[j].Position.X);
-            vbo.push_back(curMesh.Vertices[j].Position.Y);
-            vbo.push_back(curMesh.Vertices[j].Position.Z);
-            vbo.push_back(curMesh.Vertices[j].Normal.X);
-            vbo.push_back(curMesh.Vertices[j].Normal.Y);
-            vbo.push_back(curMesh.Vertices[j].Normal.Z);
-            vbo.push_back(curMesh.Vertices[j].TextureCoordinate.X);
-            vbo.push_back(1.0f - curMesh.Vertices[j].TextureCoordinate.Y);
+            vbo->push_back(curMesh.Vertices[j].Position.X);
+            vbo->push_back(curMesh.Vertices[j].Position.Y);
+            vbo->push_back(curMesh.Vertices[j].Position.Z);
+            vbo->push_back(curMesh.Vertices[j].Normal.X);
+            vbo->push_back(curMesh.Vertices[j].Normal.Y);
+            vbo->push_back(curMesh.Vertices[j].Normal.Z);
+            vbo->push_back(curMesh.Vertices[j].TextureCoordinate.X);
+            vbo->push_back(1.0f - curMesh.Vertices[j].TextureCoordinate.Y);
 
             glm::vec3 act(curMesh.Vertices[j].Position.X,curMesh.Vertices[j].Position.Y,curMesh.Vertices[j].Position.Z);
             
@@ -82,10 +86,8 @@ void ResourceOBJ::load(const char *path) {
         tempMesh->aabbMin = min;
         tempMesh->aabbMax = max;
         
-        tempMesh->name = curMesh.MeshName;
         tempMesh->vbo = vbo;
-        tempMesh->indices = std::vector<u32>(curMesh.Indices.begin(), curMesh.Indices.end());
-        tempMesh->defaultMaterialName = curMesh.MeshMaterial.name;
+        tempMesh->ibo = new std::vector<u32>(curMesh.Indices.begin(), curMesh.Indices.end());
 
         meshArray->insert(std::pair<std::string, ResourceMesh*>(curMesh.MeshName, tempMesh));
     }
@@ -93,6 +95,36 @@ void ResourceOBJ::load(const char *path) {
 
 void ResourceOBJ::release() {
     meshArray->clear();
+}
+
+void ResourceOBJ::setupMesh(ResourceMesh *mesh) {
+	if (!mesh->isSetup){
+		// create buffers/arrays
+		glGenVertexArrays(1, &mesh->VAO);
+		glGenBuffers(1, &mesh->VBO);
+		glGenBuffers(1, &mesh->IBO);
+
+		glBindVertexArray(mesh->VAO);
+
+		// load data into vertex buffers
+		glBindBuffer(GL_ARRAY_BUFFER, mesh->VBO);
+		glBufferData(GL_ARRAY_BUFFER, mesh->vbo->size() * sizeof(f32), mesh -> vbo -> data(), GL_STATIC_DRAW);  
+
+		// load data into index buffers
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, mesh->IBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh -> ibo -> size() * sizeof(u32), mesh -> ibo -> data(), GL_STATIC_DRAW);
+
+		glEnableVertexAttribArray(0);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, (3 + 3 + 2) * sizeof(f32), BUFFER_OFFSET(0));
+		glEnableVertexAttribArray(1);
+		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, (3 + 3 + 2) * sizeof(f32), BUFFER_OFFSET(3 * sizeof(f32)));
+		glEnableVertexAttribArray(2);
+		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, (3 + 3 + 2) * sizeof(f32), BUFFER_OFFSET((3 + 3) * sizeof(f32)));
+
+		glBindVertexArray(0);
+
+		mesh->isSetup = true;
+	}
 }
 
 void ResourceOBJ::setIdentifier(const char *i) {

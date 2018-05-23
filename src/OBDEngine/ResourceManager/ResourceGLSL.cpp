@@ -20,7 +20,7 @@ void ResourceGLSL::load(const char *path) {
     } else if (fragmentFound != std::string::npos) {
         type = OBDEnums::ShaderType::FRAGMENT;
     } else {
-        //std::cout << "Error, unknown shader type." << std::endl;
+        std::cerr << "Error: tipo de shader desconocido, utiliza la palabra vertex o fragment en el nombre para su reconocimiento." << std::endl;
         exit(0);
     }
 
@@ -31,7 +31,7 @@ void ResourceGLSL::load(const char *path) {
         shaderCode = sstr.str();
         shaderStream.close();
     } else {
-        //std::cout << "Impossible to open " << file_path << ". Are you in the right directory?" << std::endl;
+        std::cerr << "Error: imposible abrir el archivo, revisa la ruta y los permisos." << std::endl;
         exit(0);
     }
 }

@@ -17,6 +17,16 @@ TLight::~TLight() {
 void TLight::beginDraw() {
     if (active) {
         cache.getLights()->push_back(components);
+
+		//Send lights
+		if (cache.getLights()->size()) {   
+			i32 lightNumber = cache.getLights()->size();
+			if (lightNumber > MAX_LIGHTS) lightNumber = MAX_LIGHTS;
+			glUniform1i(cache.getID(OBDEnums::OpenGLIDs::LIGHT_AMOUNT), lightNumber);
+			glBindBuffer(GL_UNIFORM_BUFFER, cache.getLightsBuffer());
+			glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glslLight) * cache.getLights()->size(), &cache.getLights()->at(0));
+			glBindBufferBase(GL_UNIFORM_BUFFER, 1, cache.getLightsBuffer());
+		}
     }
 }
 

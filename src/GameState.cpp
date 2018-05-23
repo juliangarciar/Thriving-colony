@@ -80,3 +80,7 @@ void GameState::cleanGamePaused() {
     gamePaused = false;
     delete pauseMenu;
 }
+
+Map *GameState::getMap(){
+	return map;
+}

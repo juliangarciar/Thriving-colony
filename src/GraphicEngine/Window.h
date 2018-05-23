@@ -140,7 +140,8 @@ class Window {
         //Layer where are going to be created all videos;
 		OBDShaderProgram *videoProgram;
         OBDSceneNode* videoLayer;
-
+		
+		GLuint VAO;
         nanogui::Screen* gui;
         
         f64 dtThen;

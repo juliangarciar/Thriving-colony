@@ -13,7 +13,7 @@ Window::Window() {
     closeWindow = false;
     
     if (!glfwInit()) {
-		//std::cout << "Failed to initialize GLFW" << std::endl;
+		std::cerr << "Error al inicializar GLFW" << std::endl;
 		exit(0);
 	}
 
@@ -22,6 +22,7 @@ Window::Window() {
 }
 
 Window::~Window() {
+	glDeleteVertexArrays(1, &VAO);
     //ToDo: destructor
 }
 
@@ -43,12 +44,12 @@ void Window::Init(i32 width, i32 height) {
     // Create an application window with the following settings:
     window = glfwCreateWindow(windowWidth, windowHeight, "Thriving Colony", nullptr, nullptr);
     if (window == nullptr) {
-        //std::cout << "Failed to create GLFW window" << std::endl;
+        std::cerr << "Error al crear una ventana de GLFW" << std::endl;
         glfwTerminate();
         exit(0);
     }
 
-    //std::cout << "Using OpenGL version: " <<  glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MAJOR) << "." << glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MINOR) << std::endl;
+    std::cout << "Info: estas usando la version de OpenGL " <<  glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MAJOR) << "." << glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MINOR) << std::endl;
 
     glfwMakeContextCurrent(window);
 
@@ -57,6 +58,9 @@ void Window::Init(i32 width, i32 height) {
 	engine -> createShaderProgram("defaultProgram", "media/shaders/vertexShader.glsl", "media/shaders/fragmentShader.glsl");
 	engine -> setCurrentShaderProgram("defaultProgram");
    
+	//Gen VAO
+	glGenVertexArrays(1, &VAO);
+
     // create gui manager    
     gui = new nanogui::Screen();
     gui -> initialize(window, true);
@@ -109,7 +113,9 @@ void Window::beginScene() {
 
 void Window::endScene() {
 	engine->draw();
+	glBindVertexArray(VAO);
     gui -> drawWidgets();
+	glBindVertexArray(0);
     glEnable(GL_DEPTH_TEST);
 	glfwSwapBuffers(window);
     glfwPollEvents();

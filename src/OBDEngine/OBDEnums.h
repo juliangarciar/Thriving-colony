@@ -37,8 +37,6 @@ class OBDEnums {
         enum OpenGLIDs {
             CURRENT_PROGRAM_ID = 0,
 
-            VAO_BUFFER,
-
             MATRIX_PROJECTION,
             MATRIX_VIEW,
             MATRIX_MODEL,

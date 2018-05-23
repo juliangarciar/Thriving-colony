@@ -16,7 +16,6 @@
 #include "OBDSkybox.h"
 #include "OBDTerrain.h"
 #include "OBDTexture.h"
-#include "OBDTile.h"
 #include "OBDVideo.h"
 
 #include "ResourceManager/ResourceManager.h"
@@ -313,20 +312,6 @@ class OBDEngine {
 		 * @return OBDShaderProgram* 
 		 */
 		OBDShaderProgram *getRegisteredShaderProgram(std::string);
-
-        
-		////////////SANDBOX////////////
-
-		/**
-		 * @brief Julian, genera comentarios, primer aviso xD
-		 * 
-		 * @param _texture 
-		 * @param _position 
-		 * @return OBDTile* 
-		 */
-        OBDTile* createTile(ResourceIMG* _texture, glm::vec2 _position);
-
-		/////////////////////////////
     private:
         ResourceManager *OBDManager;
 

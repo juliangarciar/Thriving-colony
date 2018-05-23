@@ -2,18 +2,18 @@
 
 OBDTexture::OBDTexture(OBDEnums::TextureTypes t, ResourceIMG* i) {
 	type = t;
-	tex = new TTexture(i);
+	img = i;
+	img->setGLTexture();
 }
 
 OBDTexture::~OBDTexture() {
-	delete tex;
-	tex = nullptr;
+	//Se libera en el gestor
 }
 
 OBDEnums::TextureTypes OBDTexture::getType() {
 	return type;
 }
 
-TTexture *OBDTexture::getTexture() {
-	return tex;
+ResourceIMG *OBDTexture::getTexture() {
+	return img;
 }

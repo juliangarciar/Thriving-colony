@@ -39,6 +39,9 @@ extern "C" {
 	#include <sys/time.h>
 }
 
+#define MAX_LIGHTS 10
+#define BUFFER_OFFSET(i) ((char *)NULL + (i))
+
 typedef int32_t i32;
 typedef uint32_t u32;
 typedef float f32;
@@ -56,8 +59,8 @@ struct glslLight {
 inline bool operator==(const glslLight& l, const glslLight& r) { return (l.position == r.position && l.intensity == r.intensity && l.ambientCoeficient == r.ambientCoeficient && l.attenuationCoeficient == r.attenuationCoeficient) == 0; }
 
 struct glslMesh {
-    std::vector<f32> vbo;
-    std::vector<u32> ibo;
+    GLuint VAO;
+	u32 num_indices;
 };
 
 struct glslMaterial {

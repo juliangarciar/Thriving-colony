@@ -4,7 +4,7 @@
 #include "OBDTypes.h"
 #include "OBDEnums.h"
 
-#include "Graphics/TTexture.h"
+#include "ResourceManager/ResourceIMG.h"
 
 class OBDTexture {
 	public:
@@ -12,10 +12,10 @@ class OBDTexture {
 		~OBDTexture();
 
 		OBDEnums::TextureTypes getType();
-		TTexture *getTexture();
+		ResourceIMG *getTexture();
 	private:
 		OBDEnums::TextureTypes type;
-		TTexture *tex;
+		ResourceIMG *img;
 };
 
 #endif

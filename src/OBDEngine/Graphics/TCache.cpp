@@ -40,6 +40,12 @@ std::vector<GLuint> TCache::generateAllIDs(GLuint programID) {
 	paramIDs[OBDEnums::OpenGLIDs::SAMPLER_SPECULAR] = glGetUniformLocation(programID, "textureSpecular");
 	paramIDs[OBDEnums::OpenGLIDs::SAMPLER_ALPHA] = glGetUniformLocation(programID, "textureAlpha");
 
+	// Lights
+	glGenBuffers(1, &lightsID);
+	glBindBuffer(GL_UNIFORM_BUFFER, lightsID);
+	glBufferData(GL_UNIFORM_BUFFER, sizeof(glslLight) * MAX_LIGHTS, 0, GL_DYNAMIC_DRAW);
+	glBindBuffer(GL_UNIFORM_BUFFER, 0);
+
     return std::vector<GLuint>(paramIDs, paramIDs + OBDEnums::OpenGLIDs::PARAMS);
 }
 
@@ -77,6 +83,10 @@ void TCache::setCameraPosition(glm::vec3 m) {
 
 glm::vec3 TCache::getCameraPosition() {
     return cameraPosition;
+}
+
+GLuint TCache::getLightsBuffer(){
+	return lightsID;
 }
 
 std::vector<glslLight> *TCache::getLights() {

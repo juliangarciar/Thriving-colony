@@ -3,7 +3,7 @@
 
 TCubemapTexture::TCubemapTexture(std::vector<ResourceIMG *> textures) {
 	if (textures.size() != 6) {
-		//std::cout << "Una textura de cubo debe tener 6 texturas" << std::endl;
+		std::cerr << "Error: una textura de cubo debe tener 6 texturas" << std::endl;
 		exit(0);
 	}
 

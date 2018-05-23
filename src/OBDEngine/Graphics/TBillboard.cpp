@@ -26,13 +26,33 @@ TBillboard::TBillboard(GLuint programID, glm::vec3 p, glm::vec2 s) : TEntity() {
 		  0.5f,  0.5f, 0.0f,
 	};
 
-    glGenBuffers(1, &vertexbuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+
+	glBindVertexArray(VAO);
+
+	// load data into vertex buffers
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_DYNAMIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+    glVertexAttribPointer(
+        0,                  
+        3,                  
+        GL_FLOAT,           
+        GL_FALSE,           
+        0,                  
+        (void*)0            
+    );
+
+    glGenBuffers(1, &VBO);
+
+	glBindVertexArray(0);
 }
 
 TBillboard::~TBillboard() {
-	glDeleteBuffers(1, &vertexbuffer);
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &VAO);
 }
 
 void TBillboard::beginDraw() {
@@ -50,21 +70,13 @@ void TBillboard::beginDraw() {
 	glUniform1f(frontWidthID, frontWidth);
 	glUniform4f(frontColorID, frontColor.x, frontColor.y, frontColor.z, frontColor.a);
 
-    glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-    glVertexAttribPointer(
-        0,                  
-        3,                  
-        GL_FLOAT,           
-        GL_FALSE,           
-        0,                  
-        (void*)0            
-    );
+	glBindVertexArray(VAO);
     glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glBindVertexArray(0);
 }
 
 void TBillboard::endDraw() {
-    glDisableVertexAttribArray(0);
+	
 }
 
 void TBillboard::setPosition(glm::vec3 pos) {

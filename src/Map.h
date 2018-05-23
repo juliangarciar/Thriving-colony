@@ -53,6 +53,18 @@ class Map {
          */
         void CleanUp();
 
+		/**
+		 * @brief Set the Map object
+		 * 
+		 */
+		void setMap(std::string);
+
+		/**
+		 * @brief Set the Breeds object
+		 * 
+		 */
+		void setBreeds(std::string, std::string);
+
         /**
         * @brief Get the terrain.
         * 
@@ -147,6 +159,13 @@ class Map {
          * @param i32 is the value of the current progress.
          */
         void loadProgress(i32);
+
+		//
+		std::string loadMap;
+
+		//
+		std::string humanBreed;
+		std::string iaBreed;
 
         //Pointer to the only instance of Human class.
         static Map* pinstance;

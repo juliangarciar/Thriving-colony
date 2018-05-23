@@ -32,6 +32,13 @@ class StartMenu {
         void setHUDEvents();
 
     private:
+		std::vector<std::string> races;
+		std::vector<std::string> maps;
+		std::vector<std::string> map_paths;
+
+		std::vector<std::string> languages;
+		std::vector<std::string> resolution;
+
         //Pointer to Button object that closes the game.
         Button *buttonQuit;
 

@@ -58,6 +58,7 @@ class TVideo : public TEntity {
 		GLuint mvpID;
 		GLuint textureID;
 
+		GLuint VAO;
 		GLuint vert_buf;
 		GLuint uv_buf;
 		GLuint elem_buf;

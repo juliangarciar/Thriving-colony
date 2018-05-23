@@ -43,6 +43,8 @@ class TSkybox : public TEntity {
 
         GLuint vpID;
         GLuint skyboxID;
+
+		GLuint VAO;
 		GLuint vbo_cube_vertices;
 		GLuint ibo_cube_indices;
 };

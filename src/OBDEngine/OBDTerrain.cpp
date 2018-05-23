@@ -8,6 +8,9 @@ OBDTerrain::OBDTerrain(OBDSceneNode* parent, std::string path, f32 y_offset, f32
 	terrain->setHeightsFromTexture(path.c_str(), y_offset, y_scale, step);
 	terrain->buildMesh();
 
+	vbo = new std::vector<f32>(terrain->vertices, terrain->vertices+(terrain->num_vertices*8));
+	ibo = new std::vector<u32>(terrain->indices, terrain->indices+terrain->num_indices);
+
 	//Octree
 	vertex_vector = std::vector<glm::vec3>(terrain->glm_vertices, terrain->glm_vertices + terrain->num_vertices);
 
@@ -17,8 +20,31 @@ OBDTerrain::OBDTerrain(OBDSceneNode* parent, std::string path, f32 y_offset, f32
 
 	//glslMesh
 	mesh = new glslMesh();
-	mesh -> vbo = std::vector<f32>(terrain->vertices, terrain->vertices+(terrain->num_vertices*8));
-	mesh -> ibo = std::vector<u32>(terrain->indices, terrain->indices+terrain->num_indices);
+
+	mesh -> num_indices = ibo -> size();
+
+	glGenVertexArrays(1, &mesh->VAO);
+	glGenBuffers(1, &vboid);
+	glGenBuffers(1, &iboid);
+
+	glBindVertexArray(mesh->VAO);
+
+	// load data into vertex buffers
+	glBindBuffer(GL_ARRAY_BUFFER, vboid);
+	glBufferData(GL_ARRAY_BUFFER, vbo->size() * sizeof(f32), vbo -> data(), GL_STATIC_DRAW);  
+
+	// load data into index buffers
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, iboid);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, ibo -> size() * sizeof(u32), ibo -> data(), GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, (3 + 3 + 2) * sizeof(f32), BUFFER_OFFSET(0));
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, (3 + 3 + 2) * sizeof(f32), BUFFER_OFFSET(3 * sizeof(f32)));
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, (3 + 3 + 2) * sizeof(f32), BUFFER_OFFSET((3 + 3) * sizeof(f32)));
+	
+	glBindVertexArray(0);
 
 	//Empty material
 	material = new OBDMaterial();
@@ -32,11 +58,17 @@ OBDTerrain::~OBDTerrain() {
 	delete octree;
 	delete mesh;
 	delete material;
+	vbo->clear();
+	delete vbo;
+	ibo->clear();
+	delete ibo;
 
 	terrain = nullptr;
 	octree = nullptr;
 	mesh = nullptr;
 	material = nullptr;
+	vbo = nullptr;
+	ibo = nullptr;
 }
 
 void OBDTerrain::refreshModelMatrix(glm::mat4 parent) {

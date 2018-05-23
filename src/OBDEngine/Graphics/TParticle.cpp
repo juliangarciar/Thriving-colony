@@ -5,7 +5,7 @@ TParticle::TParticle(OBDColor newColor, OBDColor newStartColor, i32 newEndTime, 
     startColor = newStartColor;
 
     endTime = newEndTime;
-    i32 startTime = newStartTime;
+    //i32 startTime = newStartTime;
 
     position = newPosition;
     startDirection = newStartDirection;

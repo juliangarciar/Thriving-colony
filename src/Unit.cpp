@@ -159,7 +159,7 @@ void Unit::update() {
         break;
 
         default: 
-            std::cout << "ERROR UNIT STATE \n";
+            std::cerr << "Error UNIT STATE \n";
         break;
     }
 }

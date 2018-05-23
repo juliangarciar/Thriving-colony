@@ -45,7 +45,7 @@ OBDMaterial::OBDMaterial(ResourceMTL *m, std::string n) {
 
 		name = it->second->materialName;
 	} else {
-		//std::cout << "No se ha podido encontrar el material " << n << ", se creará un material por defecto." << std::endl;
+		std::cout << "Aviso: no se ha podido encontrar el material " << n << ", se creará un material por defecto." << std::endl;
 
 		material = new glslMaterial();
 

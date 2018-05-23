@@ -91,6 +91,13 @@ class TCache {
          */
         glm::vec3 getCameraPosition();
 
+		/**
+		 * @brief Get the Lights Buffer object
+		 * 
+		 * @return GLuint 
+		 */
+		GLuint getLightsBuffer();
+
         /**
          * @brief Get the Lights object
          * 
@@ -113,6 +120,7 @@ class TCache {
         glm::mat4 projectionMatrix;
 		glm::vec3 cameraPosition;
 
+		GLuint lightsID;
         std::vector<glslLight> *lights;
 };
 

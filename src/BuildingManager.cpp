@@ -159,7 +159,7 @@ void BuildingManager::buildBuilding(Vector2<f32> pos) {
 		//Finish everything
 		tempBuilding = nullptr;
 	} else {
-		//std::cout << "Error, se ha intentado construir un edificio inexistente" << std::endl;
+		std::cerr << "Error: se ha intentado construir un edificio inexistente" << std::endl;
 		exit(0);
 	}
 }
@@ -236,7 +236,7 @@ Building *BuildingManager::getBuilding(i32 id) {
 const BuildingData& BuildingManager::getBuildingData(std::string type) const{
 	std::map<std::string, BuildingData>::const_iterator it = baseBuildings.find(type);
 	if (it == baseBuildings.end()) {
-		//std::cout << "El tipo de edificio " << type << " no es valido." << std::endl;
+		std::cerr << "Error: el tipo de edificio " << type << " no es valido." << std::endl;
 		exit(0);
 	}
 	return it->second;

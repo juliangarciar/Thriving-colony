@@ -22,13 +22,13 @@ OBDVideo::OBDVideo(OBDSceneNode* parent, OBDShaderProgram *program, std::string 
 
 	// open video
 	if((error = avformat_open_input(&data->pFormatCtx, path.c_str(), NULL, NULL)) != 0) {
-		//std::cout << "Error " << av_err2str(error) << ": failed to open file: " << path.c_str() << std::endl;
+		std::cerr << "Error " << av_err2str(error) << ": failed to open file: " << path.c_str() << std::endl;
 		exit(0);
 	}
 	
 	// find stream info
 	if(avformat_find_stream_info(data->pFormatCtx, NULL) < 0) {
-		//std::cout << "Error: failed to get stream info" << std::endl;
+		std::cerr << "Error: failed to get stream info" << std::endl;
 		exit(0);
 	}
 	
@@ -44,7 +44,7 @@ OBDVideo::OBDVideo(OBDSceneNode* parent, OBDShaderProgram *program, std::string 
 		}
 	}
 	if(data->videoStream==-1) {
-		//std::cout << "Error: Didn't find a video stream" << std::endl;
+		std::cerr << "Error: Didn't find a video stream" << std::endl;
 		exit(0);
 	}
 	
@@ -53,19 +53,19 @@ OBDVideo::OBDVideo(OBDSceneNode* parent, OBDShaderProgram *program, std::string 
 	// Find the decoder for the video stream
 	data->pCodec=avcodec_find_decoder(data->pCodecCtxOrig->codec_id);
 	if(data->pCodec==NULL) {
-		//std::cout << "Unsupported codec!" << std::endl;
+		std::cerr << "Error: Unsupported codec!" << std::endl;
 		exit(0);
 	}
 	// Copy context
 	data->pCodecCtx = avcodec_alloc_context3(data->pCodec);
 	if(avcodec_copy_context(data->pCodecCtx, data->pCodecCtxOrig) != 0) {
-		//std::cout << "Couldn't copy codec context" << std::endl;
+		std::cerr << "Error: Couldn't copy codec context" << std::endl;
 		exit(0);
 	}
 
 	// Open codec
 	if(avcodec_open2(data->pCodecCtx, data->pCodec, NULL) < 0){
-		//std::cout << "Couldn't open codec context" << std::endl;
+		std::cerr << "Error: Couldn't open codec context" << std::endl;
 		exit(0);
 	}
 	
@@ -75,7 +75,7 @@ OBDVideo::OBDVideo(OBDSceneNode* parent, OBDShaderProgram *program, std::string 
 	// Allocate an AVFrame structure
 	data->pFrameRGB = av_frame_alloc();
 	if(data->pFrameRGB == NULL){
-		//std::cout << "Couldn't allocate frame" << std::endl;
+		std::cerr << "Error: Couldn't allocate frame" << std::endl;
 		exit(0);
 	}
 

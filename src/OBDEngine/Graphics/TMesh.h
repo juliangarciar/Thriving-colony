@@ -2,11 +2,8 @@
 #define TMESH_H
 
 #include "TEntity.h"
-#include "TTexture.h"
 
 #include "../OBDMaterial.h"
-
-#define BUFFER_OFFSET(i) ((char *)NULL + (i))
 
 class TMesh : public TEntity {
     public:
@@ -53,10 +50,6 @@ class TMesh : public TEntity {
 
 		glm::mat4 modelMatrix;
         
-        GLuint VBOID;
-	    GLuint IBOID;
-
-        GLuint lightID;
         GLuint materialID;
         GLuint textureID;
 };
