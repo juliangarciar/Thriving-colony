@@ -25,8 +25,7 @@ OBDEngine::~OBDEngine() {
 }
 
 void OBDEngine::Init(i32 sW, i32 sH) {
-    windowWidth = sW;
-    windowHeight = sH;
+    setWindowSize(sW, sH);
 
 	// Viewport
 	viewport = glm::vec4(0.0f, 0.0f, windowWidth, windowHeight);
@@ -286,6 +285,7 @@ void OBDEngine::setWindowSize(i32 w, i32 h) {
 	windowWidth = w;
 	windowHeight = h;
 	viewport = glm::vec4(0.0f, 0.0f, windowWidth, windowHeight);
+	TEntity::cache.setScreenSize(glm::vec2(w, h));
 }
 
 void OBDEngine::setClearColor(OBDColor c) {

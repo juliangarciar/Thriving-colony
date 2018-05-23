@@ -7,6 +7,7 @@
 #include <GUIEngine/ComboBox.h>
 #include <GUIEngine/Label.h>
 #include <GUIEngine/Slider.h>
+#include <GraphicEngine/Image.h>
 #include <GraphicEngine/Video.h>
 
 /**
@@ -90,8 +91,11 @@ class StartMenu {
         //Pointer to Button object that goes to the main menu.
         Button *buttonBack;
 
-		//
+		//Image
+		Image *image;
+
 #ifdef USEVIDEO
+		//Video
 		Video *video;
 #endif
 };
