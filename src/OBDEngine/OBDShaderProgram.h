@@ -9,14 +9,14 @@
 class OBDShaderProgram {
     public:
         /**
-         * @brief 
-         * @param shader
-         * @param shader
+         * @brief create a new shader program
+         * @param shader vertex shader
+         * @param shader fragment shader
          */
         OBDShaderProgram(ResourceGLSL*, ResourceGLSL*);
 
         /**
-         * @brief 
+         * @brief Destroy the OBDShaderProgram object
          * 
          */
         ~OBDShaderProgram();

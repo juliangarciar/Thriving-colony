@@ -5,6 +5,7 @@ TImage::TImage(GLuint pID, ResourceIMG *d){
 	data = d;
 	position = glm::vec4(0,0,0,0);
 
+	// Create a quad in which to render the image.
 	float quad[20] = {
 		-1.0f,  1.0f, 0.0f, 0.0f, 0.0f,
 		-1.0f, -1.0f, 0.0f, 0.0f, 1.0f,
@@ -12,6 +13,7 @@ TImage::TImage(GLuint pID, ResourceIMG *d){
 		 1.0f,  1.0f, 0.0f, 1.0f, 0.0f
 	};
 	
+	// Vertex ids
 	unsigned short elem[6] = {
 		0, 1, 2,
 		0, 2, 3
@@ -67,6 +69,7 @@ void TImage::beginDraw(){
 }
 
 void TImage::endDraw(){
+	// Free buffers
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }

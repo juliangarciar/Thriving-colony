@@ -35,7 +35,6 @@ TCubemapTexture::TCubemapTexture(std::vector<ResourceIMG *> textures) {
 }
 
 TCubemapTexture::~TCubemapTexture() {
-	//El ResourceIMG no se libera aqui sino en el gestor de recursos
 }
 
 GLuint TCubemapTexture::getTextureID() {

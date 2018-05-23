@@ -112,6 +112,7 @@ class TCache {
          */
         std::stack<glm::mat4>& getMatrixStack();
     private:
+        
         std::stack<glm::mat4> matrixStack;
 
         std::vector<GLuint> parameterIDs;

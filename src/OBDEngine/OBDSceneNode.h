@@ -10,64 +10,63 @@
 class OBDSceneNode : public OBDEntity {
     public:
         /**
-         * @brief 
+         * @brief create a new scene node
          * 
          * @param parent 
          */
         OBDSceneNode(TNode*);
 
         /**
-         * @brief 
+         * @brief create a new scene node as a child of a given scene node
          * 
          * @param parent 
          */
         OBDSceneNode(OBDSceneNode*);
 
         /**
-         * @brief 
+         * @brief Destroy the OBDSceneNode object
          * 
          */
         virtual ~OBDSceneNode();
 
         /**
-         * @brief 
+         * @brief add a child to this scenenode children list
          * 
          */
         void addChild(OBDEntity *);
 
         /**
-         * @brief 
+         * @brief add a child to this scenenode children list
          * 
          */
         void addChild(TNode *);
 
 		/**
-		 * @brief 
+		 * @brief reset this node's model matrix
 		 * 
 		 */
 		void refreshModelMatrix(glm::mat4);
 
 		/**
-		 * @brief 
+		 * @brief add this scenenode bounding box to the octree
 		 * 
-         * @param s 
-         * @param s 
+         * @param id
+         * @param bounding box
 		 */
 		void insertBoundingBox(u32, aabb::AABB);
 
 		/**
-		 * @brief 
+		 * @brief refresh this scenenode's bounding box in the octree
 		 * 
-         * @param s 
-         * @param s 
+         * @param id
+         * @param bounding box
 		 */
 		void refreshBoundingBox(u32, aabb::AABB);
 
 		/**
-		 * @brief 
+		 * @briefremove this scenenode's bounding from the octree
 		 * 
-         * @param s 
-         * @param s 
+         * @param id
 		 */
 		void removeBoundingBox(u32);
 

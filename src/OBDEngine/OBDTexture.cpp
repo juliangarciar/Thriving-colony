@@ -7,7 +7,7 @@ OBDTexture::OBDTexture(OBDEnums::TextureTypes t, ResourceIMG* i) {
 }
 
 OBDTexture::~OBDTexture() {
-	//Se libera en el gestor
+	// To be freed up on the resource manager
 }
 
 OBDEnums::TextureTypes OBDTexture::getType() {

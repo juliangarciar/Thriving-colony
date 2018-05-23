@@ -11,13 +11,17 @@ class OBDSkybox {
     
     public:
         /**
-         * @brief 
+         * @brief Construct a new OBDSkybox object
          * 
+         * 
+         * @param parent
+         * @param shader used to render the skybox
+         * @param vector of textures
          */
         OBDSkybox(OBDSceneNode *, OBDShaderProgram *, std::vector<ResourceIMG *>);
 
         /**
-         * @brief 
+         * @brief Destroy the OBDSkybox object
          * 
          */
         ~OBDSkybox();

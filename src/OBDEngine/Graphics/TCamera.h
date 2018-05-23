@@ -96,20 +96,16 @@ class TCamera : public TEntity {
         void setRight(f32);
 
         /**
-         * @brief 
+         * @brief Set the position of the camera target.
          * 
-         * @param tX 
-         * @param tY 
-         * @param tZ 
+         * @param p new target position.
          */
         void setTargetPosition(glm::vec3 p);
 
         /**
-         * @brief 
+         * @brief Set the position of the camera.
          * 
-         * @param tX 
-         * @param tY 
-         * @param tZ 
+         * @param p new camera position.
          */
         void setCameraPosition(glm::vec3 p);
         
@@ -171,29 +167,31 @@ class TCamera : public TEntity {
         f32 getRight();
 
         /**
-         * @brief 
+         * @brief returns the target position
          * 
          * @return glm::vec3 
          */
         glm::vec3 getTargetPosition();
 
         /**
-         * @brief 
+         * @brief returns the camera position.
          * 
          * @return glm::vec3 
          */
         glm::vec3 getCameraPosition();
     private:
         /**
-         * @brief 
+         * @brief calculates the view matrix. This method is to be called after every transformation 
+         * done to the camera and not on the draw call to optimize.
          * 
          */
         void recalculateViewMatrix();
 
 		/**
-		 * @brief 
-		 * 
-		 */
+         * @brief calculates the projection matrix. This method is to be called after every change 
+         * done to the camera's properties and not on the draw call to optimize.
+         * 
+         */
 		void recalculateProjectionMatrix();
 		
         // Positions

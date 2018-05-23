@@ -26,19 +26,19 @@
 class OBDEngine {
     public:
         /**
-         * @brief 
+         * @brief Construct a new OBDEngine object
          * 
          */
         OBDEngine();
 
         /**
-         * @brief 
+         * @brief Destroy the OBDEngine object
          * 
          */
         ~OBDEngine();
 
         /**
-         * @brief 
+         * @brief initialize the engine
          * 
          * @param screenWidth 
          * @param screenHeight 
@@ -52,7 +52,7 @@ class OBDEngine {
         void End();
 
         /**
-         * @brief 
+         * @brief draw the scene
          * 
          */
         void draw();
@@ -66,17 +66,17 @@ class OBDEngine {
 #endif
 
         /**
-         * @brief 
+         * @brief create a new scenenode
          * 
-         * @return OBDSceneNode* 
+         * @return OBDSceneNode* new scenenode
          */
         OBDSceneNode* createSceneNode();
 
         /**
-         * @brief 
+         * @brief create a new scene node under the chosen parent.
          * 
-         * @param 
-         * @return OBDSceneNode* 
+         * @param parent
+         * @return OBDSceneNode* new scenenode
          */
         OBDSceneNode* createSceneNode(OBDSceneNode*);
 
@@ -92,31 +92,37 @@ class OBDEngine {
         OBDLight* createLight(OBDColor color, f32 intensity, f32 ambient, f32 attenuation);
 
         /**
-         * @brief 
+         * @brief Create a Camera object
          * 
+         * @param far 
+         * @param fov 
          * @return OBDCamera* 
          */
         OBDCamera* createCamera(f32 far, f32 fov);
         
         /**
-         * @brief 
+         * @brief Create a 3d Object 
          * 
-         * @param
-         * @return OBDMesh* 
+         * @param id
+         * @param path
+         * @param wether or not it should automatically.
+         * @return OBDObject* 
          */
         OBDObject* createObject(u32, std::string, bool);
         
         /**
-         * @brief 
+         * @brief create a 3d object
          * 
-         * @param 
-         * @param 
+         * @param parent
+         * @param id
+         * @param path
+         * @param wether or not it should load automatically
          * @return OBDMesh* 
          */
         OBDObject* createObject(OBDSceneNode*, u32, std::string, bool);
 
         /**
-         * @brief 
+         * @brief create a new animation
          * 
          * @param vector of objects
          * @param material
@@ -126,7 +132,7 @@ class OBDEngine {
         OBDAnimation* createAnimation(std::vector<std::string>, std::string, bool);
         
         /**
-         * @brief 
+         * @brief create a new animation
          * 
          * @param parent
          * @param vector of objects
@@ -151,7 +157,7 @@ class OBDEngine {
 		OBDTerrain *createTerrain(OBDSceneNode*, std::string, f32 y_offset, f32 y_scale, i32 step);
 
         /**
-         * @brief
+         * @brief create a new billboard
          * @param a 
          * @param c 
          */
@@ -159,17 +165,20 @@ class OBDEngine {
 
 #ifdef USEVIDEO
         /**
-         * @brief
-         * @param a 
-         * @param c 
+         * @brief create a new video
+         * @param  parent
+         * @param  shader
+         * @param  path
          */
         OBDVideo* createVideo(OBDSceneNode*, OBDShaderProgram *, std::string);
 #endif
 
         /**
-         * @brief
-         * @param a 
-         * @param c 
+         * @brief create a new image
+         * 
+         * @param parent
+         * @param shader
+         * @param path
          */
         OBDImage* createImage(OBDSceneNode*, OBDShaderProgram *, std::string);
 
@@ -177,16 +186,16 @@ class OBDEngine {
          * @brief Create a Skybox object
          * 
          * @param texture 
-         * @return OBDSkybox* 
+         * @return OBDSkybox* new skybox
          */
         OBDSkybox* createSkybox(OBDSceneNode*, OBDShaderProgram*, std::vector<std::string>);
 
         /**
          * @brief Create a Shader Program object
          * 
-         * @param a 
-         * @param b 
-         * @param c 
+         * @param path
+         * @param fragment shader
+         * @param vertex shader
          * @return OBDShaderProgram* 
          */
         OBDShaderProgram *createShaderProgram(std::string, std::string, std::string);
@@ -195,7 +204,7 @@ class OBDEngine {
 		 * @brief Create a Material object
 		 * @path
 		 * @name
-		 * @return OBDMaterial* 
+		 * @return OBDMaterial* new material
 		 */
 		OBDMaterial *createMaterial(std::string, std::string);
 
@@ -221,49 +230,53 @@ class OBDEngine {
 		OBDSceneNode* createShaderedSceneNode(OBDSceneNode *p, std::string sN, std::string vs, std::string fs);
 
         /**
-         * @brief 
-         * @param r 
-         * @param sync 
+         * @brief load a material from an object
+         * 
+         * @param object
+         * @param mtl file
+         * @param wether or this shoudl be loaded synchronoulsy or asynchronously
          */
         void loadObjectTexturesFromMTL(OBDObject *, ResourceMTL *m, bool = true);
 
         /**
-         * @brief 
-         * @param r 
-         * @param sync 
+         * @brief load a material from an animation
+         * 
+         * @param object
+         * @param mtl file
+         * @param wether or this shoudl be loaded synchronoulsy or asynchronously
          */
         void loadAnimationTexturesFromMTL(OBDAnimation *, ResourceMTL *m, bool = true);
 
         /**
-         * @brief 
+         * @brief add a camera to the register of cameras
          * 
-         * @param rec 
+         * @param rec camera to register
          */
         void registerCamera(OBDCamera* rec);
 
         /**
-         * @brief 
+         * @brief add a light to the register of lights
          * 
          * @param lightNode 
          */
         void registerLight(OBDLight* lightNode);
 
         /**
-         * @brief 
+         * @brief add a shader to the register of shaders
          * 
-         * @param shaderProgram 
-         * @param shaderProgram 
+         * @param shader name
+         * @param shaderProgram shader 
          */
         void registerShaderProgram(std::string, OBDShaderProgram *);
 
         /**
-         * @brief Set the current shader program
+         * @brief Set the current shader program to use
          * @param program
          */
         void setCurrentShaderProgram(std::string);
 
 		/**
-		 * @brief Set the Window Size object
+		 * @brief Set the Window Size
 		 * @param width
 		 * @param height
 		 */
@@ -276,14 +289,14 @@ class OBDEngine {
         void setClearColor(OBDColor);
 
         /**
-         * @brief 
+         * @brief get the root of the tree
          * 
          * @return TNode* 
          */
         TNode* getRootNode();
 
         /**
-         * @brief 
+         * @brief returns the default scenenode
          * 
          */
         OBDSceneNode* getDefaultLayer();
@@ -324,12 +337,14 @@ class OBDEngine {
 		OBDShaderProgram *getRegisteredShaderProgram(std::string);
     private:
         ResourceManager *OBDManager;
-
+        //Root
         TNode* rootNode;
 
+        // Default layers/scenenodes
         OBDSceneNode *clSceneNode;
         OBDSceneNode *defaultSceneNode;
 
+        // Registers
         std::vector<OBDCamera*> cameras;
         std::vector<OBDLight*> lights;
 

@@ -18,7 +18,7 @@ void TLight::beginDraw() {
     if (active) {
         cache.getLights()->push_back(components);
 
-		//Send lights
+		//Send lights to shader program.
 		if (cache.getLights()->size()) {   
 			i32 lightNumber = cache.getLights()->size();
 			if (lightNumber > MAX_LIGHTS) lightNumber = MAX_LIGHTS;

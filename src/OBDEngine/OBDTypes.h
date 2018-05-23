@@ -46,6 +46,7 @@ typedef int32_t i32;
 typedef uint32_t u32;
 typedef float f32;
 
+// Light data to use in shaders
 struct glslLight {
     glm::vec4 position;
     glm::vec4 intensity;
@@ -58,11 +59,13 @@ struct glslLight {
 
 inline bool operator==(const glslLight& l, const glslLight& r) { return (l.position == r.position && l.intensity == r.intensity && l.ambientCoeficient == r.ambientCoeficient && l.attenuationCoeficient == r.attenuationCoeficient) == 0; }
 
+// Mesh data to use in shaders
 struct glslMesh {
     GLuint VAO;
 	u32 num_indices;
 };
 
+// Material data to use in shaders
 struct glslMaterial {
     glm::vec4 ambientColor;
     glm::vec4 diffuseColor;
@@ -71,6 +74,7 @@ struct glslMaterial {
 	GLfloat shininess;
 };
 
+// Texture data to use in shaders
 struct glslTexture {
     GLint diffuseTexture;
     GLint oclusionsTexture;
@@ -78,6 +82,7 @@ struct glslTexture {
     GLint alphaTexture;
 };
 
+// Line data to use in  raycasting
 struct OBDLine {
     glm::vec3 start;
     glm::vec3 end;

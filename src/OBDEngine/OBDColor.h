@@ -6,13 +6,13 @@
 class OBDColor {
     public:
         /**
-         * @brief 
+         * @brief Construct a new OBDColor with default color black
          * 
          */
         OBDColor();
 
         /**
-         * @brief 
+         * @brief Construct a new OBDColor
          * 
          * @param red 
          * @param green 
@@ -21,21 +21,21 @@ class OBDColor {
         OBDColor(f32 red, f32 green, f32 blue);
 
         /**
-         * @brief 
+         * @brief Construct a new OBDColor
          * 
          * @param rgb 
          */
         OBDColor(glm::vec3);
 
         /**
-         * @brief 
+         * @brief Construct a new OBDColor
          * 
          * @param rgba 
          */
         OBDColor(glm::vec4);
 
         /**
-         * @brief 
+         * @brief Construct a new OBDColor
          * 
          * @param red 
          * @param green 
@@ -45,14 +45,14 @@ class OBDColor {
         OBDColor(f32 red, f32 green, f32 blue, f32 alpha);
 
         /**
-         * @brief 
+         * @brief Destroy the OBDColor object
          * 
          */
         ~OBDColor();
 
 
         /**
-         * @brief 
+         * @brief sets the color
          * 
          * @param red 
          * @param green 
@@ -62,14 +62,14 @@ class OBDColor {
         void set(f32 red, f32 green, f32 blue, f32 alpha);
 
         /**
-         * @brief 
+         * @brief sets the color
          * 
          * @param rgba
          */
         void set(glm::vec4 rgba);
 
         /**
-         * @brief 
+         * @brief sets the color
          * 
          * @param red 
          * @param green 
@@ -79,21 +79,21 @@ class OBDColor {
         void set(f32 red, f32 green, f32 blue);
 
         /**
-         * @brief 
+         * @brief sets the color
          * 
          * @param rgba
          */
         void set(glm::vec3 rgb);
 
         /**
-         * @brief 
+         * @brief returns the color
          * 
          * @return glm::vec3 
          */
         glm::vec3 getRGB();
 
         /**
-         * @brief 
+         * @brief returns the color with the alpha value included
          * 
          * @return glm::vec4 
          */

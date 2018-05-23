@@ -159,7 +159,7 @@ void Unit::update() {
         break;
 
         default: 
-            std::cerr << "Error UNIT STATE \n";
+            //std::cout << "ERROR UNIT STATE \n";
         break;
     }
 }
@@ -218,7 +218,7 @@ void Unit::switchState(Enumeration::UnitState newState) {
         break;
 
         default: 
-            std::cout << "INVALID UNIT STATE \n";
+            //std::cout << "INVALID UNIT STATE \n";
         break;
     }
 }
@@ -436,13 +436,9 @@ void Unit::takeDamage(i32 _damage) {
 }
 
 void Unit::setTarget(Entity *newTarget) {
-    if(target != nullptr){
-        target->removeHostile(this);
-    }
     target = newTarget;
     if (target == nullptr) {
         switchState(Enumeration::UnitState::Idle);
-        switchUnitFigthersState(Enumeration::UnitFighterState::ufIdle);
     }
     else{
         target->addHostile(this);

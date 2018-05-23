@@ -7,9 +7,10 @@
 
 class TEntity {
     public:
+        //Implement after inheritance.
         virtual void beginDraw() = 0;
         virtual void endDraw() = 0;
-
+        // Reference the matrix cache
         static TCache cache;
 };
 
