@@ -4,7 +4,7 @@
 
 StartMenu::StartMenu() {
 #ifdef USEVIDEO
-	video = new Video("media/videos/20180520_231429.mp4");
+	video = new Video("media/videos/Pantalla_menu.mp4");
 	video -> play();
 	video -> setLoop(true);
 #endif
