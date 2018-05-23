@@ -58,11 +58,17 @@ OBDTerrain::~OBDTerrain() {
 	delete octree;
 	delete mesh;
 	delete material;
+	vbo->clear();
+	delete vbo;
+	ibo->clear();
+	delete ibo;
 
 	terrain = nullptr;
 	octree = nullptr;
 	mesh = nullptr;
 	material = nullptr;
+	vbo = nullptr;
+	ibo = nullptr;
 }
 
 void OBDTerrain::refreshModelMatrix(glm::mat4 parent) {
