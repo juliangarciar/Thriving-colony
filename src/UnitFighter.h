@@ -39,7 +39,6 @@ class UnitFighter{
         bool hasArrived();
         Vector2<f32> calculateFlocking();
         void calculateDirection();
-        void rotateFighter();
         /* Privamente member variables */
         Unit* unitLeader;
         Animation* fighterModel;
@@ -53,9 +52,7 @@ class UnitFighter{
         Vector2<f32> vectorDirection;
         const f32 maxDesviation;
         f32 maxTime;
-        f32 rotationAngle;
         Timer* unitFighterClock;
-        Timer* rotationClock;
         /* Check in the future */
         std::vector<UnitFighter*> nearFighters;
         Enumeration::UnitFighterState fighterState;

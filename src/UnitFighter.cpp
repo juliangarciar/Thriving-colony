@@ -37,17 +37,10 @@ UnitFighter::UnitFighter(SceneNode* _parent,
             switchState(Enumeration::UnitFighterState::ufAttack);
         }
     });
-
-    rotationClock = new Timer(0.1, true, false);
-    rotationClock->setCallback([&]{
-        //std::cout << "Estoy rotando bitch \n";
-        rotateFighter();
-    });
 }
 
 UnitFighter::~UnitFighter(){
     delete unitFighterClock;
-    delete rotationClock;
     delete fighterModel;
     nearFighters.clear();
 }
@@ -305,8 +298,6 @@ Vector2<f32> UnitFighter::calculateFlocking() {
     return flock;
 }
 
-/* Change this method, so only is called when set destiny is called */
-/* Take flocking out of here */
 void UnitFighter::calculateDirection() {
     Vector2<f32> _incVector = vectorDestiny - vectorPosition;
     /* Calculate speed */
@@ -315,16 +306,12 @@ void UnitFighter::calculateDirection() {
         vectorDirection = _incVector / distance;
         vectorDirection += calculateFlocking();
 
-        //fighterModel->setRotation(Vector3<f32>(0, std::atan2(vectorDirection.y, vectorDirection.x)*180.0f/3.1415926f + 90.f, 0));
-        //rotationAngle = std::atan2(vectorDirection.y, vectorDirection.x) * (180.0f / 3.1415926f) + 90.f;
-        //std::cout << "Angulo primo: " << rotationAngle << "\n";
-        //rotationClock->start();
         /* Normalize */
         if (vectorDirection.x != 0 || vectorDirection.y != 0) {
             distance = std::sqrt(std::pow(vectorDirection.x, 2) + std::pow(vectorDirection.y, 2));
             vectorDirection = vectorDirection / distance;   
             
-            //fighterModel->setRotation(Vector3<f32>(0, std::atan2(vectorDirection.y, vectorDirection.x)*180.0f/3.1415926f + 90.f, 0));
+            fighterModel->setRotation(Vector3<f32>(0, std::atan2(vectorDirection.y, vectorDirection.x) * 180.0f / 3.1415926f + 90.f, 0));
         }
         else{
             std::cout << "Te pille cabron \n";
@@ -349,26 +336,3 @@ bool UnitFighter::inRange(){
     
     return inRange;
 }
-
-void UnitFighter::rotateFighter(){
-    if(std::abs(rotationAngle) <= 15.0f){
-        fighterModel->setRotation(Vector3<f32>(0, rotationAngle, 0));
-        rotationAngle = 0;
-        rotationClock->stop();
-    }
-    else{
-        if (rotationAngle > 0.0f){
-            fighterModel->setRotation(Vector3<f32>(0, 15, 0));
-            rotationAngle -= 15.0f;
-        }
-        else{
-            fighterModel->setRotation(Vector3<f32>(0, -15, 0));
-            rotationAngle += 15.0f;
-        }
-    }
-}
-
-//void UnitFighter::rotateFighter(Vector2<f32> targetDirection){
-//    Vector2<f32> dummyRotation = targetDirection - 
-//    //fighterModel->setRotation(Vector3<f32>(0, std::atan2(vectorDirection.y, vectorDirection.x)*180.0f/3.1415926f + 90.f, 0));
-//}
