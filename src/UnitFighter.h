@@ -39,7 +39,7 @@ class UnitFighter{
         bool hasArrived();
         Vector2<f32> calculateFlocking();
         void calculateDirection();
-        void rotateFighter(Vector2<f32> targetDirection);
+        void rotateFighter();
         /* Privamente member variables */
         Unit* unitLeader;
         Animation* fighterModel;
