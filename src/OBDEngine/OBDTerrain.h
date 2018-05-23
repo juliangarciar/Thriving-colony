@@ -18,23 +18,23 @@
 class OBDTerrain : public OBDEntity {
 	public:
 		/**
-		 * @brief 
+		 * @brief Construct a new OBDTerrain object
 		 * 
-		 * @param  
-		 * @param 
+		 * @param y_offset 
+		 * @param y_scale 
+		 * @param step 
 		 */
 		OBDTerrain(OBDSceneNode*, std::string, f32 y_offset, f32 y_scale, i32 step);
 
 		/**
-		 * @brief 
+		 * @brief Destroy the OBDTerrain object
 		 * 
 		 */
 		virtual ~OBDTerrain();
 		
 		/**
-		 * @brief 
+		 * @brief update the terrain's model matrix
 		 * 
-		 * @param parent 
 		 */
 		void refreshModelMatrix(glm::mat4);
 
@@ -45,7 +45,7 @@ class OBDTerrain : public OBDEntity {
         void setTexture(OBDTexture*);
 
 		/**
-		 * @brief Get the Ray Collision object
+		 * @brief Get the Raycast Collision point
 		 * 
 		 * @param line
 		 * @return glm::vec3 
@@ -53,11 +53,11 @@ class OBDTerrain : public OBDEntity {
 		glm::vec3 getRayCollision(OBDLine);
 
 		/**
-		 * @brief 
+		 * @brief get the y component of a given point of the terrain
 		 * 
 		 * @param x 
 		 * @param z 
-		 * @return f32 
+		 * @return f32 y component
 		 */
 		f32 getY(f32 x, f32 z);
 
@@ -72,6 +72,7 @@ class OBDTerrain : public OBDEntity {
 		SDF *octree;
 		std::vector<glm::vec3> vertex_vector;
 
+		// Buffers
 		std::vector<f32> *vbo;
 		std::vector<u32> *ibo;
 		GLuint vboid;

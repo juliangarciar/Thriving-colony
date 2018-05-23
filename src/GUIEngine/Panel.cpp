@@ -7,6 +7,7 @@ Panel::Panel(std::string t) {
     panel -> setLayout(new nanogui::BoxLayout(nanogui::Orientation::Horizontal, nanogui::Alignment::Middle, 0, 6));
     panel -> setModal(false);
     panel -> setFontSize(1);
+    panel -> transpa
 }
 
 Panel::Panel(GUIElement *parent, std::string title) {

@@ -8,7 +8,6 @@ StartMenu::StartMenu() {
 	video -> play();
 	video -> setLoop(true);
 #endif
-    //SoundSystem::Instance() -> playMusicEvent("MenuMusic");
     ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/maps/maplist.json", true);
     json j = *r -> getJSON();
 

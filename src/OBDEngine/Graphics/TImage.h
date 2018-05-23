@@ -7,28 +7,43 @@
 class TImage : public TEntity {
     public:
         /**
-         * @brief 
+         * @brief Construct a new TImage object
          * 
+         * @param programID shader to use to render this image.
          */
         TImage(GLuint programID, ResourceIMG *);
 
         /**
-         * @brief 
+         * @brief Destroy the TImage object.
          * 
          */
         ~TImage();
 
         /**
-         * @brief 
+         * @brief render the image on screen.
          * 
          */
         void beginDraw();
 
         /**
-         * @brief 
+         * @brief free the buffer off the textures.
          * 
          */
         void endDraw();
+
+		/**
+		 * @brief Set the Position object
+		 * 
+		 * @param new position.
+		 */
+		void setPosition(glm::vec3 position);
+
+		/**
+		 * @brief Get the Position object
+		 * 
+		 * @return glm::vec3 image position.
+		 */
+		glm::vec3 getPosition();
 	private:
 		ResourceIMG *data;
 
@@ -41,8 +56,11 @@ class TImage : public TEntity {
 		GLuint vert_buf;
 		GLuint uv_buf;
 		GLuint elem_buf;
-		
-		glm::mat4 mvp;
+
+		glm::vec4 position;
+		glm::vec2 ratio;
+		glm::mat4 vp;
+		glm::mat4 m;
 };
 
 #endif

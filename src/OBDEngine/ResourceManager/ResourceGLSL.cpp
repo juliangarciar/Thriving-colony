@@ -31,7 +31,7 @@ void ResourceGLSL::load(const char *path) {
         shaderCode = sstr.str();
         shaderStream.close();
     } else {
-        std::cerr << "Error: imposible abrir el archivo, revisa la ruta y los permisos." << std::endl;
+        std::cerr << "Error: imposible abrir el shader, revisa la ruta y los permisos." << std::endl;
         exit(0);
     }
 }

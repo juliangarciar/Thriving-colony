@@ -7,17 +7,20 @@
  */
 class OBDEnums {
     public:
+        // Camera projections
         enum CameraProjection {
             ProjectionPerspective,
             ProjectionOrtographic,
             ProjectionParallel
         };
 
+        // Types of shader
         enum ShaderType {
             VERTEX,
             FRAGMENT
         };
 
+        // Types of texture
         enum TextureTypes {
             TEXTURE_DIFFUSE,
             TEXTURE_OCLUSIONS,
@@ -27,13 +30,14 @@ class OBDEnums {
             TEXTURE_SIZE
         };
 
+        // Types of light
         enum LightTypes {
             LIGHT_POINT,
             LIGHT_DIRECTIONAL,
             LIGHT_SPOT
         };
 
-        // Internal
+        // OpenGL Internal
         enum OpenGLIDs {
             CURRENT_PROGRAM_ID = 0,
 

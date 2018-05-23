@@ -26,11 +26,12 @@ TMesh::~TMesh() {
 }
 
 void TMesh::beginDraw() { 
+	// Fetch matrices
 	glm::mat4 pM = *cache.getProjectionMatrix();
 	glm::mat4 vM = *cache.getViewMatrix();
 	modelMatrix = cache.getMatrixStack().top();
 
-	// Matrices
+	// Multiply matrices 
 	glm::mat4 MV = vM * modelMatrix;
 	glm::mat4 MVP = pM * vM * modelMatrix;
 	glUniformMatrix4fv(cache.getID(OBDEnums::OpenGLIDs::MATRIX_MODEL), 1, GL_FALSE, &modelMatrix[0][0]);
@@ -53,7 +54,10 @@ void TMesh::beginDraw() {
 	glBindBufferBase(GL_UNIFORM_BUFFER, 3, textureID);
 
 	i32 loadedTextures = 0;
-
+	/*
+	* Send active textures if there are any.
+	* Those that do exist, identify them.
+	*/
 	if (material->getGLSLActiveTextures()->diffuseTexture == 1) {
 		glActiveTexture(GL_TEXTURE0 + loadedTextures);
 		glBindTexture(GL_TEXTURE_2D, material->getTexture(OBDEnums::TextureTypes::TEXTURE_DIFFUSE)->getTexture()->getTextureID());
@@ -82,12 +86,14 @@ void TMesh::beginDraw() {
 		loadedTextures++;
 	}
 
+	// Draw the triangles.
 	glBindVertexArray(mesh->VAO);
 	glDrawElements(GL_TRIANGLES, mesh->num_indices, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
 }
 
 void TMesh::endDraw() {
+	// Free textures off the buffers.
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glActiveTexture(GL_TEXTURE1);

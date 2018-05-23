@@ -7,6 +7,10 @@
 class TBillboard : public TEntity {
     
     public:
+        /**
+         * @brief Construct a new TBillboard object
+         * 
+         */
         TBillboard(GLuint, glm::vec3, glm::vec2);
 
         virtual ~TBillboard();

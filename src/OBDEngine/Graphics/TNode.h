@@ -6,96 +6,96 @@
 class TNode {
     public:
         /**
-         * @brief 
+         * @brief Construct a new TNode object
          * 
          */
         TNode();
 
         /**
-         * @brief 
+         * @brief Construct a new TNode oject and attach a new Entity to it.
          * 
-         * @param TEntity 
          */
         TNode(TEntity*);
 
         /**
-         * @brief 
+         * @brief Construct a new TNode object and attach a new Entity to it. After that, give it a parent.
          * 
-         * @param TEntity 
-         * @param TNode 
+         * @param TEntity entity for the node
+         * @param TNode parent.
          */
         TNode(TEntity*, TNode*);
 
         /**
-         * @brief 
+         * @brief Destroy the TNode object
          * 
          */
         ~TNode();
 
         /**
-         * @brief 
+         * @brief add a child to this node's children list.
          * 
-         * @param TNode 
+         * @param TNode new child
          */
         void addChild(TNode*);
 
         /**
-         * @brief 
+         * @brief delete a child from this node's children list.
          * 
-         * @param TNode 
+         * @param TNode node to remove.
          */
         void removeChild(TNode*);
 
         /**
-         * @brief 
+         * @brief recursively call all children's draw function
          * 
          */
         void draw();
 
         /**
-         * @brief 
+         * @brief Give this node a new entity
          * 
-         * @param TEntity 
+         * @param TEntity new entity
          */
         void setEntity(TEntity*);
 
         /**
-         * @brief 
+         * @brief remove this node's entity
          */
         void removeEntity();
 
         /**
-         * @brief 
+         * @brief Get the Entity of this node
          * 
-         * @return TEntity* 
+         * @return TEntity* this node's entity
          */
         TEntity *getEntity();
 
         /**
-         * @brief Set if Active
+         * @brief Set wether or not this node is active. Inactive node's draw function will not be executed.
+         * Neither will its children.
          * 
-         * @param a 
+         * @param a active status
          */
         void setActive(bool a);
 
         /**
-         * @brief Get if Active
+         * @brief Get wether or not this node is active.
          * 
-         * @return true 
-         * @return false 
+         * @return true this node is active
+         * @return false this node is inactive
          */
         bool getActive();
 
         /**
-         * @brief Set the Parent object
-         * @param node
+         * @brief Set this node's parent.
+         * @param node 
          */
         void setParent(TNode *);
 
         /**
-         * @brief 
+         * @brief return this node's parent.
          * 
-         * @return TNode* 
+         * @return TNode* parent.
          */
         TNode *getParent();
     private:

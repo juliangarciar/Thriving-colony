@@ -4,6 +4,7 @@
 Widget::Widget() {
     widget = Window::Instance() -> getGUIEnvironment() -> add<nanogui::Widget>();
     widget -> setFontSize(4);
+    widget -> transparent()
 }
 
 Widget::Widget(GUIElement *parent) {

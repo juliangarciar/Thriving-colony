@@ -36,7 +36,7 @@ void ResourceMTL::load(const char *path) {
         mtl_objl::Material curMat = loader.LoadedMaterials[i];
 
         ResourceMaterial *tempMat = new ResourceMaterial();
-
+        // Set the material properties
         tempMat -> materialName = curMat.name;
         tempMat -> ambientColor = glm::vec3(curMat.Ka.X, curMat.Ka.Y, curMat.Ka.Z);
         tempMat -> diffuseColor = glm::vec3(curMat.Kd.X, curMat.Kd.Y, curMat.Kd.Z);

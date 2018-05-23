@@ -19,12 +19,12 @@ class TTransform : public TEntity {
         virtual ~TTransform();
 
         /**
-         * @brief 
+         * @brief stack the current matrix.
          * 
          */
         void beginDraw();
         /**
-         * @brief 
+         * @brief unstack the current matrix on top.
          * 
          */
         void endDraw();
@@ -45,7 +45,7 @@ class TTransform : public TEntity {
         void load(glm::mat4);
 
         /**
-         * @brief 
+         * @brief transpose the current matrix
          * 
          */
         void transpose();

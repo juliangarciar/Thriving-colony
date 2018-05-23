@@ -10,132 +10,129 @@
 class OBDCamera {
     public:
         /**
-         * @brief 
+         * @brief Construct a new OBDCamera object
          * 
-         * @param parent 
-         * @param screenWidth
-         * @param screenHeight
+         * @param parent node
+         * @param screen width
+         * @param screen height
+         * @param far distance
+         * @param field of view
+         * 
          */
         OBDCamera(OBDSceneNode* parent, i32, i32, f32, f32);
 
         /**
-         * @brief 
+         * @brief Destroy the OBDCamera object
          * 
          */
         virtual ~OBDCamera();
 
         /**
-          * @brief 
-          * 
-          * @param tX 
-          * @param tY 
-          * @param tZ 
-          */
+         * @brief Set the Target Position 
+         * 
+         * @param p new target position
+         */
         void setTargetPosition(glm::vec3 p);
 
         /**
-          * @brief 
-          * 
-          * @param tX 
-          * @param tY 
-          * @param tZ 
-          */
+         * @brief Set the Camera Position
+         * 
+         * @param p new camera position
+         */
         void setCameraPosition(glm::vec3 p);
 
         /**
-         * @brief 
+         * @brief set sitch on or off the the camera
          * 
-         * @param active 
+         * @param active new active status
          */
         void setActive(bool active);
 
         /**
-         * @brief 
+         * @brief set a new distance to the near plane.
          * 
-         * @param n 
+         * @param n new near value
          */
         void setNearValue(f32 n);
 
         /**
-         * @brief 
+         * @brief set a new distance to the far plane
          * 
-         * @param f 
+         * @param f new far value
          */
         void setFarValue(f32 f);
 
         /**
-         * @brief 
+         * @brief change to perspective projection.
          * 
          */
         void setPerspectiveProjection();
 
         /**
-         * @brief 
+         * @brief change to parallel projection
          * 
          */
         void setParallelProjection();
 
         /**
-         * @brief 
+         * @brief set a new field of view
          * 
-         * @param fov 
+         * @param fov field of view
          */
         void setFov(f32 fov);
 
-        // En realidad no se si se necesitan getters pero los pongo por si acaso
-
         /**
-         * @brief 
+         * @brief returns weteher or not the camera is active
          * 
          */
         bool getActive();
 
         /**
-         * @brief 
+         * @brief returns at which distance sits the near plane
          * 
-         * @return f32 
+         * @return f32 near distance
          */
         f32 getNear();
 
         /**
-         * @brief 
+         * @brief return at which distance sits the far plane
          * 
-         * @return f32 
+         * @return f32 far distance
          */
         f32 getFar();
 
         /**
-         * @brief 
+         * @brief returns the field of view
          * 
-         * @return f32 
+         * @return f32 field of view
          */
         f32 getFov();
 
         /**
-         * @brief 
+         * @brief returns the current projection mode of the camera.
          * 
-         * @return TEnums::CameraProjection 
+         * @return TEnums::CameraProjection current projection mode.
          */
         OBDEnums::CameraProjection getProjectionMode();
 
         /**
-         * @brief 
+         * @brief returns the camera position.
          * 
-         * @return glm::vec3 
+         * @return glm::vec3 position of the camera.
          */
         glm::vec3 getCameraPosition();
 
         /**
-         * @brief 
+         * @brief return the target position
          * 
-         * @return glm::vec3 
+         * @return glm::vec3 position of the target.
          */
         glm::vec3 getTargetPosition();
 		
         /**
-         * @brief 
-         * s
-         * @return TCamera* 
+         * @brief get this' camera entity.
+         * 
+         * @return TCamera* camera entity.
          */
         TCamera* getCameraEntity();
 

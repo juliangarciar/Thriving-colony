@@ -25,8 +25,7 @@ OBDEngine::~OBDEngine() {
 }
 
 void OBDEngine::Init(i32 sW, i32 sH) {
-    windowWidth = sW;
-    windowHeight = sH;
+    setWindowSize(sW, sH);
 
 	// Viewport
 	viewport = glm::vec4(0.0f, 0.0f, windowWidth, windowHeight);
@@ -166,6 +165,11 @@ OBDVideo* OBDEngine::createVideo(OBDSceneNode *layer, OBDShaderProgram *p, std::
 }
 #endif
 
+OBDImage* OBDEngine::createImage(OBDSceneNode *layer, OBDShaderProgram *p, std::string path){
+	ResourceIMG *s = (ResourceIMG*)OBDManager->getResource(path, true);
+	return new OBDImage(layer, p, s);
+}
+
 OBDSkybox* OBDEngine::createSkybox(OBDSceneNode* layer, OBDShaderProgram* program, std::vector<std::string> textures) {
 	std::vector<ResourceIMG*> images;
 	for (int i = 0; i < textures.size(); i++){
@@ -281,6 +285,7 @@ void OBDEngine::setWindowSize(i32 w, i32 h) {
 	windowWidth = w;
 	windowHeight = h;
 	viewport = glm::vec4(0.0f, 0.0f, windowWidth, windowHeight);
+	TEntity::cache.setScreenSize(glm::vec2(w, h));
 }
 
 void OBDEngine::setClearColor(OBDColor c) {

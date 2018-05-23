@@ -42,23 +42,29 @@ OBDAnimation::~OBDAnimation() {
 
 void OBDAnimation::updateFrame() {
 	if (getActive()){
+		// Disable the current frame and enable the next one.
 		frames -> at(currentFrame) -> setActive(false);
 		frames -> at(nextFrame) -> setActive(true);
 		currentFrame = nextFrame;
+		// Increase the frame
 		nextFrame++;
+		// Last frame reached, reset.
 		if (nextFrame >= numberOfFrames) nextFrame = 0;
 	}
 }
 
 void OBDAnimation::setActive(bool a){
 	OBDEntity::setActive(a);
+	// When deactivating an animation, reset it.
 	setCurrentFrame(0);
 }
 
-/* Me pase de listo */
 void OBDAnimation::setCurrentFrame(i32 nFrame){
+	// Make sure the desired frame is within the limits.
 	assert(nFrame >= 0 && nFrame < numberOfFrames);
+	// Deactivate the current frame
 	frames -> at(currentFrame) -> setActive(false);
+	// Jump to the desired frame and nebale it.
 	currentFrame = nFrame;
 	nextFrame = nFrame;
 	frames -> at(currentFrame) -> setActive(true);

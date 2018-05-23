@@ -97,18 +97,18 @@ class Window {
         OBDSceneNode* getBillboardLayer();
 
         /**
-         * @brief Get the program where are going to be created all video.
+         * @brief Get the program where are going to be created all image.
          * 
-         * @return OBDShaderProgram* that is going to be the value of videoLayer.
+         * @return OBDShaderProgram* that is going to be the value of imageLayer.
          */
-        OBDShaderProgram* getVideoProgram();
+        OBDShaderProgram* getImageProgram();
 
         /**
-         * @brief Get the layer where are going to be created all video.
+         * @brief Get the layer where are going to be created all image.
          * 
-         * @return OBDSceneNode* that is going to be the value of videoLayer.
+         * @return OBDSceneNode* that is going to be the value of imageLayer.
          */
-        OBDSceneNode* getVideoLayer();
+        OBDSceneNode* getImageLayer();
         
         i32 windowWidth;
         i32 windowHeight;
@@ -137,9 +137,9 @@ class Window {
 		OBDShaderProgram *billboardProgram;
         OBDSceneNode* billboardLayer;
 
-        //Layer where are going to be created all videos;
-		OBDShaderProgram *videoProgram;
-        OBDSceneNode* videoLayer;
+        //Layer where are going to be created all image;
+		OBDShaderProgram *imageProgram;
+        OBDSceneNode* imageLayer;
 		
 		GLuint VAO;
         nanogui::Screen* gui;

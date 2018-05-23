@@ -4,8 +4,8 @@
 
 Video::Video(std::string path){
 	video = Window::Instance() -> getEngine() -> createVideo(
-		Window::Instance()->getVideoLayer(), 
-		Window::Instance()->getVideoProgram(), 
+		Window::Instance()->getImageLayer(), 
+		Window::Instance()->getImageProgram(), 
 		path
 	);
 }

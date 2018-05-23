@@ -9,79 +9,81 @@
 class OBDBillboard {
     public:
         /**
-         * @brief 
+         * @brief Construct a new OBDBillboard object.
          * 
-         * @param parent
-         * @param position
+         * @param parent node.
+         * @param sP billboard shader to use to render this.
+         * @param position 
+         * @param size
          */
         OBDBillboard(OBDSceneNode*, OBDShaderProgram *sP, glm::vec3, glm::vec2);
 
         /**
-         * @brief 
+         * @brief Destroy the OBDBillboard object
          * 
          */
         virtual ~OBDBillboard();
 
         /**
-         * @brief 
+         * @brief Set this billboards position
          * 
          */
         void setPosition(glm::vec3);
 
         /**
-         * @brief 
+         * @brief Set the Color for this billboard's back side
          * 
          */
         void setColor(OBDColor);
 
         /**
-         * @brief 
+         * @brief Set the Color for this billboard's front side
          * 
          */
         void setFrontColor(OBDColor);
 
         /**
-         * @brief Set the Size object
+         * @brief Set the Size of the billboard
          * 
          */
         void setSize(glm::vec2);
 
         /**
-         * @brief Set the Wid object
+         * @brief Set the Width of the billboard
          * 
          */
         void setFrontWidth(f32);
 
 		/**
-		 * @brief Set the Active object
-		 * @param b
+		 * @brief Set wether or not this billboard is active
+		 * @param b new active status
 		 */
 		void setActive(bool);
 
         /**
-         * @brief 
+         * @brief return this billboards position
          * 
          */
         glm::vec3 getPosition();
 
         /**
-         * @brief Get the Height object
+         * @brief Get the Height of this billboard
          * 
-         * @return f32 
+         * @return f32 billboard's height
          */
         glm::vec2 getSize();
 
         /**
-         * @brief Get the Top width object
+         * @brief Get the width of the front side.
          * 
-         * @return f32 
+         * @return f32 front width
          */
         f32 getFrontWidth();
 
          /**
          * @brief Get the Node object
          * 
-         * @return TNode* 
+         * @return TNode* node
          */
         TNode *getNode();
 
