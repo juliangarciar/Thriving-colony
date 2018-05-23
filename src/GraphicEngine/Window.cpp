@@ -13,7 +13,7 @@ Window::Window() {
     closeWindow = false;
     
     if (!glfwInit()) {
-		std::cout << "Failed to initialize GLFW" << std::endl;
+		//std::cout << "Failed to initialize GLFW" << std::endl;
 		exit(0);
 	}
 
@@ -43,18 +43,17 @@ void Window::Init(i32 width, i32 height) {
     // Create an application window with the following settings:
     window = glfwCreateWindow(windowWidth, windowHeight, "Thriving Colony", nullptr, nullptr);
     if (window == nullptr) {
-        std::cout << "Failed to create GLFW window" << std::endl;
+        //std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         exit(0);
     }
 
-    std::cout << "Using OpenGL version: " <<  glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MAJOR) << "." << glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MINOR) << std::endl;
+    //std::cout << "Using OpenGL version: " <<  glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MAJOR) << "." << glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MINOR) << std::endl;
 
     glfwMakeContextCurrent(window);
 
     engine = new OBDEngine();
 	engine -> Init(windowWidth, windowHeight);
-	engine -> InitVideoSystem();
 	engine -> createShaderProgram("defaultProgram", "media/shaders/vertexShader.glsl", "media/shaders/fragmentShader.glsl");
 	engine -> setCurrentShaderProgram("defaultProgram");
    
@@ -89,8 +88,11 @@ void Window::Init(i32 width, i32 height) {
     billboardLayer = engine -> createShaderedSceneNode("billboardShader", "media/shaders/vertexShaderBillboards.glsl", "media/shaders/fragmentShaderBillboards.glsl");
 	billboardProgram = engine -> getRegisteredShaderProgram("billboardShader");
 
+#ifdef USEVIDEO
+	engine -> InitVideoSystem();
     videoLayer = engine -> createShaderedSceneNode("videoShader", "media/shaders/vertexShaderVideo.glsl", "media/shaders/fragmentShaderVideo.glsl");
 	videoProgram = engine -> getRegisteredShaderProgram("videoShader");
+#endif
 }
 
 void Window::setGUI() { 

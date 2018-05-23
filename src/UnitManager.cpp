@@ -164,7 +164,7 @@ bool UnitManager::createTroop(std::string type) {
             return true;
         }
     } else {
-        std::cout << "No existe ese tipo de tropa" << std::endl;
+        //std::cout << "No existe ese tipo de tropa" << std::endl;
         exit(0);
     }
     return false;
@@ -464,7 +464,7 @@ const UnitData& UnitManager::getUnitData(std::string type) const{
 	/*if (it != baseUnits->end()) {
 		//return &it->second;
 	}*/ if (it == baseUnits->end()) {
-		std::cout << "El tipo de unidad " << type << " no es valido." << std::endl;
+		//std::cout << "El tipo de unidad " << type << " no es valido." << std::endl;
 		exit(0);
 		//return &it->second;
 	}

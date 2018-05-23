@@ -56,7 +56,7 @@ void GameState::Update() {
 
 		//Resize trigger
         Window::Instance()->setResizeCallback([&](i32 newWidth, i32 newHeight) {
-			std::cout << "Resized to (" << newWidth << "," << newHeight << ")" << std::endl;
+			//std::cout << "Resized to (" << newWidth << "," << newHeight << ")" << std::endl;
 		});
     }
     //fps count goes after game logic to see how long it took to go through the logic

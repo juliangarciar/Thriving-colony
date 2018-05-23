@@ -3,7 +3,7 @@
 
 i32 main() {
     if(!glfwInit()) {
-		std::cout << "Failed to initialize GLFW" << std::endl;
+		//std::cout << "Failed to initialize GLFW" << std::endl;
 		exit(0);
 	}
 	
@@ -18,7 +18,7 @@ i32 main() {
     // Create an application window with the following settings:
     GLFWwindow *window = glfwCreateWindow(1280, 720, "Thriving Colony", nullptr, nullptr);
     if (window == nullptr) {
-        std::cout << "Failed to create GLFW window" << std::endl;
+        //std::cout << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
         exit(0);
     }

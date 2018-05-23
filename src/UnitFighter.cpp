@@ -100,7 +100,7 @@ void UnitFighter::update() {
         break;
     
         default: 
-            std::cout << "INVALID FIGHTER STATE \n";
+            //std::cout << "INVALID FIGHTER STATE \n";
         break;
     }
 }
@@ -143,7 +143,7 @@ void UnitFighter::switchState(Enumeration::UnitFighterState _state) {
         break;
 
         default: 
-            std::cout << "INVALID UNITfightER STATE \n";
+            //std::cout << "INVALID UNITfightER STATE \n";
         break;
     }
 }
@@ -156,7 +156,7 @@ void UnitFighter::ufMoveState() {
     move();
     /* Esto es el bug */
     if(hasArrived()){
-        std::cout << "Pues he llegado primo \n";
+        //std::cout << "Pues he llegado primo \n";
         switchState(Enumeration::UnitFighterState::ufIdle);
     }
 }

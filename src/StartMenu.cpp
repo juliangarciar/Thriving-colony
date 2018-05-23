@@ -2,9 +2,11 @@
 #include "Game.h"
 
 StartMenu::StartMenu() {
+#ifdef USEVIDEO
 	video = new Video("media/videos/20180520_231429.mp4");
 	video -> play();
 	video -> setLoop(true);
+#endif
 
     //Main
     bgMain = new Panel("Thriving colony");
@@ -120,8 +122,9 @@ StartMenu::~StartMenu() {
     delete mapsCb;
     delete buttonPlay;
     delete buttonBack;
-
+#ifdef USEVIDEO
 	delete video;
+#endif
 }
 
 void StartMenu::setHUDEvents() {

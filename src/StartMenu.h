@@ -84,7 +84,9 @@ class StartMenu {
         Button *buttonBack;
 
 		//
+#ifdef USEVIDEO
 		Video *video;
+#endif
 };
 
 #endif

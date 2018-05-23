@@ -57,11 +57,13 @@ class OBDEngine {
          */
         void draw();
 
+#ifdef USEVIDEO
 		/**
 		 * @brief 
 		 * 
 		 */
 		void InitVideoSystem();
+#endif
 
         /**
          * @brief 
@@ -154,14 +156,14 @@ class OBDEngine {
          * @param c 
          */
         OBDBillboard* createBillboard(OBDSceneNode*, OBDShaderProgram *, glm::vec3, glm::vec2);
-
+#ifdef USEVIDEO
         /**
          * @brief
          * @param a 
          * @param c 
          */
         OBDVideo* createVideo(OBDSceneNode*, OBDShaderProgram *, std::string);
-
+#endif
         /**
          * @brief Create a Skybox object
          * 

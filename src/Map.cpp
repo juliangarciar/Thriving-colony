@@ -435,7 +435,7 @@ i32 Map::getInfluenceRangeIncrementLimit() {
 
 void Map::loadProgress(i32 p) {
 	hud->setProgressBar(p/100.f);
-    std::cout << "Porcentaje de carga del mapa: " << p << "%" << std::endl;
+    //std::cout << "Porcentaje de carga del mapa: " << p << "%" << std::endl;
 	//ToDo: barra de carga
 	Window::Instance()->endScene();
 }

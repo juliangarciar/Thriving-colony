@@ -115,7 +115,7 @@ void WorldGeometry::Init(i32 _cellSize, i32 _mapX, i32 _mapY, i32 _quadDepth) {
             cellsDistance[j][k] = calculateDistance(mCells[j]->getPosition(), neighbors[k]->getPosition());
             // Debug intended
             if (cellsDistance[j][k] == 0) {
-                std::cout << "Weird stuff happens at init at: " << j << "," << k << "\n";
+                //std::cout << "Weird stuff happens at init at: " << j << "," << k << "\n";
             }
         }
     }

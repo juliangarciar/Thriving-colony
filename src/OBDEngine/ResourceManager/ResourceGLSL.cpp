@@ -20,7 +20,7 @@ void ResourceGLSL::load(const char *path) {
     } else if (fragmentFound != std::string::npos) {
         type = OBDEnums::ShaderType::FRAGMENT;
     } else {
-        std::cout << "Error, unknown shader type." << std::endl;
+        //std::cout << "Error, unknown shader type." << std::endl;
         exit(0);
     }
 
@@ -31,7 +31,7 @@ void ResourceGLSL::load(const char *path) {
         shaderCode = sstr.str();
         shaderStream.close();
     } else {
-        std::cout << "Impossible to open " << file_path << ". Are you in the right directory?" << std::endl;
+        //std::cout << "Impossible to open " << file_path << ". Are you in the right directory?" << std::endl;
         exit(0);
     }
 }

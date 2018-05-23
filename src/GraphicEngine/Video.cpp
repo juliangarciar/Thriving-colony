@@ -1,3 +1,4 @@
+#ifdef USEVIDEO
 #include "Video.h"
 #include "Window.h"
 
@@ -25,3 +26,4 @@ void Video::pause(){
 void Video::setLoop(bool l){
 	video -> setLoop(l);
 }
+#endif
