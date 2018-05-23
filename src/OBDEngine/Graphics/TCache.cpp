@@ -96,3 +96,11 @@ std::vector<glslLight> *TCache::getLights() {
 std::stack<glm::mat4>& TCache::getMatrixStack() {
     return matrixStack;
 }
+
+void TCache::setScreenSize(glm::vec2 s){
+	screenSize = s;
+}
+
+glm::vec2 TCache::getScreenSize(){
+	return screenSize;
+}

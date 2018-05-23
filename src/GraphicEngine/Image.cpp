@@ -1,7 +1,7 @@
 #include "Image.h"
 #include "Window.h"
 
-Image::Image(std::string path, glm::vec3 pos) {
+Image::Image(std::string path, Vector3<f32> pos) {
 	i = Window::Instance() -> getEngine() -> createImage(
 		Window::Instance()->getImageLayer(), 
 		Window::Instance()->getImageProgram(), 

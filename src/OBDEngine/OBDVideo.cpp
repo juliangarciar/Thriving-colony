@@ -22,7 +22,7 @@ OBDVideo::OBDVideo(OBDSceneNode* parent, OBDShaderProgram *program, std::string 
 
 	// open video
 	if((error = avformat_open_input(&data->pFormatCtx, path.c_str(), NULL, NULL)) != 0) {
-		std::cerr << "Error " << av_err2str(error) << ": failed to open file: " << path.c_str() << std::endl;
+		std::cerr << "Error: failed to open file: " << path.c_str() << std::endl;
 		exit(0);
 	}
 	
