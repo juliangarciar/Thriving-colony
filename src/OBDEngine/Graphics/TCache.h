@@ -111,6 +111,19 @@ class TCache {
          * @return std::stack<glm::mat4>& 
          */
         std::stack<glm::mat4>& getMatrixStack();
+
+		/**
+		 * @brief Set the Screen Size object
+		 * 
+		 */
+		void setScreenSize(glm::vec2);
+
+		/**
+		 * @brief Get the Screen Size object
+		 * 
+		 * @return glm::vec2 
+		 */
+		glm::vec2 getScreenSize();
     private:
         std::stack<glm::mat4> matrixStack;
 
@@ -119,6 +132,8 @@ class TCache {
         glm::mat4 viewMatrix;
         glm::mat4 projectionMatrix;
 		glm::vec3 cameraPosition;
+
+		glm::vec2 screenSize;
 
 		GLuint lightsID;
         std::vector<glslLight> *lights;

@@ -9,7 +9,7 @@
 
 class Image {
     public:
-        Image(std::string, glm::vec3);
+        Image(std::string, Vector3<f32>);
         ~Image();
 
 		void setPosition(Vector3<f32> position);

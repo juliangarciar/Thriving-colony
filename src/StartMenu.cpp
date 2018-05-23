@@ -8,6 +8,8 @@ StartMenu::StartMenu() {
 	video -> setLoop(true);
 #endif
 
+	//image = new Image("media/icons/Mouse/cursor_azul.png", Vector3<f32>(10.f, 10.f, 0.1f));
+
     ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/maps/maplist.json", true);
     json j = *r -> getJSON();
 

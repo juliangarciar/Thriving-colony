@@ -50,15 +50,16 @@ class TImage : public TEntity {
 
 		GLuint textureID;
 		GLuint mvpID;
-		GLuint positionID;
 
 		GLuint VAO;
 		GLuint vert_buf;
 		GLuint uv_buf;
 		GLuint elem_buf;
-		
+
 		glm::vec4 position;
-		glm::mat4 mvp;
+		glm::vec2 ratio;
+		glm::mat4 vp;
+		glm::mat4 m;
 };
 
 #endif

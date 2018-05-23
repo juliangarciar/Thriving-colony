@@ -7,9 +7,8 @@ layout(location = 1) in vec2 vertexUV_modelspace;
 out vec2 UV;
 
 uniform mat4 MVP;
-uniform vec4 position;
 
 void main(){
-	gl_Position = MVP * (vec4(vertexPosition_modelspace, 1.0)+position);
+	gl_Position = MVP * vec4(vertexPosition_modelspace, 1.0);
 	UV = vertexUV_modelspace;
 }

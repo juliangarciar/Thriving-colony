@@ -3,7 +3,8 @@
 TImage::TImage(GLuint pID, ResourceIMG *d){	
 	programID = pID;
 	data = d;
-	position = glm::vec4(0,0,0,0);
+	m = glm::mat4(1.0f);
+	ratio = glm::vec2(d->getWidth()/cache.getScreenSize().x, d->getHeight()/cache.getScreenSize().y);
 
 	float quad[20] = {
 		-1.0f,  1.0f, 0.0f, 0.0f, 0.0f,
@@ -40,9 +41,8 @@ TImage::TImage(GLuint pID, ResourceIMG *d){
 
 	mvpID = glGetUniformLocation(programID, "MVP");
 	textureID = glGetUniformLocation(programID, "imageTexture");
-	positionID = glGetUniformLocation(programID, "position");
 
-	mvp = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+	vp = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
 }
 
 TImage::~TImage(){
@@ -52,8 +52,15 @@ TImage::~TImage(){
 }
 
 void TImage::beginDraw(){
+	for (int i = 0; i < 4; i++){
+		for (int j = 0; j < 4; j++){
+			std::cout << m[i][j] << " ";
+		}
+		std::cout << std::endl;
+	}
+		std::cout << std::endl;
+	glm::mat4 mvp = vp * m;
 	glUniformMatrix4fv(mvpID, 1, GL_FALSE, glm::value_ptr(mvp));
-	glUniform4f(positionID, position.x, position.y, position.z, position.w);
 
 	//Texture
 	glActiveTexture(GL_TEXTURE0);
@@ -73,6 +80,13 @@ void TImage::endDraw(){
 
 void TImage::setPosition(glm::vec3 p){
 	position = glm::vec4(p, 1);
+	p.y = -p.y;
+
+	glm::mat4 i = glm::mat4(1.0f);
+	glm::mat4 s = glm::scale(i, glm::vec3(ratio.x, ratio.y, 1));
+	glm::mat4 t = glm::translate(i, p);
+
+	m = s * t * i;
 }
 
 glm::vec3 TImage::getPosition(){
