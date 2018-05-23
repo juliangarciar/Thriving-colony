@@ -2,7 +2,6 @@
 #define TMESH_H
 
 #include "TEntity.h"
-#include "TTexture.h"
 
 #include "../OBDMaterial.h"
 
@@ -51,10 +50,6 @@ class TMesh : public TEntity {
 
 		glm::mat4 modelMatrix;
         
-        GLuint VBOID;
-	    GLuint IBOID;
-
-        GLuint lightID;
         GLuint materialID;
         GLuint textureID;
 };

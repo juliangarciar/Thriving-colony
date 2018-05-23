@@ -320,12 +320,3 @@ OBDShaderProgram *OBDEngine::getRegisteredShaderProgram(std::string sN) {
 	assert(it != shaderPrograms.end());
 	return it->second;
 }
-
-//////SANDBOX//////
-
-
-OBDTile* OBDEngine::createTile(ResourceIMG* _texture, glm::vec2 _position) {
-    return new OBDTile(defaultSceneNode, _texture, _position);
-}
-
-/////////////////
