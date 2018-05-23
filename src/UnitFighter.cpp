@@ -70,11 +70,12 @@ void UnitFighter::setDestiny(Vector2<f32> _dest){
     unitFighterClock->changeDuration(maxTime);
     unitFighterClock->restart();
 }
-
+// Poner aqui la rotacion
 void UnitFighter::move(){
     calculateDirection();
     Vector2<f32> _oldPosition = vectorPosition;
     vectorSpeed = vectorDirection * speed;
+    fighterModel->setRotation(Vector3<f32>(0, std::atan2(vectorSpeed.y, vectorSpeed.x)*180.0f/3.1415926f + 90.f, 0));
     vectorPosition += vectorSpeed;
     vectorPosition = _oldPosition + (vectorPosition - _oldPosition) * Window::Instance()->getDeltaTimeVariance();
     fighterModel->setPosition(Vector3<f32>(vectorPosition.x, Map::Instance()->getTerrain()->getY(vectorPosition.x, vectorPosition.y), vectorPosition.y));
@@ -315,9 +316,9 @@ void UnitFighter::calculateDirection() {
         vectorDirection += calculateFlocking();
 
         //fighterModel->setRotation(Vector3<f32>(0, std::atan2(vectorDirection.y, vectorDirection.x)*180.0f/3.1415926f + 90.f, 0));
-        rotationAngle = std::atan2(vectorDirection.y, vectorDirection.x) * (180.0f / 3.1415926f) + 90.f;
-        std::cout << "Angulo primo: " << rotationAngle << "\n";
-        rotationClock->start();
+        //rotationAngle = std::atan2(vectorDirection.y, vectorDirection.x) * (180.0f / 3.1415926f) + 90.f;
+        //std::cout << "Angulo primo: " << rotationAngle << "\n";
+        //rotationClock->start();
         /* Normalize */
         if (vectorDirection.x != 0 || vectorDirection.y != 0) {
             distance = std::sqrt(std::pow(vectorDirection.x, 2) + std::pow(vectorDirection.y, 2));
@@ -366,3 +367,8 @@ void UnitFighter::rotateFighter(){
         }
     }
 }
+
+//void UnitFighter::rotateFighter(Vector2<f32> targetDirection){
+//    Vector2<f32> dummyRotation = targetDirection - 
+//    //fighterModel->setRotation(Vector3<f32>(0, std::atan2(vectorDirection.y, vectorDirection.x)*180.0f/3.1415926f + 90.f, 0));
+//}
