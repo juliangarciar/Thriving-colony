@@ -19,7 +19,7 @@ class OBDImage {
         OBDImage(OBDSceneNode* parent, OBDShaderProgram *, ResourceIMG *);
 
         /**
-         * @brief 
+         * @brief Destroy the OBDImage object
          * 
          */
         virtual ~OBDImage();

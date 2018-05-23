@@ -3,7 +3,7 @@
 TSkybox::TSkybox(GLuint p, TCubemapTexture* t) : TEntity() {
 	texture = t;
 	programID = p;
-
+	
     GLfloat cube_vertices[24] = {
 		-1.0,  	-1.0,	-1.0,
 		1.0, 	-1.0,	-1.0,

@@ -62,7 +62,7 @@ void Hud::Init() {
     resourceWidget -> setPosition(Vector2<i32>(20, 640));
     
     new Label(resourceWidget, "Resource buildings");
-    buttonHouse = new Button(resourceWidget, "House");
+    buttonHouse = new Button(resourceWidget, "Home");
     buttonHouse -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonHouse -> setBackgroundColor(150, 0, 200, 0);
 
@@ -70,7 +70,7 @@ void Hud::Init() {
     buttonSiderurgy -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonSiderurgy -> setBackgroundColor(150, 0, 200 ,0);
 
-    buttonQuarry = new Button(resourceWidget, "Quarry");
+    buttonQuarry = new Button(resourceWidget, "Crystal quarry");
     buttonQuarry -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonQuarry -> setBackgroundColor(150, 0, 200, 0);
 
@@ -80,15 +80,15 @@ void Hud::Init() {
     serviceWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(serviceWidget, "Service buildings");
-    buttonSchool = new Button(serviceWidget, "School");
+    buttonSchool = new Button(serviceWidget, "Reasearch lab");
     buttonSchool -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonSchool -> setBackgroundColor(150, 200, 0, 200);
 
-    buttonMarket = new Button(serviceWidget, "Market");
+    buttonMarket = new Button(serviceWidget, "Resource center");
     buttonMarket -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonMarket -> setBackgroundColor(150, 200, 0, 200);
 
-    buttonHospital = new Button(serviceWidget, "Hospital");
+    buttonHospital = new Button(serviceWidget, "Healing center");
     buttonHospital -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonHospital -> setBackgroundColor(150, 200, 0, 200);
 
@@ -98,15 +98,15 @@ void Hud::Init() {
     militaryWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(militaryWidget, "Military buildings");
-    buttonBarrack = new Button(militaryWidget, "Barrack");
+    buttonBarrack = new Button(militaryWidget, "Infantry center");
     buttonBarrack -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonBarrack -> setBackgroundColor(150, 200, 0, 0);
 
-    buttonBarn = new Button(militaryWidget, "Barn");
+    buttonBarn = new Button(militaryWidget, "Creature lab");
     buttonBarn -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonBarn -> setBackgroundColor(150, 200, 0, 0);
 
-    buttonWorkshop = new Button(militaryWidget, "Workshop");
+    buttonWorkshop = new Button(militaryWidget, "War factory");
     buttonWorkshop -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonWorkshop -> setBackgroundColor(150, 200, 0, 0);
 
@@ -116,7 +116,7 @@ void Hud::Init() {
     defenseWidget -> setPosition(Vector2<i32>(20, 640));
 
     new Label(defenseWidget, "Defensive buildings");
-    buttonTower = new Button(defenseWidget, "Tower");
+    buttonTower = new Button(defenseWidget, "Watchtower");
     buttonTower -> setSize(Vector2<i32>(_WIDTH, _HEIGHT));
     buttonTower -> setBackgroundColor(150, 0, 0, 200);
 
@@ -292,13 +292,14 @@ void Hud::Init() {
                 Human::Instance() -> getUnitManager() -> createTroop("AdvancedM");
             });
             
-            b = new Button(barnContent, "Create mounted ranged unit");
+            b = new Button(barnContent, "Create creature");
+            b -> hide();
             b -> setTooltip("Create a ranged unit that rides a mighty beast\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::Instance() -> getUnitManager() -> createTroop("AdvancedR");
             });
 
-            b = new Button(barnContent, "Create monster");
+            b = new Button(barnContent, "Create idol");
             b -> setTooltip("Create a overwhelmingly powerful creature to destroy your enemies\nMetal cost: 100\nCrystal cost:100");
             b->setCallback([&] {
                 Human::Instance() -> getUnitManager() -> createTroop("Idol");

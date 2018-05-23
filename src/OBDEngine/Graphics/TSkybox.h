@@ -7,25 +7,28 @@
 class TSkybox : public TEntity {
     public:
         /**
-         * @brief 
+         * @brief Construct a new TSkybox object
          * 
+         * 
+         * @param id
+         * @param cube texture
          */
         TSkybox(GLuint, TCubemapTexture*);
 
         /**
-         * @brief 
+         * @brief Destroy the TSkybox object
          * 
          */
         virtual ~TSkybox();
 
         /**
-         * @brief 
+         * @brief draw the skybox
          * 
          */
         void beginDraw();
 
         /**
-         * @brief 
+         * @brief free buffers
          * 
          */
         void endDraw();
@@ -43,7 +46,7 @@ class TSkybox : public TEntity {
 
         GLuint vpID;
         GLuint skyboxID;
-
+        // buffers
 		GLuint VAO;
 		GLuint vbo_cube_vertices;
 		GLuint ibo_cube_indices;

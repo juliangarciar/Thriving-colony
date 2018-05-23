@@ -34,10 +34,10 @@ void ResourceManager::Update() {
 
 void ResourceManager::load(std::string path) {
 	if (resources.find(path) != resources.end()) return;
-
+	// Parse the name and get the format
     std::size_t found = path.find_last_of(".");
     std::string extension = path.substr(found+1);
-
+	// Make sure the format is supported
     if (extension.find("obj") != std::string::npos) {
         Resource *r = new ResourceOBJ();
         r -> load(path.c_str());
@@ -59,12 +59,14 @@ void ResourceManager::load(std::string path) {
         r -> load(path.c_str());
         resources.insert(std::pair<std::string, Resource*>(path, r));
     } else {
+		// Format is not currently supported
         std::cerr << "Error: extension no soportada (" << extension << ") en el archivo '" << path << "'." << std::endl;
         exit(0);
     }
 }
 
 void ResourceManager::push(std::string path) {
+	// Threads available, push a new one to load  resource asynchronously
 	if (maxThreads > 0){
 		paths.push(path);
 	} else {

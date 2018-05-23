@@ -12,28 +12,30 @@
 class OBDMesh : public OBDEntity {
     public:
         /**
-         * @brief 
+         * @brief Construct a new OBDMesh object
          * 
-         * @param  
-         * @param 
-         * @param 
+         * @param mesh
+         * @param material
          */
         OBDMesh(glslMesh*, OBDMaterial*);
 
         /**
-         * @brief 
+         * @brief Destroy the OBDMesh object
          * 
          */
         ~OBDMesh();
 
 		/**
-		 * @brief 
+		 * @brief update this object's bounding box
 		 * 
 		 */
 		void refreshBoundingBox();
 
 		/**
-		 * @brief 
+		 * @brief sets the bounding box
+         * 
+         * @param min point
+         * @param max point
 		 * 
 		 */
 		void setBoundingBox(glm::vec3, glm::vec3);
@@ -41,6 +43,7 @@ class OBDMesh : public OBDEntity {
         /**
          * @brief Set the OBDMaterial object
          * 
+         * @param new material
          */
         void setMaterial(OBDMaterial*);
 
@@ -51,14 +54,14 @@ class OBDMesh : public OBDEntity {
         void setMaterialName(std::string);
 
         /**
-         * @brief 
+         * @brief returns the material
          * 
          * @return std::string 
          */
         OBDMaterial *getMaterial();
 
         /**
-         * @brief 
+         * @brief returns the name of the material
          * 
          * @return std::string 
          */

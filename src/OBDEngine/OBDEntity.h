@@ -25,21 +25,21 @@ class OBDEntity {
 		~OBDEntity();
 
         /**
-         * @brief 
+         * @brief translate towards the paramter point
          * 
          */
         virtual void translate(glm::vec3 t);
 
         /**
-         * @brief 
+         * @brief rotate this entity
          * 
-         * @param r
-         * @param a
+         * @param r normalized vector
+         * @param a angle
          */
         virtual void rotate(glm::vec3 r, f32 a);
 
         /**
-         * @brief 
+         * @brief Change the scale of this entity
          * 
          * @param s
          */
@@ -103,7 +103,7 @@ class OBDEntity {
         virtual bool getActive();
 
 		/**
-		 * @brief 
+		 * @brief update this entity's model matrix
 		 * 
 		 * @param modelMatrix
 		 */
