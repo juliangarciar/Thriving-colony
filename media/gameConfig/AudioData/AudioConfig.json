@@ -1,0 +1,204 @@
+ {
+    "AudioBanks":[
+        {
+            "Name": "MasterBank",
+            "BankPath": "./media/soundBank/Master Bank.bank"
+        },
+        {
+            "Name": "StringsBank",
+            "BankPath": "./media/soundBank/Master Bank.strings.bank"
+        },
+        {
+            "Name": "DroraniaBank",
+            "BankPath": "./media/soundBank/Drorania.bank"
+        },
+        {
+            "Name": "KaonovBank",
+            "BankPath": "./media/soundBank/Kaonov.bank"
+        },
+        {
+            "Name": "SpecialBank",
+            "BankPath": "./media/soundBank/Specials.bank"
+        }
+    ],
+    "AudioConfig":[
+        {
+            "Name" : "MenuMusic",
+            "EventPath" : "event:/Music/music1"
+        },
+        {
+            "Name" : "GameMusic",
+            "EventPath" : "event:/Music/music2"
+        },
+        {
+            "Name" : "MenuClick",
+            "EventPath" : "event:/SFX/menu1"
+        },
+        {
+            "Name" : "MenuHover",
+            "EventPath" : "event:/SFX/menu2"
+        },
+        {
+            "Name" : "Destruction",
+            "EventPath" : "event:/SFX/explosion"
+        },
+        {
+            "Name" : "Drorania_ranged_attack",
+            "EventPath" : "event:/Drorania_ranged/attack"
+        },
+        {
+            "Name" : "Drorania_ranged_move",
+            "EventPath" : "event:/Drorania_ranged/move"
+        },
+        {
+            "Name" : "Drorania_ranged_select",
+            "EventPath" : "event:/Drorania_ranged/select"
+        },
+        {
+            "Name" : "Drorania_melee_attack",
+            "EventPath" : "event:/Drorania_melee/attack"
+        },
+        {
+            "Name" : "Drorania_melee_move",
+            "EventPath" : "event:/Drorania_melee/move"
+        },
+        {
+            "Name" : "Drorania_melee_select",
+            "EventPath" : "event:/Drorania_melee/select"
+        },
+        {
+            "Name" : "Drorania_creature_attack",
+            "EventPath" : "event:/Drorania_creature/attack"
+        },
+        {
+            "Name" : "Drorania_creature_move",
+            "EventPath" : "event:/Drorania_creature/move"
+        },
+        {
+            "Name" : "Drorania_creature_select",
+            "EventPath" : "event:/Drorania_creature/select"
+        },
+        {
+            "Name" : "Drorania_entity_attack",
+            "EventPath" : "event:/Drorania_entity/attack"
+        },
+        {
+            "Name" : "Drorania_entity_move",
+            "EventPath" : "event:/Drorania_entity/move"
+        
+        },
+        {
+            "Name" : "Drorania_entity_select",
+            "EventPath" : "event:/Drorania_entity/select"
+        },
+        {
+            "Name" : "Drorania_siege_machine_attack",
+            "EventPath" : "event:/Drorania_siege_machine/attack"
+        },
+        {
+            "Name" : "Drorania_siege_machine_move",
+            "EventPath" : "event:/Drorania_siege_machine/move"
+        },
+        {
+            "Name" : "Drorania_siege_machine_select",
+            "EventPath" : "event:/Drorania_siege_machine/select"
+        },
+        {
+            "Name" : "Kaonov_ranged_attack",
+            "EventPath" : "event:/Kaonov_ranged/attack"
+        },
+        {
+            "Name" : "Kaonov_ranged_move",
+            "EventPath" : "event:/Kaonov_ranged/move"
+        },
+        {
+            "Name" : "Kaonov_ranged_select",
+            "EventPath" : "event:/Kaonov_ranged/select"
+        },
+        {
+            "Name" : "Kaonov_melee_attack",
+            "EventPath" : "event:/Kaonov_melee/attack"
+        },
+        {
+            "Name" : "Kaonov_melee_move",
+            "EventPath" : "event:/Kaonov_melee/move"
+        },
+        {
+            "Name" : "Kaonov_melee_select",
+            "EventPath" : "event:/Kaonov_melee/select"
+        },
+        {
+            "Name" : "Kaonov_creature_attack",
+            "EventPath" : "event:/Kaonov_creature/attack"
+        },
+        {
+            "Name" : "Kaonov_creature_move",
+            "EventPath" : "event:/Kaonov_creature/move"
+        },
+        {
+            "Name" : "Kaonov_creature_select",
+            "EventPath" : "event:/Kaonov_creature/select"
+        },
+        {
+            "Name" : "Kaonov_entity_attack",
+            "EventPath" : "event:/Kaonov_entity/attack"
+        },
+        {
+            "Name" : "Kaonov_entity_move",
+            "EventPath" : "event:/Kaonov_entity/move"
+        
+        },
+        {
+            "Name" : "Kaonov_entity_select",
+            "EventPath" : "event:/Kaonov_entity/select"
+        },
+        {
+            "Name" : "Kaonov_siege_machine_attack",
+            "EventPath" : "event:/Kaonov_siege_machine/attack"
+        },
+        {
+            "Name" : "Kaonov_siege_machine_move",
+            "EventPath" : "event:/Kaonov_siege_machine/move"
+        },
+        {
+            "Name" : "Kaonov_siege_machine_select",
+            "EventPath" : "event:/Kaonov_siege_machine/select"
+        },
+        {
+            "Name" : "moreMetal",
+            "EventPath" : "event:/Storyteller/moreMetal"
+        },
+        {
+            "Name" : "moreCrystal",
+            "EventPath" : "event:/Storyteller/moreCrystal"
+        },
+        {
+            "Name" : "moreCitizens",
+            "EventPath" : "event:/Storyteller/moreCitizens"
+        },
+        {
+            "Name" : "cantBuild01",
+            "EventPath" : "event:/Storyteller/cantBuild01"
+        },
+        {
+            "Name" : "cantBuild02",
+            "EventPath" : "event:/Storyteller/cantBuild02"
+        },
+        {
+            "Name" : "underAttack01",
+            "EventPath" : "event:/Storyteller/underAttack01"
+        },
+        {
+            "Name" : "underAttack02",
+            "EventPath" : "event:/Storyteller/underAttack02"
+        },
+        {
+            "Name" : "endBuilding",
+            "EventPath" : "event:/Storyteller/endBuilding"
+        },
+        {
+            "Name" : "endTroop",
+            "EventPath" : "event:/Storyteller/endTroop"
+        }
+    ]
+}

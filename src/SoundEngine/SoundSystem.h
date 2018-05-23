@@ -28,10 +28,6 @@ public:
 	SoundSystem();
     
 	~SoundSystem();
-    /*
-    *   Inits the sytem (events and descriptions)
-    */
-	void initSystem();
     /**
      *  Método factoría que Construye un SoundEvent a partir del nombre de un evento de FMOD Studio, 
      *  p. ej. "event:/Ambience/Country"
@@ -56,11 +52,20 @@ public:
      */
     void update();
     FMOD_STUDIO_EVENTDESCRIPTION* createDescription(const char* path, FMOD_STUDIO_EVENTDESCRIPTION* desc);
-    void createEvent(std::string eventPath);
+    void createEvent(std::string eventName, std::string eventPath);
+
+
+
+    void playMusicEvent(string c);
+    void stopMusicEvent();
+
+    void playVoiceEvent(string c);
+    void stopVoiceEvent();
+
+    void playSFXEvent(string c);
+    void stopSFXEvent();
 
     void playEvent(SoundEvent* event);
-    void playMusicEvent(string c);
-    void playVoiceEvent(string c);
     void stopEvent(SoundEvent* event);
     void checkAndStopEvent(SoundEvent* event);
     
@@ -68,28 +73,22 @@ public:
 
 private:
     static SoundSystem* pinstance;
-    bool paused;
+    bool paused = false;
     bool voicePlay = false;
     bool musicPlay = false;
-    //bool playing = false;
-    //const char * systemID;
-    //FMOD_RESULT result;
-    //FMOD_STUDIO_STOP_MODE pausedMode;
-    //FMOD_GUID id;
-    //FMOD_STUDIO_BUS*        bus = 0;
+    bool sfxPlay = false;
+
 	FMOD_STUDIO_PLAYBACK_STATE state;
     FMOD_STUDIO_SYSTEM*	system = 0;
 	FMOD_SYSTEM* lowLevelSystem = 0;
-	FMOD_STUDIO_BANK* masterBank = 0;
-	FMOD_STUDIO_BANK* stringsBank = 0;
-    FMOD_STUDIO_BANK* droraniaBank = 0;
-    FMOD_STUDIO_BANK* kaonovBank = 0;
+
     map<string, FMOD_STUDIO_BANK*> banks;
     map<string, FMOD_STUDIO_EVENTDESCRIPTION*> eventDescriptions;
     map<string, FMOD_STUDIO_EVENTINSTANCE*> soundEvents;
-    FMOD_STUDIO_EVENTINSTANCE* musicInstance = 0;
-    FMOD_STUDIO_EVENTINSTANCE* voiceInstance = 0;
-    //FMOD_STUDIO_EVENTINSTANCE * sfxInstance;
+
+    FMOD_STUDIO_EVENTINSTANCE* musicInstance = nullptr;
+    FMOD_STUDIO_EVENTINSTANCE* voiceInstance = nullptr;
+    FMOD_STUDIO_EVENTINSTANCE* sfxInstance = nullptr;
 };
 
 //THIS IS GOING TO DISSAPEAR

@@ -256,9 +256,9 @@ void Map::Input() {
 	//Interactions with human buildings
 	i32 idBuilding = human -> getBuildingManager() -> getCollisionID();
 	if (idBuilding != -1) {
-		if (!human -> getUnitManager() -> isTroopSelected())
-			IO::Instance() -> getMouse() -> changeCustomIcon(1);
-		
+		IO::Instance() -> getMouse() -> changeCustomIcon(1);
+		//if (!human -> getUnitManager() -> isTroopSelected())
+			
 		if (IO::Instance() -> getMouse() -> leftMousePressed()) {
 			Building *b = human -> getBuildingManager()->getBuilding(idBuilding);
 			if (b != nullptr) {
@@ -272,10 +272,17 @@ void Map::Input() {
 		if (IO::Instance() -> getMouse() -> rightMousePressed()) {
 			// Have a troop
 			if (human -> getUnitManager() -> isTroopSelected()) {
+				/* Evento de sonido aqui */
 				// Main hall
 				if (idBuilding == 0) {
 					//Retract
 					human -> getUnitManager() -> getSelectedTroop() -> switchState(Enumeration::UnitState::Retract);
+					SoundSystem::Instance() -> playVoiceEvent(human -> getUnitManager() -> getSelectedTroop() -> getMoveEvent());
+				}
+				// Move order here
+				else {
+					human -> getUnitManager() -> moveOrder();
+					SoundSystem::Instance() -> playVoiceEvent(human -> getUnitManager() -> getSelectedTroop() -> getMoveEvent());
 				}
 			}
 		}
@@ -289,7 +296,9 @@ void Map::Input() {
 		IO::Instance() -> getMouse() -> changeCustomIcon(1);
 
 		if (IO::Instance() -> getMouse() -> leftMousePressed()) {
+			/* Evento de sonido aqui */
 			human -> getUnitManager() -> selectTroop(idTroop);
+			SoundSystem::Instance() -> playVoiceEvent(human -> getUnitManager() -> getSelectedTroop() -> getSelectEvent());
 		}
 		
 		onMap = false;
@@ -304,6 +313,7 @@ void Map::Input() {
 			if (human -> getUnitManager() -> isTroopSelected()) {
 				if (IO::Instance() -> getMouse() -> rightMousePressed()) {
 					human -> getUnitManager()->getSelectedTroop()->setTarget(ia -> getBuildingManager()->getBuilding(idBuildingIA));
+					SoundSystem::Instance() -> playVoiceEvent(human -> getUnitManager() -> getSelectedTroop() -> getAttackEvent());
 				}
 			}
 
@@ -317,7 +327,9 @@ void Map::Input() {
 
 			if (human -> getUnitManager() -> isTroopSelected()) {
 				if (IO::Instance() -> getMouse() -> rightMousePressed()) {
+					/* Attack event here */
 					human -> getUnitManager()->getSelectedTroop()->setTarget(ia -> getUnitManager()->getUnit(idTroopIA));
+					SoundSystem::Instance() -> playVoiceEvent(human -> getUnitManager()->getSelectedTroop() -> getAttackEvent());
 				}
 			}
 
@@ -329,6 +341,7 @@ void Map::Input() {
 		if(human -> getUnitManager() -> isTroopSelected()){
 			if (IO::Instance()-> getMouse() -> rightMousePressed()) {
 				human -> getUnitManager() -> moveOrder();
+				SoundSystem::Instance() -> playVoiceEvent(human -> getUnitManager()->getSelectedTroop() -> getMoveEvent());
 			}
 		}
 	}
@@ -346,6 +359,7 @@ void Map::Input() {
 					Vector3<f32> p = getMouseCollitionPoint();
 					human -> getUnitManager() -> deploySelectedTroop(Vector2<f32>(p.x, p.z));
 					human -> getUnitManager() -> selectTroop(idTroop);
+					SoundSystem::Instance() -> playVoiceEvent(human -> getUnitManager()->getSelectedTroop() -> getMoveEvent());
 				}
 			} else if (idTroop == 0) {
 				if (IO::Instance() -> getMouse() -> rightMousePressed()) {

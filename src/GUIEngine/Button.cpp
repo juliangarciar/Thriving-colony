@@ -73,3 +73,9 @@ void Button::setBackgroundColor(i32 a, i32 r, i32 g, i32 b) {
 nanogui::Widget *Button::getGUIElement() {
     return button; 
 }
+
+void Button::onHover(){
+    if(button->focused()){
+        std::cout << "Ye primi \n";
+    }
+}

@@ -33,6 +33,7 @@ class Button : public GUIElement{
         void refreshButton();
         void setBackgroundColor(i32 a, i32 r, i32 g, i32 b);
 
+        void onHover();
         nanogui::Widget *getGUIElement();
     private:
         nanogui::Button *button;

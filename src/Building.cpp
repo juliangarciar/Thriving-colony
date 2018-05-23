@@ -6,6 +6,7 @@
 #include "GraphicEngine/Window.h"
 #include "BuildingManager.h"
 #include <WorldEngine/WorldGeometry.h>
+#include <SoundEngine/SoundSystem.h>
 
 Building::Building(
 	SceneNode *_layer,
@@ -43,6 +44,10 @@ Building::Building(
     buildTimer -> setCallback([&]{
         adjustCityStats();
 		setBaseColor();
+        if(team == Enumeration::Team::Human){
+            SoundSystem::Instance() -> stopVoiceEvent();
+            SoundSystem::Instance() -> playVoiceEvent("endBuilding");
+        }
         if (callback != nullptr) callback(this);
     });
 }

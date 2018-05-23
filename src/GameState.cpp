@@ -14,9 +14,8 @@ GameState::~GameState() {
 void GameState::Init() {
     //Load map
     map -> Init();
-
-    //Init SoundSystem
-    SoundSystem::Instance() -> initSystem();
+    SoundSystem::Instance() -> stopMusicEvent();
+    SoundSystem::Instance() -> playMusicEvent("GameMusic");
 }
 
 void GameState::Input() {
@@ -51,8 +50,8 @@ void GameState::Update() {
         map -> Update();
 
         //ToDo: NEW SOUND SYSTEM
-        SoundSystem::Instance() -> playMusicEvent("event:/Music/DroraniaMusic");
-        SoundSystem::Instance() -> update();
+        //SoundSystem::Instance() -> playMusicEvent("GameMusic");
+        //SoundSystem::Instance() -> update();
 
 		//Resize trigger
         Window::Instance()->setResizeCallback([&](i32 newWidth, i32 newHeight) {

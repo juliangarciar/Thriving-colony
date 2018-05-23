@@ -344,7 +344,7 @@ void UnitManager::selectTroop(i32 troopID) {
     if (it != inMapTroops -> end()) {
         selectedTroop = it -> second;
         //SELECT VOICE
-        SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getSelectEvent());
+        //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getSelectEvent());
     }
 }
 
@@ -369,7 +369,7 @@ void UnitManager::moveOrder() {
             selectedTroop->setPathToTarget(Map::Instance() -> getTerrain() -> getPointCollision(IO::Instance() -> getMouse()->getPosition()).toVector2());
         }
         //MOVEMENT VOICE
-        SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
+        //SoundSystem::Instance() -> playVoiceEvent(selectedTroop -> getMoveEvent());
     }
 }
 

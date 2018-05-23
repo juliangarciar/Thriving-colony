@@ -1,4 +1,7 @@
 #include "SoundSystem.h"
+#include <OBDEngine/ResourceManager/ResourceJSON.h>
+#include <IOEngine/IO.h>
+
 #define ERRCHECK(_result) ERRCHECK_fn(_result, __FILE__, __LINE__)
 
 void ERRCHECK_fn(FMOD_RESULT result, const char *file, i32 line) {
@@ -27,15 +30,18 @@ SoundSystem::SoundSystem() {
     ERRCHECK(FMOD_System_SetOutput(lowLevelSystem, FMOD_OUTPUTTYPE_AUTODETECT));
     //INITIALIZE SYSTEM
     ERRCHECK(FMOD_Studio_System_Initialize(system, 1024, FMOD_STUDIO_INIT_NORMAL, FMOD_INIT_NORMAL, 0));
-    //LOAD BANKS
-    ERRCHECK(FMOD_Studio_System_LoadBankFile(system, "./media/soundBank/Master Bank.bank", FMOD_STUDIO_LOAD_BANK_NORMAL, &masterBank));
-    ERRCHECK(FMOD_Studio_System_LoadBankFile(system, "./media/soundBank/Master Bank.strings.bank", FMOD_STUDIO_LOAD_BANK_NORMAL, &stringsBank));
-    ERRCHECK(FMOD_Studio_System_LoadBankFile(system, "./media/soundBank/Drorania.bank", FMOD_STUDIO_LOAD_BANK_NORMAL, &droraniaBank));
-    ERRCHECK(FMOD_Studio_System_LoadBankFile(system, "./media/soundBank/Kaonov.bank", FMOD_STUDIO_LOAD_BANK_NORMAL, &kaonovBank));
-    banks["masterBank"] = masterBank;
-	banks["stringsBank"] = stringsBank;
-	banks["droraniaBank"] = droraniaBank;
-	banks["kaonovBank"] = kaonovBank;
+    ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/gameConfig/AudioData/AudioConfig.json", true);
+
+    json j = *r -> getJSON();
+
+    for (auto& element : j["AudioBanks"]){
+        FMOD_STUDIO_BANK* tmpBank = 0;
+        ERRCHECK(FMOD_Studio_System_LoadBankFile(system, element["BankPath"].get<std::string>().c_str(), FMOD_STUDIO_LOAD_BANK_NORMAL, &tmpBank));
+        banks[element["Name"].get<std::string>()] = tmpBank;
+    }
+    for (auto& element1 : j["AudioConfig"]) {
+        createEvent(element1["Name"].get<std::string>(), element1["EventPath"].get<std::string>());
+    }
 
     //GETTING BUSMASTER ID (NOT WORKING)
     //ERRCHECK(FMOD_Studio_System_LookupID(system, , &systemID));
@@ -43,73 +49,19 @@ SoundSystem::SoundSystem() {
 }
 
 SoundSystem::~SoundSystem() {
-    banks.clear();
+    
     eventDescriptions.clear();
     soundEvents.clear();
-    FMOD_Studio_Bank_Unload(droraniaBank);
+    for(map<string, FMOD_STUDIO_BANK*>::iterator it = banks.begin(); it != banks.end(); it++){
+        FMOD_Studio_Bank_Unload(it->second);
+    }
+    /*FMOD_Studio_Bank_Unload(droraniaBank);
     FMOD_Studio_Bank_Unload(kaonovBank);
     FMOD_Studio_Bank_Unload(stringsBank);
-    FMOD_Studio_Bank_Unload(masterBank);
-
+    FMOD_Studio_Bank_Unload(masterBank);*/
+    banks.clear();
     FMOD_Studio_System_UnloadAll(system);
     FMOD_Studio_System_Release(system);
-}
-
-//LOAD DESCRIPTIONS AND EVENTS
-void SoundSystem::initSystem() {
-    string c;
-    c = "event:/Music/DroraniaMusic";
-    createEvent(c);
-    c = "event:/UnitSelect/Drorania_melee_S";       
-    createEvent(c);
-    c = "event:/UnitSelect/Drorania_melee_A";
-    createEvent(c);
-    c = "event:/UnitSelect/Drorania_ranged_S";
-    createEvent(c);
-    c = "event:/UnitSelect/Drorania_ranged_A";
-    createEvent(c);
-    c = "event:/UnitSelect/Kaonov_melee_S";
-    createEvent(c);
-    c = "event:/UnitSelect/Kaonov_melee_S";
-    createEvent(c);
-    c = "event:/UnitSelect/Kaonov_melee_A";
-    createEvent(c);
-    c = "event:/UnitSelect/Kaonov_ranged_S";
-    createEvent(c);
-    c = "event:/UnitSelect/Kaonov_ranged_A";
-    createEvent(c);
-    c = "event:/UnitMovement/Drorania_melee_S";
-    createEvent(c);
-    c = "event:/UnitMovement/Drorania_melee_A";
-    createEvent(c);
-    c = "event:/UnitMovement/Drorania_ranged_S";
-    createEvent(c);
-    c = "event:/UnitMovement/Drorania_ranged_A";
-    createEvent(c);
-    c = "event:/UnitMovement/Kaonov_melee_S";
-    createEvent(c);
-    c = "event:/UnitMovement/Kaonov_melee_A";
-    createEvent(c);
-    c = "event:/UnitMovement/Kaonov_ranged_S";
-    createEvent(c);
-    c = "event:/UnitMovement/Kaonov_ranged_A";
-    createEvent(c);
-    c = "event:/UnitAttack/Drorania_melee_S";
-    createEvent(c);
-    c = "event:/UnitAttack/Drorania_melee_A";
-    createEvent(c);
-    c = "event:/UnitAttack/Drorania_ranged_S";
-    createEvent(c);
-    c = "event:/UnitAttack/Drorania_ranged_A";
-    createEvent(c);
-    c = "event:/UnitAttack/Kaonov_melee_S";
-    createEvent(c);
-    c = "event:/UnitAttack/Kaonov_melee_A";
-    createEvent(c);
-    c = "event:/UnitAttack/Kaonov_ranged_S";
-    createEvent(c);
-    c = "event:/UnitAttack/Kaonov_ranged_A";
-    createEvent(c);
 }
 
 FMOD_STUDIO_EVENTINSTANCE* SoundSystem::getEvent(string pathData) {
@@ -128,48 +80,44 @@ void SoundSystem::setListernerPosition(Vector3<f32> vectorData) {
 }
 
 void SoundSystem::update() {
-    if (!paused)
+    if (!paused){
         ERRCHECK(FMOD_Studio_System_Update(system));
+        ERRCHECK(FMOD_Studio_EventInstance_GetPlaybackState(musicInstance, &state));
+        if (state == FMOD_STUDIO_PLAYBACK_STOPPED) {
+            ERRCHECK(FMOD_Studio_EventInstance_Start(musicInstance));   
+            if(!musicPlay)
+                musicPlay = true;
+        }
+    }    
 }
 
 void SoundSystem::setStat(bool data) {
     paused = data;
 }
 
-/*
-    BASED ON JESUS SOUND SYSTEM
-    MODIFIED BY JULIAN
-    EVERYTHING BASED ON soundEvent DOESN'T WORK, IS NOT NEEDED
-    IT WILL BE DELETED SOON
-*/
-
 FMOD_STUDIO_EVENTDESCRIPTION* SoundSystem::createDescription(const char* path, FMOD_STUDIO_EVENTDESCRIPTION* desc) {
-	ERRCHECK(FMOD_Studio_System_GetEvent(system, path, &desc));	        //Create the event
-	eventDescriptions[path] = desc;				                    //Add the descriptions to the event descriptions map
+	ERRCHECK(FMOD_Studio_System_GetEvent(system, path, &desc));
+	eventDescriptions[path] = desc;				                   
 	return desc;
 }
 
-void SoundSystem::createEvent(std::string eventPath) {
-	FMOD_STUDIO_EVENTDESCRIPTION * eventDesc = nullptr;					//Initialize the event description
+void SoundSystem::createEvent(std::string eventName, std::string eventPath) {
+	std::cout << eventPath << "\n";
+    FMOD_STUDIO_EVENTDESCRIPTION * eventDesc = nullptr;					//Initialize the event description
 	FMOD_STUDIO_EVENTINSTANCE * eventInst    = nullptr;					//Initialize the event instance
 	//SoundEvent * newEvent					 = nullptr; 					//Initialize the event
 	
 	//Search the description to know if it's already created
-	if (eventDescriptions[eventPath] != nullptr) 
+	if (eventDescriptions[eventName] != nullptr) 
 		eventDesc = eventDescriptions[eventPath];					 //Set it to the eventDesc var
 	else {
 		eventDesc = createDescription(eventPath.c_str(), eventDesc); //Else set a new event description
-		eventDescriptions[eventPath] = eventDesc;					 //And store it at the descriptions map
+		eventDescriptions[eventName] = eventDesc;					 //And store it at the descriptions map
 	}
 
 	ERRCHECK(FMOD_Studio_EventDescription_CreateInstance(eventDesc, &eventInst));				//Set the event instance
     
-	soundEvents[eventPath] = eventInst;
-}
-
-//Used for events without position as the events from the menu
-void SoundSystem::playEvent(SoundEvent* event) {
-	event -> start();					
+	soundEvents[eventName] = eventInst;
 }
 
 void SoundSystem::playMusicEvent(string c) {
@@ -192,6 +140,15 @@ void SoundSystem::playMusicEvent(string c) {
     }
 }
 
+void SoundSystem::stopMusicEvent(){
+    if(musicInstance != nullptr){
+        if(musicPlay){
+            ERRCHECK(FMOD_Studio_EventInstance_Stop(musicInstance, FMOD_STUDIO_STOP_IMMEDIATE));
+            musicInstance = nullptr;
+            musicPlay = false;
+        }
+    }
+}
 void SoundSystem::playVoiceEvent(string c) {
     if (voicePlay) {
         ERRCHECK(FMOD_Studio_EventInstance_GetPlaybackState(voiceInstance, &state));
@@ -212,25 +169,60 @@ void SoundSystem::playVoiceEvent(string c) {
     }
 }
 
-/******************************************************
- * @brief Stops an event that is being played
- * @param eventPath path of the event to stop
- ******************************************************/
+void SoundSystem::stopVoiceEvent(){
+    if(voiceInstance != nullptr){
+        ERRCHECK(FMOD_Studio_EventInstance_GetPlaybackState(voiceInstance, &state));
+        if (state == FMOD_STUDIO_PLAYBACK_PLAYING) {
+            ERRCHECK(FMOD_Studio_EventInstance_Stop(voiceInstance, FMOD_STUDIO_STOP_IMMEDIATE));
+            voiceInstance = nullptr;
+            voicePlay = false;
+        }
+    }
+}
+
+void SoundSystem::playSFXEvent(string c) {
+    if (sfxPlay) {
+        ERRCHECK(FMOD_Studio_EventInstance_GetPlaybackState(sfxInstance, &state));
+        if (state == FMOD_STUDIO_PLAYBACK_STOPPED) {
+            sfxInstance = soundEvents.find(c) -> second;
+            ERRCHECK(FMOD_Studio_EventInstance_Start(sfxInstance));
+        }
+    }
+    else {
+        FMOD_STUDIO_EVENTINSTANCE * instance;
+        instance = soundEvents.find(c) -> second;
+        ERRCHECK(FMOD_Studio_EventInstance_GetPlaybackState(instance, &state));
+        if (state == FMOD_STUDIO_PLAYBACK_STOPPED) {
+            ERRCHECK(FMOD_Studio_EventInstance_Start(instance));  
+            sfxInstance = instance;
+            sfxPlay = true; 
+        }
+    }
+}
+
+void SoundSystem::stopSFXEvent(){
+    if(sfxInstance != nullptr){
+        ERRCHECK(FMOD_Studio_EventInstance_GetPlaybackState(sfxInstance, &state));
+        if (state == FMOD_STUDIO_PLAYBACK_PLAYING) {
+            ERRCHECK(FMOD_Studio_EventInstance_Stop(sfxInstance, FMOD_STUDIO_STOP_IMMEDIATE));
+            sfxInstance = nullptr;
+            sfxPlay = false;
+        }
+    }
+}
+
+void SoundSystem::playEvent(SoundEvent* event) {
+	event -> start();					
+}
+
 void SoundSystem::stopEvent(SoundEvent* event) {
     event -> stop();
 }
 
-/******************************************************
- * @brief Stops an event if it's being played
- * @param eventPath path of the event to stop
- ******************************************************/
 void SoundSystem::checkAndStopEvent(SoundEvent* event) {
     if (event -> isPlaying()) event -> stop();
 }
 
-/*
-SOUND EVENT -> THIS IS GOING TO DISSAPEAR SOON
-*/
 SoundEvent::SoundEvent() {}
 SoundEvent::~SoundEvent() {}
 
@@ -256,7 +248,6 @@ void SoundEvent::setGain(f32 gainData) {
     ERRCHECK(FMOD_Studio_EventInstance_SetPitch(soundInstance, gainData));
 }
 
-//NOT IMPLEMENTED
 void SoundEvent::setPosition(Vector3<f32> vectorData) {
 
 }

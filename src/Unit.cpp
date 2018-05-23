@@ -13,6 +13,7 @@
 #include "Sensor.h"
 #include "IOEngine/IO.h"
 #include "UnitManager.h"
+#include <SoundEngine/SoundSystem.h>
 
 //ToDo: revisar y limpiar esta clase
 
@@ -66,6 +67,10 @@ Unit::Unit(SceneNode* _layer,
     recruitingTimer -> setCallback([&]() {
         if (recruitedCallback) recruitedCallback(this);
         switchState(Enumeration::UnitState::InHome);
+        if(team == Enumeration::Team::Human){
+            SoundSystem::Instance() -> stopVoiceEvent();
+            SoundSystem::Instance() -> playVoiceEvent("endTroop");
+        }
     });
 
     enemySensorTimer = new Timer(0.5, true, false);

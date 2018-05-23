@@ -3,6 +3,7 @@
 #include <WorldEngine/WorldGeometry.h>
 #include <GraphicEngine/Window.h>
 #include <OBDEngine/ResourceManager/ResourceJSON.h>
+#include <SoundEngine/SoundSystem.h>
 
 BuildingManager::BuildingManager(Enumeration::Team t, std::string b) {
 	team = t;
@@ -109,6 +110,9 @@ void BuildingManager::drawBuilding() {
 		
 		if (!canBuild) {
 			tempBuilding->setCantBuildColor();
+			if (IO::Instance() -> getMouse() -> leftMouseDown()) {
+				SoundSystem::Instance() -> playVoiceEvent("cantBuild01");
+			}
 		} else {
 			tempBuilding->setBaseColor();
 			//If there is no collision and the player press left button of the mouse, build the building
@@ -221,6 +225,7 @@ void BuildingManager::deleteBuilding(i32 id) {
 		buildingAmounts[it -> second -> getType()]--;
 		delete it -> second;
 		inMapBuildings -> erase(id);
+		SoundSystem::Instance() -> playSFXEvent("Destruction");
 	}
 } 
 

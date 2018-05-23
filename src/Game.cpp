@@ -18,7 +18,7 @@ Game::Game() {
     state = menu;
     stateData = Enumeration::State::GameState;
 
-    soundSystem = SoundSystem::Instance();
+    soundSystem = nullptr;
 }
 
 Game::~Game() {
@@ -36,6 +36,9 @@ void Game::Init() {
     IO::Instance()->loadImageIcon("media/icons/Mouse/cursor_verde.png");
     IO::Instance()->loadImageIcon("media/icons/Mouse/cursor_rojo.png");
     IO::Instance() -> getMouse() -> changeCustomIcon(0);
+    soundSystem = SoundSystem::Instance();
+    SoundSystem::Instance() -> stopMusicEvent();
+    SoundSystem::Instance() -> playMusicEvent("MenuMusic");
     state -> Init();
 }
 
@@ -44,6 +47,8 @@ void Game::Input() {
 }
 
 void Game::Update() {
+    
+    SoundSystem::Instance() -> update();
 	IO::Instance() -> Update();
     state -> Update();
 }

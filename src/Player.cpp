@@ -1,12 +1,12 @@
 #include "Player.h"
 #include "Map.h"
 
-Player::Player() {
-    
+Player::Player(Enumeration::Team _team) {
+    team = _team;
 }
 
 Player::~Player() {
-
+    
 }
 
 void Player::Init() {

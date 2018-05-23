@@ -15,7 +15,7 @@ Human* Human::Instance() {
     return instance;
 }
 
-Human::Human() : Player() {
+Human::Human() : Player(Enumeration::Team::Human) {
 }
 
 Human::~Human() {

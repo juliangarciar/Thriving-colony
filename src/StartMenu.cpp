@@ -1,5 +1,6 @@
 #include "StartMenu.h"
 #include "Game.h"
+#include <SoundEngine/SoundSystem.h>
 
 StartMenu::StartMenu() {
 #ifdef USEVIDEO
@@ -7,7 +8,7 @@ StartMenu::StartMenu() {
 	video -> play();
 	video -> setLoop(true);
 #endif
-
+    //SoundSystem::Instance() -> playMusicEvent("MenuMusic");
     ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/maps/maplist.json", true);
     json j = *r -> getJSON();
 
@@ -123,38 +124,46 @@ StartMenu::~StartMenu() {
 
 void StartMenu::setHUDEvents() {
     buttonQuit -> setCallback([]{
+        SoundSystem::Instance() -> playSFXEvent("MenuClick");
         Window::Instance() -> close();
     });
 
     buttonStart -> setCallback([this]{
+        SoundSystem::Instance() -> playSFXEvent("MenuClick");
         bgMain -> hide();
         bgPlay -> show();
     });
 
     buttonOptions -> setCallback([this]{
+        SoundSystem::Instance() -> playSFXEvent("MenuClick");
         bgMain -> hide();
         bgOptions -> show();
     });
 
     buttonAccept -> setCallback([this]{
+        SoundSystem::Instance() -> playSFXEvent("MenuClick");
         bgOptions -> hide();
         bgMain -> show();
     });
 
 	mapsCb -> setCallback([this] (bool a) {
+        SoundSystem::Instance() -> playSFXEvent("MenuClick");
 		Game::Instance() -> getGameState() -> getMap() -> setMap(map_paths[mapsCb->getSelectedOption()]);
-	});
+    });
 
 	racesCb -> setCallback([this] (bool a) {
+        SoundSystem::Instance() -> playSFXEvent("MenuClick");
 		if (races[racesCb->getSelectedOption()] == "Drorania") Game::Instance() -> getGameState() -> getMap() -> setBreeds("Drorania", "Kaonov");
 		else if (races[racesCb->getSelectedOption()] == "Kaonov") Game::Instance() -> getGameState() -> getMap() -> setBreeds("Kaonov", "Drorania");
-	});
+    });
 
     buttonPlay -> setCallback([]{
+        SoundSystem::Instance() -> playSFXEvent("MenuClick");
         Game::Instance() -> changeState(Enumeration::State::GameState);
     });
 
     buttonBack -> setCallback([this]{
+        SoundSystem::Instance() -> playSFXEvent("MenuClick");
         bgMain -> show();
         bgPlay -> hide();
     });

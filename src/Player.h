@@ -18,7 +18,7 @@ class Player {
         /**
          * @brief Player constructor.
          */
-        Player();
+        Player(Enumeration::Team _team);
 
         /**
          * @brief Player destructor.
@@ -258,6 +258,7 @@ class Player {
         //Denizen limit
         bool limitReached = false;
 
+        Enumeration::Team team;
     private:
         
 };

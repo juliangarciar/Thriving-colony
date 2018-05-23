@@ -25,7 +25,7 @@ IA* IA::Instance() {
     return instance;
 }
 
-IA::IA() : Player() {
+IA::IA() : Player(Enumeration::Team::IA) {
     
 }
 
