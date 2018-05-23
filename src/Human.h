@@ -23,6 +23,13 @@ class Human : public Player {
 		 */
         void Init(std::string _race);
 
+		/**
+		 * @brief 
+		 * 
+		 */
+		void Input();
+
+
         /**
          * @brief Update buildings and units variables.
          */

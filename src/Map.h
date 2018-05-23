@@ -161,6 +161,9 @@ class Map {
         void loadProgress(i32);
 
 		//
+		bool iaEnabled;
+
+		//
 		std::string loadMap;
 
 		//

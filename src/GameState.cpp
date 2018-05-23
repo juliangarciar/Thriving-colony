@@ -70,10 +70,7 @@ void GameState::Render() {
 void GameState::CleanUp() {
     delete pauseMenu;
 
-    Human::Instance() -> CleanUp();
-    IA::Instance() -> CleanUp();
     map -> CleanUp();
-    Hud::Instance() -> CleanUp();
 }
 
 void GameState::cleanGamePaused() {

@@ -88,7 +88,7 @@ void Map::Init() {
     IO::Instance() -> getEventManager() -> addEvent("checkWinCondition", [=]() {
 		int amount = 0;
 		if (winCondition.player == "IA"){
-			amount = IA::Instance() -> getBuildingManager() -> getAmount(winCondition.building);
+			if (iaEnabled) amount = IA::Instance() -> getBuildingManager() -> getAmount(winCondition.building);
 		} else if (winCondition.player == "Human") {
 			amount = Human::Instance() -> getBuildingManager() -> getAmount(winCondition.building);
 		}
@@ -123,7 +123,7 @@ void Map::Init() {
     IO::Instance() -> getEventManager() -> addEvent("checkLoseCondition", [=]() {
 		int amount = 0;
 		if (loseCondition.player == "IA"){
-			amount = IA::Instance() -> getBuildingManager() -> getAmount(loseCondition.building);
+			if (iaEnabled) amount = IA::Instance() -> getBuildingManager() -> getAmount(loseCondition.building);
 		} else if (loseCondition.player == "Human") {
 			amount = Human::Instance() -> getBuildingManager() -> getAmount(loseCondition.building);
 		}
@@ -179,29 +179,33 @@ void Map::Init() {
     loadProgress(60);
 
     //IA
-    ia -> Init(iaBreed);
-    ia -> metalAmount = j["IA"]["initial_metal"].get<i32>();
-    ia -> crystalAmount = j["IA"]["initial_crystal"].get<i32>();
-    ia -> buildableRange = j["IA"]["building_radius"].get<f32>();
+	iaEnabled = j["IA"]["enabled"].get<bool>();
+	if (iaEnabled){
+		ia -> Init(iaBreed);
+		ia -> metalAmount = j["IA"]["initial_metal"].get<i32>();
+		ia -> crystalAmount = j["IA"]["initial_crystal"].get<i32>();
+		ia -> buildableRange = j["IA"]["building_radius"].get<f32>();
 
-    Vector2<f32> iaPosition(j["IA"]["mainBuilding"]["position"]["x"], j["IA"]["mainBuilding"]["position"]["z"]);
-    ia -> getBuildingManager() -> createBuilding(iaPosition, "MainBuilding", 0);
-    ia -> hallPosition = Vector3<f32>(iaPosition.x, terrain->getY(iaPosition.x, iaPosition.y), iaPosition.y);
-    iaStartPos = iaPosition;
-    
-    for (auto& element : j["IA"]["buildings"]) {
-        Vector2<f32> iaPosition(element["position"]["x"], element["position"]["z"]);
-        ia -> getBuildingManager() -> createBuilding(iaPosition, element["type"].get<std::string>(), 0);
-    }
+		Vector2<f32> iaPosition(j["IA"]["mainBuilding"]["position"]["x"], j["IA"]["mainBuilding"]["position"]["z"]);
+		ia -> getBuildingManager() -> createBuilding(iaPosition, "MainBuilding", 0);
+		ia -> hallPosition = Vector3<f32>(iaPosition.x, terrain->getY(iaPosition.x, iaPosition.y), iaPosition.y);
+		iaStartPos = iaPosition;
+		
+		for (auto& element : j["IA"]["buildings"]) {
+			Vector2<f32> iaPosition(element["position"]["x"], element["position"]["z"]);
+			ia -> getBuildingManager() -> createBuilding(iaPosition, element["type"].get<std::string>(), 0);
+		}
 
-    //IA Events
-    IO::Instance() -> getEventManager() -> addEvent("RetractTroopsIA", [&]() {
-        IA::Instance() -> getUnitManager() -> retractAllTroops();
-    });
-    IO::Instance() -> getEventManager() -> addEvent("DeployTroopsIA", [&]() {
-        Vector3<f32> p = IA::Instance() -> hallPosition;
-        IA::Instance() -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
-    });
+		//IA Events
+		IO::Instance() -> getEventManager() -> addEvent("RetractTroopsIA", [&]() {
+			IA::Instance() -> getUnitManager() -> retractAllTroops();
+		});
+		IO::Instance() -> getEventManager() -> addEvent("DeployTroopsIA", [&]() {
+			Vector3<f32> p = IA::Instance() -> hallPosition;
+			IA::Instance() -> getUnitManager() -> deployAllTroops(Vector2<f32>(p.x, p.z));
+		});
+	}
+
 
     loadProgress(80);
 
@@ -219,7 +223,7 @@ void Map::Init() {
     IO::Instance() -> getEventManager() -> addEvent("showRecruitedText", [&]() {
         Hud::Instance() -> addToastToQueue("Se ha reclutado una tropa");
     });
-	hud->InitDebug();
+	hud->InitPlayerStats();
 
 	loadProgress(95);
 
@@ -244,15 +248,12 @@ void Map::Input() {
     camera -> CenterCamera();
 
     collisionPoint = terrain->getPointCollision(IO::Instance()->getMouse()->getPosition());
-	
-	human -> getBuildingManager() -> testRaycastCollisions();
-	human -> getUnitManager() -> testRaycastCollisions();
 
-	ia -> getBuildingManager() -> testRaycastCollisions();
-	ia -> getUnitManager() -> testRaycastCollisions();
+	human -> Input();
+	if (iaEnabled) ia -> Input();
 
 	i32 onMap = true;
-	//Interactions with our buildings
+	//Interactions with human buildings
 	i32 idBuilding = human -> getBuildingManager() -> getCollisionID();
 	if (idBuilding != -1) {
 		if (!human -> getUnitManager() -> isTroopSelected())
@@ -282,20 +283,6 @@ void Map::Input() {
 		onMap = false;
 	}
 
-	//Interactions with IA's buildings
-	i32 idBuildingIA =  ia -> getBuildingManager() -> getCollisionID();
-	if (idBuildingIA != -1) {
-		IO::Instance() -> getMouse() -> changeCustomIcon(2);
-		
-		if (human -> getUnitManager() -> isTroopSelected()) {
-			if (IO::Instance() -> getMouse() -> rightMousePressed()) {
-				human -> getUnitManager()->getSelectedTroop()->setTarget(ia -> getBuildingManager()->getBuilding(idBuildingIA));
-			}
-		}
-
-		onMap = false;
-	}
-
 	//Interactions with Human Units
 	i32 idTroop = human -> getUnitManager() -> getCollisionID();
 	if (idTroop != -1) {
@@ -308,18 +295,34 @@ void Map::Input() {
 		onMap = false;
 	}
 
-	//Interactions with IA Units
-	i32 idTroopIA = ia -> getUnitManager() -> getCollisionID();
-	if (idTroopIA != -1) {
-		IO::Instance() -> getMouse() -> changeCustomIcon(2);
-
-		if (human -> getUnitManager() -> isTroopSelected()) {
-			if (IO::Instance() -> getMouse() -> rightMousePressed()) {
-				human -> getUnitManager()->getSelectedTroop()->setTarget(ia -> getUnitManager()->getUnit(idTroopIA));
+	if (iaEnabled){
+		//Interactions with IA's buildings
+		i32 idBuildingIA =  ia -> getBuildingManager() -> getCollisionID();
+		if (idBuildingIA != -1) {
+			IO::Instance() -> getMouse() -> changeCustomIcon(2);
+			
+			if (human -> getUnitManager() -> isTroopSelected()) {
+				if (IO::Instance() -> getMouse() -> rightMousePressed()) {
+					human -> getUnitManager()->getSelectedTroop()->setTarget(ia -> getBuildingManager()->getBuilding(idBuildingIA));
+				}
 			}
+
+			onMap = false;
 		}
 
-		onMap = false;
+		//Interactions with IA Units
+		i32 idTroopIA = ia -> getUnitManager() -> getCollisionID();
+		if (idTroopIA != -1) {
+			IO::Instance() -> getMouse() -> changeCustomIcon(2);
+
+			if (human -> getUnitManager() -> isTroopSelected()) {
+				if (IO::Instance() -> getMouse() -> rightMousePressed()) {
+					human -> getUnitManager()->getSelectedTroop()->setTarget(ia -> getUnitManager()->getUnit(idTroopIA));
+				}
+			}
+
+			onMap = false;
+		}
 	}
 
 	if(onMap){
@@ -367,7 +370,7 @@ void Map::Update() {
 
 	//Update human and IA status
 	human -> Update();
-	ia -> Update();
+	if (iaEnabled) ia -> Update();
 
 	//Win/Lose
 	IO::Instance() -> getEventManager() -> triggerEvent("checkWinCondition");
@@ -379,6 +382,11 @@ void Map::Render() {
 }
 
 void Map::CleanUp() {
+    human -> CleanUp();
+    if (iaEnabled) ia -> CleanUp();
+	
+    hud -> CleanUp();
+
     for (i32 i=0; i<lights.size(); i++) {
         delete lights[i];
     }

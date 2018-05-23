@@ -64,6 +64,8 @@ class TVideo : public TEntity {
 		GLuint elem_buf;
 
 		GLuint frame_tex;
+		
+		glm::mat4 mvp;
 };
 
 #endif

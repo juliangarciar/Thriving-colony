@@ -55,6 +55,8 @@ TVideo::TVideo(GLuint pID, VideoData *d){
 
 	mvpID = glGetUniformLocation(programID, "MVP");
 	textureID = glGetUniformLocation(programID, "videoTexture");
+	
+	mvp = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
 }
 
 TVideo::~TVideo(){
@@ -67,7 +69,6 @@ TVideo::~TVideo(){
 void TVideo::beginDraw(){
 	if (play) readFrame();
 	
-	glm::mat4 mvp = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
 	glUniformMatrix4fv(mvpID, 1, GL_FALSE, glm::value_ptr(mvp));
 
 	//Texture
@@ -82,8 +83,6 @@ void TVideo::beginDraw(){
 }
 
 void TVideo::endDraw(){
-	glDisableVertexAttribArray(0);
-	glDisableVertexAttribArray(1);
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, 0);
 }
