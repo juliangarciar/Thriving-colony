@@ -32,6 +32,11 @@ void Human::Init(std::string _race) {
     units = new UnitManager(Enumeration::Team::Human, _race);
 }
 
+void Human::Input() {
+	buildings -> testRaycastCollisions();
+	units -> testRaycastCollisions();
+}
+
 void Human::Update() {
 	Player::Update();
 	

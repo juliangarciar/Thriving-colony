@@ -25,6 +25,12 @@ class IA : public Player {
 		 */
         void Init(std::string _race);
 
+		/**
+		 * @brief 
+		 * 
+		 */
+		void Input();
+
         /**
          * @brief Update buildings, units variables and choice the next step when is time.
          */

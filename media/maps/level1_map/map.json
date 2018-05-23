@@ -1,15 +1,15 @@
 {
 	"map": {
-		"heightmap": "media/maps/test_map/mapa3-256x256.bmp",
-		"texture": "media/maps/test_map/map-texture.jpg",
+		"heightmap": "media/maps/level1_map/level1_map_heightmap.bmp",
+		"texture": "media/maps/level1_map/level1_map_texture.bmp",
 		"detail_texture": "",
 		"skybox_textures": [
-			"media/maps/test_map/bluefreeze_rt.tga",
-			"media/maps/test_map/bluefreeze_lf.tga",
-			"media/maps/test_map/bluefreeze_up.tga",
-			"media/maps/test_map/bluefreeze_dn.tga",
-			"media/maps/test_map/bluefreeze_bk.tga",
-			"media/maps/test_map/bluefreeze_ft.tga"
+			"media/maps/level1_map/bluefreeze_rt.tga",
+			"media/maps/level1_map/bluefreeze_lf.tga",
+			"media/maps/level1_map/bluefreeze_up.tga",
+			"media/maps/level1_map/bluefreeze_dn.tga",
+			"media/maps/level1_map/bluefreeze_bk.tga",
+			"media/maps/level1_map/bluefreeze_ft.tga"
 		],
 		"scale":{
 			"x": 40,
@@ -34,10 +34,10 @@
 		"expansion_increment_times": 5,
 		"citizen_increment": 1,
 		"win_condition": {
-			"player": "IA", 
-			"building": "MainBuilding",
+			"player": "Human", 
+			"building": "Hospital",
 			"condition": "==",
-			"value": 0
+			"value": 1
 		},
 		"lose_condition": {
 			"player": "Human", 
@@ -100,8 +100,8 @@
 		"building_radius": 2000,
 		"mainBuilding": {
 			"position": {
-				"x": 8040,
-				"z": 8040
+				"x": 3000,
+				"z": 3000
 			},
 			"scale": {
 				"x": 0,
@@ -118,8 +118,8 @@
 			{
 				"type": "Siderurgy", 
 				"position": {
-					"x": 8120,
-					"z": 8600
+					"x": 3120,
+					"z": 3600
 				},
 				"scale": {
 					"x": 0,
@@ -136,16 +136,16 @@
 	},
 	"IA":
 	{
-		"enabled": true,
-		"initial_metal": 1200,
+		"enabled": false,
+		"initial_metal": 0,
 		"initial_crystal": 0,
-		"siderurgy_productivity": 15,
-		"quarry_productivity": 10,
-		"building_radius": 2000,
+		"siderurgy_productivity": 0,
+		"quarry_productivity": 0,
+		"building_radius": 0,
 		"mainBuilding": {
 			"position": {
-				"x": 1960,
-				"z": 1960
+				"x": 0,
+				"z": 0
 			},
 			"scale": {
 				"x": 0,
@@ -158,27 +158,6 @@
 				"z": 0
 			}
 		},
-		"buildings":[
-			{
-				"type": "Siderurgy", 
-				"position": {
-					"x": 2120,
-					"z": 1480
-				},
-				"scale": {
-					"x": 0,
-					"y": 0,
-					"z": 0
-				},
-				"rotation": {
-					"x": 0,
-					"y": 0,
-					"z": 0
-				},
-				"productivity": {
-					"tax": 1	
-				}
-			}
-		]
+		"buildings":[]
 	}
 }

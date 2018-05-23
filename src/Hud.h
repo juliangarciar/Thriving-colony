@@ -62,7 +62,13 @@ class Hud {
 		 * @brief 
 		 * 
 		 */
-		void InitDebug();
+		void InitPlayerStats();
+
+		/**
+		 * @brief 
+		 * 
+		 */
+		void UpdatePlayerStats();
 
         /**
          * @brief Enable the tab pssaed by parameter.
@@ -201,6 +207,12 @@ class Hud {
          * @brief Ajust the widgets that have to be shown or hidden.
          */
         void adjustMenuVisibility();
+
+		/**
+		 * @brief 
+		 * 
+		 */
+		void InitDebug();
 
         /**
          * @brief Shows all relevant player's variables.
@@ -399,7 +411,10 @@ class Hud {
         //AI's behaviour.
         Label *iaBehaviour;
 
-        //Time that crontols when the players' panels will be updated.
+        //Time that controls when the players' panels will be updated.
+        Timer* playerTimer;
+
+        //Time that controls when the debug panels will be updated.
         Timer* debugTimer;
 
         //

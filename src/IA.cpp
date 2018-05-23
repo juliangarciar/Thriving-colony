@@ -75,6 +75,11 @@ void IA::Init(std::string _race) {
 	});
 }
 
+void IA::Input() {
+	buildings -> testRaycastCollisions();
+	units -> testRaycastCollisions();
+}
+
 void IA::Update() {
 	Player::Update();
     units -> updateUnitManager();
