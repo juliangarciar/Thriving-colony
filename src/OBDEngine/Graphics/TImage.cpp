@@ -3,6 +3,7 @@
 TImage::TImage(GLuint pID, ResourceIMG *d){	
 	programID = pID;
 	data = d;
+	position = glm::vec4(0,0,0,0);
 
 	float quad[20] = {
 		-1.0f,  1.0f, 0.0f, 0.0f, 0.0f,
@@ -38,7 +39,8 @@ TImage::TImage(GLuint pID, ResourceIMG *d){
 	glBindVertexArray(0);
 
 	mvpID = glGetUniformLocation(programID, "MVP");
-	textureID = glGetUniformLocation(programID, "videoTexture");
+	textureID = glGetUniformLocation(programID, "imageTexture");
+	positionID = glGetUniformLocation(programID, "position");
 
 	mvp = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
 }
@@ -51,6 +53,7 @@ TImage::~TImage(){
 
 void TImage::beginDraw(){
 	glUniformMatrix4fv(mvpID, 1, GL_FALSE, glm::value_ptr(mvp));
+	glUniform4f(positionID, position.x, position.y, position.z, position.w);
 
 	//Texture
 	glActiveTexture(GL_TEXTURE0);
@@ -66,4 +69,12 @@ void TImage::beginDraw(){
 void TImage::endDraw(){
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, 0);
+}
+
+void TImage::setPosition(glm::vec3 p){
+	position = glm::vec4(p, 1);
+}
+
+glm::vec3 TImage::getPosition(){
+	return glm::vec4(position);
 }

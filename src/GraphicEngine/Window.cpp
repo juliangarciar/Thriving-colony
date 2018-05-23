@@ -94,9 +94,9 @@ void Window::Init(i32 width, i32 height) {
 
 #ifdef USEVIDEO
 	engine -> InitVideoSystem();
-    videoLayer = engine -> createShaderedSceneNode("videoShader", "media/shaders/vertexShaderVideo.glsl", "media/shaders/fragmentShaderVideo.glsl");
-	videoProgram = engine -> getRegisteredShaderProgram("videoShader");
 #endif
+    imageLayer = engine -> createShaderedSceneNode("imageShader", "media/shaders/vertexShaderImageVideo.glsl", "media/shaders/fragmentShaderImageVideo.glsl");
+	imageProgram = engine -> getRegisteredShaderProgram("imageShader");
 }
 
 void Window::setGUI() { 
@@ -197,10 +197,10 @@ OBDSceneNode* Window::getBillboardLayer() {
     return billboardLayer;
 }
 
-OBDShaderProgram* Window::getVideoProgram(){
-	return videoProgram;
+OBDShaderProgram* Window::getImageProgram(){
+	return imageProgram;
 }
 
-OBDSceneNode* Window::getVideoLayer(){
-	return videoLayer;
+OBDSceneNode* Window::getImageLayer(){
+	return imageLayer;
 }

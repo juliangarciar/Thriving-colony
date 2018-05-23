@@ -8,6 +8,7 @@
 #include "OBDBillboard.h"
 #include "OBDCamera.h"
 #include "OBDColor.h"
+#include "OBDImage.h"
 #include "OBDLight.h"
 #include "OBDMaterial.h"
 #include "OBDObject.h"
@@ -155,6 +156,7 @@ class OBDEngine {
          * @param c 
          */
         OBDBillboard* createBillboard(OBDSceneNode*, OBDShaderProgram *, glm::vec3, glm::vec2);
+
 #ifdef USEVIDEO
         /**
          * @brief
@@ -163,6 +165,14 @@ class OBDEngine {
          */
         OBDVideo* createVideo(OBDSceneNode*, OBDShaderProgram *, std::string);
 #endif
+
+        /**
+         * @brief
+         * @param a 
+         * @param c 
+         */
+        OBDImage* createImage(OBDSceneNode*, OBDShaderProgram *, std::string);
+
         /**
          * @brief Create a Skybox object
          * 

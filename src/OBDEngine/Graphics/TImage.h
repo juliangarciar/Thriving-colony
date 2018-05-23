@@ -29,6 +29,20 @@ class TImage : public TEntity {
          * 
          */
         void endDraw();
+
+		/**
+		 * @brief Set the Position object
+		 * 
+		 * @param position 
+		 */
+		void setPosition(glm::vec3 position);
+
+		/**
+		 * @brief Get the Position object
+		 * 
+		 * @return glm::vec3 
+		 */
+		glm::vec3 getPosition();
 	private:
 		ResourceIMG *data;
 
@@ -36,12 +50,14 @@ class TImage : public TEntity {
 
 		GLuint textureID;
 		GLuint mvpID;
+		GLuint positionID;
 
 		GLuint VAO;
 		GLuint vert_buf;
 		GLuint uv_buf;
 		GLuint elem_buf;
 		
+		glm::vec4 position;
 		glm::mat4 mvp;
 };
 
