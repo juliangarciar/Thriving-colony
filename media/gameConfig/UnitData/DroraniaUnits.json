@@ -52,8 +52,8 @@
 		{
 			"unitName": "StandardM",
 			"buildingType": "Barrack",
-			"moveSpeed": 30,
-			"attackDamage": 100,
+			"moveSpeed": 3,
+			"attackDamage": 10,
 			"attackRange": 25,
 			"attackSpeed": 1,
 			"viewRadius": 450,
