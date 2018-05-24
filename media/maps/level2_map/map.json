@@ -13,7 +13,7 @@
 		],
 		"scale":{
 			"x": 40,
-			"y": 20,
+			"y": 4,
 			"z": 40
 		},
 		"size":{
@@ -21,10 +21,10 @@
 			"height": 10240
 		},
 		"margins":{
-			"top": 2000,
-			"right": 9000,
-			"bottom": 9000,
-			"left": 2000
+			"top": 1000,
+			"right": 9240,
+			"bottom": 9240,
+			"left": 1000
 		}
 	},
 	"game":{
@@ -93,15 +93,15 @@
 	"expandableTerrain": true,
 	"player":
 	{
-		"initial_metal": 1200,
+		"initial_metal": 200,
 		"initial_crystal": 0,
 		"siderurgy_productivity": 10,
 		"quarry_productivity": 5,
 		"building_radius": 2000,
 		"mainBuilding": {
 			"position": {
-				"x": 3000,
-				"z": 3000
+				"x": 7520,
+				"z": 3520
 			},
 			"scale": {
 				"x": 0,
@@ -118,8 +118,8 @@
 			{
 				"type": "Siderurgy", 
 				"position": {
-					"x": 3120,
-					"z": 3600
+					"x": 7520,
+					"z": 4000
 				},
 				"scale": {
 					"x": 0,
@@ -136,16 +136,16 @@
 	},
 	"IA":
 	{
-		"enabled": false,
-		"initial_metal": 0,
+		"enabled": true,
+		"initial_metal": 200,
 		"initial_crystal": 0,
-		"siderurgy_productivity": 0,
-		"quarry_productivity": 0,
-		"building_radius": 0,
+		"siderurgy_productivity": 10,
+		"quarry_productivity": 5,
+		"building_radius": 2000,
 		"mainBuilding": {
 			"position": {
-				"x": 0,
-				"z": 0
+				"x": 3280,
+				"z": 6480
 			},
 			"scale": {
 				"x": 0,
@@ -158,6 +158,24 @@
 				"z": 0
 			}
 		},
-		"buildings":[]
+		"buildings":[
+{
+				"type": "Siderurgy", 
+				"position": {
+					"x": 3280,
+					"z": 6960
+				},
+				"scale": {
+					"x": 0,
+					"y": 0,
+					"z": 0
+				},
+				"rotation": {
+					"x": 0,
+					"y": 0,
+					"z": 0
+				}
+			}
+		]
 	}
 }
