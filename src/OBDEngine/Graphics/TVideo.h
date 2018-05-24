@@ -44,6 +44,8 @@ class TVideo : public TEntity {
 		 * @param loop
 		 */
 		void setLoop(bool);
+
+		bool seekFrame(int s_frame);
 	private:
 		bool readFrame();
 		int decode(AVCodecContext *avctx, AVFrame *frame, int *got_frame, AVPacket *pkt);

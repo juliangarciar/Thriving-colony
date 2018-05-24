@@ -27,6 +27,15 @@ Window::~Window() {
 }
 
 void Window::Init(i32 width, i32 height) {
+    int wWidth, wHeight;
+    const GLFWvidmode *screen = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
+    wWidth = screen->width;
+    wHeight = screen->height;
+
+    if (width > wWidth) width = wWidth;
+    if (height > wHeight) height = wHeight;
+
     windowWidth = width;
     windowHeight = height;
     screenCenter = Vector2<i32>(windowWidth/2, windowHeight/2);
@@ -42,7 +51,7 @@ void Window::Init(i32 width, i32 height) {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Create an application window with the following settings:
-    window = glfwCreateWindow(windowWidth, windowHeight, "Thriving Colony", nullptr, nullptr);
+    window = glfwCreateWindow(windowWidth, windowHeight, "Thriving Colony", glfwGetPrimaryMonitor(), nullptr);
     if (window == nullptr) {
         std::cerr << "Error al crear una ventana de GLFW" << std::endl;
         glfwTerminate();

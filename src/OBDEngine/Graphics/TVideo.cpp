@@ -94,9 +94,9 @@ bool TVideo::readFrame() {
 		//Todo bien, todo correcto
 	} else if (error == AVERROR_EOF) {
 		if(loop) {
-			auto stream = data->pFormatCtx->streams[data->videoStream];
-			avio_seek(data->pFormatCtx->pb, 0, SEEK_SET);
-			avformat_seek_file(data->pFormatCtx, data->videoStream, 0, 0, stream->duration, 0);
+			std::cout << "Reiniciando" << std::endl;
+			seekFrame(0);
+
 		} else return false;
 	} else {
 		std::cerr << "Error " << error << " al leer el frame" << std::endl;
@@ -125,6 +125,34 @@ bool TVideo::readFrame() {
 	av_packet_unref(&data->packet);
 	
 	return true;
+}
+
+bool TVideo::seekFrame(int s_frame) {
+   int flags = AVSEEK_FLAG_FRAME;
+   if (s_frame < data->pFrame->pkt_dts)
+   {
+       flags |= AVSEEK_FLAG_BACKWARD;
+   }
+
+   if(av_seek_frame(data->pFormatCtx,data->videoStream,s_frame,flags) != 0)
+   {
+       printf("\nFailed to seek for time %d",s_frame);
+      return false;
+   }
+	if(avformat_seek_file	(data->pFormatCtx,
+		data->packet.stream_index,
+		0,
+		0,
+		0,
+		flags 
+	) != 0){
+		printf("\nFailed to seek for time %d",s_frame);
+      return false;
+	}
+	av_read_play(data->pFormatCtx);
+
+   avcodec_flush_buffers(data->pCodecCtx);
+   return true;
 }
 
 int TVideo::decode(AVCodecContext *avctx, AVFrame *frame, int *got_frame, AVPacket *pkt) {
