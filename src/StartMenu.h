@@ -7,6 +7,7 @@
 #include <GUIEngine/ComboBox.h>
 #include <GUIEngine/Label.h>
 #include <GUIEngine/Slider.h>
+#include <GUIEngine/Widget.h>
 #include <GraphicEngine/Image.h>
 #include <GraphicEngine/Video.h>
 
@@ -50,7 +51,7 @@ class StartMenu {
         Button *buttonStart;
 
         //Panel where are going to be shown the main menu buttons.
-        Panel *bgMain;
+        Widget *bgMain;
 
         //Panel where are going to be shown the options menu buttons.
         Panel *bgOptions;

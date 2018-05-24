@@ -22,6 +22,8 @@ class Panel : public GUIElement {
         void setPosition(Vector2<i32> position);
         void setSize(Vector2<i32> size);
 
+		void setAlpha(f32);
+
         void setTitle(std::string t);
         void setTooltip(std::string text);
         

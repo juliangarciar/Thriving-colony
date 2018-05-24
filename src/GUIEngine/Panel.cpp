@@ -49,6 +49,12 @@ void Panel::refreshLayout() {
     Window::Instance()->getGUIEnvironment()->performLayout();
 }
 
+void Panel::setAlpha(f32 a){
+	nanogui::Theme *t = panel -> theme();
+	nanogui::Color c = t->mWindowPopup;
+	t->mWindowPopup = nanogui::Color::Color(c.r(), c.g(), c.b(), a);
+}
+
 void Panel::setPosition(Vector2<i32> position) {
     panel -> setPosition(Eigen::Vector2i(position.x, position.y));
 }
