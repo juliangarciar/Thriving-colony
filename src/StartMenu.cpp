@@ -11,12 +11,16 @@ StartMenu::StartMenu() {
     ResourceJSON *r = (ResourceJSON*)IO::Instance() -> getResourceManager() -> getResource("media/maps/maplist.json", true);
     json j = *r -> getJSON();
 
+	Vector2<i32> center = Vector2<i32>(Window::Instance()->getWindowWidth()/2, Window::Instance()->getWindowHeight()/2);
+
     //Main
-    bgMain = new Panel("Thriving colony");
+    bgMain = new Widget();
+	bgMain -> setPosition(Vector2<i32>(center.x-30, center.y-15));
     bgMain -> setSize(Vector2<i32>(400, 300));
+	//bgMain -> setAlpha(0);
     bgMain -> setVerticalLayout();
-    bgMain -> refreshLayout();
-    bgMain -> center();
+    //bgMain -> refreshLayout();
+    //bgMain -> center();
 
     buttonStart = new Button(bgMain, "Play");
     buttonOptions = new Button(bgMain, "Options"); 
@@ -60,8 +64,9 @@ StartMenu::StartMenu() {
     	map_paths . push_back(element["map"].get<std::string>());
 	}
 
-    bgPlay = new Panel("Match options");
+    bgPlay = new Panel("Game options");
     bgPlay -> setSize(Vector2<i32>(400, 300));
+	//bgPlay -> setPosition(Vector2<i32>(center.x-30, center.y-15));
     bgPlay -> setVerticalLayout();
     bgPlay -> refreshLayout();
     bgPlay -> center();

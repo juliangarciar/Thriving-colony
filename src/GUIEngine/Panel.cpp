@@ -7,7 +7,7 @@ Panel::Panel(std::string t) {
     panel -> setLayout(new nanogui::BoxLayout(nanogui::Orientation::Horizontal, nanogui::Alignment::Middle, 0, 6));
     panel -> setModal(false);
     panel -> setFontSize(1);
-    panel -> transpa
+    //panel -> transpa
 }
 
 Panel::Panel(GUIElement *parent, std::string title) {
@@ -47,6 +47,12 @@ void Panel::center() {
 
 void Panel::refreshLayout() {
     Window::Instance()->getGUIEnvironment()->performLayout();
+}
+
+void Panel::setAlpha(f32 a){
+	nanogui::Theme *t = panel -> theme();
+	nanogui::Color c = t->mWindowPopup;
+	t->mWindowPopup = nanogui::Color::Color(c.r(), c.g(), c.b(), a);
 }
 
 void Panel::setPosition(Vector2<i32> position) {
